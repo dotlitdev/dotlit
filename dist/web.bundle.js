@@ -2732,11 +2732,7 @@ var processor = function processor() {
   return unified__WEBPACK_IMPORTED_MODULE_2___default()() // remark
   .use((remark_parse__WEBPACK_IMPORTED_MODULE_3___default())).use(remark_wiki_link__WEBPACK_IMPORTED_MODULE_9__.wikiLinkPlugin, {
     permalinks: options.files,
-    pageResolver: function pageResolver(name) {
-      var full = name.replace(/ /g, '_').toLowerCase();
-      var tail = path.basename(full);
-      return [full + '.lit', full + '.md', tail + '.lit', tail + '.md'];
-    },
+    pageResolver: _links__WEBPACK_IMPORTED_MODULE_12__.nameToPermalinks,
     hrefTemplate: function hrefTemplate(permalink) {
       return "".concat(permalink);
     }

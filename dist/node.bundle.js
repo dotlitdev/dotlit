@@ -1861,10 +1861,10 @@ function _convert() {
 
             _context.t0 = output;
             _context.next = 7;
-            return (0,_renderer_index__WEBPACK_IMPORTED_MODULE_9__.render)(input, cmd);
+            return (0,_renderer_index__WEBPACK_IMPORTED_MODULE_9__.renderToVfile)(input, cmd);
 
           case 7:
-            _context.t1 = _context.sent;
+            _context.t1 = _context.sent.contents;
             (0, _context.t0)(_context.t1);
             _context.next = 12;
             break;
@@ -2403,11 +2403,7 @@ var processor = function processor() {
   return unified__WEBPACK_IMPORTED_MODULE_2___default()() // remark
   .use((remark_parse__WEBPACK_IMPORTED_MODULE_3___default())).use(remark_wiki_link__WEBPACK_IMPORTED_MODULE_9__.wikiLinkPlugin, {
     permalinks: options.files,
-    pageResolver: function pageResolver(name) {
-      var full = name.replace(/ /g, '_').toLowerCase();
-      var tail = path.basename(full);
-      return [full + '.lit', full + '.md', tail + '.lit', tail + '.md'];
-    },
+    pageResolver: _links__WEBPACK_IMPORTED_MODULE_12__.nameToPermalinks,
     hrefTemplate: function hrefTemplate(permalink) {
       return "".concat(permalink);
     }
@@ -71293,7 +71289,7 @@ function factory(key, options) {
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"name\":\"@dotlit/dotlit\",\"version\":\"0.0.2\",\"description\":\"\",\"main\":\"src/index.js\",\"scripts\":{\"build-web\":\"webpack --config=./webpack.web.config.js\",\"build-node\":\"webpack --config=./webpack.node.config.js\",\"build\":\"npm run build-web\"},\"bin\":{\"dotlit\":\"./src/index.js\"},\"author\":\"dotlitdev\",\"license\":\"UNLICENCED\",\"dependencies\":{\"@babel/core\":\"^7.12.8\",\"@babel/plugin-transform-runtime\":\"^7.12.1\",\"@babel/preset-env\":\"^7.12.7\",\"@babel/preset-react\":\"^7.12.7\",\"@babel/preset-typescript\":\"^7.12.7\",\"@babel/register\":\"^7.12.1\",\"@isomorphic-git/lightning-fs\":\"^4.4.1\",\"assert\":\"^2.0.0\",\"babel-loader\":\"^8.2.1\",\"commander\":\"^6.2.0\",\"console-browserify\":\"^1.2.0\",\"glob\":\"^7.1.6\",\"glob-watcher\":\"^5.0.5\",\"html-whitespace-sensitive-tag-names\":\"^1.0.3\",\"mdast-util-heading-range\":\"^2.1.5\",\"mkdirp\":\"^1.0.4\",\"path-browserify\":\"^1.0.1\",\"process\":\"^0.11.10\",\"react\":\"^17.0.1\",\"react-dom\":\"^17.0.1\",\"rehype-document\":\"^5.1.0\",\"rehype-format\":\"^3.1.0\",\"rehype-react\":\"^6.2.0\",\"rehype-stringify\":\"^8.0.0\",\"remark-footnotes\":\"^3.0.0\",\"remark-frontmatter\":\"^3.0.0\",\"remark-heading-id\":\"^1.0.0\",\"remark-parse\":\"^9.0.0\",\"remark-react\":\"^8.0.0\",\"remark-rehype\":\"^8.0.0\",\"remark-slug\":\"^6.0.0\",\"remark-stringify\":\"^9.0.0\",\"remark-toc\":\"^7.0.0\",\"remark-wiki-link\":\"^1.0.2\",\"to-vfile\":\"^6.1.0\",\"unified\":\"^9.2.0\",\"unist-util-find-after\":\"^3.0.0\",\"unist-util-find-before\":\"^2.0.5\",\"unist-util-flatmap\":\"^1.0.0\",\"unist-util-generated\":\"^1.1.6\",\"unist-util-remove-position\":\"^3.0.0\",\"unist-util-select\":\"^3.0.4\",\"webpack\":\"^5.6.0\",\"webpack-cli\":\"^4.2.0\"}}");
+module.exports = JSON.parse("{\"name\":\"@dotlit/dotlit\",\"version\":\"0.0.5\",\"description\":\"\",\"main\":\"src/index.js\",\"scripts\":{\"build-web\":\"webpack --config=./webpack.web.config.js\",\"build-node\":\"webpack --config=./webpack.node.config.js\",\"build\":\"npm run build-web && npm run build-node\"},\"bin\":{\"dotlit\":\"./src/index.js\"},\"author\":\"dotlitdev\",\"license\":\"UNLICENCED\",\"dependencies\":{\"@babel/core\":\"^7.12.8\",\"@babel/plugin-transform-runtime\":\"^7.12.1\",\"@babel/preset-env\":\"^7.12.7\",\"@babel/preset-react\":\"^7.12.7\",\"@babel/preset-typescript\":\"^7.12.7\",\"@babel/register\":\"^7.12.1\",\"@isomorphic-git/lightning-fs\":\"^4.4.1\",\"assert\":\"^2.0.0\",\"babel-loader\":\"^8.2.1\",\"commander\":\"^6.2.0\",\"console-browserify\":\"^1.2.0\",\"glob\":\"^7.1.6\",\"glob-watcher\":\"^5.0.5\",\"html-whitespace-sensitive-tag-names\":\"^1.0.3\",\"mdast-util-heading-range\":\"^2.1.5\",\"mkdirp\":\"^1.0.4\",\"path-browserify\":\"^1.0.1\",\"process\":\"^0.11.10\",\"react\":\"^17.0.1\",\"react-dom\":\"^17.0.1\",\"rehype-document\":\"^5.1.0\",\"rehype-format\":\"^3.1.0\",\"rehype-react\":\"^6.2.0\",\"rehype-stringify\":\"^8.0.0\",\"remark-footnotes\":\"^3.0.0\",\"remark-frontmatter\":\"^3.0.0\",\"remark-heading-id\":\"^1.0.0\",\"remark-parse\":\"^9.0.0\",\"remark-react\":\"^8.0.0\",\"remark-rehype\":\"^8.0.0\",\"remark-slug\":\"^6.0.0\",\"remark-stringify\":\"^9.0.0\",\"remark-toc\":\"^7.0.0\",\"remark-wiki-link\":\"^1.0.2\",\"to-vfile\":\"^6.1.0\",\"unified\":\"^9.2.0\",\"unist-util-find-after\":\"^3.0.0\",\"unist-util-find-before\":\"^2.0.5\",\"unist-util-flatmap\":\"^1.0.0\",\"unist-util-generated\":\"^1.1.6\",\"unist-util-remove-position\":\"^3.0.0\",\"unist-util-select\":\"^3.0.4\",\"webpack\":\"^5.6.0\",\"webpack-cli\":\"^4.2.0\"}}");
 
 /***/ }),
 
