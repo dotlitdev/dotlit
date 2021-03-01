@@ -11,7 +11,7 @@ import { wikiLinkPlugin } from 'remark-wiki-link'
 import {groupIntoSections, ungroupSections} from './sections'
 import litcodeblocks from './codeblocks'
 
-import {resolveLinks} from './links'
+import {resolveLinks, nodeMappings, nameToPermalinks} from './links'
 
 import {log} from '../utils/console'
 
@@ -24,17 +24,7 @@ export const processor = (options={files: []}) => {
     .use(markdown)
     .use(wikiLinkPlugin, { 
         permalinks: options.files,
-        pageResolver: (name) => {
-
-            const full = name.replace(/ /g, '_').toLowerCase()
-            const tail = path.basename(full)
-            return [
-                full + '.lit', 
-                full + '.md',
-                tail + '.lit', 
-                tail + '.md',
-            ]
-        },
+        pageResolver: nameToPermalinks,
         hrefTemplate: (permalink) => `${permalink}`
     })
     .use(slug)
