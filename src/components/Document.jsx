@@ -12,6 +12,8 @@ export default class Document extends React.Component {
                 <meta name="litroot" value={this.props.root}/>
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
                 <link rel="stylesheet" href={path.join(this.props.root, 'style.css')}/>
+                <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+                <script>eruda.init();</script>
                 <script src={path.join(this.props.root, 'web.bundle.js')}/>
             </head>
             <body>
