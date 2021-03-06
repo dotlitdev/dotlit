@@ -32,7 +32,9 @@ export const processor = (options={files: []}) => {
     // .use(headings)
     // .use(toc, {})
     .use(frontmatter, {
-        type: 'yaml', marker: {
+        type: ['yaml'],
+        anywhere: true,
+        fence: {
             open: '<!--', close: '-->'
         }
     })

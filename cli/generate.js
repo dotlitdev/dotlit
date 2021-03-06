@@ -87,7 +87,6 @@ export function generate(cmd) {
 
                 const html_files = await Promise.all(ast_files.map( async file => {
                     await fs.writeFile(path.join(cmd.output, file.path + '.json'), JSON.stringify(file.data.ast, null, 4))
-                    console.log(file.path, 'DATA', file.data)
                     const html_file = renderToVfile(await file, cmd, file.data.backlinks)
                     await fs.writeFile(path.join(cmd.output, file.path), file.contents)
                     level(0, info)(`Wrote  ${file.path} to "${path.join(cmd.output, file.path)}" to disk`)
