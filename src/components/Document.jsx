@@ -10,6 +10,7 @@ export default class Document extends React.Component {
                 <title>{this.props.title}</title>
                 <meta name="litsrc" value={this.props.path}/>
                 <meta name="litroot" value={this.props.root}/>
+                <meta name="viewport" content="width=device-width, initial-scale=1">
                 <link rel="stylesheet" href={path.join(this.props.root, 'style.css')}/>
                 <script src={path.join(this.props.root, 'web.bundle.js')}/>
             </head>
