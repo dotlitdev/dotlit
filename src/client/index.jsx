@@ -1,7 +1,8 @@
 const React = require('react')
 const ReactDOM = require('react-dom')
 const parser = require('../parser')
-const {App} = require('../renderer')
+const renderer = require('../renderer')
+const App = require('../components/App').default
 const vfile = require('vfile')
 const path = require('path')
 const FS = require('@isomorphic-git/lightning-fs')
@@ -22,20 +23,30 @@ console.log(`baseUrl:`, baseUrl)
 console.log(`lit:`, window.lit)
 
 ;(async () => {
+    console.log("Fetching file content", litroot, litsrc, path.join(litroot, litsrc))
     const filecontents = await (await fetch(path.join(litroot, litsrc))).text()
     console.log('Fetched file contents:', filecontents)
     const file = await vfile({path: litsrc, contents: filecontents})
     console.log(file)
-    const notebook = window.lit.notebook = <App 
+    try {
+    window.lit.notebook = <App 
         title={file.stem}
         src={file.contents.toString()}
         root={litroot}
         path={file.path}
         permalinks={{}}
+        processor={renderer.processor(litroot, file.path)}
     />
-    console.log('notebook', notebook)
+    } catch(err) {
+        console.error("Error instantiating App", err)
+    }
+    console.log('notebook', window.lit.notebook)
     
-    ReactDOM.hydrate(notebook, document.getElementById('app'))
+    try {
+        ReactDOM.hydrate(window.lit.notebook, document.getElementById('app'))
+    } catch (err) {
+        console.error("Error hydrating App", err)
+    }
 })()
 
 

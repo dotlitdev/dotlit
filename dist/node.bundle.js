@@ -1690,24 +1690,23 @@ function generate(cmd) {
                             return fs__WEBPACK_IMPORTED_MODULE_7__.promises.writeFile(path__WEBPACK_IMPORTED_MODULE_6___default().join(cmd.output, file.path + '.json'), JSON.stringify(file.data.ast, null, 4));
 
                           case 2:
-                            console.log(file.path, 'DATA', file.data);
                             _context4.t0 = _renderer_index__WEBPACK_IMPORTED_MODULE_12__.renderToVfile;
-                            _context4.next = 6;
+                            _context4.next = 5;
                             return file;
 
-                          case 6:
+                          case 5:
                             _context4.t1 = _context4.sent;
                             _context4.t2 = cmd;
                             _context4.t3 = file.data.backlinks;
                             html_file = (0, _context4.t0)(_context4.t1, _context4.t2, _context4.t3);
-                            _context4.next = 12;
+                            _context4.next = 11;
                             return fs__WEBPACK_IMPORTED_MODULE_7__.promises.writeFile(path__WEBPACK_IMPORTED_MODULE_6___default().join(cmd.output, file.path), file.contents);
 
-                          case 12:
+                          case 11:
                             (0,_utils_console__WEBPACK_IMPORTED_MODULE_10__.level)(0, _utils_console__WEBPACK_IMPORTED_MODULE_10__.info)("Wrote  ".concat(file.path, " to \"").concat(path__WEBPACK_IMPORTED_MODULE_6___default().join(cmd.output, file.path), "\" to disk"));
                             return _context4.abrupt("return", html_file);
 
-                          case 14:
+                          case 13:
                           case "end":
                             return _context4.stop();
                         }
@@ -1921,12 +1920,12 @@ commander__WEBPACK_IMPORTED_MODULE_4___default().parse(process.argv);
 
 /***/ }),
 
-/***/ "./src/components/Head.jsx":
-/*!*********************************!*\
-  !*** ./src/components/Head.jsx ***!
-  \*********************************/
+/***/ "./src/components/App.jsx":
+/*!********************************!*\
+  !*** ./src/components/App.jsx ***!
+  \********************************/
 /*! namespace exports */
-/*! export Head [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1934,59 +1933,81 @@ commander__WEBPACK_IMPORTED_MODULE_4___default().parse(process.argv);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Head": () => /* binding */ Head
+/* harmony export */   "default": () => /* binding */ App
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
 /* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
 /* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 
 
 
 
 
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default()(this, result); }; }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5___default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5___default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4___default()(this, result); }; }
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 
-var Head = /*#__PURE__*/function (_React$Component) {
-  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default()(Head, _React$Component);
 
-  var _super = _createSuper(Head);
+var App = /*#__PURE__*/function (_React$Component) {
+  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3___default()(App, _React$Component);
 
-  function Head() {
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, Head);
+  var _super = _createSuper(App);
 
-    return _super.apply(this, arguments);
+  function App(props) {
+    var _this;
+
+    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, App);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      src: props.src
+    };
+    _this.onChange = _this.onChange.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2___default()(_this));
+    return _this;
   }
 
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(Head, [{
+  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(App, [{
+    key: "onChange",
+    value: function onChange(ev) {
+      this.setState({
+        src: ev.target.value
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("head", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("title", null, this.props.title));
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6__.createElement("div", {
+        id: "content"
+      }, this.props.processor.processSync(this.state.src).result);
     }
   }]);
 
-  return Head;
-}(react__WEBPACK_IMPORTED_MODULE_5__.Component);
+  return App;
+}(react__WEBPACK_IMPORTED_MODULE_6__.Component);
+
+
 
 /***/ }),
 
-/***/ "./src/components/Header.jsx":
-/*!***********************************!*\
-  !*** ./src/components/Header.jsx ***!
-  \***********************************/
+/***/ "./src/components/Backlinks.jsx":
+/*!**************************************!*\
+  !*** ./src/components/Backlinks.jsx ***!
+  \**************************************/
 /*! namespace exports */
-/*! export Header [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1994,7 +2015,7 @@ var Head = /*#__PURE__*/function (_React$Component) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Header": () => /* binding */ Header
+/* harmony export */   "default": () => /* binding */ Backlinks
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
 /* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);
@@ -2007,134 +2028,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
 /* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-
-
-
-
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default()(this, result); }; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-
-var Header = /*#__PURE__*/function (_React$Component) {
-  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default()(Header, _React$Component);
-
-  var _super = _createSuper(Header);
-
-  function Header() {
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, Header);
-
-    return _super.apply(this, arguments);
-  }
-
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(Header, [{
-    key: "render",
-    value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("header", null, "Menu...");
-    }
-  }]);
-
-  return Header;
-}(react__WEBPACK_IMPORTED_MODULE_5__.Component);
-
-/***/ }),
-
-/***/ "./src/components/LitDocument.jsx":
-/*!****************************************!*\
-  !*** ./src/components/LitDocument.jsx ***!
-  \****************************************/
-/*! namespace exports */
-/*! export LitDocument [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "LitDocument": () => /* binding */ LitDocument
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _parser__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../parser */ "./src/parser/index.js");
-
-
-
-
-
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default()(this, result); }; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-
-
-var LitDocument = /*#__PURE__*/function (_React$Component) {
-  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default()(LitDocument, _React$Component);
-
-  var _super = _createSuper(LitDocument);
-
-  function LitDocument() {
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, LitDocument);
-
-    return _super.apply(this, arguments);
-  }
-
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(LitDocument, [{
-    key: "render",
-    value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("div", {
-        className: "content"
-      }, this.props.src);
-    }
-  }]);
-
-  return LitDocument;
-}(react__WEBPACK_IMPORTED_MODULE_5__.Component);
-
-/***/ }),
-
-/***/ "./src/components/Notebook.jsx":
-/*!*************************************!*\
-  !*** ./src/components/Notebook.jsx ***!
-  \*************************************/
-/*! namespace exports */
-/*! export Notebook [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Notebook": () => /* binding */ Notebook
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _Head_jsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Head.jsx */ "./src/components/Head.jsx");
-/* harmony import */ var _Header_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Header.jsx */ "./src/components/Header.jsx");
-/* harmony import */ var _LitDocument_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./LitDocument.jsx */ "./src/components/LitDocument.jsx");
-/* harmony import */ var _parser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../parser */ "./src/parser/index.js");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! path */ "path");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_6__);
 
 
 
@@ -2148,32 +2043,353 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 
 
+var Backlinks = /*#__PURE__*/function (_React$Component) {
+  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default()(Backlinks, _React$Component);
 
+  var _super = _createSuper(Backlinks);
 
-var Notebook = /*#__PURE__*/function (_React$Component) {
-  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default()(Notebook, _React$Component);
-
-  var _super = _createSuper(Notebook);
-
-  function Notebook() {
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, Notebook);
+  function Backlinks() {
+    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, Backlinks);
 
     return _super.apply(this, arguments);
   }
 
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(Notebook, [{
+  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(Backlinks, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("html", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement(_Head_jsx__WEBPACK_IMPORTED_MODULE_6__.Head, {
-        title: this.props.title
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("body", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement(_Header_jsx__WEBPACK_IMPORTED_MODULE_7__.Header, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement(_LitDocument_jsx__WEBPACK_IMPORTED_MODULE_8__.LitDocument, {
-        src: this.props.src
+      var _this = this;
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement(react__WEBPACK_IMPORTED_MODULE_5__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("h4", null, "Backlinks (", this.props.links.length, ")"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("ol", null, this.props.links.map(function (link) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("a", {
+          title: link.title,
+          href: path__WEBPACK_IMPORTED_MODULE_6___default().join(_this.props.root, link.url)
+        }, link.url));
       })));
     }
   }]);
 
-  return Notebook;
+  return Backlinks;
 }(react__WEBPACK_IMPORTED_MODULE_5__.Component);
+
+
+
+/***/ }),
+
+/***/ "./src/components/Document.jsx":
+/*!*************************************!*\
+  !*** ./src/components/Document.jsx ***!
+  \*************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* binding */ Document
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! path */ "path");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./App */ "./src/components/App.jsx");
+/* harmony import */ var _Backlinks__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Backlinks */ "./src/components/Backlinks.jsx");
+
+
+
+
+
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default()(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+
+
+
+
+
+var Document = /*#__PURE__*/function (_React$Component) {
+  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default()(Document, _React$Component);
+
+  var _super = _createSuper(Document);
+
+  function Document() {
+    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, Document);
+
+    return _super.apply(this, arguments);
+  }
+
+  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(Document, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("html", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("head", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("title", null, this.props.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("meta", {
+        name: "litsrc",
+        value: this.props.path
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("meta", {
+        name: "litroot",
+        value: this.props.root
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("link", {
+        rel: "stylesheet",
+        href: path__WEBPACK_IMPORTED_MODULE_6___default().join(this.props.root, 'style.css')
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("script", {
+        src: path__WEBPACK_IMPORTED_MODULE_6___default().join(this.props.root, 'web.bundle.js')
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("body", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("div", {
+        id: "app"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement(_App__WEBPACK_IMPORTED_MODULE_7__.default, this.props)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("div", {
+        id: "backlinks"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement(_Backlinks__WEBPACK_IMPORTED_MODULE_8__.default, {
+        root: this.props.root,
+        links: this.props.backlinks || []
+      }))));
+    }
+  }]);
+
+  return Document;
+}(react__WEBPACK_IMPORTED_MODULE_5__.Component);
+
+
+
+/***/ }),
+
+/***/ "./src/components/base/Codeblock.jsx":
+/*!*******************************************!*\
+  !*** ./src/components/base/Codeblock.jsx ***!
+  \*******************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* binding */ Codeblock
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+
+
+
+
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default()(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+
+
+var Meta = /*#__PURE__*/function (_React$Component) {
+  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default()(Meta, _React$Component);
+
+  var _super = _createSuper(Meta);
+
+  function Meta() {
+    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, Meta);
+
+    return _super.apply(this, arguments);
+  }
+
+  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(Meta, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("span", {
+        className: "meta"
+      }, this.props.meta.filename, ".", this.props.meta.lang, " ", this.props.meta.tags.join(','));
+    }
+  }]);
+
+  return Meta;
+}(react__WEBPACK_IMPORTED_MODULE_5__.Component);
+
+var Codeblock = /*#__PURE__*/function (_React$Component2) {
+  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default()(Codeblock, _React$Component2);
+
+  var _super2 = _createSuper(Codeblock);
+
+  function Codeblock() {
+    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, Codeblock);
+
+    return _super2.apply(this, arguments);
+  }
+
+  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(Codeblock, [{
+    key: "render",
+    value: function render() {
+      var codeNode = this.props.node.children && this.props.node.children.length == 1 && this.props.node.children[0].type === 'code' ? this.props.node.children[0] : null;
+
+      if (codeNode) {
+        console.log("Code block", codeNode.properties.meta);
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("div", {
+          className: "LitCode"
+        }, codeNode.properties.meta && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement(Meta, {
+          meta: codeNode.properties.meta
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("pre", null, this.props.children));
+      } else {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("pre", null, this.props.children);
+      }
+    }
+  }]);
+
+  return Codeblock;
+}(react__WEBPACK_IMPORTED_MODULE_5__.Component);
+
+
+
+/***/ }),
+
+/***/ "./src/components/base/Link.jsx":
+/*!**************************************!*\
+  !*** ./src/components/base/Link.jsx ***!
+  \**************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* binding */ Link
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+
+
+
+
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default()(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+
+
+var Link = /*#__PURE__*/function (_React$Component) {
+  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default()(Link, _React$Component);
+
+  var _super = _createSuper(Link);
+
+  function Link() {
+    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, Link);
+
+    return _super.apply(this, arguments);
+  }
+
+  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(Link, [{
+    key: "render",
+    value: function render() {
+      var title = this.props.node.properties.title;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("a", {
+        className: "LitLink " + this.props.className,
+        href: this.props.href,
+        title: title
+      }, this.props.children);
+    }
+  }]);
+
+  return Link;
+}(react__WEBPACK_IMPORTED_MODULE_5__.Component);
+
+
+
+/***/ }),
+
+/***/ "./src/components/base/Paragraph.jsx":
+/*!*******************************************!*\
+  !*** ./src/components/base/Paragraph.jsx ***!
+  \*******************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* binding */ Paragraph
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+
+
+
+
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default()(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+
+
+var Paragraph = /*#__PURE__*/function (_React$Component) {
+  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default()(Paragraph, _React$Component);
+
+  var _super = _createSuper(Paragraph);
+
+  function Paragraph() {
+    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, Paragraph);
+
+    return _super.apply(this, arguments);
+  }
+
+  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(Paragraph, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("p", {
+        className: 'LitP'
+      }, this.props.children);
+    }
+  }]);
+
+  return Paragraph;
+}(react__WEBPACK_IMPORTED_MODULE_5__.Component);
+
+
 
 /***/ }),
 
@@ -2270,37 +2486,42 @@ function transform(node, index, parent) {
   (0,_utils_console__WEBPACK_IMPORTED_MODULE_5__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_5__.log)('[CodeBlocks] Visiting: ', node.lang, node.meta);
   var litMeta = parseMeta(node);
   node.data = _objectSpread(_objectSpread({}, node.data), {}, {
-    litMeta: litMeta,
     hProperties: {
-      "class": litMeta ? litMeta.tags.map(function (t) {
+      className: litMeta ? litMeta.tags.map(function (t) {
         return "tag-".concat(t);
-      }) : ''
+      }).join(' ') : '',
+      meta: litMeta
     }
   });
   return node;
 }
 
 function parseMeta(node) {
-  var meta = node.meta;
-  if (!meta) return undefined;
-  var isOutput = meta[0] === '<'; // example meta in (): ```lang (name.ext#tag attr=value)
+  var meta = "".concat(node.lang || '', " ").concat(node.meta || '');
+  var isOutput = meta && meta[0] === '>'; // example meta in (): ```lang (name.ext#tag attr=value)
 
-  var _ref = !isOutput ? meta.split('>') : [meta.split('<')[1]],
+  var _ref = !isOutput ? meta.split('>') : [meta.split('>')[1]],
       _ref2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref, 2),
       input = _ref2[0],
       output = _ref2[1];
 
-  var filenameMatch = input.match(/^\s?(\S)+/);
+  var langMatch = input && input.match(/^(\S)+/);
 
-  var _ref3 = filenameMatch ? filenameMatch : '',
+  var _ref3 = langMatch ? langMatch : '',
       _ref4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref3, 1),
-      filename = _ref4[0];
+      lang = _ref4[0];
 
-  var tagsMatch = input.match(/#\S+/g);
+  var filenameMatch = input && input.match(/^\S+\s?([^\s#]+)/);
+
+  var _ref5 = filenameMatch ? filenameMatch : '',
+      _ref6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref5, 1),
+      filename = _ref6[0];
+
+  var tagsMatch = input && input.match(/#\S+/g);
   var tags = tagsMatch ? tagsMatch.map(function (t) {
     return t.slice(1);
   }) : [];
-  var attrsMatch = input.match(/[a-zA-Z-0-9-_]+="?[^"\s]*"?/g);
+  var attrsMatch = input && input.match(/[a-zA-Z-0-9-_]+="?[^"\s]*"?/g);
   var attrs = !attrsMatch ? {} : attrsMatch.reduce(function (memo, attr) {
     return _objectSpread(_objectSpread({}, memo), {}, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()({}, attr.split('=')[0], [attr.split('=')[1]]));
   }, {});
@@ -2316,6 +2537,7 @@ function parseMeta(node) {
       meta: outputMeta
     });
     return {
+      lang: lang,
       filename: filename,
       tags: tags,
       attrs: attrs,
@@ -2325,6 +2547,7 @@ function parseMeta(node) {
     };
   } else {
     return {
+      lang: lang,
       filename: filename,
       tags: tags,
       attrs: attrs,
@@ -2410,8 +2633,9 @@ var processor = function processor() {
   }).use((remark_slug__WEBPACK_IMPORTED_MODULE_6___default())).use((remark_heading_id__WEBPACK_IMPORTED_MODULE_14___default())) // .use(headings)
   // .use(toc, {})
   .use((remark_frontmatter__WEBPACK_IMPORTED_MODULE_5___default()), {
-    type: 'yaml',
-    marker: {
+    type: ['yaml'],
+    anywhere: true,
+    fence: {
       open: '<!--',
       close: '-->'
     }
@@ -2715,8 +2939,6 @@ var ungroupSections = function ungroupSections() {
   !*** ./src/renderer/index.jsx ***!
   \********************************/
 /*! namespace exports */
-/*! export App [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export HTML [provided] [no usage info] [missing usage info prevents renaming] */
 /*! export processor [provided] [no usage info] [missing usage info prevents renaming] */
 /*! export renderToVfile [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -2727,52 +2949,21 @@ var ungroupSections = function ungroupSections() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "processor": () => /* binding */ processor,
-/* harmony export */   "HTML": () => /* binding */ HTML,
-/* harmony export */   "App": () => /* binding */ App,
 /* harmony export */   "renderToVfile": () => /* binding */ renderToVfile
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js");
-/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! path */ "path");
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var unified__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! unified */ "./node_modules/unified/index.js");
-/* harmony import */ var unified__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(unified__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var remark_rehype__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! remark-rehype */ "./node_modules/remark-rehype/index.js");
-/* harmony import */ var remark_rehype__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(remark_rehype__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var rehype_document__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rehype-document */ "./node_modules/rehype-document/index.js");
-/* harmony import */ var rehype_document__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(rehype_document__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var rehype_stringify__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rehype-stringify */ "./node_modules/rehype-stringify/index.js");
-/* harmony import */ var rehype_stringify__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(rehype_stringify__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var rehype_react__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rehype-react */ "./node_modules/rehype-react/index.js");
-/* harmony import */ var rehype_react__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(rehype_react__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var mdast_util_to_hast__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! mdast-util-to-hast */ "./node_modules/mdast-util-to-hast/index.js");
-/* harmony import */ var mdast_util_to_hast__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(mdast_util_to_hast__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var react_dom_server__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-dom/server */ "./node_modules/react-dom/server.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _parser__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../parser */ "./src/parser/index.js");
-/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
-/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _components_Notebook_jsx__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../components/Notebook.jsx */ "./src/components/Notebook.jsx");
-
-
-
-
-
-
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5___default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5___default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4___default()(this, result); }; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! path */ "path");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var remark_rehype__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! remark-rehype */ "./node_modules/remark-rehype/index.js");
+/* harmony import */ var remark_rehype__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(remark_rehype__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var rehype_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rehype-react */ "./node_modules/rehype-react/index.js");
+/* harmony import */ var rehype_react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(rehype_react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_dom_server__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-dom/server */ "./node_modules/react-dom/server.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _parser__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../parser */ "./src/parser/index.js");
+/* harmony import */ var _components_Document__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/Document */ "./src/components/Document.jsx");
+/* harmony import */ var _components_base_Paragraph__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/base/Paragraph */ "./src/components/base/Paragraph.jsx");
+/* harmony import */ var _components_base_Link__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/base/Link */ "./src/components/base/Link.jsx");
+/* harmony import */ var _components_base_Codeblock__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/base/Codeblock */ "./src/components/base/Codeblock.jsx");
 
 
 
@@ -2782,195 +2973,36 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 
 
-
-
-
-
-
-var LitParagraph = /*#__PURE__*/function (_React$Component) {
-  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3___default()(LitParagraph, _React$Component);
-
-  var _super = _createSuper(LitParagraph);
-
-  function LitParagraph() {
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1___default()(this, LitParagraph);
-
-    return _super.apply(this, arguments);
-  }
-
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2___default()(LitParagraph, [{
-    key: "render",
-    value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("p", {
-        className: 'LitP'
-      }, this.props.children);
-    }
-  }]);
-
-  return LitParagraph;
-}(react__WEBPACK_IMPORTED_MODULE_14__.Component);
-
-var LitLink = /*#__PURE__*/function (_React$Component2) {
-  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3___default()(LitLink, _React$Component2);
-
-  var _super2 = _createSuper(LitLink);
-
-  function LitLink() {
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1___default()(this, LitLink);
-
-    return _super2.apply(this, arguments);
-  }
-
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2___default()(LitLink, [{
-    key: "render",
-    value: function render() {
-      var title = this.props.node.properties.title;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("a", {
-        className: "LitLink " + this.props.className,
-        href: this.props.href,
-        title: title
-      }, this.props.children);
-    }
-  }]);
-
-  return LitLink;
-}(react__WEBPACK_IMPORTED_MODULE_14__.Component);
 
 function processor(relroot, filepath) {
-  return (0,_parser__WEBPACK_IMPORTED_MODULE_15__.processor)().use(function () {
+  return (0,_parser__WEBPACK_IMPORTED_MODULE_5__.processor)().use(function () {
     return {};
-  }).use((remark_rehype__WEBPACK_IMPORTED_MODULE_8___default())).use((rehype_react__WEBPACK_IMPORTED_MODULE_11___default()), {
-    Fragment: react__WEBPACK_IMPORTED_MODULE_14__.Fragment,
-    createElement: react__WEBPACK_IMPORTED_MODULE_14__.createElement,
+  }).use((remark_rehype__WEBPACK_IMPORTED_MODULE_1___default())).use((rehype_react__WEBPACK_IMPORTED_MODULE_2___default()), {
+    Fragment: react__WEBPACK_IMPORTED_MODULE_4__.Fragment,
+    createElement: react__WEBPACK_IMPORTED_MODULE_4__.createElement,
     passNode: true,
     components: {
-      p: LitParagraph,
-      a: LitLink
+      p: _components_base_Paragraph__WEBPACK_IMPORTED_MODULE_7__.default,
+      a: _components_base_Link__WEBPACK_IMPORTED_MODULE_8__.default,
+      pre: _components_base_Codeblock__WEBPACK_IMPORTED_MODULE_9__.default
     }
   });
 }
-
-var Backlinks = /*#__PURE__*/function (_React$Component3) {
-  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3___default()(Backlinks, _React$Component3);
-
-  var _super3 = _createSuper(Backlinks);
-
-  function Backlinks() {
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1___default()(this, Backlinks);
-
-    return _super3.apply(this, arguments);
-  }
-
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2___default()(Backlinks, [{
-    key: "render",
-    value: function render() {
-      var _this = this;
-
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement(react__WEBPACK_IMPORTED_MODULE_14__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("h4", null, "Backlinks (", this.props.links.length, ")"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("ol", null, this.props.links.map(function (link) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("a", {
-          title: link.title,
-          href: path__WEBPACK_IMPORTED_MODULE_6___default().join(_this.props.root, link.url)
-        }, link.url));
-      })));
-    }
-  }]);
-
-  return Backlinks;
-}(react__WEBPACK_IMPORTED_MODULE_14__.Component);
-
-var HTML = /*#__PURE__*/function (_React$Component4) {
-  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3___default()(HTML, _React$Component4);
-
-  var _super4 = _createSuper(HTML);
-
-  function HTML() {
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1___default()(this, HTML);
-
-    return _super4.apply(this, arguments);
-  }
-
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2___default()(HTML, [{
-    key: "render",
-    value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("html", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("head", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("title", null, this.props.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("meta", {
-        name: "litsrc",
-        value: this.props.path
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("meta", {
-        name: "litroot",
-        value: this.props.root
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("link", {
-        rel: "stylesheet",
-        href: path__WEBPACK_IMPORTED_MODULE_6___default().join(this.props.root, 'style.css')
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("script", {
-        src: path__WEBPACK_IMPORTED_MODULE_6___default().join(this.props.root, 'web.bundle.js')
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("body", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("div", {
-        id: "app"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement(App, this.props)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("div", {
-        id: "backlinks"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement(Backlinks, {
-        root: this.props.root,
-        links: this.props.backlinks || []
-      }))));
-    }
-  }]);
-
-  return HTML;
-}(react__WEBPACK_IMPORTED_MODULE_14__.Component);
-var App = /*#__PURE__*/function (_React$Component5) {
-  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3___default()(App, _React$Component5);
-
-  var _super5 = _createSuper(App);
-
-  function App(props) {
-    var _this2;
-
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1___default()(this, App);
-
-    _this2 = _super5.call(this, props);
-    _this2.state = {
-      src: props.src
-    };
-    _this2.onChange = _this2.onChange.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_0___default()(_this2));
-    _this2.processor = processor(_this2.props.root, _this2.props.path);
-    return _this2;
-  }
-
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2___default()(App, [{
-    key: "onChange",
-    value: function onChange(ev) {
-      this.setState({
-        src: ev.target.value
-      });
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement(react__WEBPACK_IMPORTED_MODULE_14__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("textarea", {
-        className: "tmp",
-        value: this.state.src,
-        onChange: this.onChange
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("div", {
-        id: "preview"
-      }, this.processor.processSync(this.state.src).result));
-    }
-  }]);
-
-  return App;
-}(react__WEBPACK_IMPORTED_MODULE_14__.Component);
 function renderToVfile(vfile, cmd, links) {
-  var root = path__WEBPACK_IMPORTED_MODULE_6___default().resolve(cmd.output);
-  var dir = path__WEBPACK_IMPORTED_MODULE_6___default().dirname(path__WEBPACK_IMPORTED_MODULE_6___default().join(root, vfile.path));
-  var relroot = path__WEBPACK_IMPORTED_MODULE_6___default().relative(dir, root) || '.';
-  console.log(root, relroot, dir, vfile.path);
+  var root = path__WEBPACK_IMPORTED_MODULE_0___default().resolve(cmd.output);
+  var dir = path__WEBPACK_IMPORTED_MODULE_0___default().dirname(path__WEBPACK_IMPORTED_MODULE_0___default().join(root, vfile.path));
+  var relroot = path__WEBPACK_IMPORTED_MODULE_0___default().relative(dir, root) || '.';
+  console.log(root, relroot, dir, vfile.path, links);
   var output = vfile;
-  var notebook = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement(HTML, {
+  var notebook = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4__.createElement(_components_Document__WEBPACK_IMPORTED_MODULE_6__.default, {
     title: vfile.stem,
     src: vfile.contents.toString(),
     root: relroot,
     path: vfile.path,
-    backlinks: links
+    backlinks: links,
+    processor: processor(relroot, vfile.path)
   });
-  output.contents = react_dom_server__WEBPACK_IMPORTED_MODULE_13__.renderToString(notebook);
+  output.contents = react_dom_server__WEBPACK_IMPORTED_MODULE_3__.renderToString(notebook);
   output.extname = '.html';
   return output;
 }
@@ -6360,428 +6392,6 @@ module.exports = namespace();
 
 module.exports.namespace = namespace;
 
-
-/***/ }),
-
-/***/ "./node_modules/ccount/index.js":
-/*!**************************************!*\
-  !*** ./node_modules/ccount/index.js ***!
-  \**************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
-/***/ ((module) => {
-
-"use strict";
-
-
-module.exports = ccount
-
-function ccount(source, character) {
-  var value = String(source)
-  var count = 0
-  var index
-
-  if (typeof character !== 'string') {
-    throw new Error('Expected character')
-  }
-
-  index = value.indexOf(character)
-
-  while (index !== -1) {
-    count++
-    index = value.indexOf(character, index + character.length)
-  }
-
-  return count
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/character-entities-html4/index.json":
-/*!**********************************************************!*\
-  !*** ./node_modules/character-entities-html4/index.json ***!
-  \**********************************************************/
-/*! default exports */
-/*! export AElig [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Aacute [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Acirc [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Agrave [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Alpha [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Aring [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Atilde [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Auml [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Beta [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Ccedil [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Chi [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Dagger [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Delta [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ETH [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Eacute [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Ecirc [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Egrave [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Epsilon [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Eta [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Euml [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Gamma [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Iacute [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Icirc [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Igrave [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Iota [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Iuml [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Kappa [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Lambda [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Mu [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Ntilde [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Nu [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export OElig [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Oacute [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Ocirc [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Ograve [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Omega [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Omicron [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Oslash [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Otilde [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Ouml [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Phi [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Pi [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Prime [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Psi [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Rho [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Scaron [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Sigma [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export THORN [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Tau [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Theta [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Uacute [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Ucirc [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Ugrave [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Upsilon [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Uuml [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Xi [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Yacute [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Yuml [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Zeta [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export aacute [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export acirc [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export acute [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export aelig [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export agrave [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export alefsym [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export alpha [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export amp [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export and [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ang [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export aring [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export asymp [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export atilde [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export auml [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export bdquo [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export beta [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export brvbar [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export bull [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export cap [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ccedil [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export cedil [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export cent [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export chi [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export circ [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export clubs [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export cong [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export copy [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export crarr [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export cup [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export curren [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export dArr [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export dagger [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export darr [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export deg [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export delta [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export diams [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export divide [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export eacute [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ecirc [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export egrave [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export empty [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export emsp [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ensp [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export epsilon [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export equiv [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export eta [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export eth [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export euml [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export euro [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export exist [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export fnof [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export forall [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export frac12 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export frac14 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export frac34 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export frasl [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export gamma [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ge [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export gt [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export hArr [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export harr [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export hearts [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export hellip [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export iacute [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export icirc [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export iexcl [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export igrave [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export image [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export infin [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export int [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export iota [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export iquest [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isin [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export iuml [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export kappa [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export lArr [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export lambda [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export lang [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export laquo [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export larr [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export lceil [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ldquo [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export le [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export lfloor [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export lowast [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export loz [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export lrm [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export lsaquo [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export lsquo [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export lt [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export macr [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export mdash [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export micro [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export middot [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export minus [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export mu [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export nabla [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export nbsp [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ndash [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ne [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ni [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export not [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export notin [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export nsub [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ntilde [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export nu [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export oacute [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ocirc [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export oelig [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ograve [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export oline [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export omega [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export omicron [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export oplus [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export or [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ordf [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ordm [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export oslash [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export otilde [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export otimes [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ouml [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export para [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export part [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export permil [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export perp [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export phi [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export pi [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export piv [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export plusmn [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export pound [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export prime [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export prod [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export prop [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export psi [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export quot [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export rArr [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export radic [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export rang [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export raquo [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export rarr [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export rceil [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export rdquo [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export real [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export reg [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export rfloor [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export rho [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export rlm [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export rsaquo [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export rsquo [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export sbquo [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export scaron [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export sdot [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export sect [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export shy [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export sigma [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export sigmaf [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export sim [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export spades [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export sub [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export sube [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export sum [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export sup [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export sup1 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export sup2 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export sup3 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export supe [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export szlig [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export tau [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export there4 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export theta [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export thetasym [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export thinsp [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export thorn [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export tilde [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export times [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export trade [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export uArr [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export uacute [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export uarr [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ucirc [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ugrave [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export uml [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export upsih [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export upsilon [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export uuml [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export weierp [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export xi [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export yacute [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export yen [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export yuml [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export zeta [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export zwj [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export zwnj [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: module */
-/***/ ((module) => {
-
-"use strict";
-module.exports = JSON.parse("{\"nbsp\":\" \",\"iexcl\":\"¡\",\"cent\":\"¢\",\"pound\":\"£\",\"curren\":\"¤\",\"yen\":\"¥\",\"brvbar\":\"¦\",\"sect\":\"§\",\"uml\":\"¨\",\"copy\":\"©\",\"ordf\":\"ª\",\"laquo\":\"«\",\"not\":\"¬\",\"shy\":\"­\",\"reg\":\"®\",\"macr\":\"¯\",\"deg\":\"°\",\"plusmn\":\"±\",\"sup2\":\"²\",\"sup3\":\"³\",\"acute\":\"´\",\"micro\":\"µ\",\"para\":\"¶\",\"middot\":\"·\",\"cedil\":\"¸\",\"sup1\":\"¹\",\"ordm\":\"º\",\"raquo\":\"»\",\"frac14\":\"¼\",\"frac12\":\"½\",\"frac34\":\"¾\",\"iquest\":\"¿\",\"Agrave\":\"À\",\"Aacute\":\"Á\",\"Acirc\":\"Â\",\"Atilde\":\"Ã\",\"Auml\":\"Ä\",\"Aring\":\"Å\",\"AElig\":\"Æ\",\"Ccedil\":\"Ç\",\"Egrave\":\"È\",\"Eacute\":\"É\",\"Ecirc\":\"Ê\",\"Euml\":\"Ë\",\"Igrave\":\"Ì\",\"Iacute\":\"Í\",\"Icirc\":\"Î\",\"Iuml\":\"Ï\",\"ETH\":\"Ð\",\"Ntilde\":\"Ñ\",\"Ograve\":\"Ò\",\"Oacute\":\"Ó\",\"Ocirc\":\"Ô\",\"Otilde\":\"Õ\",\"Ouml\":\"Ö\",\"times\":\"×\",\"Oslash\":\"Ø\",\"Ugrave\":\"Ù\",\"Uacute\":\"Ú\",\"Ucirc\":\"Û\",\"Uuml\":\"Ü\",\"Yacute\":\"Ý\",\"THORN\":\"Þ\",\"szlig\":\"ß\",\"agrave\":\"à\",\"aacute\":\"á\",\"acirc\":\"â\",\"atilde\":\"ã\",\"auml\":\"ä\",\"aring\":\"å\",\"aelig\":\"æ\",\"ccedil\":\"ç\",\"egrave\":\"è\",\"eacute\":\"é\",\"ecirc\":\"ê\",\"euml\":\"ë\",\"igrave\":\"ì\",\"iacute\":\"í\",\"icirc\":\"î\",\"iuml\":\"ï\",\"eth\":\"ð\",\"ntilde\":\"ñ\",\"ograve\":\"ò\",\"oacute\":\"ó\",\"ocirc\":\"ô\",\"otilde\":\"õ\",\"ouml\":\"ö\",\"divide\":\"÷\",\"oslash\":\"ø\",\"ugrave\":\"ù\",\"uacute\":\"ú\",\"ucirc\":\"û\",\"uuml\":\"ü\",\"yacute\":\"ý\",\"thorn\":\"þ\",\"yuml\":\"ÿ\",\"fnof\":\"ƒ\",\"Alpha\":\"Α\",\"Beta\":\"Β\",\"Gamma\":\"Γ\",\"Delta\":\"Δ\",\"Epsilon\":\"Ε\",\"Zeta\":\"Ζ\",\"Eta\":\"Η\",\"Theta\":\"Θ\",\"Iota\":\"Ι\",\"Kappa\":\"Κ\",\"Lambda\":\"Λ\",\"Mu\":\"Μ\",\"Nu\":\"Ν\",\"Xi\":\"Ξ\",\"Omicron\":\"Ο\",\"Pi\":\"Π\",\"Rho\":\"Ρ\",\"Sigma\":\"Σ\",\"Tau\":\"Τ\",\"Upsilon\":\"Υ\",\"Phi\":\"Φ\",\"Chi\":\"Χ\",\"Psi\":\"Ψ\",\"Omega\":\"Ω\",\"alpha\":\"α\",\"beta\":\"β\",\"gamma\":\"γ\",\"delta\":\"δ\",\"epsilon\":\"ε\",\"zeta\":\"ζ\",\"eta\":\"η\",\"theta\":\"θ\",\"iota\":\"ι\",\"kappa\":\"κ\",\"lambda\":\"λ\",\"mu\":\"μ\",\"nu\":\"ν\",\"xi\":\"ξ\",\"omicron\":\"ο\",\"pi\":\"π\",\"rho\":\"ρ\",\"sigmaf\":\"ς\",\"sigma\":\"σ\",\"tau\":\"τ\",\"upsilon\":\"υ\",\"phi\":\"φ\",\"chi\":\"χ\",\"psi\":\"ψ\",\"omega\":\"ω\",\"thetasym\":\"ϑ\",\"upsih\":\"ϒ\",\"piv\":\"ϖ\",\"bull\":\"•\",\"hellip\":\"…\",\"prime\":\"′\",\"Prime\":\"″\",\"oline\":\"‾\",\"frasl\":\"⁄\",\"weierp\":\"℘\",\"image\":\"ℑ\",\"real\":\"ℜ\",\"trade\":\"™\",\"alefsym\":\"ℵ\",\"larr\":\"←\",\"uarr\":\"↑\",\"rarr\":\"→\",\"darr\":\"↓\",\"harr\":\"↔\",\"crarr\":\"↵\",\"lArr\":\"⇐\",\"uArr\":\"⇑\",\"rArr\":\"⇒\",\"dArr\":\"⇓\",\"hArr\":\"⇔\",\"forall\":\"∀\",\"part\":\"∂\",\"exist\":\"∃\",\"empty\":\"∅\",\"nabla\":\"∇\",\"isin\":\"∈\",\"notin\":\"∉\",\"ni\":\"∋\",\"prod\":\"∏\",\"sum\":\"∑\",\"minus\":\"−\",\"lowast\":\"∗\",\"radic\":\"√\",\"prop\":\"∝\",\"infin\":\"∞\",\"ang\":\"∠\",\"and\":\"∧\",\"or\":\"∨\",\"cap\":\"∩\",\"cup\":\"∪\",\"int\":\"∫\",\"there4\":\"∴\",\"sim\":\"∼\",\"cong\":\"≅\",\"asymp\":\"≈\",\"ne\":\"≠\",\"equiv\":\"≡\",\"le\":\"≤\",\"ge\":\"≥\",\"sub\":\"⊂\",\"sup\":\"⊃\",\"nsub\":\"⊄\",\"sube\":\"⊆\",\"supe\":\"⊇\",\"oplus\":\"⊕\",\"otimes\":\"⊗\",\"perp\":\"⊥\",\"sdot\":\"⋅\",\"lceil\":\"⌈\",\"rceil\":\"⌉\",\"lfloor\":\"⌊\",\"rfloor\":\"⌋\",\"lang\":\"〈\",\"rang\":\"〉\",\"loz\":\"◊\",\"spades\":\"♠\",\"clubs\":\"♣\",\"hearts\":\"♥\",\"diams\":\"♦\",\"quot\":\"\\\"\",\"amp\":\"&\",\"lt\":\"<\",\"gt\":\">\",\"OElig\":\"Œ\",\"oelig\":\"œ\",\"Scaron\":\"Š\",\"scaron\":\"š\",\"Yuml\":\"Ÿ\",\"circ\":\"ˆ\",\"tilde\":\"˜\",\"ensp\":\" \",\"emsp\":\" \",\"thinsp\":\" \",\"zwnj\":\"‌\",\"zwj\":\"‍\",\"lrm\":\"‎\",\"rlm\":\"‏\",\"ndash\":\"–\",\"mdash\":\"—\",\"lsquo\":\"‘\",\"rsquo\":\"’\",\"sbquo\":\"‚\",\"ldquo\":\"“\",\"rdquo\":\"”\",\"bdquo\":\"„\",\"dagger\":\"†\",\"Dagger\":\"‡\",\"permil\":\"‰\",\"lsaquo\":\"‹\",\"rsaquo\":\"›\",\"euro\":\"€\"}");
-
-/***/ }),
-
-/***/ "./node_modules/character-entities-legacy/index.json":
-/*!***********************************************************!*\
-  !*** ./node_modules/character-entities-legacy/index.json ***!
-  \***********************************************************/
-/*! default exports */
-/*! export AElig [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export AMP [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Aacute [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Acirc [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Agrave [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Aring [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Atilde [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Auml [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export COPY [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Ccedil [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ETH [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Eacute [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Ecirc [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Egrave [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Euml [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export GT [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Iacute [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Icirc [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Igrave [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Iuml [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export LT [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Ntilde [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Oacute [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Ocirc [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Ograve [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Oslash [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Otilde [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Ouml [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export QUOT [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export REG [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export THORN [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Uacute [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Ucirc [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Ugrave [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Uuml [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Yacute [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export aacute [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export acirc [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export acute [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export aelig [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export agrave [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export amp [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export aring [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export atilde [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export auml [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export brvbar [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ccedil [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export cedil [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export cent [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export copy [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export curren [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export deg [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export divide [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export eacute [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ecirc [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export egrave [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export eth [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export euml [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export frac12 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export frac14 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export frac34 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export gt [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export iacute [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export icirc [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export iexcl [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export igrave [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export iquest [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export iuml [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export laquo [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export lt [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export macr [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export micro [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export middot [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export nbsp [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export not [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ntilde [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export oacute [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ocirc [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ograve [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ordf [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ordm [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export oslash [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export otilde [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ouml [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export para [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export plusmn [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export pound [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export quot [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export raquo [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export reg [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export sect [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export shy [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export sup1 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export sup2 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export sup3 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export szlig [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export thorn [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export times [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export uacute [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ucirc [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ugrave [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export uml [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export uuml [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export yacute [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export yen [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export yuml [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: module */
-/***/ ((module) => {
-
-"use strict";
-module.exports = JSON.parse("{\"AElig\":\"Æ\",\"AMP\":\"&\",\"Aacute\":\"Á\",\"Acirc\":\"Â\",\"Agrave\":\"À\",\"Aring\":\"Å\",\"Atilde\":\"Ã\",\"Auml\":\"Ä\",\"COPY\":\"©\",\"Ccedil\":\"Ç\",\"ETH\":\"Ð\",\"Eacute\":\"É\",\"Ecirc\":\"Ê\",\"Egrave\":\"È\",\"Euml\":\"Ë\",\"GT\":\">\",\"Iacute\":\"Í\",\"Icirc\":\"Î\",\"Igrave\":\"Ì\",\"Iuml\":\"Ï\",\"LT\":\"<\",\"Ntilde\":\"Ñ\",\"Oacute\":\"Ó\",\"Ocirc\":\"Ô\",\"Ograve\":\"Ò\",\"Oslash\":\"Ø\",\"Otilde\":\"Õ\",\"Ouml\":\"Ö\",\"QUOT\":\"\\\"\",\"REG\":\"®\",\"THORN\":\"Þ\",\"Uacute\":\"Ú\",\"Ucirc\":\"Û\",\"Ugrave\":\"Ù\",\"Uuml\":\"Ü\",\"Yacute\":\"Ý\",\"aacute\":\"á\",\"acirc\":\"â\",\"acute\":\"´\",\"aelig\":\"æ\",\"agrave\":\"à\",\"amp\":\"&\",\"aring\":\"å\",\"atilde\":\"ã\",\"auml\":\"ä\",\"brvbar\":\"¦\",\"ccedil\":\"ç\",\"cedil\":\"¸\",\"cent\":\"¢\",\"copy\":\"©\",\"curren\":\"¤\",\"deg\":\"°\",\"divide\":\"÷\",\"eacute\":\"é\",\"ecirc\":\"ê\",\"egrave\":\"è\",\"eth\":\"ð\",\"euml\":\"ë\",\"frac12\":\"½\",\"frac14\":\"¼\",\"frac34\":\"¾\",\"gt\":\">\",\"iacute\":\"í\",\"icirc\":\"î\",\"iexcl\":\"¡\",\"igrave\":\"ì\",\"iquest\":\"¿\",\"iuml\":\"ï\",\"laquo\":\"«\",\"lt\":\"<\",\"macr\":\"¯\",\"micro\":\"µ\",\"middot\":\"·\",\"nbsp\":\" \",\"not\":\"¬\",\"ntilde\":\"ñ\",\"oacute\":\"ó\",\"ocirc\":\"ô\",\"ograve\":\"ò\",\"ordf\":\"ª\",\"ordm\":\"º\",\"oslash\":\"ø\",\"otilde\":\"õ\",\"ouml\":\"ö\",\"para\":\"¶\",\"plusmn\":\"±\",\"pound\":\"£\",\"quot\":\"\\\"\",\"raquo\":\"»\",\"reg\":\"®\",\"sect\":\"§\",\"shy\":\"­\",\"sup1\":\"¹\",\"sup2\":\"²\",\"sup3\":\"³\",\"szlig\":\"ß\",\"thorn\":\"þ\",\"times\":\"×\",\"uacute\":\"ú\",\"ucirc\":\"û\",\"ugrave\":\"ù\",\"uml\":\"¨\",\"uuml\":\"ü\",\"yacute\":\"ý\",\"yen\":\"¥\",\"yuml\":\"ÿ\"}");
 
 /***/ }),
 
@@ -15390,106 +15000,6 @@ module.exports = function isDescriptor(obj, key) {
 
 /***/ }),
 
-/***/ "./node_modules/doctype/index.js":
-/*!***************************************!*\
-  !*** ./node_modules/doctype/index.js ***!
-  \***************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var doctypes = __webpack_require__(/*! ./index.json */ "./node_modules/doctype/index.json")
-
-module.exports = getDoctype
-getDoctype.all = doctypes
-
-// Gather all doctypes as shortcodes.
-var shortcodes = gather()
-
-// Ensure proper non-versioned types work:
-shortcodes.h = shortcodes.h5
-shortcodes.s = shortcodes['s1.1f']
-shortcodes.m = shortcodes.m2
-shortcodes.x = shortcodes['x1.1']
-
-// Get a doctype from a name.
-function getDoctype(name) {
-  var key = cleanDoctype(name)
-  return shortcodes[key] || shortcodes['h' + key] || null
-}
-
-// Clean and simplify a doctype name.
-function cleanDoctype(name) {
-  return String(name)
-    .toLowerCase()
-    .replace(/([a-z]+|\d+)/, ' $1 ')
-    .replace(/\.0+(?!\d)/, '')
-    .replace(/\.01/, '')
-    .replace(/\.2/, '')
-    .replace(
-      /\b(xhtml|html|mathml|svg|full|basic|tiny|strict|frameset|basic)\b/g,
-      character
-    )
-    .replace(/ t(?:ransitional)?/, '')
-    .replace(/\s+/g, '')
-}
-
-// Get the first character of the second parameter.
-function character(_, value) {
-  return value.charAt(0)
-}
-
-// Clean all doctypes.
-function gather() {
-  var codes = {}
-  var key
-
-  for (key in doctypes) {
-    codes[cleanDoctype(key)] = doctypes[key]
-  }
-
-  return codes
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/doctype/index.json":
-/*!*****************************************!*\
-  !*** ./node_modules/doctype/index.json ***!
-  \*****************************************/
-/*! default exports */
-/*! export HTML 2.0 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export HTML 3.2 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export HTML 4.01 Frameset [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export HTML 4.01 Strict [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export HTML 4.01 Transitional [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export HTML 5 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export MathML 1.01 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export MathML 2.0 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export SVG 1.0 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export SVG 1.1 Basic [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export SVG 1.1 Full [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export SVG 1.1 Tiny [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export XHTML 1.0 Frameset [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export XHTML 1.0 Strict [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export XHTML 1.0 Transitional [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export XHTML 1.1 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export XHTML Basic 1.0 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export XHTML Basic 1.1 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: module */
-/***/ ((module) => {
-
-"use strict";
-module.exports = JSON.parse("{\"HTML 5\":\"html\",\"HTML 4.01 Strict\":\"HTML PUBLIC \\\"-//W3C//DTD HTML 4.01//EN\\\" \\\"http://www.w3.org/TR/html4/strict.dtd\\\"\",\"HTML 4.01 Transitional\":\"HTML PUBLIC \\\"-//W3C//DTD HTML 4.01 Transitional//EN\\\" \\\"http://www.w3.org/TR/html4/loose.dtd\\\"\",\"HTML 4.01 Frameset\":\"HTML PUBLIC \\\"-//W3C//DTD HTML 4.01 Frameset//EN\\\" \\\"http://www.w3.org/TR/html4/frameset.dtd\\\"\",\"HTML 3.2\":\"HTML PUBLIC \\\"-//W3C//DTD HTML 3.2 Final//EN\\\"\",\"HTML 2.0\":\"HTML PUBLIC \\\"-//IETF//DTD HTML//EN\\\"\",\"XHTML 1.0 Strict\":\"html PUBLIC \\\"-//W3C//DTD XHTML 1.0 Strict//EN\\\" \\\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\\\"\",\"XHTML 1.0 Transitional\":\"html PUBLIC \\\"-//W3C//DTD XHTML 1.0 Transitional//EN\\\" \\\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\\\"\",\"XHTML 1.0 Frameset\":\"html PUBLIC \\\"-//W3C//DTD XHTML 1.0 Frameset//EN\\\" \\\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd\\\"\",\"XHTML 1.1\":\"html PUBLIC \\\"-//W3C//DTD XHTML 1.1//EN\\\" \\\"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\\\"\",\"XHTML Basic 1.1\":\"html PUBLIC \\\"-//W3C//DTD XHTML Basic 1.1//EN\\\" \\\"http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd\\\"\",\"XHTML Basic 1.0\":\"html PUBLIC \\\"-//W3C//DTD XHTML Basic 1.0//EN\\\" \\\"http://www.w3.org/TR/xhtml-basic/xhtml-basic10.dtd\\\"\",\"MathML 2.0\":\"math PUBLIC \\\"-//W3C//DTD MathML 2.0//EN\\\" \\\"http://www.w3.org/Math/DTD/mathml2/mathml2.dtd\\\"\",\"MathML 1.01\":\"math SYSTEM \\\"http://www.w3.org/Math/DTD/mathml1/mathml.dtd\\\"\",\"SVG 1.0\":\"svg PUBLIC \\\"-//W3C//DTD SVG 1.0//EN\\\" \\\"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\\\"\",\"SVG 1.1 Full\":\"svg PUBLIC \\\"-//W3C//DTD SVG 1.1//EN\\\" \\\"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\\\"\",\"SVG 1.1 Basic\":\"svg PUBLIC \\\"-//W3C//DTD SVG 1.1 Basic//EN\\\" \\\"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd\\\"\",\"SVG 1.1 Tiny\":\"svg PUBLIC \\\"-//W3C//DTD SVG 1.1 Tiny//EN\\\" \\\"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd\\\"\"}");
-
-/***/ }),
-
 /***/ "./node_modules/emoji-regex/index.js":
 /*!*******************************************!*\
   !*** ./node_modules/emoji-regex/index.js ***!
@@ -22282,1516 +21792,6 @@ function styleReplacer($0, $1) {
 
 /***/ }),
 
-/***/ "./node_modules/hast-util-is-element/convert.js":
-/*!******************************************************!*\
-  !*** ./node_modules/hast-util-is-element/convert.js ***!
-  \******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
-/***/ ((module) => {
-
-"use strict";
-
-
-module.exports = convert
-
-function convert(test) {
-  if (typeof test === 'string') {
-    return tagNameFactory(test)
-  }
-
-  if (test === null || test === undefined) {
-    return element
-  }
-
-  if (typeof test === 'object') {
-    return any(test)
-  }
-
-  if (typeof test === 'function') {
-    return callFactory(test)
-  }
-
-  throw new Error('Expected function, string, or array as test')
-}
-
-function convertAll(tests) {
-  var length = tests.length
-  var index = -1
-  var results = []
-
-  while (++index < length) {
-    results[index] = convert(tests[index])
-  }
-
-  return results
-}
-
-function any(tests) {
-  var checks = convertAll(tests)
-  var length = checks.length
-
-  return matches
-
-  function matches() {
-    var index = -1
-
-    while (++index < length) {
-      if (checks[index].apply(this, arguments)) {
-        return true
-      }
-    }
-
-    return false
-  }
-}
-
-// Utility to convert a string a tag name check.
-function tagNameFactory(test) {
-  return tagName
-
-  function tagName(node) {
-    return element(node) && node.tagName === test
-  }
-}
-
-// Utility to convert a function check.
-function callFactory(test) {
-  return call
-
-  function call(node) {
-    return element(node) && Boolean(test.apply(this, arguments))
-  }
-}
-
-// Utility to return true if this is an element.
-function element(node) {
-  return (
-    node &&
-    typeof node === 'object' &&
-    node.type === 'element' &&
-    typeof node.tagName === 'string'
-  )
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/hast-util-is-element/index.js":
-/*!****************************************************!*\
-  !*** ./node_modules/hast-util-is-element/index.js ***!
-  \****************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var convert = __webpack_require__(/*! ./convert */ "./node_modules/hast-util-is-element/convert.js")
-
-module.exports = isElement
-
-isElement.convert = convert
-
-// Check if if `node` is an `element` and whether it passes the given test.
-function isElement(node, test, index, parent, context) {
-  var hasParent = parent !== null && parent !== undefined
-  var hasIndex = index !== null && index !== undefined
-  var check = convert(test)
-
-  if (
-    hasIndex &&
-    (typeof index !== 'number' || index < 0 || index === Infinity)
-  ) {
-    throw new Error('Expected positive finite index for child node')
-  }
-
-  if (hasParent && (!parent.type || !parent.children)) {
-    throw new Error('Expected parent node')
-  }
-
-  if (!node || !node.type || typeof node.type !== 'string') {
-    return false
-  }
-
-  if (hasParent !== hasIndex) {
-    throw new Error('Expected both parent and index')
-  }
-
-  return check.call(context, node, index, parent)
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/hast-util-parse-selector/index.js":
-/*!********************************************************!*\
-  !*** ./node_modules/hast-util-parse-selector/index.js ***!
-  \********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
-/***/ ((module) => {
-
-"use strict";
-
-
-module.exports = parse
-
-var search = /[#.]/g
-
-// Create a hast element from a simple CSS selector.
-function parse(selector, defaultTagName) {
-  var value = selector || ''
-  var name = defaultTagName || 'div'
-  var props = {}
-  var start = 0
-  var subvalue
-  var previous
-  var match
-
-  while (start < value.length) {
-    search.lastIndex = start
-    match = search.exec(value)
-    subvalue = value.slice(start, match ? match.index : value.length)
-
-    if (subvalue) {
-      if (!previous) {
-        name = subvalue
-      } else if (previous === '#') {
-        props.id = subvalue
-      } else if (props.className) {
-        props.className.push(subvalue)
-      } else {
-        props.className = [subvalue]
-      }
-
-      start += subvalue.length
-    }
-
-    if (match) {
-      previous = match[0]
-      start++
-    }
-  }
-
-  return {type: 'element', tagName: name, properties: props, children: []}
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/hast-util-to-html/index.js":
-/*!*************************************************!*\
-  !*** ./node_modules/hast-util-to-html/index.js ***!
-  \*************************************************/
-/*! dynamic exports */
-/*! exports [maybe provided (runtime-defined)] [no usage info] -> ./node_modules/hast-util-to-html/lib/index.js */
-/*! runtime requirements: module, __webpack_require__ */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-module.exports = __webpack_require__(/*! ./lib */ "./node_modules/hast-util-to-html/lib/index.js")
-
-
-/***/ }),
-
-/***/ "./node_modules/hast-util-to-html/lib/all.js":
-/*!***************************************************!*\
-  !*** ./node_modules/hast-util-to-html/lib/all.js ***!
-  \***************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var one = __webpack_require__(/*! ./one */ "./node_modules/hast-util-to-html/lib/one.js")
-
-module.exports = all
-
-// Serialize all children of `parent`.
-function all(ctx, parent) {
-  var results = []
-  var children = (parent && parent.children) || []
-  var index = -1
-
-  while (++index < children.length) {
-    results[index] = one(ctx, children[index], index, parent)
-  }
-
-  return results.join('')
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/hast-util-to-html/lib/comment.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/hast-util-to-html/lib/comment.js ***!
-  \*******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 6:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var xtend = __webpack_require__(/*! xtend */ "./node_modules/xtend/immutable.js")
-var entities = __webpack_require__(/*! stringify-entities */ "./node_modules/stringify-entities/index.js")
-
-module.exports = serializeComment
-
-function serializeComment(ctx, node) {
-  // See: <https://html.spec.whatwg.org/multipage/syntax.html#comments>
-  return ctx.bogusComments
-    ? '<?' + entities(node.value, xtend(ctx.entities, {subset: ['>']})) + '>'
-    : '<!--' + node.value.replace(/^>|^->|<!--|-->|--!>|<!-$/g, encode) + '-->'
-
-  function encode($0) {
-    return entities($0, xtend(ctx.entities, {subset: ['<', '>']}))
-  }
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/hast-util-to-html/lib/constants.js":
-/*!*********************************************************!*\
-  !*** ./node_modules/hast-util-to-html/lib/constants.js ***!
-  \*********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 7:0-14 */
-/***/ ((module) => {
-
-"use strict";
-
-
-// Maps of subsets.
-// Each value is a matrix of tuples.
-// The first value causes parse errors, the second is valid.
-// Of both values, the first value is unsafe, and the second is safe.
-module.exports = {
-  // See: <https://html.spec.whatwg.org/#attribute-name-state>.
-  name: [
-    ['\t\n\f\r &/=>'.split(''), '\t\n\f\r "&\'/=>`'.split('')],
-    ['\0\t\n\f\r "&\'/<=>'.split(''), '\0\t\n\f\r "&\'/<=>`'.split('')]
-  ],
-  // See: <https://html.spec.whatwg.org/#attribute-value-(unquoted)-state>.
-  unquoted: [
-    ['\t\n\f\r &>'.split(''), '\0\t\n\f\r "&\'<=>`'.split('')],
-    ['\0\t\n\f\r "&\'<=>`'.split(''), '\0\t\n\f\r "&\'<=>`'.split('')]
-  ],
-  // See: <https://html.spec.whatwg.org/#attribute-value-(single-quoted)-state>.
-  single: [
-    ["&'".split(''), '"&\'`'.split('')],
-    ["\0&'".split(''), '\0"&\'`'.split('')]
-  ],
-  // See: <https://html.spec.whatwg.org/#attribute-value-(double-quoted)-state>.
-  double: [
-    ['"&'.split(''), '"&\'`'.split('')],
-    ['\0"&'.split(''), '\0"&\'`'.split('')]
-  ]
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/hast-util-to-html/lib/doctype.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/hast-util-to-html/lib/doctype.js ***!
-  \*******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 7:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var xtend = __webpack_require__(/*! xtend */ "./node_modules/xtend/immutable.js")
-var ccount = __webpack_require__(/*! ccount */ "./node_modules/ccount/index.js")
-var entities = __webpack_require__(/*! stringify-entities */ "./node_modules/stringify-entities/index.js")
-
-module.exports = serializeDoctype
-
-function serializeDoctype(ctx, node) {
-  var sep = ctx.tightDoctype ? '' : ' '
-  var parts = ['<!' + (ctx.upperDoctype ? 'DOCTYPE' : 'doctype')]
-
-  if (node.name) {
-    parts.push(sep, node.name)
-
-    if (node.public != null) {
-      parts.push(' public', sep, quote(ctx, node.public))
-    } else if (node.system != null) {
-      parts.push(' system')
-    }
-
-    if (node.system != null) {
-      parts.push(sep, quote(ctx, node.system))
-    }
-  }
-
-  return parts.join('') + '>'
-}
-
-function quote(ctx, value) {
-  var string = String(value)
-  var quote =
-    ccount(string, ctx.quote) > ccount(string, ctx.alternative)
-      ? ctx.alternative
-      : ctx.quote
-
-  return (
-    quote +
-    entities(string, xtend(ctx.entities, {subset: ['<', '&', quote]})) +
-    quote
-  )
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/hast-util-to-html/lib/element.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/hast-util-to-html/lib/element.js ***!
-  \*******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 13:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var xtend = __webpack_require__(/*! xtend */ "./node_modules/xtend/immutable.js")
-var svg = __webpack_require__(/*! property-information/svg */ "./node_modules/property-information/svg.js")
-var find = __webpack_require__(/*! property-information/find */ "./node_modules/property-information/find.js")
-var spaces = __webpack_require__(/*! space-separated-tokens */ "./node_modules/space-separated-tokens/index.js")
-var commas = __webpack_require__(/*! comma-separated-tokens */ "./node_modules/comma-separated-tokens/index.js")
-var entities = __webpack_require__(/*! stringify-entities */ "./node_modules/stringify-entities/index.js")
-var ccount = __webpack_require__(/*! ccount */ "./node_modules/ccount/index.js")
-var all = __webpack_require__(/*! ./all */ "./node_modules/hast-util-to-html/lib/all.js")
-var constants = __webpack_require__(/*! ./constants */ "./node_modules/hast-util-to-html/lib/constants.js")
-
-module.exports = serializeElement
-
-function serializeElement(ctx, node, index, parent) {
-  var schema = ctx.schema
-  var omit = schema.space === 'svg' ? false : ctx.omit
-  var parts = []
-  var selfClosing =
-    schema.space === 'svg'
-      ? ctx.closeEmpty
-      : ctx.voids.indexOf(node.tagName.toLowerCase()) > -1
-  var attrs = serializeAttributes(ctx, node.properties)
-  var content
-  var last
-
-  if (schema.space === 'html' && node.tagName === 'svg') {
-    ctx.schema = svg
-  }
-
-  content = all(
-    ctx,
-    schema.space === 'html' && node.tagName === 'template' ? node.content : node
-  )
-
-  ctx.schema = schema
-
-  // If the node is categorised as void, but it has children, remove the
-  // categorisation.
-  // This enables for example `menuitem`s, which are void in W3C HTML but not
-  // void in WHATWG HTML, to be stringified properly.
-  if (content) selfClosing = false
-
-  if (attrs || !omit || !omit.opening(node, index, parent)) {
-    parts.push('<', node.tagName, attrs ? ' ' + attrs : '')
-
-    if (selfClosing && (schema.space === 'svg' || ctx.close)) {
-      last = attrs.charAt(attrs.length - 1)
-      if (
-        !ctx.tightClose ||
-        last === '/' ||
-        (schema.space === 'svg' && last && last !== '"' && last !== "'")
-      ) {
-        parts.push(' ')
-      }
-
-      parts.push('/')
-    }
-
-    parts.push('>')
-  }
-
-  parts.push(content)
-
-  if (!selfClosing && (!omit || !omit.closing(node, index, parent))) {
-    parts.push('</' + node.tagName + '>')
-  }
-
-  return parts.join('')
-}
-
-function serializeAttributes(ctx, props) {
-  var values = []
-  var index = -1
-  var key
-  var value
-  var last
-
-  for (key in props) {
-    if (props[key] != null) {
-      value = serializeAttribute(ctx, key, props[key])
-      if (value) values.push(value)
-    }
-  }
-
-  while (++index < values.length) {
-    last = ctx.tight ? values[index].charAt(values[index].length - 1) : null
-
-    // In tight mode, don’t add a space after quoted attributes.
-    if (index !== values.length - 1 && last !== '"' && last !== "'") {
-      values[index] += ' '
-    }
-  }
-
-  return values.join('')
-}
-
-function serializeAttribute(ctx, key, value) {
-  var info = find(ctx.schema, key)
-  var quote = ctx.quote
-  var result
-  var name
-
-  if (info.overloadedBoolean && (value === info.attribute || value === '')) {
-    value = true
-  } else if (
-    info.boolean ||
-    (info.overloadedBoolean && typeof value !== 'string')
-  ) {
-    value = Boolean(value)
-  }
-
-  if (
-    value == null ||
-    value === false ||
-    (typeof value === 'number' && value !== value)
-  ) {
-    return ''
-  }
-
-  name = entities(
-    info.attribute,
-    xtend(ctx.entities, {
-      // Always encode without parse errors in non-HTML.
-      subset:
-        constants.name[ctx.schema.space === 'html' ? ctx.valid : 1][ctx.safe]
-    })
-  )
-
-  // No value.
-  // There is currently only one boolean property in SVG: `[download]` on
-  // `<a>`.
-  // This property does not seem to work in browsers (FF, Sa, Ch), so I can’t
-  // test if dropping the value works.
-  // But I assume that it should:
-  //
-  // ```html
-  // <!doctype html>
-  // <svg viewBox="0 0 100 100">
-  //   <a href=https://example.com download>
-  //     <circle cx=50 cy=40 r=35 />
-  //   </a>
-  // </svg>
-  // ```
-  //
-  // See: <https://github.com/wooorm/property-information/blob/main/lib/svg.js>
-  if (value === true) return name
-
-  value =
-    typeof value === 'object' && 'length' in value
-      ? // `spaces` doesn’t accept a second argument, but it’s given here just to
-        // keep the code cleaner.
-        (info.commaSeparated ? commas.stringify : spaces.stringify)(value, {
-          padLeft: !ctx.tightLists
-        })
-      : String(value)
-
-  if (ctx.collapseEmpty && !value) return name
-
-  // Check unquoted value.
-  if (ctx.unquoted) {
-    result = entities(
-      value,
-      xtend(ctx.entities, {
-        subset: constants.unquoted[ctx.valid][ctx.safe],
-        attribute: true
-      })
-    )
-  }
-
-  // If we don’t want unquoted, or if `value` contains character references when
-  // unquoted…
-  if (result !== value) {
-    // If the alternative is less common than `quote`, switch.
-    if (ctx.smart && ccount(value, quote) > ccount(value, ctx.alternative)) {
-      quote = ctx.alternative
-    }
-
-    result =
-      quote +
-      entities(
-        value,
-        xtend(ctx.entities, {
-          // Always encode without parse errors in non-HTML.
-          subset: (quote === "'" ? constants.single : constants.double)[
-            ctx.schema.space === 'html' ? ctx.valid : 1
-          ][ctx.safe],
-          attribute: true
-        })
-      ) +
-      quote
-  }
-
-  // Don’t add a `=` for unquoted empties.
-  return name + (result ? '=' + result : result)
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/hast-util-to-html/lib/index.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/hast-util-to-html/lib/index.js ***!
-  \*****************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 9:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var html = __webpack_require__(/*! property-information/html */ "./node_modules/property-information/html.js")
-var svg = __webpack_require__(/*! property-information/svg */ "./node_modules/property-information/svg.js")
-var voids = __webpack_require__(/*! html-void-elements */ "./node_modules/html-void-elements/index.json")
-var omission = __webpack_require__(/*! ./omission */ "./node_modules/hast-util-to-html/lib/omission/index.js")
-var one = __webpack_require__(/*! ./one */ "./node_modules/hast-util-to-html/lib/one.js")
-
-module.exports = toHtml
-
-var deprecationWarningIssued
-
-function toHtml(node, options) {
-  var settings = options || {}
-  var quote = settings.quote || '"'
-  var alternative = quote === '"' ? "'" : '"'
-
-  if (quote !== '"' && quote !== "'") {
-    throw new Error('Invalid quote `' + quote + '`, expected `\'` or `"`')
-  }
-
-  if ('allowDangerousHTML' in settings && !deprecationWarningIssued) {
-    deprecationWarningIssued = true
-    console.warn(
-      'Deprecation warning: `allowDangerousHTML` is a nonstandard option, use `allowDangerousHtml` instead'
-    )
-  }
-
-  return one(
-    {
-      valid: settings.allowParseErrors ? 0 : 1,
-      safe: settings.allowDangerousCharacters ? 0 : 1,
-      schema: settings.space === 'svg' ? svg : html,
-      omit: settings.omitOptionalTags && omission,
-      quote: quote,
-      alternative: alternative,
-      smart: settings.quoteSmart,
-      unquoted: settings.preferUnquoted,
-      tight: settings.tightAttributes,
-      upperDoctype: settings.upperDoctype,
-      tightDoctype: settings.tightDoctype,
-      bogusComments: settings.bogusComments,
-      tightLists: settings.tightCommaSeparatedLists,
-      tightClose: settings.tightSelfClosing,
-      collapseEmpty: settings.collapseEmptyAttributes,
-      dangerous: settings.allowDangerousHtml || settings.allowDangerousHTML,
-      voids: settings.voids || voids.concat(),
-      entities: settings.entities || {},
-      close: settings.closeSelfClosing,
-      closeEmpty: settings.closeEmptyElements
-    },
-    node && typeof node === 'object' && 'length' in node
-      ? {type: 'root', children: node}
-      : node
-  )
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/hast-util-to-html/lib/omission/closing.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/hast-util-to-html/lib/omission/closing.js ***!
-  \****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 9:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var element = __webpack_require__(/*! hast-util-is-element */ "./node_modules/hast-util-is-element/index.js")
-var whiteSpaceStart = __webpack_require__(/*! ./util/white-space-start */ "./node_modules/hast-util-to-html/lib/omission/util/white-space-start.js")
-var comment = __webpack_require__(/*! ./util/comment */ "./node_modules/hast-util-to-html/lib/omission/util/comment.js")
-var siblings = __webpack_require__(/*! ./util/siblings */ "./node_modules/hast-util-to-html/lib/omission/util/siblings.js")
-var omission = __webpack_require__(/*! ./omission */ "./node_modules/hast-util-to-html/lib/omission/omission.js")
-
-module.exports = omission({
-  html: html,
-  head: headOrColgroupOrCaption,
-  body: body,
-  p: p,
-  li: li,
-  dt: dt,
-  dd: dd,
-  rt: rubyElement,
-  rp: rubyElement,
-  optgroup: optgroup,
-  option: option,
-  menuitem: menuitem,
-  colgroup: headOrColgroupOrCaption,
-  caption: headOrColgroupOrCaption,
-  thead: thead,
-  tbody: tbody,
-  tfoot: tfoot,
-  tr: tr,
-  td: cells,
-  th: cells
-})
-
-// Macro for `</head>`, `</colgroup>`, and `</caption>`.
-function headOrColgroupOrCaption(node, index, parent) {
-  var next = siblings.after(parent, index, true)
-  return !next || (!comment(next) && !whiteSpaceStart(next))
-}
-
-// Whether to omit `</html>`.
-function html(node, index, parent) {
-  var next = siblings.after(parent, index)
-  return !next || !comment(next)
-}
-
-// Whether to omit `</body>`.
-function body(node, index, parent) {
-  var next = siblings.after(parent, index)
-  return !next || !comment(next)
-}
-
-// Whether to omit `</p>`.
-function p(node, index, parent) {
-  var next = siblings.after(parent, index)
-  return next
-    ? element(next, [
-        'address',
-        'article',
-        'aside',
-        'blockquote',
-        'details',
-        'div',
-        'dl',
-        'fieldset',
-        'figcaption',
-        'figure',
-        'footer',
-        'form',
-        'h1',
-        'h2',
-        'h3',
-        'h4',
-        'h5',
-        'h6',
-        'header',
-        'hgroup',
-        'hr',
-        'main',
-        'menu',
-        'nav',
-        'ol',
-        'p',
-        'pre',
-        'section',
-        'table',
-        'ul'
-      ])
-    : !parent ||
-        // Confusing parent.
-        !element(parent, [
-          'a',
-          'audio',
-          'del',
-          'ins',
-          'map',
-          'noscript',
-          'video'
-        ])
-}
-
-// Whether to omit `</li>`.
-function li(node, index, parent) {
-  var next = siblings.after(parent, index)
-  return !next || element(next, 'li')
-}
-
-// Whether to omit `</dt>`.
-function dt(node, index, parent) {
-  var next = siblings.after(parent, index)
-  return next && element(next, ['dt', 'dd'])
-}
-
-// Whether to omit `</dd>`.
-function dd(node, index, parent) {
-  var next = siblings.after(parent, index)
-  return !next || element(next, ['dt', 'dd'])
-}
-
-// Whether to omit `</rt>` or `</rp>`.
-function rubyElement(node, index, parent) {
-  var next = siblings.after(parent, index)
-  return !next || element(next, ['rp', 'rt'])
-}
-
-// Whether to omit `</optgroup>`.
-function optgroup(node, index, parent) {
-  var next = siblings.after(parent, index)
-  return !next || element(next, 'optgroup')
-}
-
-// Whether to omit `</option>`.
-function option(node, index, parent) {
-  var next = siblings.after(parent, index)
-  return !next || element(next, ['option', 'optgroup'])
-}
-
-// Whether to omit `</menuitem>`.
-function menuitem(node, index, parent) {
-  var next = siblings.after(parent, index)
-  return !next || element(next, ['menuitem', 'hr', 'menu'])
-}
-
-// Whether to omit `</thead>`.
-function thead(node, index, parent) {
-  var next = siblings.after(parent, index)
-  return next && element(next, ['tbody', 'tfoot'])
-}
-
-// Whether to omit `</tbody>`.
-function tbody(node, index, parent) {
-  var next = siblings.after(parent, index)
-  return !next || element(next, ['tbody', 'tfoot'])
-}
-
-// Whether to omit `</tfoot>`.
-function tfoot(node, index, parent) {
-  return !siblings.after(parent, index)
-}
-
-// Whether to omit `</tr>`.
-function tr(node, index, parent) {
-  var next = siblings.after(parent, index)
-  return !next || element(next, 'tr')
-}
-
-// Whether to omit `</td>` or `</th>`.
-function cells(node, index, parent) {
-  var next = siblings.after(parent, index)
-  return !next || element(next, ['td', 'th'])
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/hast-util-to-html/lib/omission/index.js":
-/*!**************************************************************!*\
-  !*** ./node_modules/hast-util-to-html/lib/omission/index.js ***!
-  \**************************************************************/
-/*! default exports */
-/*! export closing [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/hast-util-to-html/lib/omission/closing.js */
-/*!   exports [maybe provided (runtime-defined)] [no usage info] */
-/*! export opening [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/hast-util-to-html/lib/omission/opening.js */
-/*!   exports [maybe provided (runtime-defined)] [no usage info] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-exports.opening = __webpack_require__(/*! ./opening */ "./node_modules/hast-util-to-html/lib/omission/opening.js")
-exports.closing = __webpack_require__(/*! ./closing */ "./node_modules/hast-util-to-html/lib/omission/closing.js")
-
-
-/***/ }),
-
-/***/ "./node_modules/hast-util-to-html/lib/omission/omission.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/hast-util-to-html/lib/omission/omission.js ***!
-  \*****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
-/***/ ((module) => {
-
-"use strict";
-
-
-module.exports = omission
-
-var own = {}.hasOwnProperty
-
-// Factory to check if a given node can have a tag omitted.
-function omission(handlers) {
-  return omit
-
-  // Check if a given node can have a tag omitted.
-  function omit(node, index, parent) {
-    return (
-      own.call(handlers, node.tagName) &&
-      handlers[node.tagName](node, index, parent)
-    )
-  }
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/hast-util-to-html/lib/omission/opening.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/hast-util-to-html/lib/omission/opening.js ***!
-  \****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 10:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var element = __webpack_require__(/*! hast-util-is-element */ "./node_modules/hast-util-is-element/index.js")
-var siblings = __webpack_require__(/*! ./util/siblings */ "./node_modules/hast-util-to-html/lib/omission/util/siblings.js")
-var whiteSpaceStart = __webpack_require__(/*! ./util/white-space-start */ "./node_modules/hast-util-to-html/lib/omission/util/white-space-start.js")
-var comment = __webpack_require__(/*! ./util/comment */ "./node_modules/hast-util-to-html/lib/omission/util/comment.js")
-var closing = __webpack_require__(/*! ./closing */ "./node_modules/hast-util-to-html/lib/omission/closing.js")
-var omission = __webpack_require__(/*! ./omission */ "./node_modules/hast-util-to-html/lib/omission/omission.js")
-
-module.exports = omission({
-  html: html,
-  head: head,
-  body: body,
-  colgroup: colgroup,
-  tbody: tbody
-})
-
-// Whether to omit `<html>`.
-function html(node) {
-  var head = siblings.after(node, -1)
-  return !head || !comment(head)
-}
-
-// Whether to omit `<head>`.
-function head(node) {
-  var children = node.children
-  var seen = []
-  var index = -1
-
-  while (++index < children.length) {
-    if (element(children[index], ['title', 'base'])) {
-      if (seen.indexOf(children[index].tagName) > -1) return false
-      seen.push(children[index].tagName)
-    }
-  }
-
-  return children.length
-}
-
-// Whether to omit `<body>`.
-function body(node) {
-  var head = siblings.after(node, -1, true)
-
-  return (
-    !head ||
-    (!comment(head) &&
-      !whiteSpaceStart(head) &&
-      !element(head, ['meta', 'link', 'script', 'style', 'template']))
-  )
-}
-
-// Whether to omit `<colgroup>`.
-// The spec describes some logic for the opening tag, but it’s easier to
-// implement in the closing tag, to the same effect, so we handle it there
-// instead.
-function colgroup(node, index, parent) {
-  var previous = siblings.before(parent, index)
-  var head = siblings.after(node, -1, true)
-
-  // Previous colgroup was already omitted.
-  if (
-    element(previous, 'colgroup') &&
-    closing(previous, parent.children.indexOf(previous), parent)
-  ) {
-    return false
-  }
-
-  return head && element(head, 'col')
-}
-
-// Whether to omit `<tbody>`.
-function tbody(node, index, parent) {
-  var previous = siblings.before(parent, index)
-  var head = siblings.after(node, -1)
-
-  // Previous table section was already omitted.
-  if (
-    element(previous, ['thead', 'tbody']) &&
-    closing(previous, parent.children.indexOf(previous), parent)
-  ) {
-    return false
-  }
-
-  return head && element(head, 'tr')
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/hast-util-to-html/lib/omission/util/comment.js":
-/*!*********************************************************************!*\
-  !*** ./node_modules/hast-util-to-html/lib/omission/util/comment.js ***!
-  \*********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var convert = __webpack_require__(/*! unist-util-is/convert */ "./node_modules/unist-util-is/convert.js")
-
-module.exports = convert('comment')
-
-
-/***/ }),
-
-/***/ "./node_modules/hast-util-to-html/lib/omission/util/siblings.js":
-/*!**********************************************************************!*\
-  !*** ./node_modules/hast-util-to-html/lib/omission/util/siblings.js ***!
-  \**********************************************************************/
-/*! default exports */
-/*! export after [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export before [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-var whiteSpace = __webpack_require__(/*! hast-util-whitespace */ "./node_modules/hast-util-whitespace/index.js")
-
-exports.before = siblings(-1)
-exports.after = siblings(1)
-
-// Factory to check siblings in a direction.
-function siblings(increment) {
-  return sibling
-
-  // Find applicable siblings in a direction.
-  function sibling(parent, index, includeWhiteSpace) {
-    var siblings = parent && parent.children
-    var offset = index + increment
-    var next = siblings && siblings[offset]
-
-    if (!includeWhiteSpace) {
-      while (next && whiteSpace(next)) {
-        offset += increment
-        next = siblings[offset]
-      }
-    }
-
-    return next
-  }
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/hast-util-to-html/lib/omission/util/white-space-start.js":
-/*!*******************************************************************************!*\
-  !*** ./node_modules/hast-util-to-html/lib/omission/util/white-space-start.js ***!
-  \*******************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 6:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var convert = __webpack_require__(/*! unist-util-is/convert */ "./node_modules/unist-util-is/convert.js")
-var whiteSpace = __webpack_require__(/*! hast-util-whitespace */ "./node_modules/hast-util-whitespace/index.js")
-
-module.exports = whiteSpaceStart
-
-var isText = convert('text')
-
-// Check if `node` starts with white-space.
-function whiteSpaceStart(node) {
-  return isText(node) && whiteSpace(node.value.charAt(0))
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/hast-util-to-html/lib/one.js":
-/*!***************************************************!*\
-  !*** ./node_modules/hast-util-to-html/lib/one.js ***!
-  \***************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-module.exports = serialize
-
-var handlers = {
-  comment: __webpack_require__(/*! ./comment */ "./node_modules/hast-util-to-html/lib/comment.js"),
-  doctype: __webpack_require__(/*! ./doctype */ "./node_modules/hast-util-to-html/lib/doctype.js"),
-  element: __webpack_require__(/*! ./element */ "./node_modules/hast-util-to-html/lib/element.js"),
-  raw: __webpack_require__(/*! ./raw */ "./node_modules/hast-util-to-html/lib/raw.js"),
-  root: __webpack_require__(/*! ./all */ "./node_modules/hast-util-to-html/lib/all.js"),
-  text: __webpack_require__(/*! ./text */ "./node_modules/hast-util-to-html/lib/text.js")
-}
-
-var own = {}.hasOwnProperty
-
-function serialize(ctx, node, index, parent) {
-  if (!node || !node.type) {
-    throw new Error('Expected node, not `' + node + '`')
-  }
-
-  if (!own.call(handlers, node.type)) {
-    throw new Error('Cannot compile unknown node `' + node.type + '`')
-  }
-
-  return handlers[node.type](ctx, node, index, parent)
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/hast-util-to-html/lib/raw.js":
-/*!***************************************************!*\
-  !*** ./node_modules/hast-util-to-html/lib/raw.js ***!
-  \***************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var text = __webpack_require__(/*! ./text */ "./node_modules/hast-util-to-html/lib/text.js")
-
-module.exports = serializeRaw
-
-function serializeRaw(ctx, node) {
-  return ctx.dangerous ? node.value : text(ctx, node)
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/hast-util-to-html/lib/text.js":
-/*!****************************************************!*\
-  !*** ./node_modules/hast-util-to-html/lib/text.js ***!
-  \****************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 6:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var xtend = __webpack_require__(/*! xtend */ "./node_modules/xtend/immutable.js")
-var entities = __webpack_require__(/*! stringify-entities */ "./node_modules/stringify-entities/index.js")
-
-module.exports = serializeText
-
-function serializeText(ctx, node, index, parent) {
-  // Check if content of `node` should be escaped.
-  return parent && (parent.tagName === 'script' || parent.tagName === 'style')
-    ? node.value
-    : entities(node.value, xtend(ctx.entities, {subset: ['<', '&']}))
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/hast-util-whitespace/index.js":
-/*!****************************************************!*\
-  !*** ./node_modules/hast-util-whitespace/index.js ***!
-  \****************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
-/***/ ((module) => {
-
-"use strict";
-
-
-module.exports = interElementWhiteSpace
-
-// HTML white-space expression.
-// See <https://html.spec.whatwg.org/#space-character>.
-var re = /[ \t\n\f\r]/g
-
-function interElementWhiteSpace(node) {
-  var value
-
-  if (node && typeof node === 'object' && node.type === 'text') {
-    value = node.value || ''
-  } else if (typeof node === 'string') {
-    value = node
-  } else {
-    return false
-  }
-
-  return value.replace(re, '') === ''
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/hastscript/factory.js":
-/*!********************************************!*\
-  !*** ./node_modules/hastscript/factory.js ***!
-  \********************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: __webpack_require__, module */
-/*! CommonJS bailout: module.exports is used directly at 9:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var find = __webpack_require__(/*! property-information/find */ "./node_modules/property-information/find.js")
-var normalize = __webpack_require__(/*! property-information/normalize */ "./node_modules/property-information/normalize.js")
-var parseSelector = __webpack_require__(/*! hast-util-parse-selector */ "./node_modules/hast-util-parse-selector/index.js")
-var spaces = __webpack_require__(/*! space-separated-tokens */ "./node_modules/space-separated-tokens/index.js").parse
-var commas = __webpack_require__(/*! comma-separated-tokens */ "./node_modules/comma-separated-tokens/index.js").parse
-
-module.exports = factory
-
-var own = {}.hasOwnProperty
-
-function factory(schema, defaultTagName, caseSensitive) {
-  var adjust = caseSensitive ? createAdjustMap(caseSensitive) : null
-
-  return h
-
-  // Hyperscript compatible DSL for creating virtual hast trees.
-  function h(selector, properties) {
-    var node = parseSelector(selector, defaultTagName)
-    var children = Array.prototype.slice.call(arguments, 2)
-    var name = node.tagName.toLowerCase()
-    var property
-
-    node.tagName = adjust && own.call(adjust, name) ? adjust[name] : name
-
-    if (properties && isChildren(properties, node)) {
-      children.unshift(properties)
-      properties = null
-    }
-
-    if (properties) {
-      for (property in properties) {
-        addProperty(node.properties, property, properties[property])
-      }
-    }
-
-    addChild(node.children, children)
-
-    if (node.tagName === 'template') {
-      node.content = {type: 'root', children: node.children}
-      node.children = []
-    }
-
-    return node
-  }
-
-  function addProperty(properties, key, value) {
-    var info
-    var property
-    var result
-
-    // Ignore nully and NaN values.
-    if (value === null || value === undefined || value !== value) {
-      return
-    }
-
-    info = find(schema, key)
-    property = info.property
-    result = value
-
-    // Handle list values.
-    if (typeof result === 'string') {
-      if (info.spaceSeparated) {
-        result = spaces(result)
-      } else if (info.commaSeparated) {
-        result = commas(result)
-      } else if (info.commaOrSpaceSeparated) {
-        result = spaces(commas(result).join(' '))
-      }
-    }
-
-    // Accept `object` on style.
-    if (property === 'style' && typeof value !== 'string') {
-      result = style(result)
-    }
-
-    // Class-names (which can be added both on the `selector` and here).
-    if (property === 'className' && properties.className) {
-      result = properties.className.concat(result)
-    }
-
-    properties[property] = parsePrimitives(info, property, result)
-  }
-}
-
-function isChildren(value, node) {
-  return (
-    typeof value === 'string' ||
-    'length' in value ||
-    isNode(node.tagName, value)
-  )
-}
-
-function isNode(tagName, value) {
-  var type = value.type
-
-  if (tagName === 'input' || !type || typeof type !== 'string') {
-    return false
-  }
-
-  if (typeof value.children === 'object' && 'length' in value.children) {
-    return true
-  }
-
-  type = type.toLowerCase()
-
-  if (tagName === 'button') {
-    return (
-      type !== 'menu' &&
-      type !== 'submit' &&
-      type !== 'reset' &&
-      type !== 'button'
-    )
-  }
-
-  return 'value' in value
-}
-
-function addChild(nodes, value) {
-  var index
-  var length
-
-  if (typeof value === 'string' || typeof value === 'number') {
-    nodes.push({type: 'text', value: String(value)})
-    return
-  }
-
-  if (typeof value === 'object' && 'length' in value) {
-    index = -1
-    length = value.length
-
-    while (++index < length) {
-      addChild(nodes, value[index])
-    }
-
-    return
-  }
-
-  if (typeof value !== 'object' || !('type' in value)) {
-    throw new Error('Expected node, nodes, or string, got `' + value + '`')
-  }
-
-  nodes.push(value)
-}
-
-// Parse a (list of) primitives.
-function parsePrimitives(info, name, value) {
-  var index
-  var length
-  var result
-
-  if (typeof value !== 'object' || !('length' in value)) {
-    return parsePrimitive(info, name, value)
-  }
-
-  length = value.length
-  index = -1
-  result = []
-
-  while (++index < length) {
-    result[index] = parsePrimitive(info, name, value[index])
-  }
-
-  return result
-}
-
-// Parse a single primitives.
-function parsePrimitive(info, name, value) {
-  var result = value
-
-  if (info.number || info.positiveNumber) {
-    if (!isNaN(result) && result !== '') {
-      result = Number(result)
-    }
-  } else if (info.boolean || info.overloadedBoolean) {
-    // Accept `boolean` and `string`.
-    if (
-      typeof result === 'string' &&
-      (result === '' || normalize(value) === normalize(name))
-    ) {
-      result = true
-    }
-  }
-
-  return result
-}
-
-function style(value) {
-  var result = []
-  var key
-
-  for (key in value) {
-    result.push([key, value[key]].join(': '))
-  }
-
-  return result.join('; ')
-}
-
-function createAdjustMap(values) {
-  var length = values.length
-  var index = -1
-  var result = {}
-  var value
-
-  while (++index < length) {
-    value = values[index]
-    result[value.toLowerCase()] = value
-  }
-
-  return result
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/hastscript/html.js":
-/*!*****************************************!*\
-  !*** ./node_modules/hastscript/html.js ***!
-  \*****************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 9:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var schema = __webpack_require__(/*! property-information/html */ "./node_modules/property-information/html.js")
-var factory = __webpack_require__(/*! ./factory */ "./node_modules/hastscript/factory.js")
-
-var html = factory(schema, 'div')
-html.displayName = 'html'
-
-module.exports = html
-
-
-/***/ }),
-
-/***/ "./node_modules/hastscript/index.js":
-/*!******************************************!*\
-  !*** ./node_modules/hastscript/index.js ***!
-  \******************************************/
-/*! dynamic exports */
-/*! exports [maybe provided (runtime-defined)] [no usage info] -> ./node_modules/hastscript/html.js */
-/*! runtime requirements: module, __webpack_require__ */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-module.exports = __webpack_require__(/*! ./html */ "./node_modules/hastscript/html.js")
-
-
-/***/ }),
-
-/***/ "./node_modules/html-void-elements/index.json":
-/*!****************************************************!*\
-  !*** ./node_modules/html-void-elements/index.json ***!
-  \****************************************************/
-/*! default exports */
-/*! export 0 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 1 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 10 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 11 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 12 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 13 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 14 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 15 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 16 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 17 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 18 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 19 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 2 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 20 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 21 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 22 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 3 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 4 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 5 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 6 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 7 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 8 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 9 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: module */
-/***/ ((module) => {
-
-"use strict";
-module.exports = JSON.parse("[\"area\",\"base\",\"basefont\",\"bgsound\",\"br\",\"col\",\"command\",\"embed\",\"frame\",\"hr\",\"image\",\"img\",\"input\",\"isindex\",\"keygen\",\"link\",\"menuitem\",\"meta\",\"nextid\",\"param\",\"source\",\"track\",\"wbr\"]");
-
-/***/ }),
-
 /***/ "./node_modules/inflight/inflight.js":
 /*!*******************************************!*\
   !*** ./node_modules/inflight/inflight.js ***!
@@ -27587,8 +25587,7 @@ function wrapExpression(expression) {
   !*** ./node_modules/mdast-util-to-hast/index.js ***!
   \**************************************************/
 /*! dynamic exports */
-/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/mdast-util-to-hast/lib/index.js .__esModule */
-/*! other exports [maybe provided (runtime-defined)] [no usage info] -> ./node_modules/mdast-util-to-hast/lib/index.js */
+/*! exports [maybe provided (runtime-defined)] [no usage info] -> ./node_modules/mdast-util-to-hast/lib/index.js */
 /*! runtime requirements: module, __webpack_require__ */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -57260,135 +55259,6 @@ module.exports = toRegex;
 
 /***/ }),
 
-/***/ "./node_modules/rehype-document/index.js":
-/*!***********************************************!*\
-  !*** ./node_modules/rehype-document/index.js ***!
-  \***********************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 7:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var u = __webpack_require__(/*! unist-builder */ "./node_modules/unist-builder/index.js")
-var h = __webpack_require__(/*! hastscript */ "./node_modules/hastscript/index.js")
-var doctypes = __webpack_require__(/*! doctype */ "./node_modules/doctype/index.js")
-
-module.exports = document
-
-function document(options) {
-  var settings = options || {}
-  var meta = cast(settings.meta)
-  var link = cast(settings.link)
-  var styles = cast(settings.style)
-  var css = cast(settings.css)
-  var scripts = cast(settings.script)
-  var js = cast(settings.js)
-
-  if (settings.responsive !== false) {
-    meta.unshift({
-      name: 'viewport',
-      content: 'width=device-width, initial-scale=1'
-    })
-  }
-
-  return transformer
-
-  function transformer(tree, file) {
-    var title = settings.title || file.stem
-    var contents = tree.type === 'root' ? tree.children.concat() : [tree]
-    var head = [line(), h('meta', {charset: 'utf-8'})]
-    var length
-    var index
-
-    if (contents.length !== 0) {
-      contents.unshift(line())
-    }
-
-    if (title) {
-      head.push(line(), h('title', [title]))
-    }
-
-    length = meta.length
-    index = -1
-
-    while (++index < length) {
-      head.push(line(), h('meta', meta[index]))
-    }
-
-    length = link.length
-    index = -1
-
-    while (++index < length) {
-      head.push(line(), h('link', link[index]))
-    }
-
-    // Inject style tags before linked CSS
-    length = styles.length
-    index = -1
-
-    while (++index < length) {
-      head.push(line(), h('style', styles[index]))
-    }
-
-    length = css.length
-    index = -1
-
-    while (++index < length) {
-      head.push(line(), h('link', {rel: 'stylesheet', href: css[index]}))
-    }
-
-    head.push(line())
-
-    // Inject script tags before linked JS
-    length = scripts.length
-    index = -1
-
-    while (++index < length) {
-      contents.push(line(), h('script', scripts[index]))
-    }
-
-    length = js.length
-    index = -1
-
-    while (++index < length) {
-      contents.push(line(), h('script', {src: js[index]}))
-    }
-
-    contents.push(line())
-
-    return u('root', [
-      u('doctype', {name: doctypes(settings.doctype || 5)}),
-      line(),
-      h('html', {lang: settings.language || 'en'}, [
-        line(),
-        h('head', head),
-        line(),
-        h('body', contents),
-        line()
-      ]),
-      line()
-    ])
-  }
-}
-
-function line() {
-  return u('text', '\n')
-}
-
-function cast(value) {
-  if (value === null || value === undefined) {
-    return []
-  }
-
-  return typeof value === 'string' || !('length' in value) ? [value] : value
-}
-
-
-/***/ }),
-
 /***/ "./node_modules/rehype-react/index.js":
 /*!********************************************!*\
   !*** ./node_modules/rehype-react/index.js ***!
@@ -57445,35 +55315,6 @@ function rehypeReact(options) {
     }
 
     return createElement(component, props, children)
-  }
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/rehype-stringify/index.js":
-/*!************************************************!*\
-  !*** ./node_modules/rehype-stringify/index.js ***!
-  \************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var toHTML = __webpack_require__(/*! hast-util-to-html */ "./node_modules/hast-util-to-html/index.js")
-
-module.exports = stringify
-
-function stringify(config) {
-  var settings = Object.assign({}, config, this.data('settings'))
-
-  this.Compiler = compiler
-
-  function compiler(tree) {
-    return toHTML(tree, settings)
   }
 }
 
@@ -66673,398 +64514,6 @@ function simpleEnd(buf) {
 
 /***/ }),
 
-/***/ "./node_modules/stringify-entities/index.js":
-/*!**************************************************!*\
-  !*** ./node_modules/stringify-entities/index.js ***!
-  \**************************************************/
-/*! dynamic exports */
-/*! exports [maybe provided (runtime-defined)] [no usage info] -> ./node_modules/stringify-entities/lib/index.js */
-/*! runtime requirements: module, __webpack_require__ */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-module.exports = __webpack_require__(/*! ./lib */ "./node_modules/stringify-entities/lib/index.js")
-
-
-/***/ }),
-
-/***/ "./node_modules/stringify-entities/lib/constant/characters.js":
-/*!********************************************************************!*\
-  !*** ./node_modules/stringify-entities/lib/constant/characters.js ***!
-  \********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 6:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var entities = __webpack_require__(/*! character-entities-html4 */ "./node_modules/character-entities-html4/index.json")
-
-var characters = {}
-var name
-
-module.exports = characters
-
-for (name in entities) {
-  characters[entities[name]] = name
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/stringify-entities/lib/constant/dangerous.json":
-/*!*********************************************************************!*\
-  !*** ./node_modules/stringify-entities/lib/constant/dangerous.json ***!
-  \*********************************************************************/
-/*! default exports */
-/*! export 0 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 1 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 2 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 3 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 4 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 5 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 6 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export 7 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: module */
-/***/ ((module) => {
-
-"use strict";
-module.exports = JSON.parse("[\"cent\",\"copy\",\"divide\",\"gt\",\"lt\",\"not\",\"para\",\"times\"]");
-
-/***/ }),
-
-/***/ "./node_modules/stringify-entities/lib/constant/from-char-code.js":
-/*!************************************************************************!*\
-  !*** ./node_modules/stringify-entities/lib/constant/from-char-code.js ***!
-  \************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
-/***/ ((module) => {
-
-module.exports = String.fromCharCode
-
-
-/***/ }),
-
-/***/ "./node_modules/stringify-entities/lib/constant/has-own-property.js":
-/*!**************************************************************************!*\
-  !*** ./node_modules/stringify-entities/lib/constant/has-own-property.js ***!
-  \**************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
-/***/ ((module) => {
-
-module.exports = {}.hasOwnProperty
-
-
-/***/ }),
-
-/***/ "./node_modules/stringify-entities/lib/core.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/stringify-entities/lib/core.js ***!
-  \*****************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
-/***/ ((module) => {
-
-"use strict";
-
-
-module.exports = encode
-
-// Encode special characters in `value`.
-function encode(value, options) {
-  value = value.replace(
-    options.subset ? charactersToExpression(options.subset) : /["&'<>`]/g,
-    basic
-  )
-
-  if (options.subset || options.escapeOnly) {
-    return value
-  }
-
-  return (
-    value
-      // Surrogate pairs.
-      .replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, surrogate)
-      // BMP control characters (C0 except for LF, CR, SP; DEL; and some more
-      // non-ASCII ones).
-      .replace(
-        // eslint-disable-next-line no-control-regex, unicorn/no-hex-escape
-        /[\x01-\t\v\f\x0E-\x1F\x7F\x81\x8D\x8F\x90\x9D\xA0-\uFFFF]/g,
-        basic
-      )
-  )
-
-  function surrogate(pair, index, all) {
-    return options.format(
-      (pair.charCodeAt(0) - 0xd800) * 0x400 +
-        pair.charCodeAt(1) -
-        0xdc00 +
-        0x10000,
-      all.charCodeAt(index + 2),
-      options
-    )
-  }
-
-  function basic(character, index, all) {
-    return options.format(
-      character.charCodeAt(0),
-      all.charCodeAt(index + 1),
-      options
-    )
-  }
-}
-
-function charactersToExpression(subset) {
-  var groups = []
-  var index = -1
-
-  while (++index < subset.length) {
-    groups.push(subset[index].replace(/[|\\{}()[\]^$+*?.]/g, '\\$&'))
-  }
-
-  return new RegExp('(?:' + groups.join('|') + ')', 'g')
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/stringify-entities/lib/encode.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/stringify-entities/lib/encode.js ***!
-  \*******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 7:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var xtend = __webpack_require__(/*! xtend */ "./node_modules/xtend/immutable.js")
-var core = __webpack_require__(/*! ./core */ "./node_modules/stringify-entities/lib/core.js")
-var smart = __webpack_require__(/*! ./util/format-smart */ "./node_modules/stringify-entities/lib/util/format-smart.js")
-
-module.exports = encode
-
-// Encode special characters in `value`.
-function encode(value, options) {
-  // Note: Switch to `Object.assign` next major.
-  return core(value, xtend(options, {format: smart}))
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/stringify-entities/lib/escape.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/stringify-entities/lib/escape.js ***!
-  \*******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 6:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var core = __webpack_require__(/*! ./core */ "./node_modules/stringify-entities/lib/core.js")
-var smart = __webpack_require__(/*! ./util/format-smart */ "./node_modules/stringify-entities/lib/util/format-smart.js")
-
-module.exports = escape
-
-// Shortcut to escape special characters in HTML.
-function escape(value) {
-  return core(value, {
-    escapeOnly: true,
-    useNamedReferences: true,
-    format: smart
-  })
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/stringify-entities/lib/index.js":
-/*!******************************************************!*\
-  !*** ./node_modules/stringify-entities/lib/index.js ***!
-  \******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 6:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var encode = __webpack_require__(/*! ./encode */ "./node_modules/stringify-entities/lib/encode.js")
-var escape = __webpack_require__(/*! ./escape */ "./node_modules/stringify-entities/lib/escape.js")
-
-module.exports = encode
-encode.escape = escape
-
-
-/***/ }),
-
-/***/ "./node_modules/stringify-entities/lib/util/format-smart.js":
-/*!******************************************************************!*\
-  !*** ./node_modules/stringify-entities/lib/util/format-smart.js ***!
-  \******************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = formatPretty
-
-var toHexadecimal = __webpack_require__(/*! ./to-hexadecimal */ "./node_modules/stringify-entities/lib/util/to-hexadecimal.js")
-var toDecimal = __webpack_require__(/*! ./to-decimal */ "./node_modules/stringify-entities/lib/util/to-decimal.js")
-var toNamed = __webpack_require__(/*! ./to-named */ "./node_modules/stringify-entities/lib/util/to-named.js")
-
-// Encode `character` according to `options`.
-function formatPretty(code, next, options) {
-  var named
-  var numeric
-  var decimal
-
-  if (options.useNamedReferences || options.useShortestReferences) {
-    named = toNamed(
-      code,
-      next,
-      options.omitOptionalSemicolons,
-      options.attribute
-    )
-  }
-
-  if (options.useShortestReferences || !named) {
-    numeric = toHexadecimal(code, next, options.omitOptionalSemicolons)
-
-    // Use the shortest numeric reference when requested.
-    // A simple algorithm would use decimal for all code points under 100, as
-    // those are shorter than hexadecimal:
-    //
-    // * `&#99;` vs `&#x63;` (decimal shorter)
-    // * `&#100;` vs `&#x64;` (equal)
-    //
-    // However, because we take `next` into consideration when `omit` is used,
-    // And it would be possible that decimals are shorter on bigger values as
-    // well if `next` is hexadecimal but not decimal, we instead compare both.
-    if (options.useShortestReferences) {
-      decimal = toDecimal(code, next, options.omitOptionalSemicolons)
-
-      if (decimal.length < numeric.length) {
-        numeric = decimal
-      }
-    }
-  }
-
-  return named &&
-    (!options.useShortestReferences || named.length < numeric.length)
-    ? named
-    : numeric
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/stringify-entities/lib/util/to-decimal.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/stringify-entities/lib/util/to-decimal.js ***!
-  \****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = toDecimalReference
-
-var fromCharCode = __webpack_require__(/*! ../constant/from-char-code */ "./node_modules/stringify-entities/lib/constant/from-char-code.js")
-
-// Transform `code` into a decimal character reference.
-function toDecimalReference(code, next, omit) {
-  var value = '&#' + String(code)
-  return omit && next && !/\d/.test(fromCharCode(next)) ? value : value + ';'
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/stringify-entities/lib/util/to-hexadecimal.js":
-/*!********************************************************************!*\
-  !*** ./node_modules/stringify-entities/lib/util/to-hexadecimal.js ***!
-  \********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = toHexReference
-
-var fromCharCode = __webpack_require__(/*! ../constant/from-char-code */ "./node_modules/stringify-entities/lib/constant/from-char-code.js")
-
-// Transform `code` into a hexadecimal character reference.
-function toHexReference(code, next, omit) {
-  var value = '&#x' + code.toString(16).toUpperCase()
-  return omit && next && !/[\dA-Fa-f]/.test(fromCharCode(next))
-    ? value
-    : value + ';'
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/stringify-entities/lib/util/to-named.js":
-/*!**************************************************************!*\
-  !*** ./node_modules/stringify-entities/lib/util/to-named.js ***!
-  \**************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = toNamed
-
-var legacy = __webpack_require__(/*! character-entities-legacy */ "./node_modules/character-entities-legacy/index.json")
-var characters = __webpack_require__(/*! ../constant/characters */ "./node_modules/stringify-entities/lib/constant/characters.js")
-var fromCharCode = __webpack_require__(/*! ../constant/from-char-code */ "./node_modules/stringify-entities/lib/constant/from-char-code.js")
-var own = __webpack_require__(/*! ../constant/has-own-property */ "./node_modules/stringify-entities/lib/constant/has-own-property.js")
-var dangerous = __webpack_require__(/*! ../constant/dangerous.json */ "./node_modules/stringify-entities/lib/constant/dangerous.json")
-
-// Transform `code` into a named character reference.
-function toNamed(code, next, omit, attribute) {
-  var character = fromCharCode(code)
-  var name
-  var value
-
-  if (own.call(characters, character)) {
-    name = characters[character]
-    value = '&' + name
-
-    if (
-      omit &&
-      own.call(legacy, name) &&
-      dangerous.indexOf(name) === -1 &&
-      (!attribute ||
-        (next && next !== 61 /* `=` */ && /[^\da-z]/i.test(fromCharCode(next))))
-    ) {
-      return value
-    }
-
-    return value + ';'
-  }
-
-  return ''
-}
-
-
-/***/ }),
-
 /***/ "./node_modules/style-to-object/index.js":
 /*!***********************************************!*\
   !*** ./node_modules/style-to-object/index.js ***!
@@ -71282,6 +68731,7 @@ function factory(key, options) {
 /*!   export build [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   export build-node [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   export build-web [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export start [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   other exports [not provided] [no usage info] */
 /*! export version [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -71289,7 +68739,7 @@ function factory(key, options) {
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"name\":\"@dotlit/dotlit\",\"version\":\"0.0.5\",\"description\":\"\",\"main\":\"src/index.js\",\"scripts\":{\"build-web\":\"webpack --config=./webpack.web.config.js\",\"build-node\":\"webpack --config=./webpack.node.config.js\",\"build\":\"npm run build-web && npm run build-node\"},\"bin\":{\"dotlit\":\"./src/index.js\"},\"author\":\"dotlitdev\",\"license\":\"UNLICENCED\",\"dependencies\":{\"@babel/core\":\"^7.12.8\",\"@babel/plugin-transform-runtime\":\"^7.12.1\",\"@babel/preset-env\":\"^7.12.7\",\"@babel/preset-react\":\"^7.12.7\",\"@babel/preset-typescript\":\"^7.12.7\",\"@babel/register\":\"^7.12.1\",\"@isomorphic-git/lightning-fs\":\"^4.4.1\",\"assert\":\"^2.0.0\",\"babel-loader\":\"^8.2.1\",\"commander\":\"^6.2.0\",\"console-browserify\":\"^1.2.0\",\"glob\":\"^7.1.6\",\"glob-watcher\":\"^5.0.5\",\"html-whitespace-sensitive-tag-names\":\"^1.0.3\",\"mdast-util-heading-range\":\"^2.1.5\",\"mkdirp\":\"^1.0.4\",\"path-browserify\":\"^1.0.1\",\"process\":\"^0.11.10\",\"react\":\"^17.0.1\",\"react-dom\":\"^17.0.1\",\"rehype-document\":\"^5.1.0\",\"rehype-format\":\"^3.1.0\",\"rehype-react\":\"^6.2.0\",\"rehype-stringify\":\"^8.0.0\",\"remark-footnotes\":\"^3.0.0\",\"remark-frontmatter\":\"^3.0.0\",\"remark-heading-id\":\"^1.0.0\",\"remark-parse\":\"^9.0.0\",\"remark-react\":\"^8.0.0\",\"remark-rehype\":\"^8.0.0\",\"remark-slug\":\"^6.0.0\",\"remark-stringify\":\"^9.0.0\",\"remark-toc\":\"^7.0.0\",\"remark-wiki-link\":\"^1.0.2\",\"to-vfile\":\"^6.1.0\",\"unified\":\"^9.2.0\",\"unist-util-find-after\":\"^3.0.0\",\"unist-util-find-before\":\"^2.0.5\",\"unist-util-flatmap\":\"^1.0.0\",\"unist-util-generated\":\"^1.1.6\",\"unist-util-remove-position\":\"^3.0.0\",\"unist-util-select\":\"^3.0.4\",\"webpack\":\"^5.6.0\",\"webpack-cli\":\"^4.2.0\"}}");
+module.exports = JSON.parse("{\"name\":\"@dotlit/dotlit\",\"version\":\"0.0.5\",\"description\":\"\",\"main\":\"src/index.js\",\"scripts\":{\"build-web\":\"webpack --config=./webpack.web.config.js\",\"build-node\":\"webpack --config=./webpack.node.config.js\",\"build\":\"npm run build-web && npm run build-node\",\"start\":\"npm run build && rm -rf ./tests/out/* && dotlit -d 2 generate ./src -o ./build -w & http-server ./build\"},\"bin\":{\"dotlit\":\"./src/index.js\"},\"author\":\"dotlitdev\",\"license\":\"UNLICENCED\",\"dependencies\":{\"@babel/core\":\"^7.12.8\",\"@babel/plugin-transform-runtime\":\"^7.12.1\",\"@babel/preset-env\":\"^7.12.7\",\"@babel/preset-react\":\"^7.12.7\",\"@babel/preset-typescript\":\"^7.12.7\",\"@babel/register\":\"^7.12.1\",\"@isomorphic-git/lightning-fs\":\"^4.4.1\",\"assert\":\"^2.0.0\",\"babel-loader\":\"^8.2.1\",\"commander\":\"^6.2.0\",\"console-browserify\":\"^1.2.0\",\"glob\":\"^7.1.6\",\"glob-watcher\":\"^5.0.5\",\"html-whitespace-sensitive-tag-names\":\"^1.0.3\",\"mdast-util-heading-range\":\"^2.1.5\",\"mkdirp\":\"^1.0.4\",\"path-browserify\":\"^1.0.1\",\"process\":\"^0.11.10\",\"react\":\"^17.0.1\",\"react-dom\":\"^17.0.1\",\"rehype-document\":\"^5.1.0\",\"rehype-format\":\"^3.1.0\",\"rehype-react\":\"^6.2.0\",\"rehype-stringify\":\"^8.0.0\",\"remark-footnotes\":\"^3.0.0\",\"remark-frontmatter\":\"^3.0.0\",\"remark-heading-id\":\"^1.0.0\",\"remark-parse\":\"^9.0.0\",\"remark-react\":\"^8.0.0\",\"remark-rehype\":\"^8.0.0\",\"remark-slug\":\"^6.0.0\",\"remark-stringify\":\"^9.0.0\",\"remark-toc\":\"^7.0.0\",\"remark-wiki-link\":\"^1.0.2\",\"to-vfile\":\"^6.1.0\",\"unified\":\"^9.2.0\",\"unist-util-find-after\":\"^3.0.0\",\"unist-util-find-before\":\"^2.0.5\",\"unist-util-flatmap\":\"^1.0.0\",\"unist-util-generated\":\"^1.1.6\",\"unist-util-remove-position\":\"^3.0.0\",\"unist-util-select\":\"^3.0.4\",\"webpack\":\"^5.6.0\",\"webpack-cli\":\"^4.2.0\"}}");
 
 /***/ }),
 
