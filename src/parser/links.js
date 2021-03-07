@@ -51,12 +51,12 @@ export const decorateLinkNode = (link, root, filepath) => {
     link.data.isRelative = isRelative
 
     link.data.hProperties = link.data.hProperties || {}
-    link.data.hProperties.className = isAbsolute 
-      ? 'absolute'
+    link.data.hProperties.className += isAbsolute 
+      ? ' absolute'
       : isRelative
-        ? 'relative'
+        ? ' relative'
         : isFragment
-          ? 'fragment'
+          ? ' fragment'
           : ''
 
     return link
