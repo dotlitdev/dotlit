@@ -37,10 +37,9 @@ console.log(`lit:`, window.lit)
     const filecontents = await (await fetch(path.join(litroot, litsrc))).text()
     console.log('Fetched file contents:', filecontents)
     const file = await vfile({path: litsrc, contents: filecontents})
-    console.log(file)
-
-    const ast = await parser.parse(file)
-    console.log(ast)
+    const parsedFile = await parser.parse(file)
+    console.log(parsedFile)
+    window.lit.ast = parsedFile.data.ast
 
     try {
     window.lit.notebook = <App 

@@ -58538,7 +58538,7 @@ console.log("baseUrl:", baseUrl);
 console.log("lit:", window.lit);
 
 (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
-  var filecontents, file, ast;
+  var filecontents, file, parsedFile;
   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
@@ -58562,13 +58562,13 @@ console.log("lit:", window.lit);
 
         case 9:
           file = _context.sent;
-          console.log(file);
-          _context.next = 13;
+          _context.next = 12;
           return parser.parse(file);
 
-        case 13:
-          ast = _context.sent;
-          console.log(ast);
+        case 12:
+          parsedFile = _context.sent;
+          console.log(parsedFile);
+          window.lit.ast = parsedFile.data.ast;
 
           try {
             window.lit.notebook = /*#__PURE__*/React.createElement(App, {
