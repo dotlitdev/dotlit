@@ -58582,9 +58582,16 @@ console.log("lit:", window.lit);
             console.error("Error hydrating App", err);
           }
 
-          console.log(parser.processor().processSync(file));
+          _context.t0 = console;
+          _context.next = 17;
+          return parser.parse(file);
 
-        case 15:
+        case 17:
+          _context.t1 = _context.sent;
+
+          _context.t0.log.call(_context.t0, _context.t1);
+
+        case 19:
         case "end":
           return _context.stop();
       }
