@@ -1,15 +1,17 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./node_modules/@babel/runtime/helpers/arrayLikeToArray.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/arrayLikeToArray.js ***!
-  \*****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 11:0-14 */
-/***/ ((module) => {
+/***/ "./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _arrayLikeToArray)
+/* harmony export */ });
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
 
@@ -20,55 +22,55 @@ function _arrayLikeToArray(arr, len) {
   return arr2;
 }
 
-module.exports = _arrayLikeToArray;
-
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/arrayWithHoles.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/arrayWithHoles.js ***!
-  \***************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
-/***/ ((module) => {
+/***/ "./node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _arrayWithHoles)
+/* harmony export */ });
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
 
-module.exports = _arrayWithHoles;
-
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/arrayWithoutHoles.js":
-/*!******************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/arrayWithoutHoles.js ***!
-  \******************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 7:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ "./node_modules/@babel/runtime/helpers/esm/arrayWithoutHoles.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/arrayWithoutHoles.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-var arrayLikeToArray = __webpack_require__(/*! ./arrayLikeToArray */ "./node_modules/@babel/runtime/helpers/arrayLikeToArray.js");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _arrayWithoutHoles)
+/* harmony export */ });
+/* harmony import */ var _arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./arrayLikeToArray.js */ "./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js");
 
 function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) return arrayLikeToArray(arr);
+  if (Array.isArray(arr)) return (0,_arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__.default)(arr);
 }
-
-module.exports = _arrayWithoutHoles;
 
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js":
-/*!**********************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/assertThisInitialized.js ***!
-  \**********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 9:0-14 */
-/***/ ((module) => {
+/***/ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _assertThisInitialized)
+/* harmony export */ });
 function _assertThisInitialized(self) {
   if (self === void 0) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -77,19 +79,19 @@ function _assertThisInitialized(self) {
   return self;
 }
 
-module.exports = _assertThisInitialized;
-
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/asyncToGenerator.js ***!
-  \*****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 37:0-14 */
-/***/ ((module) => {
+/***/ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _asyncToGenerator)
+/* harmony export */ });
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
   try {
     var info = gen[key](arg);
@@ -126,38 +128,38 @@ function _asyncToGenerator(fn) {
   };
 }
 
-module.exports = _asyncToGenerator;
-
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/classCallCheck.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/classCallCheck.js ***!
-  \***************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 7:0-14 */
-/***/ ((module) => {
+/***/ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/classCallCheck.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _classCallCheck)
+/* harmony export */ });
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
   }
 }
 
-module.exports = _classCallCheck;
-
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/createClass.js":
-/*!************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/createClass.js ***!
-  \************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 17:0-14 */
-/***/ ((module) => {
+/***/ "./node_modules/@babel/runtime/helpers/esm/createClass.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/createClass.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _createClass)
+/* harmony export */ });
 function _defineProperties(target, props) {
   for (var i = 0; i < props.length; i++) {
     var descriptor = props[i];
@@ -174,19 +176,19 @@ function _createClass(Constructor, protoProps, staticProps) {
   return Constructor;
 }
 
-module.exports = _createClass;
-
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/defineProperty.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/defineProperty.js ***!
-  \***************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 16:0-14 */
-/***/ ((module) => {
+/***/ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/defineProperty.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _defineProperty)
+/* harmony export */ });
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -202,41 +204,40 @@ function _defineProperty(obj, key, value) {
   return obj;
 }
 
-module.exports = _defineProperty;
-
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/getPrototypeOf.js ***!
-  \***************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 2:2-16 */
-/*! CommonJS bailout: module.exports is used directly at 8:0-14 */
-/***/ ((module) => {
+/***/ "./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _getPrototypeOf)
+/* harmony export */ });
 function _getPrototypeOf(o) {
-  module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
     return o.__proto__ || Object.getPrototypeOf(o);
   };
   return _getPrototypeOf(o);
 }
 
-module.exports = _getPrototypeOf;
-
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/inherits.js":
-/*!*********************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/inherits.js ***!
-  \*********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 18:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ "./node_modules/@babel/runtime/helpers/esm/inherits.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/inherits.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-var setPrototypeOf = __webpack_require__(/*! ./setPrototypeOf */ "./node_modules/@babel/runtime/helpers/setPrototypeOf.js");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _inherits)
+/* harmony export */ });
+/* harmony import */ var _setPrototypeOf_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./setPrototypeOf.js */ "./node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js");
 
 function _inherits(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
@@ -250,39 +251,39 @@ function _inherits(subClass, superClass) {
       configurable: true
     }
   });
-  if (superClass) setPrototypeOf(subClass, superClass);
+  if (superClass) (0,_setPrototypeOf_js__WEBPACK_IMPORTED_MODULE_0__.default)(subClass, superClass);
 }
-
-module.exports = _inherits;
 
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/iterableToArray.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/iterableToArray.js ***!
-  \****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
-/***/ ((module) => {
+/***/ "./node_modules/@babel/runtime/helpers/esm/iterableToArray.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/iterableToArray.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _iterableToArray)
+/* harmony export */ });
 function _iterableToArray(iter) {
   if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
 }
 
-module.exports = _iterableToArray;
-
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/iterableToArrayLimit.js":
-/*!*********************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/iterableToArrayLimit.js ***!
-  \*********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 28:0-14 */
-/***/ ((module) => {
+/***/ "./node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _iterableToArrayLimit)
+/* harmony export */ });
 function _iterableToArrayLimit(arr, i) {
   if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
   var _arr = [];
@@ -310,81 +311,80 @@ function _iterableToArrayLimit(arr, i) {
   return _arr;
 }
 
-module.exports = _iterableToArrayLimit;
-
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/nonIterableRest.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/nonIterableRest.js ***!
-  \****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
-/***/ ((module) => {
+/***/ "./node_modules/@babel/runtime/helpers/esm/nonIterableRest.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/nonIterableRest.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _nonIterableRest)
+/* harmony export */ });
 function _nonIterableRest() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
-module.exports = _nonIterableRest;
-
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/nonIterableSpread.js":
-/*!******************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/nonIterableSpread.js ***!
-  \******************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
-/***/ ((module) => {
+/***/ "./node_modules/@babel/runtime/helpers/esm/nonIterableSpread.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/nonIterableSpread.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _nonIterableSpread)
+/* harmony export */ });
 function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
-module.exports = _nonIterableSpread;
-
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js":
-/*!**************************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js ***!
-  \**************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 13:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ "./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-var _typeof = __webpack_require__(/*! @babel/runtime/helpers/typeof */ "./node_modules/@babel/runtime/helpers/typeof.js");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _possibleConstructorReturn)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/typeof */ "./node_modules/@babel/runtime/helpers/esm/typeof.js");
+/* harmony import */ var _assertThisInitialized_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./assertThisInitialized.js */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
 
-var assertThisInitialized = __webpack_require__(/*! ./assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js");
 
 function _possibleConstructorReturn(self, call) {
-  if (call && (_typeof(call) === "object" || typeof call === "function")) {
+  if (call && ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__.default)(call) === "object" || typeof call === "function")) {
     return call;
   }
 
-  return assertThisInitialized(self);
+  return (0,_assertThisInitialized_js__WEBPACK_IMPORTED_MODULE_1__.default)(self);
 }
-
-module.exports = _possibleConstructorReturn;
 
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/setPrototypeOf.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/setPrototypeOf.js ***!
-  \***************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 2:2-16 */
-/*! CommonJS bailout: module.exports is used directly at 10:0-14 */
-/***/ ((module) => {
+/***/ "./node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _setPrototypeOf)
+/* harmony export */ });
 function _setPrototypeOf(o, p) {
-  module.exports = _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+  _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
     o.__proto__ = p;
     return o;
   };
@@ -392,80 +392,78 @@ function _setPrototypeOf(o, p) {
   return _setPrototypeOf(o, p);
 }
 
-module.exports = _setPrototypeOf;
-
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/slicedToArray.js":
-/*!**************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/slicedToArray.js ***!
-  \**************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 13:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/slicedToArray.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-var arrayWithHoles = __webpack_require__(/*! ./arrayWithHoles */ "./node_modules/@babel/runtime/helpers/arrayWithHoles.js");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _slicedToArray)
+/* harmony export */ });
+/* harmony import */ var _arrayWithHoles_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./arrayWithHoles.js */ "./node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js");
+/* harmony import */ var _iterableToArrayLimit_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./iterableToArrayLimit.js */ "./node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js");
+/* harmony import */ var _unsupportedIterableToArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./unsupportedIterableToArray.js */ "./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js");
+/* harmony import */ var _nonIterableRest_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./nonIterableRest.js */ "./node_modules/@babel/runtime/helpers/esm/nonIterableRest.js");
 
-var iterableToArrayLimit = __webpack_require__(/*! ./iterableToArrayLimit */ "./node_modules/@babel/runtime/helpers/iterableToArrayLimit.js");
 
-var unsupportedIterableToArray = __webpack_require__(/*! ./unsupportedIterableToArray */ "./node_modules/@babel/runtime/helpers/unsupportedIterableToArray.js");
 
-var nonIterableRest = __webpack_require__(/*! ./nonIterableRest */ "./node_modules/@babel/runtime/helpers/nonIterableRest.js");
 
 function _slicedToArray(arr, i) {
-  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || unsupportedIterableToArray(arr, i) || nonIterableRest();
+  return (0,_arrayWithHoles_js__WEBPACK_IMPORTED_MODULE_0__.default)(arr) || (0,_iterableToArrayLimit_js__WEBPACK_IMPORTED_MODULE_1__.default)(arr, i) || (0,_unsupportedIterableToArray_js__WEBPACK_IMPORTED_MODULE_2__.default)(arr, i) || (0,_nonIterableRest_js__WEBPACK_IMPORTED_MODULE_3__.default)();
 }
-
-module.exports = _slicedToArray;
 
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/toConsumableArray.js":
-/*!******************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/toConsumableArray.js ***!
-  \******************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 13:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ "./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-var arrayWithoutHoles = __webpack_require__(/*! ./arrayWithoutHoles */ "./node_modules/@babel/runtime/helpers/arrayWithoutHoles.js");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _toConsumableArray)
+/* harmony export */ });
+/* harmony import */ var _arrayWithoutHoles_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./arrayWithoutHoles.js */ "./node_modules/@babel/runtime/helpers/esm/arrayWithoutHoles.js");
+/* harmony import */ var _iterableToArray_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./iterableToArray.js */ "./node_modules/@babel/runtime/helpers/esm/iterableToArray.js");
+/* harmony import */ var _unsupportedIterableToArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./unsupportedIterableToArray.js */ "./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js");
+/* harmony import */ var _nonIterableSpread_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./nonIterableSpread.js */ "./node_modules/@babel/runtime/helpers/esm/nonIterableSpread.js");
 
-var iterableToArray = __webpack_require__(/*! ./iterableToArray */ "./node_modules/@babel/runtime/helpers/iterableToArray.js");
 
-var unsupportedIterableToArray = __webpack_require__(/*! ./unsupportedIterableToArray */ "./node_modules/@babel/runtime/helpers/unsupportedIterableToArray.js");
 
-var nonIterableSpread = __webpack_require__(/*! ./nonIterableSpread */ "./node_modules/@babel/runtime/helpers/nonIterableSpread.js");
 
 function _toConsumableArray(arr) {
-  return arrayWithoutHoles(arr) || iterableToArray(arr) || unsupportedIterableToArray(arr) || nonIterableSpread();
+  return (0,_arrayWithoutHoles_js__WEBPACK_IMPORTED_MODULE_0__.default)(arr) || (0,_iterableToArray_js__WEBPACK_IMPORTED_MODULE_1__.default)(arr) || (0,_unsupportedIterableToArray_js__WEBPACK_IMPORTED_MODULE_2__.default)(arr) || (0,_nonIterableSpread_js__WEBPACK_IMPORTED_MODULE_3__.default)();
 }
-
-module.exports = _toConsumableArray;
 
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/typeof.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/typeof.js ***!
-  \*******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 5:4-18 */
-/*! CommonJS bailout: module.exports is used directly at 9:4-18 */
-/*! CommonJS bailout: module.exports is used directly at 17:0-14 */
-/***/ ((module) => {
+/***/ "./node_modules/@babel/runtime/helpers/esm/typeof.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/typeof.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _typeof)
+/* harmony export */ });
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    module.exports = _typeof = function _typeof(obj) {
+    _typeof = function _typeof(obj) {
       return typeof obj;
     };
   } else {
-    module.exports = _typeof = function _typeof(obj) {
+    _typeof = function _typeof(obj) {
       return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
     };
   }
@@ -473,31 +471,29 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
-module.exports = _typeof;
-
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/unsupportedIterableToArray.js":
-/*!***************************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/unsupportedIterableToArray.js ***!
-  \***************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 12:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ "./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-var arrayLikeToArray = __webpack_require__(/*! ./arrayLikeToArray */ "./node_modules/@babel/runtime/helpers/arrayLikeToArray.js");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _unsupportedIterableToArray)
+/* harmony export */ });
+/* harmony import */ var _arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./arrayLikeToArray.js */ "./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js");
 
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
-  if (typeof o === "string") return arrayLikeToArray(o, minLen);
+  if (typeof o === "string") return (0,_arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__.default)(o, minLen);
   var n = Object.prototype.toString.call(o).slice(8, -1);
   if (n === "Object" && o.constructor) n = o.constructor.name;
   if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return arrayLikeToArray(o, minLen);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return (0,_arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__.default)(o, minLen);
 }
-
-module.exports = _unsupportedIterableToArray;
 
 /***/ }),
 
@@ -505,10 +501,6 @@ module.exports = _unsupportedIterableToArray;
 /*!**********************************************************!*\
   !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
   \**********************************************************/
-/*! dynamic exports */
-/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/regenerator-runtime/runtime.js .__esModule */
-/*! other exports [maybe provided (runtime-defined)] [no usage info] -> ./node_modules/regenerator-runtime/runtime.js */
-/*! runtime requirements: module, __webpack_require__ */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/regenerator-runtime/runtime.js");
@@ -520,30 +512,19 @@ module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/
 /*!*********************************************************************!*\
   !*** ./node_modules/@isomorphic-git/idb-keyval/dist/idb-keyval.mjs ***!
   \*********************************************************************/
-/*! namespace exports */
-/*! export Store [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export clear [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export close [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export del [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export get [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export keys [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export set [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export update [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Store": () => /* binding */ Store,
-/* harmony export */   "get": () => /* binding */ get,
-/* harmony export */   "set": () => /* binding */ set,
-/* harmony export */   "update": () => /* binding */ update,
-/* harmony export */   "del": () => /* binding */ del,
-/* harmony export */   "clear": () => /* binding */ clear,
-/* harmony export */   "keys": () => /* binding */ keys,
-/* harmony export */   "close": () => /* binding */ close
+/* harmony export */   "Store": () => (/* binding */ Store),
+/* harmony export */   "get": () => (/* binding */ get),
+/* harmony export */   "set": () => (/* binding */ set),
+/* harmony export */   "update": () => (/* binding */ update),
+/* harmony export */   "del": () => (/* binding */ del),
+/* harmony export */   "clear": () => (/* binding */ clear),
+/* harmony export */   "keys": () => (/* binding */ keys),
+/* harmony export */   "close": () => (/* binding */ close)
 /* harmony export */ });
 class Store {
     constructor(dbName = 'keyval-store', storeName = 'keyval') {
@@ -644,9 +625,6 @@ function close(store = getDefaultStore()) {
 /*!******************************************************************!*\
   !*** ./node_modules/@isomorphic-git/lightning-fs/src/CacheFS.js ***!
   \******************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 6:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 const path = __webpack_require__(/*! ./path.js */ "./node_modules/@isomorphic-git/lightning-fs/src/path.js");
@@ -923,9 +901,6 @@ module.exports = class CacheFS {
 /*!*************************************************************************!*\
   !*** ./node_modules/@isomorphic-git/lightning-fs/src/DefaultBackend.js ***!
   \*************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 13:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 const { encode, decode } = __webpack_require__(/*! isomorphic-textencoder */ "./node_modules/isomorphic-textencoder/browser.js");
@@ -1116,9 +1091,6 @@ module.exports = class DefaultBackend {
 /*!**********************************************************************!*\
   !*** ./node_modules/@isomorphic-git/lightning-fs/src/HttpBackend.js ***!
   \**********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = class HttpBackend {
@@ -1153,9 +1125,6 @@ module.exports = class HttpBackend {
 /*!*********************************************************************!*\
   !*** ./node_modules/@isomorphic-git/lightning-fs/src/IdbBackend.js ***!
   \*********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 const idb = __webpack_require__(/*! @isomorphic-git/idb-keyval */ "./node_modules/@isomorphic-git/idb-keyval/dist/idb-keyval.mjs");
@@ -1196,9 +1165,6 @@ module.exports = class IdbBackend {
 /*!****************************************************************!*\
   !*** ./node_modules/@isomorphic-git/lightning-fs/src/Mutex.js ***!
   \****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 const idb = __webpack_require__(/*! @isomorphic-git/idb-keyval */ "./node_modules/@isomorphic-git/idb-keyval/dist/idb-keyval.mjs");
@@ -1292,9 +1258,6 @@ module.exports = class Mutex {
 /*!*****************************************************************!*\
   !*** ./node_modules/@isomorphic-git/lightning-fs/src/Mutex2.js ***!
   \*****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = class Mutex {
@@ -1354,9 +1317,6 @@ module.exports = class Mutex {
 /*!************************************************************************!*\
   !*** ./node_modules/@isomorphic-git/lightning-fs/src/PromisifiedFS.js ***!
   \************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 43:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 const DefaultBackend = __webpack_require__(/*! ./DefaultBackend.js */ "./node_modules/@isomorphic-git/lightning-fs/src/DefaultBackend.js");
@@ -1568,9 +1528,6 @@ module.exports = class PromisifiedFS {
 /*!***************************************************************!*\
   !*** ./node_modules/@isomorphic-git/lightning-fs/src/Stat.js ***!
   \***************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = class Stat {
@@ -1603,9 +1560,6 @@ module.exports = class Stat {
 /*!*****************************************************************!*\
   !*** ./node_modules/@isomorphic-git/lightning-fs/src/errors.js ***!
   \*****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 21:0-14 */
 /***/ ((module) => {
 
 function Err(name) {
@@ -1637,9 +1591,6 @@ module.exports = { EEXIST, ENOENT, ENOTDIR, ENOTEMPTY, ETIMEDOUT };
 /*!****************************************************************!*\
   !*** ./node_modules/@isomorphic-git/lightning-fs/src/index.js ***!
   \****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 14:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 const once = __webpack_require__(/*! just-once */ "./node_modules/just-once/index.js");
@@ -1738,9 +1689,6 @@ module.exports = class FS {
 /*!***************************************************************!*\
   !*** ./node_modules/@isomorphic-git/lightning-fs/src/path.js ***!
   \***************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 100:0-14 */
 /***/ ((module) => {
 
 function normalizePath(path) {
@@ -1858,15 +1806,12 @@ module.exports = {
 /*!******************************************************************!*\
   !*** ./node_modules/@mapbox/hast-util-table-cell-style/index.js ***!
   \******************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 13:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var visit = __webpack_require__(/*! unist-util-visit */ "./node_modules/@mapbox/hast-util-table-cell-style/node_modules/unist-util-visit/index.js");
+var visit = __webpack_require__(/*! unist-util-visit */ "./node_modules/unist-util-visit/index.js");
 
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 var hastCssPropertyMap = {
@@ -1916,381 +1861,23 @@ function appendStyle(node, property, value) {
 
 /***/ }),
 
-/***/ "./node_modules/@mapbox/hast-util-table-cell-style/node_modules/unist-util-is/convert.js":
-/*!***********************************************************************************************!*\
-  !*** ./node_modules/@mapbox/hast-util-table-cell-style/node_modules/unist-util-is/convert.js ***!
-  \***********************************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
-/***/ ((module) => {
-
-"use strict";
-
-
-module.exports = convert
-
-function convert(test) {
-  if (typeof test === 'string') {
-    return typeFactory(test)
-  }
-
-  if (test === null || test === undefined) {
-    return ok
-  }
-
-  if (typeof test === 'object') {
-    return ('length' in test ? anyFactory : matchesFactory)(test)
-  }
-
-  if (typeof test === 'function') {
-    return test
-  }
-
-  throw new Error('Expected function, string, or object as test')
-}
-
-function convertAll(tests) {
-  var results = []
-  var length = tests.length
-  var index = -1
-
-  while (++index < length) {
-    results[index] = convert(tests[index])
-  }
-
-  return results
-}
-
-// Utility assert each property in `test` is represented in `node`, and each
-// values are strictly equal.
-function matchesFactory(test) {
-  return matches
-
-  function matches(node) {
-    var key
-
-    for (key in test) {
-      if (node[key] !== test[key]) {
-        return false
-      }
-    }
-
-    return true
-  }
-}
-
-function anyFactory(tests) {
-  var checks = convertAll(tests)
-  var length = checks.length
-
-  return matches
-
-  function matches() {
-    var index = -1
-
-    while (++index < length) {
-      if (checks[index].apply(this, arguments)) {
-        return true
-      }
-    }
-
-    return false
-  }
-}
-
-// Utility to convert a string into a function which checks a given node’s type
-// for said string.
-function typeFactory(test) {
-  return type
-
-  function type(node) {
-    return Boolean(node && node.type === test)
-  }
-}
-
-// Utility to return true.
-function ok() {
-  return true
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/@mapbox/hast-util-table-cell-style/node_modules/unist-util-visit-parents/index.js":
-/*!********************************************************************************************************!*\
-  !*** ./node_modules/@mapbox/hast-util-table-cell-style/node_modules/unist-util-visit-parents/index.js ***!
-  \********************************************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-module.exports = visitParents
-
-var convert = __webpack_require__(/*! unist-util-is/convert */ "./node_modules/@mapbox/hast-util-table-cell-style/node_modules/unist-util-is/convert.js")
-
-var CONTINUE = true
-var SKIP = 'skip'
-var EXIT = false
-
-visitParents.CONTINUE = CONTINUE
-visitParents.SKIP = SKIP
-visitParents.EXIT = EXIT
-
-function visitParents(tree, test, visitor, reverse) {
-  var is
-
-  if (typeof test === 'function' && typeof visitor !== 'function') {
-    reverse = visitor
-    visitor = test
-    test = null
-  }
-
-  is = convert(test)
-
-  one(tree, null, [])
-
-  // Visit a single node.
-  function one(node, index, parents) {
-    var result = []
-    var subresult
-
-    if (!test || is(node, index, parents[parents.length - 1] || null)) {
-      result = toResult(visitor(node, parents))
-
-      if (result[0] === EXIT) {
-        return result
-      }
-    }
-
-    if (node.children && result[0] !== SKIP) {
-      subresult = toResult(all(node.children, parents.concat(node)))
-      return subresult[0] === EXIT ? subresult : result
-    }
-
-    return result
-  }
-
-  // Visit children in `parent`.
-  function all(children, parents) {
-    var min = -1
-    var step = reverse ? -1 : 1
-    var index = (reverse ? children.length : min) + step
-    var result
-
-    while (index > min && index < children.length) {
-      result = one(children[index], index, parents)
-
-      if (result[0] === EXIT) {
-        return result
-      }
-
-      index = typeof result[1] === 'number' ? result[1] : index + step
-    }
-  }
-}
-
-function toResult(value) {
-  if (value !== null && typeof value === 'object' && 'length' in value) {
-    return value
-  }
-
-  if (typeof value === 'number') {
-    return [CONTINUE, value]
-  }
-
-  return [value]
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/@mapbox/hast-util-table-cell-style/node_modules/unist-util-visit/index.js":
-/*!************************************************************************************************!*\
-  !*** ./node_modules/@mapbox/hast-util-table-cell-style/node_modules/unist-util-visit/index.js ***!
-  \************************************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-module.exports = visit
-
-var visitParents = __webpack_require__(/*! unist-util-visit-parents */ "./node_modules/@mapbox/hast-util-table-cell-style/node_modules/unist-util-visit-parents/index.js")
-
-var CONTINUE = visitParents.CONTINUE
-var SKIP = visitParents.SKIP
-var EXIT = visitParents.EXIT
-
-visit.CONTINUE = CONTINUE
-visit.SKIP = SKIP
-visit.EXIT = EXIT
-
-function visit(tree, test, visitor, reverse) {
-  if (typeof test === 'function' && typeof visitor !== 'function') {
-    reverse = visitor
-    visitor = test
-    test = null
-  }
-
-  visitParents(tree, test, overload, reverse)
-
-  function overload(node, parents) {
-    var parent = parents[parents.length - 1]
-    var index = parent ? parent.children.indexOf(node) : null
-    return visitor(node, index, parent)
-  }
-}
-
-
-/***/ }),
-
-/***/ "./src/client/index.jsx":
-/*!******************************!*\
-  !*** ./src/client/index.jsx ***!
-  \******************************/
-/*! namespace exports */
-/*! exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__);
-
-
-
-var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-
-var parser = __webpack_require__(/*! ../parser */ "./src/parser/index.js");
-
-var renderer = __webpack_require__(/*! ../renderer */ "./src/renderer/index.jsx");
-
-var App = __webpack_require__(/*! ../components/App */ "./src/components/App.jsx").default;
-
-var vfile = __webpack_require__(/*! vfile */ "./node_modules/vfile/index.js");
-
-var path = __webpack_require__(/*! path */ "./node_modules/path-browserify/index.js");
-
-var FS = __webpack_require__(/*! @isomorphic-git/lightning-fs */ "./node_modules/@isomorphic-git/lightning-fs/src/index.js");
-
-var litsrc = document.querySelector('meta[name="litsrc"]').getAttribute('value');
-var litroot = document.querySelector('meta[name="litroot"]').getAttribute('value');
-var baseUrl = "".concat(location.protocol, "//").concat(location.host).concat(path.join(path.dirname(location.pathname), litroot));
-var fs = new FS(baseUrl);
-window.lit = {
-  path: path,
-  parser: parser,
-  App: App,
-  vfile: vfile,
-  fs: fs,
-  litsrc: litsrc,
-  litroot: litroot,
-  baseUrl: baseUrl
-};
-console.log('.lit Notebook client initializing...');
-console.log("litsrc:", litsrc);
-console.log("litroot:", litroot);
-console.log("baseUrl:", baseUrl);
-console.log("lit:", window.lit);
-
-_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-  var filecontents, file;
-  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-    while (1) {
-      switch (_context.prev = _context.next) {
-        case 0:
-          console.log("Fetching file content", litroot, litsrc, path.join(litroot, litsrc));
-          _context.next = 3;
-          return fetch(path.join(litroot, litsrc));
-
-        case 3:
-          _context.next = 5;
-          return _context.sent.text();
-
-        case 5:
-          filecontents = _context.sent;
-          console.log('Fetched file contents:', filecontents);
-          _context.next = 9;
-          return vfile({
-            path: litsrc,
-            contents: filecontents
-          });
-
-        case 9:
-          file = _context.sent;
-          console.log(file);
-
-          try {
-            window.lit.notebook = /*#__PURE__*/React.createElement(App, {
-              title: file.stem,
-              src: file.contents.toString(),
-              root: litroot,
-              path: file.path,
-              permalinks: {},
-              processor: renderer.processor(litroot, file.path)
-            });
-          } catch (err) {
-            console.error("Error instantiating App", err);
-          }
-
-          console.log('notebook', window.lit.notebook);
-
-          try {
-            ReactDOM.hydrate(window.lit.notebook, document.getElementById('app'));
-          } catch (err) {
-            console.error("Error hydrating App", err);
-          }
-
-        case 14:
-        case "end":
-          return _context.stop();
-      }
-    }
-  }, _callee);
-}))();
-
-/***/ }),
-
 /***/ "./src/components/App.jsx":
 /*!********************************!*\
   !*** ./src/components/App.jsx ***!
   \********************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ App
+/* harmony export */   "default": () => (/* binding */ App)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js");
-/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 
@@ -2299,31 +1886,31 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5___default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5___default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4___default()(this, result); }; }
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__.default)(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__.default)(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__.default)(this, result); }; }
 
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 
 
 var App = /*#__PURE__*/function (_React$Component) {
-  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3___default()(App, _React$Component);
+  (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3__.default)(App, _React$Component);
 
   var _super = _createSuper(App);
 
   function App(props) {
     var _this;
 
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, App);
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__.default)(this, App);
 
     _this = _super.call(this, props);
     _this.state = {
       src: props.src
     };
-    _this.onChange = _this.onChange.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2___default()(_this));
+    _this.onChange = _this.onChange.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__.default)(_this));
     return _this;
   }
 
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(App, [{
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__.default)(App, [{
     key: "onChange",
     value: function onChange(ev) {
       this.setState({
@@ -2350,27 +1937,18 @@ var App = /*#__PURE__*/function (_React$Component) {
 /*!**************************************!*\
   !*** ./src/components/Backlinks.jsx ***!
   \**************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ Backlinks
+/* harmony export */   "default": () => (/* binding */ Backlinks)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var path__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! path */ "./node_modules/path-browserify/index.js");
 /* harmony import */ var path__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_6__);
@@ -2380,25 +1958,25 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default()(this, result); }; }
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__.default)(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__.default)(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__.default)(this, result); }; }
 
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 
 
 
 var Backlinks = /*#__PURE__*/function (_React$Component) {
-  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default()(Backlinks, _React$Component);
+  (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__.default)(Backlinks, _React$Component);
 
   var _super = _createSuper(Backlinks);
 
   function Backlinks() {
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, Backlinks);
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__.default)(this, Backlinks);
 
     return _super.apply(this, arguments);
   }
 
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(Backlinks, [{
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__.default)(Backlinks, [{
     key: "render",
     value: function render() {
       var _this = this;
@@ -2423,27 +2001,18 @@ var Backlinks = /*#__PURE__*/function (_React$Component) {
 /*!*************************************!*\
   !*** ./src/components/Document.jsx ***!
   \*************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ Document
+/* harmony export */   "default": () => (/* binding */ Document)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var path__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! path */ "./node_modules/path-browserify/index.js");
 /* harmony import */ var path__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_6__);
@@ -2455,9 +2024,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default()(this, result); }; }
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__.default)(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__.default)(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__.default)(this, result); }; }
 
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 
 
@@ -2465,17 +2034,17 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 
 var Document = /*#__PURE__*/function (_React$Component) {
-  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default()(Document, _React$Component);
+  (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__.default)(Document, _React$Component);
 
   var _super = _createSuper(Document);
 
   function Document() {
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, Document);
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__.default)(this, Document);
 
     return _super.apply(this, arguments);
   }
 
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(Document, [{
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__.default)(Document, [{
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("html", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("head", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("title", null, this.props.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("meta", {
@@ -2484,10 +2053,15 @@ var Document = /*#__PURE__*/function (_React$Component) {
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("meta", {
         name: "litroot",
         value: this.props.root
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("meta", {
+        name: "viewport",
+        content: "width=device-width, initial-scale=1"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("link", {
         rel: "stylesheet",
         href: path__WEBPACK_IMPORTED_MODULE_6___default().join(this.props.root, 'style.css')
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("script", {
+        src: "//cdn.jsdelivr.net/npm/eruda"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("script", null, "eruda.init();"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("script", {
         src: path__WEBPACK_IMPORTED_MODULE_6___default().join(this.props.root, 'web.bundle.js')
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("body", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("div", {
         id: "app"
@@ -2511,27 +2085,18 @@ var Document = /*#__PURE__*/function (_React$Component) {
 /*!*******************************************!*\
   !*** ./src/components/base/Codeblock.jsx ***!
   \*******************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ Codeblock
+/* harmony export */   "default": () => (/* binding */ Codeblock)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 
@@ -2539,24 +2104,24 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default()(this, result); }; }
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__.default)(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__.default)(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__.default)(this, result); }; }
 
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 
 
 var Meta = /*#__PURE__*/function (_React$Component) {
-  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default()(Meta, _React$Component);
+  (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__.default)(Meta, _React$Component);
 
   var _super = _createSuper(Meta);
 
   function Meta() {
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, Meta);
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__.default)(this, Meta);
 
     return _super.apply(this, arguments);
   }
 
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(Meta, [{
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__.default)(Meta, [{
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("span", {
@@ -2569,17 +2134,17 @@ var Meta = /*#__PURE__*/function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_5__.Component);
 
 var Codeblock = /*#__PURE__*/function (_React$Component2) {
-  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default()(Codeblock, _React$Component2);
+  (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__.default)(Codeblock, _React$Component2);
 
   var _super2 = _createSuper(Codeblock);
 
   function Codeblock() {
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, Codeblock);
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__.default)(this, Codeblock);
 
     return _super2.apply(this, arguments);
   }
 
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(Codeblock, [{
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__.default)(Codeblock, [{
     key: "render",
     value: function render() {
       var codeNode = this.props.node.children && this.props.node.children.length == 1 && this.props.node.children[0].type === 'code' ? this.props.node.children[0] : null;
@@ -2608,27 +2173,18 @@ var Codeblock = /*#__PURE__*/function (_React$Component2) {
 /*!**************************************!*\
   !*** ./src/components/base/Link.jsx ***!
   \**************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ Link
+/* harmony export */   "default": () => (/* binding */ Link)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 
@@ -2636,24 +2192,24 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default()(this, result); }; }
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__.default)(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__.default)(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__.default)(this, result); }; }
 
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 
 
 var Link = /*#__PURE__*/function (_React$Component) {
-  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default()(Link, _React$Component);
+  (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__.default)(Link, _React$Component);
 
   var _super = _createSuper(Link);
 
   function Link() {
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, Link);
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__.default)(this, Link);
 
     return _super.apply(this, arguments);
   }
 
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(Link, [{
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__.default)(Link, [{
     key: "render",
     value: function render() {
       var title = this.props.node.properties.title;
@@ -2676,27 +2232,18 @@ var Link = /*#__PURE__*/function (_React$Component) {
 /*!*******************************************!*\
   !*** ./src/components/base/Paragraph.jsx ***!
   \*******************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ Paragraph
+/* harmony export */   "default": () => (/* binding */ Paragraph)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 
@@ -2704,24 +2251,24 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default()(this, result); }; }
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__.default)(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__.default)(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__.default)(this, result); }; }
 
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 
 
 var Paragraph = /*#__PURE__*/function (_React$Component) {
-  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default()(Paragraph, _React$Component);
+  (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__.default)(Paragraph, _React$Component);
 
   var _super = _createSuper(Paragraph);
 
   function Paragraph() {
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, Paragraph);
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__.default)(this, Paragraph);
 
     return _super.apply(this, arguments);
   }
 
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(Paragraph, [{
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__.default)(Paragraph, [{
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("p", {
@@ -2741,16 +2288,12 @@ var Paragraph = /*#__PURE__*/function (_React$Component) {
 /*!*****************************!*\
   !*** ./src/parser/cells.js ***!
   \*****************************/
-/*! namespace exports */
-/*! export reduceIntoCells [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "reduceIntoCells": () => /* binding */ reduceIntoCells
+/* harmony export */   "reduceIntoCells": () => (/* binding */ reduceIntoCells)
 /* harmony export */ });
 /* harmony import */ var unist_util_visit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! unist-util-visit */ "./node_modules/unist-util-visit/index.js");
 /* harmony import */ var unist_util_visit__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(unist_util_visit__WEBPACK_IMPORTED_MODULE_0__);
@@ -2784,21 +2327,15 @@ function reduceIntoCells(nodes) {
 /*!**********************************!*\
   !*** ./src/parser/codeblocks.js ***!
   \**********************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (/* export default binding */ __WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js");
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
 /* harmony import */ var unist_util_visit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! unist-util-visit */ "./node_modules/unist-util-visit/index.js");
 /* harmony import */ var unist_util_visit__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(unist_util_visit__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var unist_util_find_before__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! unist-util-find-before */ "./node_modules/unist-util-find-before/index.js");
@@ -2812,7 +2349,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 
 
@@ -2845,20 +2382,20 @@ function parseMeta(node) {
   var isOutput = meta && meta[0] === '>'; // example meta in (): ```lang (name.ext#tag attr=value)
 
   var _ref = !isOutput ? meta.split('>') : [meta.split('>')[1]],
-      _ref2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref, 2),
+      _ref2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__.default)(_ref, 2),
       input = _ref2[0],
       output = _ref2[1];
 
   var langMatch = input && input.match(/^(\S)+/);
 
   var _ref3 = langMatch ? langMatch : '',
-      _ref4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref3, 1),
+      _ref4 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__.default)(_ref3, 1),
       lang = _ref4[0];
 
   var filenameMatch = input && input.match(/^\S+\s?([^\s#]+)/);
 
   var _ref5 = filenameMatch ? filenameMatch : '',
-      _ref6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref5, 1),
+      _ref6 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__.default)(_ref5, 1),
       filename = _ref6[0];
 
   var tagsMatch = input && input.match(/#\S+/g);
@@ -2867,12 +2404,12 @@ function parseMeta(node) {
   }) : [];
   var attrsMatch = input && input.match(/[a-zA-Z-0-9-_]+="?[^"\s]*"?/g);
   var attrs = !attrsMatch ? {} : attrsMatch.reduce(function (memo, attr) {
-    return _objectSpread(_objectSpread({}, memo), {}, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()({}, attr.split('=')[0], [attr.split('=')[1]]));
+    return _objectSpread(_objectSpread({}, memo), {}, (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__.default)({}, attr.split('=')[0], [attr.split('=')[1]]));
   }, {});
 
   if (output) {
     var _output$trim$match = output.trim().match(/^(\S+)\s?(.*)?/),
-        _output$trim$match2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_output$trim$match, 3),
+        _output$trim$match2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__.default)(_output$trim$match, 3),
         full = _output$trim$match2[0],
         outputLang = _output$trim$match2[1],
         outputMeta = _output$trim$match2[2];
@@ -2906,25 +2443,18 @@ function parseMeta(node) {
 /*!*****************************!*\
   !*** ./src/parser/index.js ***!
   \*****************************/
-/*! namespace exports */
-/*! export parse [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export processor [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export stringify [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "processor": () => /* binding */ processor,
-/* harmony export */   "parse": () => /* binding */ parse,
-/* harmony export */   "stringify": () => /* binding */ stringify
+/* harmony export */   "processor": () => (/* binding */ processor),
+/* harmony export */   "parse": () => (/* binding */ parse),
+/* harmony export */   "stringify": () => (/* binding */ stringify)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var unified__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! unified */ "./node_modules/unified/index.js");
 /* harmony import */ var unified__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(unified__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var remark_parse__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! remark-parse */ "./node_modules/remark-parse/index.js");
@@ -2993,9 +2523,9 @@ function parse(_x, _x2) {
 }
 
 function _parse() {
-  _parse = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(vfile, options) {
+  _parse = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(vfile, options) {
     var p, ast;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
@@ -3041,22 +2571,15 @@ function stringify(vfile) {
 /*!*****************************!*\
   !*** ./src/parser/links.js ***!
   \*****************************/
-/*! namespace exports */
-/*! export decorateLinkNode [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export nameToPermalinks [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export nodeMappings [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export resolveLinks [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "resolveLinks": () => /* binding */ resolveLinks,
-/* harmony export */   "decorateLinkNode": () => /* binding */ decorateLinkNode,
-/* harmony export */   "nameToPermalinks": () => /* binding */ nameToPermalinks,
-/* harmony export */   "nodeMappings": () => /* binding */ nodeMappings
+/* harmony export */   "resolveLinks": () => (/* binding */ resolveLinks),
+/* harmony export */   "decorateLinkNode": () => (/* binding */ decorateLinkNode),
+/* harmony export */   "nameToPermalinks": () => (/* binding */ nameToPermalinks),
+/* harmony export */   "nodeMappings": () => (/* binding */ nodeMappings)
 /* harmony export */ });
 /* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! path */ "./node_modules/path-browserify/index.js");
 /* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_0__);
@@ -3145,21 +2668,15 @@ var nodeMappings = function nodeMappings(files) {
 /*!********************************!*\
   !*** ./src/parser/sections.js ***!
   \********************************/
-/*! namespace exports */
-/*! export groupIntoSections [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ungroupSections [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "groupIntoSections": () => /* binding */ groupIntoSections,
-/* harmony export */   "ungroupSections": () => /* binding */ ungroupSections
+/* harmony export */   "groupIntoSections": () => (/* binding */ groupIntoSections),
+/* harmony export */   "ungroupSections": () => (/* binding */ ungroupSections)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ "./node_modules/@babel/runtime/helpers/toConsumableArray.js");
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ "./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js");
 /* harmony import */ var mdast_util_heading_range__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! mdast-util-heading-range */ "./node_modules/mdast-util-heading-range/index.js");
 /* harmony import */ var mdast_util_heading_range__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(mdast_util_heading_range__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var unist_util_generated__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! unist-util-generated */ "./node_modules/unist-util-generated/index.js");
@@ -3189,7 +2706,7 @@ var wrapSection = function wrapSection(options) {
 
     var cells = [];
     var newCell = null;
-    nodes = [start].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(nodes));
+    nodes = [start].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__.default)(nodes));
     nodes.map(function (current) {
       var node = current; //removePosition(current)
 
@@ -3282,18 +2799,13 @@ var ungroupSections = function ungroupSections() {
 /*!********************************!*\
   !*** ./src/renderer/index.jsx ***!
   \********************************/
-/*! namespace exports */
-/*! export processor [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export renderToVfile [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "processor": () => /* binding */ processor,
-/* harmony export */   "renderToVfile": () => /* binding */ renderToVfile
+/* harmony export */   "processor": () => (/* binding */ processor),
+/* harmony export */   "renderToVfile": () => (/* binding */ renderToVfile)
 /* harmony export */ });
 /* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! path */ "./node_modules/path-browserify/index.js");
 /* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_0__);
@@ -3357,9 +2869,6 @@ function renderToVfile(vfile, cmd, links) {
 /*!******************************!*\
   !*** ./src/utils/console.js ***!
   \******************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: __webpack_require__, module */
-/*! CommonJS bailout: module.exports is used directly at 31:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /* provided dependency */ var process = __webpack_require__(/*! process/browser */ "./node_modules/process/browser.js");
@@ -3409,9 +2918,6 @@ module.exports = {
 /*!************************************!*\
   !*** ./node_modules/bail/index.js ***!
   \************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -3432,9 +2938,6 @@ function bail(err) {
 /*!****************************************!*\
   !*** ./node_modules/boolbase/index.js ***!
   \****************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = {
@@ -3452,11 +2955,6 @@ module.exports = {
 /*!******************************************************!*\
   !*** ./node_modules/comma-separated-tokens/index.js ***!
   \******************************************************/
-/*! default exports */
-/*! export parse [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export stringify [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__ */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -3520,11 +3018,6 @@ function stringify(values, options) {
 /*!*******************************************************!*\
   !*** ./node_modules/css-selector-parser/lib/index.js ***!
   \*******************************************************/
-/*! flagged exports */
-/*! export CssSelectorParser [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __esModule [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -3652,11 +3145,6 @@ exports.CssSelectorParser = CssSelectorParser;
 /*!****************************************************************!*\
   !*** ./node_modules/css-selector-parser/lib/parser-context.js ***!
   \****************************************************************/
-/*! flagged exports */
-/*! export __esModule [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export parseCssSelector [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -3997,11 +3485,6 @@ exports.parseCssSelector = parseCssSelector;
 /*!********************************************************!*\
   !*** ./node_modules/css-selector-parser/lib/render.js ***!
   \********************************************************/
-/*! flagged exports */
-/*! export __esModule [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export renderEntity [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -4095,19 +3578,6 @@ exports.renderEntity = renderEntity;
 /*!*******************************************************!*\
   !*** ./node_modules/css-selector-parser/lib/utils.js ***!
   \*******************************************************/
-/*! flagged exports */
-/*! export __esModule [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export doubleQuotesEscapeChars [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export escapeIdentifier [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export escapeStr [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export identSpecialChars [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isHex [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isIdent [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isIdentStart [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export singleQuoteEscapeChars [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export strReplacementsRev [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__ */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -4242,9 +3712,6 @@ exports.doubleQuotesEscapeChars = {
 /*!*******************************************!*\
   !*** ./node_modules/emoji-regex/index.js ***!
   \*******************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = function() {
@@ -4258,9 +3725,6 @@ module.exports = function() {
 /*!**************************************!*\
   !*** ./node_modules/extend/index.js ***!
   \**************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 65:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -4389,9 +3853,6 @@ module.exports = function extend() {
 /*!*****************************************************!*\
   !*** ./node_modules/fast-text-encoding/text.min.js ***!
   \*****************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: top-level-this-exports, __webpack_require__.g, __webpack_require__.* */
-/*! CommonJS bailout: this is used directly at 6:220-224 */
 /***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
 (function(l){function m(){}function k(a,c){a=void 0===a?"utf-8":a;c=void 0===c?{fatal:!1}:c;if(-1===r.indexOf(a.toLowerCase()))throw new RangeError("Failed to construct 'TextDecoder': The encoding label provided ('"+a+"') is invalid.");if(c.fatal)throw Error("Failed to construct 'TextDecoder': the 'fatal' option is unsupported.");}function t(a){return Buffer.from(a.buffer,a.byteOffset,a.byteLength).toString("utf-8")}function u(a){var c=URL.createObjectURL(new Blob([a],{type:"text/plain;charset=UTF-8"}));
@@ -4408,9 +3869,6 @@ a=a instanceof Uint8Array?a:a.buffer instanceof ArrayBuffer?new Uint8Array(a.buf
 /*!*************************************!*\
   !*** ./node_modules/fault/index.js ***!
   \*************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 7:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -4453,9 +3911,6 @@ function create(EConstructor) {
 /*!***************************************!*\
   !*** ./node_modules/format/format.js ***!
   \***************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 19:16-30 */
 /***/ ((module) => {
 
 //
@@ -4591,9 +4046,6 @@ function create(EConstructor) {
 /*!**********************************************!*\
   !*** ./node_modules/github-slugger/index.js ***!
   \**********************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var emoji = __webpack_require__(/*! emoji-regex */ "./node_modules/emoji-regex/index.js")
@@ -4660,9 +4112,6 @@ BananaSlug.slug = slugger
 /*!***************************************************!*\
   !*** ./node_modules/hast-to-hyperscript/index.js ***!
   \***************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 17:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -4892,9 +4341,6 @@ function styleReplacer($0, $1) {
 /*!***************************************************!*\
   !*** ./node_modules/inline-style-parser/index.js ***!
   \***************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 34:0-14 */
 /***/ ((module) => {
 
 // http://www.w3.org/TR/CSS21/grammar.html
@@ -5162,37 +4608,10 @@ function trim(str) {
 
 /***/ }),
 
-/***/ "./node_modules/is-buffer/index.js":
-/*!*****************************************!*\
-  !*** ./node_modules/is-buffer/index.js ***!
-  \*****************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 8:0-14 */
-/***/ ((module) => {
-
-/*!
- * Determine if an object is a Buffer
- *
- * @author   Feross Aboukhadijeh <https://feross.org>
- * @license  MIT
- */
-
-module.exports = function isBuffer (obj) {
-  return obj != null && obj.constructor != null &&
-    typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
-}
-
-
-/***/ }),
-
 /***/ "./node_modules/is-plain-obj/index.js":
 /*!********************************************!*\
   !*** ./node_modules/is-plain-obj/index.js ***!
   \********************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -5214,9 +4633,6 @@ module.exports = value => {
 /*!********************************************************!*\
   !*** ./node_modules/isomorphic-textencoder/browser.js ***!
   \********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 4:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 // Polyfill TextEncoder for MS Edge
@@ -5234,9 +4650,6 @@ module.exports = {
 /*!************************************************!*\
   !*** ./node_modules/just-debounce-it/index.js ***!
   \************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = debounce;
@@ -5271,9 +4684,6 @@ function debounce(fn, wait, callFirst) {
 /*!*****************************************!*\
   !*** ./node_modules/just-once/index.js ***!
   \*****************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = once;
@@ -5309,9 +4719,6 @@ function once(fn) {
 /*!**********************************************!*\
   !*** ./node_modules/longest-streak/index.js ***!
   \**********************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -5359,15 +4766,12 @@ function longestStreak(value, character) {
 /*!******************************************************!*\
   !*** ./node_modules/mdast-util-definitions/index.js ***!
   \******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var visit = __webpack_require__(/*! unist-util-visit */ "./node_modules/unist-util-visit/index.js")
+var visit = __webpack_require__(/*! unist-util-visit */ "./node_modules/mdast-util-definitions/node_modules/unist-util-visit/index.js")
 
 module.exports = getDefinitionFactory
 
@@ -5416,19 +4820,53 @@ function normalise(identifier) {
 
 /***/ }),
 
+/***/ "./node_modules/mdast-util-definitions/node_modules/unist-util-visit/index.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/mdast-util-definitions/node_modules/unist-util-visit/index.js ***!
+  \************************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = visit
+
+var visitParents = __webpack_require__(/*! unist-util-visit-parents */ "./node_modules/unist-util-visit-parents/index.js")
+
+var CONTINUE = visitParents.CONTINUE
+var SKIP = visitParents.SKIP
+var EXIT = visitParents.EXIT
+
+visit.CONTINUE = CONTINUE
+visit.SKIP = SKIP
+visit.EXIT = EXIT
+
+function visit(tree, test, visitor, reverse) {
+  if (typeof test === 'function' && typeof visitor !== 'function') {
+    reverse = visitor
+    visitor = test
+    test = null
+  }
+
+  visitParents(tree, test, overload, reverse)
+
+  function overload(node, parents) {
+    var parent = parents[parents.length - 1]
+    var index = parent ? parent.children.indexOf(node) : null
+    return visitor(node, index, parent)
+  }
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/mdast-util-footnote/from-markdown.js":
 /*!***********************************************************!*\
   !*** ./node_modules/mdast-util-footnote/from-markdown.js ***!
   \***********************************************************/
-/*! default exports */
-/*! export canContainEols [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export enter [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export exit [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-var normalizeIdentifier = __webpack_require__(/*! micromark/dist/util/normalize-identifier */ "./node_modules/mdast-util-footnote/node_modules/micromark/dist/util/normalize-identifier.js")
+var normalizeIdentifier = __webpack_require__(/*! micromark/dist/util/normalize-identifier */ "./node_modules/micromark/dist/util/normalize-identifier.js")
 
 exports.canContainEols = ['footnote']
 
@@ -5501,491 +4939,10 @@ function exitNote(token) {
 
 /***/ }),
 
-/***/ "./node_modules/mdast-util-footnote/node_modules/mdast-util-to-markdown/lib/util/association.js":
-/*!******************************************************************************************************!*\
-  !*** ./node_modules/mdast-util-footnote/node_modules/mdast-util-to-markdown/lib/util/association.js ***!
-  \******************************************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = association
-
-var decode = __webpack_require__(/*! parse-entities/decode-entity */ "./node_modules/parse-entities/decode-entity.browser.js")
-
-var characterEscape = /\\([!-/:-@[-`{-~])/g
-var characterReference = /&(#(\d{1,7}|x[\da-f]{1,6})|[\da-z]{1,31});/gi
-
-// The `label` of an association is the string value: character escapes and
-// references work, and casing is intact.
-// The `identifier` is used to match one association to another: controversially,
-// character escapes and references don’t work in this matching: `&copy;` does
-// not match `©`, and `\+` does not match `+`.
-// But casing is ignored (and whitespace) is trimmed and collapsed: ` A\nb`
-// matches `a b`.
-// So, we do prefer the label when figuring out how we’re going to serialize:
-// it has whitespace, casing, and we can ignore most useless character escapes
-// and all character references.
-function association(node) {
-  if (node.label || !node.identifier) {
-    return node.label || ''
-  }
-
-  return node.identifier
-    .replace(characterEscape, '$1')
-    .replace(characterReference, decodeIfPossible)
-}
-
-function decodeIfPossible($0, $1) {
-  return decode($1) || $0
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/mdast-util-footnote/node_modules/mdast-util-to-markdown/lib/util/container-flow.js":
-/*!*********************************************************************************************************!*\
-  !*** ./node_modules/mdast-util-footnote/node_modules/mdast-util-to-markdown/lib/util/container-flow.js ***!
-  \*********************************************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = flow
-
-var repeat = __webpack_require__(/*! repeat-string */ "./node_modules/repeat-string/index.js")
-
-function flow(parent, context) {
-  var children = parent.children || []
-  var results = []
-  var index = -1
-  var child
-
-  while (++index < children.length) {
-    child = children[index]
-
-    results.push(
-      context.handle(child, parent, context, {before: '\n', after: '\n'})
-    )
-
-    if (index + 1 < children.length) {
-      results.push(between(child, children[index + 1]))
-    }
-  }
-
-  return results.join('')
-
-  function between(left, right) {
-    var index = -1
-    var result
-
-    while (++index < context.join.length) {
-      result = context.join[index](left, right, parent, context)
-
-      if (result === true || result === 1) {
-        break
-      }
-
-      if (typeof result === 'number') {
-        return repeat('\n', 1 + Number(result))
-      }
-
-      if (result === false) {
-        return '\n\n<!---->\n\n'
-      }
-    }
-
-    return '\n\n'
-  }
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/mdast-util-footnote/node_modules/mdast-util-to-markdown/lib/util/container-phrasing.js":
-/*!*************************************************************************************************************!*\
-  !*** ./node_modules/mdast-util-footnote/node_modules/mdast-util-to-markdown/lib/util/container-phrasing.js ***!
-  \*************************************************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
-/***/ ((module) => {
-
-module.exports = phrasing
-
-function phrasing(parent, context, safeOptions) {
-  var children = parent.children || []
-  var results = []
-  var index = -1
-  var before = safeOptions.before
-  var after
-  var handle
-  var child
-
-  while (++index < children.length) {
-    child = children[index]
-
-    if (index + 1 < children.length) {
-      handle = context.handle.handlers[children[index + 1].type]
-      if (handle && handle.peek) handle = handle.peek
-      after = handle
-        ? handle(children[index + 1], parent, context, {
-            before: '',
-            after: ''
-          }).charAt(0)
-        : ''
-    } else {
-      after = safeOptions.after
-    }
-
-    // In some cases, html (text) can be found in phrasing right after an eol.
-    // When we’d serialize that, in most cases that would be seen as html
-    // (flow).
-    // As we can’t escape or so to prevent it from happening, we take a somewhat
-    // reasonable approach: replace that eol with a space.
-    // See: <https://github.com/syntax-tree/mdast-util-to-markdown/issues/15>
-    if (
-      results.length > 0 &&
-      (before === '\r' || before === '\n') &&
-      child.type === 'html'
-    ) {
-      results[results.length - 1] = results[results.length - 1].replace(
-        /(\r?\n|\r)$/,
-        ' '
-      )
-      before = ' '
-    }
-
-    results.push(
-      context.handle(child, parent, context, {
-        before: before,
-        after: after
-      })
-    )
-
-    before = results[results.length - 1].slice(-1)
-  }
-
-  return results.join('')
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/mdast-util-footnote/node_modules/mdast-util-to-markdown/lib/util/indent-lines.js":
-/*!*******************************************************************************************************!*\
-  !*** ./node_modules/mdast-util-footnote/node_modules/mdast-util-to-markdown/lib/util/indent-lines.js ***!
-  \*******************************************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
-/***/ ((module) => {
-
-module.exports = indentLines
-
-var eol = /\r?\n|\r/g
-
-function indentLines(value, map) {
-  var result = []
-  var start = 0
-  var line = 0
-  var match
-
-  while ((match = eol.exec(value))) {
-    one(value.slice(start, match.index))
-    result.push(match[0])
-    start = match.index + match[0].length
-    line++
-  }
-
-  one(value.slice(start))
-
-  return result.join('')
-
-  function one(value) {
-    result.push(map(value, line, !value))
-  }
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/mdast-util-footnote/node_modules/mdast-util-to-markdown/lib/util/pattern-compile.js":
-/*!**********************************************************************************************************!*\
-  !*** ./node_modules/mdast-util-footnote/node_modules/mdast-util-to-markdown/lib/util/pattern-compile.js ***!
-  \**********************************************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
-/***/ ((module) => {
-
-module.exports = patternCompile
-
-function patternCompile(pattern) {
-  var before
-  var after
-
-  if (!pattern._compiled) {
-    before = pattern.before ? '(?:' + pattern.before + ')' : ''
-    after = pattern.after ? '(?:' + pattern.after + ')' : ''
-
-    if (pattern.atBreak) {
-      before = '[\\r\\n][\\t ]*' + before
-    }
-
-    pattern._compiled = new RegExp(
-      (before ? '(' + before + ')' : '') +
-        (/[|\\{}()[\]^$+*?.-]/.test(pattern.character) ? '\\' : '') +
-        pattern.character +
-        (after || ''),
-      'g'
-    )
-  }
-
-  return pattern._compiled
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/mdast-util-footnote/node_modules/mdast-util-to-markdown/lib/util/pattern-in-scope.js":
-/*!***********************************************************************************************************!*\
-  !*** ./node_modules/mdast-util-footnote/node_modules/mdast-util-to-markdown/lib/util/pattern-in-scope.js ***!
-  \***********************************************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
-/***/ ((module) => {
-
-module.exports = patternInScope
-
-function patternInScope(stack, pattern) {
-  return (
-    listInScope(stack, pattern.inConstruct, true) &&
-    !listInScope(stack, pattern.notInConstruct)
-  )
-}
-
-function listInScope(stack, list, none) {
-  var index
-
-  if (!list) {
-    return none
-  }
-
-  if (typeof list === 'string') {
-    list = [list]
-  }
-
-  index = -1
-
-  while (++index < list.length) {
-    if (stack.indexOf(list[index]) !== -1) {
-      return true
-    }
-  }
-
-  return false
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/mdast-util-footnote/node_modules/mdast-util-to-markdown/lib/util/safe.js":
-/*!***********************************************************************************************!*\
-  !*** ./node_modules/mdast-util-footnote/node_modules/mdast-util-to-markdown/lib/util/safe.js ***!
-  \***********************************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = safe
-
-var patternCompile = __webpack_require__(/*! ./pattern-compile */ "./node_modules/mdast-util-footnote/node_modules/mdast-util-to-markdown/lib/util/pattern-compile.js")
-var patternInScope = __webpack_require__(/*! ./pattern-in-scope */ "./node_modules/mdast-util-footnote/node_modules/mdast-util-to-markdown/lib/util/pattern-in-scope.js")
-
-function safe(context, input, config) {
-  var value = (config.before || '') + (input || '') + (config.after || '')
-  var positions = []
-  var result = []
-  var infos = {}
-  var index = -1
-  var before
-  var after
-  var position
-  var pattern
-  var expression
-  var match
-  var start
-  var end
-
-  while (++index < context.unsafe.length) {
-    pattern = context.unsafe[index]
-
-    if (!patternInScope(context.stack, pattern)) {
-      continue
-    }
-
-    expression = patternCompile(pattern)
-
-    while ((match = expression.exec(value))) {
-      before = 'before' in pattern || pattern.atBreak
-      after = 'after' in pattern
-
-      position = match.index + (before ? match[1].length : 0)
-
-      if (positions.indexOf(position) === -1) {
-        positions.push(position)
-        infos[position] = {before: before, after: after}
-      } else {
-        if (infos[position].before && !before) {
-          infos[position].before = false
-        }
-
-        if (infos[position].after && !after) {
-          infos[position].after = false
-        }
-      }
-    }
-  }
-
-  positions.sort(numerical)
-
-  start = config.before ? config.before.length : 0
-  end = value.length - (config.after ? config.after.length : 0)
-  index = -1
-
-  while (++index < positions.length) {
-    position = positions[index]
-
-    if (
-      // Character before or after matched:
-      position < start ||
-      position >= end
-    ) {
-      continue
-    }
-
-    // If this character is supposed to be escaped because it has a condition on
-    // the next character, and the next character is definitly being escaped,
-    // then skip this escape.
-    if (
-      position + 1 < end &&
-      positions[index + 1] === position + 1 &&
-      infos[position].after &&
-      !infos[position + 1].before &&
-      !infos[position + 1].after
-    ) {
-      continue
-    }
-
-    if (start !== position) {
-      // If we have to use a character reference, an ampersand would be more
-      // correct, but as backslashes only care about punctuation, either will
-      // do the trick
-      result.push(escapeBackslashes(value.slice(start, position), '\\'))
-    }
-
-    start = position
-
-    if (
-      /[!-/:-@[-`{-~]/.test(value.charAt(position)) &&
-      (!config.encode || config.encode.indexOf(value.charAt(position)) === -1)
-    ) {
-      // Character escape.
-      result.push('\\')
-    } else {
-      // Character reference.
-      result.push(
-        '&#x' + value.charCodeAt(position).toString(16).toUpperCase() + ';'
-      )
-      start++
-    }
-  }
-
-  result.push(escapeBackslashes(value.slice(start, end), config.after))
-
-  return result.join('')
-}
-
-function numerical(a, b) {
-  return a - b
-}
-
-function escapeBackslashes(value, after) {
-  var expression = /\\(?=[!-/:-@[-`{-~])/g
-  var positions = []
-  var results = []
-  var index = -1
-  var start = 0
-  var whole = value + after
-  var match
-
-  while ((match = expression.exec(whole))) {
-    positions.push(match.index)
-  }
-
-  while (++index < positions.length) {
-    if (start !== positions[index]) {
-      results.push(value.slice(start, positions[index]))
-    }
-
-    results.push('\\')
-    start = positions[index]
-  }
-
-  results.push(value.slice(start))
-
-  return results.join('')
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/mdast-util-footnote/node_modules/micromark/dist/util/normalize-identifier.js":
-/*!***************************************************************************************************!*\
-  !*** ./node_modules/mdast-util-footnote/node_modules/micromark/dist/util/normalize-identifier.js ***!
-  \***************************************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 18:0-14 */
-/***/ ((module) => {
-
-"use strict";
-
-
-function normalizeIdentifier(value) {
-  return (
-    value // Collapse Markdown whitespace.
-      .replace(/[\t\n\r ]+/g, ' ') // Trim.
-      .replace(/^ | $/g, '') // Some characters are considered “uppercase”, but if their lowercase
-      // counterpart is uppercased will result in a different uppercase
-      // character.
-      // Hence, to get that form, we perform both lower- and uppercase.
-      // Upper case makes sure keys will not interact with default prototypal
-      // methods: no object method is uppercase.
-      .toLowerCase()
-      .toUpperCase()
-  )
-}
-
-module.exports = normalizeIdentifier
-
-
-/***/ }),
-
 /***/ "./node_modules/mdast-util-footnote/to-markdown.js":
 /*!*********************************************************!*\
   !*** ./node_modules/mdast-util-footnote/to-markdown.js ***!
   \*********************************************************/
-/*! default exports */
-/*! export handlers [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unsafe [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 exports.unsafe = [
@@ -5998,11 +4955,11 @@ exports.handlers = {
   footnoteReference: footnoteReference
 }
 
-var association = __webpack_require__(/*! mdast-util-to-markdown/lib/util/association */ "./node_modules/mdast-util-footnote/node_modules/mdast-util-to-markdown/lib/util/association.js")
-var phrasing = __webpack_require__(/*! mdast-util-to-markdown/lib/util/container-phrasing */ "./node_modules/mdast-util-footnote/node_modules/mdast-util-to-markdown/lib/util/container-phrasing.js")
-var flow = __webpack_require__(/*! mdast-util-to-markdown/lib/util/container-flow */ "./node_modules/mdast-util-footnote/node_modules/mdast-util-to-markdown/lib/util/container-flow.js")
-var indentLines = __webpack_require__(/*! mdast-util-to-markdown/lib/util/indent-lines */ "./node_modules/mdast-util-footnote/node_modules/mdast-util-to-markdown/lib/util/indent-lines.js")
-var safe = __webpack_require__(/*! mdast-util-to-markdown/lib/util/safe */ "./node_modules/mdast-util-footnote/node_modules/mdast-util-to-markdown/lib/util/safe.js")
+var association = __webpack_require__(/*! mdast-util-to-markdown/lib/util/association */ "./node_modules/mdast-util-to-markdown/lib/util/association.js")
+var phrasing = __webpack_require__(/*! mdast-util-to-markdown/lib/util/container-phrasing */ "./node_modules/mdast-util-to-markdown/lib/util/container-phrasing.js")
+var flow = __webpack_require__(/*! mdast-util-to-markdown/lib/util/container-flow */ "./node_modules/mdast-util-to-markdown/lib/util/container-flow.js")
+var indentLines = __webpack_require__(/*! mdast-util-to-markdown/lib/util/indent-lines */ "./node_modules/mdast-util-to-markdown/lib/util/indent-lines.js")
+var safe = __webpack_require__(/*! mdast-util-to-markdown/lib/util/safe */ "./node_modules/mdast-util-to-markdown/lib/util/safe.js")
 
 footnoteReference.peek = footnoteReferencePeek
 footnote.peek = footnotePeek
@@ -6062,9 +5019,6 @@ function footnoteDefinition(node, _, context) {
 /*!*************************************************************!*\
   !*** ./node_modules/mdast-util-from-markdown/dist/index.js ***!
   \*************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -6074,14 +5028,16 @@ module.exports = fromMarkdown
 
 // These three are compiled away in the `dist/`
 
-var decode = __webpack_require__(/*! parse-entities/decode-entity */ "./node_modules/parse-entities/decode-entity.browser.js")
-var toString = __webpack_require__(/*! mdast-util-to-string */ "./node_modules/mdast-util-to-string/index.js")
+var toString = __webpack_require__(/*! mdast-util-to-string */ "./node_modules/mdast-util-from-markdown/node_modules/mdast-util-to-string/index.js")
+var assign = __webpack_require__(/*! micromark/dist/constant/assign */ "./node_modules/micromark/dist/constant/assign.js")
 var own = __webpack_require__(/*! micromark/dist/constant/has-own-property */ "./node_modules/micromark/dist/constant/has-own-property.js")
 var normalizeIdentifier = __webpack_require__(/*! micromark/dist/util/normalize-identifier */ "./node_modules/micromark/dist/util/normalize-identifier.js")
 var safeFromInt = __webpack_require__(/*! micromark/dist/util/safe-from-int */ "./node_modules/micromark/dist/util/safe-from-int.js")
 var parser = __webpack_require__(/*! micromark/dist/parse */ "./node_modules/micromark/dist/parse.js")
 var preprocessor = __webpack_require__(/*! micromark/dist/preprocess */ "./node_modules/micromark/dist/preprocess.js")
 var postprocess = __webpack_require__(/*! micromark/dist/postprocess */ "./node_modules/micromark/dist/postprocess.js")
+var decode = __webpack_require__(/*! parse-entities/decode-entity */ "./node_modules/parse-entities/decode-entity.browser.js")
+var stringifyPosition = __webpack_require__(/*! unist-util-stringify-position */ "./node_modules/unist-util-stringify-position/index.js")
 
 function fromMarkdown(value, encoding, options) {
   if (typeof encoding !== 'string') {
@@ -6101,6 +5057,7 @@ function compiler(options) {
   var settings = options || {}
   var config = configure(
     {
+      transforms: [],
       canContainEols: [
         'emphasis',
         'fragment',
@@ -6163,7 +5120,7 @@ function compiler(options) {
         characterEscapeValue: onexitdata,
         characterReferenceMarkerHexadecimal: onexitcharacterreferencemarker,
         characterReferenceMarkerNumeric: onexitcharacterreferencemarker,
-        characterReferenceValue: closer(onexitcharacterreferencevalue),
+        characterReferenceValue: onexitcharacterreferencevalue,
         codeFenced: closer(onexitcodefenced),
         codeFencedFence: onexitcodefencedfence,
         codeFencedFenceInfo: onexitcodefencedfenceinfo,
@@ -6213,24 +5170,34 @@ function compiler(options) {
   return compile
 
   function compile(events) {
-    var stack = [{type: 'root', children: []}]
-    var index = -1
+    var tree = {type: 'root', children: []}
+    var stack = [tree]
+    var tokenStack = []
     var listStack = []
-    var length
+    var index = -1
     var handler
     var listStart
-    var event
+
+    var context = {
+      stack: stack,
+      tokenStack: tokenStack,
+      config: config,
+      enter: enter,
+      exit: exit,
+      buffer: buffer,
+      resume: resume,
+      setData: setData,
+      getData: getData
+    }
 
     while (++index < events.length) {
-      event = events[index]
-
       // We preprocess lists to add `listItem` tokens, and to infer whether
       // items the list itself are spread out.
       if (
-        event[1].type === 'listOrdered' ||
-        event[1].type === 'listUnordered'
+        events[index][1].type === 'listOrdered' ||
+        events[index][1].type === 'listUnordered'
       ) {
-        if (event[0] === 'enter') {
+        if (events[index][0] === 'enter') {
           listStack.push(index)
         } else {
           listStart = listStack.pop(index)
@@ -6240,44 +5207,50 @@ function compiler(options) {
     }
 
     index = -1
-    length = events.length
 
-    while (++index < length) {
+    while (++index < events.length) {
       handler = config[events[index][0]]
 
       if (own.call(handler, events[index][1].type)) {
         handler[events[index][1].type].call(
-          {
-            stack: stack,
-            config: config,
-            enter: enter,
-            exit: exit,
-            buffer: buffer,
-            resume: resume,
-            sliceSerialize: events[index][2].sliceSerialize,
-            setData: setData,
-            getData: getData
-          },
-
+          assign({sliceSerialize: events[index][2].sliceSerialize}, context),
           events[index][1]
         )
       }
     }
 
+    if (tokenStack.length) {
+      throw new Error(
+        'Cannot close document, a token (`' +
+          tokenStack[tokenStack.length - 1].type +
+          '`, ' +
+          stringifyPosition({
+            start: tokenStack[tokenStack.length - 1].start,
+            end: tokenStack[tokenStack.length - 1].end
+          }) +
+          ') is still open'
+      )
+    }
+
     // Figure out `root` position.
-    stack[0].position = {
+    tree.position = {
       start: point(
-        length ? events[0][1].start : {line: 1, column: 1, offset: 0}
+        events.length ? events[0][1].start : {line: 1, column: 1, offset: 0}
       ),
 
       end: point(
-        length
+        events.length
           ? events[events.length - 2][1].end
           : {line: 1, column: 1, offset: 0}
       )
     }
 
-    return stack[0]
+    index = -1
+    while (++index < config.transforms.length) {
+      tree = config.transforms[index](tree) || tree
+    }
+
+    return tree
   }
 
   function prepareList(events, start, length) {
@@ -6440,6 +5413,7 @@ function compiler(options) {
   function enter(node, token) {
     this.stack[this.stack.length - 1].children.push(node)
     this.stack.push(node)
+    this.tokenStack.push(token)
     node.position = {start: point(token.start)}
     return node
   }
@@ -6455,13 +5429,36 @@ function compiler(options) {
 
   function exit(token) {
     var node = this.stack.pop()
+    var open = this.tokenStack.pop()
+
+    if (!open) {
+      throw new Error(
+        'Cannot close `' +
+          token.type +
+          '` (' +
+          stringifyPosition({start: token.start, end: token.end}) +
+          '): it’s not open'
+      )
+    } else if (open.type !== token.type) {
+      throw new Error(
+        'Cannot close `' +
+          token.type +
+          '` (' +
+          stringifyPosition({start: token.start, end: token.end}) +
+          '): a different token (`' +
+          open.type +
+          '`, ' +
+          stringifyPosition({start: open.start, end: open.end}) +
+          ') is open'
+      )
+    }
+
     node.position.end = point(token.end)
     return node
   }
 
   function resume() {
-    var value = toString(this.stack.pop())
-    return value
+    return toString(this.stack.pop())
   }
 
   //
@@ -6588,11 +5585,10 @@ function compiler(options) {
       return
     }
 
-    if (getData('setextHeadingSlurpLineEnding')) {
-      return
-    }
-
-    if (config.canContainEols.indexOf(context.type) !== -1) {
+    if (
+      !getData('setextHeadingSlurpLineEnding') &&
+      config.canContainEols.indexOf(context.type) > -1
+    ) {
       onenterdata.call(this, token)
       onexitdata.call(this, token)
     }
@@ -6710,6 +5706,7 @@ function compiler(options) {
     var data = this.sliceSerialize(token)
     var type = getData('characterReferenceType')
     var value
+    var tail
 
     if (type) {
       value = safeFromInt(
@@ -6722,7 +5719,9 @@ function compiler(options) {
       value = decode(data)
     }
 
-    this.stack[this.stack.length - 1].value += value
+    tail = this.stack.pop()
+    tail.value += value
+    tail.position.end = point(token.end)
   }
 
   function onexitautolinkprotocol(token) {
@@ -6823,10 +5822,9 @@ function compiler(options) {
 }
 
 function configure(config, extensions) {
-  var length = extensions.length
   var index = -1
 
-  while (++index < length) {
+  while (++index < extensions.length) {
     extension(config, extensions[index])
   }
 
@@ -6836,16 +5834,14 @@ function configure(config, extensions) {
 function extension(config, extension) {
   var key
   var left
-  var right
 
   for (key in extension) {
     left = own.call(config, key) ? config[key] : (config[key] = {})
-    right = extension[key]
 
-    if (key === 'canContainEols') {
-      config[key] = [].concat(left, right)
+    if (key === 'canContainEols' || key === 'transforms') {
+      config[key] = [].concat(left, extension[key])
     } else {
-      Object.assign(left, right)
+      Object.assign(left, extension[key])
     }
   }
 }
@@ -6857,9 +5853,6 @@ function extension(config, extension) {
 /*!********************************************************!*\
   !*** ./node_modules/mdast-util-from-markdown/index.js ***!
   \********************************************************/
-/*! dynamic exports */
-/*! exports [maybe provided (runtime-defined)] [no usage info] -> ./node_modules/mdast-util-from-markdown/dist/index.js */
-/*! runtime requirements: module, __webpack_require__ */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -6870,13 +5863,50 @@ module.exports = __webpack_require__(/*! ./dist */ "./node_modules/mdast-util-fr
 
 /***/ }),
 
+/***/ "./node_modules/mdast-util-from-markdown/node_modules/mdast-util-to-string/index.js":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/mdast-util-from-markdown/node_modules/mdast-util-to-string/index.js ***!
+  \******************************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = toString
+
+// Get the text content of a node.
+// Prefer the node’s plain-text fields, otherwise serialize its children,
+// and if the given value is an array, serialize the nodes in it.
+function toString(node) {
+  return (
+    (node &&
+      (node.value ||
+        node.alt ||
+        node.title ||
+        ('children' in node && all(node.children)) ||
+        ('length' in node && all(node)))) ||
+    ''
+  )
+}
+
+function all(values) {
+  var result = []
+  var index = -1
+
+  while (++index < values.length) {
+    result[index] = toString(values[index])
+  }
+
+  return result.join('')
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/mdast-util-frontmatter/from-markdown.js":
 /*!**************************************************************!*\
   !*** ./node_modules/mdast-util-frontmatter/from-markdown.js ***!
   \**************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = createFromMarkdown
@@ -6927,9 +5957,6 @@ function value(token) {
 /*!************************************************************!*\
   !*** ./node_modules/mdast-util-frontmatter/to-markdown.js ***!
   \************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = createToMarkdown
@@ -6986,9 +6013,6 @@ function pick(schema, prop) {
 /*!********************************************************!*\
   !*** ./node_modules/mdast-util-heading-range/index.js ***!
   \********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7110,9 +6134,6 @@ function wrapExpression(expression) {
 /*!**************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/index.js ***!
   \**************************************************/
-/*! dynamic exports */
-/*! exports [maybe provided (runtime-defined)] [no usage info] -> ./node_modules/mdast-util-to-hast/lib/index.js */
-/*! runtime requirements: module, __webpack_require__ */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7126,9 +6147,6 @@ module.exports = __webpack_require__(/*! ./lib */ "./node_modules/mdast-util-to-
 /*!****************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/all.js ***!
   \****************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7176,9 +6194,6 @@ function all(h, parent) {
 /*!*******************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/footer.js ***!
   \*******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7257,9 +6272,6 @@ function generateFootnotes(h) {
 /*!********************************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/handlers/blockquote.js ***!
   \********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7281,9 +6293,6 @@ function blockquote(h, node) {
 /*!***************************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/handlers/break.js ***!
   \***************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7304,9 +6313,6 @@ function hardBreak(h, node) {
 /*!**************************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/handlers/code.js ***!
   \**************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7318,14 +6324,23 @@ var u = __webpack_require__(/*! unist-builder */ "./node_modules/unist-builder/i
 
 function code(h, node) {
   var value = node.value ? node.value + '\n' : ''
+  // To do: next major, use `node.lang` w/o regex, the splitting’s been going
+  // on for years in remark now.
   var lang = node.lang && node.lang.match(/^[^ \t]+(?=[ \t]|$)/)
   var props = {}
+  var code
 
   if (lang) {
     props.className = ['language-' + lang]
   }
 
-  return h(node.position, 'pre', [h(node, 'code', props, [u('text', value)])])
+  code = h(node, 'code', props, [u('text', value)])
+
+  if (node.meta) {
+    code.data = {meta: node.meta}
+  }
+
+  return h(node.position, 'pre', [code])
 }
 
 
@@ -7335,9 +6350,6 @@ function code(h, node) {
 /*!****************************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/handlers/delete.js ***!
   \****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7358,9 +6370,6 @@ function strikethrough(h, node) {
 /*!******************************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/handlers/emphasis.js ***!
   \******************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7381,9 +6390,6 @@ function emphasis(h, node) {
 /*!****************************************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/handlers/footnote-reference.js ***!
   \****************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7415,9 +6421,6 @@ function footnoteReference(h, node) {
 /*!******************************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/handlers/footnote.js ***!
   \******************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7463,9 +6466,6 @@ function footnote(h, node) {
 /*!*****************************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/handlers/heading.js ***!
   \*****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7486,9 +6486,6 @@ function heading(h, node) {
 /*!**************************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/handlers/html.js ***!
   \**************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7510,9 +6507,6 @@ function html(h, node) {
 /*!*************************************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/handlers/image-reference.js ***!
   \*************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7547,9 +6541,6 @@ function imageReference(h, node) {
 /*!***************************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/handlers/image.js ***!
   \***************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7576,9 +6567,6 @@ function image(h, node) {
 /*!***************************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/handlers/index.js ***!
   \***************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7625,9 +6613,6 @@ function ignore() {
 /*!*********************************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/handlers/inline-code.js ***!
   \*********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7649,9 +6634,6 @@ function inlineCode(h, node) {
 /*!************************************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/handlers/link-reference.js ***!
   \************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7687,9 +6669,6 @@ function linkReference(h, node) {
 /*!**************************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/handlers/link.js ***!
   \**************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 6:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7717,9 +6696,6 @@ function link(h, node) {
 /*!*******************************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/handlers/list-item.js ***!
   \*******************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7817,9 +6793,6 @@ function listItemLoose(node) {
 /*!**************************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/handlers/list.js ***!
   \**************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7865,9 +6838,6 @@ function list(h, node) {
 /*!*******************************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/handlers/paragraph.js ***!
   \*******************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7888,9 +6858,6 @@ function paragraph(h, node) {
 /*!**************************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/handlers/root.js ***!
   \**************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7913,9 +6880,6 @@ function root(h, node) {
 /*!****************************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/handlers/strong.js ***!
   \****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7936,9 +6900,6 @@ function strong(h, node) {
 /*!***************************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/handlers/table.js ***!
   \***************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -8004,9 +6965,6 @@ function table(h, node) {
 /*!**************************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/handlers/text.js ***!
   \**************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -8030,9 +6988,6 @@ function text(h, node) {
 /*!************************************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/handlers/thematic-break.js ***!
   \************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -8051,9 +7006,6 @@ function thematicBreak(h, node) {
 /*!******************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/index.js ***!
   \******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -8062,7 +7014,7 @@ function thematicBreak(h, node) {
 module.exports = toHast
 
 var u = __webpack_require__(/*! unist-builder */ "./node_modules/unist-builder/index.js")
-var visit = __webpack_require__(/*! unist-util-visit */ "./node_modules/unist-util-visit/index.js")
+var visit = __webpack_require__(/*! unist-util-visit */ "./node_modules/mdast-util-to-hast/node_modules/unist-util-visit/index.js")
 var position = __webpack_require__(/*! unist-util-position */ "./node_modules/unist-util-position/index.js")
 var generated = __webpack_require__(/*! unist-util-generated */ "./node_modules/unist-util-generated/index.js")
 var definitions = __webpack_require__(/*! mdast-util-definitions */ "./node_modules/mdast-util-definitions/index.js")
@@ -8096,6 +7048,7 @@ function factory(tree, options) {
   h.augment = augment
   h.handlers = Object.assign({}, handlers, settings.handlers)
   h.unknownHandler = settings.unknownHandler
+  h.passThrough = settings.passThrough
 
   visit(tree, 'footnoteDefinition', onfootnotedefinition)
 
@@ -8107,7 +7060,7 @@ function factory(tree, options) {
     var ctx
 
     // Handle `data.hName`, `data.hProperties, `data.hChildren`.
-    if (left && 'data' in left) {
+    if (left && left.data) {
       data = left.data
 
       if (data.hName) {
@@ -8194,9 +7147,6 @@ function toHast(tree, options) {
 /*!****************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/one.js ***!
   \****************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -8221,11 +7171,19 @@ function unknown(h, node) {
 // Visit a node.
 function one(h, node, parent) {
   var type = node && node.type
-  var fn = own.call(h.handlers, type) ? h.handlers[type] : h.unknownHandler
+  var fn
 
   // Fail on non-nodes.
   if (!type) {
     throw new Error('Expected node, got `' + node + '`')
+  }
+
+  if (own.call(h.handlers, type)) {
+    fn = h.handlers[type]
+  } else if (h.passThrough && h.passThrough.indexOf(type) > -1) {
+    fn = returnNode
+  } else {
+    fn = h.unknownHandler
   }
 
   return (typeof fn === 'function' ? fn : unknown)(h, node, parent)
@@ -8246,6 +7204,18 @@ function text(node) {
   return 'value' in node
 }
 
+function returnNode(h, node) {
+  var clone
+
+  if (node.children) {
+    clone = Object.assign({}, node)
+    clone.children = all(h, node)
+    return clone
+  }
+
+  return node
+}
+
 
 /***/ }),
 
@@ -8253,9 +7223,6 @@ function text(node) {
 /*!*******************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/revert.js ***!
   \*******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -8311,9 +7278,6 @@ function revert(h, node) {
 /*!*****************************************************!*\
   !*** ./node_modules/mdast-util-to-hast/lib/wrap.js ***!
   \*****************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -8352,16 +7316,90 @@ function wrap(nodes, loose) {
 
 /***/ }),
 
+/***/ "./node_modules/mdast-util-to-hast/node_modules/unist-util-visit/index.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/mdast-util-to-hast/node_modules/unist-util-visit/index.js ***!
+  \********************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = visit
+
+var visitParents = __webpack_require__(/*! unist-util-visit-parents */ "./node_modules/unist-util-visit-parents/index.js")
+
+var CONTINUE = visitParents.CONTINUE
+var SKIP = visitParents.SKIP
+var EXIT = visitParents.EXIT
+
+visit.CONTINUE = CONTINUE
+visit.SKIP = SKIP
+visit.EXIT = EXIT
+
+function visit(tree, test, visitor, reverse) {
+  if (typeof test === 'function' && typeof visitor !== 'function') {
+    reverse = visitor
+    visitor = test
+    test = null
+  }
+
+  visitParents(tree, test, overload, reverse)
+
+  function overload(node, parents) {
+    var parent = parents[parents.length - 1]
+    var index = parent ? parent.children.indexOf(node) : null
+    return visitor(node, index, parent)
+  }
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/mdast-util-to-markdown/index.js":
 /*!******************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/index.js ***!
   \******************************************************/
-/*! dynamic exports */
-/*! exports [maybe provided (runtime-defined)] [no usage info] -> ./node_modules/mdast-util-to-markdown/lib/index.js */
-/*! runtime requirements: module, __webpack_require__ */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = __webpack_require__(/*! ./lib */ "./node_modules/mdast-util-to-markdown/lib/index.js")
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-markdown/lib/configure.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/mdast-util-to-markdown/lib/configure.js ***!
+  \**************************************************************/
+/***/ ((module) => {
+
+module.exports = configure
+
+function configure(base, extension) {
+  var index = -1
+  var key
+
+  // First do subextensions.
+  if (extension.extensions) {
+    while (++index < extension.extensions.length) {
+      configure(base, extension.extensions[index])
+    }
+  }
+
+  for (key in extension) {
+    if (key === 'extensions') {
+      // Empty.
+    } else if (key === 'unsafe' || key === 'join') {
+      base[key] = base[key].concat(extension[key] || [])
+    } else if (key === 'handlers') {
+      base[key] = Object.assign(base[key], extension[key] || {})
+    } else {
+      base.options[key] = extension[key]
+    }
+  }
+
+  return base
+}
 
 
 /***/ }),
@@ -8370,9 +7408,6 @@ module.exports = __webpack_require__(/*! ./lib */ "./node_modules/mdast-util-to-
 /*!**********************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/handle/blockquote.js ***!
   \**********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = blockquote
@@ -8398,14 +7433,26 @@ function map(line, index, blank) {
 /*!*****************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/handle/break.js ***!
   \*****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
-/***/ ((module) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = hardBreak
 
-function hardBreak() {
+var patternInScope = __webpack_require__(/*! ../util/pattern-in-scope */ "./node_modules/mdast-util-to-markdown/lib/util/pattern-in-scope.js")
+
+function hardBreak(node, _, context, safe) {
+  var index = -1
+
+  while (++index < context.unsafe.length) {
+    // If we can’t put eols in this construct (setext headings, tables), use a
+    // space instead.
+    if (
+      context.unsafe[index].character === '\n' &&
+      patternInScope(context.stack, context.unsafe[index])
+    ) {
+      return /[ \t]/.test(safe.before) ? '' : ' '
+    }
+  }
+
   return '\\\n'
 }
 
@@ -8416,9 +7463,6 @@ function hardBreak() {
 /*!****************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/handle/code.js ***!
   \****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = code
@@ -8493,9 +7537,6 @@ function map(line, _, blank) {
 /*!**********************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/handle/definition.js ***!
   \**********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = definition
@@ -8552,9 +7593,6 @@ function definition(node, _, context) {
 /*!********************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/handle/emphasis.js ***!
   \********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = emphasis
@@ -8586,9 +7624,6 @@ function emphasisPeek(node, _, context) {
 /*!*******************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/handle/heading.js ***!
   \*******************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = heading
@@ -8647,15 +7682,17 @@ function heading(node, _, context) {
 /*!****************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/handle/html.js ***!
   \****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = html
+html.peek = htmlPeek
 
 function html(node) {
   return node.value || ''
+}
+
+function htmlPeek() {
+  return '<'
 }
 
 
@@ -8665,9 +7702,6 @@ function html(node) {
 /*!***************************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/handle/image-reference.js ***!
   \***************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = imageReference
@@ -8715,9 +7749,6 @@ function imageReferencePeek() {
 /*!*****************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/handle/image.js ***!
   \*****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = image
@@ -8781,49 +7812,6 @@ function imagePeek() {
 /*!*****************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/handle/index.js ***!
   \*****************************************************************/
-/*! default exports */
-/*! export blockquote [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/mdast-util-to-markdown/lib/handle/blockquote.js */
-/*!   exports [maybe provided (runtime-defined)] [no usage info] */
-/*! export break [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/mdast-util-to-markdown/lib/handle/break.js */
-/*!   exports [maybe provided (runtime-defined)] [no usage info] */
-/*! export code [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/mdast-util-to-markdown/lib/handle/code.js */
-/*!   exports [maybe provided (runtime-defined)] [no usage info] */
-/*! export definition [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/mdast-util-to-markdown/lib/handle/definition.js */
-/*!   exports [maybe provided (runtime-defined)] [no usage info] */
-/*! export emphasis [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/mdast-util-to-markdown/lib/handle/emphasis.js */
-/*!   exports [maybe provided (runtime-defined)] [no usage info] */
-/*! export hardBreak [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/mdast-util-to-markdown/lib/handle/break.js */
-/*!   ... (1 already listed exports) */
-/*! export heading [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/mdast-util-to-markdown/lib/handle/heading.js */
-/*!   exports [maybe provided (runtime-defined)] [no usage info] */
-/*! export html [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/mdast-util-to-markdown/lib/handle/html.js */
-/*!   exports [maybe provided (runtime-defined)] [no usage info] */
-/*! export image [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/mdast-util-to-markdown/lib/handle/image.js */
-/*!   exports [maybe provided (runtime-defined)] [no usage info] */
-/*! export imageReference [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/mdast-util-to-markdown/lib/handle/image-reference.js */
-/*!   exports [maybe provided (runtime-defined)] [no usage info] */
-/*! export inlineCode [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/mdast-util-to-markdown/lib/handle/inline-code.js */
-/*!   exports [maybe provided (runtime-defined)] [no usage info] */
-/*! export link [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/mdast-util-to-markdown/lib/handle/link.js */
-/*!   exports [maybe provided (runtime-defined)] [no usage info] */
-/*! export linkReference [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/mdast-util-to-markdown/lib/handle/link-reference.js */
-/*!   exports [maybe provided (runtime-defined)] [no usage info] */
-/*! export list [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/mdast-util-to-markdown/lib/handle/list.js */
-/*!   exports [maybe provided (runtime-defined)] [no usage info] */
-/*! export listItem [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/mdast-util-to-markdown/lib/handle/list-item.js */
-/*!   exports [maybe provided (runtime-defined)] [no usage info] */
-/*! export paragraph [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/mdast-util-to-markdown/lib/handle/paragraph.js */
-/*!   exports [maybe provided (runtime-defined)] [no usage info] */
-/*! export root [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/mdast-util-to-markdown/lib/handle/root.js */
-/*!   exports [maybe provided (runtime-defined)] [no usage info] */
-/*! export strong [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/mdast-util-to-markdown/lib/handle/strong.js */
-/*!   exports [maybe provided (runtime-defined)] [no usage info] */
-/*! export text [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/mdast-util-to-markdown/lib/handle/text.js */
-/*!   exports [maybe provided (runtime-defined)] [no usage info] */
-/*! export thematicBreak [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/mdast-util-to-markdown/lib/handle/thematic-break.js */
-/*!   exports [maybe provided (runtime-defined)] [no usage info] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 exports.blockquote = __webpack_require__(/*! ./blockquote */ "./node_modules/mdast-util-to-markdown/lib/handle/blockquote.js")
@@ -8854,18 +7842,21 @@ exports.thematicBreak = __webpack_require__(/*! ./thematic-break */ "./node_modu
 /*!***********************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/handle/inline-code.js ***!
   \***********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
-/***/ ((module) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = inlineCode
 inlineCode.peek = inlineCodePeek
 
-function inlineCode(node) {
+var patternCompile = __webpack_require__(/*! ../util/pattern-compile */ "./node_modules/mdast-util-to-markdown/lib/util/pattern-compile.js")
+
+function inlineCode(node, parent, context) {
   var value = node.value || ''
   var sequence = '`'
-  var pad = ''
+  var index = -1
+  var pattern
+  var expression
+  var match
+  var position
 
   // If there is a single grave accent on its own in the code, use a fence of
   // two.
@@ -8881,10 +7872,42 @@ function inlineCode(node) {
     (/[ \r\n`]/.test(value.charAt(0)) ||
       /[ \r\n`]/.test(value.charAt(value.length - 1)))
   ) {
-    pad = ' '
+    value = ' ' + value + ' '
   }
 
-  return sequence + pad + value + pad + sequence
+  // We have a potential problem: certain characters after eols could result in
+  // blocks being seen.
+  // For example, if someone injected the string `'\n# b'`, then that would
+  // result in an ATX heading.
+  // We can’t escape characters in `inlineCode`, but because eols are
+  // transformed to spaces when going from markdown to HTML anyway, we can swap
+  // them out.
+  while (++index < context.unsafe.length) {
+    pattern = context.unsafe[index]
+
+    // Only look for `atBreak`s.
+    // Btw: note that `atBreak` patterns will always start the regex at LF or
+    // CR.
+    if (!pattern.atBreak) continue
+
+    expression = patternCompile(pattern)
+
+    while ((match = expression.exec(value))) {
+      position = match.index
+
+      // Support CRLF (patterns only look for one of the characters).
+      if (
+        value.charCodeAt(position) === 10 /* `\n` */ &&
+        value.charCodeAt(position - 1) === 13 /* `\r` */
+      ) {
+        position--
+      }
+
+      value = value.slice(0, position) + ' ' + value.slice(match.index + 1)
+    }
+  }
+
+  return sequence + value + sequence
 }
 
 function inlineCodePeek() {
@@ -8898,9 +7921,6 @@ function inlineCodePeek() {
 /*!**************************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/handle/link-reference.js ***!
   \**************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = linkReference
@@ -8949,9 +7969,6 @@ function linkReferencePeek() {
 /*!****************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/handle/link.js ***!
   \****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = link
@@ -8970,7 +7987,7 @@ function link(node, _, context) {
   var value
   var stack
 
-  if (formatLinkAsAutolink(node)) {
+  if (formatLinkAsAutolink(node, context)) {
     // Hide the fact that we’re in phrasing, because escapes don’t work.
     stack = context.stack
     context.stack = []
@@ -9021,8 +8038,8 @@ function link(node, _, context) {
   return value
 }
 
-function linkPeek(node) {
-  return formatLinkAsAutolink(node) ? '<' : '['
+function linkPeek(node, _, context) {
+  return formatLinkAsAutolink(node, context) ? '<' : '['
 }
 
 
@@ -9032,9 +8049,6 @@ function linkPeek(node) {
 /*!*********************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/handle/list-item.js ***!
   \*********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = listItem
@@ -9092,9 +8106,6 @@ function listItem(node, parent, context) {
 /*!****************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/handle/list.js ***!
   \****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = list
@@ -9115,9 +8126,6 @@ function list(node, _, context) {
 /*!*********************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/handle/paragraph.js ***!
   \*********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = paragraph
@@ -9140,9 +8148,6 @@ function paragraph(node, _, context) {
 /*!****************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/handle/root.js ***!
   \****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = root
@@ -9160,9 +8165,6 @@ function root(node, _, context) {
 /*!******************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/handle/strong.js ***!
   \******************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = strong
@@ -9194,9 +8196,6 @@ function strongPeek(node, _, context) {
 /*!****************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/handle/text.js ***!
   \****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = text
@@ -9214,9 +8213,6 @@ function text(node, parent, context, safeOptions) {
 /*!**************************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/handle/thematic-break.js ***!
   \**************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = thematicBreak
@@ -9241,36 +8237,46 @@ function thematicBreak(node, parent, context) {
 /*!**********************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/index.js ***!
   \**********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = toMarkdown
 
 var zwitch = __webpack_require__(/*! zwitch */ "./node_modules/zwitch/index.js")
+var configure = __webpack_require__(/*! ./configure */ "./node_modules/mdast-util-to-markdown/lib/configure.js")
 var defaultHandlers = __webpack_require__(/*! ./handle */ "./node_modules/mdast-util-to-markdown/lib/handle/index.js")
-var defaultUnsafePatterns = __webpack_require__(/*! ./unsafe */ "./node_modules/mdast-util-to-markdown/lib/unsafe.js")
 var defaultJoin = __webpack_require__(/*! ./join */ "./node_modules/mdast-util-to-markdown/lib/join.js")
+var defaultUnsafe = __webpack_require__(/*! ./unsafe */ "./node_modules/mdast-util-to-markdown/lib/unsafe.js")
 
 function toMarkdown(tree, options) {
   var settings = options || {}
-  var extensions = configure(settings)
-  var stack = []
-  var handle = zwitch('type', {
+  var context = {
+    enter: enter,
+    stack: [],
+    unsafe: [],
+    join: [],
+    handlers: {},
+    options: {}
+  }
+  var result
+
+  configure(context, {
+    unsafe: defaultUnsafe,
+    join: defaultJoin,
+    handlers: defaultHandlers
+  })
+  configure(context, settings)
+
+  if (context.options.tightDefinitions) {
+    context.join = [joinDefinition].concat(context.join)
+  }
+
+  context.handle = zwitch('type', {
     invalid: invalid,
     unknown: unknown,
-    handlers: extensions.handlers
+    handlers: context.handlers
   })
-  var context = {
-    handle: handle,
-    stack: stack,
-    enter: enter,
-    options: settings,
-    unsafePatterns: extensions.unsafe,
-    join: extensions.join
-  }
-  var result = handle(tree, null, context, {before: '\n', after: '\n'})
+
+  result = context.handle(tree, null, context, {before: '\n', after: '\n'})
 
   if (
     result &&
@@ -9283,11 +8289,11 @@ function toMarkdown(tree, options) {
   return result
 
   function enter(name) {
-    stack.push(name)
+    context.stack.push(name)
     return exit
 
     function exit() {
-      stack.pop()
+      context.stack.pop()
     }
   }
 }
@@ -9298,28 +8304,6 @@ function invalid(value) {
 
 function unknown(node) {
   throw new Error('Cannot handle unknown node `' + node.type + '`')
-}
-
-function configure(settings) {
-  var extensions = [
-    {unsafe: settings.unsafe, handlers: settings.handlers, join: settings.join}
-  ].concat(settings.extensions || [])
-  var unsafe = defaultUnsafePatterns
-  var join = defaultJoin
-  var handlers = Object.assign({}, defaultHandlers)
-  var index = -1
-
-  if (settings.tightDefinitions) {
-    join = [joinDefinition].concat(join)
-  }
-
-  while (++index < extensions.length) {
-    unsafe = unsafe.concat(extensions[index].unsafe || [])
-    join = join.concat(extensions[index].join || [])
-    Object.assign(handlers, extensions[index].handlers || {})
-  }
-
-  return {unsafe: unsafe, join: join, handlers: handlers}
 }
 
 function joinDefinition(left, right) {
@@ -9336,9 +8320,6 @@ function joinDefinition(left, right) {
 /*!*********************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/join.js ***!
   \*********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = [joinDefaults]
@@ -9386,9 +8367,6 @@ function joinDefaults(left, right, parent, context) {
 /*!***********************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/unsafe.js ***!
   \***********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = [
@@ -9429,6 +8407,7 @@ module.exports = [
   {character: '"', inConstruct: 'titleQuote'},
   // A number sign could start an ATX heading if it starts a line.
   {atBreak: true, character: '#'},
+  {character: '#', inConstruct: 'headingAtx', after: '(?:[\r\n]|$)'},
   // Dollar sign and percentage are not used in markdown.
   // An ampersand could start a character reference.
   {character: '&', after: '[#A-Za-z]', inConstruct: 'phrasing'},
@@ -9469,13 +8448,10 @@ module.exports = [
   // Question mark and at sign are not used in markdown for constructs.
   // A left bracket can start definitions, references, labels,
   {atBreak: true, character: '['},
-  {
-    character: '[',
-    inConstruct: ['phrasing', 'label', 'reference']
-  },
+  {character: '[', inConstruct: ['phrasing', 'label', 'reference']},
   // A backslash can start an escape (when followed by punctuation) or a
   // hard break (when followed by an eol).
-  {character: '\\', after: '[!-/:-@[-`{-~]'},
+  // Note: typical escapes are handled in `safe`!
   {character: '\\', after: '[\\r\\n]', inConstruct: 'phrasing'},
   // A right bracket can exit labels.
   {
@@ -9511,9 +8487,6 @@ module.exports = [
 /*!*********************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/util/association.js ***!
   \*********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = association
@@ -9554,9 +8527,6 @@ function decodeIfPossible($0, $1) {
 /*!**********************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/util/check-bullet.js ***!
   \**********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = checkBullet
@@ -9582,9 +8552,6 @@ function checkBullet(context) {
 /*!************************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/util/check-emphasis.js ***!
   \************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = checkEmphasis
@@ -9610,9 +8577,6 @@ function checkEmphasis(context) {
 /*!*********************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/util/check-fence.js ***!
   \*********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = checkFence
@@ -9638,9 +8602,6 @@ function checkFence(context) {
 /*!********************************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/util/check-list-item-indent.js ***!
   \********************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = checkListItemIndent
@@ -9670,9 +8631,6 @@ function checkListItemIndent(context) {
 /*!*********************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/util/check-quote.js ***!
   \*********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = checkQuote
@@ -9698,9 +8656,6 @@ function checkQuote(context) {
 /*!***************************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/util/check-rule-repeat.js ***!
   \***************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = checkRule
@@ -9726,9 +8681,6 @@ function checkRule(context) {
 /*!********************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/util/check-rule.js ***!
   \********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = checkRule
@@ -9754,9 +8706,6 @@ function checkRule(context) {
 /*!**********************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/util/check-strong.js ***!
   \**********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = checkStrong
@@ -9782,9 +8731,6 @@ function checkStrong(context) {
 /*!************************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/util/container-flow.js ***!
   \************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = flow
@@ -9842,9 +8788,6 @@ function flow(parent, context) {
 /*!****************************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/util/container-phrasing.js ***!
   \****************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = phrasing
@@ -9874,12 +8817,31 @@ function phrasing(parent, context, safeOptions) {
       after = safeOptions.after
     }
 
+    // In some cases, html (text) can be found in phrasing right after an eol.
+    // When we’d serialize that, in most cases that would be seen as html
+    // (flow).
+    // As we can’t escape or so to prevent it from happening, we take a somewhat
+    // reasonable approach: replace that eol with a space.
+    // See: <https://github.com/syntax-tree/mdast-util-to-markdown/issues/15>
+    if (
+      results.length > 0 &&
+      (before === '\r' || before === '\n') &&
+      child.type === 'html'
+    ) {
+      results[results.length - 1] = results[results.length - 1].replace(
+        /(\r?\n|\r)$/,
+        ' '
+      )
+      before = ' '
+    }
+
     results.push(
       context.handle(child, parent, context, {
         before: before,
         after: after
       })
     )
+
     before = results[results.length - 1].slice(-1)
   }
 
@@ -9893,23 +8855,20 @@ function phrasing(parent, context, safeOptions) {
 /*!*********************************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/util/format-code-as-indented.js ***!
   \*********************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = formatCodeAsIndented
 
 function formatCodeAsIndented(node, context) {
   return (
-    node.value &&
     !context.options.fences &&
+    node.value &&
     // If there’s no info…
     !node.lang &&
     // And there’s a non-whitespace character…
     /[^ \r\n]/.test(node.value) &&
     // And the value doesn’t start or end in a blank…
-    !/^[\t ]*[\r\n]|[\r\n][\t ]*$/.test(node.value)
+    !/^[\t ]*(?:[\r\n]|$)|(?:^|[\r\n])[\t ]*$/.test(node.value)
   )
 }
 
@@ -9920,9 +8879,6 @@ function formatCodeAsIndented(node, context) {
 /*!**********************************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/util/format-heading-as-setext.js ***!
   \**********************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = formatHeadingAsSetext
@@ -9942,23 +8898,25 @@ function formatHeadingAsSetext(node, context) {
 /*!*********************************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/util/format-link-as-autolink.js ***!
   \*********************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = formatLinkAsAutolink
 
 var toString = __webpack_require__(/*! mdast-util-to-string */ "./node_modules/mdast-util-to-markdown/node_modules/mdast-util-to-string/index.js")
 
-function formatLinkAsAutolink(node) {
+function formatLinkAsAutolink(node, context) {
   var raw = toString(node)
 
   return (
+    !context.options.resourceLink &&
     // If there’s a url…
     node.url &&
     // And there’s a no title…
     !node.title &&
+    // And the content of `node` is a single text node…
+    node.children &&
+    node.children.length === 1 &&
+    node.children[0].type === 'text' &&
     // And if the url is the same as the content…
     (raw === node.url || 'mailto:' + raw === node.url) &&
     // And that starts w/ a protocol…
@@ -9976,9 +8934,6 @@ function formatLinkAsAutolink(node) {
 /*!**********************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/util/indent-lines.js ***!
   \**********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = indentLines
@@ -10010,13 +8965,848 @@ function indentLines(value, map) {
 
 /***/ }),
 
+/***/ "./node_modules/mdast-util-to-markdown/lib/util/pattern-compile.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/mdast-util-to-markdown/lib/util/pattern-compile.js ***!
+  \*************************************************************************/
+/***/ ((module) => {
+
+module.exports = patternCompile
+
+function patternCompile(pattern) {
+  var before
+  var after
+
+  if (!pattern._compiled) {
+    before = pattern.before ? '(?:' + pattern.before + ')' : ''
+    after = pattern.after ? '(?:' + pattern.after + ')' : ''
+
+    if (pattern.atBreak) {
+      before = '[\\r\\n][\\t ]*' + before
+    }
+
+    pattern._compiled = new RegExp(
+      (before ? '(' + before + ')' : '') +
+        (/[|\\{}()[\]^$+*?.-]/.test(pattern.character) ? '\\' : '') +
+        pattern.character +
+        (after || ''),
+      'g'
+    )
+  }
+
+  return pattern._compiled
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-markdown/lib/util/pattern-in-scope.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/mdast-util-to-markdown/lib/util/pattern-in-scope.js ***!
+  \**************************************************************************/
+/***/ ((module) => {
+
+module.exports = patternInScope
+
+function patternInScope(stack, pattern) {
+  return (
+    listInScope(stack, pattern.inConstruct, true) &&
+    !listInScope(stack, pattern.notInConstruct)
+  )
+}
+
+function listInScope(stack, list, none) {
+  var index
+
+  if (!list) {
+    return none
+  }
+
+  if (typeof list === 'string') {
+    list = [list]
+  }
+
+  index = -1
+
+  while (++index < list.length) {
+    if (stack.indexOf(list[index]) !== -1) {
+      return true
+    }
+  }
+
+  return false
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/mdast-util-to-markdown/lib/util/safe.js":
 /*!**************************************************************!*\
   !*** ./node_modules/mdast-util-to-markdown/lib/util/safe.js ***!
   \**************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = safe
+
+var patternCompile = __webpack_require__(/*! ./pattern-compile */ "./node_modules/mdast-util-to-markdown/lib/util/pattern-compile.js")
+var patternInScope = __webpack_require__(/*! ./pattern-in-scope */ "./node_modules/mdast-util-to-markdown/lib/util/pattern-in-scope.js")
+
+function safe(context, input, config) {
+  var value = (config.before || '') + (input || '') + (config.after || '')
+  var positions = []
+  var result = []
+  var infos = {}
+  var index = -1
+  var before
+  var after
+  var position
+  var pattern
+  var expression
+  var match
+  var start
+  var end
+
+  while (++index < context.unsafe.length) {
+    pattern = context.unsafe[index]
+
+    if (!patternInScope(context.stack, pattern)) {
+      continue
+    }
+
+    expression = patternCompile(pattern)
+
+    while ((match = expression.exec(value))) {
+      before = 'before' in pattern || pattern.atBreak
+      after = 'after' in pattern
+
+      position = match.index + (before ? match[1].length : 0)
+
+      if (positions.indexOf(position) === -1) {
+        positions.push(position)
+        infos[position] = {before: before, after: after}
+      } else {
+        if (infos[position].before && !before) {
+          infos[position].before = false
+        }
+
+        if (infos[position].after && !after) {
+          infos[position].after = false
+        }
+      }
+    }
+  }
+
+  positions.sort(numerical)
+
+  start = config.before ? config.before.length : 0
+  end = value.length - (config.after ? config.after.length : 0)
+  index = -1
+
+  while (++index < positions.length) {
+    position = positions[index]
+
+    if (
+      // Character before or after matched:
+      position < start ||
+      position >= end
+    ) {
+      continue
+    }
+
+    // If this character is supposed to be escaped because it has a condition on
+    // the next character, and the next character is definitly being escaped,
+    // then skip this escape.
+    if (
+      position + 1 < end &&
+      positions[index + 1] === position + 1 &&
+      infos[position].after &&
+      !infos[position + 1].before &&
+      !infos[position + 1].after
+    ) {
+      continue
+    }
+
+    if (start !== position) {
+      // If we have to use a character reference, an ampersand would be more
+      // correct, but as backslashes only care about punctuation, either will
+      // do the trick
+      result.push(escapeBackslashes(value.slice(start, position), '\\'))
+    }
+
+    start = position
+
+    if (
+      /[!-/:-@[-`{-~]/.test(value.charAt(position)) &&
+      (!config.encode || config.encode.indexOf(value.charAt(position)) === -1)
+    ) {
+      // Character escape.
+      result.push('\\')
+    } else {
+      // Character reference.
+      result.push(
+        '&#x' + value.charCodeAt(position).toString(16).toUpperCase() + ';'
+      )
+      start++
+    }
+  }
+
+  result.push(escapeBackslashes(value.slice(start, end), config.after))
+
+  return result.join('')
+}
+
+function numerical(a, b) {
+  return a - b
+}
+
+function escapeBackslashes(value, after) {
+  var expression = /\\(?=[!-/:-@[-`{-~])/g
+  var positions = []
+  var results = []
+  var index = -1
+  var start = 0
+  var whole = value + after
+  var match
+
+  while ((match = expression.exec(whole))) {
+    positions.push(match.index)
+  }
+
+  while (++index < positions.length) {
+    if (start !== positions[index]) {
+      results.push(value.slice(start, positions[index]))
+    }
+
+    results.push('\\')
+    start = positions[index]
+  }
+
+  results.push(value.slice(start))
+
+  return results.join('')
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-markdown/node_modules/mdast-util-to-string/index.js":
+/*!****************************************************************************************!*\
+  !*** ./node_modules/mdast-util-to-markdown/node_modules/mdast-util-to-string/index.js ***!
+  \****************************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = toString
+
+// Get the text content of a node.
+// Prefer the node’s plain-text fields, otherwise serialize its children,
+// and if the given value is an array, serialize the nodes in it.
+function toString(node) {
+  return (
+    (node &&
+      (node.value ||
+        node.alt ||
+        node.title ||
+        ('children' in node && all(node.children)) ||
+        ('length' in node && all(node)))) ||
+    ''
+  )
+}
+
+function all(values) {
+  var result = []
+  var index = -1
+
+  while (++index < values.length) {
+    result[index] = toString(values[index])
+  }
+
+  return result.join('')
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-to-string/index.js":
+/*!****************************************************!*\
+  !*** ./node_modules/mdast-util-to-string/index.js ***!
+  \****************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = toString
+
+// Get the text content of a node.
+// Prefer the node’s plain-text fields, otherwise serialize its children,
+// and if the given value is an array, serialize the nodes in it.
+function toString(node) {
+  return (
+    (node &&
+      (node.value ||
+        node.alt ||
+        node.title ||
+        ('children' in node && all(node.children)) ||
+        ('length' in node && all(node)))) ||
+    ''
+  )
+}
+
+function all(values) {
+  var result = []
+  var length = values.length
+  var index = -1
+
+  while (++index < length) {
+    result[index] = toString(values[index])
+  }
+
+  return result.join('')
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-toc/index.js":
+/*!**********************************************!*\
+  !*** ./node_modules/mdast-util-toc/index.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = __webpack_require__(/*! ./lib */ "./node_modules/mdast-util-toc/lib/index.js")
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-toc/lib/contents.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/mdast-util-toc/lib/contents.js ***!
+  \*****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var extend = __webpack_require__(/*! extend */ "./node_modules/extend/index.js")
+
+module.exports = contents
+
+// Transform a list of heading objects to a markdown list.
+function contents(map, tight, prefix, ordered) {
+  var table = {type: 'list', ordered: ordered, spread: false, children: []}
+  var minDepth = Infinity
+  var index = -1
+
+  // Find minimum depth.
+  while (++index < map.length) {
+    if (map[index].depth < minDepth) {
+      minDepth = map[index].depth
+    }
+  }
+
+  // Normalize depth.
+  index = -1
+
+  while (++index < map.length) {
+    map[index].depth -= minDepth - 1
+  }
+
+  // Add TOC to list.
+  index = -1
+
+  while (++index < map.length) {
+    insert(map[index], table, tight, prefix, ordered)
+  }
+
+  return table
+}
+
+// Insert an entry into `parent`.
+function insert(entry, parent, tight, prefix, ordered) {
+  var siblings = parent.children
+  var tail = siblings[siblings.length - 1]
+  var index = -1
+  var item
+
+  if (entry.depth === 1) {
+    siblings.push({
+      type: 'listItem',
+      spread: false,
+      children: [
+        {
+          type: 'paragraph',
+          children: [
+            {
+              type: 'link',
+              title: null,
+              url: '#' + (prefix || '') + entry.id,
+              children: all(entry.children)
+            }
+          ]
+        }
+      ]
+    })
+  } else if (tail && tail.type === 'listItem') {
+    insert(entry, siblings[siblings.length - 1], tight, prefix, ordered)
+  } else if (tail && tail.type === 'list') {
+    entry.depth--
+    insert(entry, tail, tight, prefix, ordered)
+  } else if (parent.type === 'list') {
+    item = {type: 'listItem', spread: false, children: []}
+    siblings.push(item)
+    insert(entry, item, tight, prefix, ordered)
+  } else {
+    item = {
+      type: 'list',
+      ordered: ordered,
+      spread: false,
+      children: []
+    }
+    siblings.push(item)
+    entry.depth--
+    insert(entry, item, tight, prefix, ordered)
+  }
+
+  if (parent.type === 'list' && !tight) {
+    parent.spread = false
+
+    while (++index < siblings.length) {
+      if (siblings[index].children.length > 1) {
+        parent.spread = true
+        break
+      }
+    }
+  } else {
+    parent.spread = !tight
+  }
+}
+
+function all(children) {
+  var result = []
+  var index = -1
+
+  if (children) {
+    while (++index < children.length) {
+      result = result.concat(one(children[index]))
+    }
+  }
+
+  return result
+}
+
+function one(node) {
+  var copy
+
+  if (
+    node.type === 'link' ||
+    node.type === 'linkReference' ||
+    node.type === 'footnote' ||
+    node.type === 'footnoteReference'
+  ) {
+    return all(node.children)
+  }
+
+  copy = extend({}, node)
+
+  delete copy.children
+  delete copy.position
+
+  copy = extend(true, {}, copy)
+
+  if (node.children) {
+    copy.children = all(node.children)
+  }
+
+  return copy
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-toc/lib/index.js":
+/*!**************************************************!*\
+  !*** ./node_modules/mdast-util-toc/lib/index.js ***!
+  \**************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = toc
+
+var search = __webpack_require__(/*! ./search */ "./node_modules/mdast-util-toc/lib/search.js")
+var contents = __webpack_require__(/*! ./contents */ "./node_modules/mdast-util-toc/lib/contents.js")
+var toExpression = __webpack_require__(/*! ./to-expression */ "./node_modules/mdast-util-toc/lib/to-expression.js")
+
+// Get a TOC representation of `node`.
+function toc(node, options) {
+  var settings = options || {}
+  var heading = settings.heading ? toExpression(settings.heading) : null
+  var result = search(node, heading, settings)
+
+  result.map = result.map.length
+    ? contents(
+        result.map,
+        settings.tight,
+        settings.prefix,
+        settings.ordered || false
+      )
+    : null
+
+  // No given heading.
+  if (!heading) {
+    result.endIndex = result.index = null
+  }
+
+  return result
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-toc/lib/search.js":
+/*!***************************************************!*\
+  !*** ./node_modules/mdast-util-toc/lib/search.js ***!
+  \***************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = search
+
+var toString = __webpack_require__(/*! mdast-util-to-string */ "./node_modules/mdast-util-toc/node_modules/mdast-util-to-string/index.js")
+var visit = __webpack_require__(/*! unist-util-visit */ "./node_modules/mdast-util-toc/node_modules/unist-util-visit/index.js")
+var convert = __webpack_require__(/*! unist-util-is/convert */ "./node_modules/unist-util-is/convert.js")
+var slugs = __webpack_require__(/*! github-slugger */ "./node_modules/github-slugger/index.js")()
+var toExpression = __webpack_require__(/*! ./to-expression */ "./node_modules/mdast-util-toc/lib/to-expression.js")
+
+// Search a node for a location.
+function search(root, expression, settings) {
+  var skip = settings.skip && toExpression(settings.skip)
+  var parents = convert(settings.parents || root)
+  var map = []
+  var index
+  var endIndex
+  var opening
+
+  slugs.reset()
+
+  // Visit all headings in `root`.  We `slug` all headings (to account for
+  // duplicates), but only create a TOC from top-level headings.
+  visit(root, 'heading', onheading)
+
+  return {
+    index: index || -1,
+    endIndex: index ? endIndex || root.children.length : -1,
+    map: map
+  }
+
+  function onheading(node, position, parent) {
+    var value = toString(node)
+    /* istanbul ignore next - to do: remove this when `remark-attr` is up to
+     * date w/ micromark. */
+    var id = node.data && node.data.hProperties && node.data.hProperties.id
+    var slug = slugs.slug(id || value)
+
+    if (!parents(parent)) {
+      return
+    }
+
+    // Our opening heading.
+    if (expression && !index && expression.test(value)) {
+      index = position + 1
+      opening = node
+      return
+    }
+
+    // Our closing heading.
+    if (opening && !endIndex && node.depth <= opening.depth) {
+      endIndex = position
+    }
+
+    // A non-empty heading after the closing (if we were looking for one).
+    if (
+      value &&
+      (endIndex || !expression) &&
+      (!settings.maxDepth || node.depth <= settings.maxDepth) &&
+      (!skip || !skip.test(value))
+    ) {
+      map.push({depth: node.depth, children: node.children, id: slug})
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-toc/lib/to-expression.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/mdast-util-toc/lib/to-expression.js ***!
+  \**********************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = toExpression
+
+// Transform a string into an applicable expression.
+function toExpression(value) {
+  return new RegExp('^(' + value + ')$', 'i')
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-toc/node_modules/mdast-util-to-string/index.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/mdast-util-toc/node_modules/mdast-util-to-string/index.js ***!
+  \********************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = toString
+
+// Get the text content of a node.
+// Prefer the node’s plain-text fields, otherwise serialize its children,
+// and if the given value is an array, serialize the nodes in it.
+function toString(node) {
+  return (
+    (node &&
+      (node.value ||
+        node.alt ||
+        node.title ||
+        ('children' in node && all(node.children)) ||
+        ('length' in node && all(node)))) ||
+    ''
+  )
+}
+
+function all(values) {
+  var result = []
+  var index = -1
+
+  while (++index < values.length) {
+    result[index] = toString(values[index])
+  }
+
+  return result.join('')
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-toc/node_modules/unist-util-visit/index.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/mdast-util-toc/node_modules/unist-util-visit/index.js ***!
+  \****************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = visit
+
+var visitParents = __webpack_require__(/*! unist-util-visit-parents */ "./node_modules/unist-util-visit-parents/index.js")
+
+var CONTINUE = visitParents.CONTINUE
+var SKIP = visitParents.SKIP
+var EXIT = visitParents.EXIT
+
+visit.CONTINUE = CONTINUE
+visit.SKIP = SKIP
+visit.EXIT = EXIT
+
+function visit(tree, test, visitor, reverse) {
+  if (typeof test === 'function' && typeof visitor !== 'function') {
+    reverse = visitor
+    visitor = test
+    test = null
+  }
+
+  visitParents(tree, test, overload, reverse)
+
+  function overload(node, parents) {
+    var parent = parents[parents.length - 1]
+    var index = parent ? parent.children.indexOf(node) : null
+    return visitor(node, index, parent)
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-wiki-link/dist/index.umd.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/mdast-util-wiki-link/dist/index.umd.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "fromMarkdown": () => (/* binding */ fromMarkdown),
+/* harmony export */   "toMarkdown": () => (/* binding */ toMarkdown)
+/* harmony export */ });
+/* harmony import */ var mdast_util_to_markdown_lib_util_safe__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mdast-util-to-markdown/lib/util/safe */ "./node_modules/mdast-util-wiki-link/node_modules/mdast-util-to-markdown/lib/util/safe.js");
+/* harmony import */ var mdast_util_to_markdown_lib_util_safe__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mdast_util_to_markdown_lib_util_safe__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function fromMarkdown() {
+  var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var permalinks = opts.permalinks || [];
+
+  var defaultPageResolver = function defaultPageResolver(name) {
+    return [name.replace(/ /g, '_').toLowerCase()];
+  };
+
+  var pageResolver = opts.pageResolver || defaultPageResolver;
+  var newClassName = opts.newClassName || 'new';
+  var wikiLinkClassName = opts.wikiLinkClassName || 'internal';
+
+  var defaultHrefTemplate = function defaultHrefTemplate(permalink) {
+    return "#/page/".concat(permalink);
+  };
+
+  var hrefTemplate = opts.hrefTemplate || defaultHrefTemplate;
+
+  function enterWikiLink(token) {
+    this.enter({
+      type: 'wikiLink',
+      value: null,
+      data: {
+        alias: null,
+        permalink: null,
+        exists: null
+      }
+    }, token);
+  }
+
+  function top(stack) {
+    return stack[stack.length - 1];
+  }
+
+  function exitWikiLinkAlias(token) {
+    var alias = this.sliceSerialize(token);
+    var current = top(this.stack);
+    current.data.alias = alias;
+  }
+
+  function exitWikiLinkTarget(token) {
+    var target = this.sliceSerialize(token);
+    var current = top(this.stack);
+    current.value = target;
+  }
+
+  function exitWikiLink(token) {
+    var wikiLink = this.exit(token);
+    var pagePermalinks = pageResolver(wikiLink.value);
+    var permalink = pagePermalinks.find(function (p) {
+      return permalinks.indexOf(p) !== -1;
+    });
+    var exists = permalink !== undefined;
+
+    if (!exists) {
+      permalink = pagePermalinks[0];
+    }
+
+    var displayName = wikiLink.value;
+
+    if (wikiLink.data.alias) {
+      displayName = wikiLink.data.alias;
+    }
+
+    var classNames = wikiLinkClassName;
+
+    if (!exists) {
+      classNames += ' ' + newClassName;
+    }
+
+    wikiLink.data.alias = displayName;
+    wikiLink.data.permalink = permalink;
+    wikiLink.data.exists = exists;
+    wikiLink.data.hName = 'a';
+    wikiLink.data.hProperties = {
+      className: classNames,
+      href: hrefTemplate(permalink)
+    };
+    wikiLink.data.hChildren = [{
+      type: 'text',
+      value: displayName
+    }];
+  }
+
+  return {
+    enter: {
+      wikiLink: enterWikiLink
+    },
+    exit: {
+      wikiLinkTarget: exitWikiLinkTarget,
+      wikiLinkAlias: exitWikiLinkAlias,
+      wikiLink: exitWikiLink
+    }
+  };
+}
+
+function toMarkdown() {
+  var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var aliasDivider = opts.aliasDivider || ':';
+  var unsafe = [{
+    character: '[',
+    inConstruct: ['phrasing', 'label', 'reference']
+  }, {
+    character: ']',
+    inConstruct: ['label', 'reference']
+  }];
+
+  function handler(node, _, context) {
+    var exit = context.enter('wikiLink');
+    var nodeValue = mdast_util_to_markdown_lib_util_safe__WEBPACK_IMPORTED_MODULE_0___default()(context, node.value, {
+      before: '[',
+      after: ']'
+    });
+    var nodeAlias = mdast_util_to_markdown_lib_util_safe__WEBPACK_IMPORTED_MODULE_0___default()(context, node.data.alias, {
+      before: '[',
+      after: ']'
+    });
+    var value;
+
+    if (nodeAlias !== nodeValue) {
+      value = "[[".concat(nodeValue).concat(aliasDivider).concat(nodeAlias, "]]");
+    } else {
+      value = "[[".concat(nodeValue, "]]");
+    }
+
+    exit();
+    return value;
+  }
+
+  return {
+    unsafe: unsafe,
+    handlers: {
+      wikiLink: handler
+    }
+  };
+}
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/mdast-util-wiki-link/node_modules/mdast-util-to-markdown/lib/util/safe.js":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/mdast-util-wiki-link/node_modules/mdast-util-to-markdown/lib/util/safe.js ***!
+  \************************************************************************************************/
 /***/ ((module) => {
 
 module.exports = safe
@@ -10171,616 +9961,10 @@ function numerical(a, b) {
 
 /***/ }),
 
-/***/ "./node_modules/mdast-util-to-markdown/node_modules/mdast-util-to-string/index.js":
-/*!****************************************************************************************!*\
-  !*** ./node_modules/mdast-util-to-markdown/node_modules/mdast-util-to-string/index.js ***!
-  \****************************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
-/***/ ((module) => {
-
-"use strict";
-
-
-module.exports = toString
-
-// Get the text content of a node.
-// Prefer the node’s plain-text fields, otherwise serialize its children,
-// and if the given value is an array, serialize the nodes in it.
-function toString(node) {
-  return (
-    (node &&
-      (node.value ||
-        node.alt ||
-        node.title ||
-        ('children' in node && all(node.children)) ||
-        ('length' in node && all(node)))) ||
-    ''
-  )
-}
-
-function all(values) {
-  var result = []
-  var index = -1
-
-  while (++index < values.length) {
-    result[index] = toString(values[index])
-  }
-
-  return result.join('')
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/mdast-util-to-string/index.js":
-/*!****************************************************!*\
-  !*** ./node_modules/mdast-util-to-string/index.js ***!
-  \****************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
-/***/ ((module) => {
-
-"use strict";
-
-
-module.exports = toString
-
-// Get the text content of a node.
-// Prefer the node’s plain-text fields, otherwise serialize its children,
-// and if the given value is an array, serialize the nodes in it.
-function toString(node) {
-  return (
-    (node &&
-      (node.value ||
-        node.alt ||
-        node.title ||
-        ('children' in node && all(node.children)) ||
-        ('length' in node && all(node)))) ||
-    ''
-  )
-}
-
-function all(values) {
-  var result = []
-  var length = values.length
-  var index = -1
-
-  while (++index < length) {
-    result[index] = toString(values[index])
-  }
-
-  return result.join('')
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/mdast-util-toc/index.js":
-/*!**********************************************!*\
-  !*** ./node_modules/mdast-util-toc/index.js ***!
-  \**********************************************/
-/*! dynamic exports */
-/*! exports [maybe provided (runtime-defined)] [no usage info] -> ./node_modules/mdast-util-toc/lib/index.js */
-/*! runtime requirements: module, __webpack_require__ */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-module.exports = __webpack_require__(/*! ./lib */ "./node_modules/mdast-util-toc/lib/index.js")
-
-
-/***/ }),
-
-/***/ "./node_modules/mdast-util-toc/lib/contents.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/mdast-util-toc/lib/contents.js ***!
-  \*****************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var extend = __webpack_require__(/*! extend */ "./node_modules/extend/index.js")
-
-module.exports = contents
-
-// Transform a list of heading objects to a markdown list.
-function contents(map, tight, prefix, ordered) {
-  var table = {type: 'list', ordered: ordered, spread: false, children: []}
-  var minDepth = Infinity
-  var index = -1
-
-  // Find minimum depth.
-  while (++index < map.length) {
-    if (map[index].depth < minDepth) {
-      minDepth = map[index].depth
-    }
-  }
-
-  // Normalize depth.
-  index = -1
-
-  while (++index < map.length) {
-    map[index].depth -= minDepth - 1
-  }
-
-  // Add TOC to list.
-  index = -1
-
-  while (++index < map.length) {
-    insert(map[index], table, tight, prefix, ordered)
-  }
-
-  return table
-}
-
-// Insert an entry into `parent`.
-function insert(entry, parent, tight, prefix, ordered) {
-  var siblings = parent.children
-  var tail = siblings[siblings.length - 1]
-  var index = -1
-  var item
-
-  if (entry.depth === 1) {
-    siblings.push({
-      type: 'listItem',
-      spread: false,
-      children: [
-        {
-          type: 'paragraph',
-          children: [
-            {
-              type: 'link',
-              title: null,
-              url: '#' + (prefix || '') + entry.id,
-              children: all(entry.children)
-            }
-          ]
-        }
-      ]
-    })
-  } else if (tail && tail.type === 'listItem') {
-    insert(entry, siblings[siblings.length - 1], tight, prefix, ordered)
-  } else if (tail && tail.type === 'list') {
-    entry.depth--
-    insert(entry, tail, tight, prefix, ordered)
-  } else if (parent.type === 'list') {
-    item = {type: 'listItem', spread: false, children: []}
-    siblings.push(item)
-    insert(entry, item, tight, prefix, ordered)
-  } else {
-    item = {
-      type: 'list',
-      ordered: ordered,
-      spread: false,
-      children: []
-    }
-    siblings.push(item)
-    entry.depth--
-    insert(entry, item, tight, prefix, ordered)
-  }
-
-  if (parent.type === 'list' && !tight) {
-    parent.spread = false
-
-    while (++index < siblings.length) {
-      if (siblings[index].children.length > 1) {
-        parent.spread = true
-        break
-      }
-    }
-  } else {
-    parent.spread = !tight
-  }
-}
-
-function all(children) {
-  var result = []
-  var index = -1
-
-  if (children) {
-    while (++index < children.length) {
-      result = result.concat(one(children[index]))
-    }
-  }
-
-  return result
-}
-
-function one(node) {
-  var copy
-
-  if (
-    node.type === 'link' ||
-    node.type === 'linkReference' ||
-    node.type === 'footnote' ||
-    node.type === 'footnoteReference'
-  ) {
-    return all(node.children)
-  }
-
-  copy = extend({}, node)
-
-  delete copy.children
-  delete copy.position
-
-  copy = extend(true, {}, copy)
-
-  if (node.children) {
-    copy.children = all(node.children)
-  }
-
-  return copy
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/mdast-util-toc/lib/index.js":
-/*!**************************************************!*\
-  !*** ./node_modules/mdast-util-toc/lib/index.js ***!
-  \**************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-module.exports = toc
-
-var search = __webpack_require__(/*! ./search */ "./node_modules/mdast-util-toc/lib/search.js")
-var contents = __webpack_require__(/*! ./contents */ "./node_modules/mdast-util-toc/lib/contents.js")
-var toExpression = __webpack_require__(/*! ./to-expression */ "./node_modules/mdast-util-toc/lib/to-expression.js")
-
-// Get a TOC representation of `node`.
-function toc(node, options) {
-  var settings = options || {}
-  var heading = settings.heading ? toExpression(settings.heading) : null
-  var result = search(node, heading, settings)
-
-  result.map = result.map.length
-    ? contents(
-        result.map,
-        settings.tight,
-        settings.prefix,
-        settings.ordered || false
-      )
-    : null
-
-  // No given heading.
-  if (!heading) {
-    result.endIndex = result.index = null
-  }
-
-  return result
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/mdast-util-toc/lib/search.js":
-/*!***************************************************!*\
-  !*** ./node_modules/mdast-util-toc/lib/search.js ***!
-  \***************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-module.exports = search
-
-var toString = __webpack_require__(/*! mdast-util-to-string */ "./node_modules/mdast-util-toc/node_modules/mdast-util-to-string/index.js")
-var visit = __webpack_require__(/*! unist-util-visit */ "./node_modules/unist-util-visit/index.js")
-var convert = __webpack_require__(/*! unist-util-is/convert */ "./node_modules/unist-util-is/convert.js")
-var slugs = __webpack_require__(/*! github-slugger */ "./node_modules/github-slugger/index.js")()
-var toExpression = __webpack_require__(/*! ./to-expression */ "./node_modules/mdast-util-toc/lib/to-expression.js")
-
-// Search a node for a location.
-function search(root, expression, settings) {
-  var skip = settings.skip && toExpression(settings.skip)
-  var parents = convert(settings.parents || root)
-  var map = []
-  var index
-  var endIndex
-  var opening
-
-  slugs.reset()
-
-  // Visit all headings in `root`.  We `slug` all headings (to account for
-  // duplicates), but only create a TOC from top-level headings.
-  visit(root, 'heading', onheading)
-
-  return {
-    index: index || -1,
-    endIndex: index ? endIndex || root.children.length : -1,
-    map: map
-  }
-
-  function onheading(node, position, parent) {
-    var value = toString(node)
-    /* istanbul ignore next - to do: remove this when `remark-attr` is up to
-     * date w/ micromark. */
-    var id = node.data && node.data.hProperties && node.data.hProperties.id
-    var slug = slugs.slug(id || value)
-
-    if (!parents(parent)) {
-      return
-    }
-
-    // Our opening heading.
-    if (expression && !index && expression.test(value)) {
-      index = position + 1
-      opening = node
-      return
-    }
-
-    // Our closing heading.
-    if (opening && !endIndex && node.depth <= opening.depth) {
-      endIndex = position
-    }
-
-    // A non-empty heading after the closing (if we were looking for one).
-    if (
-      value &&
-      (endIndex || !expression) &&
-      (!settings.maxDepth || node.depth <= settings.maxDepth) &&
-      (!skip || !skip.test(value))
-    ) {
-      map.push({depth: node.depth, children: node.children, id: slug})
-    }
-  }
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/mdast-util-toc/lib/to-expression.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/mdast-util-toc/lib/to-expression.js ***!
-  \**********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
-/***/ ((module) => {
-
-"use strict";
-
-
-module.exports = toExpression
-
-// Transform a string into an applicable expression.
-function toExpression(value) {
-  return new RegExp('^(' + value + ')$', 'i')
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/mdast-util-toc/node_modules/mdast-util-to-string/index.js":
-/*!********************************************************************************!*\
-  !*** ./node_modules/mdast-util-toc/node_modules/mdast-util-to-string/index.js ***!
-  \********************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
-/***/ ((module) => {
-
-"use strict";
-
-
-module.exports = toString
-
-// Get the text content of a node.
-// Prefer the node’s plain-text fields, otherwise serialize its children,
-// and if the given value is an array, serialize the nodes in it.
-function toString(node) {
-  return (
-    (node &&
-      (node.value ||
-        node.alt ||
-        node.title ||
-        ('children' in node && all(node.children)) ||
-        ('length' in node && all(node)))) ||
-    ''
-  )
-}
-
-function all(values) {
-  var result = []
-  var index = -1
-
-  while (++index < values.length) {
-    result[index] = toString(values[index])
-  }
-
-  return result.join('')
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/mdast-util-wiki-link/dist/index.umd.js":
-/*!*************************************************************!*\
-  !*** ./node_modules/mdast-util-wiki-link/dist/index.umd.js ***!
-  \*************************************************************/
-/*! namespace exports */
-/*! export fromMarkdown [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export toMarkdown [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "fromMarkdown": () => /* binding */ fromMarkdown,
-/* harmony export */   "toMarkdown": () => /* binding */ toMarkdown
-/* harmony export */ });
-/* harmony import */ var mdast_util_to_markdown_lib_util_safe__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mdast-util-to-markdown/lib/util/safe */ "./node_modules/mdast-util-to-markdown/lib/util/safe.js");
-/* harmony import */ var mdast_util_to_markdown_lib_util_safe__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mdast_util_to_markdown_lib_util_safe__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function fromMarkdown() {
-  var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var permalinks = opts.permalinks || [];
-
-  var defaultPageResolver = function defaultPageResolver(name) {
-    return [name.replace(/ /g, '_').toLowerCase()];
-  };
-
-  var pageResolver = opts.pageResolver || defaultPageResolver;
-  var newClassName = opts.newClassName || 'new';
-  var wikiLinkClassName = opts.wikiLinkClassName || 'internal';
-
-  var defaultHrefTemplate = function defaultHrefTemplate(permalink) {
-    return "#/page/".concat(permalink);
-  };
-
-  var hrefTemplate = opts.hrefTemplate || defaultHrefTemplate;
-
-  function enterWikiLink(token) {
-    this.enter({
-      type: 'wikiLink',
-      value: null,
-      data: {
-        alias: null,
-        permalink: null,
-        exists: null
-      }
-    }, token);
-  }
-
-  function top(stack) {
-    return stack[stack.length - 1];
-  }
-
-  function exitWikiLinkAlias(token) {
-    var alias = this.sliceSerialize(token);
-    var current = top(this.stack);
-    current.data.alias = alias;
-  }
-
-  function exitWikiLinkTarget(token) {
-    var target = this.sliceSerialize(token);
-    var current = top(this.stack);
-    current.value = target;
-  }
-
-  function exitWikiLink(token) {
-    var wikiLink = this.exit(token);
-    var pagePermalinks = pageResolver(wikiLink.value);
-    var permalink = pagePermalinks.find(function (p) {
-      return permalinks.indexOf(p) !== -1;
-    });
-    var exists = permalink !== undefined;
-
-    if (!exists) {
-      permalink = pagePermalinks[0];
-    }
-
-    var displayName = wikiLink.value;
-
-    if (wikiLink.data.alias) {
-      displayName = wikiLink.data.alias;
-    }
-
-    var classNames = wikiLinkClassName;
-
-    if (!exists) {
-      classNames += ' ' + newClassName;
-    }
-
-    wikiLink.data.alias = displayName;
-    wikiLink.data.permalink = permalink;
-    wikiLink.data.exists = exists;
-    wikiLink.data.hName = 'a';
-    wikiLink.data.hProperties = {
-      className: classNames,
-      href: hrefTemplate(permalink)
-    };
-    wikiLink.data.hChildren = [{
-      type: 'text',
-      value: displayName
-    }];
-  }
-
-  return {
-    enter: {
-      wikiLink: enterWikiLink
-    },
-    exit: {
-      wikiLinkTarget: exitWikiLinkTarget,
-      wikiLinkAlias: exitWikiLinkAlias,
-      wikiLink: exitWikiLink
-    }
-  };
-}
-
-function toMarkdown() {
-  var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var aliasDivider = opts.aliasDivider || ':';
-  var unsafe = [{
-    character: '[',
-    inConstruct: ['phrasing', 'label', 'reference']
-  }, {
-    character: ']',
-    inConstruct: ['label', 'reference']
-  }];
-
-  function handler(node, _, context) {
-    var exit = context.enter('wikiLink');
-    var nodeValue = mdast_util_to_markdown_lib_util_safe__WEBPACK_IMPORTED_MODULE_0___default()(context, node.value, {
-      before: '[',
-      after: ']'
-    });
-    var nodeAlias = mdast_util_to_markdown_lib_util_safe__WEBPACK_IMPORTED_MODULE_0___default()(context, node.data.alias, {
-      before: '[',
-      after: ']'
-    });
-    var value;
-
-    if (nodeAlias !== nodeValue) {
-      value = "[[".concat(nodeValue).concat(aliasDivider).concat(nodeAlias, "]]");
-    } else {
-      value = "[[".concat(nodeValue, "]]");
-    }
-
-    exit();
-    return value;
-  }
-
-  return {
-    unsafe: unsafe,
-    handlers: {
-      wikiLink: handler
-    }
-  };
-}
-
-
-
-
-/***/ }),
-
 /***/ "./node_modules/mdurl/encode.js":
 /*!**************************************!*\
   !*** ./node_modules/mdurl/encode.js ***!
   \**************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 98:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -10890,20 +10074,17 @@ module.exports = encode;
 /*!************************************************************!*\
   !*** ./node_modules/micromark-extension-footnote/index.js ***!
   \************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = footnote
 
-var normalizeIdentifier = __webpack_require__(/*! micromark/dist/util/normalize-identifier */ "./node_modules/micromark-extension-footnote/node_modules/micromark/dist/util/normalize-identifier.js")
-var blank = __webpack_require__(/*! micromark/dist/tokenize/partial-blank-line */ "./node_modules/micromark-extension-footnote/node_modules/micromark/dist/tokenize/partial-blank-line.js")
-var createSpace = __webpack_require__(/*! micromark/dist/tokenize/factory-space */ "./node_modules/micromark-extension-footnote/node_modules/micromark/dist/tokenize/factory-space.js")
-var chunkedSplice = __webpack_require__(/*! micromark/dist/util/chunked-splice */ "./node_modules/micromark-extension-footnote/node_modules/micromark/dist/util/chunked-splice.js")
-var prefixSize = __webpack_require__(/*! micromark/dist/util/prefix-size */ "./node_modules/micromark-extension-footnote/node_modules/micromark/dist/util/prefix-size.js")
-var shallow = __webpack_require__(/*! micromark/dist/util/shallow */ "./node_modules/micromark-extension-footnote/node_modules/micromark/dist/util/shallow.js")
-var resolveAll = __webpack_require__(/*! micromark/dist/util/resolve-all */ "./node_modules/micromark-extension-footnote/node_modules/micromark/dist/util/resolve-all.js")
+var normalizeIdentifier = __webpack_require__(/*! micromark/dist/util/normalize-identifier */ "./node_modules/micromark/dist/util/normalize-identifier.js")
+var blank = __webpack_require__(/*! micromark/dist/tokenize/partial-blank-line */ "./node_modules/micromark/dist/tokenize/partial-blank-line.js")
+var createSpace = __webpack_require__(/*! micromark/dist/tokenize/factory-space */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+var chunkedSplice = __webpack_require__(/*! micromark/dist/util/chunked-splice */ "./node_modules/micromark/dist/util/chunked-splice.js")
+var prefixSize = __webpack_require__(/*! micromark/dist/util/prefix-size */ "./node_modules/micromark/dist/util/prefix-size.js")
+var shallow = __webpack_require__(/*! micromark/dist/util/shallow */ "./node_modules/micromark/dist/util/shallow.js")
+var resolveAll = __webpack_require__(/*! micromark/dist/util/resolve-all */ "./node_modules/micromark/dist/util/resolve-all.js")
 
 var indent = {tokenize: tokenizeIndent, partial: true}
 
@@ -11341,366 +10522,10 @@ function tokenizeIndent(effects, ok, nok) {
 
 /***/ }),
 
-/***/ "./node_modules/micromark-extension-footnote/node_modules/micromark/dist/character/markdown-line-ending.js":
-/*!*****************************************************************************************************************!*\
-  !*** ./node_modules/micromark-extension-footnote/node_modules/micromark/dist/character/markdown-line-ending.js ***!
-  \*****************************************************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 7:0-14 */
-/***/ ((module) => {
-
-"use strict";
-
-
-function markdownLineEnding(code) {
-  return code < -2
-}
-
-module.exports = markdownLineEnding
-
-
-/***/ }),
-
-/***/ "./node_modules/micromark-extension-footnote/node_modules/micromark/dist/character/markdown-space.js":
-/*!***********************************************************************************************************!*\
-  !*** ./node_modules/micromark-extension-footnote/node_modules/micromark/dist/character/markdown-space.js ***!
-  \***********************************************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 7:0-14 */
-/***/ ((module) => {
-
-"use strict";
-
-
-function markdownSpace(code) {
-  return code === -2 || code === -1 || code === 32
-}
-
-module.exports = markdownSpace
-
-
-/***/ }),
-
-/***/ "./node_modules/micromark-extension-footnote/node_modules/micromark/dist/constant/assign.js":
-/*!**************************************************************************************************!*\
-  !*** ./node_modules/micromark-extension-footnote/node_modules/micromark/dist/constant/assign.js ***!
-  \**************************************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
-/***/ ((module) => {
-
-"use strict";
-
-
-var assign = Object.assign
-
-module.exports = assign
-
-
-/***/ }),
-
-/***/ "./node_modules/micromark-extension-footnote/node_modules/micromark/dist/constant/splice.js":
-/*!**************************************************************************************************!*\
-  !*** ./node_modules/micromark-extension-footnote/node_modules/micromark/dist/constant/splice.js ***!
-  \**************************************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
-/***/ ((module) => {
-
-"use strict";
-
-
-var splice = [].splice
-
-module.exports = splice
-
-
-/***/ }),
-
-/***/ "./node_modules/micromark-extension-footnote/node_modules/micromark/dist/tokenize/factory-space.js":
-/*!*********************************************************************************************************!*\
-  !*** ./node_modules/micromark-extension-footnote/node_modules/micromark/dist/tokenize/factory-space.js ***!
-  \*********************************************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 30:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var markdownSpace = __webpack_require__(/*! ../character/markdown-space.js */ "./node_modules/micromark-extension-footnote/node_modules/micromark/dist/character/markdown-space.js")
-
-function spaceFactory(effects, ok, type, max) {
-  var limit = max ? max - 1 : Infinity
-  var size = 0
-  return start
-
-  function start(code) {
-    if (markdownSpace(code)) {
-      effects.enter(type)
-      return prefix(code)
-    }
-
-    return ok(code)
-  }
-
-  function prefix(code) {
-    if (markdownSpace(code) && size++ < limit) {
-      effects.consume(code)
-      return prefix
-    }
-
-    effects.exit(type)
-    return ok(code)
-  }
-}
-
-module.exports = spaceFactory
-
-
-/***/ }),
-
-/***/ "./node_modules/micromark-extension-footnote/node_modules/micromark/dist/tokenize/partial-blank-line.js":
-/*!**************************************************************************************************************!*\
-  !*** ./node_modules/micromark-extension-footnote/node_modules/micromark/dist/tokenize/partial-blank-line.js ***!
-  \**************************************************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 19:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark-extension-footnote/node_modules/micromark/dist/character/markdown-line-ending.js")
-var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark-extension-footnote/node_modules/micromark/dist/tokenize/factory-space.js")
-
-var partialBlankLine = {
-  tokenize: tokenizePartialBlankLine,
-  partial: true
-}
-
-function tokenizePartialBlankLine(effects, ok, nok) {
-  return factorySpace(effects, afterWhitespace, 'linePrefix')
-
-  function afterWhitespace(code) {
-    return code === null || markdownLineEnding(code) ? ok(code) : nok(code)
-  }
-}
-
-module.exports = partialBlankLine
-
-
-/***/ }),
-
-/***/ "./node_modules/micromark-extension-footnote/node_modules/micromark/dist/util/chunked-splice.js":
-/*!******************************************************************************************************!*\
-  !*** ./node_modules/micromark-extension-footnote/node_modules/micromark/dist/util/chunked-splice.js ***!
-  \******************************************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 38:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var splice = __webpack_require__(/*! ../constant/splice.js */ "./node_modules/micromark-extension-footnote/node_modules/micromark/dist/constant/splice.js")
-
-// causes a stack overflow in V8 when trying to insert 100k items for instance.
-
-function chunkedSplice(list, start, remove, items) {
-  var end = list.length
-  var chunkStart = 0
-  var parameters // Make start between zero and `end` (included).
-
-  if (start < 0) {
-    start = -start > end ? 0 : end + start
-  } else {
-    start = start > end ? end : start
-  }
-
-  remove = remove > 0 ? remove : 0 // No need to chunk the items if there’s only a couple (10k) items.
-
-  if (items.length < 10000) {
-    parameters = Array.from(items)
-    parameters.unshift(start, remove)
-    splice.apply(list, parameters)
-  } else {
-    // Delete `remove` items starting from `start`
-    if (remove) splice.apply(list, [start, remove]) // Insert the items in chunks to not cause stack overflows.
-
-    while (chunkStart < items.length) {
-      parameters = items.slice(chunkStart, chunkStart + 10000)
-      parameters.unshift(start, 0)
-      splice.apply(list, parameters)
-      chunkStart += 10000
-      start += 10000
-    }
-  }
-}
-
-module.exports = chunkedSplice
-
-
-/***/ }),
-
-/***/ "./node_modules/micromark-extension-footnote/node_modules/micromark/dist/util/normalize-identifier.js":
-/*!************************************************************************************************************!*\
-  !*** ./node_modules/micromark-extension-footnote/node_modules/micromark/dist/util/normalize-identifier.js ***!
-  \************************************************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 18:0-14 */
-/***/ ((module) => {
-
-"use strict";
-
-
-function normalizeIdentifier(value) {
-  return (
-    value // Collapse Markdown whitespace.
-      .replace(/[\t\n\r ]+/g, ' ') // Trim.
-      .replace(/^ | $/g, '') // Some characters are considered “uppercase”, but if their lowercase
-      // counterpart is uppercased will result in a different uppercase
-      // character.
-      // Hence, to get that form, we perform both lower- and uppercase.
-      // Upper case makes sure keys will not interact with default prototypal
-      // methods: no object method is uppercase.
-      .toLowerCase()
-      .toUpperCase()
-  )
-}
-
-module.exports = normalizeIdentifier
-
-
-/***/ }),
-
-/***/ "./node_modules/micromark-extension-footnote/node_modules/micromark/dist/util/prefix-size.js":
-/*!***************************************************************************************************!*\
-  !*** ./node_modules/micromark-extension-footnote/node_modules/micromark/dist/util/prefix-size.js ***!
-  \***************************************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 11:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var sizeChunks = __webpack_require__(/*! ./size-chunks.js */ "./node_modules/micromark-extension-footnote/node_modules/micromark/dist/util/size-chunks.js")
-
-function prefixSize(events, type) {
-  var tail = events[events.length - 1]
-  if (!tail || tail[1].type !== type) return 0
-  return sizeChunks(tail[2].sliceStream(tail[1]))
-}
-
-module.exports = prefixSize
-
-
-/***/ }),
-
-/***/ "./node_modules/micromark-extension-footnote/node_modules/micromark/dist/util/resolve-all.js":
-/*!***************************************************************************************************!*\
-  !*** ./node_modules/micromark-extension-footnote/node_modules/micromark/dist/util/resolve-all.js ***!
-  \***************************************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 20:0-14 */
-/***/ ((module) => {
-
-"use strict";
-
-
-function resolveAll(constructs, events, context) {
-  var called = []
-  var index = -1
-  var resolve
-
-  while (++index < constructs.length) {
-    resolve = constructs[index].resolveAll
-
-    if (resolve && called.indexOf(resolve) < 0) {
-      events = resolve(events, context)
-      called.push(resolve)
-    }
-  }
-
-  return events
-}
-
-module.exports = resolveAll
-
-
-/***/ }),
-
-/***/ "./node_modules/micromark-extension-footnote/node_modules/micromark/dist/util/shallow.js":
-/*!***********************************************************************************************!*\
-  !*** ./node_modules/micromark-extension-footnote/node_modules/micromark/dist/util/shallow.js ***!
-  \***********************************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 9:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var assign = __webpack_require__(/*! ../constant/assign.js */ "./node_modules/micromark-extension-footnote/node_modules/micromark/dist/constant/assign.js")
-
-function shallow(object) {
-  return assign({}, object)
-}
-
-module.exports = shallow
-
-
-/***/ }),
-
-/***/ "./node_modules/micromark-extension-footnote/node_modules/micromark/dist/util/size-chunks.js":
-/*!***************************************************************************************************!*\
-  !*** ./node_modules/micromark-extension-footnote/node_modules/micromark/dist/util/size-chunks.js ***!
-  \***************************************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 16:0-14 */
-/***/ ((module) => {
-
-"use strict";
-
-
-// Counts tabs based on their expanded size, and CR+LF as one character.
-
-function sizeChunks(chunks) {
-  var index = -1
-  var size = 0
-
-  while (++index < chunks.length) {
-    size += typeof chunks[index] === 'string' ? chunks[index].length : 1
-  }
-
-  return size
-}
-
-module.exports = sizeChunks
-
-
-/***/ }),
-
 /***/ "./node_modules/micromark-extension-frontmatter/index.js":
 /*!***************************************************************!*\
   !*** ./node_modules/micromark-extension-frontmatter/index.js ***!
   \***************************************************************/
-/*! dynamic exports */
-/*! exports [maybe provided (runtime-defined)] [no usage info] -> ./node_modules/micromark-extension-frontmatter/lib/syntax.js */
-/*! runtime requirements: module, __webpack_require__ */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = __webpack_require__(/*! ./lib/syntax */ "./node_modules/micromark-extension-frontmatter/lib/syntax.js")
@@ -11712,9 +10537,6 @@ module.exports = __webpack_require__(/*! ./lib/syntax */ "./node_modules/microma
 /*!*********************************************************************!*\
   !*** ./node_modules/micromark-extension-frontmatter/lib/matters.js ***!
   \*********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = matters
@@ -11776,9 +10598,6 @@ function matter(option) {
 /*!********************************************************************!*\
   !*** ./node_modules/micromark-extension-frontmatter/lib/syntax.js ***!
   \********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = create
@@ -11956,18 +10775,13 @@ function pick(schema, prop) {
 /*!**********************************************************************!*\
   !*** ./node_modules/micromark-extension-wiki-link/dist/index.umd.js ***!
   \**********************************************************************/
-/*! namespace exports */
-/*! export html [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export syntax [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "html": () => /* binding */ html,
-/* harmony export */   "syntax": () => /* binding */ wikiLink
+/* harmony export */   "html": () => (/* binding */ html),
+/* harmony export */   "syntax": () => (/* binding */ wikiLink)
 /* harmony export */ });
 function html() {
   var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -12215,14 +11029,16 @@ function wikiLink() {
 /*!**************************************************************!*\
   !*** ./node_modules/micromark/dist/character/ascii-alpha.js ***!
   \**************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var check = __webpack_require__(/*! ../util/regex-check */ "./node_modules/micromark/dist/util/regex-check.js")
+"use strict";
 
-module.exports = check(/[A-Za-z]/)
+
+var regexCheck = __webpack_require__(/*! ../util/regex-check.js */ "./node_modules/micromark/dist/util/regex-check.js")
+
+var asciiAlpha = regexCheck(/[A-Za-z]/)
+
+module.exports = asciiAlpha
 
 
 /***/ }),
@@ -12231,14 +11047,16 @@ module.exports = check(/[A-Za-z]/)
 /*!*********************************************************************!*\
   !*** ./node_modules/micromark/dist/character/ascii-alphanumeric.js ***!
   \*********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var check = __webpack_require__(/*! ../util/regex-check */ "./node_modules/micromark/dist/util/regex-check.js")
+"use strict";
 
-module.exports = check(/[\dA-Za-z]/)
+
+var regexCheck = __webpack_require__(/*! ../util/regex-check.js */ "./node_modules/micromark/dist/util/regex-check.js")
+
+var asciiAlphanumeric = regexCheck(/[\dA-Za-z]/)
+
+module.exports = asciiAlphanumeric
 
 
 /***/ }),
@@ -12247,14 +11065,16 @@ module.exports = check(/[\dA-Za-z]/)
 /*!**************************************************************!*\
   !*** ./node_modules/micromark/dist/character/ascii-atext.js ***!
   \**************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var check = __webpack_require__(/*! ../util/regex-check */ "./node_modules/micromark/dist/util/regex-check.js")
+"use strict";
 
-module.exports = check(/[#-'*+\--9=?A-Z^-~]/)
+
+var regexCheck = __webpack_require__(/*! ../util/regex-check.js */ "./node_modules/micromark/dist/util/regex-check.js")
+
+var asciiAtext = regexCheck(/[#-'*+\--9=?A-Z^-~]/)
+
+module.exports = asciiAtext
 
 
 /***/ }),
@@ -12263,12 +11083,10 @@ module.exports = check(/[#-'*+\--9=?A-Z^-~]/)
 /*!****************************************************************!*\
   !*** ./node_modules/micromark/dist/character/ascii-control.js ***!
   \****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
-module.exports = asciiControl
+"use strict";
+
 
 // Note: EOF is seen as ASCII control here, because `null < 32 == true`.
 function asciiControl(code) {
@@ -12279,6 +11097,8 @@ function asciiControl(code) {
   )
 }
 
+module.exports = asciiControl
+
 
 /***/ }),
 
@@ -12286,14 +11106,16 @@ function asciiControl(code) {
 /*!**************************************************************!*\
   !*** ./node_modules/micromark/dist/character/ascii-digit.js ***!
   \**************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var check = __webpack_require__(/*! ../util/regex-check */ "./node_modules/micromark/dist/util/regex-check.js")
+"use strict";
 
-module.exports = check(/\d/)
+
+var regexCheck = __webpack_require__(/*! ../util/regex-check.js */ "./node_modules/micromark/dist/util/regex-check.js")
+
+var asciiDigit = regexCheck(/\d/)
+
+module.exports = asciiDigit
 
 
 /***/ }),
@@ -12302,14 +11124,16 @@ module.exports = check(/\d/)
 /*!******************************************************************!*\
   !*** ./node_modules/micromark/dist/character/ascii-hex-digit.js ***!
   \******************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var check = __webpack_require__(/*! ../util/regex-check */ "./node_modules/micromark/dist/util/regex-check.js")
+"use strict";
 
-module.exports = check(/[\dA-Fa-f]/)
+
+var regexCheck = __webpack_require__(/*! ../util/regex-check.js */ "./node_modules/micromark/dist/util/regex-check.js")
+
+var asciiHexDigit = regexCheck(/[\dA-Fa-f]/)
+
+module.exports = asciiHexDigit
 
 
 /***/ }),
@@ -12318,14 +11142,16 @@ module.exports = check(/[\dA-Fa-f]/)
 /*!********************************************************************!*\
   !*** ./node_modules/micromark/dist/character/ascii-punctuation.js ***!
   \********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var check = __webpack_require__(/*! ../util/regex-check */ "./node_modules/micromark/dist/util/regex-check.js")
+"use strict";
 
-module.exports = check(/[!-/:-@[-`{-~]/)
+
+var regexCheck = __webpack_require__(/*! ../util/regex-check.js */ "./node_modules/micromark/dist/util/regex-check.js")
+
+var asciiPunctuation = regexCheck(/[!-/:-@[-`{-~]/)
+
+module.exports = asciiPunctuation
 
 
 /***/ }),
@@ -12334,16 +11160,16 @@ module.exports = check(/[!-/:-@[-`{-~]/)
 /*!********************************************************************************!*\
   !*** ./node_modules/micromark/dist/character/markdown-line-ending-or-space.js ***!
   \********************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
-module.exports = markdownLineEndingOrSpace
+"use strict";
+
 
 function markdownLineEndingOrSpace(code) {
   return code < 0 || code === 32
 }
+
+module.exports = markdownLineEndingOrSpace
 
 
 /***/ }),
@@ -12352,16 +11178,16 @@ function markdownLineEndingOrSpace(code) {
 /*!***********************************************************************!*\
   !*** ./node_modules/micromark/dist/character/markdown-line-ending.js ***!
   \***********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
-module.exports = markdownLineEnding
+"use strict";
+
 
 function markdownLineEnding(code) {
   return code < -2
 }
+
+module.exports = markdownLineEnding
 
 
 /***/ }),
@@ -12370,16 +11196,16 @@ function markdownLineEnding(code) {
 /*!*****************************************************************!*\
   !*** ./node_modules/micromark/dist/character/markdown-space.js ***!
   \*****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
-module.exports = markdownSpace
+"use strict";
+
 
 function markdownSpace(code) {
   return code === -2 || code === -1 || code === 32
 }
+
+module.exports = markdownSpace
 
 
 /***/ }),
@@ -12388,17 +11214,19 @@ function markdownSpace(code) {
 /*!**********************************************************************!*\
   !*** ./node_modules/micromark/dist/character/unicode-punctuation.js ***!
   \**********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 6:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var unicodePunctuation = __webpack_require__(/*! ../constant/unicode-punctuation-regex */ "./node_modules/micromark/dist/constant/unicode-punctuation-regex.js")
-var check = __webpack_require__(/*! ../util/regex-check */ "./node_modules/micromark/dist/util/regex-check.js")
+"use strict";
 
-// Size note: removing ASCII from the regex and using `ascii-punctuation` here
+
+var unicodePunctuationRegex = __webpack_require__(/*! ../constant/unicode-punctuation-regex.js */ "./node_modules/micromark/dist/constant/unicode-punctuation-regex.js")
+var regexCheck = __webpack_require__(/*! ../util/regex-check.js */ "./node_modules/micromark/dist/util/regex-check.js")
+
 // In fact adds to the bundle size.
-module.exports = check(unicodePunctuation)
+
+var unicodePunctuation = regexCheck(unicodePunctuationRegex)
+
+module.exports = unicodePunctuation
 
 
 /***/ }),
@@ -12407,14 +11235,16 @@ module.exports = check(unicodePunctuation)
 /*!*********************************************************************!*\
   !*** ./node_modules/micromark/dist/character/unicode-whitespace.js ***!
   \*********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var check = __webpack_require__(/*! ../util/regex-check */ "./node_modules/micromark/dist/util/regex-check.js")
+"use strict";
 
-module.exports = check(/\s/)
+
+var regexCheck = __webpack_require__(/*! ../util/regex-check.js */ "./node_modules/micromark/dist/util/regex-check.js")
+
+var unicodeWhitespace = regexCheck(/\s/)
+
+module.exports = unicodeWhitespace
 
 
 /***/ }),
@@ -12423,12 +11253,14 @@ module.exports = check(/\s/)
 /*!********************************************************!*\
   !*** ./node_modules/micromark/dist/constant/assign.js ***!
   \********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
-module.exports = Object.assign
+"use strict";
+
+
+var assign = Object.assign
+
+module.exports = assign
 
 
 /***/ }),
@@ -12437,12 +11269,14 @@ module.exports = Object.assign
 /*!****************************************************************!*\
   !*** ./node_modules/micromark/dist/constant/from-char-code.js ***!
   \****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
-module.exports = String.fromCharCode
+"use strict";
+
+
+var fromCharCode = String.fromCharCode
+
+module.exports = fromCharCode
 
 
 /***/ }),
@@ -12451,12 +11285,14 @@ module.exports = String.fromCharCode
 /*!******************************************************************!*\
   !*** ./node_modules/micromark/dist/constant/has-own-property.js ***!
   \******************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
-module.exports = {}.hasOwnProperty
+"use strict";
+
+
+var own = {}.hasOwnProperty
+
+module.exports = own
 
 
 /***/ }),
@@ -12465,13 +11301,13 @@ module.exports = {}.hasOwnProperty
 /*!******************************************************************!*\
   !*** ./node_modules/micromark/dist/constant/html-block-names.js ***!
   \******************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 2:0-14 */
 /***/ ((module) => {
 
+"use strict";
+
+
 // This module is copied from <https://spec.commonmark.org/0.29/#html-blocks>.
-module.exports = [
+var basics = [
   'address',
   'article',
   'aside',
@@ -12536,6 +11372,8 @@ module.exports = [
   'ul'
 ]
 
+module.exports = basics
+
 
 /***/ }),
 
@@ -12543,13 +11381,31 @@ module.exports = [
 /*!****************************************************************!*\
   !*** ./node_modules/micromark/dist/constant/html-raw-names.js ***!
   \****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 2:0-14 */
 /***/ ((module) => {
 
+"use strict";
+
+
 // This module is copied from <https://spec.commonmark.org/0.29/#html-blocks>.
-module.exports = ['pre', 'script', 'style']
+var raws = ['pre', 'script', 'style', 'textarea']
+
+module.exports = raws
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/constant/splice.js":
+/*!********************************************************!*\
+  !*** ./node_modules/micromark/dist/constant/splice.js ***!
+  \********************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+var splice = [].splice
+
+module.exports = splice
 
 
 /***/ }),
@@ -12558,10 +11414,10 @@ module.exports = ['pre', 'script', 'style']
 /*!***************************************************************************!*\
   !*** ./node_modules/micromark/dist/constant/unicode-punctuation-regex.js ***!
   \***************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 7:0-14 */
 /***/ ((module) => {
+
+"use strict";
+
 
 // This module is generated by `script/`.
 //
@@ -12569,7 +11425,9 @@ module.exports = ['pre', 'script', 'style']
 // before or after them.
 // One such difference is if those characters are Unicode punctuation.
 // This script is generated from the Unicode data.
-module.exports = /[!-\/:-@\[-`\{-~\xA1\xA7\xAB\xB6\xB7\xBB\xBF\u037E\u0387\u055A-\u055F\u0589\u058A\u05BE\u05C0\u05C3\u05C6\u05F3\u05F4\u0609\u060A\u060C\u060D\u061B\u061E\u061F\u066A-\u066D\u06D4\u0700-\u070D\u07F7-\u07F9\u0830-\u083E\u085E\u0964\u0965\u0970\u09FD\u0A76\u0AF0\u0C77\u0C84\u0DF4\u0E4F\u0E5A\u0E5B\u0F04-\u0F12\u0F14\u0F3A-\u0F3D\u0F85\u0FD0-\u0FD4\u0FD9\u0FDA\u104A-\u104F\u10FB\u1360-\u1368\u1400\u166E\u169B\u169C\u16EB-\u16ED\u1735\u1736\u17D4-\u17D6\u17D8-\u17DA\u1800-\u180A\u1944\u1945\u1A1E\u1A1F\u1AA0-\u1AA6\u1AA8-\u1AAD\u1B5A-\u1B60\u1BFC-\u1BFF\u1C3B-\u1C3F\u1C7E\u1C7F\u1CC0-\u1CC7\u1CD3\u2010-\u2027\u2030-\u2043\u2045-\u2051\u2053-\u205E\u207D\u207E\u208D\u208E\u2308-\u230B\u2329\u232A\u2768-\u2775\u27C5\u27C6\u27E6-\u27EF\u2983-\u2998\u29D8-\u29DB\u29FC\u29FD\u2CF9-\u2CFC\u2CFE\u2CFF\u2D70\u2E00-\u2E2E\u2E30-\u2E4F\u2E52\u3001-\u3003\u3008-\u3011\u3014-\u301F\u3030\u303D\u30A0\u30FB\uA4FE\uA4FF\uA60D-\uA60F\uA673\uA67E\uA6F2-\uA6F7\uA874-\uA877\uA8CE\uA8CF\uA8F8-\uA8FA\uA8FC\uA92E\uA92F\uA95F\uA9C1-\uA9CD\uA9DE\uA9DF\uAA5C-\uAA5F\uAADE\uAADF\uAAF0\uAAF1\uABEB\uFD3E\uFD3F\uFE10-\uFE19\uFE30-\uFE52\uFE54-\uFE61\uFE63\uFE68\uFE6A\uFE6B\uFF01-\uFF03\uFF05-\uFF0A\uFF0C-\uFF0F\uFF1A\uFF1B\uFF1F\uFF20\uFF3B-\uFF3D\uFF3F\uFF5B\uFF5D\uFF5F-\uFF65]/
+var unicodePunctuation = /[!-\/:-@\[-`\{-~\xA1\xA7\xAB\xB6\xB7\xBB\xBF\u037E\u0387\u055A-\u055F\u0589\u058A\u05BE\u05C0\u05C3\u05C6\u05F3\u05F4\u0609\u060A\u060C\u060D\u061B\u061E\u061F\u066A-\u066D\u06D4\u0700-\u070D\u07F7-\u07F9\u0830-\u083E\u085E\u0964\u0965\u0970\u09FD\u0A76\u0AF0\u0C77\u0C84\u0DF4\u0E4F\u0E5A\u0E5B\u0F04-\u0F12\u0F14\u0F3A-\u0F3D\u0F85\u0FD0-\u0FD4\u0FD9\u0FDA\u104A-\u104F\u10FB\u1360-\u1368\u1400\u166E\u169B\u169C\u16EB-\u16ED\u1735\u1736\u17D4-\u17D6\u17D8-\u17DA\u1800-\u180A\u1944\u1945\u1A1E\u1A1F\u1AA0-\u1AA6\u1AA8-\u1AAD\u1B5A-\u1B60\u1BFC-\u1BFF\u1C3B-\u1C3F\u1C7E\u1C7F\u1CC0-\u1CC7\u1CD3\u2010-\u2027\u2030-\u2043\u2045-\u2051\u2053-\u205E\u207D\u207E\u208D\u208E\u2308-\u230B\u2329\u232A\u2768-\u2775\u27C5\u27C6\u27E6-\u27EF\u2983-\u2998\u29D8-\u29DB\u29FC\u29FD\u2CF9-\u2CFC\u2CFE\u2CFF\u2D70\u2E00-\u2E2E\u2E30-\u2E4F\u2E52\u3001-\u3003\u3008-\u3011\u3014-\u301F\u3030\u303D\u30A0\u30FB\uA4FE\uA4FF\uA60D-\uA60F\uA673\uA67E\uA6F2-\uA6F7\uA874-\uA877\uA8CE\uA8CF\uA8F8-\uA8FA\uA8FC\uA92E\uA92F\uA95F\uA9C1-\uA9CD\uA9DE\uA9DF\uAA5C-\uAA5F\uAADE\uAADF\uAAF0\uAAF1\uABEB\uFD3E\uFD3F\uFE10-\uFE19\uFE30-\uFE52\uFE54-\uFE61\uFE63\uFE68\uFE6A\uFE6B\uFF01-\uFF03\uFF05-\uFF0A\uFF0C-\uFF0F\uFF1A\uFF1B\uFF1F\uFF20\uFF3B-\uFF3D\uFF3F\uFF5B\uFF5D\uFF5F-\uFF65]/
+
+module.exports = unicodePunctuation
 
 
 /***/ }),
@@ -12578,101 +11436,136 @@ module.exports = /[!-\/:-@\[-`\{-~\xA1\xA7\xAB\xB6\xB7\xBB\xBF\u037E\u0387\u055A
 /*!***************************************************!*\
   !*** ./node_modules/micromark/dist/constructs.js ***!
   \***************************************************/
-/*! default exports */
-/*! export contentInitial [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export document [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export flow [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export flowInitial [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export insideSpan [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export string [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export text [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__ */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-var attention = __webpack_require__(/*! ./tokenize/attention */ "./node_modules/micromark/dist/tokenize/attention.js")
-var headingAtx = __webpack_require__(/*! ./tokenize/heading-atx */ "./node_modules/micromark/dist/tokenize/heading-atx.js")
-var autolink = __webpack_require__(/*! ./tokenize/autolink */ "./node_modules/micromark/dist/tokenize/autolink.js")
-var list = __webpack_require__(/*! ./tokenize/list */ "./node_modules/micromark/dist/tokenize/list.js")
-var blockQuote = __webpack_require__(/*! ./tokenize/block-quote */ "./node_modules/micromark/dist/tokenize/block-quote.js")
-var characterEscape = __webpack_require__(/*! ./tokenize/character-escape */ "./node_modules/micromark/dist/tokenize/character-escape.js")
-var characterReference = __webpack_require__(/*! ./tokenize/character-reference */ "./node_modules/micromark/dist/tokenize/character-reference.js")
-var codeFenced = __webpack_require__(/*! ./tokenize/code-fenced */ "./node_modules/micromark/dist/tokenize/code-fenced.js")
-var codeIndented = __webpack_require__(/*! ./tokenize/code-indented */ "./node_modules/micromark/dist/tokenize/code-indented.js")
-var codeText = __webpack_require__(/*! ./tokenize/code-text */ "./node_modules/micromark/dist/tokenize/code-text.js")
-var definition = __webpack_require__(/*! ./tokenize/definition */ "./node_modules/micromark/dist/tokenize/definition.js")
-var hardBreakEscape = __webpack_require__(/*! ./tokenize/hard-break-escape */ "./node_modules/micromark/dist/tokenize/hard-break-escape.js")
-var htmlFlow = __webpack_require__(/*! ./tokenize/html-flow */ "./node_modules/micromark/dist/tokenize/html-flow.js")
-var htmlText = __webpack_require__(/*! ./tokenize/html-text */ "./node_modules/micromark/dist/tokenize/html-text.js")
-var labelEnd = __webpack_require__(/*! ./tokenize/label-end */ "./node_modules/micromark/dist/tokenize/label-end.js")
-var labelImage = __webpack_require__(/*! ./tokenize/label-start-image */ "./node_modules/micromark/dist/tokenize/label-start-image.js")
-var labelLink = __webpack_require__(/*! ./tokenize/label-start-link */ "./node_modules/micromark/dist/tokenize/label-start-link.js")
-var setextUnderline = __webpack_require__(/*! ./tokenize/setext-underline */ "./node_modules/micromark/dist/tokenize/setext-underline.js")
-var thematicBreak = __webpack_require__(/*! ./tokenize/thematic-break */ "./node_modules/micromark/dist/tokenize/thematic-break.js")
-var lineEnding = __webpack_require__(/*! ./tokenize/line-ending */ "./node_modules/micromark/dist/tokenize/line-ending.js")
-var resolveText = __webpack_require__(/*! ./initialize/text */ "./node_modules/micromark/dist/initialize/text.js").resolver
+"use strict";
 
-exports.document = {
-  42: list, // Asterisk
-  43: list, // Plus sign
-  45: list, // Dash
-  48: list, // 0
-  49: list, // 1
-  50: list, // 2
-  51: list, // 3
-  52: list, // 4
-  53: list, // 5
-  54: list, // 6
-  55: list, // 7
-  56: list, // 8
-  57: list, // 9
+
+Object.defineProperty(exports, "__esModule", ({value: true}))
+
+var text$1 = __webpack_require__(/*! ./initialize/text.js */ "./node_modules/micromark/dist/initialize/text.js")
+var attention = __webpack_require__(/*! ./tokenize/attention.js */ "./node_modules/micromark/dist/tokenize/attention.js")
+var autolink = __webpack_require__(/*! ./tokenize/autolink.js */ "./node_modules/micromark/dist/tokenize/autolink.js")
+var blockQuote = __webpack_require__(/*! ./tokenize/block-quote.js */ "./node_modules/micromark/dist/tokenize/block-quote.js")
+var characterEscape = __webpack_require__(/*! ./tokenize/character-escape.js */ "./node_modules/micromark/dist/tokenize/character-escape.js")
+var characterReference = __webpack_require__(/*! ./tokenize/character-reference.js */ "./node_modules/micromark/dist/tokenize/character-reference.js")
+var codeFenced = __webpack_require__(/*! ./tokenize/code-fenced.js */ "./node_modules/micromark/dist/tokenize/code-fenced.js")
+var codeIndented = __webpack_require__(/*! ./tokenize/code-indented.js */ "./node_modules/micromark/dist/tokenize/code-indented.js")
+var codeText = __webpack_require__(/*! ./tokenize/code-text.js */ "./node_modules/micromark/dist/tokenize/code-text.js")
+var definition = __webpack_require__(/*! ./tokenize/definition.js */ "./node_modules/micromark/dist/tokenize/definition.js")
+var hardBreakEscape = __webpack_require__(/*! ./tokenize/hard-break-escape.js */ "./node_modules/micromark/dist/tokenize/hard-break-escape.js")
+var headingAtx = __webpack_require__(/*! ./tokenize/heading-atx.js */ "./node_modules/micromark/dist/tokenize/heading-atx.js")
+var htmlFlow = __webpack_require__(/*! ./tokenize/html-flow.js */ "./node_modules/micromark/dist/tokenize/html-flow.js")
+var htmlText = __webpack_require__(/*! ./tokenize/html-text.js */ "./node_modules/micromark/dist/tokenize/html-text.js")
+var labelEnd = __webpack_require__(/*! ./tokenize/label-end.js */ "./node_modules/micromark/dist/tokenize/label-end.js")
+var labelStartImage = __webpack_require__(/*! ./tokenize/label-start-image.js */ "./node_modules/micromark/dist/tokenize/label-start-image.js")
+var labelStartLink = __webpack_require__(/*! ./tokenize/label-start-link.js */ "./node_modules/micromark/dist/tokenize/label-start-link.js")
+var lineEnding = __webpack_require__(/*! ./tokenize/line-ending.js */ "./node_modules/micromark/dist/tokenize/line-ending.js")
+var list = __webpack_require__(/*! ./tokenize/list.js */ "./node_modules/micromark/dist/tokenize/list.js")
+var setextUnderline = __webpack_require__(/*! ./tokenize/setext-underline.js */ "./node_modules/micromark/dist/tokenize/setext-underline.js")
+var thematicBreak = __webpack_require__(/*! ./tokenize/thematic-break.js */ "./node_modules/micromark/dist/tokenize/thematic-break.js")
+
+var document = {
+  42: list,
+  // Asterisk
+  43: list,
+  // Plus sign
+  45: list,
+  // Dash
+  48: list,
+  // 0
+  49: list,
+  // 1
+  50: list,
+  // 2
+  51: list,
+  // 3
+  52: list,
+  // 4
+  53: list,
+  // 5
+  54: list,
+  // 6
+  55: list,
+  // 7
+  56: list,
+  // 8
+  57: list,
+  // 9
   62: blockQuote // Greater than
 }
-
-exports.contentInitial = {
+var contentInitial = {
   91: definition // Left square bracket
 }
-
-exports.flowInitial = {
-  '-2': codeIndented, // Horizontal tab
-  '-1': codeIndented, // Virtual space
+var flowInitial = {
+  '-2': codeIndented,
+  // Horizontal tab
+  '-1': codeIndented,
+  // Virtual space
   32: codeIndented // Space
 }
-
-exports.flow = {
-  35: headingAtx, // Number sign
-  42: thematicBreak, // Asterisk
-  45: [setextUnderline, thematicBreak], // Dash
-  60: htmlFlow, // Less than
-  61: setextUnderline, // Equals to
-  95: thematicBreak, // Underscore
-  96: codeFenced, // Grave accent
+var flow = {
+  35: headingAtx,
+  // Number sign
+  42: thematicBreak,
+  // Asterisk
+  45: [setextUnderline, thematicBreak],
+  // Dash
+  60: htmlFlow,
+  // Less than
+  61: setextUnderline,
+  // Equals to
+  95: thematicBreak,
+  // Underscore
+  96: codeFenced,
+  // Grave accent
   126: codeFenced // Tilde
 }
-
-exports.string = {
-  38: characterReference, // Ampersand
+var string = {
+  38: characterReference,
+  // Ampersand
   92: characterEscape // Backslash
 }
-
-exports.text = {
-  '-5': lineEnding, // Carriage return
-  '-4': lineEnding, // Line feed
-  '-3': lineEnding, // Carriage return + line feed
-  33: labelImage, // Exclamation mark
-  38: characterReference, // Ampersand
-  42: attention, // Asterisk
-  60: [autolink, htmlText], // Less than
-  91: labelLink, // Left square bracket
-  92: [hardBreakEscape, characterEscape], // Backslash
-  93: labelEnd, // Right square bracket
-  95: attention, // Underscore
+var text = {
+  '-5': lineEnding,
+  // Carriage return
+  '-4': lineEnding,
+  // Line feed
+  '-3': lineEnding,
+  // Carriage return + line feed
+  33: labelStartImage,
+  // Exclamation mark
+  38: characterReference,
+  // Ampersand
+  42: attention,
+  // Asterisk
+  60: [autolink, htmlText],
+  // Less than
+  91: labelStartLink,
+  // Left square bracket
+  92: [hardBreakEscape, characterEscape],
+  // Backslash
+  93: labelEnd,
+  // Right square bracket
+  95: attention,
+  // Underscore
   96: codeText // Grave accent
 }
-
-exports.insideSpan = {
-  null: [attention, resolveText]
+var insideSpan = {
+  null: [attention, text$1.resolver]
 }
+var disable = {
+  null: []
+}
+
+exports.contentInitial = contentInitial
+exports.disable = disable
+exports.document = document
+exports.flow = flow
+exports.flowInitial = flowInitial
+exports.insideSpan = insideSpan
+exports.string = string
+exports.text = text
 
 
 /***/ }),
@@ -12681,17 +11574,17 @@ exports.insideSpan = {
 /*!***********************************************************!*\
   !*** ./node_modules/micromark/dist/initialize/content.js ***!
   \***********************************************************/
-/*! default exports */
-/*! export tokenize [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-exports.tokenize = initializeContent
+"use strict";
 
-var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
 
-var createSpace = __webpack_require__(/*! ../tokenize/factory-space */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+Object.defineProperty(exports, "__esModule", ({value: true}))
+
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var factorySpace = __webpack_require__(/*! ../tokenize/factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+
+var tokenize = initializeContent
 
 function initializeContent(effects) {
   var contentStart = effects.attempt(
@@ -12699,9 +11592,7 @@ function initializeContent(effects) {
     afterContentStartConstruct,
     paragraphInitial
   )
-
   var previous
-
   return contentStart
 
   function afterContentStartConstruct(code) {
@@ -12713,7 +11604,7 @@ function initializeContent(effects) {
     effects.enter('lineEnding')
     effects.consume(code)
     effects.exit('lineEnding')
-    return createSpace(effects, contentStart, 'linePrefix')
+    return factorySpace(effects, contentStart, 'linePrefix')
   }
 
   function paragraphInitial(code) {
@@ -12732,7 +11623,6 @@ function initializeContent(effects) {
     }
 
     previous = token
-
     return data(code)
   }
 
@@ -12748,13 +11638,14 @@ function initializeContent(effects) {
       effects.consume(code)
       effects.exit('chunkText')
       return lineStart
-    }
+    } // Data.
 
-    // Data.
     effects.consume(code)
     return data
   }
 }
+
+exports.tokenize = tokenize
 
 
 /***/ }),
@@ -12763,30 +11654,36 @@ function initializeContent(effects) {
 /*!************************************************************!*\
   !*** ./node_modules/micromark/dist/initialize/document.js ***!
   \************************************************************/
-/*! default exports */
-/*! export tokenize [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-exports.tokenize = initializeDocument
+"use strict";
 
-var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
 
-var createSpace = __webpack_require__(/*! ../tokenize/factory-space */ "./node_modules/micromark/dist/tokenize/factory-space.js")
-var blank = __webpack_require__(/*! ../tokenize/partial-blank-line */ "./node_modules/micromark/dist/tokenize/partial-blank-line.js")
+Object.defineProperty(exports, "__esModule", ({value: true}))
 
-var container = {tokenize: tokenizeContainer}
-var lazyFlow = {tokenize: tokenizeLazyFlow}
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var factorySpace = __webpack_require__(/*! ../tokenize/factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+var partialBlankLine = __webpack_require__(/*! ../tokenize/partial-blank-line.js */ "./node_modules/micromark/dist/tokenize/partial-blank-line.js")
+
+var tokenize = initializeDocument
+var containerConstruct = {
+  tokenize: tokenizeContainer
+}
+var lazyFlowConstruct = {
+  tokenize: tokenizeLazyFlow
+}
 
 function initializeDocument(effects) {
   var self = this
   var stack = []
   var continued = 0
+  var inspectConstruct = {
+    tokenize: tokenizeInspect,
+    partial: true
+  }
   var inspectResult
   var childFlow
   var childToken
-
   return start
 
   function start(code) {
@@ -12819,7 +11716,11 @@ function initializeDocument(effects) {
       childFlow.currentConstruct &&
       childFlow.currentConstruct.interruptible
     self.containerState = {}
-    return effects.attempt(container, containerContinue, flowStart)(code)
+    return effects.attempt(
+      containerConstruct,
+      containerContinue,
+      flowStart
+    )(code)
   }
 
   function containerContinue(code) {
@@ -12836,13 +11737,11 @@ function initializeDocument(effects) {
     }
 
     childFlow = childFlow || self.parser.flow(self.now())
-
     effects.enter('chunkFlow', {
       contentType: 'flow',
       previous: childToken,
       _tokenizer: childFlow
     })
-
     return flowContinue(code)
   }
 
@@ -12855,10 +11754,7 @@ function initializeDocument(effects) {
     if (markdownLineEnding(code)) {
       effects.consume(code)
       continueFlow(effects.exit('chunkFlow'))
-      return effects.check(
-        {tokenize: tokenizeInspect, partial: true},
-        documentAfterPeek
-      )
+      return effects.check(inspectConstruct, documentAfterPeek)
     }
 
     effects.consume(code)
@@ -12870,7 +11766,6 @@ function initializeDocument(effects) {
       inspectResult.continued,
       inspectResult && inspectResult.flowEnd
     )
-
     continued = 0
     return start(code)
   }
@@ -12884,15 +11779,13 @@ function initializeDocument(effects) {
   }
 
   function exitContainers(size, end) {
-    var index = stack.length
+    var index = stack.length // Close the flow.
 
-    // Close the flow.
     if (childFlow && end) {
       childFlow.write([null])
       childToken = childFlow = undefined
-    }
+    } // Exit open containers.
 
-    // Exit open containers.
     while (index-- > size) {
       self.containerState = stack[index][1]
       stack[index][0].exit.call(self, effects)
@@ -12903,9 +11796,7 @@ function initializeDocument(effects) {
 
   function tokenizeInspect(effects, ok) {
     var subcontinued = 0
-
     inspectResult = {}
-
     return inspectStart
 
     function inspectStart(code) {
@@ -12916,10 +11807,9 @@ function initializeDocument(effects) {
           inspectContinue,
           inspectLess
         )(code)
-      }
-
-      // If we’re continued but in a concrete flow, we can’t have more
+      } // If we’re continued but in a concrete flow, we can’t have more
       // containers.
+
       if (childFlow.currentConstruct && childFlow.currentConstruct.concrete) {
         inspectResult.flowContinue = true
         return inspectDone(code)
@@ -12928,7 +11818,11 @@ function initializeDocument(effects) {
       self.interrupt =
         childFlow.currentConstruct && childFlow.currentConstruct.interruptible
       self.containerState = {}
-      return effects.attempt(container, inspectFlowEnd, inspectDone)(code)
+      return effects.attempt(
+        containerConstruct,
+        inspectFlowEnd,
+        inspectDone
+      )(code)
     }
 
     function inspectContinue(code) {
@@ -12943,18 +11837,16 @@ function initializeDocument(effects) {
         // Maybe another container?
         self.containerState = {}
         return effects.attempt(
-          container,
-          inspectFlowEnd,
-          // Maybe flow, or a blank line?
+          containerConstruct,
+          inspectFlowEnd, // Maybe flow, or a blank line?
           effects.attempt(
-            lazyFlow,
+            lazyFlowConstruct,
             inspectFlowEnd,
-            effects.check(blank, inspectFlowEnd, inspectLazy)
+            effects.check(partialBlankLine, inspectFlowEnd, inspectLazy)
           )
         )(code)
-      }
+      } // Otherwise we’re interrupting.
 
-      // Otherwise we’re interrupting.
       return inspectFlowEnd(code)
     }
 
@@ -12964,9 +11856,8 @@ function initializeDocument(effects) {
       inspectResult.lazy = true
       inspectResult.flowContinue = true
       return inspectDone(code)
-    }
+    } // We’re done with flow if we have more containers, or an interruption.
 
-    // We’re done with flow if we have more containers, or an interruption.
     function inspectFlowEnd(code) {
       inspectResult.flowEnd = true
       return inspectDone(code)
@@ -12981,22 +11872,28 @@ function initializeDocument(effects) {
 }
 
 function tokenizeContainer(effects, ok, nok) {
-  return createSpace(
+  return factorySpace(
     effects,
     effects.attempt(this.parser.constructs.document, ok, nok),
     'linePrefix',
-    4
+    this.parser.constructs.disable.null.indexOf('codeIndented') > -1
+      ? undefined
+      : 4
   )
 }
 
 function tokenizeLazyFlow(effects, ok, nok) {
-  return createSpace(
+  return factorySpace(
     effects,
     effects.lazy(this.parser.constructs.flow, ok, nok),
     'linePrefix',
-    4
+    this.parser.constructs.disable.null.indexOf('codeIndented') > -1
+      ? undefined
+      : 4
   )
 }
+
+exports.tokenize = tokenize
 
 
 /***/ }),
@@ -13005,31 +11902,29 @@ function tokenizeLazyFlow(effects, ok, nok) {
 /*!********************************************************!*\
   !*** ./node_modules/micromark/dist/initialize/flow.js ***!
   \********************************************************/
-/*! default exports */
-/*! export tokenize [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-exports.tokenize = initializeFlow
+"use strict";
 
-var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
 
-var createSpace = __webpack_require__(/*! ../tokenize/factory-space */ "./node_modules/micromark/dist/tokenize/factory-space.js")
-var blank = __webpack_require__(/*! ../tokenize/partial-blank-line */ "./node_modules/micromark/dist/tokenize/partial-blank-line.js")
-var content = __webpack_require__(/*! ../tokenize/content */ "./node_modules/micromark/dist/tokenize/content.js")
+Object.defineProperty(exports, "__esModule", ({value: true}))
+
+var content = __webpack_require__(/*! ../tokenize/content.js */ "./node_modules/micromark/dist/tokenize/content.js")
+var factorySpace = __webpack_require__(/*! ../tokenize/factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+var partialBlankLine = __webpack_require__(/*! ../tokenize/partial-blank-line.js */ "./node_modules/micromark/dist/tokenize/partial-blank-line.js")
+
+var tokenize = initializeFlow
 
 function initializeFlow(effects) {
   var self = this
   var initial = effects.attempt(
     // Try to parse a blank line.
-    blank,
-    atBlankEnding,
-    // Try to parse initial flow (essentially, only code).
+    partialBlankLine,
+    atBlankEnding, // Try to parse initial flow (essentially, only code).
     effects.attempt(
       this.parser.constructs.flowInitial,
       afterConstruct,
-      createSpace(
+      factorySpace(
         effects,
         effects.attempt(
           this.parser.constructs.flow,
@@ -13040,7 +11935,6 @@ function initializeFlow(effects) {
       )
     )
   )
-
   return initial
 
   function atBlankEnding(code) {
@@ -13070,6 +11964,8 @@ function initializeFlow(effects) {
   }
 }
 
+exports.tokenize = tokenize
+
 
 /***/ }),
 
@@ -13077,33 +11973,34 @@ function initializeFlow(effects) {
 /*!********************************************************!*\
   !*** ./node_modules/micromark/dist/initialize/text.js ***!
   \********************************************************/
-/*! default exports */
-/*! export resolver [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export string [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export text [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-exports.text = initializeFactory('text')
-exports.string = initializeFactory('string')
-exports.resolver = {resolveAll: resolver()}
+"use strict";
 
-var assign = __webpack_require__(/*! ../constant/assign */ "./node_modules/micromark/dist/constant/assign.js")
 
-var shallow = __webpack_require__(/*! ../util/shallow */ "./node_modules/micromark/dist/util/shallow.js")
+Object.defineProperty(exports, "__esModule", ({value: true}))
+
+var assign = __webpack_require__(/*! ../constant/assign.js */ "./node_modules/micromark/dist/constant/assign.js")
+var shallow = __webpack_require__(/*! ../util/shallow.js */ "./node_modules/micromark/dist/util/shallow.js")
+
+var text = initializeFactory('text')
+var string = initializeFactory('string')
+var resolver = {
+  resolveAll: createResolver()
+}
 
 function initializeFactory(field) {
   return {
     tokenize: initializeText,
-    resolveAll: resolver(field === 'text' ? resolveAllLineSuffixes : undefined)
+    resolveAll: createResolver(
+      field === 'text' ? resolveAllLineSuffixes : undefined
+    )
   }
 
   function initializeText(effects) {
     var self = this
     var constructs = this.parser.constructs[field]
     var text = effects.attempt(constructs, start, notText)
-
     return start
 
     function start(code) {
@@ -13125,9 +12022,8 @@ function initializeFactory(field) {
       if (atBreak(code)) {
         effects.exit('data')
         return text(code)
-      }
+      } // Data.
 
-      // Data.
       effects.consume(code)
       return data
     }
@@ -13154,15 +12050,14 @@ function initializeFactory(field) {
   }
 }
 
-function resolver(extraResolver) {
+function createResolver(extraResolver) {
   return resolveAllText
 
   function resolveAllText(events, context) {
     var index = -1
-    var enter
-
-    // A rather boring computation (to merge adjacent `data` events) which
+    var enter // A rather boring computation (to merge adjacent `data` events) which
     // improves mm performance by 29%.
+
     while (++index <= events.length) {
       if (enter === undefined) {
         if (events[index] && events[index][1].type === 'data') {
@@ -13183,15 +12078,14 @@ function resolver(extraResolver) {
 
     return extraResolver ? extraResolver(events, context) : events
   }
-}
-
-// A rather ugly set of instructions which again looks at chunks in the input
+} // A rather ugly set of instructions which again looks at chunks in the input
 // stream.
 // The reason to do this here is that it is *much* faster to parse in reverse.
 // And that we can’t hook into `null` to split the line suffix before an EOF.
 // To do: figure out if we can make this into a clean utility, or even in core.
 // As it will be useful for GFMs literal autolink extension (and maybe even
 // tables?)
+
 function resolveAllLineSuffixes(events, context) {
   var eventIndex = -1
   var chunks
@@ -13229,14 +12123,12 @@ function resolveAllLineSuffixes(events, context) {
 
           if (bufferIndex) break
           bufferIndex = -1
-        }
-        // Number
+        } // Number
         else if (chunk === -2) {
           tabs = true
           size++
-        } else if (chunk === -1) {
-          // Empty
-        } else {
+        } else if (chunk === -1);
+        else {
           // Replacement character, exit.
           index++
           break
@@ -13249,7 +12141,6 @@ function resolveAllLineSuffixes(events, context) {
             eventIndex === events.length || tabs || size < 2
               ? 'lineSuffix'
               : 'hardBreakTrailing',
-
           start: {
             line: data.end.line,
             column: data.end.column - size,
@@ -13259,10 +12150,8 @@ function resolveAllLineSuffixes(events, context) {
               ? bufferIndex
               : data.start._bufferIndex + bufferIndex
           },
-
           end: shallow(data.end)
         }
-
         data.end = shallow(token.start)
 
         if (data.start.offset === data.end.offset) {
@@ -13274,7 +12163,6 @@ function resolveAllLineSuffixes(events, context) {
             ['enter', token, context],
             ['exit', token, context]
           )
-
           eventIndex += 2
         }
       }
@@ -13286,6 +12174,10 @@ function resolveAllLineSuffixes(events, context) {
   return events
 }
 
+exports.resolver = resolver
+exports.string = string
+exports.text = text
+
 
 /***/ }),
 
@@ -13293,46 +12185,45 @@ function resolveAllLineSuffixes(events, context) {
 /*!**********************************************!*\
   !*** ./node_modules/micromark/dist/parse.js ***!
   \**********************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = createParser
+"use strict";
 
-var initializeContent = __webpack_require__(/*! ./initialize/content */ "./node_modules/micromark/dist/initialize/content.js")
-var initializeDocument = __webpack_require__(/*! ./initialize/document */ "./node_modules/micromark/dist/initialize/document.js")
-var initializeFlow = __webpack_require__(/*! ./initialize/flow */ "./node_modules/micromark/dist/initialize/flow.js")
-var initializeText = __webpack_require__(/*! ./initialize/text */ "./node_modules/micromark/dist/initialize/text.js")
-var constructs = __webpack_require__(/*! ./constructs */ "./node_modules/micromark/dist/constructs.js")
-var createTokenizer = __webpack_require__(/*! ./util/create-tokenizer */ "./node_modules/micromark/dist/util/create-tokenizer.js")
-var combineExtensions = __webpack_require__(/*! ./util/combine-extensions */ "./node_modules/micromark/dist/util/combine-extensions.js")
-var miniflat = __webpack_require__(/*! ./util/miniflat */ "./node_modules/micromark/dist/util/miniflat.js")
 
-function createParser(options) {
+var content = __webpack_require__(/*! ./initialize/content.js */ "./node_modules/micromark/dist/initialize/content.js")
+var document = __webpack_require__(/*! ./initialize/document.js */ "./node_modules/micromark/dist/initialize/document.js")
+var flow = __webpack_require__(/*! ./initialize/flow.js */ "./node_modules/micromark/dist/initialize/flow.js")
+var text = __webpack_require__(/*! ./initialize/text.js */ "./node_modules/micromark/dist/initialize/text.js")
+var combineExtensions = __webpack_require__(/*! ./util/combine-extensions.js */ "./node_modules/micromark/dist/util/combine-extensions.js")
+var createTokenizer = __webpack_require__(/*! ./util/create-tokenizer.js */ "./node_modules/micromark/dist/util/create-tokenizer.js")
+var miniflat = __webpack_require__(/*! ./util/miniflat.js */ "./node_modules/micromark/dist/util/miniflat.js")
+var constructs = __webpack_require__(/*! ./constructs.js */ "./node_modules/micromark/dist/constructs.js")
+
+function parse(options) {
   var settings = options || {}
   var parser = {
     defined: [],
     constructs: combineExtensions(
       [constructs].concat(miniflat(settings.extensions))
     ),
-
-    content: create(initializeContent),
-    document: create(initializeDocument),
-    flow: create(initializeFlow),
-    string: create(initializeText.string),
-    text: create(initializeText.text)
+    content: create(content),
+    document: create(document),
+    flow: create(flow),
+    string: create(text.string),
+    text: create(text.text)
   }
-
   return parser
 
   function create(initializer) {
     return creator
+
     function creator(from) {
       return createTokenizer(parser, initializer, from)
     }
   }
 }
+
+module.exports = parse
 
 
 /***/ }),
@@ -13341,14 +12232,12 @@ function createParser(options) {
 /*!****************************************************!*\
   !*** ./node_modules/micromark/dist/postprocess.js ***!
   \****************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = postprocess
+"use strict";
 
-var subtokenize = __webpack_require__(/*! ./util/subtokenize */ "./node_modules/micromark/dist/util/subtokenize.js")
+
+var subtokenize = __webpack_require__(/*! ./util/subtokenize.js */ "./node_modules/micromark/dist/util/subtokenize.js")
 
 function postprocess(events) {
   while (!subtokenize(events)) {
@@ -13358,6 +12247,8 @@ function postprocess(events) {
   return events
 }
 
+module.exports = postprocess
+
 
 /***/ }),
 
@@ -13365,31 +12256,27 @@ function postprocess(events) {
 /*!***************************************************!*\
   !*** ./node_modules/micromark/dist/preprocess.js ***!
   \***************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
-module.exports = preprocessor
+"use strict";
+
 
 var search = /[\0\t\n\r]/g
 
-function preprocessor() {
+function preprocess() {
   var start = true
   var column = 1
   var buffer = ''
   var atCarriageReturn
+  return preprocessor
 
-  return preprocess
-
-  function preprocess(value, encoding, end) {
+  function preprocessor(value, encoding, end) {
     var chunks = []
     var match
     var next
     var startPosition
     var endPosition
     var code
-
     value = buffer + value.toString(encoding)
     startPosition = 0
     buffer = ''
@@ -13433,12 +12320,12 @@ function preprocessor() {
         } else if (code === 9) {
           next = Math.ceil(column / 4) * 4
           chunks.push(-2)
+
           while (column++ < next) chunks.push(-1)
         } else if (code === 10) {
           chunks.push(-4)
           column = 1
-        }
-        // Must be carriage return.
+        } // Must be carriage return.
         else {
           atCarriageReturn = true
           column = 1
@@ -13458,6 +12345,8 @@ function preprocessor() {
   }
 }
 
+module.exports = preprocess
+
 
 /***/ }),
 
@@ -13465,23 +12354,24 @@ function preprocessor() {
 /*!***********************************************************!*\
   !*** ./node_modules/micromark/dist/tokenize/attention.js ***!
   \***********************************************************/
-/*! default exports */
-/*! export resolveAll [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export tokenize [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-exports.tokenize = tokenizeAttention
-exports.resolveAll = resolveAllAttention
+"use strict";
 
-var shallow = __webpack_require__(/*! ../util/shallow */ "./node_modules/micromark/dist/util/shallow.js")
-var chunkedSplice = __webpack_require__(/*! ../util/chunked-splice */ "./node_modules/micromark/dist/util/chunked-splice.js")
-var classifyCharacter = __webpack_require__(/*! ../util/classify-character */ "./node_modules/micromark/dist/util/classify-character.js")
-var movePoint = __webpack_require__(/*! ../util/move-point */ "./node_modules/micromark/dist/util/move-point.js")
-var resolveAll = __webpack_require__(/*! ../util/resolve-all */ "./node_modules/micromark/dist/util/resolve-all.js")
 
-// Take all events and resolve attention to emphasis or strong.
+var chunkedPush = __webpack_require__(/*! ../util/chunked-push.js */ "./node_modules/micromark/dist/util/chunked-push.js")
+var chunkedSplice = __webpack_require__(/*! ../util/chunked-splice.js */ "./node_modules/micromark/dist/util/chunked-splice.js")
+var classifyCharacter = __webpack_require__(/*! ../util/classify-character.js */ "./node_modules/micromark/dist/util/classify-character.js")
+var movePoint = __webpack_require__(/*! ../util/move-point.js */ "./node_modules/micromark/dist/util/move-point.js")
+var resolveAll = __webpack_require__(/*! ../util/resolve-all.js */ "./node_modules/micromark/dist/util/resolve-all.js")
+var shallow = __webpack_require__(/*! ../util/shallow.js */ "./node_modules/micromark/dist/util/shallow.js")
+
+var attention = {
+  name: 'attention',
+  tokenize: tokenizeAttention,
+  resolveAll: resolveAllAttention
+}
+
 function resolveAllAttention(events, context) {
   var index = -1
   var open
@@ -13491,12 +12381,11 @@ function resolveAllAttention(events, context) {
   var closingSequence
   var use
   var nextEvents
-  var offset
-
-  // Walk through all events.
+  var offset // Walk through all events.
   //
   // Note: performance of this is fine on an mb of normal markdown, but it’s
   // a bottleneck for malicious stuff.
+
   while (++index < events.length) {
     // Find a token that can close.
     if (
@@ -13504,16 +12393,14 @@ function resolveAllAttention(events, context) {
       events[index][1].type === 'attentionSequence' &&
       events[index][1]._close
     ) {
-      open = index
+      open = index // Now walk back to find an opener.
 
-      // Now walk back to find an opener.
       while (open--) {
         // Find a token that can open the closer.
         if (
           events[open][0] === 'exit' &&
           events[open][1].type === 'attentionSequence' &&
-          events[open][1]._open &&
-          // If the markers are the same:
+          events[open][1]._open && // If the markers are the same:
           context.sliceSerialize(events[open][1]).charCodeAt(0) ===
             context.sliceSerialize(events[index][1]).charCodeAt(0)
         ) {
@@ -13533,84 +12420,70 @@ function resolveAllAttention(events, context) {
             )
           ) {
             continue
-          }
+          } // Number of markers to use from the sequence.
 
-          // Number of markers to use from the sequence.
           use =
             events[open][1].end.offset - events[open][1].start.offset > 1 &&
             events[index][1].end.offset - events[index][1].start.offset > 1
               ? 2
               : 1
-
           openingSequence = {
             type: use > 1 ? 'strongSequence' : 'emphasisSequence',
             start: movePoint(shallow(events[open][1].end), -use),
             end: shallow(events[open][1].end)
           }
-
           closingSequence = {
             type: use > 1 ? 'strongSequence' : 'emphasisSequence',
             start: shallow(events[index][1].start),
             end: movePoint(shallow(events[index][1].start), use)
           }
-
           text = {
             type: use > 1 ? 'strongText' : 'emphasisText',
             start: shallow(events[open][1].end),
             end: shallow(events[index][1].start)
           }
-
           group = {
             type: use > 1 ? 'strong' : 'emphasis',
             start: shallow(openingSequence.start),
             end: shallow(closingSequence.end)
           }
-
           events[open][1].end = shallow(openingSequence.start)
           events[index][1].start = shallow(closingSequence.end)
+          nextEvents = [] // If there are more markers in the opening, add them before.
 
-          nextEvents = []
-
-          // If there are more markers in the opening, add them before.
           if (events[open][1].end.offset - events[open][1].start.offset) {
-            chunkedSplice(nextEvents, nextEvents.length, 0, [
+            nextEvents = chunkedPush(nextEvents, [
               ['enter', events[open][1], context],
               ['exit', events[open][1], context]
             ])
-          }
+          } // Opening.
 
-          // Opening.
-          chunkedSplice(nextEvents, nextEvents.length, 0, [
+          nextEvents = chunkedPush(nextEvents, [
             ['enter', group, context],
             ['enter', openingSequence, context],
             ['exit', openingSequence, context],
             ['enter', text, context]
-          ])
+          ]) // Between.
 
-          // Between.
-          chunkedSplice(
+          nextEvents = chunkedPush(
             nextEvents,
-            nextEvents.length,
-            0,
             resolveAll(
               context.parser.constructs.insideSpan.null,
               events.slice(open + 1, index),
               context
             )
-          )
+          ) // Closing.
 
-          // Closing.
-          chunkedSplice(nextEvents, nextEvents.length, 0, [
+          nextEvents = chunkedPush(nextEvents, [
             ['exit', text, context],
             ['enter', closingSequence, context],
             ['exit', closingSequence, context],
             ['exit', group, context]
-          ])
+          ]) // If there are more markers in the closing, add them after.
 
-          // If there are more markers in the closing, add them after.
           if (events[index][1].end.offset - events[index][1].start.offset) {
             offset = 2
-            chunkedSplice(nextEvents, nextEvents.length, 0, [
+            nextEvents = chunkedPush(nextEvents, [
               ['enter', events[index][1], context],
               ['exit', events[index][1], context]
             ])
@@ -13619,15 +12492,13 @@ function resolveAllAttention(events, context) {
           }
 
           chunkedSplice(events, open - 1, index - open + 3, nextEvents)
-
           index = open + nextEvents.length - offset - 2
           break
         }
       }
     }
-  }
+  } // Remove remaining sequences.
 
-  // Remove remaining sequences.
   index = -1
 
   while (++index < events.length) {
@@ -13642,7 +12513,6 @@ function resolveAllAttention(events, context) {
 function tokenizeAttention(effects, ok) {
   var before = classifyCharacter(this.previous)
   var marker
-
   return start
 
   function start(code) {
@@ -13672,6 +12542,8 @@ function tokenizeAttention(effects, ok) {
   }
 }
 
+module.exports = attention
+
 
 /***/ }),
 
@@ -13679,22 +12551,23 @@ function tokenizeAttention(effects, ok) {
 /*!**********************************************************!*\
   !*** ./node_modules/micromark/dist/tokenize/autolink.js ***!
   \**********************************************************/
-/*! default exports */
-/*! export tokenize [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-exports.tokenize = tokenizeAutolink
+"use strict";
 
-var asciiAlpha = __webpack_require__(/*! ../character/ascii-alpha */ "./node_modules/micromark/dist/character/ascii-alpha.js")
-var asciiAlphanumeric = __webpack_require__(/*! ../character/ascii-alphanumeric */ "./node_modules/micromark/dist/character/ascii-alphanumeric.js")
-var asciiAtext = __webpack_require__(/*! ../character/ascii-atext */ "./node_modules/micromark/dist/character/ascii-atext.js")
-var asciiControl = __webpack_require__(/*! ../character/ascii-control */ "./node_modules/micromark/dist/character/ascii-control.js")
+
+var asciiAlpha = __webpack_require__(/*! ../character/ascii-alpha.js */ "./node_modules/micromark/dist/character/ascii-alpha.js")
+var asciiAlphanumeric = __webpack_require__(/*! ../character/ascii-alphanumeric.js */ "./node_modules/micromark/dist/character/ascii-alphanumeric.js")
+var asciiAtext = __webpack_require__(/*! ../character/ascii-atext.js */ "./node_modules/micromark/dist/character/ascii-atext.js")
+var asciiControl = __webpack_require__(/*! ../character/ascii-control.js */ "./node_modules/micromark/dist/character/ascii-control.js")
+
+var autolink = {
+  name: 'autolink',
+  tokenize: tokenizeAutolink
+}
 
 function tokenizeAutolink(effects, ok, nok) {
-  var size
-
+  var size = 1
   return start
 
   function start(code) {
@@ -13709,7 +12582,6 @@ function tokenizeAutolink(effects, ok, nok) {
   function open(code) {
     if (asciiAlpha(code)) {
       effects.consume(code)
-      size = 1
       return schemeOrEmailAtext
     }
 
@@ -13806,6 +12678,8 @@ function tokenizeAutolink(effects, ok, nok) {
   }
 }
 
+module.exports = autolink
+
 
 /***/ }),
 
@@ -13813,28 +12687,33 @@ function tokenizeAutolink(effects, ok, nok) {
 /*!*************************************************************!*\
   !*** ./node_modules/micromark/dist/tokenize/block-quote.js ***!
   \*************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
-/*! CommonJS bailout: exports is used directly at 48:20-27 */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-exports.tokenize = tokenizeBlockQuoteStart
-exports.continuation = {tokenize: tokenizeBlockQuoteContinuation}
-exports.exit = exit
+"use strict";
 
-var markdownSpace = __webpack_require__(/*! ../character/markdown-space */ "./node_modules/micromark/dist/character/markdown-space.js")
 
-var createSpace = __webpack_require__(/*! ./factory-space */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+var markdownSpace = __webpack_require__(/*! ../character/markdown-space.js */ "./node_modules/micromark/dist/character/markdown-space.js")
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+
+var blockQuote = {
+  name: 'blockQuote',
+  tokenize: tokenizeBlockQuoteStart,
+  continuation: {
+    tokenize: tokenizeBlockQuoteContinuation
+  },
+  exit: exit
+}
 
 function tokenizeBlockQuoteStart(effects, ok, nok) {
   var self = this
-
   return start
 
   function start(code) {
     if (code === 62) {
       if (!self.containerState.open) {
-        effects.enter('blockQuote', {_container: true})
+        effects.enter('blockQuote', {
+          _container: true
+        })
         self.containerState.open = true
       }
 
@@ -13863,17 +12742,21 @@ function tokenizeBlockQuoteStart(effects, ok, nok) {
 }
 
 function tokenizeBlockQuoteContinuation(effects, ok, nok) {
-  return createSpace(
+  return factorySpace(
     effects,
-    effects.attempt(exports, ok, nok),
+    effects.attempt(blockQuote, ok, nok),
     'linePrefix',
-    4
+    this.parser.constructs.disable.null.indexOf('codeIndented') > -1
+      ? undefined
+      : 4
   )
 }
 
 function exit(effects) {
   effects.exit('blockQuote')
 }
+
+module.exports = blockQuote
 
 
 /***/ }),
@@ -13882,15 +12765,17 @@ function exit(effects) {
 /*!******************************************************************!*\
   !*** ./node_modules/micromark/dist/tokenize/character-escape.js ***!
   \******************************************************************/
-/*! default exports */
-/*! export tokenize [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-exports.tokenize = tokenizeCharacterEscape
+"use strict";
 
-var asciiPunctuation = __webpack_require__(/*! ../character/ascii-punctuation */ "./node_modules/micromark/dist/character/ascii-punctuation.js")
+
+var asciiPunctuation = __webpack_require__(/*! ../character/ascii-punctuation.js */ "./node_modules/micromark/dist/character/ascii-punctuation.js")
+
+var characterEscape = {
+  name: 'characterEscape',
+  tokenize: tokenizeCharacterEscape
+}
 
 function tokenizeCharacterEscape(effects, ok, nok) {
   return start
@@ -13916,6 +12801,8 @@ function tokenizeCharacterEscape(effects, ok, nok) {
   }
 }
 
+module.exports = characterEscape
+
 
 /***/ }),
 
@@ -13923,25 +12810,32 @@ function tokenizeCharacterEscape(effects, ok, nok) {
 /*!*********************************************************************!*\
   !*** ./node_modules/micromark/dist/tokenize/character-reference.js ***!
   \*********************************************************************/
-/*! default exports */
-/*! export tokenize [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-exports.tokenize = tokenizeCharacterReference
+"use strict";
 
-var decode = __webpack_require__(/*! parse-entities/decode-entity */ "./node_modules/parse-entities/decode-entity.browser.js")
-var asciiAlphanumeric = __webpack_require__(/*! ../character/ascii-alphanumeric */ "./node_modules/micromark/dist/character/ascii-alphanumeric.js")
-var asciiDigit = __webpack_require__(/*! ../character/ascii-digit */ "./node_modules/micromark/dist/character/ascii-digit.js")
-var asciiHexDigit = __webpack_require__(/*! ../character/ascii-hex-digit */ "./node_modules/micromark/dist/character/ascii-hex-digit.js")
+
+var decodeEntity = __webpack_require__(/*! parse-entities/decode-entity.js */ "./node_modules/parse-entities/decode-entity.browser.js")
+var asciiAlphanumeric = __webpack_require__(/*! ../character/ascii-alphanumeric.js */ "./node_modules/micromark/dist/character/ascii-alphanumeric.js")
+var asciiDigit = __webpack_require__(/*! ../character/ascii-digit.js */ "./node_modules/micromark/dist/character/ascii-digit.js")
+var asciiHexDigit = __webpack_require__(/*! ../character/ascii-hex-digit.js */ "./node_modules/micromark/dist/character/ascii-hex-digit.js")
+
+function _interopDefaultLegacy(e) {
+  return e && typeof e === 'object' && 'default' in e ? e : {default: e}
+}
+
+var decodeEntity__default = /*#__PURE__*/ _interopDefaultLegacy(decodeEntity)
+
+var characterReference = {
+  name: 'characterReference',
+  tokenize: tokenizeCharacterReference
+}
 
 function tokenizeCharacterReference(effects, ok, nok) {
   var self = this
   var size = 0
   var max
   var test
-
   return start
 
   function start(code) {
@@ -13989,7 +12883,10 @@ function tokenizeCharacterReference(effects, ok, nok) {
     if (code === 59 && size) {
       token = effects.exit('characterReferenceValue')
 
-      if (test === asciiAlphanumeric && !decode(self.sliceSerialize(token))) {
+      if (
+        test === asciiAlphanumeric &&
+        !decodeEntity__default['default'](self.sliceSerialize(token))
+      ) {
         return nok(code)
       }
 
@@ -14009,6 +12906,8 @@ function tokenizeCharacterReference(effects, ok, nok) {
   }
 }
 
+module.exports = characterReference
+
 
 /***/ }),
 
@@ -14016,28 +12915,31 @@ function tokenizeCharacterReference(effects, ok, nok) {
 /*!*************************************************************!*\
   !*** ./node_modules/micromark/dist/tokenize/code-fenced.js ***!
   \*************************************************************/
-/*! default exports */
-/*! export concrete [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export tokenize [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-exports.tokenize = tokenizeCodeFenced
-exports.concrete = true
+"use strict";
 
-var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
-var markdownLineEndingOrSpace = __webpack_require__(/*! ../character/markdown-line-ending-or-space */ "./node_modules/micromark/dist/character/markdown-line-ending-or-space.js")
 
-var prefixSize = __webpack_require__(/*! ../util/prefix-size */ "./node_modules/micromark/dist/util/prefix-size.js")
-var createSpace = __webpack_require__(/*! ./factory-space */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var markdownLineEndingOrSpace = __webpack_require__(/*! ../character/markdown-line-ending-or-space.js */ "./node_modules/micromark/dist/character/markdown-line-ending-or-space.js")
+var prefixSize = __webpack_require__(/*! ../util/prefix-size.js */ "./node_modules/micromark/dist/util/prefix-size.js")
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+
+var codeFenced = {
+  name: 'codeFenced',
+  tokenize: tokenizeCodeFenced,
+  concrete: true
+}
 
 function tokenizeCodeFenced(effects, ok, nok) {
   var self = this
+  var closingFenceConstruct = {
+    tokenize: tokenizeClosingFence,
+    partial: true
+  }
   var initialPrefix = prefixSize(this.events, 'linePrefix')
   var sizeOpen = 0
   var marker
-
   return start
 
   function start(code) {
@@ -14058,7 +12960,7 @@ function tokenizeCodeFenced(effects, ok, nok) {
     effects.exit('codeFencedFenceSequence')
     return sizeOpen < 3
       ? nok(code)
-      : createSpace(effects, infoOpen, 'whitespace')(code)
+      : factorySpace(effects, infoOpen, 'whitespace')(code)
   }
 
   function infoOpen(code) {
@@ -14067,7 +12969,9 @@ function tokenizeCodeFenced(effects, ok, nok) {
     }
 
     effects.enter('codeFencedFenceInfo')
-    effects.enter('chunkString', {contentType: 'string'})
+    effects.enter('chunkString', {
+      contentType: 'string'
+    })
     return info(code)
   }
 
@@ -14075,7 +12979,7 @@ function tokenizeCodeFenced(effects, ok, nok) {
     if (code === null || markdownLineEndingOrSpace(code)) {
       effects.exit('chunkString')
       effects.exit('codeFencedFenceInfo')
-      return createSpace(effects, infoAfter, 'whitespace')(code)
+      return factorySpace(effects, infoAfter, 'whitespace')(code)
     }
 
     if (code === 96 && code === marker) return nok(code)
@@ -14089,7 +12993,9 @@ function tokenizeCodeFenced(effects, ok, nok) {
     }
 
     effects.enter('codeFencedFenceMeta')
-    effects.enter('chunkString', {contentType: 'string'})
+    effects.enter('chunkString', {
+      contentType: 'string'
+    })
     return meta(code)
   }
 
@@ -14120,10 +13026,10 @@ function tokenizeCodeFenced(effects, ok, nok) {
       effects.consume(code)
       effects.exit('lineEnding')
       return effects.attempt(
-        {tokenize: tokenizeClosingFence, partial: true},
+        closingFenceConstruct,
         after,
         initialPrefix
-          ? createSpace(effects, content, 'linePrefix', initialPrefix + 1)
+          ? factorySpace(effects, content, 'linePrefix', initialPrefix + 1)
           : content
       )
     }
@@ -14149,10 +13055,16 @@ function tokenizeCodeFenced(effects, ok, nok) {
 
   function tokenizeClosingFence(effects, ok, nok) {
     var size = 0
+    return factorySpace(
+      effects,
+      closingSequenceStart,
+      'linePrefix',
+      this.parser.constructs.disable.null.indexOf('codeIndented') > -1
+        ? undefined
+        : 4
+    )
 
-    return createSpace(effects, closingPrefixAfter, 'linePrefix', 4)
-
-    function closingPrefixAfter(code) {
+    function closingSequenceStart(code) {
       effects.enter('codeFencedFence')
       effects.enter('codeFencedFenceSequence')
       return closingSequence(code)
@@ -14167,7 +13079,7 @@ function tokenizeCodeFenced(effects, ok, nok) {
 
       if (size < sizeOpen) return nok(code)
       effects.exit('codeFencedFenceSequence')
-      return createSpace(effects, closingSequenceEnd, 'whitespace')(code)
+      return factorySpace(effects, closingSequenceEnd, 'whitespace')(code)
     }
 
     function closingSequenceEnd(code) {
@@ -14181,6 +13093,8 @@ function tokenizeCodeFenced(effects, ok, nok) {
   }
 }
 
+module.exports = codeFenced
+
 
 /***/ }),
 
@@ -14188,23 +13102,25 @@ function tokenizeCodeFenced(effects, ok, nok) {
 /*!***************************************************************!*\
   !*** ./node_modules/micromark/dist/tokenize/code-indented.js ***!
   \***************************************************************/
-/*! default exports */
-/*! export resolve [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export tokenize [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-exports.tokenize = tokenizeCodeIndented
-exports.resolve = resolveCodeIndented
+"use strict";
 
-var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
 
-var chunkedSplice = __webpack_require__(/*! ../util/chunked-splice */ "./node_modules/micromark/dist/util/chunked-splice.js")
-var prefixSize = __webpack_require__(/*! ../util/prefix-size */ "./node_modules/micromark/dist/util/prefix-size.js")
-var createSpace = __webpack_require__(/*! ./factory-space */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var chunkedSplice = __webpack_require__(/*! ../util/chunked-splice.js */ "./node_modules/micromark/dist/util/chunked-splice.js")
+var prefixSize = __webpack_require__(/*! ../util/prefix-size.js */ "./node_modules/micromark/dist/util/prefix-size.js")
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
 
-var continuedIndent = {tokenize: tokenizeContinuedIndent, partial: true}
+var codeIndented = {
+  name: 'codeIndented',
+  tokenize: tokenizeCodeIndented,
+  resolve: resolveCodeIndented
+}
+var indentedContentConstruct = {
+  tokenize: tokenizeIndentedContent,
+  partial: true
+}
 
 function resolveCodeIndented(events, context) {
   var code = {
@@ -14212,34 +13128,13 @@ function resolveCodeIndented(events, context) {
     start: events[0][1].start,
     end: events[events.length - 1][1].end
   }
-
   chunkedSplice(events, 0, 0, [['enter', code, context]])
   chunkedSplice(events, events.length, 0, [['exit', code, context]])
-
   return events
 }
 
 function tokenizeCodeIndented(effects, ok, nok) {
-  var self = this
-
-  return createSpace(
-    effects,
-    afterInitial,
-    'linePrefix',
-
-    4 + 1
-  )
-
-  function afterInitial(code) {
-    // Flow checks blank lines first, so we don’t have EOL/EOF.
-
-    if (prefixSize(self.events, 'linePrefix') < 4) {
-      return nok(code)
-    }
-
-    effects.enter('codeFlowValue')
-    return content(code)
-  }
+  return effects.attempt(indentedContentConstruct, afterPrefix, nok)
 
   function afterPrefix(code) {
     if (code === null) {
@@ -14247,7 +13142,7 @@ function tokenizeCodeIndented(effects, ok, nok) {
     }
 
     if (markdownLineEnding(code)) {
-      return effects.attempt(continuedIndent, afterPrefix, ok)(code)
+      return effects.attempt(indentedContentConstruct, afterPrefix, ok)(code)
     }
 
     effects.enter('codeFlowValue')
@@ -14265,35 +13160,23 @@ function tokenizeCodeIndented(effects, ok, nok) {
   }
 }
 
-function tokenizeContinuedIndent(effects, ok, nok) {
+function tokenizeIndentedContent(effects, ok, nok) {
   var self = this
-
-  return createSpace(
-    effects,
-    afterPrefix,
-    'linePrefix',
-
-    4 + 1
-  )
+  return factorySpace(effects, afterPrefix, 'linePrefix', 4 + 1)
 
   function afterPrefix(code) {
     if (markdownLineEnding(code)) {
       effects.enter('lineEnding')
       effects.consume(code)
       effects.exit('lineEnding')
-
-      return createSpace(
-        effects,
-        afterPrefix,
-        'linePrefix',
-
-        4 + 1
-      )
+      return factorySpace(effects, afterPrefix, 'linePrefix', 4 + 1)
     }
 
     return prefixSize(self.events, 'linePrefix') < 4 ? nok(code) : ok(code)
   }
 }
+
+module.exports = codeIndented
 
 
 /***/ }),
@@ -14302,50 +13185,46 @@ function tokenizeContinuedIndent(effects, ok, nok) {
 /*!***********************************************************!*\
   !*** ./node_modules/micromark/dist/tokenize/code-text.js ***!
   \***********************************************************/
-/*! default exports */
-/*! export previous [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export resolve [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export tokenize [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-exports.tokenize = tokenizeCodeText
-exports.resolve = resolveCodeText
-exports.previous = previous
+"use strict";
 
-var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+
+var codeText = {
+  name: 'codeText',
+  tokenize: tokenizeCodeText,
+  resolve: resolveCodeText,
+  previous: previous
+}
 
 function resolveCodeText(events) {
   var tailExitIndex = events.length - 4
   var headEnterIndex = 3
   var index
-  var enter
+  var enter // If we start and end with an EOL or a space.
 
-  // If we start and end with an EOL or a space.
   if (
     (events[headEnterIndex][1].type === 'lineEnding' ||
       events[headEnterIndex][1].type === 'space') &&
     (events[tailExitIndex][1].type === 'lineEnding' ||
       events[tailExitIndex][1].type === 'space')
   ) {
-    index = headEnterIndex
+    index = headEnterIndex // And we have data.
 
-    // And we have data.
     while (++index < tailExitIndex) {
       if (events[index][1].type === 'codeTextData') {
         // Then we have padding.
         events[tailExitIndex][1].type = events[headEnterIndex][1].type =
           'codeTextPadding'
-
         headEnterIndex += 2
         tailExitIndex -= 2
         break
       }
     }
-  }
+  } // Merge adjacent spaces and data.
 
-  // Merge adjacent spaces and data.
   index = headEnterIndex - 1
   tailExitIndex++
 
@@ -14383,11 +13262,9 @@ function previous(code) {
 }
 
 function tokenizeCodeText(effects, ok, nok) {
-  var self = this
   var sizeOpen = 0
   var size
   var token
-
   return start
 
   function start(code) {
@@ -14411,17 +13288,15 @@ function tokenizeCodeText(effects, ok, nok) {
     // EOF.
     if (code === null) {
       return nok(code)
-    }
-
-    // Closing fence?
+    } // Closing fence?
     // Could also be data.
+
     if (code === 96) {
       token = effects.enter('codeTextSequence')
       size = 0
       return closingSequence(code)
-    }
+    } // Tabs don’t work, and virtual spaces don’t make sense.
 
-    // Tabs don’t work, and virtual spaces don’t make sense.
     if (code === 32) {
       effects.enter('space')
       effects.consume(code)
@@ -14434,14 +13309,12 @@ function tokenizeCodeText(effects, ok, nok) {
       effects.consume(code)
       effects.exit('lineEnding')
       return gap
-    }
+    } // Data.
 
-    // Data.
     effects.enter('codeTextData')
     return data(code)
-  }
+  } // In code.
 
-  // In code.
   function data(code) {
     if (
       code === null ||
@@ -14455,29 +13328,28 @@ function tokenizeCodeText(effects, ok, nok) {
 
     effects.consume(code)
     return data
-  }
+  } // Closing fence.
 
-  // Closing fence.
   function closingSequence(code) {
     // More.
     if (code === 96) {
       effects.consume(code)
       size++
       return closingSequence
-    }
+    } // Done!
 
-    // Done!
     if (size === sizeOpen) {
       effects.exit('codeTextSequence')
       effects.exit('codeText')
       return ok(code)
-    }
+    } // More or less accents: mark as data.
 
-    // More or less accents: mark as data.
     token.type = 'codeTextData'
     return data(code)
   }
 }
+
+module.exports = codeText
 
 
 /***/ }),
@@ -14486,30 +13358,29 @@ function tokenizeCodeText(effects, ok, nok) {
 /*!*********************************************************!*\
   !*** ./node_modules/micromark/dist/tokenize/content.js ***!
   \*********************************************************/
-/*! default exports */
-/*! export interruptible [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export lazy [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export resolve [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export tokenize [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-exports.tokenize = tokenizeContent
-exports.resolve = resolveContent
-exports.interruptible = true
-exports.lazy = true
+"use strict";
 
-var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
 
-var subtokenize = __webpack_require__(/*! ../util/subtokenize */ "./node_modules/micromark/dist/util/subtokenize.js")
-var prefixSize = __webpack_require__(/*! ../util/prefix-size */ "./node_modules/micromark/dist/util/prefix-size.js")
-var createSpace = __webpack_require__(/*! ./factory-space */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var prefixSize = __webpack_require__(/*! ../util/prefix-size.js */ "./node_modules/micromark/dist/util/prefix-size.js")
+var subtokenize = __webpack_require__(/*! ../util/subtokenize.js */ "./node_modules/micromark/dist/util/subtokenize.js")
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
 
-var lookaheadConstruct = {tokenize: tokenizeLookaheadConstruct, partial: true}
-
-// Content is transparent: it’s parsed right now. That way, definitions are also
+// No name because it must not be turned off.
+var content = {
+  tokenize: tokenizeContent,
+  resolve: resolveContent,
+  interruptible: true,
+  lazy: true
+}
+var continuationConstruct = {
+  tokenize: tokenizeContinuation,
+  partial: true
+} // Content is transparent: it’s parsed right now. That way, definitions are also
 // parsed right now: before text in paragraphs (specifically, media) are parsed.
+
 function resolveContent(events) {
   subtokenize(events)
   return events
@@ -14517,7 +13388,6 @@ function resolveContent(events) {
 
 function tokenizeContent(effects, ok) {
   var previous
-
   return start
 
   function start(code) {
@@ -14525,7 +13395,6 @@ function tokenizeContent(effects, ok) {
     previous = effects.enter('chunkContent', {
       contentType: 'content'
     })
-
     return data(code)
   }
 
@@ -14536,13 +13405,12 @@ function tokenizeContent(effects, ok) {
 
     if (markdownLineEnding(code)) {
       return effects.check(
-        lookaheadConstruct,
+        continuationConstruct,
         contentContinue,
         contentEnd
       )(code)
-    }
+    } // Data.
 
-    // Data.
     effects.consume(code)
     return data
   }
@@ -14560,21 +13428,19 @@ function tokenizeContent(effects, ok) {
       contentType: 'content',
       previous: previous
     })
-
     return data
   }
 }
 
-function tokenizeLookaheadConstruct(effects, ok, nok) {
+function tokenizeContinuation(effects, ok, nok) {
   var self = this
-
   return startLookahead
 
   function startLookahead(code) {
     effects.enter('lineEnding')
     effects.consume(code)
     effects.exit('lineEnding')
-    return createSpace(effects, prefixed, 'linePrefix')
+    return factorySpace(effects, prefixed, 'linePrefix')
   }
 
   function prefixed(code) {
@@ -14582,13 +13448,18 @@ function tokenizeLookaheadConstruct(effects, ok, nok) {
       return nok(code)
     }
 
-    if (prefixSize(self.events, 'linePrefix') < 4) {
+    if (
+      self.parser.constructs.disable.null.indexOf('codeIndented') > -1 ||
+      prefixSize(self.events, 'linePrefix') < 4
+    ) {
       return effects.interrupt(self.parser.constructs.flow, nok, ok)(code)
     }
 
     return ok(code)
   }
 }
+
+module.exports = content
 
 
 /***/ }),
@@ -14597,39 +13468,37 @@ function tokenizeLookaheadConstruct(effects, ok, nok) {
 /*!************************************************************!*\
   !*** ./node_modules/micromark/dist/tokenize/definition.js ***!
   \************************************************************/
-/*! default exports */
-/*! export tokenize [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-exports.tokenize = tokenizeDefinition
+"use strict";
 
-var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
-var markdownLineEndingOrSpace = __webpack_require__(/*! ../character/markdown-line-ending-or-space */ "./node_modules/micromark/dist/character/markdown-line-ending-or-space.js")
-var normalizeIdentifier = __webpack_require__(/*! ../util/normalize-identifier */ "./node_modules/micromark/dist/util/normalize-identifier.js")
 
-var createDestination = __webpack_require__(/*! ./factory-destination */ "./node_modules/micromark/dist/tokenize/factory-destination.js")
-var createLabel = __webpack_require__(/*! ./factory-label */ "./node_modules/micromark/dist/tokenize/factory-label.js")
-var createSpace = __webpack_require__(/*! ./factory-space */ "./node_modules/micromark/dist/tokenize/factory-space.js")
-var createWhitespace = __webpack_require__(/*! ./factory-whitespace */ "./node_modules/micromark/dist/tokenize/factory-whitespace.js")
-var createTitle = __webpack_require__(/*! ./factory-title */ "./node_modules/micromark/dist/tokenize/factory-title.js")
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var markdownLineEndingOrSpace = __webpack_require__(/*! ../character/markdown-line-ending-or-space.js */ "./node_modules/micromark/dist/character/markdown-line-ending-or-space.js")
+var normalizeIdentifier = __webpack_require__(/*! ../util/normalize-identifier.js */ "./node_modules/micromark/dist/util/normalize-identifier.js")
+var factoryDestination = __webpack_require__(/*! ./factory-destination.js */ "./node_modules/micromark/dist/tokenize/factory-destination.js")
+var factoryLabel = __webpack_require__(/*! ./factory-label.js */ "./node_modules/micromark/dist/tokenize/factory-label.js")
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+var factoryWhitespace = __webpack_require__(/*! ./factory-whitespace.js */ "./node_modules/micromark/dist/tokenize/factory-whitespace.js")
+var factoryTitle = __webpack_require__(/*! ./factory-title.js */ "./node_modules/micromark/dist/tokenize/factory-title.js")
+
+var definition = {
+  name: 'definition',
+  tokenize: tokenizeDefinition
+}
+var titleConstruct = {
+  tokenize: tokenizeTitle,
+  partial: true
+}
 
 function tokenizeDefinition(effects, ok, nok) {
   var self = this
-  var destinationAfter = effects.attempt(
-    {tokenize: tokenizeTitle, partial: true},
-    createSpace(effects, after, 'whitespace'),
-    createSpace(effects, after, 'whitespace')
-  )
-
   var identifier
-
   return start
 
   function start(code) {
     effects.enter('definition')
-    return createLabel.call(
+    return factoryLabel.call(
       self,
       effects,
       labelAfter,
@@ -14648,14 +13517,17 @@ function tokenizeDefinition(effects, ok, nok) {
     if (code === 58) {
       effects.enter('definitionMarker')
       effects.consume(code)
-      effects.exit('definitionMarker')
+      effects.exit('definitionMarker') // Note: blank lines can’t exist in content.
 
-      // Note: blank lines can’t exist in content.
-      return createWhitespace(
+      return factoryWhitespace(
         effects,
-        createDestination(
+        factoryDestination(
           effects,
-          destinationAfter,
+          effects.attempt(
+            titleConstruct,
+            factorySpace(effects, after, 'whitespace'),
+            factorySpace(effects, after, 'whitespace')
+          ),
           nok,
           'definitionDestination',
           'definitionDestinationLiteral',
@@ -14689,15 +13561,15 @@ function tokenizeTitle(effects, ok, nok) {
 
   function start(code) {
     return markdownLineEndingOrSpace(code)
-      ? createWhitespace(effects, before)(code)
+      ? factoryWhitespace(effects, before)(code)
       : nok(code)
   }
 
   function before(code) {
     if (code === 34 || code === 39 || code === 40) {
-      return createTitle(
+      return factoryTitle(
         effects,
-        createSpace(effects, after, 'whitespace'),
+        factorySpace(effects, after, 'whitespace'),
         nok,
         'definitionTitle',
         'definitionTitleMarker',
@@ -14713,6 +13585,8 @@ function tokenizeTitle(effects, ok, nok) {
   }
 }
 
+module.exports = definition
+
 
 /***/ }),
 
@@ -14720,19 +13594,17 @@ function tokenizeTitle(effects, ok, nok) {
 /*!*********************************************************************!*\
   !*** ./node_modules/micromark/dist/tokenize/factory-destination.js ***!
   \*********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = createDestination
+"use strict";
 
-var asciiControl = __webpack_require__(/*! ../character/ascii-control */ "./node_modules/micromark/dist/character/ascii-control.js")
-var markdownLineEndingOrSpace = __webpack_require__(/*! ../character/markdown-line-ending-or-space */ "./node_modules/micromark/dist/character/markdown-line-ending-or-space.js")
-var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+
+var asciiControl = __webpack_require__(/*! ../character/ascii-control.js */ "./node_modules/micromark/dist/character/ascii-control.js")
+var markdownLineEndingOrSpace = __webpack_require__(/*! ../character/markdown-line-ending-or-space.js */ "./node_modules/micromark/dist/character/markdown-line-ending-or-space.js")
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
 
 // eslint-disable-next-line max-params
-function createDestination(
+function destinationFactory(
   effects,
   ok,
   nok,
@@ -14745,7 +13617,6 @@ function createDestination(
 ) {
   var limit = max || Infinity
   var balance = 0
-
   return start
 
   function start(code) {
@@ -14758,14 +13629,16 @@ function createDestination(
       return destinationEnclosedBefore
     }
 
-    if (asciiControl(code)) {
+    if (asciiControl(code) || code === 41) {
       return nok(code)
     }
 
     effects.enter(type)
     effects.enter(rawType)
     effects.enter(stringType)
-    effects.enter('chunkString', {contentType: 'string'})
+    effects.enter('chunkString', {
+      contentType: 'string'
+    })
     return destinationRaw(code)
   }
 
@@ -14780,7 +13653,9 @@ function createDestination(
     }
 
     effects.enter(stringType)
-    effects.enter('chunkString', {contentType: 'string'})
+    effects.enter('chunkString', {
+      contentType: 'string'
+    })
     return destinationEnclosed(code)
   }
 
@@ -14852,6 +13727,8 @@ function createDestination(
   }
 }
 
+module.exports = destinationFactory
+
 
 /***/ }),
 
@@ -14859,22 +13736,19 @@ function createDestination(
 /*!***************************************************************!*\
   !*** ./node_modules/micromark/dist/tokenize/factory-label.js ***!
   \***************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = createLabel
+"use strict";
 
-var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
-var markdownSpace = __webpack_require__(/*! ../character/markdown-space */ "./node_modules/micromark/dist/character/markdown-space.js")
+
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var markdownSpace = __webpack_require__(/*! ../character/markdown-space.js */ "./node_modules/micromark/dist/character/markdown-space.js")
 
 // eslint-disable-next-line max-params
-function createLabel(effects, ok, nok, type, markerType, stringType) {
+function labelFactory(effects, ok, nok, type, markerType, stringType) {
   var self = this
   var size = 0
   var data
-
   return start
 
   function start(code) {
@@ -14891,9 +13765,11 @@ function createLabel(effects, ok, nok, type, markerType, stringType) {
       code === null ||
       code === 91 ||
       (code === 93 && !data) ||
-      /* istanbul ignore next - footnotes. */
+      /* c8 ignore next */
       (code === 94 &&
+        /* c8 ignore next */
         !size &&
+        /* c8 ignore next */
         '_hiddenFootnoteSupport' in self.parser.constructs) ||
       size > 999
     ) {
@@ -14916,7 +13792,9 @@ function createLabel(effects, ok, nok, type, markerType, stringType) {
       return atBreak
     }
 
-    effects.enter('chunkString', {contentType: 'string'})
+    effects.enter('chunkString', {
+      contentType: 'string'
+    })
     return label(code)
   }
 
@@ -14948,6 +13826,8 @@ function createLabel(effects, ok, nok, type, markerType, stringType) {
   }
 }
 
+module.exports = labelFactory
+
 
 /***/ }),
 
@@ -14955,25 +13835,21 @@ function createLabel(effects, ok, nok, type, markerType, stringType) {
 /*!***************************************************************!*\
   !*** ./node_modules/micromark/dist/tokenize/factory-space.js ***!
   \***************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = createSpace
+"use strict";
 
-var markdownSpace = __webpack_require__(/*! ../character/markdown-space */ "./node_modules/micromark/dist/character/markdown-space.js")
 
-function createSpace(effects, ok, type, max) {
+var markdownSpace = __webpack_require__(/*! ../character/markdown-space.js */ "./node_modules/micromark/dist/character/markdown-space.js")
+
+function spaceFactory(effects, ok, type, max) {
   var limit = max ? max - 1 : Infinity
-  var size
-
+  var size = 0
   return start
 
   function start(code) {
     if (markdownSpace(code)) {
       effects.enter(type)
-      size = 0
       return prefix(code)
     }
 
@@ -14991,6 +13867,8 @@ function createSpace(effects, ok, type, max) {
   }
 }
 
+module.exports = spaceFactory
+
 
 /***/ }),
 
@@ -14998,21 +13876,16 @@ function createSpace(effects, ok, type, max) {
 /*!***************************************************************!*\
   !*** ./node_modules/micromark/dist/tokenize/factory-title.js ***!
   \***************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = createTitle
+"use strict";
 
-var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
 
-var createSpace = __webpack_require__(/*! ./factory-space */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
 
-// eslint-disable-next-line max-params
-function createTitle(effects, ok, nok, type, markerType, stringType) {
+function titleFactory(effects, ok, nok, type, markerType, stringType) {
   var marker
-
   return start
 
   function start(code) {
@@ -15045,17 +13918,18 @@ function createTitle(effects, ok, nok, type, markerType, stringType) {
 
     if (code === null) {
       return nok(code)
-    }
+    } // Note: blank lines can’t exist in content.
 
-    // Note: blank lines can’t exist in content.
     if (markdownLineEnding(code)) {
       effects.enter('lineEnding')
       effects.consume(code)
       effects.exit('lineEnding')
-      return createSpace(effects, atTitleBreak, 'linePrefix')
+      return factorySpace(effects, atTitleBreak, 'linePrefix')
     }
 
-    effects.enter('chunkString', {contentType: 'string'})
+    effects.enter('chunkString', {
+      contentType: 'string'
+    })
     return title(code)
   }
 
@@ -15079,6 +13953,8 @@ function createTitle(effects, ok, nok, type, markerType, stringType) {
   }
 }
 
+module.exports = titleFactory
+
 
 /***/ }),
 
@@ -15086,19 +13962,16 @@ function createTitle(effects, ok, nok, type, markerType, stringType) {
 /*!********************************************************************!*\
   !*** ./node_modules/micromark/dist/tokenize/factory-whitespace.js ***!
   \********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = createWhitespace
+"use strict";
 
-var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
-var markdownSpace = __webpack_require__(/*! ../character/markdown-space */ "./node_modules/micromark/dist/character/markdown-space.js")
 
-var createSpace = __webpack_require__(/*! ./factory-space */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var markdownSpace = __webpack_require__(/*! ../character/markdown-space.js */ "./node_modules/micromark/dist/character/markdown-space.js")
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
 
-function createWhitespace(effects, ok) {
+function whitespaceFactory(effects, ok) {
   var seen
   return start
 
@@ -15112,7 +13985,7 @@ function createWhitespace(effects, ok) {
     }
 
     if (markdownSpace(code)) {
-      return createSpace(
+      return factorySpace(
         effects,
         start,
         seen ? 'linePrefix' : 'lineSuffix'
@@ -15123,6 +13996,8 @@ function createWhitespace(effects, ok) {
   }
 }
 
+module.exports = whitespaceFactory
+
 
 /***/ }),
 
@@ -15130,15 +14005,17 @@ function createWhitespace(effects, ok) {
 /*!*******************************************************************!*\
   !*** ./node_modules/micromark/dist/tokenize/hard-break-escape.js ***!
   \*******************************************************************/
-/*! default exports */
-/*! export tokenize [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-exports.tokenize = tokenizeHardBreakEscape
+"use strict";
 
-var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+
+var hardBreakEscape = {
+  name: 'hardBreakEscape',
+  tokenize: tokenizeHardBreakEscape
+}
 
 function tokenizeHardBreakEscape(effects, ok, nok) {
   return start
@@ -15161,6 +14038,8 @@ function tokenizeHardBreakEscape(effects, ok, nok) {
   }
 }
 
+module.exports = hardBreakEscape
+
 
 /***/ }),
 
@@ -15168,35 +14047,33 @@ function tokenizeHardBreakEscape(effects, ok, nok) {
 /*!*************************************************************!*\
   !*** ./node_modules/micromark/dist/tokenize/heading-atx.js ***!
   \*************************************************************/
-/*! default exports */
-/*! export resolve [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export tokenize [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-exports.tokenize = tokenizeAtxHeading
-exports.resolve = resolveAtxHeading
+"use strict";
 
-var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
-var markdownLineEndingOrSpace = __webpack_require__(/*! ../character/markdown-line-ending-or-space */ "./node_modules/micromark/dist/character/markdown-line-ending-or-space.js")
-var markdownSpace = __webpack_require__(/*! ../character/markdown-space */ "./node_modules/micromark/dist/character/markdown-space.js")
 
-var chunkedSplice = __webpack_require__(/*! ../util/chunked-splice */ "./node_modules/micromark/dist/util/chunked-splice.js")
-var createSpace = __webpack_require__(/*! ./factory-space */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var markdownLineEndingOrSpace = __webpack_require__(/*! ../character/markdown-line-ending-or-space.js */ "./node_modules/micromark/dist/character/markdown-line-ending-or-space.js")
+var markdownSpace = __webpack_require__(/*! ../character/markdown-space.js */ "./node_modules/micromark/dist/character/markdown-space.js")
+var chunkedSplice = __webpack_require__(/*! ../util/chunked-splice.js */ "./node_modules/micromark/dist/util/chunked-splice.js")
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
 
-function resolveAtxHeading(events, context) {
+var headingAtx = {
+  name: 'headingAtx',
+  tokenize: tokenizeHeadingAtx,
+  resolve: resolveHeadingAtx
+}
+
+function resolveHeadingAtx(events, context) {
   var contentEnd = events.length - 2
   var contentStart = 3
   var content
-  var text
+  var text // Prefix whitespace, part of the opening.
 
-  // Prefix whitespace, part of the opening.
   if (events[contentStart][1].type === 'whitespace') {
     contentStart += 2
-  }
+  } // Suffix whitespace, part of the closing.
 
-  // Suffix whitespace, part of the closing.
   if (
     contentEnd - 2 > contentStart &&
     events[contentEnd][1].type === 'whitespace'
@@ -15219,14 +14096,12 @@ function resolveAtxHeading(events, context) {
       start: events[contentStart][1].start,
       end: events[contentEnd][1].end
     }
-
     text = {
       type: 'chunkText',
       start: events[contentStart][1].start,
       end: events[contentEnd][1].end,
       contentType: 'text'
     }
-
     chunkedSplice(events, contentStart, contentEnd - contentStart + 1, [
       ['enter', content, context],
       ['enter', text, context],
@@ -15238,10 +14113,9 @@ function resolveAtxHeading(events, context) {
   return events
 }
 
-function tokenizeAtxHeading(effects, ok, nok) {
+function tokenizeHeadingAtx(effects, ok, nok) {
   var self = this
   var size = 0
-
   return start
 
   function start(code) {
@@ -15276,7 +14150,7 @@ function tokenizeAtxHeading(effects, ok, nok) {
     }
 
     if (markdownSpace(code)) {
-      return createSpace(effects, headingBreak, 'whitespace')(code)
+      return factorySpace(effects, headingBreak, 'whitespace')(code)
     }
 
     effects.enter('atxHeadingText')
@@ -15304,6 +14178,8 @@ function tokenizeAtxHeading(effects, ok, nok) {
   }
 }
 
+module.exports = headingAtx
+
 
 /***/ }),
 
@@ -15311,34 +14187,33 @@ function tokenizeAtxHeading(effects, ok, nok) {
 /*!***********************************************************!*\
   !*** ./node_modules/micromark/dist/tokenize/html-flow.js ***!
   \***********************************************************/
-/*! default exports */
-/*! export concrete [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export resolveTo [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export tokenize [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-exports.tokenize = tokenizeHtml
-exports.resolveTo = resolveToHtml
-exports.concrete = true
+"use strict";
 
-var asciiAlpha = __webpack_require__(/*! ../character/ascii-alpha */ "./node_modules/micromark/dist/character/ascii-alpha.js")
-var asciiAlphanumeric = __webpack_require__(/*! ../character/ascii-alphanumeric */ "./node_modules/micromark/dist/character/ascii-alphanumeric.js")
 
-var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
-var markdownLineEndingOrSpace = __webpack_require__(/*! ../character/markdown-line-ending-or-space */ "./node_modules/micromark/dist/character/markdown-line-ending-or-space.js")
-var markdownSpace = __webpack_require__(/*! ../character/markdown-space */ "./node_modules/micromark/dist/character/markdown-space.js")
+var asciiAlpha = __webpack_require__(/*! ../character/ascii-alpha.js */ "./node_modules/micromark/dist/character/ascii-alpha.js")
+var asciiAlphanumeric = __webpack_require__(/*! ../character/ascii-alphanumeric.js */ "./node_modules/micromark/dist/character/ascii-alphanumeric.js")
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var markdownLineEndingOrSpace = __webpack_require__(/*! ../character/markdown-line-ending-or-space.js */ "./node_modules/micromark/dist/character/markdown-line-ending-or-space.js")
+var markdownSpace = __webpack_require__(/*! ../character/markdown-space.js */ "./node_modules/micromark/dist/character/markdown-space.js")
+var fromCharCode = __webpack_require__(/*! ../constant/from-char-code.js */ "./node_modules/micromark/dist/constant/from-char-code.js")
+var htmlBlockNames = __webpack_require__(/*! ../constant/html-block-names.js */ "./node_modules/micromark/dist/constant/html-block-names.js")
+var htmlRawNames = __webpack_require__(/*! ../constant/html-raw-names.js */ "./node_modules/micromark/dist/constant/html-raw-names.js")
+var partialBlankLine = __webpack_require__(/*! ./partial-blank-line.js */ "./node_modules/micromark/dist/tokenize/partial-blank-line.js")
 
-var fromCharCode = __webpack_require__(/*! ../constant/from-char-code */ "./node_modules/micromark/dist/constant/from-char-code.js")
-var basics = __webpack_require__(/*! ../constant/html-block-names */ "./node_modules/micromark/dist/constant/html-block-names.js")
-var raws = __webpack_require__(/*! ../constant/html-raw-names */ "./node_modules/micromark/dist/constant/html-raw-names.js")
+var htmlFlow = {
+  name: 'htmlFlow',
+  tokenize: tokenizeHtmlFlow,
+  resolveTo: resolveToHtmlFlow,
+  concrete: true
+}
+var nextBlankConstruct = {
+  tokenize: tokenizeNextBlank,
+  partial: true
+}
 
-var blank = __webpack_require__(/*! ./partial-blank-line */ "./node_modules/micromark/dist/tokenize/partial-blank-line.js")
-
-var nextBlank = {tokenize: tokenizeNextBlank, partial: true}
-
-function resolveToHtml(events) {
+function resolveToHtmlFlow(events) {
   var index = events.length
 
   while (index--) {
@@ -15349,24 +14224,23 @@ function resolveToHtml(events) {
 
   if (index > 1 && events[index - 2][1].type === 'linePrefix') {
     // Add the prefix start to the HTML token.
-    events[index][1].start = events[index - 2][1].start
-    // Add the prefix start to the HTML line token.
-    events[index + 1][1].start = events[index - 2][1].start
-    // Remove the line prefix.
+    events[index][1].start = events[index - 2][1].start // Add the prefix start to the HTML line token.
+
+    events[index + 1][1].start = events[index - 2][1].start // Remove the line prefix.
+
     events.splice(index - 2, 2)
   }
 
   return events
 }
 
-function tokenizeHtml(effects, ok, nok) {
+function tokenizeHtmlFlow(effects, ok, nok) {
   var self = this
   var kind
   var startTag
   var buffer
   var index
   var marker
-
   return start
 
   function start(code) {
@@ -15389,9 +14263,9 @@ function tokenizeHtml(effects, ok, nok) {
 
     if (code === 63) {
       effects.consume(code)
-      kind = 3
-      // While we’re in an instruction instead of a declaration, we’re on a `?`
+      kind = 3 // While we’re in an instruction instead of a declaration, we’re on a `?`
       // right now, so we do need to search for `>`, similar to declarations.
+
       return self.interrupt ? ok : continuationDeclarationInside
     }
 
@@ -15468,12 +14342,16 @@ function tokenizeHtml(effects, ok, nok) {
       code === 62 ||
       markdownLineEndingOrSpace(code)
     ) {
-      if (code !== 47 && startTag && raws.indexOf(buffer.toLowerCase()) > -1) {
+      if (
+        code !== 47 &&
+        startTag &&
+        htmlRawNames.indexOf(buffer.toLowerCase()) > -1
+      ) {
         kind = 1
         return self.interrupt ? ok(code) : continuation(code)
       }
 
-      if (basics.indexOf(buffer.toLowerCase()) > -1) {
+      if (htmlBlockNames.indexOf(buffer.toLowerCase()) > -1) {
         kind = 6
 
         if (code === 47) {
@@ -15484,8 +14362,8 @@ function tokenizeHtml(effects, ok, nok) {
         return self.interrupt ? ok(code) : continuation(code)
       }
 
-      kind = 7
-      // Do not support complete HTML when interrupting.
+      kind = 7 // Do not support complete HTML when interrupting.
+
       return self.interrupt
         ? nok(code)
         : startTag
@@ -15682,7 +14560,7 @@ function tokenizeHtml(effects, ok, nok) {
 
     if (markdownLineEnding(code) && (kind === 6 || kind === 7)) {
       return effects.check(
-        nextBlank,
+        nextBlankConstruct,
         continuationClose,
         continuationAtLineEnding
       )(code)
@@ -15737,12 +14615,12 @@ function tokenizeHtml(effects, ok, nok) {
   }
 
   function continuationRawEndTag(code) {
-    if (code === 62 && raws.indexOf(buffer.toLowerCase()) > -1) {
+    if (code === 62 && htmlRawNames.indexOf(buffer.toLowerCase()) > -1) {
       effects.consume(code)
       return continuationClose
     }
 
-    if (asciiAlpha(code) && buffer.length < 6) {
+    if (asciiAlpha(code) && buffer.length < 8) {
       effects.consume(code)
       buffer += fromCharCode(code)
       return continuationRawEndTag
@@ -15793,9 +14671,11 @@ function tokenizeNextBlank(effects, ok, nok) {
     effects.enter('lineEndingBlank')
     effects.consume(code)
     effects.exit('lineEndingBlank')
-    return effects.attempt(blank, ok, nok)
+    return effects.attempt(partialBlankLine, ok, nok)
   }
 }
+
+module.exports = htmlFlow
 
 
 /***/ }),
@@ -15804,28 +14684,29 @@ function tokenizeNextBlank(effects, ok, nok) {
 /*!***********************************************************!*\
   !*** ./node_modules/micromark/dist/tokenize/html-text.js ***!
   \***********************************************************/
-/*! default exports */
-/*! export tokenize [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-exports.tokenize = tokenizeHtml
+"use strict";
 
-var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
-var markdownLineEndingOrSpace = __webpack_require__(/*! ../character/markdown-line-ending-or-space */ "./node_modules/micromark/dist/character/markdown-line-ending-or-space.js")
-var markdownSpace = __webpack_require__(/*! ../character/markdown-space */ "./node_modules/micromark/dist/character/markdown-space.js")
-var asciiAlpha = __webpack_require__(/*! ../character/ascii-alpha */ "./node_modules/micromark/dist/character/ascii-alpha.js")
-var asciiAlphanumeric = __webpack_require__(/*! ../character/ascii-alphanumeric */ "./node_modules/micromark/dist/character/ascii-alphanumeric.js")
 
-var createSpace = __webpack_require__(/*! ./factory-space */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+var asciiAlpha = __webpack_require__(/*! ../character/ascii-alpha.js */ "./node_modules/micromark/dist/character/ascii-alpha.js")
+var asciiAlphanumeric = __webpack_require__(/*! ../character/ascii-alphanumeric.js */ "./node_modules/micromark/dist/character/ascii-alphanumeric.js")
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var markdownLineEndingOrSpace = __webpack_require__(/*! ../character/markdown-line-ending-or-space.js */ "./node_modules/micromark/dist/character/markdown-line-ending-or-space.js")
+var markdownSpace = __webpack_require__(/*! ../character/markdown-space.js */ "./node_modules/micromark/dist/character/markdown-space.js")
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
 
-function tokenizeHtml(effects, ok, nok) {
+var htmlText = {
+  name: 'htmlText',
+  tokenize: tokenizeHtmlText
+}
+
+function tokenizeHtmlText(effects, ok, nok) {
+  var self = this
   var marker
   var buffer
   var index
   var returnState
-
   return start
 
   function start(code) {
@@ -15955,6 +14836,11 @@ function tokenizeHtml(effects, ok, nok) {
     if (code === 93) {
       effects.consume(code)
       return cdataClose
+    }
+
+    if (markdownLineEnding(code)) {
+      returnState = cdata
+      return atLineEnding(code)
     }
 
     effects.consume(code)
@@ -16200,16 +15086,22 @@ function tokenizeHtml(effects, ok, nok) {
 
     effects.consume(code)
     return tagOpenAttributeValueUnquoted
-  }
-
-  // We can’t have blank lines in content, so no need to worry about empty
+  } // We can’t have blank lines in content, so no need to worry about empty
   // tokens.
+
   function atLineEnding(code) {
     effects.exit('htmlTextData')
     effects.enter('lineEnding')
     effects.consume(code)
     effects.exit('lineEnding')
-    return createSpace(effects, afterPrefix, 'linePrefix', 4)
+    return factorySpace(
+      effects,
+      afterPrefix,
+      'linePrefix',
+      self.parser.constructs.disable.null.indexOf('codeIndented') > -1
+        ? undefined
+        : 4
+    )
   }
 
   function afterPrefix(code) {
@@ -16229,6 +15121,8 @@ function tokenizeHtml(effects, ok, nok) {
   }
 }
 
+module.exports = htmlText
+
 
 /***/ }),
 
@@ -16236,32 +15130,37 @@ function tokenizeHtml(effects, ok, nok) {
 /*!***********************************************************!*\
   !*** ./node_modules/micromark/dist/tokenize/label-end.js ***!
   \***********************************************************/
-/*! default exports */
-/*! export resolveAll [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export resolveTo [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export tokenize [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-exports.tokenize = tokenizeLabelEnd
-exports.resolveTo = resolveToLabelEnd
-exports.resolveAll = resolveAllLabelEnd
+"use strict";
 
-var markdownLineEndingOrSpace = __webpack_require__(/*! ../character/markdown-line-ending-or-space */ "./node_modules/micromark/dist/character/markdown-line-ending-or-space.js")
 
-var normalizeIdentifier = __webpack_require__(/*! ../util/normalize-identifier */ "./node_modules/micromark/dist/util/normalize-identifier.js")
-var chunkedSplice = __webpack_require__(/*! ../util/chunked-splice */ "./node_modules/micromark/dist/util/chunked-splice.js")
-var resolveAll = __webpack_require__(/*! ../util/resolve-all */ "./node_modules/micromark/dist/util/resolve-all.js")
-var shallow = __webpack_require__(/*! ../util/shallow */ "./node_modules/micromark/dist/util/shallow.js")
-var createDestination = __webpack_require__(/*! ./factory-destination */ "./node_modules/micromark/dist/tokenize/factory-destination.js")
-var createLabel = __webpack_require__(/*! ./factory-label */ "./node_modules/micromark/dist/tokenize/factory-label.js")
-var createWhitespace = __webpack_require__(/*! ./factory-whitespace */ "./node_modules/micromark/dist/tokenize/factory-whitespace.js")
-var createTitle = __webpack_require__(/*! ./factory-title */ "./node_modules/micromark/dist/tokenize/factory-title.js")
+var markdownLineEndingOrSpace = __webpack_require__(/*! ../character/markdown-line-ending-or-space.js */ "./node_modules/micromark/dist/character/markdown-line-ending-or-space.js")
+var chunkedPush = __webpack_require__(/*! ../util/chunked-push.js */ "./node_modules/micromark/dist/util/chunked-push.js")
+var chunkedSplice = __webpack_require__(/*! ../util/chunked-splice.js */ "./node_modules/micromark/dist/util/chunked-splice.js")
+var normalizeIdentifier = __webpack_require__(/*! ../util/normalize-identifier.js */ "./node_modules/micromark/dist/util/normalize-identifier.js")
+var resolveAll = __webpack_require__(/*! ../util/resolve-all.js */ "./node_modules/micromark/dist/util/resolve-all.js")
+var shallow = __webpack_require__(/*! ../util/shallow.js */ "./node_modules/micromark/dist/util/shallow.js")
+var factoryDestination = __webpack_require__(/*! ./factory-destination.js */ "./node_modules/micromark/dist/tokenize/factory-destination.js")
+var factoryLabel = __webpack_require__(/*! ./factory-label.js */ "./node_modules/micromark/dist/tokenize/factory-label.js")
+var factoryTitle = __webpack_require__(/*! ./factory-title.js */ "./node_modules/micromark/dist/tokenize/factory-title.js")
+var factoryWhitespace = __webpack_require__(/*! ./factory-whitespace.js */ "./node_modules/micromark/dist/tokenize/factory-whitespace.js")
 
-var resource = {tokenize: tokenizeResource}
-var fullReference = {tokenize: tokenizeFullReference}
-var collapsedReference = {tokenize: tokenizeCollapsedReference}
+var labelEnd = {
+  name: 'labelEnd',
+  tokenize: tokenizeLabelEnd,
+  resolveTo: resolveToLabelEnd,
+  resolveAll: resolveAllLabelEnd
+}
+var resourceConstruct = {
+  tokenize: tokenizeResource
+}
+var fullReferenceConstruct = {
+  tokenize: tokenizeFullReference
+}
+var collapsedReferenceConstruct = {
+  tokenize: tokenizeCollapsedReference
+}
 
 function resolveAllLabelEnd(events) {
   var index = -1
@@ -16295,9 +15194,8 @@ function resolveToLabelEnd(events, context) {
   var token
   var open
   var close
-  var media
+  var media // Find an opening.
 
-  // Find an opening.
   while (index--) {
     token = events[index][1]
 
@@ -16308,10 +15206,9 @@ function resolveToLabelEnd(events, context) {
         (token.type === 'labelLink' && token._inactive)
       ) {
         break
-      }
-
-      // Mark other link openings as inactive, as we can’t have links in
+      } // Mark other link openings as inactive, as we can’t have links in
       // links.
+
       if (events[index][0] === 'enter' && token.type === 'labelLink') {
         token._inactive = true
       }
@@ -16338,63 +15235,45 @@ function resolveToLabelEnd(events, context) {
     start: shallow(events[open][1].start),
     end: shallow(events[events.length - 1][1].end)
   }
-
   label = {
     type: 'label',
     start: shallow(events[open][1].start),
     end: shallow(events[close][1].end)
   }
-
   text = {
     type: 'labelText',
     start: shallow(events[open + offset + 2][1].end),
     end: shallow(events[close - 2][1].start)
   }
-
   media = [
     ['enter', group, context],
     ['enter', label, context]
-  ]
+  ] // Opening marker.
 
-  // Opening marker.
-  chunkedSplice(
+  media = chunkedPush(media, events.slice(open + 1, open + offset + 3)) // Text open.
+
+  media = chunkedPush(media, [['enter', text, context]]) // Between.
+
+  media = chunkedPush(
     media,
-    media.length,
-    0,
-    events.slice(open + 1, open + offset + 3)
-  )
-
-  // Text open.
-  chunkedSplice(media, media.length, 0, [['enter', text, context]])
-
-  // Between.
-  chunkedSplice(
-    media,
-    media.length,
-    0,
     resolveAll(
       context.parser.constructs.insideSpan.null,
       events.slice(open + offset + 4, close - 3),
       context
     )
-  )
+  ) // Text close, marker close, label close.
 
-  // Text close, marker close, label close.
-  chunkedSplice(media, media.length, 0, [
+  media = chunkedPush(media, [
     ['exit', text, context],
     events[close - 2],
     events[close - 1],
     ['exit', label, context]
-  ])
+  ]) // Reference, resource, or so.
 
-  // Reference, resource, or so.
-  chunkedSplice(media, media.length, 0, events.slice(close + 1))
+  media = chunkedPush(media, events.slice(close + 1)) // Media close.
 
-  // Media close.
-  chunkedSplice(media, media.length, 0, [['exit', group, context]])
-
+  media = chunkedPush(media, [['exit', group, context]])
   chunkedSplice(events, open, events.length, media)
-
   return events
 }
 
@@ -16402,9 +15281,8 @@ function tokenizeLabelEnd(effects, ok, nok) {
   var self = this
   var index = self.events.length
   var labelStart
-  var defined
+  var defined // Find an opening.
 
-  // Find an opening.
   while (index--) {
     if (
       (self.events[index][1].type === 'labelImage' ||
@@ -16421,14 +15299,16 @@ function tokenizeLabelEnd(effects, ok, nok) {
   function start(code) {
     if (!labelStart) {
       return nok(code)
-    }
+    } // It’s a balanced bracket, but contains a link.
 
-    // It’s a balanced bracket, but contains a link.
     if (labelStart._inactive) return balanced(code)
     defined =
       self.parser.defined.indexOf(
         normalizeIdentifier(
-          self.sliceSerialize({start: labelStart.end, end: self.now()})
+          self.sliceSerialize({
+            start: labelStart.end,
+            end: self.now()
+          })
         )
       ) > -1
     effects.enter('labelEnd')
@@ -16442,19 +15322,23 @@ function tokenizeLabelEnd(effects, ok, nok) {
   function afterLabelEnd(code) {
     // Resource: `[asd](fgh)`.
     if (code === 40) {
-      return effects.attempt(resource, ok, defined ? ok : balanced)(code)
-    }
+      return effects.attempt(
+        resourceConstruct,
+        ok,
+        defined ? ok : balanced
+      )(code)
+    } // Collapsed (`[asd][]`) or full (`[asd][fgh]`) reference?
 
-    // Collapsed (`[asd][]`) or full (`[asd][fgh]`) reference?
     if (code === 91) {
       return effects.attempt(
-        fullReference,
+        fullReferenceConstruct,
         ok,
-        defined ? effects.attempt(collapsedReference, ok, balanced) : balanced
+        defined
+          ? effects.attempt(collapsedReferenceConstruct, ok, balanced)
+          : balanced
       )(code)
-    }
+    } // Shortcut reference: `[asd]`?
 
-    // Shortcut reference: `[asd]`?
     return defined ? ok(code) : balanced(code)
   }
 
@@ -16472,7 +15356,7 @@ function tokenizeResource(effects, ok, nok) {
     effects.enter('resourceMarker')
     effects.consume(code)
     effects.exit('resourceMarker')
-    return createWhitespace(effects, open)
+    return factoryWhitespace(effects, open)
   }
 
   function open(code) {
@@ -16480,7 +15364,7 @@ function tokenizeResource(effects, ok, nok) {
       return end(code)
     }
 
-    return createDestination(
+    return factoryDestination(
       effects,
       destinationAfter,
       nok,
@@ -16495,15 +15379,15 @@ function tokenizeResource(effects, ok, nok) {
 
   function destinationAfter(code) {
     return markdownLineEndingOrSpace(code)
-      ? createWhitespace(effects, between)(code)
+      ? factoryWhitespace(effects, between)(code)
       : end(code)
   }
 
   function between(code) {
     if (code === 34 || code === 39 || code === 40) {
-      return createTitle(
+      return factoryTitle(
         effects,
-        createWhitespace(effects, end),
+        factoryWhitespace(effects, end),
         nok,
         'resourceTitle',
         'resourceTitleMarker',
@@ -16529,11 +15413,10 @@ function tokenizeResource(effects, ok, nok) {
 
 function tokenizeFullReference(effects, ok, nok) {
   var self = this
-
   return start
 
   function start(code) {
-    return createLabel.call(
+    return factoryLabel.call(
       self,
       effects,
       afterLabel,
@@ -16579,6 +15462,8 @@ function tokenizeCollapsedReference(effects, ok, nok) {
   }
 }
 
+module.exports = labelEnd
+
 
 /***/ }),
 
@@ -16586,19 +15471,21 @@ function tokenizeCollapsedReference(effects, ok, nok) {
 /*!*******************************************************************!*\
   !*** ./node_modules/micromark/dist/tokenize/label-start-image.js ***!
   \*******************************************************************/
-/*! default exports */
-/*! export resolveAll [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/micromark/dist/tokenize/label-end.js .resolveAll */
-/*! export tokenize [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-exports.tokenize = tokenizelabelImage
-exports.resolveAll = __webpack_require__(/*! ./label-end */ "./node_modules/micromark/dist/tokenize/label-end.js").resolveAll
+"use strict";
 
-function tokenizelabelImage(effects, ok, nok) {
+
+var labelEnd = __webpack_require__(/*! ./label-end.js */ "./node_modules/micromark/dist/tokenize/label-end.js")
+
+var labelStartImage = {
+  name: 'labelStartImage',
+  tokenize: tokenizeLabelStartImage,
+  resolveAll: labelEnd.resolveAll
+}
+
+function tokenizeLabelStartImage(effects, ok, nok) {
   var self = this
-
   return start
 
   function start(code) {
@@ -16622,12 +15509,17 @@ function tokenizelabelImage(effects, ok, nok) {
   }
 
   function after(code) {
-    /* istanbul ignore next - footnotes. */
-    return code === 94 && '_hiddenFootnoteSupport' in self.parser.constructs
-      ? nok(code)
+    /* c8 ignore next */
+    return code === 94 &&
+      /* c8 ignore next */
+      '_hiddenFootnoteSupport' in self.parser.constructs
+      ? /* c8 ignore next */
+        nok(code)
       : ok(code)
   }
 }
+
+module.exports = labelStartImage
 
 
 /***/ }),
@@ -16636,19 +15528,21 @@ function tokenizelabelImage(effects, ok, nok) {
 /*!******************************************************************!*\
   !*** ./node_modules/micromark/dist/tokenize/label-start-link.js ***!
   \******************************************************************/
-/*! default exports */
-/*! export resolveAll [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/micromark/dist/tokenize/label-end.js .resolveAll */
-/*! export tokenize [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-exports.tokenize = tokenizelabelLink
-exports.resolveAll = __webpack_require__(/*! ./label-end */ "./node_modules/micromark/dist/tokenize/label-end.js").resolveAll
+"use strict";
 
-function tokenizelabelLink(effects, ok, nok) {
+
+var labelEnd = __webpack_require__(/*! ./label-end.js */ "./node_modules/micromark/dist/tokenize/label-end.js")
+
+var labelStartLink = {
+  name: 'labelStartLink',
+  tokenize: tokenizeLabelStartLink,
+  resolveAll: labelEnd.resolveAll
+}
+
+function tokenizeLabelStartLink(effects, ok, nok) {
   var self = this
-
   return start
 
   function start(code) {
@@ -16661,12 +15555,17 @@ function tokenizelabelLink(effects, ok, nok) {
   }
 
   function after(code) {
-    /* istanbul ignore next - footnotes. */
-    return code === 94 && '_hiddenFootnoteSupport' in self.parser.constructs
-      ? nok(code)
+    /* c8 ignore next */
+    return code === 94 &&
+      /* c8 ignore next */
+      '_hiddenFootnoteSupport' in self.parser.constructs
+      ? /* c8 ignore next */
+        nok(code)
       : ok(code)
   }
 }
+
+module.exports = labelStartLink
 
 
 /***/ }),
@@ -16675,28 +15574,30 @@ function tokenizelabelLink(effects, ok, nok) {
 /*!*************************************************************!*\
   !*** ./node_modules/micromark/dist/tokenize/line-ending.js ***!
   \*************************************************************/
-/*! default exports */
-/*! export tokenize [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-exports.tokenize = tokenizeWhitespace
+"use strict";
 
-var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
 
-var createSpace = __webpack_require__(/*! ./factory-space */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
 
-function tokenizeWhitespace(effects, ok) {
+var lineEnding = {
+  name: 'lineEnding',
+  tokenize: tokenizeLineEnding
+}
+
+function tokenizeLineEnding(effects, ok) {
   return start
 
   function start(code) {
     effects.enter('lineEnding')
     effects.consume(code)
     effects.exit('lineEnding')
-    return createSpace(effects, ok, 'linePrefix')
+    return factorySpace(effects, ok, 'linePrefix')
   }
 }
+
+module.exports = lineEnding
 
 
 /***/ }),
@@ -16705,113 +15606,111 @@ function tokenizeWhitespace(effects, ok) {
 /*!******************************************************!*\
   !*** ./node_modules/micromark/dist/tokenize/list.js ***!
   \******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
-/*! CommonJS bailout: exports is used directly at 164:22-29 */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-exports.tokenize = tokenizeListStart
-exports.continuation = {tokenize: tokenizeListContinuation}
-exports.exit = tokenizeListEnd
+"use strict";
 
-var markdownSpace = __webpack_require__(/*! ../character/markdown-space */ "./node_modules/micromark/dist/character/markdown-space.js")
-var asciiDigit = __webpack_require__(/*! ../character/ascii-digit */ "./node_modules/micromark/dist/character/ascii-digit.js")
 
-var prefixSize = __webpack_require__(/*! ../util/prefix-size */ "./node_modules/micromark/dist/util/prefix-size.js")
-var sizeChunks = __webpack_require__(/*! ../util/size-chunks */ "./node_modules/micromark/dist/util/size-chunks.js")
-var thematicBreak = __webpack_require__(/*! ./thematic-break */ "./node_modules/micromark/dist/tokenize/thematic-break.js")
-var createSpace = __webpack_require__(/*! ./factory-space */ "./node_modules/micromark/dist/tokenize/factory-space.js")
-var blank = __webpack_require__(/*! ./partial-blank-line */ "./node_modules/micromark/dist/tokenize/partial-blank-line.js")
+var asciiDigit = __webpack_require__(/*! ../character/ascii-digit.js */ "./node_modules/micromark/dist/character/ascii-digit.js")
+var markdownSpace = __webpack_require__(/*! ../character/markdown-space.js */ "./node_modules/micromark/dist/character/markdown-space.js")
+var prefixSize = __webpack_require__(/*! ../util/prefix-size.js */ "./node_modules/micromark/dist/util/prefix-size.js")
+var sizeChunks = __webpack_require__(/*! ../util/size-chunks.js */ "./node_modules/micromark/dist/util/size-chunks.js")
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+var partialBlankLine = __webpack_require__(/*! ./partial-blank-line.js */ "./node_modules/micromark/dist/tokenize/partial-blank-line.js")
+var thematicBreak = __webpack_require__(/*! ./thematic-break.js */ "./node_modules/micromark/dist/tokenize/thematic-break.js")
+
+var list = {
+  name: 'list',
+  tokenize: tokenizeListStart,
+  continuation: {
+    tokenize: tokenizeListContinuation
+  },
+  exit: tokenizeListEnd
+}
+var listItemPrefixWhitespaceConstruct = {
+  tokenize: tokenizeListItemPrefixWhitespace,
+  partial: true
+}
+var indentConstruct = {
+  tokenize: tokenizeIndent,
+  partial: true
+}
 
 function tokenizeListStart(effects, ok, nok) {
   var self = this
   var initialSize = prefixSize(self.events, 'linePrefix')
-  var valueSize
-
+  var size = 0
   return start
 
   function start(code) {
-    if (
-      (code === 42 || code === 43 || code === 45) &&
-      (!self.containerState.marker || code === self.containerState.marker)
-    ) {
-      return code === 42 || code === 45
-        ? effects.check(thematicBreak, nok, unordered)(code)
-        : unordered(code)
-    }
+    var kind =
+      self.containerState.type ||
+      (code === 42 || code === 43 || code === 45
+        ? 'listUnordered'
+        : 'listOrdered')
 
     if (
-      asciiDigit(code) &&
-      (!self.containerState.type || self.containerState.type === 'listOrdered')
+      kind === 'listUnordered'
+        ? !self.containerState.marker || code === self.containerState.marker
+        : asciiDigit(code)
     ) {
-      return ordered(code)
-    }
-
-    return nok(code)
-  }
-
-  function unordered(code) {
-    if (!self.containerState.type) {
-      self.containerState.type = 'listUnordered'
-      effects.enter(self.containerState.type, {_container: true})
-    }
-
-    effects.enter('listItemPrefix')
-    return atMarker(code)
-  }
-
-  function ordered(code) {
-    if (self.containerState.type || !self.interrupt || code === 49) {
       if (!self.containerState.type) {
-        self.containerState.type = 'listOrdered'
-        effects.enter(self.containerState.type, {_container: true})
+        self.containerState.type = kind
+        effects.enter(kind, {
+          _container: true
+        })
       }
 
-      effects.enter('listItemPrefix')
-      effects.enter('listItemValue')
-      effects.consume(code)
-      valueSize = 1
-      return self.interrupt ? afterValue : inside
+      if (kind === 'listUnordered') {
+        effects.enter('listItemPrefix')
+        return code === 42 || code === 45
+          ? effects.check(thematicBreak, nok, atMarker)(code)
+          : atMarker(code)
+      }
+
+      if (!self.interrupt || code === 49) {
+        effects.enter('listItemPrefix')
+        effects.enter('listItemValue')
+        return inside(code)
+      }
     }
 
     return nok(code)
   }
 
   function inside(code) {
-    if (asciiDigit(code) && ++valueSize < 10) {
+    if (asciiDigit(code) && ++size < 10) {
       effects.consume(code)
       return inside
     }
 
-    return afterValue(code)
-  }
-
-  function afterValue(code) {
-    effects.exit('listItemValue')
-
-    return code === 41 || code === 46 ? atMarker(code) : nok(code)
-  }
-
-  function atMarker(code) {
-    self.containerState.marker = self.containerState.marker || code
-
-    if (code === self.containerState.marker) {
-      effects.enter('listItemMarker')
-      effects.consume(code)
-      effects.exit('listItemMarker')
-      return effects.check(
-        blank,
-        // Can’t be empty when interrupting.
-        self.interrupt ? nok : onBlank,
-        effects.attempt(
-          {tokenize: tokenizeListItemPrefixWhitespace, partial: true},
-          endOfPrefix,
-          otherPrefix
-        )
-      )
+    if (
+      (!self.interrupt || size < 2) &&
+      (self.containerState.marker
+        ? code === self.containerState.marker
+        : code === 41 || code === 46)
+    ) {
+      effects.exit('listItemValue')
+      return atMarker(code)
     }
 
     return nok(code)
+  }
+
+  function atMarker(code) {
+    effects.enter('listItemMarker')
+    effects.consume(code)
+    effects.exit('listItemMarker')
+    self.containerState.marker = self.containerState.marker || code
+    return effects.check(
+      partialBlankLine, // Can’t be empty when interrupting.
+      self.interrupt ? nok : onBlank,
+      effects.attempt(
+        listItemPrefixWhitespaceConstruct,
+        endOfPrefix,
+        otherPrefix
+      )
+    )
   }
 
   function onBlank(code) {
@@ -16840,16 +15739,21 @@ function tokenizeListStart(effects, ok, nok) {
 
 function tokenizeListContinuation(effects, ok, nok) {
   var self = this
-
   self.containerState._closeFlow = undefined
-
-  return effects.check(blank, onBlank, notBlank)
+  return effects.check(partialBlankLine, onBlank, notBlank)
 
   function onBlank(code) {
     self.containerState.furtherBlankLines =
       self.containerState.furtherBlankLines ||
-      self.containerState.initialBlankLine
-    return ok(code)
+      self.containerState.initialBlankLine // We have a blank line.
+    // Still, try to consume at most the items size.
+
+    return factorySpace(
+      effects,
+      ok,
+      'listItemIndent',
+      self.containerState.size + 1
+    )(code)
   }
 
   function notBlank(code) {
@@ -16859,35 +15763,31 @@ function tokenizeListContinuation(effects, ok, nok) {
     }
 
     self.containerState.furtherBlankLines = self.containerState.initialBlankLine = undefined
-    return effects.attempt(
-      {tokenize: tokenizeIndent, partial: true},
-      ok,
-      notInCurrentItem
-    )(code)
+    return effects.attempt(indentConstruct, ok, notInCurrentItem)(code)
   }
 
   function notInCurrentItem(code) {
     // While we do continue, we signal that the flow should be closed.
-    self.containerState._closeFlow = true
-    // As we’re closing flow, we’re no longer interrupting
+    self.containerState._closeFlow = true // As we’re closing flow, we’re no longer interrupting.
+
     self.interrupt = undefined
-    return createSpace(
+    return factorySpace(
       effects,
-      effects.attempt(exports, ok, nok),
+      effects.attempt(list, ok, nok),
       'linePrefix',
-      4
+      self.parser.constructs.disable.null.indexOf('codeIndented') > -1
+        ? undefined
+        : 4
     )(code)
   }
 }
 
 function tokenizeIndent(effects, ok, nok) {
   var self = this
-
-  return createSpace(
+  return factorySpace(
     effects,
     afterPrefix,
     'listItemIndent',
-
     self.containerState.size + 1
   )
 
@@ -16905,13 +15805,13 @@ function tokenizeListEnd(effects) {
 
 function tokenizeListItemPrefixWhitespace(effects, ok, nok) {
   var self = this
-
-  return createSpace(
+  return factorySpace(
     effects,
     afterPrefix,
     'listItemPrefixWhitespace',
-
-    4 + 1
+    self.parser.constructs.disable.null.indexOf('codeIndented') > -1
+      ? undefined
+      : 4 + 1
   )
 
   function afterPrefix(code) {
@@ -16922,6 +15822,8 @@ function tokenizeListItemPrefixWhitespace(effects, ok, nok) {
   }
 }
 
+module.exports = list
+
 
 /***/ }),
 
@@ -16929,27 +15831,28 @@ function tokenizeListItemPrefixWhitespace(effects, ok, nok) {
 /*!********************************************************************!*\
   !*** ./node_modules/micromark/dist/tokenize/partial-blank-line.js ***!
   \********************************************************************/
-/*! default exports */
-/*! export partial [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export tokenize [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-exports.tokenize = tokenizeBlankLine
-exports.partial = true
+"use strict";
 
-var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
 
-var createSpace = __webpack_require__(/*! ./factory-space */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
 
-function tokenizeBlankLine(effects, ok, nok) {
-  return createSpace(effects, afterWhitespace, 'linePrefix')
+var partialBlankLine = {
+  tokenize: tokenizePartialBlankLine,
+  partial: true
+}
+
+function tokenizePartialBlankLine(effects, ok, nok) {
+  return factorySpace(effects, afterWhitespace, 'linePrefix')
 
   function afterWhitespace(code) {
     return code === null || markdownLineEnding(code) ? ok(code) : nok(code)
   }
 }
+
+module.exports = partialBlankLine
 
 
 /***/ }),
@@ -16958,30 +15861,29 @@ function tokenizeBlankLine(effects, ok, nok) {
 /*!******************************************************************!*\
   !*** ./node_modules/micromark/dist/tokenize/setext-underline.js ***!
   \******************************************************************/
-/*! default exports */
-/*! export resolveTo [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export tokenize [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-exports.tokenize = tokenizeSetextUnderline
-exports.resolveTo = resolveToSetextUnderline
+"use strict";
 
-var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
 
-var shallow = __webpack_require__(/*! ../util/shallow */ "./node_modules/micromark/dist/util/shallow.js")
-var createSpace = __webpack_require__(/*! ./factory-space */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var shallow = __webpack_require__(/*! ../util/shallow.js */ "./node_modules/micromark/dist/util/shallow.js")
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+
+var setextUnderline = {
+  name: 'setextUnderline',
+  tokenize: tokenizeSetextUnderline,
+  resolveTo: resolveToSetextUnderline
+}
 
 function resolveToSetextUnderline(events, context) {
   var index = events.length
   var content
   var text
   var definition
-  var heading
-
-  // Find the opening of the content.
+  var heading // Find the opening of the content.
   // It’ll always exist: we don’t tokenize if it isn’t there.
+
   while (index--) {
     if (events[index][0] === 'enter') {
       if (events[index][1].type === 'content') {
@@ -16992,8 +15894,7 @@ function resolveToSetextUnderline(events, context) {
       if (events[index][1].type === 'paragraph') {
         text = index
       }
-    }
-    // Exit
+    } // Exit
     else {
       if (events[index][1].type === 'content') {
         // Remove the content end (if needed we’ll add it later)
@@ -17010,24 +15911,20 @@ function resolveToSetextUnderline(events, context) {
     type: 'setextHeading',
     start: shallow(events[text][1].start),
     end: shallow(events[events.length - 1][1].end)
-  }
+  } // Change the paragraph to setext heading text.
 
-  // Change the paragraph to setext heading text.
-  events[text][1].type = 'setextHeadingText'
-
-  // If we have definitions in the content, we’ll keep on having content,
+  events[text][1].type = 'setextHeadingText' // If we have definitions in the content, we’ll keep on having content,
   // but we need move it.
+
   if (definition) {
     events.splice(text, 0, ['enter', heading, context])
     events.splice(definition + 1, 0, ['exit', events[content][1], context])
     events[content][1].end = shallow(events[definition][1].end)
   } else {
     events[content][1] = heading
-  }
+  } // Add the heading exit at the end.
 
-  // Add the heading exit at the end.
   events.push(['exit', heading, context])
-
   return events
 }
 
@@ -17035,9 +15932,8 @@ function tokenizeSetextUnderline(effects, ok, nok) {
   var self = this
   var index = self.events.length
   var marker
-  var paragraph
+  var paragraph // Find an opening.
 
-  // Find an opening.
   while (index--) {
     // Skip enter/exit of line ending, line prefix, and content.
     // We can now either have a definition or a paragraph.
@@ -17071,7 +15967,7 @@ function tokenizeSetextUnderline(effects, ok, nok) {
     }
 
     effects.exit('setextHeadingLineSequence')
-    return createSpace(effects, closingSequenceEnd, 'lineSuffix')(code)
+    return factorySpace(effects, closingSequenceEnd, 'lineSuffix')(code)
   }
 
   function closingSequenceEnd(code) {
@@ -17084,6 +15980,8 @@ function tokenizeSetextUnderline(effects, ok, nok) {
   }
 }
 
+module.exports = setextUnderline
+
 
 /***/ }),
 
@@ -17091,23 +15989,23 @@ function tokenizeSetextUnderline(effects, ok, nok) {
 /*!****************************************************************!*\
   !*** ./node_modules/micromark/dist/tokenize/thematic-break.js ***!
   \****************************************************************/
-/*! default exports */
-/*! export tokenize [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-exports.tokenize = tokenizeThematicBreak
+"use strict";
 
-var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
-var markdownSpace = __webpack_require__(/*! ../character/markdown-space */ "./node_modules/micromark/dist/character/markdown-space.js")
 
-var createSpace = __webpack_require__(/*! ./factory-space */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var markdownSpace = __webpack_require__(/*! ../character/markdown-space.js */ "./node_modules/micromark/dist/character/markdown-space.js")
+var factorySpace = __webpack_require__(/*! ./factory-space.js */ "./node_modules/micromark/dist/tokenize/factory-space.js")
+
+var thematicBreak = {
+  name: 'thematicBreak',
+  tokenize: tokenizeThematicBreak
+}
 
 function tokenizeThematicBreak(effects, ok, nok) {
   var size = 0
   var marker
-
   return start
 
   function start(code) {
@@ -17123,7 +16021,7 @@ function tokenizeThematicBreak(effects, ok, nok) {
     }
 
     if (markdownSpace(code)) {
-      return createSpace(effects, atBreak, 'whitespace')(code)
+      return factorySpace(effects, atBreak, 'whitespace')(code)
     }
 
     if (size < 3 || (code !== null && !markdownLineEnding(code))) {
@@ -17146,6 +16044,33 @@ function tokenizeThematicBreak(effects, ok, nok) {
   }
 }
 
+module.exports = thematicBreak
+
+
+/***/ }),
+
+/***/ "./node_modules/micromark/dist/util/chunked-push.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/micromark/dist/util/chunked-push.js ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var chunkedSplice = __webpack_require__(/*! ./chunked-splice.js */ "./node_modules/micromark/dist/util/chunked-splice.js")
+
+function chunkedPush(list, items) {
+  if (list.length) {
+    chunkedSplice(list, list.length, 0, items)
+    return list
+  }
+
+  return items
+}
+
+module.exports = chunkedPush
+
 
 /***/ }),
 
@@ -17153,54 +16078,47 @@ function tokenizeThematicBreak(effects, ok, nok) {
 /*!************************************************************!*\
   !*** ./node_modules/micromark/dist/util/chunked-splice.js ***!
   \************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
-/***/ ((module) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = chunkedSplice
+"use strict";
 
-var v8MaxSafeChunkSize = 10000
 
-// `Array#splice` takes all items to be inserted as individual argument which
+var splice = __webpack_require__(/*! ../constant/splice.js */ "./node_modules/micromark/dist/constant/splice.js")
+
 // causes a stack overflow in V8 when trying to insert 100k items for instance.
+
 function chunkedSplice(list, start, remove, items) {
   var end = list.length
   var chunkStart = 0
-  var result
-  var parameters
+  var parameters // Make start between zero and `end` (included).
 
-  // Make start between zero and `end` (included).
   if (start < 0) {
     start = -start > end ? 0 : end + start
   } else {
     start = start > end ? end : start
   }
 
-  remove = remove > 0 ? remove : 0
+  remove = remove > 0 ? remove : 0 // No need to chunk the items if there’s only a couple (10k) items.
 
-  // No need to chunk the items if there’s only a couple (10k) items.
-  if (items.length < v8MaxSafeChunkSize) {
+  if (items.length < 10000) {
     parameters = Array.from(items)
     parameters.unshift(start, remove)
-    return [].splice.apply(list, parameters)
+    splice.apply(list, parameters)
+  } else {
+    // Delete `remove` items starting from `start`
+    if (remove) splice.apply(list, [start, remove]) // Insert the items in chunks to not cause stack overflows.
+
+    while (chunkStart < items.length) {
+      parameters = items.slice(chunkStart, chunkStart + 10000)
+      parameters.unshift(start, 0)
+      splice.apply(list, parameters)
+      chunkStart += 10000
+      start += 10000
+    }
   }
-
-  // Delete `remove` items starting from `start`
-  result = [].splice.apply(list, [start, remove])
-
-  // Insert the items in chunks to not cause stack overflows.
-  while (chunkStart < items.length) {
-    parameters = items.slice(chunkStart, chunkStart + v8MaxSafeChunkSize)
-    parameters.unshift(start, 0)
-    ;[].splice.apply(list, parameters)
-
-    chunkStart += v8MaxSafeChunkSize
-    start += v8MaxSafeChunkSize
-  }
-
-  return result
 }
+
+module.exports = chunkedSplice
 
 
 /***/ }),
@@ -17209,16 +16127,14 @@ function chunkedSplice(list, start, remove, items) {
 /*!****************************************************************!*\
   !*** ./node_modules/micromark/dist/util/classify-character.js ***!
   \****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = classifyCharacter
+"use strict";
 
-var markdownLineEndingOrSpace = __webpack_require__(/*! ../character/markdown-line-ending-or-space */ "./node_modules/micromark/dist/character/markdown-line-ending-or-space.js")
-var unicodePunctuation = __webpack_require__(/*! ../character/unicode-punctuation */ "./node_modules/micromark/dist/character/unicode-punctuation.js")
-var unicodeWhitespace = __webpack_require__(/*! ../character/unicode-whitespace */ "./node_modules/micromark/dist/character/unicode-whitespace.js")
+
+var markdownLineEndingOrSpace = __webpack_require__(/*! ../character/markdown-line-ending-or-space.js */ "./node_modules/micromark/dist/character/markdown-line-ending-or-space.js")
+var unicodePunctuation = __webpack_require__(/*! ../character/unicode-punctuation.js */ "./node_modules/micromark/dist/character/unicode-punctuation.js")
+var unicodeWhitespace = __webpack_require__(/*! ../character/unicode-whitespace.js */ "./node_modules/micromark/dist/character/unicode-whitespace.js")
 
 // Classify whether a character is unicode whitespace, unicode punctuation, or
 // anything else.
@@ -17238,6 +16154,8 @@ function classifyCharacter(code) {
   }
 }
 
+module.exports = classifyCharacter
+
 
 /***/ }),
 
@@ -17245,18 +16163,15 @@ function classifyCharacter(code) {
 /*!****************************************************************!*\
   !*** ./node_modules/micromark/dist/util/combine-extensions.js ***!
   \****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = combineExtensions
+"use strict";
 
-var own = __webpack_require__(/*! ../constant/has-own-property */ "./node_modules/micromark/dist/constant/has-own-property.js")
-var miniflat = __webpack_require__(/*! ./miniflat */ "./node_modules/micromark/dist/util/miniflat.js")
-var chunkedSplice = __webpack_require__(/*! ./chunked-splice */ "./node_modules/micromark/dist/util/chunked-splice.js")
 
-// Combine several syntax extensions into one.
+var hasOwnProperty = __webpack_require__(/*! ../constant/has-own-property.js */ "./node_modules/micromark/dist/constant/has-own-property.js")
+var chunkedSplice = __webpack_require__(/*! ./chunked-splice.js */ "./node_modules/micromark/dist/util/chunked-splice.js")
+var miniflat = __webpack_require__(/*! ./miniflat.js */ "./node_modules/micromark/dist/util/miniflat.js")
+
 function combineExtensions(extensions) {
   var all = {}
   var index = -1
@@ -17275,13 +16190,13 @@ function extension(all, extension) {
   var code
 
   for (hook in extension) {
-    left = own.call(all, hook) ? all[hook] : (all[hook] = {})
+    left = hasOwnProperty.call(all, hook) ? all[hook] : (all[hook] = {})
     right = extension[hook]
 
     for (code in right) {
       left[code] = constructs(
         miniflat(right[code]),
-        own.call(left, code) ? left[code] : []
+        hasOwnProperty.call(left, code) ? left[code] : []
       )
     }
   }
@@ -17299,6 +16214,8 @@ function constructs(list, existing) {
   return existing
 }
 
+module.exports = combineExtensions
+
 
 /***/ }),
 
@@ -17306,22 +16223,20 @@ function constructs(list, existing) {
 /*!**************************************************************!*\
   !*** ./node_modules/micromark/dist/util/create-tokenizer.js ***!
   \**************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = createTokenizer
+"use strict";
 
-var assign = __webpack_require__(/*! ../constant/assign */ "./node_modules/micromark/dist/constant/assign.js")
 
-var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
-var chunkedSplice = __webpack_require__(/*! ./chunked-splice */ "./node_modules/micromark/dist/util/chunked-splice.js")
-var shallow = __webpack_require__(/*! ./shallow */ "./node_modules/micromark/dist/util/shallow.js")
-var serializeChunks = __webpack_require__(/*! ./serialize-chunks */ "./node_modules/micromark/dist/util/serialize-chunks.js")
-var sliceChunks = __webpack_require__(/*! ./slice-chunks */ "./node_modules/micromark/dist/util/slice-chunks.js")
-var resolveAll = __webpack_require__(/*! ./resolve-all */ "./node_modules/micromark/dist/util/resolve-all.js")
-var miniflat = __webpack_require__(/*! ./miniflat */ "./node_modules/micromark/dist/util/miniflat.js")
+var assign = __webpack_require__(/*! ../constant/assign.js */ "./node_modules/micromark/dist/constant/assign.js")
+var markdownLineEnding = __webpack_require__(/*! ../character/markdown-line-ending.js */ "./node_modules/micromark/dist/character/markdown-line-ending.js")
+var chunkedPush = __webpack_require__(/*! ./chunked-push.js */ "./node_modules/micromark/dist/util/chunked-push.js")
+var chunkedSplice = __webpack_require__(/*! ./chunked-splice.js */ "./node_modules/micromark/dist/util/chunked-splice.js")
+var miniflat = __webpack_require__(/*! ./miniflat.js */ "./node_modules/micromark/dist/util/miniflat.js")
+var resolveAll = __webpack_require__(/*! ./resolve-all.js */ "./node_modules/micromark/dist/util/resolve-all.js")
+var serializeChunks = __webpack_require__(/*! ./serialize-chunks.js */ "./node_modules/micromark/dist/util/serialize-chunks.js")
+var shallow = __webpack_require__(/*! ./shallow.js */ "./node_modules/micromark/dist/util/shallow.js")
+var sliceChunks = __webpack_require__(/*! ./slice-chunks.js */ "./node_modules/micromark/dist/util/slice-chunks.js")
 
 // Create a tokenizer.
 // Tokenizers deal with one type of data (e.g., containers, flow, text).
@@ -17331,25 +16246,32 @@ var miniflat = __webpack_require__(/*! ./miniflat */ "./node_modules/micromark/d
 // `from` can be given to set the point before the first character, although
 // when further lines are indented, they must be set with `defineSkip`.
 function createTokenizer(parser, initialize, from) {
-  var point = from ? shallow(from) : {line: 1, column: 1, offset: 0}
+  var point = from
+    ? shallow(from)
+    : {
+        line: 1,
+        column: 1,
+        offset: 0
+      }
   var columnStart = {}
   var resolveAllConstructs = []
   var chunks = []
   var stack = []
-  var consumed = true
 
-  // Tools used for tokenizing.
   var effects = {
     consume: consume,
     enter: enter,
     exit: exit,
     attempt: constructFactory(onsuccessfulconstruct),
     check: constructFactory(onsuccessfulcheck),
-    interrupt: constructFactory(onsuccessfulcheck, {interrupt: true}),
-    lazy: constructFactory(onsuccessfulcheck, {lazy: true})
-  }
+    interrupt: constructFactory(onsuccessfulcheck, {
+      interrupt: true
+    }),
+    lazy: constructFactory(onsuccessfulcheck, {
+      lazy: true
+    })
+  } // State and tools for resolving and serializing.
 
-  // State and tools for resolving and serializing.
   var context = {
     previous: null,
     events: [],
@@ -17359,43 +16281,31 @@ function createTokenizer(parser, initialize, from) {
     now: now,
     defineSkip: skip,
     write: write
-  }
+  } // The state function.
 
-  // The state function.
-  var state = initialize.tokenize.call(context, effects)
-
-  // Track which character we expect to be consumed, to catch bugs.
-  var expectedCode
+  var state = initialize.tokenize.call(context, effects) // Track which character we expect to be consumed, to catch bugs.
 
   if (initialize.resolveAll) {
     resolveAllConstructs.push(initialize)
-  }
+  } // Store where we are in the input stream.
 
-  // Store where we are in the input stream.
   point._index = 0
   point._bufferIndex = -1
-
   return context
 
   function write(slice) {
-    chunkedSplice(chunks, chunks.length, 0, slice)
+    chunks = chunkedPush(chunks, slice)
+    main() // Exit if we’re not done, resolve might change stuff.
 
-    main()
-
-    // Exit if we’re not done, resolve might change stuff.
     if (chunks[chunks.length - 1] !== null) {
       return []
     }
 
-    addResult(initialize, 0)
+    addResult(initialize, 0) // Otherwise, resolve, and exit.
 
-    // Otherwise, resolve, and exit.
     context.events = resolveAll(resolveAllConstructs, context.events, context)
-
     return context.events
-  }
-
-  //
+  } //
   // Tools.
   //
 
@@ -17414,26 +16324,23 @@ function createTokenizer(parser, initialize, from) {
   function skip(value) {
     columnStart[value.line] = value.column
     accountForPotentialSkip()
-  }
-
-  //
+  } //
   // State management.
   //
-
   // Main loop (note that `_index` and `_bufferIndex` in `point` are modified by
   // `consume`).
   // Here is where we walk through the chunks, which either include strings of
   // several characters, or numerical character codes.
   // The reason to do this in a loop instead of a call is so the stack can
   // drain.
+
   function main() {
     var chunkIndex
     var chunk
 
     while (point._index < chunks.length) {
-      chunk = chunks[point._index]
+      chunk = chunks[point._index] // If we’re in a buffer chunk, loop through it.
 
-      // If we’re in a buffer chunk, loop through it.
       if (typeof chunk === 'string') {
         chunkIndex = point._index
 
@@ -17451,17 +16358,12 @@ function createTokenizer(parser, initialize, from) {
         go(chunk)
       }
     }
-  }
+  } // Deal with one code.
 
-  // Deal with one code.
   function go(code) {
-    consumed = undefined
-
-    expectedCode = code
     state = state(code)
-  }
+  } // Move a character forward.
 
-  // Move a character forward.
   function consume(code) {
     if (markdownLineEnding(code)) {
       point.line++
@@ -17471,73 +16373,55 @@ function createTokenizer(parser, initialize, from) {
     } else if (code !== -1) {
       point.column++
       point.offset++
-    }
+    } // Not in a string chunk.
 
-    // Not in a string chunk.
     if (point._bufferIndex < 0) {
       point._index++
     } else {
-      point._bufferIndex++
+      point._bufferIndex++ // At end of string chunk.
 
-      // At end of string chunk.
       if (point._bufferIndex === chunks[point._index].length) {
         point._bufferIndex = -1
         point._index++
       }
-    }
+    } // Expose the previous character.
 
-    // Expose the previous character.
-    context.previous = code
+    context.previous = code // Mark as consumed.
+  } // Start a token.
 
-    // Mark as consumed.
-    consumed = true
-  }
-
-  // Start a token.
   function enter(type, fields) {
     var token = fields || {}
     token.type = type
     token.start = now()
-
     context.events.push(['enter', token, context])
-
     stack.push(token)
-
     return token
-  }
+  } // Stop a token.
 
-  // Stop a token.
   function exit(type) {
     var token = stack.pop()
     token.end = now()
-
     context.events.push(['exit', token, context])
-
     return token
-  }
+  } // Use results.
 
-  // Use results.
   function onsuccessfulconstruct(construct, info) {
     addResult(construct, info.from)
-  }
+  } // Discard results.
 
-  // Discard results.
   function onsuccessfulcheck(construct, info) {
     info.restore()
-  }
+  } // Factory to attempt/check/interrupt.
 
-  // Factory to attempt/check/interrupt.
   function constructFactory(onreturn, fields) {
-    return hook
-
-    // Handle either an object mapping codes to constructs, a list of
+    return hook // Handle either an object mapping codes to constructs, a list of
     // constructs, or a single construct.
+
     function hook(constructs, returnState, bogusState) {
       var listOfConstructs
       var constructIndex
       var currentConstruct
       var info
-
       return constructs.tokenize || 'length' in constructs
         ? handleListOfConstructs(miniflat(constructs))
         : handleMapOfConstructs
@@ -17545,9 +16429,9 @@ function createTokenizer(parser, initialize, from) {
       function handleMapOfConstructs(code) {
         if (code in constructs || null in constructs) {
           return handleListOfConstructs(
-            /* istanbul ignore next - `null` is used by some extensions */
             constructs.null
-              ? miniflat(constructs[code]).concat(miniflat(constructs.null))
+              ? /* c8 ignore next */
+                miniflat(constructs[code]).concat(miniflat(constructs.null))
               : constructs[code]
           )(code)
         }
@@ -17576,6 +16460,13 @@ function createTokenizer(parser, initialize, from) {
             context.currentConstruct = construct
           }
 
+          if (
+            construct.name &&
+            context.parser.constructs.disable.null.indexOf(construct.name) > -1
+          ) {
+            return nok()
+          }
+
           return construct.tokenize.call(
             fields ? assign({}, context, fields) : context,
             effects,
@@ -17586,13 +16477,11 @@ function createTokenizer(parser, initialize, from) {
       }
 
       function ok(code) {
-        consumed = true
         onreturn(currentConstruct, info)
         return returnState
       }
 
       function nok(code) {
-        consumed = true
         info.restore()
 
         if (++constructIndex < listOfConstructs.length) {
@@ -17629,8 +16518,10 @@ function createTokenizer(parser, initialize, from) {
     var startCurrentConstruct = context.currentConstruct
     var startEventsIndex = context.events.length
     var startStack = Array.from(stack)
-
-    return {restore: restore, from: startEventsIndex}
+    return {
+      restore: restore,
+      from: startEventsIndex
+    }
 
     function restore() {
       point = startPoint
@@ -17650,6 +16541,8 @@ function createTokenizer(parser, initialize, from) {
   }
 }
 
+module.exports = createTokenizer
+
 
 /***/ }),
 
@@ -17657,12 +16550,10 @@ function createTokenizer(parser, initialize, from) {
 /*!******************************************************!*\
   !*** ./node_modules/micromark/dist/util/miniflat.js ***!
   \******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
-module.exports = miniflat
+"use strict";
+
 
 function miniflat(value) {
   return value === null || value === undefined
@@ -17672,6 +16563,8 @@ function miniflat(value) {
     : [value]
 }
 
+module.exports = miniflat
+
 
 /***/ }),
 
@@ -17679,21 +16572,21 @@ function miniflat(value) {
 /*!********************************************************!*\
   !*** ./node_modules/micromark/dist/util/move-point.js ***!
   \********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
-module.exports = movePoint
+"use strict";
 
-// Note! `move` only works inside lines! It’s not possible to move past other
+
 // chunks (replacement characters, tabs, or line endings).
+
 function movePoint(point, offset) {
   point.column += offset
   point.offset += offset
   point._bufferIndex += offset
   return point
 }
+
+module.exports = movePoint
 
 
 /***/ }),
@@ -17702,21 +16595,16 @@ function movePoint(point, offset) {
 /*!******************************************************************!*\
   !*** ./node_modules/micromark/dist/util/normalize-identifier.js ***!
   \******************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
-module.exports = normalizeIdentifier
+"use strict";
+
 
 function normalizeIdentifier(value) {
   return (
-    value
-      // Collapse Markdown whitespace.
-      .replace(/[\t\n\r ]+/g, ' ')
-      // Trim.
-      .replace(/^ | $/g, '')
-      // Some characters are considered “uppercase”, but if their lowercase
+    value // Collapse Markdown whitespace.
+      .replace(/[\t\n\r ]+/g, ' ') // Trim.
+      .replace(/^ | $/g, '') // Some characters are considered “uppercase”, but if their lowercase
       // counterpart is uppercased will result in a different uppercase
       // character.
       // Hence, to get that form, we perform both lower- and uppercase.
@@ -17727,6 +16615,8 @@ function normalizeIdentifier(value) {
   )
 }
 
+module.exports = normalizeIdentifier
+
 
 /***/ }),
 
@@ -17734,20 +16624,20 @@ function normalizeIdentifier(value) {
 /*!*********************************************************!*\
   !*** ./node_modules/micromark/dist/util/prefix-size.js ***!
   \*********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = prefixSize
+"use strict";
 
-var sizeChunks = __webpack_require__(/*! ./size-chunks */ "./node_modules/micromark/dist/util/size-chunks.js")
+
+var sizeChunks = __webpack_require__(/*! ./size-chunks.js */ "./node_modules/micromark/dist/util/size-chunks.js")
 
 function prefixSize(events, type) {
   var tail = events[events.length - 1]
   if (!tail || tail[1].type !== type) return 0
   return sizeChunks(tail[2].sliceStream(tail[1]))
 }
+
+module.exports = prefixSize
 
 
 /***/ }),
@@ -17756,21 +16646,22 @@ function prefixSize(events, type) {
 /*!*********************************************************!*\
   !*** ./node_modules/micromark/dist/util/regex-check.js ***!
   \*********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = regexCheck
+"use strict";
 
-var fromCharCode = __webpack_require__(/*! ../constant/from-char-code */ "./node_modules/micromark/dist/constant/from-char-code.js")
+
+var fromCharCode = __webpack_require__(/*! ../constant/from-char-code.js */ "./node_modules/micromark/dist/constant/from-char-code.js")
 
 function regexCheck(regex) {
   return check
+
   function check(code) {
     return regex.test(fromCharCode(code))
   }
 }
+
+module.exports = regexCheck
 
 
 /***/ }),
@@ -17779,12 +16670,10 @@ function regexCheck(regex) {
 /*!*********************************************************!*\
   !*** ./node_modules/micromark/dist/util/resolve-all.js ***!
   \*********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
-module.exports = resolveAll
+"use strict";
+
 
 function resolveAll(constructs, events, context) {
   var called = []
@@ -17803,6 +16692,8 @@ function resolveAll(constructs, events, context) {
   return events
 }
 
+module.exports = resolveAll
+
 
 /***/ }),
 
@@ -17810,14 +16701,12 @@ function resolveAll(constructs, events, context) {
 /*!***********************************************************!*\
   !*** ./node_modules/micromark/dist/util/safe-from-int.js ***!
   \***********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = safeFromInt
+"use strict";
 
-var fromCharCode = __webpack_require__(/*! ../constant/from-char-code */ "./node_modules/micromark/dist/constant/from-char-code.js")
+
+var fromCharCode = __webpack_require__(/*! ../constant/from-char-code.js */ "./node_modules/micromark/dist/constant/from-char-code.js")
 
 function safeFromInt(value, base) {
   var code = parseInt(value, base)
@@ -17826,16 +16715,12 @@ function safeFromInt(value, base) {
     // C0 except for HT, LF, FF, CR, space
     code < 9 ||
     code === 11 ||
-    (code > 13 && code < 32) ||
-    // Control character (DEL) of the basic block and C1 controls.
-    (code > 126 && code < 160) ||
-    // Lone high surrogates and low surrogates.
-    (code > 55295 && code < 57344) ||
-    // Noncharacters.
+    (code > 13 && code < 32) || // Control character (DEL) of the basic block and C1 controls.
+    (code > 126 && code < 160) || // Lone high surrogates and low surrogates.
+    (code > 55295 && code < 57344) || // Noncharacters.
     (code > 64975 && code < 65008) ||
     (code & 65535) === 65535 ||
-    (code & 65535) === 65534 ||
-    // Out of range
+    (code & 65535) === 65534 || // Out of range
     code > 1114111
   ) {
     return '\uFFFD'
@@ -17844,6 +16729,8 @@ function safeFromInt(value, base) {
   return fromCharCode(code)
 }
 
+module.exports = safeFromInt
+
 
 /***/ }),
 
@@ -17851,14 +16738,12 @@ function safeFromInt(value, base) {
 /*!**************************************************************!*\
   !*** ./node_modules/micromark/dist/util/serialize-chunks.js ***!
   \**************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = serializeChunks
+"use strict";
 
-var fromCharCode = __webpack_require__(/*! ../constant/from-char-code */ "./node_modules/micromark/dist/constant/from-char-code.js")
+
+var fromCharCode = __webpack_require__(/*! ../constant/from-char-code.js */ "./node_modules/micromark/dist/constant/from-char-code.js")
 
 function serializeChunks(chunks) {
   var index = -1
@@ -17895,6 +16780,8 @@ function serializeChunks(chunks) {
   return result.join('')
 }
 
+module.exports = serializeChunks
+
 
 /***/ }),
 
@@ -17902,18 +16789,18 @@ function serializeChunks(chunks) {
 /*!*****************************************************!*\
   !*** ./node_modules/micromark/dist/util/shallow.js ***!
   \*****************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = shallow
+"use strict";
 
-var assign = __webpack_require__(/*! ../constant/assign */ "./node_modules/micromark/dist/constant/assign.js")
+
+var assign = __webpack_require__(/*! ../constant/assign.js */ "./node_modules/micromark/dist/constant/assign.js")
 
 function shallow(object) {
   return assign({}, object)
 }
+
+module.exports = shallow
 
 
 /***/ }),
@@ -17922,15 +16809,13 @@ function shallow(object) {
 /*!*********************************************************!*\
   !*** ./node_modules/micromark/dist/util/size-chunks.js ***!
   \*********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
-module.exports = sizeChunks
+"use strict";
 
-// Measure the number of character codes in chunks.
+
 // Counts tabs based on their expanded size, and CR+LF as one character.
+
 function sizeChunks(chunks) {
   var index = -1
   var size = 0
@@ -17942,6 +16827,8 @@ function sizeChunks(chunks) {
   return size
 }
 
+module.exports = sizeChunks
+
 
 /***/ }),
 
@@ -17949,12 +16836,10 @@ function sizeChunks(chunks) {
 /*!**********************************************************!*\
   !*** ./node_modules/micromark/dist/util/slice-chunks.js ***!
   \**********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
-module.exports = sliceChunks
+"use strict";
+
 
 function sliceChunks(chunks, token) {
   var startIndex = token.start._index
@@ -17980,6 +16865,8 @@ function sliceChunks(chunks, token) {
   return view
 }
 
+module.exports = sliceChunks
+
 
 /***/ }),
 
@@ -17987,17 +16874,14 @@ function sliceChunks(chunks, token) {
 /*!*********************************************************!*\
   !*** ./node_modules/micromark/dist/util/subtokenize.js ***!
   \*********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = subtokenize
+"use strict";
 
-var assign = __webpack_require__(/*! ../constant/assign */ "./node_modules/micromark/dist/constant/assign.js")
 
-var chunkedSplice = __webpack_require__(/*! ./chunked-splice */ "./node_modules/micromark/dist/util/chunked-splice.js")
-var shallow = __webpack_require__(/*! ./shallow */ "./node_modules/micromark/dist/util/shallow.js")
+var assign = __webpack_require__(/*! ../constant/assign.js */ "./node_modules/micromark/dist/constant/assign.js")
+var chunkedSplice = __webpack_require__(/*! ./chunked-splice.js */ "./node_modules/micromark/dist/util/chunked-splice.js")
+var shallow = __webpack_require__(/*! ./shallow.js */ "./node_modules/micromark/dist/util/shallow.js")
 
 function subtokenize(events) {
   var jumps = {}
@@ -18015,10 +16899,9 @@ function subtokenize(events) {
       index = jumps[index]
     }
 
-    event = events[index]
-
-    // Add a hook for the GFM tasklist extension, which needs to know if text
+    event = events[index] // Add a hook for the GFM tasklist extension, which needs to know if text
     // is in the first content of a list item.
+
     if (
       index &&
       event[1].type === 'chunkFlow' &&
@@ -18049,17 +16932,15 @@ function subtokenize(events) {
           }
         }
       }
-    }
+    } // Enter.
 
-    // Enter.
     if (event[0] === 'enter') {
       if (event[1].contentType) {
         assign(jumps, subcontent(events, index))
         index = jumps[index]
         more = true
       }
-    }
-    // Exit.
+    } // Exit.
     else if (event[1]._container || event[1]._movePreviousLineEndings) {
       otherIndex = index
       lineIndex = undefined
@@ -18086,9 +16967,8 @@ function subtokenize(events) {
 
       if (lineIndex) {
         // Fix position.
-        event[1].end = shallow(events[lineIndex][1].start)
+        event[1].end = shallow(events[lineIndex][1].start) // Switch container exit w/ line endings.
 
-        // Switch container exit w/ line endings.
         parameters = events.slice(lineIndex, index)
         parameters.unshift(event)
         chunkedSplice(events, lineIndex, index - lineIndex + 1, parameters)
@@ -18114,10 +16994,9 @@ function subcontent(events, eventIndex) {
   var index
   var entered
   var end
-  var adjust
-
-  // Loop forward through the linked tokens to pass them in order to the
+  var adjust // Loop forward through the linked tokens to pass them in order to the
   // subtokenizer.
+
   while (token) {
     // Find the position of the event for this token.
     while (events[++startPosition][1] !== token) {
@@ -18146,15 +17025,13 @@ function subcontent(events, eventIndex) {
       if (token.isInFirstContentOfListItem) {
         tokenizer._gfmTasklistFirstContentOfListItem = undefined
       }
-    }
+    } // Unravel the next token.
 
-    // Unravel the next token.
     previous = token
     token = token.next
-  }
-
-  // Now, loop back through all events (and linked tokens), to figure out which
+  } // Now, loop back through all events (and linked tokens), to figure out which
   // parts belong where.
+
   token = previous
   index = childEvents.length
 
@@ -18170,7 +17047,6 @@ function subcontent(events, eventIndex) {
       childEvents[index][1].start.line !== childEvents[index][1].end.line
     ) {
       add(childEvents.slice(index + 1, end))
-
       // Help GC.
       token._tokenizer = token.next = undefined
       token = token.previous
@@ -18179,11 +17055,9 @@ function subcontent(events, eventIndex) {
   }
 
   // Help GC.
-  tokenizer.events = token._tokenizer = token.next = undefined
+  tokenizer.events = token._tokenizer = token.next = undefined // Do head:
 
-  // Do head:
   add(childEvents.slice(0, end))
-
   index = -1
   adjust = 0
 
@@ -18201,6 +17075,8 @@ function subcontent(events, eventIndex) {
   }
 }
 
+module.exports = subtokenize
+
 
 /***/ }),
 
@@ -18208,9 +17084,6 @@ function subcontent(events, eventIndex) {
 /*!***********************************!*\
   !*** ./node_modules/not/index.js ***!
   \***********************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = not
@@ -18230,11 +17103,6 @@ function not(f) {
 /*!***********************************************!*\
   !*** ./node_modules/nth-check/lib/compile.js ***!
   \***********************************************/
-/*! flagged exports */
-/*! export __esModule [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export compile [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -18301,13 +17169,6 @@ exports.compile = compile;
 /*!*********************************************!*\
   !*** ./node_modules/nth-check/lib/index.js ***!
   \*********************************************/
-/*! flagged exports */
-/*! export __esModule [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export compile [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export parse [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -18353,11 +17214,6 @@ exports.default = nthCheck;
 /*!*********************************************!*\
   !*** ./node_modules/nth-check/lib/parse.js ***!
   \*********************************************/
-/*! flagged exports */
-/*! export __esModule [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export parse [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__ */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -18408,9 +17264,6 @@ exports.parse = parse;
 /*!*********************************************!*\
   !*** ./node_modules/object-assign/index.js ***!
   \*********************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 65:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -18512,9 +17365,6 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /*!**************************************************************!*\
   !*** ./node_modules/parse-entities/decode-entity.browser.js ***!
   \**************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 9:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -18556,9 +17406,6 @@ function decodeEntity(characters) {
 /*!***********************************************!*\
   !*** ./node_modules/path-browserify/index.js ***!
   \***********************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: __webpack_require__, module */
-/*! CommonJS bailout: module.exports is used directly at 529:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -19100,9 +17947,6 @@ module.exports = posix;
 /*!*****************************************!*\
   !*** ./node_modules/process/browser.js ***!
   \*****************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 2:14-28 */
 /***/ ((module) => {
 
 // shim for using process in browser
@@ -19297,9 +18141,6 @@ process.umask = function() { return 0; };
 /*!***************************************************!*\
   !*** ./node_modules/property-information/find.js ***!
   \***************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 9:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -19376,30 +18217,10 @@ function camelcase($0) {
 /*!**************************************************************!*\
   !*** ./node_modules/property-information/hast-to-react.json ***!
   \**************************************************************/
-/*! default exports */
-/*! export classId [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export dataType [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export itemId [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export strokeDashArray [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export strokeDashOffset [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export strokeLineCap [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export strokeLineJoin [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export strokeMiterLimit [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export typeOf [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export xLinkActuate [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export xLinkArcRole [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export xLinkHref [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export xLinkRole [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export xLinkShow [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export xLinkTitle [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export xLinkType [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export xmlnsXLink [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: module */
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"classId\":\"classID\",\"dataType\":\"datatype\",\"itemId\":\"itemID\",\"strokeDashArray\":\"strokeDasharray\",\"strokeDashOffset\":\"strokeDashoffset\",\"strokeLineCap\":\"strokeLinecap\",\"strokeLineJoin\":\"strokeLinejoin\",\"strokeMiterLimit\":\"strokeMiterlimit\",\"typeOf\":\"typeof\",\"xLinkActuate\":\"xlinkActuate\",\"xLinkArcRole\":\"xlinkArcrole\",\"xLinkHref\":\"xlinkHref\",\"xLinkRole\":\"xlinkRole\",\"xLinkShow\":\"xlinkShow\",\"xLinkTitle\":\"xlinkTitle\",\"xLinkType\":\"xlinkType\",\"xmlnsXLink\":\"xmlnsXlink\"}");
+module.exports = JSON.parse('{"classId":"classID","dataType":"datatype","itemId":"itemID","strokeDashArray":"strokeDasharray","strokeDashOffset":"strokeDashoffset","strokeLineCap":"strokeLinecap","strokeLineJoin":"strokeLinejoin","strokeMiterLimit":"strokeMiterlimit","typeOf":"typeof","xLinkActuate":"xlinkActuate","xLinkArcRole":"xlinkArcrole","xLinkHref":"xlinkHref","xLinkRole":"xlinkRole","xLinkShow":"xlinkShow","xLinkTitle":"xlinkTitle","xLinkType":"xlinkType","xmlnsXLink":"xmlnsXlink"}');
 
 /***/ }),
 
@@ -19407,9 +18228,6 @@ module.exports = JSON.parse("{\"classId\":\"classID\",\"dataType\":\"datatype\",
 /*!***************************************************!*\
   !*** ./node_modules/property-information/html.js ***!
   \***************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 10:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -19431,9 +18249,6 @@ module.exports = merge([xml, xlink, xmlns, aria, html])
 /*!*******************************************************!*\
   !*** ./node_modules/property-information/lib/aria.js ***!
   \*******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 10:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -19512,9 +18327,6 @@ function ariaTransform(_, prop) {
 /*!*******************************************************!*\
   !*** ./node_modules/property-information/lib/html.js ***!
   \*******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 14:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -19835,9 +18647,6 @@ module.exports = create({
 /*!******************************************************!*\
   !*** ./node_modules/property-information/lib/svg.js ***!
   \******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 13:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -20416,9 +19225,6 @@ module.exports = create({
 /*!**********************************************************************************!*\
   !*** ./node_modules/property-information/lib/util/case-insensitive-transform.js ***!
   \**********************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -20439,9 +19245,6 @@ function caseInsensitiveTransform(attributes, property) {
 /*!********************************************************************************!*\
   !*** ./node_modules/property-information/lib/util/case-sensitive-transform.js ***!
   \********************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -20460,9 +19263,6 @@ function caseSensitiveTransform(attributes, attribute) {
 /*!**************************************************************!*\
   !*** ./node_modules/property-information/lib/util/create.js ***!
   \**************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 7:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -20513,9 +19313,6 @@ function create(definition) {
 /*!********************************************************************!*\
   !*** ./node_modules/property-information/lib/util/defined-info.js ***!
   \********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 6:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -20567,9 +19364,6 @@ function mark(values, key, value) {
 /*!************************************************************!*\
   !*** ./node_modules/property-information/lib/util/info.js ***!
   \************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -20604,9 +19398,6 @@ function Info(property, attribute) {
 /*!*************************************************************!*\
   !*** ./node_modules/property-information/lib/util/merge.js ***!
   \*************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 6:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -20646,9 +19437,6 @@ function merge(definitions) {
 /*!**************************************************************!*\
   !*** ./node_modules/property-information/lib/util/schema.js ***!
   \**************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -20678,16 +19466,6 @@ function Schema(property, normal, space) {
 /*!*************************************************************!*\
   !*** ./node_modules/property-information/lib/util/types.js ***!
   \*************************************************************/
-/*! default exports */
-/*! export boolean [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export booleanish [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export commaOrSpaceSeparated [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export commaSeparated [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export number [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export overloadedBoolean [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export spaceSeparated [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__ */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -20714,9 +19492,6 @@ function increment() {
 /*!********************************************************!*\
   !*** ./node_modules/property-information/lib/xlink.js ***!
   \********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -20749,9 +19524,6 @@ function xlinkTransform(_, prop) {
 /*!******************************************************!*\
   !*** ./node_modules/property-information/lib/xml.js ***!
   \******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -20780,9 +19552,6 @@ function xmlTransform(_, prop) {
 /*!********************************************************!*\
   !*** ./node_modules/property-information/lib/xmlns.js ***!
   \********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 6:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -20810,9 +19579,6 @@ module.exports = create({
 /*!********************************************************!*\
   !*** ./node_modules/property-information/normalize.js ***!
   \********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -20831,9 +19597,6 @@ function normalize(value) {
 /*!**************************************************!*\
   !*** ./node_modules/property-information/svg.js ***!
   \**************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 10:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -20855,14 +19618,6 @@ module.exports = merge([xml, xlink, xmlns, aria, svg])
 /*!****************************************************************************!*\
   !*** ./node_modules/react-dom/cjs/react-dom-server.browser.development.js ***!
   \****************************************************************************/
-/*! default exports */
-/*! export renderToNodeStream [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export renderToStaticMarkup [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export renderToStaticNodeStream [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export renderToString [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export version [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -25216,20 +23971,6 @@ exports.version = ReactVersion;
 /*!*************************************************************!*\
   !*** ./node_modules/react-dom/cjs/react-dom.development.js ***!
   \*************************************************************/
-/*! default exports */
-/*! export __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export createPortal [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export findDOMNode [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export flushSync [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export hydrate [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unmountComponentAtNode [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_batchedUpdates [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_createPortal [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_renderSubtreeIntoContainer [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export version [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -51498,20 +50239,6 @@ exports.version = ReactVersion;
 /*!*****************************************!*\
   !*** ./node_modules/react-dom/index.js ***!
   \*****************************************/
-/*! dynamic exports */
-/*! export __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react-dom/cjs/react-dom.development.js .__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED */
-/*! export createPortal [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react-dom/cjs/react-dom.development.js .createPortal */
-/*! export findDOMNode [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react-dom/cjs/react-dom.development.js .findDOMNode */
-/*! export flushSync [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react-dom/cjs/react-dom.development.js .flushSync */
-/*! export hydrate [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react-dom/cjs/react-dom.development.js .hydrate */
-/*! export render [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react-dom/cjs/react-dom.development.js .render */
-/*! export unmountComponentAtNode [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react-dom/cjs/react-dom.development.js .unmountComponentAtNode */
-/*! export unstable_batchedUpdates [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react-dom/cjs/react-dom.development.js .unstable_batchedUpdates */
-/*! export unstable_createPortal [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react-dom/cjs/react-dom.development.js .unstable_createPortal */
-/*! export unstable_renderSubtreeIntoContainer [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react-dom/cjs/react-dom.development.js .unstable_renderSubtreeIntoContainer */
-/*! export version [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react-dom/cjs/react-dom.development.js .version */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: module, __webpack_require__ */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -51556,15 +50283,6 @@ if (false) {} else {
 /*!**************************************************!*\
   !*** ./node_modules/react-dom/server.browser.js ***!
   \**************************************************/
-/*! dynamic exports */
-/*! export __esModule [not provided] [no usage info] [missing usage info prevents renaming] */
-/*! export renderToNodeStream [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react-dom/cjs/react-dom-server.browser.development.js .renderToNodeStream */
-/*! export renderToStaticMarkup [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react-dom/cjs/react-dom-server.browser.development.js .renderToStaticMarkup */
-/*! export renderToStaticNodeStream [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react-dom/cjs/react-dom-server.browser.development.js .renderToStaticNodeStream */
-/*! export renderToString [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react-dom/cjs/react-dom-server.browser.development.js .renderToString */
-/*! export version [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react-dom/cjs/react-dom-server.browser.development.js .version */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: module, __webpack_require__ */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -51581,37 +50299,6 @@ if (false) {} else {
 /*!*****************************************************!*\
   !*** ./node_modules/react/cjs/react.development.js ***!
   \*****************************************************/
-/*! default exports */
-/*! export Children [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Component [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Fragment [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Profiler [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export PureComponent [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export StrictMode [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Suspense [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export cloneElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export createContext [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export createElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export createFactory [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export createRef [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export forwardRef [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isValidElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export lazy [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export memo [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export useCallback [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export useContext [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export useDebugValue [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export useEffect [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export useImperativeHandle [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export useLayoutEffect [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export useMemo [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export useReducer [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export useRef [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export useState [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export version [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -53956,38 +52643,6 @@ exports.version = ReactVersion;
 /*!*************************************!*\
   !*** ./node_modules/react/index.js ***!
   \*************************************/
-/*! dynamic exports */
-/*! export Children [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .Children */
-/*! export Component [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .Component */
-/*! export Fragment [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .Fragment */
-/*! export Profiler [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .Profiler */
-/*! export PureComponent [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .PureComponent */
-/*! export StrictMode [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .StrictMode */
-/*! export Suspense [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .Suspense */
-/*! export __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED */
-/*! export __esModule [not provided] [no usage info] [missing usage info prevents renaming] */
-/*! export cloneElement [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .cloneElement */
-/*! export createContext [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .createContext */
-/*! export createElement [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .createElement */
-/*! export createFactory [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .createFactory */
-/*! export createRef [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .createRef */
-/*! export forwardRef [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .forwardRef */
-/*! export isValidElement [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .isValidElement */
-/*! export lazy [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .lazy */
-/*! export memo [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .memo */
-/*! export useCallback [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .useCallback */
-/*! export useContext [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .useContext */
-/*! export useDebugValue [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .useDebugValue */
-/*! export useEffect [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .useEffect */
-/*! export useImperativeHandle [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .useImperativeHandle */
-/*! export useLayoutEffect [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .useLayoutEffect */
-/*! export useMemo [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .useMemo */
-/*! export useReducer [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .useReducer */
-/*! export useRef [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .useRef */
-/*! export useState [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .useState */
-/*! export version [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/react/cjs/react.development.js .version */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: module, __webpack_require__ */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -54004,9 +52659,6 @@ if (false) {} else {
 /*!*****************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
   \*****************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 732:31-45 */
 /***/ ((module) => {
 
 /**
@@ -54765,9 +53417,6 @@ try {
 /*!********************************************!*\
   !*** ./node_modules/rehype-react/index.js ***!
   \********************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 6:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -54827,9 +53476,6 @@ function rehypeReact(options) {
 /*!************************************************!*\
   !*** ./node_modules/remark-footnotes/index.js ***!
   \************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 8:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -54879,9 +53525,6 @@ function footnotes(options) {
 /*!**************************************************!*\
   !*** ./node_modules/remark-frontmatter/index.js ***!
   \**************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 7:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -54912,9 +53555,6 @@ function frontmatter(options) {
 /*!*************************************************!*\
   !*** ./node_modules/remark-heading-id/index.js ***!
   \*************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 8:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /**
@@ -54922,7 +53562,7 @@ function frontmatter(options) {
  * @author imcuttle
  */
 
-const visit = __webpack_require__(/*! unist-util-visit */ "./node_modules/remark-heading-id/node_modules/unist-util-visit/index.js")
+const visit = __webpack_require__(/*! unist-util-visit */ "./node_modules/unist-util-visit/index.js")
 
 module.exports = function() {
   return function(node) {
@@ -54955,249 +53595,10 @@ module.exports = function() {
 
 /***/ }),
 
-/***/ "./node_modules/remark-heading-id/node_modules/unist-util-is/convert.js":
-/*!******************************************************************************!*\
-  !*** ./node_modules/remark-heading-id/node_modules/unist-util-is/convert.js ***!
-  \******************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
-/***/ ((module) => {
-
-"use strict";
-
-
-module.exports = convert
-
-function convert(test) {
-  if (typeof test === 'string') {
-    return typeFactory(test)
-  }
-
-  if (test === null || test === undefined) {
-    return ok
-  }
-
-  if (typeof test === 'object') {
-    return ('length' in test ? anyFactory : matchesFactory)(test)
-  }
-
-  if (typeof test === 'function') {
-    return test
-  }
-
-  throw new Error('Expected function, string, or object as test')
-}
-
-function convertAll(tests) {
-  var results = []
-  var length = tests.length
-  var index = -1
-
-  while (++index < length) {
-    results[index] = convert(tests[index])
-  }
-
-  return results
-}
-
-// Utility assert each property in `test` is represented in `node`, and each
-// values are strictly equal.
-function matchesFactory(test) {
-  return matches
-
-  function matches(node) {
-    var key
-
-    for (key in test) {
-      if (node[key] !== test[key]) {
-        return false
-      }
-    }
-
-    return true
-  }
-}
-
-function anyFactory(tests) {
-  var checks = convertAll(tests)
-  var length = checks.length
-
-  return matches
-
-  function matches() {
-    var index = -1
-
-    while (++index < length) {
-      if (checks[index].apply(this, arguments)) {
-        return true
-      }
-    }
-
-    return false
-  }
-}
-
-// Utility to convert a string into a function which checks a given node’s type
-// for said string.
-function typeFactory(test) {
-  return type
-
-  function type(node) {
-    return Boolean(node && node.type === test)
-  }
-}
-
-// Utility to return true.
-function ok() {
-  return true
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/remark-heading-id/node_modules/unist-util-visit-parents/index.js":
-/*!***************************************************************************************!*\
-  !*** ./node_modules/remark-heading-id/node_modules/unist-util-visit-parents/index.js ***!
-  \***************************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-module.exports = visitParents
-
-var convert = __webpack_require__(/*! unist-util-is/convert */ "./node_modules/remark-heading-id/node_modules/unist-util-is/convert.js")
-
-var CONTINUE = true
-var SKIP = 'skip'
-var EXIT = false
-
-visitParents.CONTINUE = CONTINUE
-visitParents.SKIP = SKIP
-visitParents.EXIT = EXIT
-
-function visitParents(tree, test, visitor, reverse) {
-  var is
-
-  if (typeof test === 'function' && typeof visitor !== 'function') {
-    reverse = visitor
-    visitor = test
-    test = null
-  }
-
-  is = convert(test)
-
-  one(tree, null, [])
-
-  // Visit a single node.
-  function one(node, index, parents) {
-    var result = []
-    var subresult
-
-    if (!test || is(node, index, parents[parents.length - 1] || null)) {
-      result = toResult(visitor(node, parents))
-
-      if (result[0] === EXIT) {
-        return result
-      }
-    }
-
-    if (node.children && result[0] !== SKIP) {
-      subresult = toResult(all(node.children, parents.concat(node)))
-      return subresult[0] === EXIT ? subresult : result
-    }
-
-    return result
-  }
-
-  // Visit children in `parent`.
-  function all(children, parents) {
-    var min = -1
-    var step = reverse ? -1 : 1
-    var index = (reverse ? children.length : min) + step
-    var result
-
-    while (index > min && index < children.length) {
-      result = one(children[index], index, parents)
-
-      if (result[0] === EXIT) {
-        return result
-      }
-
-      index = typeof result[1] === 'number' ? result[1] : index + step
-    }
-  }
-}
-
-function toResult(value) {
-  if (value !== null && typeof value === 'object' && 'length' in value) {
-    return value
-  }
-
-  if (typeof value === 'number') {
-    return [CONTINUE, value]
-  }
-
-  return [value]
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/remark-heading-id/node_modules/unist-util-visit/index.js":
-/*!*******************************************************************************!*\
-  !*** ./node_modules/remark-heading-id/node_modules/unist-util-visit/index.js ***!
-  \*******************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-module.exports = visit
-
-var visitParents = __webpack_require__(/*! unist-util-visit-parents */ "./node_modules/remark-heading-id/node_modules/unist-util-visit-parents/index.js")
-
-var CONTINUE = visitParents.CONTINUE
-var SKIP = visitParents.SKIP
-var EXIT = visitParents.EXIT
-
-visit.CONTINUE = CONTINUE
-visit.SKIP = SKIP
-visit.EXIT = EXIT
-
-function visit(tree, test, visitor, reverse) {
-  if (typeof test === 'function' && typeof visitor !== 'function') {
-    reverse = visitor
-    visitor = test
-    test = null
-  }
-
-  visitParents(tree, test, overload, reverse)
-
-  function overload(node, parents) {
-    var parent = parents[parents.length - 1]
-    var index = parent ? parent.children.indexOf(node) : null
-    return visitor(node, index, parent)
-  }
-}
-
-
-/***/ }),
-
 /***/ "./node_modules/remark-parse/index.js":
 /*!********************************************!*\
   !*** ./node_modules/remark-parse/index.js ***!
   \********************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -55233,9 +53634,6 @@ function parse(options) {
 /*!*********************************************!*\
   !*** ./node_modules/remark-rehype/index.js ***!
   \*********************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -55290,16 +53688,13 @@ function mutate(options) {
 /*!*******************************************!*\
   !*** ./node_modules/remark-slug/index.js ***!
   \*******************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 7:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 var toString = __webpack_require__(/*! mdast-util-to-string */ "./node_modules/mdast-util-to-string/index.js")
-var visit = __webpack_require__(/*! unist-util-visit */ "./node_modules/unist-util-visit/index.js")
+var visit = __webpack_require__(/*! unist-util-visit */ "./node_modules/remark-slug/node_modules/unist-util-visit/index.js")
 var slugs = __webpack_require__(/*! github-slugger */ "./node_modules/github-slugger/index.js")()
 
 module.exports = slug
@@ -55329,13 +53724,50 @@ function transformer(ast) {
 
 /***/ }),
 
+/***/ "./node_modules/remark-slug/node_modules/unist-util-visit/index.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/remark-slug/node_modules/unist-util-visit/index.js ***!
+  \*************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = visit
+
+var visitParents = __webpack_require__(/*! unist-util-visit-parents */ "./node_modules/unist-util-visit-parents/index.js")
+
+var CONTINUE = visitParents.CONTINUE
+var SKIP = visitParents.SKIP
+var EXIT = visitParents.EXIT
+
+visit.CONTINUE = CONTINUE
+visit.SKIP = SKIP
+visit.EXIT = EXIT
+
+function visit(tree, test, visitor, reverse) {
+  if (typeof test === 'function' && typeof visitor !== 'function') {
+    reverse = visitor
+    visitor = test
+    test = null
+  }
+
+  visitParents(tree, test, overload, reverse)
+
+  function overload(node, parents) {
+    var parent = parents[parents.length - 1]
+    var index = parent ? parent.children.indexOf(node) : null
+    return visitor(node, index, parent)
+  }
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/remark-stringify/index.js":
 /*!************************************************!*\
   !*** ./node_modules/remark-stringify/index.js ***!
   \************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -55370,9 +53802,6 @@ function stringify(options) {
 /*!******************************************!*\
   !*** ./node_modules/remark-toc/index.js ***!
   \******************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -55382,24 +53811,18 @@ var util = __webpack_require__(/*! mdast-util-toc */ "./node_modules/mdast-util-
 
 module.exports = toc
 
-var defaultHeading = 'toc|table[ -]of[ -]contents?'
-
 function toc(options) {
   var settings = options || {}
-  var heading = settings.heading || defaultHeading
-  var depth = settings.maxDepth || 6
-  var tight = settings.tight
-  var skip = settings.skip
 
   return transformer
 
   function transformer(node) {
-    var result = util(node, {
-      heading: heading,
-      maxDepth: depth,
-      tight: tight,
-      skip: skip
-    })
+    var result = util(
+      node,
+      Object.assign({}, settings, {
+        heading: settings.heading || 'toc|table[ -]of[ -]contents?'
+      })
+    )
 
     if (result.index === null || result.index === -1 || !result.map) {
       return
@@ -55420,16 +53843,12 @@ function toc(options) {
 /*!*********************************************************!*\
   !*** ./node_modules/remark-wiki-link/dist/index.umd.js ***!
   \*********************************************************/
-/*! namespace exports */
-/*! export wikiLinkPlugin [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "wikiLinkPlugin": () => /* binding */ wikiLinkPlugin
+/* harmony export */   "wikiLinkPlugin": () => (/* binding */ wikiLinkPlugin)
 /* harmony export */ });
 /* harmony import */ var micromark_extension_wiki_link__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! micromark-extension-wiki-link */ "./node_modules/micromark-extension-wiki-link/dist/index.umd.js");
 /* harmony import */ var mdast_util_wiki_link__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! mdast-util-wiki-link */ "./node_modules/mdast-util-wiki-link/dist/index.umd.js");
@@ -55465,9 +53884,6 @@ function wikiLinkPlugin() {
 /*!*********************************************!*\
   !*** ./node_modules/repeat-string/index.js ***!
   \*********************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 21:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -55545,54 +53961,10 @@ function repeat(str, num) {
 
 /***/ }),
 
-/***/ "./node_modules/replace-ext/index.js":
-/*!*******************************************!*\
-  !*** ./node_modules/replace-ext/index.js ***!
-  \*******************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 18:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var path = __webpack_require__(/*! path */ "./node_modules/path-browserify/index.js");
-
-function replaceExt(npath, ext) {
-  if (typeof npath !== 'string') {
-    return npath;
-  }
-
-  if (npath.length === 0) {
-    return npath;
-  }
-
-  var nFileName = path.basename(npath, path.extname(npath)) + ext;
-  return path.join(path.dirname(npath), nFileName);
-}
-
-module.exports = replaceExt;
-
-
-/***/ }),
-
 /***/ "./node_modules/scheduler/cjs/scheduler-tracing.development.js":
 /*!*********************************************************************!*\
   !*** ./node_modules/scheduler/cjs/scheduler-tracing.development.js ***!
   \*********************************************************************/
-/*! default exports */
-/*! export __interactionsRef [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __subscriberRef [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_clear [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_getCurrent [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_getThreadID [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_subscribe [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_trace [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_unsubscribe [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_wrap [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__ */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -55951,38 +54323,6 @@ exports.unstable_wrap = unstable_wrap;
 /*!*************************************************************!*\
   !*** ./node_modules/scheduler/cjs/scheduler.development.js ***!
   \*************************************************************/
-/*! default exports */
-/*! export unstable_IdlePriority [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_ImmediatePriority [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_LowPriority [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_NormalPriority [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_Profiling [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_UserBlockingPriority [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_cancelCallback [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_continueExecution [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_forceFrameRate [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_getCurrentPriorityLevel [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_getFirstCallbackNode [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_next [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_now [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_pauseExecution [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_requestPaint [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_runWithPriority [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_scheduleCallback [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_shouldYield [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_wrapCallback [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__ */
-/*! CommonJS bailout: exports.unstable_now(...) prevents optimization as exports is passed as call context at 52:26-46 */
-/*! CommonJS bailout: exports.unstable_now(...) prevents optimization as exports is passed as call context at 125:13-33 */
-/*! CommonJS bailout: exports.unstable_now(...) prevents optimization as exports is passed as call context at 149:24-44 */
-/*! CommonJS bailout: exports.unstable_now(...) prevents optimization as exports is passed as call context at 193:15-35 */
-/*! CommonJS bailout: exports.unstable_now(...) prevents optimization as exports is passed as call context at 548:28-48 */
-/*! CommonJS bailout: exports.unstable_now(...) prevents optimization as exports is passed as call context at 565:25-45 */
-/*! CommonJS bailout: exports.unstable_shouldYield(...) prevents optimization as exports is passed as call context at 578:74-102 */
-/*! CommonJS bailout: exports.unstable_now(...) prevents optimization as exports is passed as call context at 591:20-40 */
-/*! CommonJS bailout: exports.unstable_now(...) prevents optimization as exports is passed as call context at 695:20-40 */
-/*! CommonJS bailout: exports.unstable_now(...) prevents optimization as exports is passed as call context at 804:24-44 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -56838,28 +55178,6 @@ exports.unstable_wrapCallback = unstable_wrapCallback;
 /*!*****************************************!*\
   !*** ./node_modules/scheduler/index.js ***!
   \*****************************************/
-/*! dynamic exports */
-/*! export unstable_IdlePriority [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler.development.js .unstable_IdlePriority */
-/*! export unstable_ImmediatePriority [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler.development.js .unstable_ImmediatePriority */
-/*! export unstable_LowPriority [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler.development.js .unstable_LowPriority */
-/*! export unstable_NormalPriority [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler.development.js .unstable_NormalPriority */
-/*! export unstable_Profiling [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler.development.js .unstable_Profiling */
-/*! export unstable_UserBlockingPriority [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler.development.js .unstable_UserBlockingPriority */
-/*! export unstable_cancelCallback [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler.development.js .unstable_cancelCallback */
-/*! export unstable_continueExecution [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler.development.js .unstable_continueExecution */
-/*! export unstable_forceFrameRate [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler.development.js .unstable_forceFrameRate */
-/*! export unstable_getCurrentPriorityLevel [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler.development.js .unstable_getCurrentPriorityLevel */
-/*! export unstable_getFirstCallbackNode [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler.development.js .unstable_getFirstCallbackNode */
-/*! export unstable_next [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler.development.js .unstable_next */
-/*! export unstable_now [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler.development.js .unstable_now */
-/*! export unstable_pauseExecution [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler.development.js .unstable_pauseExecution */
-/*! export unstable_requestPaint [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler.development.js .unstable_requestPaint */
-/*! export unstable_runWithPriority [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler.development.js .unstable_runWithPriority */
-/*! export unstable_scheduleCallback [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler.development.js .unstable_scheduleCallback */
-/*! export unstable_shouldYield [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler.development.js .unstable_shouldYield */
-/*! export unstable_wrapCallback [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler.development.js .unstable_wrapCallback */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: module, __webpack_require__ */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -56876,18 +55194,6 @@ if (false) {} else {
 /*!*******************************************!*\
   !*** ./node_modules/scheduler/tracing.js ***!
   \*******************************************/
-/*! dynamic exports */
-/*! export __interactionsRef [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler-tracing.development.js .__interactionsRef */
-/*! export __subscriberRef [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler-tracing.development.js .__subscriberRef */
-/*! export unstable_clear [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler-tracing.development.js .unstable_clear */
-/*! export unstable_getCurrent [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler-tracing.development.js .unstable_getCurrent */
-/*! export unstable_getThreadID [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler-tracing.development.js .unstable_getThreadID */
-/*! export unstable_subscribe [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler-tracing.development.js .unstable_subscribe */
-/*! export unstable_trace [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler-tracing.development.js .unstable_trace */
-/*! export unstable_unsubscribe [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler-tracing.development.js .unstable_unsubscribe */
-/*! export unstable_wrap [provided] [no usage info] [provision prevents renaming (no use info)] -> ./node_modules/scheduler/cjs/scheduler-tracing.development.js .unstable_wrap */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: module, __webpack_require__ */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -56904,11 +55210,6 @@ if (false) {} else {
 /*!******************************************************!*\
   !*** ./node_modules/space-separated-tokens/index.js ***!
   \******************************************************/
-/*! default exports */
-/*! export parse [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export stringify [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__ */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -56937,9 +55238,6 @@ function stringify(values) {
 /*!***********************************************!*\
   !*** ./node_modules/style-to-object/index.js ***!
   \***********************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 42:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var parse = __webpack_require__(/*! inline-style-parser */ "./node_modules/inline-style-parser/index.js");
@@ -56992,9 +55290,6 @@ module.exports = StyleToObject;
 /*!**************************************!*\
   !*** ./node_modules/trough/index.js ***!
   \**************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -57080,9 +55375,6 @@ function trough() {
 /*!*************************************!*\
   !*** ./node_modules/trough/wrap.js ***!
   \*************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -57158,16 +55450,13 @@ function wrap(fn, callback) {
 /*!***************************************!*\
   !*** ./node_modules/unified/index.js ***!
   \***************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 11:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 var bail = __webpack_require__(/*! bail */ "./node_modules/bail/index.js")
-var buffer = __webpack_require__(/*! is-buffer */ "./node_modules/is-buffer/index.js")
+var buffer = __webpack_require__(/*! is-buffer */ "./node_modules/unified/node_modules/is-buffer/index.js")
 var extend = __webpack_require__(/*! extend */ "./node_modules/extend/index.js")
 var plain = __webpack_require__(/*! is-plain-obj */ "./node_modules/is-plain-obj/index.js")
 var trough = __webpack_require__(/*! trough */ "./node_modules/trough/index.js")
@@ -57192,9 +55481,9 @@ function pipelineParse(p, ctx) {
 function pipelineRun(p, ctx, next) {
   p.run(ctx.tree, ctx.file, done)
 
-  function done(err, tree, file) {
-    if (err) {
-      next(err)
+  function done(error, tree, file) {
+    if (error) {
+      next(error)
     } else {
       ctx.tree = tree
       ctx.file = file
@@ -57205,14 +55494,13 @@ function pipelineRun(p, ctx, next) {
 
 function pipelineStringify(p, ctx) {
   var result = p.stringify(ctx.tree, ctx.file)
-  var file = ctx.file
 
   if (result === undefined || result === null) {
     // Empty.
   } else if (typeof result === 'string' || buffer(result)) {
-    file.contents = result
+    ctx.file.contents = result
   } else {
-    file.result = result
+    ctx.file.result = result
   }
 }
 
@@ -57221,8 +55509,8 @@ function unified() {
   var attachers = []
   var transformers = trough()
   var namespace = {}
-  var frozen = false
   var freezeIndex = -1
+  var frozen
 
   // Data management.
   processor.data = data
@@ -57248,10 +55536,9 @@ function unified() {
   // Create a new processor based on the processor in the current scope.
   function processor() {
     var destination = unified()
-    var length = attachers.length
     var index = -1
 
-    while (++index < length) {
+    while (++index < attachers.length) {
       destination.use.apply(null, attachers[index])
     }
 
@@ -57269,8 +55556,6 @@ function unified() {
   // In essence, always invoke this when exporting a processor.
   function freeze() {
     var values
-    var plugin
-    var options
     var transformer
 
     if (frozen) {
@@ -57279,19 +55564,16 @@ function unified() {
 
     while (++freezeIndex < attachers.length) {
       values = attachers[freezeIndex]
-      plugin = values[0]
-      options = values[1]
-      transformer = null
 
-      if (options === false) {
+      if (values[1] === false) {
         continue
       }
 
-      if (options === true) {
+      if (values[1] === true) {
         values[1] = undefined
       }
 
-      transformer = plugin.apply(processor, values.slice(1))
+      transformer = values[0].apply(processor, values.slice(1))
 
       if (typeof transformer === 'function') {
         transformers.use(transformer)
@@ -57311,9 +55593,7 @@ function unified() {
       // Set `key`.
       if (arguments.length === 2) {
         assertUnfrozen('data', frozen)
-
         namespace[key] = value
-
         return processor
       }
 
@@ -57387,16 +55667,12 @@ function unified() {
     }
 
     function addList(plugins) {
-      var length
-      var index
+      var index = -1
 
       if (plugins === null || plugins === undefined) {
         // Empty.
       } else if (typeof plugins === 'object' && 'length' in plugins) {
-        length = plugins.length
-        index = -1
-
-        while (++index < length) {
+        while (++index < plugins.length) {
           add(plugins[index])
         }
       } else {
@@ -57409,7 +55685,7 @@ function unified() {
 
       if (entry) {
         if (plain(entry[1]) && plain(value)) {
-          value = extend(entry[1], value)
+          value = extend(true, entry[1], value)
         }
 
         entry[1] = value
@@ -57420,15 +55696,11 @@ function unified() {
   }
 
   function find(plugin) {
-    var length = attachers.length
     var index = -1
-    var entry
 
-    while (++index < length) {
-      entry = attachers[index]
-
-      if (entry[0] === plugin) {
-        return entry
+    while (++index < attachers.length) {
+      if (attachers[index][0] === plugin) {
+        return attachers[index]
       }
     }
   }
@@ -57470,10 +55742,10 @@ function unified() {
     function executor(resolve, reject) {
       transformers.run(node, vfile(file), done)
 
-      function done(err, tree, file) {
+      function done(error, tree, file) {
         tree = tree || node
-        if (err) {
-          reject(err)
+        if (error) {
+          reject(error)
         } else if (resolve) {
           resolve(tree)
         } else {
@@ -57486,8 +55758,8 @@ function unified() {
   // Run transforms on a unist node representation of a file (in string or
   // vfile representation), sync.
   function runSync(node, file) {
-    var complete = false
     var result
+    var complete
 
     run(node, file, done)
 
@@ -57495,10 +55767,10 @@ function unified() {
 
     return result
 
-    function done(err, tree) {
+    function done(error, tree) {
       complete = true
-      bail(err)
       result = tree
+      bail(error)
     }
   }
 
@@ -57540,9 +55812,9 @@ function unified() {
 
       pipeline.run(processor, {file: file}, done)
 
-      function done(err) {
-        if (err) {
-          reject(err)
+      function done(error) {
+        if (error) {
+          reject(error)
         } else if (resolve) {
           resolve(file)
         } else {
@@ -57554,8 +55826,8 @@ function unified() {
 
   // Process the given document (in string or vfile representation), sync.
   function processSync(doc) {
-    var complete = false
     var file
+    var complete
 
     freeze()
     assertParser('processSync', processor.Parser)
@@ -57568,9 +55840,9 @@ function unified() {
 
     return file
 
-    function done(err) {
+    function done(error) {
       complete = true
-      bail(err)
+      bail(error)
     }
   }
 }
@@ -57641,13 +55913,31 @@ function assertDone(name, asyncName, complete) {
 
 /***/ }),
 
+/***/ "./node_modules/unified/node_modules/is-buffer/index.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/unified/node_modules/is-buffer/index.js ***!
+  \**************************************************************/
+/***/ ((module) => {
+
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+module.exports = function isBuffer (obj) {
+  return obj != null && obj.constructor != null &&
+    typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/unist-builder/index.js":
 /*!*********************************************!*\
   !*** ./node_modules/unist-builder/index.js ***!
   \*********************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -57684,9 +55974,6 @@ function u(type, props, value) {
 /*!*****************************************************!*\
   !*** ./node_modules/unist-util-find-after/index.js ***!
   \*****************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -57735,9 +56022,6 @@ function findAfter(parent, index, test) {
 /*!******************************************************!*\
   !*** ./node_modules/unist-util-find-before/index.js ***!
   \******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -57789,9 +56073,6 @@ function findBefore(parent, index, test) {
 /*!**************************************************!*\
   !*** ./node_modules/unist-util-flatmap/index.js ***!
   \**************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = flatMap
@@ -57824,9 +56105,6 @@ function flatMap(ast, fn) {
 /*!****************************************************!*\
   !*** ./node_modules/unist-util-generated/index.js ***!
   \****************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -57854,9 +56132,6 @@ function generated(node) {
 /*!***********************************************!*\
   !*** ./node_modules/unist-util-is/convert.js ***!
   \***********************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -57893,7 +56168,7 @@ function allFactory(test) {
     var key
 
     for (key in test) {
-      if (node[key] !== test[key]) return
+      if (node[key] !== test[key]) return false
     }
 
     return true
@@ -57918,6 +56193,8 @@ function anyFactory(tests) {
         return true
       }
     }
+
+    return false
   }
 }
 
@@ -57927,7 +56204,7 @@ function typeFactory(test) {
   return type
 
   function type(node) {
-    return node && node.type === test
+    return Boolean(node && node.type === test)
   }
 }
 
@@ -57943,9 +56220,6 @@ function ok() {
 /*!***************************************************!*\
   !*** ./node_modules/unist-util-position/index.js ***!
   \***************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 6:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -57986,15 +56260,12 @@ function factory(type) {
 /*!**********************************************************!*\
   !*** ./node_modules/unist-util-remove-position/index.js ***!
   \**********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var visit = __webpack_require__(/*! unist-util-visit */ "./node_modules/unist-util-visit/index.js")
+var visit = __webpack_require__(/*! unist-util-visit */ "./node_modules/unist-util-remove-position/node_modules/unist-util-visit/index.js")
 
 module.exports = removePosition
 
@@ -58014,16 +56285,50 @@ function soft(node) {
 
 /***/ }),
 
+/***/ "./node_modules/unist-util-remove-position/node_modules/unist-util-visit/index.js":
+/*!****************************************************************************************!*\
+  !*** ./node_modules/unist-util-remove-position/node_modules/unist-util-visit/index.js ***!
+  \****************************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = visit
+
+var visitParents = __webpack_require__(/*! unist-util-visit-parents */ "./node_modules/unist-util-visit-parents/index.js")
+
+var CONTINUE = visitParents.CONTINUE
+var SKIP = visitParents.SKIP
+var EXIT = visitParents.EXIT
+
+visit.CONTINUE = CONTINUE
+visit.SKIP = SKIP
+visit.EXIT = EXIT
+
+function visit(tree, test, visitor, reverse) {
+  if (typeof test === 'function' && typeof visitor !== 'function') {
+    reverse = visitor
+    visitor = test
+    test = null
+  }
+
+  visitParents(tree, test, overload, reverse)
+
+  function overload(node, parents) {
+    var parent = parents[parents.length - 1]
+    var index = parent ? parent.children.indexOf(node) : null
+    return visitor(node, index, parent)
+  }
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/unist-util-select/index.js":
 /*!*************************************************!*\
   !*** ./node_modules/unist-util-select/index.js ***!
   \*************************************************/
-/*! default exports */
-/*! export matches [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export select [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export selectAll [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -58057,9 +56362,6 @@ function selectAll(selector, node) {
 /*!***************************************************!*\
   !*** ./node_modules/unist-util-select/lib/any.js ***!
   \***************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -58200,9 +56502,6 @@ function collector(one) {
 /*!*********************************************************!*\
   !*** ./node_modules/unist-util-select/lib/attribute.js ***!
   \*********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -58302,9 +56601,6 @@ function unknownOperator(query) {
 /*!****************************************************!*\
   !*** ./node_modules/unist-util-select/lib/name.js ***!
   \****************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -58323,9 +56619,6 @@ function match(query, node) {
 /*!****************************************************!*\
   !*** ./node_modules/unist-util-select/lib/nest.js ***!
   \****************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -58518,9 +56811,6 @@ function createTypeIndex() {
 /*!*****************************************************!*\
   !*** ./node_modules/unist-util-select/lib/parse.js ***!
   \*****************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -58597,9 +56887,6 @@ function rule(query) {
 /*!******************************************************!*\
   !*** ./node_modules/unist-util-select/lib/pseudo.js ***!
   \******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -58815,9 +57102,6 @@ function appendScope(value) {
 /*!****************************************************!*\
   !*** ./node_modules/unist-util-select/lib/test.js ***!
   \****************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -58853,9 +57137,6 @@ function test(query, node, index, parent, state) {
 /*!*************************************************************!*\
   !*** ./node_modules/unist-util-stringify-position/index.js ***!
   \*************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -58917,9 +57198,6 @@ function index(value) {
 /*!****************************************************************!*\
   !*** ./node_modules/unist-util-visit-parents/color.browser.js ***!
   \****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = identity
@@ -58934,9 +57212,6 @@ function identity(d) {
 /*!********************************************************!*\
   !*** ./node_modules/unist-util-visit-parents/index.js ***!
   \********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -59041,9 +57316,6 @@ function toResult(value) {
 /*!************************************************!*\
   !*** ./node_modules/unist-util-visit/index.js ***!
   \************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -59051,7 +57323,7 @@ function toResult(value) {
 
 module.exports = visit
 
-var visitParents = __webpack_require__(/*! unist-util-visit-parents */ "./node_modules/unist-util-visit-parents/index.js")
+var visitParents = __webpack_require__(/*! unist-util-visit-parents */ "./node_modules/unist-util-visit/node_modules/unist-util-visit-parents/index.js")
 
 var CONTINUE = visitParents.CONTINUE
 var SKIP = visitParents.SKIP
@@ -59080,13 +57352,197 @@ function visit(tree, test, visitor, reverse) {
 
 /***/ }),
 
+/***/ "./node_modules/unist-util-visit/node_modules/unist-util-is/convert.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/unist-util-visit/node_modules/unist-util-is/convert.js ***!
+  \*****************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = convert
+
+function convert(test) {
+  if (typeof test === 'string') {
+    return typeFactory(test)
+  }
+
+  if (test === null || test === undefined) {
+    return ok
+  }
+
+  if (typeof test === 'object') {
+    return ('length' in test ? anyFactory : matchesFactory)(test)
+  }
+
+  if (typeof test === 'function') {
+    return test
+  }
+
+  throw new Error('Expected function, string, or object as test')
+}
+
+function convertAll(tests) {
+  var results = []
+  var length = tests.length
+  var index = -1
+
+  while (++index < length) {
+    results[index] = convert(tests[index])
+  }
+
+  return results
+}
+
+// Utility assert each property in `test` is represented in `node`, and each
+// values are strictly equal.
+function matchesFactory(test) {
+  return matches
+
+  function matches(node) {
+    var key
+
+    for (key in test) {
+      if (node[key] !== test[key]) {
+        return false
+      }
+    }
+
+    return true
+  }
+}
+
+function anyFactory(tests) {
+  var checks = convertAll(tests)
+  var length = checks.length
+
+  return matches
+
+  function matches() {
+    var index = -1
+
+    while (++index < length) {
+      if (checks[index].apply(this, arguments)) {
+        return true
+      }
+    }
+
+    return false
+  }
+}
+
+// Utility to convert a string into a function which checks a given node’s type
+// for said string.
+function typeFactory(test) {
+  return type
+
+  function type(node) {
+    return Boolean(node && node.type === test)
+  }
+}
+
+// Utility to return true.
+function ok() {
+  return true
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/unist-util-visit/node_modules/unist-util-visit-parents/index.js":
+/*!**************************************************************************************!*\
+  !*** ./node_modules/unist-util-visit/node_modules/unist-util-visit-parents/index.js ***!
+  \**************************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+module.exports = visitParents
+
+var convert = __webpack_require__(/*! unist-util-is/convert */ "./node_modules/unist-util-visit/node_modules/unist-util-is/convert.js")
+
+var CONTINUE = true
+var SKIP = 'skip'
+var EXIT = false
+
+visitParents.CONTINUE = CONTINUE
+visitParents.SKIP = SKIP
+visitParents.EXIT = EXIT
+
+function visitParents(tree, test, visitor, reverse) {
+  var is
+
+  if (typeof test === 'function' && typeof visitor !== 'function') {
+    reverse = visitor
+    visitor = test
+    test = null
+  }
+
+  is = convert(test)
+
+  one(tree, null, [])
+
+  // Visit a single node.
+  function one(node, index, parents) {
+    var result = []
+    var subresult
+
+    if (!test || is(node, index, parents[parents.length - 1] || null)) {
+      result = toResult(visitor(node, parents))
+
+      if (result[0] === EXIT) {
+        return result
+      }
+    }
+
+    if (node.children && result[0] !== SKIP) {
+      subresult = toResult(all(node.children, parents.concat(node)))
+      return subresult[0] === EXIT ? subresult : result
+    }
+
+    return result
+  }
+
+  // Visit children in `parent`.
+  function all(children, parents) {
+    var min = -1
+    var step = reverse ? -1 : 1
+    var index = (reverse ? children.length : min) + step
+    var result
+
+    while (index > min && index < children.length) {
+      result = one(children[index], index, parents)
+
+      if (result[0] === EXIT) {
+        return result
+      }
+
+      index = typeof result[1] === 'number' ? result[1] : index + step
+    }
+  }
+}
+
+function toResult(value) {
+  if (value !== null && typeof value === 'object' && 'length' in value) {
+    return value
+  }
+
+  if (typeof value === 'number') {
+    return [CONTINUE, value]
+  }
+
+  return [value]
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/vfile-message/index.js":
 /*!*********************************************!*\
   !*** ./node_modules/vfile-message/index.js ***!
   \*********************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -59188,55 +57644,72 @@ function parseOrigin(origin) {
 
 /***/ }),
 
-/***/ "./node_modules/vfile/core.js":
-/*!************************************!*\
-  !*** ./node_modules/vfile/core.js ***!
-  \************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 7:0-14 */
+/***/ "./node_modules/vfile/index.js":
+/*!*************************************!*\
+  !*** ./node_modules/vfile/index.js ***!
+  \*************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
-/* provided dependency */ var process = __webpack_require__(/*! process/browser */ "./node_modules/process/browser.js");
 
 
-var path = __webpack_require__(/*! path */ "./node_modules/path-browserify/index.js")
-var replace = __webpack_require__(/*! replace-ext */ "./node_modules/replace-ext/index.js")
-var buffer = __webpack_require__(/*! is-buffer */ "./node_modules/is-buffer/index.js")
+module.exports = __webpack_require__(/*! ./lib */ "./node_modules/vfile/lib/index.js")
+
+
+/***/ }),
+
+/***/ "./node_modules/vfile/lib/core.js":
+/*!****************************************!*\
+  !*** ./node_modules/vfile/lib/core.js ***!
+  \****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var p = __webpack_require__(/*! ./minpath */ "./node_modules/vfile/lib/minpath.browser.js")
+var proc = __webpack_require__(/*! ./minproc */ "./node_modules/vfile/lib/minproc.browser.js")
+var buffer = __webpack_require__(/*! is-buffer */ "./node_modules/vfile/node_modules/is-buffer/index.js")
 
 module.exports = VFile
 
 var own = {}.hasOwnProperty
-var proto = VFile.prototype
 
 // Order of setting (least specific to most), we need this because otherwise
 // `{stem: 'a', path: '~/b.js'}` would throw, as a path is needed before a
 // stem can be set.
 var order = ['history', 'path', 'basename', 'stem', 'extname', 'dirname']
 
-proto.toString = toString
+VFile.prototype.toString = toString
 
 // Access full path (`~/index.min.js`).
-Object.defineProperty(proto, 'path', {get: getPath, set: setPath})
+Object.defineProperty(VFile.prototype, 'path', {get: getPath, set: setPath})
 
 // Access parent path (`~`).
-Object.defineProperty(proto, 'dirname', {get: getDirname, set: setDirname})
+Object.defineProperty(VFile.prototype, 'dirname', {
+  get: getDirname,
+  set: setDirname
+})
 
 // Access basename (`index.min.js`).
-Object.defineProperty(proto, 'basename', {get: getBasename, set: setBasename})
+Object.defineProperty(VFile.prototype, 'basename', {
+  get: getBasename,
+  set: setBasename
+})
 
 // Access extname (`.js`).
-Object.defineProperty(proto, 'extname', {get: getExtname, set: setExtname})
+Object.defineProperty(VFile.prototype, 'extname', {
+  get: getExtname,
+  set: setExtname
+})
 
 // Access stem (`index.min`).
-Object.defineProperty(proto, 'stem', {get: getStem, set: setStem})
+Object.defineProperty(VFile.prototype, 'stem', {get: getStem, set: setStem})
 
 // Construct a new file.
 function VFile(options) {
   var prop
   var index
-  var length
 
   if (!options) {
     options = {}
@@ -59253,13 +57726,12 @@ function VFile(options) {
   this.data = {}
   this.messages = []
   this.history = []
-  this.cwd = process.cwd()
+  this.cwd = proc.cwd()
 
   // Set path related properties in the correct order.
   index = -1
-  length = order.length
 
-  while (++index < length) {
+  while (++index < order.length) {
     prop = order[index]
 
     if (own.call(options, prop)) {
@@ -59269,7 +57741,7 @@ function VFile(options) {
 
   // Set non-path related properties.
   for (prop in options) {
-    if (order.indexOf(prop) === -1) {
+    if (order.indexOf(prop) < 0) {
       this[prop] = options[prop]
     }
   }
@@ -59282,76 +57754,73 @@ function getPath() {
 function setPath(path) {
   assertNonEmpty(path, 'path')
 
-  if (path !== this.path) {
+  if (this.path !== path) {
     this.history.push(path)
   }
 }
 
 function getDirname() {
-  return typeof this.path === 'string' ? path.dirname(this.path) : undefined
+  return typeof this.path === 'string' ? p.dirname(this.path) : undefined
 }
 
 function setDirname(dirname) {
   assertPath(this.path, 'dirname')
-  this.path = path.join(dirname || '', this.basename)
+  this.path = p.join(dirname || '', this.basename)
 }
 
 function getBasename() {
-  return typeof this.path === 'string' ? path.basename(this.path) : undefined
+  return typeof this.path === 'string' ? p.basename(this.path) : undefined
 }
 
 function setBasename(basename) {
   assertNonEmpty(basename, 'basename')
   assertPart(basename, 'basename')
-  this.path = path.join(this.dirname || '', basename)
+  this.path = p.join(this.dirname || '', basename)
 }
 
 function getExtname() {
-  return typeof this.path === 'string' ? path.extname(this.path) : undefined
+  return typeof this.path === 'string' ? p.extname(this.path) : undefined
 }
 
 function setExtname(extname) {
-  var ext = extname || ''
-
-  assertPart(ext, 'extname')
+  assertPart(extname, 'extname')
   assertPath(this.path, 'extname')
 
-  if (ext) {
-    if (ext.charAt(0) !== '.') {
+  if (extname) {
+    if (extname.charCodeAt(0) !== 46 /* `.` */) {
       throw new Error('`extname` must start with `.`')
     }
 
-    if (ext.indexOf('.', 1) !== -1) {
+    if (extname.indexOf('.', 1) > -1) {
       throw new Error('`extname` cannot contain multiple dots')
     }
   }
 
-  this.path = replace(this.path, ext)
+  this.path = p.join(this.dirname, this.stem + (extname || ''))
 }
 
 function getStem() {
   return typeof this.path === 'string'
-    ? path.basename(this.path, this.extname)
+    ? p.basename(this.path, this.extname)
     : undefined
 }
 
 function setStem(stem) {
   assertNonEmpty(stem, 'stem')
   assertPart(stem, 'stem')
-  this.path = path.join(this.dirname || '', stem + (this.extname || ''))
+  this.path = p.join(this.dirname || '', stem + (this.extname || ''))
 }
 
 // Get the value of the file.
 function toString(encoding) {
-  var value = this.contents || ''
-  return buffer(value) ? value.toString(encoding) : String(value)
+  return (this.contents || '').toString(encoding)
 }
 
-// Assert that `part` is not a path (i.e., does not contain `path.sep`).
+// Assert that `part` is not a path (i.e., does not contain `p.sep`).
 function assertPart(part, name) {
-  if (part.indexOf(path.sep) !== -1) {
+  if (part && part.indexOf(p.sep) > -1) {
     throw new Error(
-      '`' + name + '` cannot be a path: did not expect `' + path.sep + '`'
+      '`' + name + '` cannot be a path: did not expect `' + p.sep + '`'
     )
   }
 }
@@ -59373,38 +57842,32 @@ function assertPath(path, name) {
 
 /***/ }),
 
-/***/ "./node_modules/vfile/index.js":
-/*!*************************************!*\
-  !*** ./node_modules/vfile/index.js ***!
-  \*************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 6:0-14 */
+/***/ "./node_modules/vfile/lib/index.js":
+/*!*****************************************!*\
+  !*** ./node_modules/vfile/lib/index.js ***!
+  \*****************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 var VMessage = __webpack_require__(/*! vfile-message */ "./node_modules/vfile-message/index.js")
-var VFile = __webpack_require__(/*! ./core.js */ "./node_modules/vfile/core.js")
+var VFile = __webpack_require__(/*! ./core.js */ "./node_modules/vfile/lib/core.js")
 
 module.exports = VFile
 
-var proto = VFile.prototype
-
-proto.message = message
-proto.info = info
-proto.fail = fail
+VFile.prototype.message = message
+VFile.prototype.info = info
+VFile.prototype.fail = fail
 
 // Create a message with `reason` at `position`.
 // When an error is passed in as `reason`, copies the stack.
 function message(reason, position, origin) {
-  var filePath = this.path
   var message = new VMessage(reason, position, origin)
 
-  if (filePath) {
-    message.name = filePath + ':' + message.name
-    message.file = filePath
+  if (this.path) {
+    message.name = this.path + ':' + message.name
+    message.file = this.path
   }
 
   message.fatal = false
@@ -59436,23 +57899,441 @@ function info() {
 
 /***/ }),
 
+/***/ "./node_modules/vfile/lib/minpath.browser.js":
+/*!***************************************************!*\
+  !*** ./node_modules/vfile/lib/minpath.browser.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+// A derivative work based on:
+// <https://github.com/browserify/path-browserify>.
+// Which is licensed:
+//
+// MIT License
+//
+// Copyright (c) 2013 James Halliday
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of
+// this software and associated documentation files (the "Software"), to deal in
+// the Software without restriction, including without limitation the rights to
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do so,
+// subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+// FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+// COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+// IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+// CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// A derivative work based on:
+//
+// Parts of that are extracted from Node’s internal `path` module:
+// <https://github.com/nodejs/node/blob/master/lib/path.js>.
+// Which is licensed:
+//
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+exports.basename = basename
+exports.dirname = dirname
+exports.extname = extname
+exports.join = join
+exports.sep = '/'
+
+function basename(path, ext) {
+  var start = 0
+  var end = -1
+  var index
+  var firstNonSlashEnd
+  var seenNonSlash
+  var extIndex
+
+  if (ext !== undefined && typeof ext !== 'string') {
+    throw new TypeError('"ext" argument must be a string')
+  }
+
+  assertPath(path)
+  index = path.length
+
+  if (ext === undefined || !ext.length || ext.length > path.length) {
+    while (index--) {
+      if (path.charCodeAt(index) === 47 /* `/` */) {
+        // If we reached a path separator that was not part of a set of path
+        // separators at the end of the string, stop now.
+        if (seenNonSlash) {
+          start = index + 1
+          break
+        }
+      } else if (end < 0) {
+        // We saw the first non-path separator, mark this as the end of our
+        // path component.
+        seenNonSlash = true
+        end = index + 1
+      }
+    }
+
+    return end < 0 ? '' : path.slice(start, end)
+  }
+
+  if (ext === path) {
+    return ''
+  }
+
+  firstNonSlashEnd = -1
+  extIndex = ext.length - 1
+
+  while (index--) {
+    if (path.charCodeAt(index) === 47 /* `/` */) {
+      // If we reached a path separator that was not part of a set of path
+      // separators at the end of the string, stop now.
+      if (seenNonSlash) {
+        start = index + 1
+        break
+      }
+    } else {
+      if (firstNonSlashEnd < 0) {
+        // We saw the first non-path separator, remember this index in case
+        // we need it if the extension ends up not matching.
+        seenNonSlash = true
+        firstNonSlashEnd = index + 1
+      }
+
+      if (extIndex > -1) {
+        // Try to match the explicit extension.
+        if (path.charCodeAt(index) === ext.charCodeAt(extIndex--)) {
+          if (extIndex < 0) {
+            // We matched the extension, so mark this as the end of our path
+            // component
+            end = index
+          }
+        } else {
+          // Extension does not match, so our result is the entire path
+          // component
+          extIndex = -1
+          end = firstNonSlashEnd
+        }
+      }
+    }
+  }
+
+  if (start === end) {
+    end = firstNonSlashEnd
+  } else if (end < 0) {
+    end = path.length
+  }
+
+  return path.slice(start, end)
+}
+
+function dirname(path) {
+  var end
+  var unmatchedSlash
+  var index
+
+  assertPath(path)
+
+  if (!path.length) {
+    return '.'
+  }
+
+  end = -1
+  index = path.length
+
+  // Prefix `--` is important to not run on `0`.
+  while (--index) {
+    if (path.charCodeAt(index) === 47 /* `/` */) {
+      if (unmatchedSlash) {
+        end = index
+        break
+      }
+    } else if (!unmatchedSlash) {
+      // We saw the first non-path separator
+      unmatchedSlash = true
+    }
+  }
+
+  return end < 0
+    ? path.charCodeAt(0) === 47 /* `/` */
+      ? '/'
+      : '.'
+    : end === 1 && path.charCodeAt(0) === 47 /* `/` */
+    ? '//'
+    : path.slice(0, end)
+}
+
+function extname(path) {
+  var startDot = -1
+  var startPart = 0
+  var end = -1
+  // Track the state of characters (if any) we see before our first dot and
+  // after any path separator we find.
+  var preDotState = 0
+  var unmatchedSlash
+  var code
+  var index
+
+  assertPath(path)
+
+  index = path.length
+
+  while (index--) {
+    code = path.charCodeAt(index)
+
+    if (code === 47 /* `/` */) {
+      // If we reached a path separator that was not part of a set of path
+      // separators at the end of the string, stop now.
+      if (unmatchedSlash) {
+        startPart = index + 1
+        break
+      }
+
+      continue
+    }
+
+    if (end < 0) {
+      // We saw the first non-path separator, mark this as the end of our
+      // extension.
+      unmatchedSlash = true
+      end = index + 1
+    }
+
+    if (code === 46 /* `.` */) {
+      // If this is our first dot, mark it as the start of our extension.
+      if (startDot < 0) {
+        startDot = index
+      } else if (preDotState !== 1) {
+        preDotState = 1
+      }
+    } else if (startDot > -1) {
+      // We saw a non-dot and non-path separator before our dot, so we should
+      // have a good chance at having a non-empty extension.
+      preDotState = -1
+    }
+  }
+
+  if (
+    startDot < 0 ||
+    end < 0 ||
+    // We saw a non-dot character immediately before the dot.
+    preDotState === 0 ||
+    // The (right-most) trimmed path component is exactly `..`.
+    (preDotState === 1 && startDot === end - 1 && startDot === startPart + 1)
+  ) {
+    return ''
+  }
+
+  return path.slice(startDot, end)
+}
+
+function join() {
+  var index = -1
+  var joined
+
+  while (++index < arguments.length) {
+    assertPath(arguments[index])
+
+    if (arguments[index]) {
+      joined =
+        joined === undefined
+          ? arguments[index]
+          : joined + '/' + arguments[index]
+    }
+  }
+
+  return joined === undefined ? '.' : normalize(joined)
+}
+
+// Note: `normalize` is not exposed as `path.normalize`, so some code is
+// manually removed from it.
+function normalize(path) {
+  var absolute
+  var value
+
+  assertPath(path)
+
+  absolute = path.charCodeAt(0) === 47 /* `/` */
+
+  // Normalize the path according to POSIX rules.
+  value = normalizeString(path, !absolute)
+
+  if (!value.length && !absolute) {
+    value = '.'
+  }
+
+  if (value.length && path.charCodeAt(path.length - 1) === 47 /* / */) {
+    value += '/'
+  }
+
+  return absolute ? '/' + value : value
+}
+
+// Resolve `.` and `..` elements in a path with directory names.
+function normalizeString(path, allowAboveRoot) {
+  var result = ''
+  var lastSegmentLength = 0
+  var lastSlash = -1
+  var dots = 0
+  var index = -1
+  var code
+  var lastSlashIndex
+
+  while (++index <= path.length) {
+    if (index < path.length) {
+      code = path.charCodeAt(index)
+    } else if (code === 47 /* `/` */) {
+      break
+    } else {
+      code = 47 /* `/` */
+    }
+
+    if (code === 47 /* `/` */) {
+      if (lastSlash === index - 1 || dots === 1) {
+        // Empty.
+      } else if (lastSlash !== index - 1 && dots === 2) {
+        if (
+          result.length < 2 ||
+          lastSegmentLength !== 2 ||
+          result.charCodeAt(result.length - 1) !== 46 /* `.` */ ||
+          result.charCodeAt(result.length - 2) !== 46 /* `.` */
+        ) {
+          if (result.length > 2) {
+            lastSlashIndex = result.lastIndexOf('/')
+
+            /* istanbul ignore else - No clue how to cover it. */
+            if (lastSlashIndex !== result.length - 1) {
+              if (lastSlashIndex < 0) {
+                result = ''
+                lastSegmentLength = 0
+              } else {
+                result = result.slice(0, lastSlashIndex)
+                lastSegmentLength = result.length - 1 - result.lastIndexOf('/')
+              }
+
+              lastSlash = index
+              dots = 0
+              continue
+            }
+          } else if (result.length) {
+            result = ''
+            lastSegmentLength = 0
+            lastSlash = index
+            dots = 0
+            continue
+          }
+        }
+
+        if (allowAboveRoot) {
+          result = result.length ? result + '/..' : '..'
+          lastSegmentLength = 2
+        }
+      } else {
+        if (result.length) {
+          result += '/' + path.slice(lastSlash + 1, index)
+        } else {
+          result = path.slice(lastSlash + 1, index)
+        }
+
+        lastSegmentLength = index - lastSlash - 1
+      }
+
+      lastSlash = index
+      dots = 0
+    } else if (code === 46 /* `.` */ && dots > -1) {
+      dots++
+    } else {
+      dots = -1
+    }
+  }
+
+  return result
+}
+
+function assertPath(path) {
+  if (typeof path !== 'string') {
+    throw new TypeError(
+      'Path must be a string. Received ' + JSON.stringify(path)
+    )
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/vfile/lib/minproc.browser.js":
+/*!***************************************************!*\
+  !*** ./node_modules/vfile/lib/minproc.browser.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+// Somewhat based on:
+// <https://github.com/defunctzombie/node-process/blob/master/browser.js>.
+// But I don’t think one tiny line of code can be copyrighted. 😅
+exports.cwd = cwd
+
+function cwd() {
+  return '/'
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/vfile/node_modules/is-buffer/index.js":
+/*!************************************************************!*\
+  !*** ./node_modules/vfile/node_modules/is-buffer/index.js ***!
+  \************************************************************/
+/***/ ((module) => {
+
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+module.exports = function isBuffer (obj) {
+  return obj != null && obj.constructor != null &&
+    typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/web-namespaces/index.json":
 /*!************************************************!*\
   !*** ./node_modules/web-namespaces/index.json ***!
   \************************************************/
-/*! default exports */
-/*! export html [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export mathml [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export svg [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export xlink [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export xml [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export xmlns [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: module */
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"html\":\"http://www.w3.org/1999/xhtml\",\"mathml\":\"http://www.w3.org/1998/Math/MathML\",\"svg\":\"http://www.w3.org/2000/svg\",\"xlink\":\"http://www.w3.org/1999/xlink\",\"xml\":\"http://www.w3.org/XML/1998/namespace\",\"xmlns\":\"http://www.w3.org/2000/xmlns/\"}");
+module.exports = JSON.parse('{"html":"http://www.w3.org/1999/xhtml","mathml":"http://www.w3.org/1998/Math/MathML","svg":"http://www.w3.org/2000/svg","xlink":"http://www.w3.org/1999/xlink","xml":"http://www.w3.org/XML/1998/namespace","xmlns":"http://www.w3.org/2000/xmlns/"}');
 
 /***/ }),
 
@@ -59460,9 +58341,6 @@ module.exports = JSON.parse("{\"html\":\"http://www.w3.org/1999/xhtml\",\"mathml
 /*!*****************************************!*\
   !*** ./node_modules/xtend/immutable.js ***!
   \*****************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = extend
@@ -59492,9 +58370,6 @@ function extend() {
 /*!**************************************!*\
   !*** ./node_modules/zwitch/index.js ***!
   \**************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -59561,8 +58436,8 @@ function factory(key, options) {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
 /******/ 		__webpack_require__.n = (module) => {
 /******/ 			var getter = module && module.__esModule ?
-/******/ 				() => module['default'] :
-/******/ 				() => module;
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
 /******/ 			__webpack_require__.d(getter, { a: getter });
 /******/ 			return getter;
 /******/ 		};
@@ -59594,7 +58469,7 @@ function factory(key, options) {
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
@@ -59609,10 +58484,115 @@ function factory(key, options) {
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-/******/ 	// startup
-/******/ 	// Load entry module
-/******/ 	__webpack_require__("./src/client/index.jsx");
-/******/ 	// This entry module used 'exports' so it can't be inlined
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+/*!******************************!*\
+  !*** ./src/client/index.jsx ***!
+  \******************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+
+var parser = __webpack_require__(/*! ../parser */ "./src/parser/index.js");
+
+var renderer = __webpack_require__(/*! ../renderer */ "./src/renderer/index.jsx");
+
+var App = __webpack_require__(/*! ../components/App */ "./src/components/App.jsx").default;
+
+var vfile = __webpack_require__(/*! vfile */ "./node_modules/vfile/index.js");
+
+var path = __webpack_require__(/*! path */ "./node_modules/path-browserify/index.js");
+
+var FS = __webpack_require__(/*! @isomorphic-git/lightning-fs */ "./node_modules/@isomorphic-git/lightning-fs/src/index.js");
+
+var litsrc = document.querySelector('meta[name="litsrc"]').getAttribute('value');
+var litroot = document.querySelector('meta[name="litroot"]').getAttribute('value');
+var baseUrl = "".concat(location.protocol, "//").concat(location.host).concat(path.join(path.dirname(location.pathname), litroot));
+var fs = new FS(baseUrl);
+window.lit = {
+  path: path,
+  parser: parser,
+  App: App,
+  vfile: vfile,
+  fs: fs,
+  litsrc: litsrc,
+  litroot: litroot,
+  baseUrl: baseUrl
+};
+console.log('.lit Notebook client initializing...');
+console.log("litsrc:", litsrc);
+console.log("litroot:", litroot);
+console.log("baseUrl:", baseUrl);
+console.log("lit:", window.lit);
+
+(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
+  var filecontents, file;
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          console.log("Fetching file content", litroot, litsrc, path.join(litroot, litsrc));
+          _context.next = 3;
+          return fetch(path.join(litroot, litsrc));
+
+        case 3:
+          _context.next = 5;
+          return _context.sent.text();
+
+        case 5:
+          filecontents = _context.sent;
+          console.log('Fetched file contents:', filecontents);
+          _context.next = 9;
+          return vfile({
+            path: litsrc,
+            contents: filecontents
+          });
+
+        case 9:
+          file = _context.sent;
+          console.log(file);
+
+          try {
+            window.lit.notebook = /*#__PURE__*/React.createElement(App, {
+              title: file.stem,
+              src: file.contents.toString(),
+              root: litroot,
+              path: file.path,
+              permalinks: {},
+              processor: renderer.processor(litroot, file.path)
+            });
+          } catch (err) {
+            console.error("Error instantiating App", err);
+          }
+
+          console.log('notebook', window.lit.notebook);
+
+          try {
+            ReactDOM.hydrate(window.lit.notebook, document.getElementById('app'));
+          } catch (err) {
+            console.error("Error hydrating App", err);
+          }
+
+          console.log(parser.processor().processSync(file));
+
+        case 15:
+        case "end":
+          return _context.stop();
+      }
+    }
+  }, _callee);
+}))();
+})();
+
 /******/ })()
 ;
 //# sourceMappingURL=web.bundle.js.map
