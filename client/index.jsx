@@ -47,6 +47,8 @@ console.log(`lit:`, window.lit)
     } catch (err) {
         console.error("Error hydrating App", err)
     }
+
+    console.log( parser.processor().processSync(file))
 })()
 
 
