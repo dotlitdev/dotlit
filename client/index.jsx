@@ -7,13 +7,23 @@ const vfile = require('vfile')
 const path = require('path')
 const FS = require('@isomorphic-git/lightning-fs')
 
+const select = require('unist-util-select')
+
 const litsrc = document.querySelector('meta[name="litsrc"]').getAttribute('value')
 const litroot = document.querySelector('meta[name="litroot"]').getAttribute('value')
 const baseUrl =`${location.protocol}//${location.host}${path.join(path.dirname(location.pathname), litroot)}`
 const fs = new FS(baseUrl)
 
 window.lit = {
-    path, parser, App, vfile, fs, litsrc, litroot, baseUrl
+    select,
+    path,
+    parser,
+    App, 
+    vfile,
+    fs,
+    litsrc,
+    litroot,
+    baseUrl
 }
 
 console.log('.lit Notebook client initializing...')

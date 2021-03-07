@@ -58514,11 +58514,14 @@ var path = __webpack_require__(/*! path */ "./node_modules/path-browserify/index
 
 var FS = __webpack_require__(/*! @isomorphic-git/lightning-fs */ "./node_modules/@isomorphic-git/lightning-fs/src/index.js");
 
+var select = __webpack_require__(/*! unist-util-select */ "./node_modules/unist-util-select/index.js");
+
 var litsrc = document.querySelector('meta[name="litsrc"]').getAttribute('value');
 var litroot = document.querySelector('meta[name="litroot"]').getAttribute('value');
 var baseUrl = "".concat(location.protocol, "//").concat(location.host).concat(path.join(path.dirname(location.pathname), litroot));
 var fs = new FS(baseUrl);
 window.lit = {
+  select: select,
   path: path,
   parser: parser,
   App: App,
