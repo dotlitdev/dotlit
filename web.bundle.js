@@ -2498,14 +2498,6 @@ var processor = function processor() {
     files: []
   };
   return unified__WEBPACK_IMPORTED_MODULE_2___default()() // remark
-  .use((remark_parse__WEBPACK_IMPORTED_MODULE_3___default())).use(remark_wiki_link__WEBPACK_IMPORTED_MODULE_9__.wikiLinkPlugin, {
-    permalinks: options.files,
-    pageResolver: _links__WEBPACK_IMPORTED_MODULE_12__.nameToPermalinks,
-    hrefTemplate: function hrefTemplate(permalink) {
-      return "".concat(permalink);
-    }
-  }).use((remark_slug__WEBPACK_IMPORTED_MODULE_6___default())).use((remark_heading_id__WEBPACK_IMPORTED_MODULE_14___default())) // .use(headings)
-  // .use(toc, {})
   .use((remark_frontmatter__WEBPACK_IMPORTED_MODULE_5___default()), {
     type: ['yaml'],
     anywhere: true,
@@ -2513,7 +2505,15 @@ var processor = function processor() {
       open: '<!--',
       close: '-->'
     }
-  }).use((remark_footnotes__WEBPACK_IMPORTED_MODULE_8___default()), {
+  }).use((remark_parse__WEBPACK_IMPORTED_MODULE_3___default())).use(remark_wiki_link__WEBPACK_IMPORTED_MODULE_9__.wikiLinkPlugin, {
+    permalinks: options.files,
+    pageResolver: _links__WEBPACK_IMPORTED_MODULE_12__.nameToPermalinks,
+    hrefTemplate: function hrefTemplate(permalink) {
+      return "".concat(permalink);
+    }
+  }).use((remark_slug__WEBPACK_IMPORTED_MODULE_6___default())).use((remark_heading_id__WEBPACK_IMPORTED_MODULE_14___default())) // .use(headings)
+  // .use(toc, {})
+  .use((remark_footnotes__WEBPACK_IMPORTED_MODULE_8___default()), {
     inlineNotes: true
   }) // remark-litmd (rehype compatable)
   .use((0,_links__WEBPACK_IMPORTED_MODULE_12__.resolveLinks)()).use((0,_sections__WEBPACK_IMPORTED_MODULE_10__.groupIntoSections)()).use(_codeblocks__WEBPACK_IMPORTED_MODULE_11__.default);
