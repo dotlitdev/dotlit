@@ -2646,6 +2646,8 @@ var decorateLinkNode = function decorateLinkNode(link, root, filepath) {
   link.data.isAbsolute = isAbsolute;
   link.data.isFragment = isFragment;
   link.data.isRelative = isRelative;
+  link.data.hProperties = link.data.hProperties || {};
+  link.data.hProperties.className = isAbsolute ? 'absolute' : isRelative ? 'relative' : isFragment ? 'fragment' : '';
   return link;
 };
 var nameToPermalinks = function nameToPermalinks(name) {
