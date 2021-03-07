@@ -28,6 +28,10 @@ console.log(`lit:`, window.lit)
     console.log('Fetched file contents:', filecontents)
     const file = await vfile({path: litsrc, contents: filecontents})
     console.log(file)
+
+    const ast = await parser.parse(file)
+    console.log(ast)
+
     try {
     window.lit.notebook = <App 
         title={file.stem}
@@ -48,7 +52,7 @@ console.log(`lit:`, window.lit)
         console.error("Error hydrating App", err)
     }
 
-    console.log( await parser.parse(file))
+   
 })()
 
 
