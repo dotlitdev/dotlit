@@ -21,6 +21,13 @@ export const processor = (options={files: []}) => {
     return unified()
 
     // remark
+    .use(frontmatter, {
+        type: ['yaml'],
+        anywhere: true,
+        fence: {
+            open: '<!--', close: '-->'
+        }
+    })
     .use(markdown)
     .use(wikiLinkPlugin, { 
         permalinks: options.files,
@@ -31,13 +38,7 @@ export const processor = (options={files: []}) => {
     .use(headingIds)
     // .use(headings)
     // .use(toc, {})
-    .use(frontmatter, {
-        type: ['yaml'],
-        anywhere: true,
-        fence: {
-            open: '<!--', close: '-->'
-        }
-    })
+   
     .use(footnotes, {inlineNotes: true})
     
     // remark-litmd (rehype compatable)
