@@ -11,7 +11,7 @@ const FRONTMATTER_CLOSE = '-->'
 
 export default function (...args) {
     return (tree,file) => {
-        let data = {}
+        file.data.frontmatter = []
         visit( tree, 'html', (node, index, parent) => {  
             level(0, log)( '[FrontMatter] now has access to file')
             if (node.value.indexOf(FRONTMATTER_OPEN) === 0 && node.value.indexOf(FRONTMATTER_CLOSE) === (node.value.length - FRONTMATTER_CLOSE.length)) {
@@ -19,18 +19,13 @@ export default function (...args) {
                console.log("ORIGINAL: ", node.value)
                console.log("YAML: ", yamlString)
         
-               const newNode = {
-                  type: 'frontmatter',
-                  data: yaml.load(yamlString, 'utf8'),
-                  value: yamlString,
-                  position: node.position
-               }
-               console.log(newNode)
-               data = Object.assign({}, data, newNode.data)
-               node = newNode
+               node.type = 'frontmatter'
+               node.data = yaml.load(yamlString, 'utf8')
+               console.log(node)
+               file.data.frontmatter.push(node.data)
+               
             }
         })
-        file.data = Object.assign({}, file.data, data)
     }
 }
 
