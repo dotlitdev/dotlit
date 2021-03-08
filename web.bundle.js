@@ -4531,16 +4531,14 @@ var transform = function transform(options) {
         position: node.position
       };
       console.log(newNode);
-      return newNode;
+      node = newNode;
     }
-
-    return node;
   };
 };
 
 /* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__() {
   return function (tree, file) {
-    return unist_util_visit__WEBPACK_IMPORTED_MODULE_0___default()(tree, 'html', transform({
+    unist_util_visit__WEBPACK_IMPORTED_MODULE_0___default()(tree, 'html', transform({
       file: file
     }));
   };
