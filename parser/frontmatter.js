@@ -15,6 +15,7 @@ const transform = (options) => (node, index, parent) => {
         const yamlString = node.value.slice(FRONTMATTER_OPEN.length, node.value.length - FRONTMATTER_CLOSE.length).trim()
         console.log("ORIGINAL: ", node.value)
         console.log("YAML: ", yamlString)
+        const file = options.file
         const newNode = {
             type: 'frontmatter',
             data: yaml.load(yamlString, 'utf8'),
