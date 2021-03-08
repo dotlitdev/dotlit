@@ -4517,7 +4517,7 @@ var FRONTMATTER_OPEN = '<!--';
 var FRONTMATTER_CLOSE = '-->';
 /* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__() {
   return function (tree, file) {
-    var data = {};
+    file.data.frontmatter = [];
     unist_util_visit__WEBPACK_IMPORTED_MODULE_0___default()(tree, 'html', function (node, index, parent) {
       (0,_utils_console__WEBPACK_IMPORTED_MODULE_4__.level)(0, _utils_console__WEBPACK_IMPORTED_MODULE_4__.log)('[FrontMatter] now has access to file');
 
@@ -4525,18 +4525,12 @@ var FRONTMATTER_CLOSE = '-->';
         var yamlString = node.value.slice(FRONTMATTER_OPEN.length, node.value.length - FRONTMATTER_CLOSE.length).trim();
         console.log("ORIGINAL: ", node.value);
         console.log("YAML: ", yamlString);
-        var newNode = {
-          type: 'frontmatter',
-          data: js_yaml__WEBPACK_IMPORTED_MODULE_3__.default.load(yamlString, 'utf8'),
-          value: yamlString,
-          position: node.position
-        };
-        console.log(newNode);
-        data = Object.assign({}, data, newNode.data);
-        node = newNode;
+        node.type = 'frontmatter';
+        node.data = js_yaml__WEBPACK_IMPORTED_MODULE_3__.default.load(yamlString, 'utf8');
+        console.log(node);
+        file.data.frontmatter.push(node.data);
       }
     });
-    file.data = Object.assign({}, file.data, data);
   };
 }
 
