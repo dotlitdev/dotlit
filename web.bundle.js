@@ -4515,30 +4515,35 @@ __webpack_require__.r(__webpack_exports__);
 
 var FRONTMATTER_OPEN = '<!--';
 var FRONTMATTER_CLOSE = '-->';
-/* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__() {
-  return function (tree) {
-    return unist_util_visit__WEBPACK_IMPORTED_MODULE_0___default()(tree, 'html', transform);
+
+var transform = function transform(options) {
+  return function (node, index, parent) {
+    (0,_utils_console__WEBPACK_IMPORTED_MODULE_4__.level)(0, _utils_console__WEBPACK_IMPORTED_MODULE_4__.log)('[FrontMatter] now has access to file: ', !!options.file);
+
+    if (node.value.indexOf(FRONTMATTER_OPEN) === 0 && node.value.indexOf(FRONTMATTER_CLOSE) === node.value.length - FRONTMATTER_CLOSE.length) {
+      var yamlString = node.value.slice(FRONTMATTER_OPEN.length, node.value.length - FRONTMATTER_CLOSE.length).trim();
+      console.log("ORIGINAL: ", node.value);
+      console.log("YAML: ", yamlString);
+      var newNode = {
+        type: 'frontmatter',
+        data: js_yaml__WEBPACK_IMPORTED_MODULE_3__.default.load(yamlString, 'utf8'),
+        value: yamlString,
+        position: node.position
+      };
+      console.log(newNode);
+      return newNode;
+    }
+
+    return node;
   };
-}
+};
 
-function transform(node, index, parent) {
-  (0,_utils_console__WEBPACK_IMPORTED_MODULE_4__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_4__.log)('[FrontMatter]');
-
-  if (node.value.indexOf(FRONTMATTER_OPEN) === 0 && node.value.indexOf(FRONTMATTER_CLOSE) === node.value.length - FRONTMATTER_CLOSE.length) {
-    var yamlString = node.value.slice(FRONTMATTER_OPEN.length, node.value.length - FRONTMATTER_CLOSE.length).trim();
-    console.log("ORIGINAL: ", node.value);
-    console.log("YAML: ", yamlString);
-    var newNode = {
-      type: 'frontmatter',
-      data: js_yaml__WEBPACK_IMPORTED_MODULE_3__.default.load(yamlString, 'utf8'),
-      value: yamlString,
-      position: node.position
-    };
-    console.log(newNode);
-    return newNode;
-  }
-
-  return node;
+/* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__() {
+  return function (tree, file) {
+    return unist_util_visit__WEBPACK_IMPORTED_MODULE_0___default()(tree, 'html', transform({
+      file: file
+    }));
+  };
 }
 
 /***/ }),
