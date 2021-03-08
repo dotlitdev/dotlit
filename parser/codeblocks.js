@@ -3,6 +3,15 @@ import before from 'unist-util-find-before'
 import after from 'unist-util-find-after'
 
 import {log, level} from '../utils/console'
+import { notEqual } from 'assert'
+
+const LSP = '__.litsp__'
+const NONESCAPEDSPACES_REGEX = /([^\\])\s/g
+const LANG = 'lang'
+const ATTR = 'attribute'
+const TAG = 'tag'
+const DIREC = 'directive'
+const FILENAME = 'filename'
 
 export default function (...args) {
     return codeblocks
@@ -18,7 +27,7 @@ function transform (node, index, parent) {
     node.data = {
         ...node.data,
         hProperties: {
-            className: litMeta ? litMeta.tags.map( t => `tag-${t}`).join(' ') : '',
+            className: litMeta && litMeta.tags ? litMeta.tags.map( t => `tag-${t}`).join(' ') : '',
             meta: litMeta,
         }
     }
@@ -27,43 +36,82 @@ function transform (node, index, parent) {
 
 
 function parseMeta (node) {
+    const raw = `${node.lang || ''} ${node.meta || ''}`.trim()
+    console.log(`lang: "${node.lang}" meta: "${node.meta}", raw: "${raw}"`)
 
-    const meta = `${node.lang || ''} ${node.meta || ''}`
-    const isOutput = meta && meta[0] === '>'
+    const isOutput = raw.indexOf('>') === 0
+    const hasOutput = node.meta && node.meta.indexOf('>') >= 0
+    const hasSource = node.meta && node.meta.indexOf('<') >= 0
 
-    // example meta in (): ```lang (name.ext#tag attr=value)
-    const [input, output] = !isOutput ? meta.split('>') : [meta.split('>')[1]]
+    let input = raw
+    if (isOutput) {
+        input = raw.split('>')[1].trim()
+    } else if (hasOutput) {
+        input = raw.split('>')[0].trim()
+    } else if (hasSource) {
+        input = raw.split('<')[0].trim()
+    }
 
-    const langMatch = input && input.match(/^(\S)+/)
-    const [lang] = langMatch ? langMatch : ''
+    const meta = input
+        .replace(NONESCAPEDSPACES_REGEX, "$1" + LSP)
+        .split(LSP)
+        .map(ident)
+        .reduce(reduceParts, {})
+    
+    meta.isOutput = isOutput
+    meta.hasOutput = hasOutput
+    meta.hasSource = hasSource
 
-    const filenameMatch = input && input.match(/^\S+\s?([^\s#]+)/)
-    const [filename] = filenameMatch ? filenameMatch : ''
+    console.log(input, meta)
+    return meta
+}
 
-    const tagsMatch = input && input.match(/#\S+/g)
-    const tags = tagsMatch ? tagsMatch.map( t => t.slice(1)) : []
-
-    const attrsMatch = input && input.match(/[a-zA-Z-0-9-_]+="?[^"\s]*"?/g)
-    const attrs = !attrsMatch ? {} : attrsMatch.reduce( (memo, attr) => ({
-        ...memo, 
-        [attr.split('=')[0]]: [attr.split('=')[1]]
-    }), {})
-
-
-    if (output) {
-        const [full, outputLang, outputMeta] = output.trim().match(/^(\S+)\s?(.*)?/)
-        const parsedOutput = parseMeta({meta: outputMeta})
-        return {
-            lang,
-            filename, tags, attrs,
-            output: { lang: outputLang, ...parsedOutput}
+function ident (x, i) {
+    let type, value = x
+    if (i === 0) {
+      type = LANG
+    }
+    else if(x && x[0]) {
+      if (x[0] === "#") {
+        type = TAG
+        value = x.slice(1)
+      }
+      else if (x[0] === "!") {
+        type = DIREC
+        value = x.slice(1)
+      }
+      else if (x.indexOf("=") > 0) {
+        type = ATTR
+        value = x.split("=")
+        value = {
+          type: value[0],
+          value: value[1]
         }
+      }
+      else if(i===1) type = FILENAME
+      else if (!type) type = undefined
+    }
+    return {type, value}
+  }
+  
+  function reduceParts(memo,item, i) {
+    if (item.type === ATTR){
+        item = item.value
+    }
+    const collective = `${item.type}s`
+    console.log(i, memo, item)
+    if(memo[collective]) {
+        memo[collective]
+        .push(item.value)
+    }
+    else if(typeof memo[item.type] != 'undefined') {
+        memo[collective] = [memo[item.type], item.value]
+        delete memo[item.type]
     } else {
-        return { 
-            lang, filename, tags, attrs, isOutput }
+        memo[item.type] = item.value
     }
     
-    
-    
+    return memo
 }
+  
 

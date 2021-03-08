@@ -34,7 +34,6 @@ export const decorateLinkNode = (link, root, filepath) => {
 
     link.data = link.data ? link.data : {}
 
-
     if (isRelative) {
         const abs = path.resolve(root, path.dirname(filepath), link.url)
         const newPath = path.relative(path.resolve(root), abs)
@@ -51,13 +50,12 @@ export const decorateLinkNode = (link, root, filepath) => {
     link.data.isRelative = isRelative
 
     link.data.hProperties = link.data.hProperties || {}
-    link.data.hProperties.className = (link.data.hProperties.className || '') + isAbsolute 
-      ? ' absolute'
-      : isRelative
-        ? ' relative'
-        : isFragment
-          ? ' fragment'
-          : ''
+    // don't throw away wiki link classes (yet)
+    link.data.hProperties.className = link.data.hProperties.className || ''
+    
+    link.data.hProperties.className += isAbsolute ? ' absolute' : ''
+    link.data.hProperties.className += isRelative ? ' relative' : ''
+    link.data.hProperties.className += isFragment ? ' fragment' : ''
 
     return link
 }
