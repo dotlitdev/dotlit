@@ -15,7 +15,7 @@ export default function (...args) {
     }
 }
 
-function transform = options => (node, index, parent) {  
+const transform = options => (node, index, parent) {  
     level(0, log)( '[FrontMatter] now has access to file: ', !!options.file)
     if (node.value.indexOf(FRONTMATTER_OPEN) === 0 && node.value.indexOf(FRONTMATTER_CLOSE) === (node.value.length - FRONTMATTER_CLOSE.length)) {
         const yamlString = node.value.slice(FRONTMATTER_OPEN.length, node.value.length - FRONTMATTER_CLOSE.length).trim()
