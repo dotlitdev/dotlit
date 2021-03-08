@@ -22,14 +22,13 @@ const transform = (options) => (node, index, parent) => {
             position: node.position
         }
         console.log(newNode)
-        return newNode
+        node = newNode
     }
-    return node
 }
 
 export default function (...args) {
     return (tree,file) => {
-        return visit( tree, 'html', transform({file}))
+        visit( tree, 'html', transform({file}))
     }
 }
 
