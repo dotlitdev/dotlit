@@ -21,8 +21,8 @@ export const processor = (options={files: []}) => {
     return unified()
 
     // remark
-    .use(frontmatter, {})
     .use(markdown)
+    .use(frontmatter, {})
     .use(wikiLinkPlugin, { 
         permalinks: options.files,
         pageResolver: nameToPermalinks,

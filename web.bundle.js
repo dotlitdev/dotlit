@@ -4600,7 +4600,7 @@ var processor = function processor() {
     files: []
   };
   return unified__WEBPACK_IMPORTED_MODULE_2___default()() // remark
-  .use(_frontmatter__WEBPACK_IMPORTED_MODULE_11__.default, {}).use((remark_parse__WEBPACK_IMPORTED_MODULE_3___default())).use(remark_wiki_link__WEBPACK_IMPORTED_MODULE_8__.wikiLinkPlugin, {
+  .use((remark_parse__WEBPACK_IMPORTED_MODULE_3___default())).use(_frontmatter__WEBPACK_IMPORTED_MODULE_11__.default, {}).use(remark_wiki_link__WEBPACK_IMPORTED_MODULE_8__.wikiLinkPlugin, {
     permalinks: options.files,
     pageResolver: _links__WEBPACK_IMPORTED_MODULE_12__.nameToPermalinks,
     hrefTemplate: function hrefTemplate(permalink) {
