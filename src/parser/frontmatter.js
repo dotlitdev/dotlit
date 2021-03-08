@@ -10,13 +10,13 @@ const FRONTMATTER_OPEN = '<!--'
 const FRONTMATTER_CLOSE = '-->'
 
 export default function (...args) {
-    return (tree) => {
-        return visit( tree, 'html', transform )
+    return (tree,file) => {
+        return visit( tree, 'html', transform({file}))
     }
 }
 
-function transform (node, index, parent) {  
-    level(2, log)( '[FrontMatter]')
+function transform = options => (node, index, parent) {  
+    level(0, log)( '[FrontMatter] now has access to file: ', !!options.file)
     if (node.value.indexOf(FRONTMATTER_OPEN) === 0 && node.value.indexOf(FRONTMATTER_CLOSE) === (node.value.length - FRONTMATTER_CLOSE.length)) {
         const yamlString = node.value.slice(FRONTMATTER_OPEN.length, node.value.length - FRONTMATTER_CLOSE.length).trim()
         console.log("ORIGINAL: ", node.value)
