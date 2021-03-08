@@ -4525,7 +4525,6 @@ var FRONTMATTER_CLOSE = '-->';
         var yamlString = node.value.slice(FRONTMATTER_OPEN.length, node.value.length - FRONTMATTER_CLOSE.length).trim();
         console.log("ORIGINAL: ", node.value);
         console.log("YAML: ", yamlString);
-        node.type = 'frontmatter';
         node.data = js_yaml__WEBPACK_IMPORTED_MODULE_3__.default.load(yamlString, 'utf8');
         console.log(node);
         file.data.frontmatter.push(node.data);

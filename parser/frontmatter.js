@@ -18,12 +18,9 @@ export default function (...args) {
                const yamlString = node.value.slice(FRONTMATTER_OPEN.length, node.value.length - FRONTMATTER_CLOSE.length).trim()
                console.log("ORIGINAL: ", node.value)
                console.log("YAML: ", yamlString)
-        
-               node.type = 'frontmatter'
                node.data = yaml.load(yamlString, 'utf8')
                console.log(node)
                file.data.frontmatter.push(node.data)
-               
             }
         })
     }
