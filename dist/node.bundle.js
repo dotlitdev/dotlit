@@ -24,23 +24,6 @@ module.exports = _arrayLikeToArray;
 
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/arrayWithHoles.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/arrayWithHoles.js ***!
-  \***************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
-/***/ ((module) => {
-
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr;
-}
-
-module.exports = _arrayWithHoles;
-
-/***/ }),
-
 /***/ "./node_modules/@babel/runtime/helpers/arrayWithoutHoles.js":
 /*!******************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/arrayWithoutHoles.js ***!
@@ -274,63 +257,6 @@ module.exports = _iterableToArray;
 
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/iterableToArrayLimit.js":
-/*!*********************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/iterableToArrayLimit.js ***!
-  \*********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 28:0-14 */
-/***/ ((module) => {
-
-function _iterableToArrayLimit(arr, i) {
-  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
-  var _arr = [];
-  var _n = true;
-  var _d = false;
-  var _e = undefined;
-
-  try {
-    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value);
-
-      if (i && _arr.length === i) break;
-    }
-  } catch (err) {
-    _d = true;
-    _e = err;
-  } finally {
-    try {
-      if (!_n && _i["return"] != null) _i["return"]();
-    } finally {
-      if (_d) throw _e;
-    }
-  }
-
-  return _arr;
-}
-
-module.exports = _iterableToArrayLimit;
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/nonIterableRest.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/nonIterableRest.js ***!
-  \****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
-/***/ ((module) => {
-
-function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-
-module.exports = _nonIterableRest;
-
-/***/ }),
-
 /***/ "./node_modules/@babel/runtime/helpers/nonIterableSpread.js":
 /*!******************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/nonIterableSpread.js ***!
@@ -393,31 +319,6 @@ function _setPrototypeOf(o, p) {
 }
 
 module.exports = _setPrototypeOf;
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/slicedToArray.js":
-/*!**************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/slicedToArray.js ***!
-  \**************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 13:0-14 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var arrayWithHoles = __webpack_require__(/*! ./arrayWithHoles */ "./node_modules/@babel/runtime/helpers/arrayWithHoles.js");
-
-var iterableToArrayLimit = __webpack_require__(/*! ./iterableToArrayLimit */ "./node_modules/@babel/runtime/helpers/iterableToArrayLimit.js");
-
-var unsupportedIterableToArray = __webpack_require__(/*! ./unsupportedIterableToArray */ "./node_modules/@babel/runtime/helpers/unsupportedIterableToArray.js");
-
-var nonIterableRest = __webpack_require__(/*! ./nonIterableRest */ "./node_modules/@babel/runtime/helpers/nonIterableRest.js");
-
-function _slicedToArray(arr, i) {
-  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || unsupportedIterableToArray(arr, i) || nonIterableRest();
-}
-
-module.exports = _slicedToArray;
 
 /***/ }),
 
@@ -2140,10 +2041,15 @@ var Document = /*#__PURE__*/function (_React$Component) {
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("meta", {
         name: "litroot",
         value: this.props.root
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("meta", {
+        name: "viewport",
+        content: "width=device-width, initial-scale=1"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("link", {
         rel: "stylesheet",
         href: path__WEBPACK_IMPORTED_MODULE_6___default().join(this.props.root, 'style.css')
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("script", {
+        src: "//cdn.jsdelivr.net/npm/eruda"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("script", null, "eruda.init();"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("script", {
         src: path__WEBPACK_IMPORTED_MODULE_6___default().join(this.props.root, 'web.bundle.js')
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("body", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("div", {
         id: "app"
@@ -2451,43 +2357,50 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js");
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var unist_util_visit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! unist-util-visit */ "./node_modules/unist-util-visit/index.js");
-/* harmony import */ var unist_util_visit__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(unist_util_visit__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var unist_util_find_before__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! unist-util-find-before */ "./node_modules/unist-util-find-before/index.js");
-/* harmony import */ var unist_util_find_before__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(unist_util_find_before__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var unist_util_find_after__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! unist-util-find-after */ "./node_modules/unist-util-find-after/index.js");
-/* harmony import */ var unist_util_find_after__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(unist_util_find_after__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
-/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_5__);
-
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var unist_util_visit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! unist-util-visit */ "./node_modules/unist-util-visit/index.js");
+/* harmony import */ var unist_util_visit__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(unist_util_visit__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var unist_util_find_before__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! unist-util-find-before */ "./node_modules/unist-util-find-before/index.js");
+/* harmony import */ var unist_util_find_before__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(unist_util_find_before__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var unist_util_find_after__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! unist-util-find-after */ "./node_modules/unist-util-find-after/index.js");
+/* harmony import */ var unist_util_find_after__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(unist_util_find_after__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var assert__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! assert */ "assert");
+/* harmony import */ var assert__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(assert__WEBPACK_IMPORTED_MODULE_5__);
 
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 
 
 
 
+
+var LSP = '__.litsp__';
+var NONESCAPEDSPACES_REGEX = /([^\\])\s/g;
+var LANG = 'lang';
+var ATTR = 'attribute';
+var TAG = 'tag';
+var DIREC = 'directive';
+var FILENAME = 'filename';
 /* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__() {
   return codeblocks;
 }
 
 function codeblocks(tree) {
-  return unist_util_visit__WEBPACK_IMPORTED_MODULE_2___default()(tree, 'code', transform);
+  return unist_util_visit__WEBPACK_IMPORTED_MODULE_1___default()(tree, 'code', transform);
 }
 
 function transform(node, index, parent) {
-  (0,_utils_console__WEBPACK_IMPORTED_MODULE_5__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_5__.log)('[CodeBlocks] Visiting: ', node.lang, node.meta);
+  (0,_utils_console__WEBPACK_IMPORTED_MODULE_4__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_4__.log)('[CodeBlocks] Visiting: ', node.lang, node.meta);
   var litMeta = parseMeta(node);
   node.data = _objectSpread(_objectSpread({}, node.data), {}, {
     hProperties: {
-      className: litMeta ? litMeta.tags.map(function (t) {
+      className: litMeta && litMeta.tags ? litMeta.tags.map(function (t) {
         return "tag-".concat(t);
       }).join(' ') : '',
       meta: litMeta
@@ -2497,63 +2410,76 @@ function transform(node, index, parent) {
 }
 
 function parseMeta(node) {
-  var meta = "".concat(node.lang || '', " ").concat(node.meta || '');
-  var isOutput = meta && meta[0] === '>'; // example meta in (): ```lang (name.ext#tag attr=value)
+  var raw = "".concat(node.lang || '', " ").concat(node.meta || '').trim();
+  console.log("lang: \"".concat(node.lang, "\" meta: \"").concat(node.meta, "\", raw: \"").concat(raw, "\""));
+  var isOutput = raw.indexOf('>') === 0;
+  var hasOutput = node.meta && node.meta.indexOf('>') >= 0;
+  var hasSource = node.meta && node.meta.indexOf('<') >= 0;
+  var input = raw;
 
-  var _ref = !isOutput ? meta.split('>') : [meta.split('>')[1]],
-      _ref2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref, 2),
-      input = _ref2[0],
-      output = _ref2[1];
-
-  var langMatch = input && input.match(/^(\S)+/);
-
-  var _ref3 = langMatch ? langMatch : '',
-      _ref4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref3, 1),
-      lang = _ref4[0];
-
-  var filenameMatch = input && input.match(/^\S+\s?([^\s#]+)/);
-
-  var _ref5 = filenameMatch ? filenameMatch : '',
-      _ref6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref5, 1),
-      filename = _ref6[0];
-
-  var tagsMatch = input && input.match(/#\S+/g);
-  var tags = tagsMatch ? tagsMatch.map(function (t) {
-    return t.slice(1);
-  }) : [];
-  var attrsMatch = input && input.match(/[a-zA-Z-0-9-_]+="?[^"\s]*"?/g);
-  var attrs = !attrsMatch ? {} : attrsMatch.reduce(function (memo, attr) {
-    return _objectSpread(_objectSpread({}, memo), {}, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()({}, attr.split('=')[0], [attr.split('=')[1]]));
-  }, {});
-
-  if (output) {
-    var _output$trim$match = output.trim().match(/^(\S+)\s?(.*)?/),
-        _output$trim$match2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_output$trim$match, 3),
-        full = _output$trim$match2[0],
-        outputLang = _output$trim$match2[1],
-        outputMeta = _output$trim$match2[2];
-
-    var parsedOutput = parseMeta({
-      meta: outputMeta
-    });
-    return {
-      lang: lang,
-      filename: filename,
-      tags: tags,
-      attrs: attrs,
-      output: _objectSpread({
-        lang: outputLang
-      }, parsedOutput)
-    };
-  } else {
-    return {
-      lang: lang,
-      filename: filename,
-      tags: tags,
-      attrs: attrs,
-      isOutput: isOutput
-    };
+  if (isOutput) {
+    input = raw.split('>')[1].trim();
+  } else if (hasOutput) {
+    input = raw.split('>')[0].trim();
+  } else if (hasSource) {
+    input = raw.split('<')[0].trim();
   }
+
+  var meta = input.replace(NONESCAPEDSPACES_REGEX, "$1" + LSP).split(LSP).map(ident).reduce(reduceParts, {});
+  meta.isOutput = isOutput;
+  meta.hasOutput = hasOutput;
+  meta.hasSource = hasSource;
+  console.log(input, meta);
+  return meta;
+}
+
+function ident(x, i) {
+  var type,
+      value = x;
+
+  if (i === 0) {
+    type = LANG;
+  } else if (x && x[0]) {
+    if (x[0] === "#") {
+      type = TAG;
+      value = x.slice(1);
+    } else if (x[0] === "!") {
+      type = DIREC;
+      value = x.slice(1);
+    } else if (x.indexOf("=") > 0) {
+      type = ATTR;
+      value = x.split("=");
+      value = {
+        type: value[0],
+        value: value[1]
+      };
+    } else if (i === 1) type = FILENAME;else if (!type) type = undefined;
+  }
+
+  return {
+    type: type,
+    value: value
+  };
+}
+
+function reduceParts(memo, item, i) {
+  if (item.type === ATTR) {
+    item = item.value;
+  }
+
+  var collective = "".concat(item.type, "s");
+  console.log(i, memo, item);
+
+  if (memo[collective]) {
+    memo[collective].push(item.value);
+  } else if (typeof memo[item.type] != 'undefined') {
+    memo[collective] = [memo[item.type], item.value];
+    delete memo[item.type];
+  } else {
+    memo[item.type] = item.value;
+  }
+
+  return memo;
 }
 
 /***/ }),
@@ -2624,14 +2550,6 @@ var processor = function processor() {
     files: []
   };
   return unified__WEBPACK_IMPORTED_MODULE_2___default()() // remark
-  .use((remark_parse__WEBPACK_IMPORTED_MODULE_3___default())).use(remark_wiki_link__WEBPACK_IMPORTED_MODULE_9__.wikiLinkPlugin, {
-    permalinks: options.files,
-    pageResolver: _links__WEBPACK_IMPORTED_MODULE_12__.nameToPermalinks,
-    hrefTemplate: function hrefTemplate(permalink) {
-      return "".concat(permalink);
-    }
-  }).use((remark_slug__WEBPACK_IMPORTED_MODULE_6___default())).use((remark_heading_id__WEBPACK_IMPORTED_MODULE_14___default())) // .use(headings)
-  // .use(toc, {})
   .use((remark_frontmatter__WEBPACK_IMPORTED_MODULE_5___default()), {
     type: ['yaml'],
     anywhere: true,
@@ -2639,7 +2557,15 @@ var processor = function processor() {
       open: '<!--',
       close: '-->'
     }
-  }).use((remark_footnotes__WEBPACK_IMPORTED_MODULE_8___default()), {
+  }).use((remark_parse__WEBPACK_IMPORTED_MODULE_3___default())).use(remark_wiki_link__WEBPACK_IMPORTED_MODULE_9__.wikiLinkPlugin, {
+    permalinks: options.files,
+    pageResolver: _links__WEBPACK_IMPORTED_MODULE_12__.nameToPermalinks,
+    hrefTemplate: function hrefTemplate(permalink) {
+      return "".concat(permalink);
+    }
+  }).use((remark_slug__WEBPACK_IMPORTED_MODULE_6___default())).use((remark_heading_id__WEBPACK_IMPORTED_MODULE_14___default())) // .use(headings)
+  // .use(toc, {})
+  .use((remark_footnotes__WEBPACK_IMPORTED_MODULE_8___default()), {
     inlineNotes: true
   }) // remark-litmd (rehype compatable)
   .use((0,_links__WEBPACK_IMPORTED_MODULE_12__.resolveLinks)()).use((0,_sections__WEBPACK_IMPORTED_MODULE_10__.groupIntoSections)()).use(_codeblocks__WEBPACK_IMPORTED_MODULE_11__.default);
@@ -2779,6 +2705,12 @@ var decorateLinkNode = function decorateLinkNode(link, root, filepath) {
   link.data.isAbsolute = isAbsolute;
   link.data.isFragment = isFragment;
   link.data.isRelative = isRelative;
+  link.data.hProperties = link.data.hProperties || {}; // don't throw away wiki link classes (yet)
+
+  link.data.hProperties.className = link.data.hProperties.className || '';
+  link.data.hProperties.className += isAbsolute ? ' absolute' : '';
+  link.data.hProperties.className += isRelative ? ' relative' : '';
+  link.data.hProperties.className += isFragment ? ' fragment' : '';
   return link;
 };
 var nameToPermalinks = function nameToPermalinks(name) {
@@ -68739,7 +68671,7 @@ function factory(key, options) {
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"name\":\"@dotlit/dotlit\",\"version\":\"0.0.5\",\"description\":\"\",\"main\":\"src/index.js\",\"scripts\":{\"build-web\":\"webpack --config=./webpack.web.config.js\",\"build-node\":\"webpack --config=./webpack.node.config.js\",\"build\":\"npm run build-web && npm run build-node\",\"start\":\"npm run build && rm -rf ./tests/out/* && dotlit -d 2 generate ./src -o ./build -w & http-server ./build\"},\"bin\":{\"dotlit\":\"./src/index.js\"},\"author\":\"dotlitdev\",\"license\":\"UNLICENCED\",\"dependencies\":{\"@babel/core\":\"^7.12.8\",\"@babel/plugin-transform-runtime\":\"^7.12.1\",\"@babel/preset-env\":\"^7.12.7\",\"@babel/preset-react\":\"^7.12.7\",\"@babel/preset-typescript\":\"^7.12.7\",\"@babel/register\":\"^7.12.1\",\"@isomorphic-git/lightning-fs\":\"^4.4.1\",\"assert\":\"^2.0.0\",\"babel-loader\":\"^8.2.1\",\"commander\":\"^6.2.0\",\"console-browserify\":\"^1.2.0\",\"glob\":\"^7.1.6\",\"glob-watcher\":\"^5.0.5\",\"html-whitespace-sensitive-tag-names\":\"^1.0.3\",\"mdast-util-heading-range\":\"^2.1.5\",\"mkdirp\":\"^1.0.4\",\"path-browserify\":\"^1.0.1\",\"process\":\"^0.11.10\",\"react\":\"^17.0.1\",\"react-dom\":\"^17.0.1\",\"rehype-document\":\"^5.1.0\",\"rehype-format\":\"^3.1.0\",\"rehype-react\":\"^6.2.0\",\"rehype-stringify\":\"^8.0.0\",\"remark-footnotes\":\"^3.0.0\",\"remark-frontmatter\":\"^3.0.0\",\"remark-heading-id\":\"^1.0.0\",\"remark-parse\":\"^9.0.0\",\"remark-react\":\"^8.0.0\",\"remark-rehype\":\"^8.0.0\",\"remark-slug\":\"^6.0.0\",\"remark-stringify\":\"^9.0.0\",\"remark-toc\":\"^7.0.0\",\"remark-wiki-link\":\"^1.0.2\",\"to-vfile\":\"^6.1.0\",\"unified\":\"^9.2.0\",\"unist-util-find-after\":\"^3.0.0\",\"unist-util-find-before\":\"^2.0.5\",\"unist-util-flatmap\":\"^1.0.0\",\"unist-util-generated\":\"^1.1.6\",\"unist-util-remove-position\":\"^3.0.0\",\"unist-util-select\":\"^3.0.4\",\"webpack\":\"^5.6.0\",\"webpack-cli\":\"^4.2.0\"}}");
+module.exports = JSON.parse("{\"name\":\"@dotlit/dotlit\",\"version\":\"0.0.6\",\"description\":\"\",\"main\":\"src/index.js\",\"scripts\":{\"build-web\":\"webpack --config=./webpack.web.config.js\",\"build-node\":\"webpack --config=./webpack.node.config.js\",\"build\":\"npm run build-web && npm run build-node\",\"start\":\"npm run build && rm -rf ./tests/out/* && dotlit -d 2 generate ./src -o ./build -w & http-server ./build\"},\"bin\":{\"dotlit\":\"./src/index.js\"},\"author\":\"dotlitdev\",\"license\":\"UNLICENCED\",\"dependencies\":{\"@babel/core\":\"^7.12.8\",\"@babel/plugin-transform-runtime\":\"^7.12.1\",\"@babel/preset-env\":\"^7.12.7\",\"@babel/preset-react\":\"^7.12.7\",\"@babel/preset-typescript\":\"^7.12.7\",\"@babel/register\":\"^7.12.1\",\"@isomorphic-git/lightning-fs\":\"^4.4.1\",\"assert\":\"^2.0.0\",\"babel-loader\":\"^8.2.1\",\"commander\":\"^6.2.0\",\"console-browserify\":\"^1.2.0\",\"glob\":\"^7.1.6\",\"glob-watcher\":\"^5.0.5\",\"html-whitespace-sensitive-tag-names\":\"^1.0.3\",\"mdast-util-heading-range\":\"^2.1.5\",\"mkdirp\":\"^1.0.4\",\"path-browserify\":\"^1.0.1\",\"process\":\"^0.11.10\",\"react\":\"^17.0.1\",\"react-dom\":\"^17.0.1\",\"rehype-document\":\"^5.1.0\",\"rehype-format\":\"^3.1.0\",\"rehype-react\":\"^6.2.0\",\"rehype-stringify\":\"^8.0.0\",\"remark-footnotes\":\"^3.0.0\",\"remark-frontmatter\":\"^3.0.0\",\"remark-heading-id\":\"^1.0.0\",\"remark-parse\":\"^9.0.0\",\"remark-react\":\"^8.0.0\",\"remark-rehype\":\"^8.0.0\",\"remark-slug\":\"^6.0.0\",\"remark-stringify\":\"^9.0.0\",\"remark-toc\":\"^7.0.0\",\"remark-wiki-link\":\"^1.0.2\",\"to-vfile\":\"^6.1.0\",\"unified\":\"^9.2.0\",\"unist-util-find-after\":\"^3.0.0\",\"unist-util-find-before\":\"^2.0.5\",\"unist-util-flatmap\":\"^1.0.0\",\"unist-util-generated\":\"^1.1.6\",\"unist-util-remove-position\":\"^3.0.0\",\"unist-util-select\":\"^3.0.4\",\"webpack\":\"^5.6.0\",\"webpack-cli\":\"^4.2.0\"}}");
 
 /***/ }),
 
@@ -68748,7 +68680,8 @@ module.exports = JSON.parse("{\"name\":\"@dotlit/dotlit\",\"version\":\"0.0.5\",
   !*** external "assert" ***!
   \*************************/
 /*! dynamic exports */
-/*! exports [maybe provided (runtime-defined)] [no usage info] */
+/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
+/*! other exports [maybe provided (runtime-defined)] [no usage info] */
 /*! runtime requirements: module */
 /***/ ((module) => {
 
