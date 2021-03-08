@@ -22,6 +22,7 @@ const transform = (options) => (node, index, parent) => {
             position: node.position
         }
         console.log(newNode)
+        file.data = Object.assign(file.data || {}, newNode.data)
         node = newNode
     }
 }
