@@ -4634,13 +4634,10 @@ function _parse() {
             return p.run(ast);
 
           case 6:
-            _context.t0 = _context.sent;
-            vfile.data = {
-              ast: _context.t0
-            };
+            vfile.data.ast = _context.sent;
             return _context.abrupt("return", vfile);
 
-          case 9:
+          case 8:
           case "end":
             return _context.stop();
         }
