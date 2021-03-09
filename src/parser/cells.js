@@ -10,7 +10,7 @@ export function reduceIntoCells(nodes) {
             tree.push(node)
             current = null
         } else {
-            if (!current) current = {type: 'cell', children: []}
+            if (!current) current = {type: 'cell', children: [], data: { hName: 'cell'}}
             current.children.push(node)
         }      
     })

@@ -14,15 +14,11 @@ const DIREC = 'directive'
 const FILENAME = 'filename'
 
 export default function (...args) {
-    return codeblocks
-}
-
-function codeblocks(tree) {
-    return visit( tree, 'code', transform )
+    return (tree) => visit( tree, 'code', transform )
 }
 
 function transform (node, index, parent) {  
-    level(2, log)( '[CodeBlocks] Visiting: ', node.lang, node.meta)
+    level(1, log)( '[CodeBlocks] Visiting: ', node.lang, node.meta)
     const litMeta = parseMeta(node)
     node.data = {
         ...node.data,
@@ -37,7 +33,7 @@ function transform (node, index, parent) {
 
 function parseMeta (node) {
     const raw = `${node.lang || ''} ${node.meta || ''}`.trim()
-    console.log(`lang: "${node.lang}" meta: "${node.meta}", raw: "${raw}"`)
+    level(2, log)(`[CodeBlocks] lang: "${node.lang}" meta: "${node.meta}", raw: "${raw}"`)
 
     const isOutput = raw.indexOf('>') === 0
     const hasOutput = node.meta && node.meta.indexOf('>') >= 0
@@ -62,7 +58,6 @@ function parseMeta (node) {
     meta.hasOutput = hasOutput
     meta.hasSource = hasSource
 
-    console.log(input, meta)
     return meta
 }
 
@@ -99,7 +94,6 @@ function ident (x, i) {
         item = item.value
     }
     const collective = `${item.type}s`
-    console.log(i, memo, item)
     if(memo[collective]) {
         memo[collective]
         .push(item.value)

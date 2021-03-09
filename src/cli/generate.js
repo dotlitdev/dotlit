@@ -103,7 +103,7 @@ export function generate(cmd) {
 
                 await fs.copyFile( path.join(__dirname,'../../dist/web.bundle.js'), path.join(cmd.output, 'web.bundle.js'))
                 await fs.copyFile( path.join(__dirname,'../../dist/web.bundle.js.map'), path.join(cmd.output, 'web.bundle.js.map'))
-                await fs.copyFile( path.join(__dirname,'../client/style.css'), path.join(cmd.output, 'style.css'))
+                await fs.copyFile( path.join(__dirname,'../../dist/style.css'), path.join(cmd.output, 'style.css'))
 
                 timeEnd('generate')
             }

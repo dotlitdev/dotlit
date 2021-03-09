@@ -1,6 +1,8 @@
 
 // const {Console} = require('console')
 
+if (process && process.env) console.log("DEBUG:",process.env.DEBUG )
+
 const debug_level = () => typeof process !== 'undefined' ? parseInt(process.env.DEBUG || 0, 10) : 99;
 
 // const level = function(level, fn) {
