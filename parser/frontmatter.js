@@ -13,13 +13,16 @@ export default function (...args) {
     return (tree,file) => {
         file.data.frontmatter = []
         visit( tree, 'html', (node, index, parent) => {  
-            level(0, log)( '[FrontMatter] now has access to file')
+            level(1, log)( '[FrontMatter]')
             if (node.value.indexOf(FRONTMATTER_OPEN) === 0 && node.value.indexOf(FRONTMATTER_CLOSE) === (node.value.length - FRONTMATTER_CLOSE.length)) {
-               const yamlString = node.value.slice(FRONTMATTER_OPEN.length, node.value.length - FRONTMATTER_CLOSE.length).trim()
-               console.log("ORIGINAL: ", node.value)
-               console.log("YAML: ", yamlString)
-               node.data = yaml.load(yamlString, 'utf8')
-               console.log(node)
+                level(2, log)( '[FrontMatter] Raw', node.value)
+                const yamlString = node.value.slice(FRONTMATTER_OPEN.length, node.value.length - FRONTMATTER_CLOSE.length).trim()
+                try {
+                    node.data = yaml.load(yamlString, 'utf8')
+                } catch(err) {
+                    node.data = {error: err.toString()}
+                }
+               level(2, log)( '[FrontMatter] Parsed', yamlString)
                file.data.frontmatter.push(node.data)
             }
         })
