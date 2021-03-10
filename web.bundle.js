@@ -21018,7 +21018,7 @@ var Document = function Document(props) {
     value: props.root
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("meta", {
     name: "viewport",
-    content: "width=device-width, initial-scale=1"
+    content: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("link", {
     rel: "stylesheet",
     href: path__WEBPACK_IMPORTED_MODULE_1___default().join(props.root, 'style.css')
