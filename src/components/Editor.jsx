@@ -40,8 +40,6 @@ export default class Editor extends React.Component {
         })
     }
     render() {
-        return <div className="editor" ref={this.editorRef}>
-            <button onClick={this.save}>Save</button>
-        </div>
+        return <div className="editor" ref={this.editorRef}></div>
     }
 }

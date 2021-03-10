@@ -19156,10 +19156,9 @@ var Cell = function Cell(props) {
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_SelectionContext__WEBPACK_IMPORTED_MODULE_4__.default.Consumer, null, function (ctx) {
-    console.log("Cell src:", props.node, props.node.position, unist_util_source__WEBPACK_IMPORTED_MODULE_2___default()(props.node.position, ctx.src), ctx.src.length);
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("cell", {
       onClick: toggleSelected(ctx),
-      className: isSelected(ctx) ? 'selected' : ''
+      className: [isSelected(ctx) ? 'selected' : '', editing ? 'editing' : ''].join(' ')
     }, editing ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Editor__WEBPACK_IMPORTED_MODULE_5__.default, {
       src: unist_util_source__WEBPACK_IMPORTED_MODULE_2___default()(props.node.position, ctx.src),
       update: ctx.setSrc
@@ -19402,9 +19401,7 @@ var Editor = /*#__PURE__*/function (_React$Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6__.createElement("div", {
         className: "editor",
         ref: this.editorRef
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6__.createElement("button", {
-        onClick: this.save
-      }, "Save"));
+      });
     }
   }]);
 
@@ -90893,13 +90890,11 @@ function factory(key, options) {
 /*!   export unist-util-generated [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   export unist-util-remove-position [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   export unist-util-select [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export unist-util-source [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   export webpack [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   export webpack-cli [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   other exports [not provided] [no usage info] */
 /*! export description [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export devDependencies [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export unist-util-source [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   other exports [not provided] [no usage info] */
 /*! export license [provided] [no usage info] [missing usage info prevents renaming] */
 /*! export main [provided] [no usage info] [missing usage info prevents renaming] */
 /*! export name [provided] [no usage info] [missing usage info prevents renaming] */
@@ -90915,7 +90910,7 @@ function factory(key, options) {
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"name\":\"@dotlit/dotlit\",\"version\":\"0.0.6\",\"description\":\"\",\"main\":\"src/index.js\",\"scripts\":{\"build-web\":\"webpack --config=./webpack.web.config.js && stylus ./src/client/style.styl -o ./dist/style.css\",\"build-node\":\"webpack --config=./webpack.node.config.js\",\"build\":\"npm run build-web && npm run build-node\",\"start\":\"npm run build && rm -rf ./tests/out/* && dotlit -d 2 generate ./src -o ./build -w & http-server ./build\"},\"bin\":{\"dotlit\":\"./src/index.js\"},\"author\":\"dotlitdev\",\"license\":\"UNLICENCED\",\"dependencies\":{\"@babel/core\":\"^7.12.8\",\"@babel/plugin-transform-runtime\":\"^7.12.1\",\"@babel/preset-env\":\"^7.12.7\",\"@babel/preset-react\":\"^7.12.7\",\"@babel/preset-typescript\":\"^7.12.7\",\"@babel/register\":\"^7.12.1\",\"@codemirror/basic-setup\":\"^0.18.0\",\"@isomorphic-git/lightning-fs\":\"^4.4.1\",\"assert\":\"^2.0.0\",\"babel-loader\":\"^8.2.1\",\"commander\":\"^6.2.0\",\"console-browserify\":\"^1.2.0\",\"glob\":\"^7.1.6\",\"glob-watcher\":\"^5.0.5\",\"html-whitespace-sensitive-tag-names\":\"^1.0.3\",\"js-yaml\":\"^4.0.0\",\"mdast-util-heading-range\":\"^2.1.5\",\"mkdirp\":\"^1.0.4\",\"path-browserify\":\"^1.0.1\",\"process\":\"^0.11.10\",\"react\":\"^17.0.1\",\"react-dom\":\"^17.0.1\",\"rehype-document\":\"^5.1.0\",\"rehype-format\":\"^3.1.0\",\"rehype-react\":\"^6.2.0\",\"rehype-stringify\":\"^8.0.0\",\"remark-footnotes\":\"^3.0.0\",\"remark-frontmatter\":\"^3.0.0\",\"remark-heading-id\":\"^1.0.0\",\"remark-parse\":\"^9.0.0\",\"remark-react\":\"^8.0.0\",\"remark-rehype\":\"^8.0.0\",\"remark-slug\":\"^6.0.0\",\"remark-stringify\":\"^9.0.0\",\"remark-toc\":\"^7.0.0\",\"remark-wiki-link\":\"^1.0.2\",\"stylus\":\"^0.54.8\",\"to-vfile\":\"^6.1.0\",\"unified\":\"^9.2.0\",\"unist-util-find-after\":\"^3.0.0\",\"unist-util-find-before\":\"^2.0.5\",\"unist-util-flatmap\":\"^1.0.0\",\"unist-util-generated\":\"^1.1.6\",\"unist-util-remove-position\":\"^3.0.0\",\"unist-util-select\":\"^3.0.4\",\"webpack\":\"^5.6.0\",\"webpack-cli\":\"^4.2.0\"},\"devDependencies\":{\"unist-util-source\":\"^3.0.0\"}}");
+module.exports = JSON.parse("{\"name\":\"@dotlit/dotlit\",\"version\":\"0.0.6\",\"description\":\"\",\"main\":\"src/index.js\",\"scripts\":{\"build-web\":\"webpack --config=./webpack.web.config.js && stylus ./src/client/style.styl -o ./dist/style.css\",\"build-node\":\"webpack --config=./webpack.node.config.js\",\"build\":\"npm run build-web && npm run build-node\",\"start\":\"npm run build && rm -rf ./tests/out/* && dotlit -d 2 generate ./src -o ./build -w & http-server ./build\"},\"bin\":{\"dotlit\":\"./src/index.js\"},\"author\":\"dotlitdev\",\"license\":\"UNLICENCED\",\"dependencies\":{\"@babel/core\":\"^7.12.8\",\"@babel/plugin-transform-runtime\":\"^7.12.1\",\"@babel/preset-env\":\"^7.12.7\",\"@babel/preset-react\":\"^7.12.7\",\"@babel/preset-typescript\":\"^7.12.7\",\"@babel/register\":\"^7.12.1\",\"@codemirror/basic-setup\":\"^0.18.0\",\"@isomorphic-git/lightning-fs\":\"^4.4.1\",\"assert\":\"^2.0.0\",\"babel-loader\":\"^8.2.1\",\"commander\":\"^6.2.0\",\"console-browserify\":\"^1.2.0\",\"glob\":\"^7.1.6\",\"glob-watcher\":\"^5.0.5\",\"html-whitespace-sensitive-tag-names\":\"^1.0.3\",\"js-yaml\":\"^4.0.0\",\"mdast-util-heading-range\":\"^2.1.5\",\"mkdirp\":\"^1.0.4\",\"path-browserify\":\"^1.0.1\",\"process\":\"^0.11.10\",\"react\":\"^17.0.1\",\"react-dom\":\"^17.0.1\",\"rehype-document\":\"^5.1.0\",\"rehype-format\":\"^3.1.0\",\"rehype-react\":\"^6.2.0\",\"rehype-stringify\":\"^8.0.0\",\"remark-footnotes\":\"^3.0.0\",\"remark-frontmatter\":\"^3.0.0\",\"remark-heading-id\":\"^1.0.0\",\"remark-parse\":\"^9.0.0\",\"remark-react\":\"^8.0.0\",\"remark-rehype\":\"^8.0.0\",\"remark-slug\":\"^6.0.0\",\"remark-stringify\":\"^9.0.0\",\"remark-toc\":\"^7.0.0\",\"remark-wiki-link\":\"^1.0.2\",\"stylus\":\"^0.54.8\",\"to-vfile\":\"^6.1.0\",\"unified\":\"^9.2.0\",\"unist-util-find-after\":\"^3.0.0\",\"unist-util-find-before\":\"^2.0.5\",\"unist-util-flatmap\":\"^1.0.0\",\"unist-util-generated\":\"^1.1.6\",\"unist-util-remove-position\":\"^3.0.0\",\"unist-util-select\":\"^3.0.4\",\"webpack\":\"^5.6.0\",\"webpack-cli\":\"^4.2.0\",\"unist-util-source\":\"^3.0.0\"}}");
 
 /***/ }),
 

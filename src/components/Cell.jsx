@@ -18,14 +18,14 @@ const Cell = props => {
         if (!selected) ctx.setSelectedCell(symbol)
     }
 
-    
-
     return <SelectionContext.Consumer>
         { ctx => {
-            console.log("Cell src:", props.node, props.node.position, source(props.node.position, ctx.src), ctx.src.length)
             return <cell
                 onClick={toggleSelected(ctx)}
-                className={isSelected(ctx) ? 'selected': ''}>
+                className={[
+                    isSelected(ctx) ? 'selected': '',
+                    editing ? 'editing' : '',
+                    ].join(' ')}>
                     { editing ? <Editor src={source(props.node.position, ctx.src)} update={ctx.setSrc}/> : props.children }
                     { isSelected(ctx) && <CellMenu editing={editing} toggleEditing={toggleEditing}/>}
             </cell>

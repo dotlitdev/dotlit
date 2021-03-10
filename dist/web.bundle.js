@@ -21652,10 +21652,9 @@ var Cell = function Cell(props) {
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_SelectionContext__WEBPACK_IMPORTED_MODULE_4__.default.Consumer, null, function (ctx) {
-    console.log("Cell src:", props.node, props.node.position, unist_util_source__WEBPACK_IMPORTED_MODULE_2___default()(props.node.position, ctx.src), ctx.src.length);
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("cell", {
       onClick: toggleSelected(ctx),
-      className: isSelected(ctx) ? 'selected' : ''
+      className: [isSelected(ctx) ? 'selected' : '', editing ? 'editing' : ''].join(' ')
     }, editing ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Editor__WEBPACK_IMPORTED_MODULE_5__.default, {
       src: unist_util_source__WEBPACK_IMPORTED_MODULE_2___default()(props.node.position, ctx.src),
       update: ctx.setSrc
@@ -21898,9 +21897,7 @@ var Editor = /*#__PURE__*/function (_React$Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6__.createElement("div", {
         className: "editor",
         ref: this.editorRef
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6__.createElement("button", {
-        onClick: this.save
-      }, "Save"));
+      });
     }
   }]);
 

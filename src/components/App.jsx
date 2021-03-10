@@ -17,11 +17,7 @@ const App = (props) => {
     const state = {src, selectedCell, setSelectedCell, setSrc}
 
     return <SelectionContext.Provider value={state}>
-        { showEditor 
-            ? <Editor src={src} update={updateSrc}/> 
-            : <div id="content">{props.processor.processSync(src).result}</div>
-        }
-        <span onClick={toggleEditor}>Editor</span>
+        <div id="content">{props.processor.processSync(src).result}</div>
     </SelectionContext.Provider>
 }
 
