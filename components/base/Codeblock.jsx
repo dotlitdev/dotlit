@@ -31,15 +31,15 @@ export default class Codeblock extends React.Component {
         
         if (codeNode) {
             level(2, log)("[Codeblock]", codeNode.properties.meta )
-            return <div className="LitCode">
+            return <codecell>
                 { meta && <Meta meta={meta}/> }
                 { meta &&  meta.isOutput
                     ? <output><pre>{this.props.children}</pre></output>
                     : <pre>{this.props.children}</pre> }
-            </div>
+            </codecell>
         } else {
             console.log("Default codeblock", this.props.node.children[0])
-            return <pre>{this.props.children}</pre>
+            return <codecell><pre>{this.props.children}</pre></codecell>
         }
     }
 }

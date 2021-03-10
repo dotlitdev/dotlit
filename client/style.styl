@@ -3,41 +3,55 @@ body
     margin 0 auto
     padding 1em
 
+section, cell, codecell
+    display: block
+
+section
+    margin-top: -2px
+
 #backlinks
     color: tint(black, 60%)
 
-.cell, .LitCode 
+cell
+    cell-border-width = 2px
+    cell-border-color = #d1d1ff
+
     padding 0.4em
     margin 0
-
-.cell 
-    & > *:last-child 
-        margin-bottom 0
+    border: cell-border-width solid transparent
         
     & > *:first-child 
         margin-top 0
+    
+    &.selected 
+        border: cell-border-width solid cell-border-color
+    
+    &.editing
+        padding: 0
 
-.LitLink 
+a
     &.internal.new 
         color red
         text-decoration underline
             
-.LitCode 
+codecell
+    code-cell-spacing = 0.4em
+
     & > .meta 
         font-family monospace
 
         .lang 
             font-weight bold
-            margin-right 0.4em
+            margin-right code-cell-spacing
         
         .repl 
             font-style: italic
             color: tint(black, 60%)
-            margin-right 0.4em
+            margin-right code-cell-spacing
 
         .filename 
             color: tint(black, 60%)
-            margin-right 0.4em
+            margin-right code-cell-spacing
         
         ul, ol 
             display inline-flex
@@ -47,8 +61,8 @@ body
             float right
             
             li 
-                padding 0 0.2em
-                margin 0 0.2em
+                padding 0 (code-cell-spacing / 2)
+                margin 0 (code-cell-spacing / 2)
                 border-radius 2px
                 background-color: tint(black, 90%)
         .tag 
@@ -59,11 +73,56 @@ body
                 content '!'
     & pre 
         margin: 0
-        padding: 0.4em
+        padding: code-cell-spacing
         min-height: 1em
         background-color: darkslategrey
         color: white
+        white-space: pre-wrap
     
     & > output > pre
         background-color: white
         color: black
+
+
+cell, codecell
+    position: relative
+
+    & > menu
+        margin: 0;
+        padding: 0;
+        z-index: 99999;
+        position: absolute;
+        top: 0.5em;
+        left: 0;
+        right: 0;
+        bottom: 0.5em;
+        display: flex;
+        place-items: flex-end;
+        pointer-events: none;
+
+        .menu__items
+            list-style: none
+            margin: 0
+            padding: 0;
+            pointer-events: none;
+            position: sticky;
+            bottom: 50%;
+            display: flex;
+            justify-content: flex-end;
+            width: 100%;
+            flex-direction: row;
+
+            li 
+                background-color: #9999f7;
+                width: 2em;
+                height: 2em;
+                border-radius: 1em;
+                overflow: hidden;
+                margin: 0 .25em;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                pointer-events: all;
+                color: white;
+                line-height: 1;
