@@ -16,11 +16,14 @@ const CellMenu = props => {
     })
 
     const items = [
-        props.editing
-            ? {title: "Cancel", icon: "⨯", handler: wrapHandler(props.toggleEditing)}
-            : {title: "Edit", icon: "✎", handler: wrapHandler(props.toggleEditing)},
         {title: "Execute", icon: "▶", handler: wrapHandler(props.execute)}
     ]
+
+    if (!props.editing) items.push({title: "Edit", icon: "✎", handler: wrapHandler(props.toggleEditing)})
+    else {
+        items.push({title: "Cancel", icon: "c", handler: wrapHandler(props.toggleEditing)})
+        items.push({title: "Save", icon: "s", handler: wrapHandler(props.save)})
+    }
 
     return <menu>
         <ul className="menu__items">

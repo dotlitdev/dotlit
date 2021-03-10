@@ -24,20 +24,20 @@ export default class Editor extends React.Component {
       //  linter(esLint(new Linter)),
       //  StreamLanguage.define(javascript),
       ]})
-
-      this.save = this.save.bind(this)
     }
 
-    save() {
-        console.log('save', this.editorState.doc)
-        this.props.update(this.editorState.doc.toString())
+    getState() {
+        return this.editorState.doc.toString()
     }
 
     componentDidMount() {
         this.view = new EditorView({
             state: this.editorState, 
-            parent: this.editorRef.current
+            parent: this.editorRef.current,
+            lineWrapping: true,
         })
+
+        if (this.props.getState) this.props.getState(this.getState.bind(this))
     }
     render() {
         return <div className="editor" ref={this.editorRef}></div>
