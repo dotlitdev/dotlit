@@ -9,7 +9,7 @@ const Document = props => {
             <title>{props.title}</title>
             <meta name="litsrc" value={props.path}/>
             <meta name="litroot" value={props.root}/>
-            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
             <link rel="stylesheet" href={path.join(props.root, 'style.css')}/>
             <script src="//cdn.jsdelivr.net/npm/eruda"></script>
             <script>eruda.init();</script>
