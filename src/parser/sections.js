@@ -5,7 +5,11 @@ import visit from 'unist-util-visit'
 import flatMap from 'unist-util-flatmap'
 
 import {log, level} from '../utils/console'
-import cells from './cells'
+
+
+const symbolFromPos = pos => {
+  return `cell-${pos.line}:${pos.column}:${pos.offset}`
+}
 
 const wrapSection = options => (start, nodes, end) => {
   level(2, log)("[Sections] Wrapping:", start && start.data.id, nodes && nodes.length, end && end.type)
@@ -29,15 +33,18 @@ const wrapSection = options => (start, nodes, end) => {
     }
 
     if (node.type !== 'section' && node.type !== 'code') {
-      if (newCell) newCell.children.push(node) 
-      else {
+      if (newCell) {
+        newCell.children.push(node)
+        newCell.position.end = node.position.end
+      } else {
         newCell = {
           type: 'cell',
+          position: node.position,
           data: {
-            id: `${start.data.id}-${cells.length}`,
-            hName: 'div',
+            hName: 'cell',
             hProperties: {
-              class: 'cell'
+              class: 'cell',
+              "data-symbol": symbolFromPos(node.position.start)
             }
           },
           children: [node]
