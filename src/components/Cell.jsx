@@ -9,8 +9,8 @@ import Editor from './Editor'
 const Cell = props => {
 
     const symbol = props.node.properties['data-symbol']
-    const [srcGetter, setSrcGetter] = useState(()=>{})
 
+    const [src, setSrc] = useState('')
     const [editing, setEditing] = useState(false)
     const toggleEditing = () => setEditing(!editing)
     
@@ -21,27 +21,21 @@ const Cell = props => {
     }
 
     const save = ctx => args => {
-        const src = srcGetter()
-        ctx.setSrc(patchSource(ctx.src, props.node.position, src))
+        console.log("current", src)
+        console.log('original', source(props.node.position, ctx.src))
+        const patchedSrc = patchSource(ctx.src, props.node.position, src)
+        console.log('patched', patchedSrc)
+        ctx.setSrc(patchedSrc)
+        setEditing(false)
     }
-
-    const updateSrc = (value) => {
-        setSrc(value)
-    }
-
-    const getState = (getter) => {
-        setSrcGetter(getter)
-    }
-
 
     return <SelectionContext.Consumer>
         { ctx => {
-            const src = source(props.node.position, ctx.src)
             return <cell
                 onClick={toggleSelected(ctx)}
                 className={[ isSelected(ctx) ? 'selected' : '', editing ? 'editing' : ''].join(' ')}>
-                    { editing ? <Editor src={src} getState={getState}/> : props.children }
-                    { isSelected(ctx) && <CellMenu editing={editing} toggleEditing={toggleEditing} save={save}/>}
+                    { editing ? <Editor src={source(props.node.position, ctx.src)} update={setSrc}/> : props.children }
+                    { isSelected(ctx) && <CellMenu editing={editing} toggleEditing={toggleEditing} save={save(ctx)}/>}
             </cell>
         }}
     </SelectionContext.Consumer>
