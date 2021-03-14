@@ -22276,6 +22276,22 @@ var wrapSection = function wrapSection(options) {
       if (node.type === 'section') {
         newCell = null;
         cells.push(node);
+      } else if (node.type === 'list') {
+        var listSection = {
+          type: 'section',
+          data: {
+            // id: start.data.id,
+            hName: 'section',
+            hProperties: {// href: start.data.id
+            }
+          },
+          position: {
+            start: start.position.start,
+            end: end ? end.position.end : nodes[nodes.length - 1].position.end
+          },
+          children: (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__.default)(node.children)
+        };
+        cells.push(listSection);
       } else if (node.type === 'code') {
         newCell = null;
         var singleCell = {
