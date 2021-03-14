@@ -22275,7 +22275,21 @@ var wrapSection = function wrapSection(options) {
 
       if (node.type === 'section') {}
 
-      if (node.type === 'code') {}
+      if (node.type === 'code') {
+        var singleCell = {
+          type: 'cell',
+          position: node.position,
+          data: {
+            hName: 'cell',
+            hProperties: {
+              "class": 'cell',
+              "data-symbol": symbolFromPos(node.position.start)
+            }
+          },
+          children: [node]
+        };
+        cells.push(singleCell);
+      }
 
       if (node.type !== 'section' && node.type !== 'code') {
         if (newCell) {

@@ -29,7 +29,19 @@ const wrapSection = options => (start, nodes, end) => {
     }
 
     if (node.type === 'code') {
-
+       let singleCell = {
+          type: 'cell',
+          position: node.position,
+          data: {
+            hName: 'cell',
+            hProperties: {
+              class: 'cell',
+              "data-symbol": symbolFromPos(node.position.start)
+            }
+          },
+          children: [node]
+        }
+        cells.push(singleCell)
     }
 
     if (node.type !== 'section' && node.type !== 'code') {
