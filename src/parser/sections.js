@@ -41,12 +41,7 @@ const wrapSection = options => (start, nodes, end) => {
       }
     },
     position: node.position,
-    children: [
-      // Mark that heading as having been mutated, 
-      // otherwise we'd be processing the same header 
-      // over and over (infinite loop)
-      ...node.children
-    ]
+    children: [node]
   }
 
      cells.push(listSection)
