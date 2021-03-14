@@ -22273,9 +22273,11 @@ var wrapSection = function wrapSection(options) {
 
       (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.level)(3, _utils_console__WEBPACK_IMPORTED_MODULE_6__.log)("[Sections] child: ", node.type);
 
-      if (node.type === 'section') {}
-
-      if (node.type === 'code') {
+      if (node.type === 'section') {
+        newCell = null;
+        cells.push(node);
+      } else if (node.type === 'code') {
+        newCell = null;
         var singleCell = {
           type: 'cell',
           position: node.position,
@@ -22289,9 +22291,7 @@ var wrapSection = function wrapSection(options) {
           children: [node]
         };
         cells.push(singleCell);
-      }
-
-      if (node.type !== 'section' && node.type !== 'code') {
+      } else {
         if (newCell) {
           newCell.children.push(node);
           newCell.position.end = node.position.end;
@@ -22310,12 +22310,6 @@ var wrapSection = function wrapSection(options) {
           };
           cells.push(newCell);
         }
-      } else {
-        if (newCell) {
-          newCell = null;
-        }
-
-        cells.push(node);
       }
     });
     return [{
