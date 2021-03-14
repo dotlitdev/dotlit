@@ -28,7 +28,8 @@ const wrapSection = options => (start, nodes, end) => {
 
     }
 
-    if (node.type === 'code') {
+    else if (node.type === 'code') {
+       newCell = null
        let singleCell = {
           type: 'cell',
           position: node.position,
@@ -44,7 +45,7 @@ const wrapSection = options => (start, nodes, end) => {
         cells.push(singleCell)
     }
 
-    if (node.type !== 'section' && node.type !== 'code') {
+    else {
       if (newCell) {
         newCell.children.push(node)
         newCell.position.end = node.position.end
