@@ -22286,7 +22286,7 @@ var wrapSection = function wrapSection(options) {
             }
           },
           position: node.position,
-          children: (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__.default)(node.children)
+          children: [node]
         };
         cells.push(listSection);
       } else if (node.type === 'code') {
