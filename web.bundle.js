@@ -22285,10 +22285,7 @@ var wrapSection = function wrapSection(options) {
             hProperties: {// href: start.data.id
             }
           },
-          position: {
-            start: start.position.start,
-            end: end ? end.position.end : nodes[nodes.length - 1].position.end
-          },
+          position: node.position,
           children: (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__.default)(node.children)
         };
         cells.push(listSection);

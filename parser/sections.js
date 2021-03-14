@@ -40,10 +40,7 @@ const wrapSection = options => (start, nodes, end) => {
         // href: start.data.id
       }
     },
-    position: {
-      start: start.position.start,
-      end: end ? end.position.end : nodes[nodes.length - 1].position.end
-    },
+    position: node.position,
     children: [
       // Mark that heading as having been mutated, 
       // otherwise we'd be processing the same header 
