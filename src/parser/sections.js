@@ -25,7 +25,8 @@ const wrapSection = options => (start, nodes, end) => {
     level(3, log)( "[Sections] child: ", node.type)
 
     if (node.type === 'section') {
-
+       newCell = null
+       cells.push(node)
     }
 
     else if (node.type === 'code') {
@@ -64,11 +65,6 @@ const wrapSection = options => (start, nodes, end) => {
         }
         cells.push(newCell)
       }
-    } else {
-      if (newCell) { 
-        newCell = null
-      }
-      cells.push(node)
     }
   })
 
