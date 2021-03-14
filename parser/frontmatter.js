@@ -6,7 +6,7 @@ import yaml from 'js-yaml'
 import {log, level} from '../utils/console'
 import { notEqual } from 'assert'
 
-const FRONTMATTER_OPEN = '<!--'
+const FRONTMATTER_OPEN = '<!-- data'
 const FRONTMATTER_CLOSE = '-->'
 
 export default function (...args) {

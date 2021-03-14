@@ -547,29 +547,43 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-/// An instance of this is passed to completion source functions.
+/**
+An instance of this is passed to completion source functions.
+*/
 class CompletionContext {
-    /// Create a new completion context. (Mostly useful for testing
-    /// completion sources—in the editor, the extension will create
-    /// these for you.)
+    /**
+    Create a new completion context. (Mostly useful for testing
+    completion sources—in the editor, the extension will create
+    these for you.)
+    */
     constructor(
-    /// The editor state that the completion happens in.
+    /**
+    The editor state that the completion happens in.
+    */
     state, 
-    /// The position at which the completion is happening.
+    /**
+    The position at which the completion is happening.
+    */
     pos, 
-    /// Indicates whether completion was activated explicitly, or
-    /// implicitly by typing. The usual way to respond to this is to
-    /// only return completions when either there is part of a
-    /// completable entity before the cursor, or `explicit` is true.
+    /**
+    Indicates whether completion was activated explicitly, or
+    implicitly by typing. The usual way to respond to this is to
+    only return completions when either there is part of a
+    completable entity before the cursor, or `explicit` is true.
+    */
     explicit) {
         this.state = state;
         this.pos = pos;
         this.explicit = explicit;
-        /// @internal
+        /**
+        @internal
+        */
         this.abortListeners = [];
     }
-    /// Get the extent, content, and (if there is a token) type of the
-    /// token before `this.pos`.
+    /**
+    Get the extent, content, and (if there is a token) type of the
+    token before `this.pos`.
+    */
     tokenBefore(types) {
         let token = (0,_codemirror_language__WEBPACK_IMPORTED_MODULE_0__.syntaxTree)(this.state).resolve(this.pos, -1);
         while (token && types.indexOf(token.name) < 0)
@@ -578,8 +592,10 @@ class CompletionContext {
             text: this.state.sliceDoc(token.from, this.pos),
             type: token.type } : null;
     }
-    /// Get the match of the given expression directly before the
-    /// cursor.
+    /**
+    Get the match of the given expression directly before the
+    cursor.
+    */
     matchBefore(expr) {
         let line = this.state.doc.lineAt(this.pos);
         let start = Math.max(line.from, this.pos - 250);
@@ -587,12 +603,16 @@ class CompletionContext {
         let found = str.search(ensureAnchor(expr, false));
         return found < 0 ? null : { from: start + found, to: this.pos, text: str.slice(found) };
     }
-    /// Yields true when the query has been aborted. Can be useful in
-    /// asynchronous queries to avoid doing work that will be ignored.
+    /**
+    Yields true when the query has been aborted. Can be useful in
+    asynchronous queries to avoid doing work that will be ignored.
+    */
     get aborted() { return this.abortListeners == null; }
-    /// Allows you to register abort handlers, which will be called when
-    /// the query is
-    /// [aborted](#autocomplete.CompletionContext.aborted).
+    /**
+    Allows you to register abort handlers, which will be called when
+    the query is
+    [aborted](https://codemirror.net/6/docs/ref/#autocomplete.CompletionContext.aborted).
+    */
     addEventListener(type, listener) {
         if (type == "abort" && this.abortListeners)
             this.abortListeners.push(listener);
@@ -615,8 +635,10 @@ function prefixMatch(options) {
     let source = toSet(first) + toSet(rest) + "*$";
     return [new RegExp("^" + source), new RegExp(source)];
 }
-/// Given a a fixed array of options, return an autocompleter that
-/// completes them.
+/**
+Given a a fixed array of options, return an autocompleter that
+completes them.
+*/
 function completeFromList(list) {
     let options = list.map(o => typeof o == "string" ? { label: o } : o);
     let [span, match] = options.every(o => /^\w+$/.test(o.label)) ? [/\w*$/, /\w+$/] : prefixMatch(options);
@@ -625,8 +647,10 @@ function completeFromList(list) {
         return token || context.explicit ? { from: token ? token.from : context.pos, options, span } : null;
     };
 }
-/// Wrap the given completion source so that it will not fire when the
-/// cursor is in a syntax node with one of the given names.
+/**
+Wrap the given completion source so that it will not fire when the
+cursor is in a syntax node with one of the given names.
+*/
 function ifNotIn(nodes, source) {
     return (context) => {
         for (let pos = (0,_codemirror_language__WEBPACK_IMPORTED_MODULE_0__.syntaxTree)(context.state).resolve(context.pos, -1); pos; pos = pos.parent)
@@ -815,8 +839,10 @@ const baseTheme = _codemirror_view__WEBPACK_IMPORTED_MODULE_3__.EditorView.baseT
     ".cm-tooltip.cm-tooltip-autocomplete": {
         "& > ul": {
             fontFamily: "monospace",
-            overflowY: "auto",
             whiteSpace: "nowrap",
+            overflow: "auto",
+            maxWidth_fallback: "700px",
+            maxWidth: "min(700px, 95vw)",
             maxHeight: "10em",
             listStyle: "none",
             margin: 0,
@@ -948,14 +974,20 @@ function createListBox(options, id, range) {
         ul.classList.add("cm-completionListIncompleteBottom");
     return ul;
 }
-function createInfoDialog(option) {
+function createInfoDialog(option, view) {
     let dom = document.createElement("div");
     dom.className = "cm-tooltip cm-completionInfo";
     let { info } = option.completion;
-    if (typeof info == "string")
+    if (typeof info == "string") {
         dom.textContent = info;
-    else
-        dom.appendChild(info(option.completion));
+    }
+    else {
+        let content = info(option.completion);
+        if (content.then)
+            content.then(node => dom.appendChild(node), e => (0,_codemirror_view__WEBPACK_IMPORTED_MODULE_3__.logException)(view.state, e, "completion info"));
+        else
+            dom.appendChild(content);
+    }
     return dom;
 }
 function rangeAroundSelected(total, selected, max) {
@@ -1025,7 +1057,7 @@ class CompletionTooltip {
             }
             let option = open.options[open.selected];
             if (option.completion.info) {
-                this.info = this.dom.appendChild(createInfoDialog(option));
+                this.info = this.dom.appendChild(createInfoDialog(option, this.view));
                 this.view.requestMeasure(this.placeInfo);
             }
         }
@@ -1174,6 +1206,8 @@ class CompletionState {
         let open = tr.selection || active.some(a => a.hasResult() && tr.changes.touchesRange(a.from, a.to)) ||
             !sameResults(active, this.active) ? CompletionDialog.build(active, state, this.id, this.open)
             : this.open && tr.docChanged ? this.open.map(tr.changes) : this.open;
+        if (!open && active.every(a => a.state != 1 /* Pending */) && active.some(a => a.hasResult()))
+            active = active.map(a => a.hasResult() ? new ActiveSource(a.source, 0 /* Inactive */, false) : a);
         for (let effect of tr.effects)
             if (effect.is(setSelectedEffect))
                 open = open && open.setSelected(effect.value, this.id);
@@ -1289,8 +1323,10 @@ const completionState = _codemirror_state__WEBPACK_IMPORTED_MODULE_2__.StateFiel
 });
 
 const CompletionInteractMargin = 75;
-/// Returns a command that moves the completion selection forward or
-/// backward by the given amount.
+/**
+Returns a command that moves the completion selection forward or
+backward by the given amount.
+*/
 function moveCompletionSelection(forward, by = "option") {
     return (view) => {
         let cState = view.state.field(completionState, false);
@@ -1308,7 +1344,9 @@ function moveCompletionSelection(forward, by = "option") {
         return true;
     };
 }
-/// Accept the current completion.
+/**
+Accept the current completion.
+*/
 const acceptCompletion = (view) => {
     let cState = view.state.field(completionState, false);
     if (!cState || !cState.open || Date.now() - cState.open.timestamp < CompletionInteractMargin)
@@ -1316,7 +1354,9 @@ const acceptCompletion = (view) => {
     applyCompletion(view, cState.open.options[cState.open.selected]);
     return true;
 };
-/// Explicitly start autocompletion.
+/**
+Explicitly start autocompletion.
+*/
 const startCompletion = (view) => {
     let cState = view.state.field(completionState, false);
     if (!cState)
@@ -1324,7 +1364,9 @@ const startCompletion = (view) => {
     view.dispatch({ effects: startCompletionEffect.of(true) });
     return true;
 };
-/// Close the currently active completion.
+/**
+Close the currently active completion.
+*/
 const closeCompletion = (view) => {
     let cState = view.state.field(completionState, false);
     if (!cState || !cState.active.some(a => a.state != 0 /* Inactive */))
@@ -1592,29 +1634,31 @@ const snippetState = _codemirror_state__WEBPACK_IMPORTED_MODULE_2__.StateField.d
 function fieldSelection(ranges, field) {
     return _codemirror_state__WEBPACK_IMPORTED_MODULE_2__.EditorSelection.create(ranges.filter(r => r.field == field).map(r => _codemirror_state__WEBPACK_IMPORTED_MODULE_2__.EditorSelection.range(r.from, r.to)));
 }
-/// Convert a snippet template to a function that can apply it.
-/// Snippets are written using syntax like this:
-///
-///     "for (let ${index} = 0; ${index} < ${end}; ${index}++) {\n\t${}\n}"
-///
-/// Each `${}` placeholder (you may also use `#{}`) indicates a field
-/// that the user can fill in. Its name, if any, will be the default
-/// content for the field.
-///
-/// When the snippet is activated by calling the returned function,
-/// the code is inserted at the given position. Newlines in the
-/// template are indented by the indentation of the start line, plus
-/// one [indent unit](#language.indentUnit) per tab character after
-/// the newline.
-///
-/// On activation, (all instances of) the first field are selected.
-/// The user can move between fields with Tab and Shift-Tab as long as
-/// the fields are active. Moving to the last field or moving the
-/// cursor out of the current field deactivates the fields.
-///
-/// The order of fields defaults to textual order, but you can add
-/// numbers to placeholders (`${1}` or `${1:defaultText}`) to provide
-/// a custom order.
+/**
+Convert a snippet template to a function that can apply it.
+Snippets are written using syntax like this:
+
+    "for (let ${index} = 0; ${index} < ${end}; ${index}++) {\n\t${}\n}"
+
+Each `${}` placeholder (you may also use `#{}`) indicates a field
+that the user can fill in. Its name, if any, will be the default
+content for the field.
+
+When the snippet is activated by calling the returned function,
+the code is inserted at the given position. Newlines in the
+template are indented by the indentation of the start line, plus
+one [indent unit](https://codemirror.net/6/docs/ref/#language.indentUnit) per tab character after
+the newline.
+
+On activation, (all instances of) the first field are selected.
+The user can move between fields with Tab and Shift-Tab as long as
+the fields are active. Moving to the last field or moving the
+cursor out of the current field deactivates the fields.
+
+The order of fields defaults to textual order, but you can add
+numbers to placeholders (`${1}` or `${1:defaultText}`) to provide
+a custom order.
+*/
 function snippet(template) {
     let snippet = Snippet.parse(template);
     return (editor, _completion, from, to) => {
@@ -1643,7 +1687,9 @@ function moveField(dir) {
         return true;
     };
 }
-/// A command that clears the active snippet, if any.
+/**
+A command that clears the active snippet, if any.
+*/
 const clearSnippet = ({ state, dispatch }) => {
     let active = state.field(snippetState, false);
     if (!active)
@@ -1651,26 +1697,34 @@ const clearSnippet = ({ state, dispatch }) => {
     dispatch(state.update({ effects: setActive.of(null) }));
     return true;
 };
-/// Move to the next snippet field, if available.
+/**
+Move to the next snippet field, if available.
+*/
 const nextSnippetField = moveField(1);
-/// Move to the previous snippet field, if available.
+/**
+Move to the previous snippet field, if available.
+*/
 const prevSnippetField = moveField(-1);
 const defaultSnippetKeymap = [
     { key: "Tab", run: nextSnippetField, shift: prevSnippetField },
     { key: "Escape", run: clearSnippet }
 ];
-/// A facet that can be used to configure the key bindings used by
-/// snippets. The default binds Tab to
-/// [`nextSnippetField`](#autocomplete.nextSnippetField), Shift-Tab to
-/// [`prevSnippetField`](#autocomplete.prevSnippetField), and Escape
-/// to [`clearSnippet`](#autocomplete.clearSnippet).
+/**
+A facet that can be used to configure the key bindings used by
+snippets. The default binds Tab to
+[`nextSnippetField`](https://codemirror.net/6/docs/ref/#autocomplete.nextSnippetField), Shift-Tab to
+[`prevSnippetField`](https://codemirror.net/6/docs/ref/#autocomplete.prevSnippetField), and Escape
+to [`clearSnippet`](https://codemirror.net/6/docs/ref/#autocomplete.clearSnippet).
+*/
 const snippetKeymap = _codemirror_state__WEBPACK_IMPORTED_MODULE_2__.Facet.define({
     combine(maps) { return maps.length ? maps[0] : defaultSnippetKeymap; }
 });
 const addSnippetKeymap = _codemirror_state__WEBPACK_IMPORTED_MODULE_2__.Prec.override(_codemirror_view__WEBPACK_IMPORTED_MODULE_3__.keymap.compute([snippetKeymap], state => state.facet(snippetKeymap)));
-/// Create a completion from a snippet. Returns an object with the
-/// properties from `completion`, plus an `apply` function that
-/// applies the snippet.
+/**
+Create a completion from a snippet. Returns an object with the
+properties from `completion`, plus an `apply` function that
+applies the snippet.
+*/
 function snippetCompletion(template, completion) {
     return Object.assign(Object.assign({}, completion), { apply: snippet(template) });
 }
@@ -1690,9 +1744,11 @@ const snippetPointerHandler = _codemirror_view__WEBPACK_IMPORTED_MODULE_3__.Edit
     }
 });
 
-/// A completion source that will scan the document for words (using a
-/// [character categorizer](#state.EditorState.charCategorizer)), and
-/// return those as completions.
+/**
+A completion source that will scan the document for words (using a
+[character categorizer](https://codemirror.net/6/docs/ref/#state.EditorState.charCategorizer)), and
+return those as completions.
+*/
 const completeAnyWord = context => {
     let options = [], seen = Object.create(null);
     let cat = context.state.charCategorizer(context.pos);
@@ -1726,7 +1782,9 @@ const completeAnyWord = context => {
     return { from, options, span: /^\w*/ };
 };
 
-/// Returns an extension that enables autocompletion.
+/**
+Returns an extension that enables autocompletion.
+*/
 function autocompletion(config = {}) {
     return [
         completionState,
@@ -1737,15 +1795,17 @@ function autocompletion(config = {}) {
         (0,_codemirror_tooltip__WEBPACK_IMPORTED_MODULE_4__.tooltips)()
     ];
 }
-/// Basic keybindings for autocompletion.
-///
-///  - Ctrl-Space: [`startCompletion`](#autocomplete.startCompletion)
-///  - Escape: [`closeCompletion`](#autocomplete.closeCompletion)
-///  - ArrowDown: [`moveCompletionSelection`](#autocomplete.moveCompletionSelection)`(true)`
-///  - ArrowUp: [`moveCompletionSelection`](#autocomplete.moveCompletionSelection)`(false)`
-///  - PageDown: [`moveCompletionSelection`](#autocomplete.moveCompletionSelection)`(true, "page")`
-///  - PageDown: [`moveCompletionSelection`](#autocomplete.moveCompletionSelection)`(true, "page")`
-///  - Enter: [`acceptCompletion`](#autocomplete.acceptCompletion)
+/**
+Basic keybindings for autocompletion.
+
+ - Ctrl-Space: [`startCompletion`](https://codemirror.net/6/docs/ref/#autocomplete.startCompletion)
+ - Escape: [`closeCompletion`](https://codemirror.net/6/docs/ref/#autocomplete.closeCompletion)
+ - ArrowDown: [`moveCompletionSelection`](https://codemirror.net/6/docs/ref/#autocomplete.moveCompletionSelection)`(true)`
+ - ArrowUp: [`moveCompletionSelection`](https://codemirror.net/6/docs/ref/#autocomplete.moveCompletionSelection)`(false)`
+ - PageDown: [`moveCompletionSelection`](https://codemirror.net/6/docs/ref/#autocomplete.moveCompletionSelection)`(true, "page")`
+ - PageDown: [`moveCompletionSelection`](https://codemirror.net/6/docs/ref/#autocomplete.moveCompletionSelection)`(true, "page")`
+ - Enter: [`acceptCompletion`](https://codemirror.net/6/docs/ref/#autocomplete.acceptCompletion)
+*/
 const completionKeymap = [
     { key: "Ctrl-Space", run: startCompletion },
     { key: "Escape", run: closeCompletion },
@@ -1756,16 +1816,20 @@ const completionKeymap = [
     { key: "Enter", run: acceptCompletion }
 ];
 const completionKeymapExt = _codemirror_state__WEBPACK_IMPORTED_MODULE_2__.Prec.override(_codemirror_view__WEBPACK_IMPORTED_MODULE_3__.keymap.computeN([completionConfig], state => state.facet(completionConfig).defaultKeymap ? [completionKeymap] : []));
-/// Get the current completion status. When completions are available,
-/// this will return `"active"`. When completions are pending (in the
-/// process of being queried), this returns `"pending"`. Otherwise, it
-/// returns `null`.
+/**
+Get the current completion status. When completions are available,
+this will return `"active"`. When completions are pending (in the
+process of being queried), this returns `"pending"`. Otherwise, it
+returns `null`.
+*/
 function completionStatus(state) {
     let cState = state.field(completionState, false);
     return cState && cState.active.some(a => a.state == 1 /* Pending */) ? "pending"
         : cState && cState.active.some(a => a.state != 0 /* Inactive */) ? "active" : null;
 }
-/// Returns the available completions as an array.
+/**
+Returns the available completions as an array.
+*/
 function currentCompletions(state) {
     var _a;
     let open = (_a = state.field(completionState, false)) === null || _a === void 0 ? void 0 : _a.open;
@@ -8282,42 +8346,62 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const DefaultSplit = /\r\n?|\n/;
-/// Distinguishes different ways in which positions can be mapped.
+/**
+Distinguishes different ways in which positions can be mapped.
+*/
 var MapMode;
 (function (MapMode) {
-    /// Map a position to a valid new position, even when its context
-    /// was deleted.
+    /**
+    Map a position to a valid new position, even when its context
+    was deleted.
+    */
     MapMode[MapMode["Simple"] = 0] = "Simple";
-    /// Return null if deletion happens across the position.
+    /**
+    Return null if deletion happens across the position.
+    */
     MapMode[MapMode["TrackDel"] = 1] = "TrackDel";
-    /// Return null if the character _before_ the position is deleted.
+    /**
+    Return null if the character _before_ the position is deleted.
+    */
     MapMode[MapMode["TrackBefore"] = 2] = "TrackBefore";
-    /// Return null if the character _after_ the position is deleted.
+    /**
+    Return null if the character _after_ the position is deleted.
+    */
     MapMode[MapMode["TrackAfter"] = 3] = "TrackAfter";
 })(MapMode || (MapMode = {}));
-/// A change description is a variant of [change set](#state.ChangeSet)
-/// that doesn't store the inserted text. As such, it can't be
-/// applied, but is cheaper to store and manipulate.
+/**
+A change description is a variant of [change set](https://codemirror.net/6/docs/ref/#state.ChangeSet)
+that doesn't store the inserted text. As such, it can't be
+applied, but is cheaper to store and manipulate.
+*/
 class ChangeDesc {
     // Sections are encoded as pairs of integers. The first is the
     // length in the current document, and the second is -1 for
     // unaffected sections, and the length of the replacement content
     // otherwise. So an insertion would be (0, n>0), a deletion (n>0,
     // 0), and a replacement two positive numbers.
-    /// @internal
+    /**
+    @internal
+    */
     constructor(
-    /// @internal
+    /**
+    @internal
+    */
     sections) {
         this.sections = sections;
     }
-    /// The length of the document before the change.
+    /**
+    The length of the document before the change.
+    */
     get length() {
         let result = 0;
         for (let i = 0; i < this.sections.length; i += 2)
             result += this.sections[i];
         return result;
     }
-    /// The length of the document after the change.
+    /**
+    The length of the document after the change.
+    */
     get newLength() {
         let result = 0;
         for (let i = 0; i < this.sections.length; i += 2) {
@@ -8326,9 +8410,13 @@ class ChangeDesc {
         }
         return result;
     }
-    /// False when there are actual changes in this set.
+    /**
+    False when there are actual changes in this set.
+    */
     get empty() { return this.sections.length == 0 || this.sections.length == 2 && this.sections[1] < 0; }
-    /// Iterate over the unchanged parts left by these changes.
+    /**
+    Iterate over the unchanged parts left by these changes.
+    */
     iterGaps(f) {
         for (let i = 0, posA = 0, posB = 0; i < this.sections.length;) {
             let len = this.sections[i++], ins = this.sections[i++];
@@ -8342,17 +8430,21 @@ class ChangeDesc {
             posA += len;
         }
     }
-    /// Iterate over the ranges changed by these changes. (See
-    /// [`ChangeSet.iterChanges`](#state.ChangeSet.iterChanges) for a
-    /// variant that also provides you with the inserted text.)
-    ///
-    /// When `individual` is true, adjacent changes (which are kept
-    /// separate for [position mapping](#state.ChangeDesc.mapPos)) are
-    /// reported separately.
+    /**
+    Iterate over the ranges changed by these changes. (See
+    [`ChangeSet.iterChanges`](https://codemirror.net/6/docs/ref/#state.ChangeSet.iterChanges) for a
+    variant that also provides you with the inserted text.)
+    
+    When `individual` is true, adjacent changes (which are kept
+    separate for [position mapping](https://codemirror.net/6/docs/ref/#state.ChangeDesc.mapPos)) are
+    reported separately.
+    */
     iterChangedRanges(f, individual = false) {
         iterChanges(this, f, individual);
     }
-    /// Get a description of the inverted form of these changes.
+    /**
+    Get a description of the inverted form of these changes.
+    */
     get invertedDesc() {
         let sections = [];
         for (let i = 0; i < this.sections.length;) {
@@ -8364,14 +8456,18 @@ class ChangeDesc {
         }
         return new ChangeDesc(sections);
     }
-    /// Compute the combined effect of applying another set of changes
-    /// after this one. The length of the document after this set should
-    /// match the length before `other`.
+    /**
+    Compute the combined effect of applying another set of changes
+    after this one. The length of the document after this set should
+    match the length before `other`.
+    */
     composeDesc(other) { return this.empty ? other : other.empty ? this : composeSets(this, other); }
-    /// Map this description, which should start with the same document
-    /// as `other`, over another set of changes, so that it can be
-    /// applied after it. When `before` is true, map as if the changes
-    /// in `other` happened before the ones in `this`.
+    /**
+    Map this description, which should start with the same document
+    as `other`, over another set of changes, so that it can be
+    applied after it. When `before` is true, map as if the changes
+    in `other` happened before the ones in `this`.
+    */
     mapDesc(other, before = false) { return other.empty ? this : mapSet(this, other, before); }
     mapPos(pos, assoc = -1, mode = MapMode.Simple) {
         let posA = 0, posB = 0;
@@ -8398,9 +8494,11 @@ class ChangeDesc {
             throw new RangeError(`Position ${pos} is out of range for changeset of length ${posA}`);
         return posB;
     }
-    /// Check whether these changes touch a given range. When one of the
-    /// changes entirely covers the range, the string `"cover"` is
-    /// returned.
+    /**
+    Check whether these changes touch a given range. When one of the
+    changes entirely covers the range, the string `"cover"` is
+    returned.
+    */
     touchesRange(from, to = from) {
         for (let i = 0, pos = 0; i < this.sections.length && pos <= to;) {
             let len = this.sections[i++], ins = this.sections[i++], end = pos + len;
@@ -8410,7 +8508,9 @@ class ChangeDesc {
         }
         return false;
     }
-    /// @internal
+    /**
+    @internal
+    */
     toString() {
         let result = "";
         for (let i = 0; i < this.sections.length;) {
@@ -8420,19 +8520,27 @@ class ChangeDesc {
         return result;
     }
 }
-/// A change set represents a group of modifications to a document. It
-/// stores the document length, and can only be applied to documents
-/// with exactly that length.
+/**
+A change set represents a group of modifications to a document. It
+stores the document length, and can only be applied to documents
+with exactly that length.
+*/
 class ChangeSet extends ChangeDesc {
-    /// @internal
+    /**
+    @internal
+    */
     constructor(sections, 
-    /// @internal
+    /**
+    @internal
+    */
     inserted) {
         super(sections);
         this.inserted = inserted;
     }
-    /// Apply the changes to a document, returning the modified
-    /// document.
+    /**
+    Apply the changes to a document, returning the modified
+    document.
+    */
     apply(doc) {
         if (this.length != doc.length)
             throw new RangeError("Applying change set to a document with the wrong length");
@@ -8440,10 +8548,12 @@ class ChangeSet extends ChangeDesc {
         return doc;
     }
     mapDesc(other, before = false) { return mapSet(this, other, before, true); }
-    /// Given the document as it existed _before_ the changes, return a
-    /// change set that represents the inverse of this set, which could
-    /// be used to go from the document created by the changes back to
-    /// the document as it existed before the changes.
+    /**
+    Given the document as it existed _before_ the changes, return a
+    change set that represents the inverse of this set, which could
+    be used to go from the document created by the changes back to
+    the document as it existed before the changes.
+    */
     invert(doc) {
         let sections = this.sections.slice(), inserted = [];
         for (let i = 0, pos = 0; i < sections.length; i += 2) {
@@ -8460,35 +8570,45 @@ class ChangeSet extends ChangeDesc {
         }
         return new ChangeSet(sections, inserted);
     }
-    /// Combine two subsequent change sets into a single set. `other`
-    /// must start in the document produced by `this`. If `this` goes
-    /// `docA` → `docB` and `other` represents `docB` → `docC`, the
-    /// returned value will represent the change `docA` → `docC`.
+    /**
+    Combine two subsequent change sets into a single set. `other`
+    must start in the document produced by `this`. If `this` goes
+    `docA` → `docB` and `other` represents `docB` → `docC`, the
+    returned value will represent the change `docA` → `docC`.
+    */
     compose(other) { return this.empty ? other : other.empty ? this : composeSets(this, other, true); }
-    /// Given another change set starting in the same document, maps this
-    /// change set over the other, producing a new change set that can be
-    /// applied to the document produced by applying `other`. When
-    /// `before` is `true`, order changes as if `this` comes before
-    /// `other`, otherwise (the default) treat `other` as coming first.
-    ///
-    /// Given two changes `A` and `B`, `A.compose(B.map(A))` and
-    /// `B.compose(A.map(B, true))` will produce the same document. This
-    /// provides a basic form of [operational
-    /// transformation](https://en.wikipedia.org/wiki/Operational_transformation),
-    /// and can be used for collaborative editing.
+    /**
+    Given another change set starting in the same document, maps this
+    change set over the other, producing a new change set that can be
+    applied to the document produced by applying `other`. When
+    `before` is `true`, order changes as if `this` comes before
+    `other`, otherwise (the default) treat `other` as coming first.
+    
+    Given two changes `A` and `B`, `A.compose(B.map(A))` and
+    `B.compose(A.map(B, true))` will produce the same document. This
+    provides a basic form of [operational
+    transformation](https://en.wikipedia.org/wiki/Operational_transformation),
+    and can be used for collaborative editing.
+    */
     map(other, before = false) { return other.empty ? this : mapSet(this, other, before, true); }
-    /// Iterate over the changed ranges in the document, calling `f` for
-    /// each.
-    ///
-    /// When `individual` is true, adjacent changes are reported
-    /// separately.
+    /**
+    Iterate over the changed ranges in the document, calling `f` for
+    each.
+    
+    When `individual` is true, adjacent changes are reported
+    separately.
+    */
     iterChanges(f, individual = false) {
         iterChanges(this, f, individual);
     }
-    /// Get a [change description](#state.ChangeDesc) for this change
-    /// set.
+    /**
+    Get a [change description](https://codemirror.net/6/docs/ref/#state.ChangeDesc) for this change
+    set.
+    */
     get desc() { return new ChangeDesc(this.sections); }
-    /// @internal
+    /**
+    @internal
+    */
     filter(ranges) {
         let resultSections = [], resultInserted = [], filteredSections = [];
         let iter = new SectionIter(this);
@@ -8520,7 +8640,9 @@ class ChangeSet extends ChangeDesc {
         return { changes: new ChangeSet(resultSections, resultInserted),
             filtered: new ChangeDesc(filteredSections) };
     }
-    /// Serialize this change set to a JSON-representable value.
+    /**
+    Serialize this change set to a JSON-representable value.
+    */
     toJSON() {
         let parts = [];
         for (let i = 0; i < this.sections.length; i += 2) {
@@ -8534,8 +8656,10 @@ class ChangeSet extends ChangeDesc {
         }
         return parts;
     }
-    /// Create a change set for the given changes, for a document of the
-    /// given length, using `lineSep` as line separator.
+    /**
+    Create a change set for the given changes, for a document of the
+    given length, using `lineSep` as line separator.
+    */
     static of(changes, length, lineSep) {
         let sections = [], inserted = [], pos = 0;
         let total = null;
@@ -8582,12 +8706,16 @@ class ChangeSet extends ChangeDesc {
         flush(!total);
         return total;
     }
-    /// Create an empty changeset of the given length.
+    /**
+    Create an empty changeset of the given length.
+    */
     static empty(length) {
         return new ChangeSet(length ? [length, -1] : [], []);
     }
-    /// Create a changeset from its JSON representation (as produced by
-    /// [`toJSON`](#state.ChangeSet.toJSON).
+    /**
+    Create a changeset from its JSON representation (as produced by
+    [`toJSON`](https://codemirror.net/6/docs/ref/#state.ChangeSet.toJSON).
+    */
     static fromJSON(json) {
         if (!Array.isArray(json))
             throw new RangeError("Invalid JSON representation of ChangeSet");
@@ -8816,96 +8944,138 @@ class SectionIter {
     }
 }
 
-/// A single selection range. When
-/// [`allowMultipleSelections`](#state.EditorState^allowMultipleSelections)
-/// is enabled, a [selection](#state.EditorSelection) may hold
-/// multiple ranges. By default, selections hold exactly one range.
+/**
+A single selection range. When
+[`allowMultipleSelections`](https://codemirror.net/6/docs/ref/#state.EditorState^allowMultipleSelections)
+is enabled, a [selection](https://codemirror.net/6/docs/ref/#state.EditorSelection) may hold
+multiple ranges. By default, selections hold exactly one range.
+*/
 class SelectionRange {
-    /// @internal
+    /**
+    @internal
+    */
     constructor(
-    /// The lower boundary of the range.
+    /**
+    The lower boundary of the range.
+    */
     from, 
-    /// The upper boundary of the range.
+    /**
+    The upper boundary of the range.
+    */
     to, flags) {
         this.from = from;
         this.to = to;
         this.flags = flags;
     }
-    /// The anchor of the range—the side that doesn't move when you
-    /// extend it.
+    /**
+    The anchor of the range—the side that doesn't move when you
+    extend it.
+    */
     get anchor() { return this.flags & 16 /* Inverted */ ? this.to : this.from; }
-    /// The head of the range, which is moved when the range is
-    /// [extended](#state.SelectionRange.extend).
+    /**
+    The head of the range, which is moved when the range is
+    [extended](https://codemirror.net/6/docs/ref/#state.SelectionRange.extend).
+    */
     get head() { return this.flags & 16 /* Inverted */ ? this.from : this.to; }
-    /// True when `anchor` and `head` are at the same position.
+    /**
+    True when `anchor` and `head` are at the same position.
+    */
     get empty() { return this.from == this.to; }
-    /// If this is a cursor that is explicitly associated with the
-    /// character on one of its sides, this returns the side. -1 means
-    /// the character before its position, 1 the character after, and 0
-    /// means no association.
+    /**
+    If this is a cursor that is explicitly associated with the
+    character on one of its sides, this returns the side. -1 means
+    the character before its position, 1 the character after, and 0
+    means no association.
+    */
     get assoc() { return this.flags & 4 /* AssocBefore */ ? -1 : this.flags & 8 /* AssocAfter */ ? 1 : 0; }
-    /// The bidirectional text level associated with this cursor, if
-    /// any.
+    /**
+    The bidirectional text level associated with this cursor, if
+    any.
+    */
     get bidiLevel() {
         let level = this.flags & 3 /* BidiLevelMask */;
         return level == 3 ? null : level;
     }
-    /// The goal column (stored vertical offset) associated with a
-    /// cursor. This is used to preserve the vertical position when
-    /// [moving](#view.EditorView.moveVertically) across
-    /// lines of different length.
+    /**
+    The goal column (stored vertical offset) associated with a
+    cursor. This is used to preserve the vertical position when
+    [moving](https://codemirror.net/6/docs/ref/#view.EditorView.moveVertically) across
+    lines of different length.
+    */
     get goalColumn() {
         let value = this.flags >> 5 /* GoalColumnOffset */;
         return value == 33554431 /* NoGoalColumn */ ? undefined : value;
     }
-    /// Map this range through a change, producing a valid range in the
-    /// updated document.
+    /**
+    Map this range through a change, producing a valid range in the
+    updated document.
+    */
     map(change, assoc = -1) {
         let from = change.mapPos(this.from, assoc), to = change.mapPos(this.to, assoc);
         return from == this.from && to == this.to ? this : new SelectionRange(from, to, this.flags);
     }
-    /// Extend this range to cover at least `from` to `to`.
+    /**
+    Extend this range to cover at least `from` to `to`.
+    */
     extend(from, to = from) {
         if (from <= this.anchor && to >= this.anchor)
             return EditorSelection.range(from, to);
         let head = Math.abs(from - this.anchor) > Math.abs(to - this.anchor) ? from : to;
         return EditorSelection.range(this.anchor, head);
     }
-    /// Compare this range to another range.
+    /**
+    Compare this range to another range.
+    */
     eq(other) {
         return this.anchor == other.anchor && this.head == other.head;
     }
-    /// Return a JSON-serializable object representing the range.
+    /**
+    Return a JSON-serializable object representing the range.
+    */
     toJSON() { return { anchor: this.anchor, head: this.head }; }
-    /// Convert a JSON representation of a range to a `SelectionRange`
-    /// instance.
+    /**
+    Convert a JSON representation of a range to a `SelectionRange`
+    instance.
+    */
     static fromJSON(json) {
         if (!json || typeof json.anchor != "number" || typeof json.head != "number")
             throw new RangeError("Invalid JSON representation for SelectionRange");
         return EditorSelection.range(json.anchor, json.head);
     }
 }
-/// An editor selection holds one or more selection ranges.
+/**
+An editor selection holds one or more selection ranges.
+*/
 class EditorSelection {
-    /// @internal
+    /**
+    @internal
+    */
     constructor(
-    /// The ranges in the selection, sorted by position. Ranges cannot
-    /// overlap (but they may touch, if they aren't empty).
+    /**
+    The ranges in the selection, sorted by position. Ranges cannot
+    overlap (but they may touch, if they aren't empty).
+    */
     ranges, 
-    /// The index of the _main_ range in the selection (which is
-    /// usually the range that was added last).
+    /**
+    The index of the _main_ range in the selection (which is
+    usually the range that was added last).
+    */
     mainIndex = 0) {
         this.ranges = ranges;
         this.mainIndex = mainIndex;
     }
-    /// Map a selection through a change. Used to adjust the selection
-    /// position for changes.
+    /**
+    Map a selection through a change. Used to adjust the selection
+    position for changes.
+    */
     map(change, assoc = -1) {
         if (change.empty)
             return this;
         return EditorSelection.create(this.ranges.map(r => r.map(change, assoc)), this.mainIndex);
     }
-    /// Compare this selection to another selection.
+    /**
+    Compare this selection to another selection.
+    */
     eq(other) {
         if (this.ranges.length != other.ranges.length ||
             this.mainIndex != other.mainIndex)
@@ -8915,43 +9085,59 @@ class EditorSelection {
                 return false;
         return true;
     }
-    /// Get the primary selection range. Usually, you should make sure
-    /// your code applies to _all_ ranges, by using methods like
-    /// [`changeByRange`](#state.EditorState.changeByRange).
+    /**
+    Get the primary selection range. Usually, you should make sure
+    your code applies to _all_ ranges, by using methods like
+    [`changeByRange`](https://codemirror.net/6/docs/ref/#state.EditorState.changeByRange).
+    */
     get main() { return this.ranges[this.mainIndex]; }
-    /// Make sure the selection only has one range. Returns a selection
-    /// holding only the main range from this selection.
+    /**
+    Make sure the selection only has one range. Returns a selection
+    holding only the main range from this selection.
+    */
     asSingle() {
         return this.ranges.length == 1 ? this : new EditorSelection([this.main]);
     }
-    /// Extend this selection with an extra range.
+    /**
+    Extend this selection with an extra range.
+    */
     addRange(range, main = true) {
         return EditorSelection.create([range].concat(this.ranges), main ? 0 : this.mainIndex + 1);
     }
-    /// Replace a given range with another range, and then normalize the
-    /// selection to merge and sort ranges if necessary.
+    /**
+    Replace a given range with another range, and then normalize the
+    selection to merge and sort ranges if necessary.
+    */
     replaceRange(range, which = this.mainIndex) {
         let ranges = this.ranges.slice();
         ranges[which] = range;
         return EditorSelection.create(ranges, this.mainIndex);
     }
-    /// Convert this selection to an object that can be serialized to
-    /// JSON.
+    /**
+    Convert this selection to an object that can be serialized to
+    JSON.
+    */
     toJSON() {
         return { ranges: this.ranges.map(r => r.toJSON()), main: this.mainIndex };
     }
-    /// Create a selection from a JSON representation.
+    /**
+    Create a selection from a JSON representation.
+    */
     static fromJSON(json) {
         if (!json || !Array.isArray(json.ranges) || typeof json.main != "number" || json.main >= json.ranges.length)
             throw new RangeError("Invalid JSON representation for EditorSelection");
         return new EditorSelection(json.ranges.map((r) => SelectionRange.fromJSON(r)), json.main);
     }
-    /// Create a selection holding a single range.
+    /**
+    Create a selection holding a single range.
+    */
     static single(anchor, head = anchor) {
         return new EditorSelection([EditorSelection.range(anchor, head)], 0);
     }
-    /// Sort and merge the given set of ranges, creating a valid
-    /// selection.
+    /**
+    Sort and merge the given set of ranges, creating a valid
+    selection.
+    */
     static create(ranges, mainIndex = 0) {
         if (ranges.length == 0)
             throw new RangeError("A selection needs at least one range");
@@ -8963,14 +9149,18 @@ class EditorSelection {
         }
         return new EditorSelection(ranges, mainIndex);
     }
-    /// Create a cursor selection range at the given position. You can
-    /// safely ignore the optional arguments in most situations.
+    /**
+    Create a cursor selection range at the given position. You can
+    safely ignore the optional arguments in most situations.
+    */
     static cursor(pos, assoc = 0, bidiLevel, goalColumn) {
         return new SelectionRange(pos, pos, (assoc == 0 ? 0 : assoc < 0 ? 4 /* AssocBefore */ : 8 /* AssocAfter */) |
             (bidiLevel == null ? 3 : Math.min(2, bidiLevel)) |
             ((goalColumn !== null && goalColumn !== void 0 ? goalColumn : 33554431 /* NoGoalColumn */) << 5 /* GoalColumnOffset */));
     }
-    /// Create a selection range.
+    /**
+    Create a selection range.
+    */
     static range(anchor, head, goalColumn) {
         let goal = (goalColumn !== null && goalColumn !== void 0 ? goalColumn : 33554431 /* NoGoalColumn */) << 5 /* GoalColumnOffset */;
         return head < anchor ? new SelectionRange(head, anchor, 16 /* Inverted */ | goal) : new SelectionRange(anchor, head, goal);
@@ -8998,56 +9188,76 @@ function checkSelection(selection, docLength) {
 }
 
 let nextID = 0;
-/// A facet is a labeled value that is associated with an editor
-/// state. It takes inputs from any number of extensions, and combines
-/// those into a single output value.
-///
-/// Examples of facets are the [theme](#view.EditorView^theme) styles
-/// associated with an editor or the [tab
-/// size](#state.EditorState^tabSize) (which is reduced to a single
-/// value, using the input with the hightest precedence).
+/**
+A facet is a labeled value that is associated with an editor
+state. It takes inputs from any number of extensions, and combines
+those into a single output value.
+
+Examples of facets are the [theme](https://codemirror.net/6/docs/ref/#view.EditorView^theme) styles
+associated with an editor or the [tab
+size](https://codemirror.net/6/docs/ref/#state.EditorState^tabSize) (which is reduced to a single
+value, using the input with the hightest precedence).
+*/
 class Facet {
     constructor(
-    /// @internal
+    /**
+    @internal
+    */
     combine, 
-    /// @internal
+    /**
+    @internal
+    */
     compareInput, 
-    /// @internal
+    /**
+    @internal
+    */
     compare, isStatic, 
-    /// @internal
+    /**
+    @internal
+    */
     extensions) {
         this.combine = combine;
         this.compareInput = compareInput;
         this.compare = compare;
         this.isStatic = isStatic;
         this.extensions = extensions;
-        /// @internal
+        /**
+        @internal
+        */
         this.id = nextID++;
         this.default = combine([]);
     }
-    /// Define a new facet.
+    /**
+    Define a new facet.
+    */
     static define(config = {}) {
         return new Facet(config.combine || ((a) => a), config.compareInput || ((a, b) => a === b), config.compare || (!config.combine ? sameArray : (a, b) => a === b), !!config.static, config.enables);
     }
-    /// Returns an extension that adds the given value for this facet.
+    /**
+    Returns an extension that adds the given value for this facet.
+    */
     of(value) {
         return new FacetProvider([], this, 0 /* Static */, value);
     }
-    /// Create an extension that computes a value for the facet from a
-    /// state. You must take care to declare the parts of the state that
-    /// this value depends on, since your function is only called again
-    /// for a new state when one of those parts changed.
-    ///
-    /// In most cases, you'll want to use the
-    /// [`provide`](#state.StateField^define^config.provide) option when
-    /// defining a field instead.
+    /**
+    Create an extension that computes a value for the facet from a
+    state. You must take care to declare the parts of the state that
+    this value depends on, since your function is only called again
+    for a new state when one of those parts changed.
+    
+    In most cases, you'll want to use the
+    [`provide`](https://codemirror.net/6/docs/ref/#state.StateField^define^config.provide) option when
+    defining a field instead.
+    */
     compute(deps, get) {
         if (this.isStatic)
             throw new Error("Can't compute a static facet");
         return new FacetProvider(deps, this, 1 /* Single */, get);
     }
-    /// Create an extension that computes zero or more values for this
-    /// facet from a state.
+    /**
+    Create an extension that computes zero or more values for this
+    facet from a state.
+    */
     computeN(deps, get) {
         if (this.isStatic)
             throw new Error("Can't compute a static facet");
@@ -9146,23 +9356,33 @@ function maybeIndex(state, id) {
     return found == null ? null : found >> 1;
 }
 const initField = Facet.define({ static: true });
-/// Fields can store additional information in an editor state, and
-/// keep it in sync with the rest of the state.
+/**
+Fields can store additional information in an editor state, and
+keep it in sync with the rest of the state.
+*/
 class StateField {
     constructor(
-    /// @internal
+    /**
+    @internal
+    */
     id, createF, updateF, compareF, 
-    /// @internal
+    /**
+    @internal
+    */
     spec) {
         this.id = id;
         this.createF = createF;
         this.updateF = updateF;
         this.compareF = compareF;
         this.spec = spec;
-        /// @internal
+        /**
+        @internal
+        */
         this.provides = undefined;
     }
-    /// Define a state field.
+    /**
+    Define a state field.
+    */
     static define(config) {
         let field = new StateField(nextID++, config.create, config.update, config.compare || ((a, b) => a === b), config);
         if (config.provide)
@@ -9173,7 +9393,9 @@ class StateField {
         let init = state.facet(initField).find(i => i.field == this);
         return ((init === null || init === void 0 ? void 0 : init.create) || this.createF)(state);
     }
-    /// @internal
+    /**
+    @internal
+    */
     slot(addresses) {
         let idx = addresses[this.id] >> 1;
         return (state, tr) => {
@@ -9198,35 +9420,53 @@ class StateField {
             return changed;
         };
     }
-    /// Returns an extension that enables this field and overrides the
-    /// way it is initialized. Can be useful when you need to provide a
-    /// non-default starting value for the field.
+    /**
+    Returns an extension that enables this field and overrides the
+    way it is initialized. Can be useful when you need to provide a
+    non-default starting value for the field.
+    */
     init(create) {
         return [this, initField.of({ field: this, create })];
     }
+    /**
+    State field instances can be used as
+    [`Extension`](https://codemirror.net/6/docs/ref/#state.Extension) values to enable the field in a
+    given state.
+    */
+    get extension() { return this; }
 }
 const Prec_ = { fallback: 3, default: 2, extend: 1, override: 0 };
 function prec(value) {
     return (ext) => new PrecExtension(ext, value);
 }
-/// By default extensions are registered in the order they are found
-/// in the flattened form of nested array that was provided.
-/// Individual extension values can be assigned a precedence to
-/// override this. Extensions that do not have a precedence set get
-/// the precedence of the nearest parent with a precedence, or
-/// [`default`](#state.Prec.default) if there is no such parent. The
-/// final ordering of extensions is determined by first sorting by
-/// precedence and then by order within each precedence.
+/**
+By default extensions are registered in the order they are found
+in the flattened form of nested array that was provided.
+Individual extension values can be assigned a precedence to
+override this. Extensions that do not have a precedence set get
+the precedence of the nearest parent with a precedence, or
+[`default`](https://codemirror.net/6/docs/ref/#state.Prec.default) if there is no such parent. The
+final ordering of extensions is determined by first sorting by
+precedence and then by order within each precedence.
+*/
 const Prec = {
-    /// A precedence below the default precedence, which will cause
-    /// default-precedence extensions to override it even if they are
-    /// specified later in the extension ordering.
+    /**
+    A precedence below the default precedence, which will cause
+    default-precedence extensions to override it even if they are
+    specified later in the extension ordering.
+    */
     fallback: prec(Prec_.fallback),
-    /// The regular default precedence.
+    /**
+    The regular default precedence.
+    */
     default: prec(Prec_.default),
-    /// A higher-than-default precedence.
+    /**
+    A higher-than-default precedence.
+    */
     extend: prec(Prec_.extend),
-    /// Precedence above the `default` and `extend` precedences.
+    /**
+    Precedence above the `default` and `extend` precedences.
+    */
     override: prec(Prec_.override)
 };
 class PrecExtension {
@@ -9235,19 +9475,32 @@ class PrecExtension {
         this.prec = prec;
     }
 }
-/// Extension compartments can be used to make a configuration
-/// dynamic. By [wrapping](#state.Compartment.of) part of your
-/// configuration in a compartment, you can later
-/// [replace](#state.Compartment.reconfigure) that part through a
-/// transaction.
+/**
+Extension compartments can be used to make a configuration
+dynamic. By [wrapping](https://codemirror.net/6/docs/ref/#state.Compartment.of) part of your
+configuration in a compartment, you can later
+[replace](https://codemirror.net/6/docs/ref/#state.Compartment.reconfigure) that part through a
+transaction.
+*/
 class Compartment {
-    /// Create an instance of this compartment to add to your [state
-    /// configuration](#state.EditorStateConfig.extensions).
+    /**
+    Create an instance of this compartment to add to your [state
+    configuration](https://codemirror.net/6/docs/ref/#state.EditorStateConfig.extensions).
+    */
     of(ext) { return new CompartmentInstance(this, ext); }
-    /// Create an [effect](#state.TransactionSpec.effects) that
-    /// reconfigures this compartment.
+    /**
+    Create an [effect](https://codemirror.net/6/docs/ref/#state.TransactionSpec.effects) that
+    reconfigures this compartment.
+    */
     reconfigure(content) {
         return Compartment.reconfigure.of({ compartment: this, extension: content });
+    }
+    /**
+    Get the current content of the compartment in the state, or
+    `undefined` if it isn't present.
+    */
+    get(state) {
+        return state.config.compartments.get(this);
     }
 }
 class CompartmentInstance {
@@ -9274,8 +9527,8 @@ class Configuration {
     static resolve(base, compartments, oldState) {
         let fields = [];
         let facets = Object.create(null);
-        let usedCompartments = new Set();
-        for (let ext of flatten(base, compartments, usedCompartments)) {
+        let newCompartments = new Map();
+        for (let ext of flatten(base, compartments, newCompartments)) {
             if (ext instanceof StateField)
                 fields.push(ext);
             else
@@ -9316,21 +9569,10 @@ class Configuration {
                 dynamicSlots.push(a => dynamicFacetSlot(a, facet, providers));
             }
         }
-        return new Configuration(base, removeUnused(compartments, usedCompartments), dynamicSlots.map(f => f(address)), address, staticValues);
+        return new Configuration(base, newCompartments, dynamicSlots.map(f => f(address)), address, staticValues);
     }
 }
-function removeUnused(compartments, usedCompartments) {
-    let dropped = [];
-    compartments.forEach((_, c) => { if (!usedCompartments.has(c))
-        dropped.push(c); });
-    if (!dropped.length)
-        return compartments;
-    let newCompartments = new Map();
-    compartments.forEach((e, c) => { if (dropped.indexOf(c) < 0)
-        newCompartments.set(c, e); });
-    return newCompartments;
-}
-function flatten(extension, compartments, compartmentsSeen) {
+function flatten(extension, compartments, newCompartments) {
     let result = [[], [], [], []];
     let seen = new Map();
     function inner(ext, prec) {
@@ -9342,7 +9584,7 @@ function flatten(extension, compartments, compartmentsSeen) {
             if (found > -1)
                 result[known].splice(found, 1);
             if (ext instanceof CompartmentInstance)
-                compartmentsSeen.delete(ext.compartment);
+                newCompartments.delete(ext.compartment);
         }
         seen.set(ext, prec);
         if (Array.isArray(ext)) {
@@ -9350,10 +9592,11 @@ function flatten(extension, compartments, compartmentsSeen) {
                 inner(e, prec);
         }
         else if (ext instanceof CompartmentInstance) {
-            if (compartmentsSeen.has(ext.compartment))
+            if (newCompartments.has(ext.compartment))
                 throw new RangeError(`Duplicate use of compartment in extensions`);
-            compartmentsSeen.add(ext.compartment);
-            inner(compartments.get(ext.compartment) || ext.inner, prec);
+            let content = compartments.get(ext.compartment) || ext.inner;
+            newCompartments.set(ext.compartment, content);
+            inner(content, prec);
         }
         else if (ext instanceof PrecExtension) {
             inner(ext.inner, ext.prec);
@@ -9408,78 +9651,116 @@ const changeFilter = Facet.define();
 const transactionFilter = Facet.define();
 const transactionExtender = Facet.define();
 
-/// Annotations are tagged values that are used to add metadata to
-/// transactions in an extensible way. They should be used to model
-/// things that effect the entire transaction (such as its [time
-/// stamp](#state.Transaction^time) or information about its
-/// [origin](#state.Transaction^userEvent)). For effects that happen
-/// _alongside_ the other changes made by the transaction, [state
-/// effects](#state.StateEffect) are more appropriate.
+/**
+Annotations are tagged values that are used to add metadata to
+transactions in an extensible way. They should be used to model
+things that effect the entire transaction (such as its [time
+stamp](https://codemirror.net/6/docs/ref/#state.Transaction^time) or information about its
+[origin](https://codemirror.net/6/docs/ref/#state.Transaction^userEvent)). For effects that happen
+_alongside_ the other changes made by the transaction, [state
+effects](https://codemirror.net/6/docs/ref/#state.StateEffect) are more appropriate.
+*/
 class Annotation {
-    /// @internal
+    /**
+    @internal
+    */
     constructor(
-    /// The annotation type.
+    /**
+    The annotation type.
+    */
     type, 
-    /// The value of this annotation.
+    /**
+    The value of this annotation.
+    */
     value) {
         this.type = type;
         this.value = value;
     }
-    /// Define a new type of annotation.
+    /**
+    Define a new type of annotation.
+    */
     static define() { return new AnnotationType(); }
 }
-/// Marker that identifies a type of [annotation](#state.Annotation).
+/**
+Marker that identifies a type of [annotation](https://codemirror.net/6/docs/ref/#state.Annotation).
+*/
 class AnnotationType {
-    /// Create an instance of this annotation.
+    /**
+    Create an instance of this annotation.
+    */
     of(value) { return new Annotation(this, value); }
 }
-/// Representation of a type of state effect. Defined with
-/// [`StateEffect.define`](#state.StateEffect^define).
+/**
+Representation of a type of state effect. Defined with
+[`StateEffect.define`](https://codemirror.net/6/docs/ref/#state.StateEffect^define).
+*/
 class StateEffectType {
-    /// @internal
+    /**
+    @internal
+    */
     constructor(
     // The `any` types in these function types are there to work
     // around TypeScript issue #37631, where the type guard on
     // `StateEffect.is` mysteriously stops working when these properly
     // have type `Value`.
-    /// @internal
+    /**
+    @internal
+    */
     map) {
         this.map = map;
     }
-    /// Create a [state effect](#state.StateEffect) instance of this
-    /// type.
+    /**
+    Create a [state effect](https://codemirror.net/6/docs/ref/#state.StateEffect) instance of this
+    type.
+    */
     of(value) { return new StateEffect(this, value); }
 }
-/// State effects can be used to represent additional effects
-/// associated with a [transaction](#state.Transaction.effects). They
-/// are often useful to model changes to custom [state
-/// fields](#state.StateField), when those changes aren't implicit in
-/// document or selection changes.
+/**
+State effects can be used to represent additional effects
+associated with a [transaction](https://codemirror.net/6/docs/ref/#state.Transaction.effects). They
+are often useful to model changes to custom [state
+fields](https://codemirror.net/6/docs/ref/#state.StateField), when those changes aren't implicit in
+document or selection changes.
+*/
 class StateEffect {
-    /// @internal
+    /**
+    @internal
+    */
     constructor(
-    /// @internal
+    /**
+    @internal
+    */
     type, 
-    /// The value of this effect.
+    /**
+    The value of this effect.
+    */
     value) {
         this.type = type;
         this.value = value;
     }
-    /// Map this effect through a position mapping. Will return
-    /// `undefined` when that ends up deleting the effect.
+    /**
+    Map this effect through a position mapping. Will return
+    `undefined` when that ends up deleting the effect.
+    */
     map(mapping) {
         let mapped = this.type.map(this.value, mapping);
         return mapped === undefined ? undefined : mapped == this.value ? this : new StateEffect(this.type, mapped);
     }
-    /// Tells you whether this effect object is of a given
-    /// [type](#state.StateEffectType).
+    /**
+    Tells you whether this effect object is of a given
+    [type](https://codemirror.net/6/docs/ref/#state.StateEffectType).
+    */
     is(type) { return this.type == type; }
-    /// Define a new effect type. The type parameter indicates the type
-    /// of values that his effect holds.
+    /**
+    Define a new effect type. The type parameter indicates the type
+    of values that his effect holds.
+    */
     static define(spec = {}) {
         return new StateEffectType(spec.map || (v => v));
     }
-    /// Map an array of effects through a change set.
+    /**
+    Map an array of effects through a change set.
+    */
     static mapEffects(effects, mapping) {
         if (!effects.length)
             return effects;
@@ -9492,35 +9773,55 @@ class StateEffect {
         return result;
     }
 }
-/// This effect can be used to reconfigure the root extensions of
-/// the editor. Doing this will discard any extensions
-/// [appended](#state.StateEffect^appendConfig), but does not reset
-/// the content of [reconfigured](#state.Compartment.reconfigure)
-/// compartments.
+/**
+This effect can be used to reconfigure the root extensions of
+the editor. Doing this will discard any extensions
+[appended](https://codemirror.net/6/docs/ref/#state.StateEffect^appendConfig), but does not reset
+the content of [reconfigured](https://codemirror.net/6/docs/ref/#state.Compartment.reconfigure)
+compartments.
+*/
 StateEffect.reconfigure = StateEffect.define();
-/// Append extensions to the top-level configuration of the editor.
+/**
+Append extensions to the top-level configuration of the editor.
+*/
 StateEffect.appendConfig = StateEffect.define();
-/// Changes to the editor state are grouped into transactions.
-/// Typically, a user action creates a single transaction, which may
-/// contain any number of document changes, may change the selection,
-/// or have other effects. Create a transaction by calling
-/// [`EditorState.update`](#state.EditorState.update).
+/**
+Changes to the editor state are grouped into transactions.
+Typically, a user action creates a single transaction, which may
+contain any number of document changes, may change the selection,
+or have other effects. Create a transaction by calling
+[`EditorState.update`](https://codemirror.net/6/docs/ref/#state.EditorState.update).
+*/
 class Transaction {
-    /// @internal
+    /**
+    @internal
+    */
     constructor(
-    /// The state from which the transaction starts.
+    /**
+    The state from which the transaction starts.
+    */
     startState, 
-    /// The document changes made by this transaction.
+    /**
+    The document changes made by this transaction.
+    */
     changes, 
-    /// The selection set by this transaction, or undefined if it
-    /// doesn't explicitly set a selection.
+    /**
+    The selection set by this transaction, or undefined if it
+    doesn't explicitly set a selection.
+    */
     selection, 
-    /// The effects added to the transaction.
+    /**
+    The effects added to the transaction.
+    */
     effects, 
-    /// @internal
+    /**
+    @internal
+    */
     annotations, 
-    /// Whether the selection should be scrolled into view after this
-    /// transaction is dispatched.
+    /**
+    Whether the selection should be scrolled into view after this
+    transaction is dispatched.
+    */
     scrollIntoView) {
         this.startState = startState;
         this.changes = changes;
@@ -9528,70 +9829,92 @@ class Transaction {
         this.effects = effects;
         this.annotations = annotations;
         this.scrollIntoView = scrollIntoView;
-        /// @internal
+        /**
+        @internal
+        */
         this._doc = null;
-        /// @internal
+        /**
+        @internal
+        */
         this._state = null;
         if (selection)
             checkSelection(selection, changes.newLength);
         if (!annotations.some((a) => a.type == Transaction.time))
             this.annotations = annotations.concat(Transaction.time.of(Date.now()));
     }
-    /// The new document produced by the transaction. Contrary to
-    /// [`.state`](#state.Transaction.state)`.doc`, accessing this won't
-    /// force the entire new state to be computed right away, so it is
-    /// recommended that [transaction
-    /// filters](#state.EditorState^transactionFilter) use this getter
-    /// when they need to look at the new document.
+    /**
+    The new document produced by the transaction. Contrary to
+    [`.state`](https://codemirror.net/6/docs/ref/#state.Transaction.state)`.doc`, accessing this won't
+    force the entire new state to be computed right away, so it is
+    recommended that [transaction
+    filters](https://codemirror.net/6/docs/ref/#state.EditorState^transactionFilter) use this getter
+    when they need to look at the new document.
+    */
     get newDoc() {
         return this._doc || (this._doc = this.changes.apply(this.startState.doc));
     }
-    /// The new selection produced by the transaction. If
-    /// [`this.selection`](#state.Transaction.selection) is undefined,
-    /// this will [map](#state.EditorSelection.map) the start state's
-    /// current selection through the changes made by the transaction.
+    /**
+    The new selection produced by the transaction. If
+    [`this.selection`](https://codemirror.net/6/docs/ref/#state.Transaction.selection) is undefined,
+    this will [map](https://codemirror.net/6/docs/ref/#state.EditorSelection.map) the start state's
+    current selection through the changes made by the transaction.
+    */
     get newSelection() {
         return this.selection || this.startState.selection.map(this.changes);
     }
-    /// The new state created by the transaction. Computed on demand
-    /// (but retained for subsequent access), so itis recommended not to
-    /// access it in [transaction
-    /// filters](#state.EditorState^transactionFilter) when possible.
+    /**
+    The new state created by the transaction. Computed on demand
+    (but retained for subsequent access), so itis recommended not to
+    access it in [transaction
+    filters](https://codemirror.net/6/docs/ref/#state.EditorState^transactionFilter) when possible.
+    */
     get state() {
         if (!this._state)
             this.startState.applyTransaction(this);
         return this._state;
     }
-    /// Get the value of the given annotation type, if any.
+    /**
+    Get the value of the given annotation type, if any.
+    */
     annotation(type) {
         for (let ann of this.annotations)
             if (ann.type == type)
                 return ann.value;
         return undefined;
     }
-    /// Indicates whether the transaction changed the document.
+    /**
+    Indicates whether the transaction changed the document.
+    */
     get docChanged() { return !this.changes.empty; }
-    /// Indicates whether this transaction reconfigures the state
-    /// (through a [configuration compartment](#state.Compartment) or
-    /// with a top-level configuration
-    /// [effect](#state.StateEffect^reconfigure).
+    /**
+    Indicates whether this transaction reconfigures the state
+    (through a [configuration compartment](https://codemirror.net/6/docs/ref/#state.Compartment) or
+    with a top-level configuration
+    [effect](https://codemirror.net/6/docs/ref/#state.StateEffect^reconfigure).
+    */
     get reconfigured() { return this.startState.config != this.state.config; }
 }
-/// Annotation used to store transaction timestamps.
+/**
+Annotation used to store transaction timestamps.
+*/
 Transaction.time = Annotation.define();
-/// Annotation used to associate a transaction with a user interface
-/// event. The view will set this to...
-///
-///  - `"input"` when the user types text
-///  - `"delete"` when the user deletes the selection or text near the selection
-///  - `"keyboardselection"` when moving the selection via the keyboard
-///  - `"pointerselection"` when moving the selection through the pointing device
-///  - `"paste"` when pasting content
-///  - `"cut"` when cutting
-///  - `"drop"` when content is inserted via drag-and-drop
+/**
+Annotation used to associate a transaction with a user interface
+event. The view will set this to...
+
+ - `"input"` when the user types text
+ - `"delete"` when the user deletes the selection or text near the selection
+ - `"keyboardselection"` when moving the selection via the keyboard
+ - `"pointerselection"` when moving the selection through the pointing device
+ - `"paste"` when pasting content
+ - `"cut"` when cutting
+ - `"drop"` when content is inserted via drag-and-drop
+*/
 Transaction.userEvent = Annotation.define();
-/// Annotation indicating whether a transaction should be added to
-/// the undo history or not.
+/**
+Annotation indicating whether a transaction should be added to
+the undo history or not.
+*/
 Transaction.addToHistory = Annotation.define();
 function joinRanges(a, b) {
     let result = [];
@@ -9712,16 +10035,24 @@ function asArray(value) {
     return value == null ? none : Array.isArray(value) ? value : [value];
 }
 
-/// The categories produced by a [character
-/// categorizer](#state.EditorState.charCategorizer). These are used
-/// do things like selecting by word.
+/**
+The categories produced by a [character
+categorizer](https://codemirror.net/6/docs/ref/#state.EditorState.charCategorizer). These are used
+do things like selecting by word.
+*/
 var CharCategory;
 (function (CharCategory) {
-    /// Word characters.
+    /**
+    Word characters.
+    */
     CharCategory[CharCategory["Word"] = 0] = "Word";
-    /// Whitespace.
+    /**
+    Whitespace.
+    */
     CharCategory[CharCategory["Space"] = 1] = "Space";
-    /// Anything else.
+    /**
+    Anything else.
+    */
     CharCategory[CharCategory["Other"] = 2] = "Other";
 })(CharCategory || (CharCategory = {}));
 const nonASCIISingleCaseWordChar = /[\u00df\u0587\u0590-\u05f4\u0600-\u06ff\u3040-\u309f\u30a0-\u30ff\u3400-\u4db5\u4e00-\u9fcc\uac00-\ud7af]/;
@@ -9753,26 +10084,38 @@ function makeCategorizer(wordChars) {
     };
 }
 
-/// The editor state class is a persistent (immutable) data structure.
-/// To update a state, you [create](#state.EditorState.update) a
-/// [transaction](#state.Transaction), which produces a _new_ state
-/// instance, without modifying the original object.
-///
-/// As such, _never_ mutate properties of a state directly. That'll
-/// just break things.
+/**
+The editor state class is a persistent (immutable) data structure.
+To update a state, you [create](https://codemirror.net/6/docs/ref/#state.EditorState.update) a
+[transaction](https://codemirror.net/6/docs/ref/#state.Transaction), which produces a _new_ state
+instance, without modifying the original object.
+
+As such, _never_ mutate properties of a state directly. That'll
+just break things.
+*/
 class EditorState {
-    /// @internal
+    /**
+    @internal
+    */
     constructor(
-    /// @internal
+    /**
+    @internal
+    */
     config, 
-    /// The current document.
+    /**
+    The current document.
+    */
     doc, 
-    /// The current selection.
+    /**
+    The current selection.
+    */
     selection, tr = null) {
         this.config = config;
         this.doc = doc;
         this.selection = selection;
-        /// @internal
+        /**
+        @internal
+        */
         this.applying = null;
         this.status = config.statusTemplate.slice();
         if (tr && tr.startState.config == config) {
@@ -9807,23 +10150,27 @@ class EditorState {
         ensureAddr(this, addr);
         return getAddr(this, addr);
     }
-    /// Create a [transaction](#state.Transaction) that updates this
-    /// state. Any number of [transaction specs](#state.TransactionSpec)
-    /// can be passed. Unless
-    /// [`sequential`](#state.TransactionSpec.sequential) is set, the
-    /// [changes](#state.TransactionSpec.changes) (if any) of each spec
-    /// are assumed to start in the _current_ document (not the document
-    /// produced by previous specs), and its
-    /// [selection](#state.TransactionSpec.selection) and
-    /// [effects](#state.TransactionSpec.effects) are assumed to refer
-    /// to the document created by its _own_ changes. The resulting
-    /// transaction contains the combined effect of all the different
-    /// specs. For [selection](#state.TransactionSpec.selection), later
-    /// specs take precedence over earlier ones.
+    /**
+    Create a [transaction](https://codemirror.net/6/docs/ref/#state.Transaction) that updates this
+    state. Any number of [transaction specs](https://codemirror.net/6/docs/ref/#state.TransactionSpec)
+    can be passed. Unless
+    [`sequential`](https://codemirror.net/6/docs/ref/#state.TransactionSpec.sequential) is set, the
+    [changes](https://codemirror.net/6/docs/ref/#state.TransactionSpec.changes) (if any) of each spec
+    are assumed to start in the _current_ document (not the document
+    produced by previous specs), and its
+    [selection](https://codemirror.net/6/docs/ref/#state.TransactionSpec.selection) and
+    [effects](https://codemirror.net/6/docs/ref/#state.TransactionSpec.effects) are assumed to refer
+    to the document created by its _own_ changes. The resulting
+    transaction contains the combined effect of all the different
+    specs. For [selection](https://codemirror.net/6/docs/ref/#state.TransactionSpec.selection), later
+    specs take precedence over earlier ones.
+    */
     update(...specs) {
         return resolveTransaction(this, specs, true);
     }
-    /// @internal
+    /**
+    @internal
+    */
     applyTransaction(tr) {
         let conf = this.config, { base, compartments } = conf;
         for (let effect of tr.effects) {
@@ -9846,23 +10193,27 @@ class EditorState {
         }
         new EditorState(conf || Configuration.resolve(base, compartments, this), tr.newDoc, tr.newSelection, tr);
     }
-    /// Create a [transaction spec](#state.TransactionSpec) that
-    /// replaces every selection range with the given content.
+    /**
+    Create a [transaction spec](https://codemirror.net/6/docs/ref/#state.TransactionSpec) that
+    replaces every selection range with the given content.
+    */
     replaceSelection(text) {
         if (typeof text == "string")
             text = this.toText(text);
         return this.changeByRange(range => ({ changes: { from: range.from, to: range.to, insert: text },
             range: EditorSelection.cursor(range.from + text.length) }));
     }
-    /// Create a set of changes and a new selection by running the given
-    /// function for each range in the active selection. The function
-    /// can return an optional set of changes (in the coordinate space
-    /// of the start document), plus an updated range (in the coordinate
-    /// space of the document produced by the call's own changes). This
-    /// method will merge all the changes and ranges into a single
-    /// changeset and selection, and return it as a [transaction
-    /// spec](#state.TransactionSpec), which can be passed to
-    /// [`update`](#state.EditorState.update).
+    /**
+    Create a set of changes and a new selection by running the given
+    function for each range in the active selection. The function
+    can return an optional set of changes (in the coordinate space
+    of the start document), plus an updated range (in the coordinate
+    space of the document produced by the call's own changes). This
+    method will merge all the changes and ranges into a single
+    changeset and selection, and return it as a [transaction
+    spec](https://codemirror.net/6/docs/ref/#state.TransactionSpec), which can be passed to
+    [`update`](https://codemirror.net/6/docs/ref/#state.EditorState.update).
+    */
     changeByRange(f) {
         let sel = this.selection;
         let result1 = f(sel.ranges[0]);
@@ -9884,25 +10235,33 @@ class EditorState {
             effects
         };
     }
-    /// Create a [change set](#state.ChangeSet) from the given change
-    /// description, taking the state's document length and line
-    /// separator into account.
+    /**
+    Create a [change set](https://codemirror.net/6/docs/ref/#state.ChangeSet) from the given change
+    description, taking the state's document length and line
+    separator into account.
+    */
     changes(spec = []) {
         if (spec instanceof ChangeSet)
             return spec;
         return ChangeSet.of(spec, this.doc.length, this.facet(EditorState.lineSeparator));
     }
-    /// Using the state's [line
-    /// separator](#state.EditorState^lineSeparator), create a
-    /// [`Text`](#text.Text) instance from the given string.
+    /**
+    Using the state's [line
+    separator](https://codemirror.net/6/docs/ref/#state.EditorState^lineSeparator), create a
+    [`Text`](https://codemirror.net/6/docs/ref/#text.Text) instance from the given string.
+    */
     toText(string) {
         return _codemirror_text__WEBPACK_IMPORTED_MODULE_0__.Text.of(string.split(this.facet(EditorState.lineSeparator) || DefaultSplit));
     }
-    /// Return the given range of the document as a string.
+    /**
+    Return the given range of the document as a string.
+    */
     sliceDoc(from = 0, to = this.doc.length) {
         return this.doc.sliceString(from, to, this.lineBreak);
     }
-    /// Get the value of a state [facet](#state.Facet).
+    /**
+    Get the value of a state [facet](https://codemirror.net/6/docs/ref/#state.Facet).
+    */
     facet(facet) {
         let addr = this.config.address[facet.id];
         if (addr == null)
@@ -9910,24 +10269,31 @@ class EditorState {
         ensureAddr(this, addr);
         return getAddr(this, addr);
     }
-    /// Convert this state to a JSON-serializable object. When custom
-    /// fields should be serialized, you can pass them in as an object
-    /// mapping property names (in the resulting object, which should
-    /// not use `doc` or `selection`) to fields.
+    /**
+    Convert this state to a JSON-serializable object. When custom
+    fields should be serialized, you can pass them in as an object
+    mapping property names (in the resulting object, which should
+    not use `doc` or `selection`) to fields.
+    */
     toJSON(fields) {
         let result = {
             doc: this.sliceDoc(),
             selection: this.selection.toJSON()
         };
         if (fields)
-            for (let prop in fields)
-                result[prop] = fields[prop].spec.toJSON(this.field(fields[prop]), this);
+            for (let prop in fields) {
+                let value = fields[prop];
+                if (value instanceof StateField)
+                    result[prop] = value.spec.toJSON(this.field(fields[prop]), this);
+            }
         return result;
     }
-    /// Deserialize a state from its JSON representation. When custom
-    /// fields should be deserialized, pass the same object you passed
-    /// to [`toJSON`](#state.EditorState.toJSON) when serializing as
-    /// third argument.
+    /**
+    Deserialize a state from its JSON representation. When custom
+    fields should be deserialized, pass the same object you passed
+    to [`toJSON`](https://codemirror.net/6/docs/ref/#state.EditorState.toJSON) when serializing as
+    third argument.
+    */
     static fromJSON(json, config = {}, fields) {
         if (!json || typeof json.doc != "string")
             throw new RangeError("Invalid JSON representation for EditorState");
@@ -9943,9 +10309,11 @@ class EditorState {
             extensions: config.extensions ? fieldInit.concat([config.extensions]) : fieldInit
         });
     }
-    /// Create a new state. You'll usually only need this when
-    /// initializing an editor—updated states are created by applying
-    /// transactions.
+    /**
+    Create a new state. You'll usually only need this when
+    initializing an editor—updated states are created by applying
+    transactions.
+    */
     static create(config = {}) {
         let configuration = Configuration.resolve(config.extensions || [], new Map);
         let doc = config.doc instanceof _codemirror_text__WEBPACK_IMPORTED_MODULE_0__.Text ? config.doc
@@ -9958,23 +10326,31 @@ class EditorState {
             selection = selection.asSingle();
         return new EditorState(configuration, doc, selection);
     }
-    /// The size (in columns) of a tab in the document, determined by
-    /// the [`tabSize`](#state.EditorState^tabSize) facet.
+    /**
+    The size (in columns) of a tab in the document, determined by
+    the [`tabSize`](https://codemirror.net/6/docs/ref/#state.EditorState^tabSize) facet.
+    */
     get tabSize() { return this.facet(EditorState.tabSize); }
-    /// Get the proper [line-break](#state.EditorState^lineSeparator)
-    /// string for this state.
+    /**
+    Get the proper [line-break](https://codemirror.net/6/docs/ref/#state.EditorState^lineSeparator)
+    string for this state.
+    */
     get lineBreak() { return this.facet(EditorState.lineSeparator) || "\n"; }
-    /// Look up a translation for the given phrase (via the
-    /// [`phrases`](#state.EditorState^phrases) facet), or return the
-    /// original string if no translation is found.
+    /**
+    Look up a translation for the given phrase (via the
+    [`phrases`](https://codemirror.net/6/docs/ref/#state.EditorState^phrases) facet), or return the
+    original string if no translation is found.
+    */
     phrase(phrase) {
         for (let map of this.facet(EditorState.phrases))
             if (Object.prototype.hasOwnProperty.call(map, phrase))
                 return map[phrase];
         return phrase;
     }
-    /// Find the values for a given language data field, provided by the
-    /// the [`languageData`](#state.EditorState^languageData) facet.
+    /**
+    Find the values for a given language data field, provided by the
+    the [`languageData`](https://codemirror.net/6/docs/ref/#state.EditorState^languageData) facet.
+    */
     languageDataAt(name, pos) {
         let values = [];
         for (let provider of this.facet(languageData)) {
@@ -9985,96 +10361,116 @@ class EditorState {
         }
         return values;
     }
-    /// Return a function that can categorize strings (expected to
-    /// represent a single [grapheme cluster](#text.findClusterBreak))
-    /// into one of:
-    ///
-    ///  - Word (contains an alphanumeric character or a character
-    ///    explicitly listed in the local language's `"wordChars"`
-    ///    language data, which should be a string)
-    ///  - Space (contains only whitespace)
-    ///  - Other (anything else)
+    /**
+    Return a function that can categorize strings (expected to
+    represent a single [grapheme cluster](https://codemirror.net/6/docs/ref/#text.findClusterBreak))
+    into one of:
+    
+     - Word (contains an alphanumeric character or a character
+       explicitly listed in the local language's `"wordChars"`
+       language data, which should be a string)
+     - Space (contains only whitespace)
+     - Other (anything else)
+    */
     charCategorizer(at) {
         return makeCategorizer(this.languageDataAt("wordChars", at).join(""));
     }
 }
-/// A facet that, when enabled, causes the editor to allow multiple
-/// ranges to be selected. Be careful though, because by default the
-/// editor relies on the native DOM selection, which cannot handle
-/// multiple selections. An extension like
-/// [`drawSelection`](#view.drawSelection) can be used to make
-/// secondary selections visible to the user.
+/**
+A facet that, when enabled, causes the editor to allow multiple
+ranges to be selected. Be careful though, because by default the
+editor relies on the native DOM selection, which cannot handle
+multiple selections. An extension like
+[`drawSelection`](https://codemirror.net/6/docs/ref/#view.drawSelection) can be used to make
+secondary selections visible to the user.
+*/
 EditorState.allowMultipleSelections = allowMultipleSelections;
-/// Configures the tab size to use in this state. The first
-/// (highest-precedence) value of the facet is used. If no value is
-/// given, this defaults to 4.
+/**
+Configures the tab size to use in this state. The first
+(highest-precedence) value of the facet is used. If no value is
+given, this defaults to 4.
+*/
 EditorState.tabSize = Facet.define({
     combine: values => values.length ? values[0] : 4
 });
-/// The line separator to use. By default, any of `"\n"`, `"\r\n"`
-/// and `"\r"` is treated as a separator when splitting lines, and
-/// lines are joined with `"\n"`.
-///
-/// When you configure a value here, only that precise separator
-/// will be used, allowing you to round-trip documents through the
-/// editor without normalizing line separators.
+/**
+The line separator to use. By default, any of `"\n"`, `"\r\n"`
+and `"\r"` is treated as a separator when splitting lines, and
+lines are joined with `"\n"`.
+
+When you configure a value here, only that precise separator
+will be used, allowing you to round-trip documents through the
+editor without normalizing line separators.
+*/
 EditorState.lineSeparator = lineSeparator;
-/// Registers translation phrases. The
-/// [`phrase`](#state.EditorState.phrase) method will look through
-/// all objects registered with this facet to find translations for
-/// its argument.
+/**
+Registers translation phrases. The
+[`phrase`](https://codemirror.net/6/docs/ref/#state.EditorState.phrase) method will look through
+all objects registered with this facet to find translations for
+its argument.
+*/
 EditorState.phrases = Facet.define();
-/// A facet used to register [language
-/// data](#state.EditorState.languageDataAt) providers.
+/**
+A facet used to register [language
+data](https://codemirror.net/6/docs/ref/#state.EditorState.languageDataAt) providers.
+*/
 EditorState.languageData = languageData;
-/// Facet used to register change filters, which are called for each
-/// transaction (unless explicitly
-/// [disabled](#state.TransactionSpec.filter)), and can suppress
-/// part of the transaction's changes.
-///
-/// Such a function can return `true` to indicate that it doesn't
-/// want to do anything, `false` to completely stop the changes in
-/// the transaction, or a set of ranges in which changes should be
-/// suppressed. Such ranges are represented as an array of numbers,
-/// with each pair of two number indicating the start and end of a
-/// range. So for example `[10, 20, 100, 110]` suppresses changes
-/// between 10 and 20, and between 100 and 110.
+/**
+Facet used to register change filters, which are called for each
+transaction (unless explicitly
+[disabled](https://codemirror.net/6/docs/ref/#state.TransactionSpec.filter)), and can suppress
+part of the transaction's changes.
+
+Such a function can return `true` to indicate that it doesn't
+want to do anything, `false` to completely stop the changes in
+the transaction, or a set of ranges in which changes should be
+suppressed. Such ranges are represented as an array of numbers,
+with each pair of two number indicating the start and end of a
+range. So for example `[10, 20, 100, 110]` suppresses changes
+between 10 and 20, and between 100 and 110.
+*/
 EditorState.changeFilter = changeFilter;
-/// Facet used to register a hook that gets a chance to update or
-/// replace transaction specs before they are applied. This will
-/// only be applied for transactions that don't have
-/// [`filter`](#state.TransactionSpec.filter) set to `false`. You
-/// can either return a single (possibly the input transaction), or
-/// an array of specs (which will be combined in the same way as the
-/// arguments to [`EditorState.update`](#state.EditorState.update)).
-///
-/// When possible, it is recommended to avoid accessing
-/// [`Transaction.state`](#state.Transaction.state) in a filter,
-/// since it will force creation of a state that will then be
-/// discarded again, if the transaction is actually filtered.
-///
-/// (This functionality should be used with care. Indiscriminately
-/// modifying transaction is likely to break something or degrade
-/// the user experience.)
+/**
+Facet used to register a hook that gets a chance to update or
+replace transaction specs before they are applied. This will
+only be applied for transactions that don't have
+[`filter`](https://codemirror.net/6/docs/ref/#state.TransactionSpec.filter) set to `false`. You
+can either return a single (possibly the input transaction), or
+an array of specs (which will be combined in the same way as the
+arguments to [`EditorState.update`](https://codemirror.net/6/docs/ref/#state.EditorState.update)).
+
+When possible, it is recommended to avoid accessing
+[`Transaction.state`](https://codemirror.net/6/docs/ref/#state.Transaction.state) in a filter,
+since it will force creation of a state that will then be
+discarded again, if the transaction is actually filtered.
+
+(This functionality should be used with care. Indiscriminately
+modifying transaction is likely to break something or degrade
+the user experience.)
+*/
 EditorState.transactionFilter = transactionFilter;
-/// This is a more limited form of
-/// [`transactionFilter`](#state.EditorState^transactionFilter),
-/// which can only add
-/// [annotations](#state.TransactionSpec.annotations) and
-/// [effects](#state.TransactionSpec.effects). _But_, this type
-/// of filter runs even the transaction has disabled regular
-/// [filtering](#state.TransactionSpec.filter), making it suitable
-/// for effects that don't need to touch the changes or selection,
-/// but do want to process every transaction.
-///
-/// Extenders run _after_ filters, when both are applied.
+/**
+This is a more limited form of
+[`transactionFilter`](https://codemirror.net/6/docs/ref/#state.EditorState^transactionFilter),
+which can only add
+[annotations](https://codemirror.net/6/docs/ref/#state.TransactionSpec.annotations) and
+[effects](https://codemirror.net/6/docs/ref/#state.TransactionSpec.effects). _But_, this type
+of filter runs even the transaction has disabled regular
+[filtering](https://codemirror.net/6/docs/ref/#state.TransactionSpec.filter), making it suitable
+for effects that don't need to touch the changes or selection,
+but do want to process every transaction.
+
+Extenders run _after_ filters, when both are applied.
+*/
 EditorState.transactionExtender = transactionExtender;
 Compartment.reconfigure = StateEffect.define();
 
-/// Utility function for combining behaviors to fill in a config
-/// object from an array of provided configs. Will, by default, error
-/// when a field gets two values that aren't `===`-equal, but you can
-/// provide combine functions per field to do something else.
+/**
+Utility function for combining behaviors to fill in a config
+object from an array of provided configs. Will, by default, error
+when a field gets two values that aren't `===`-equal, but you can
+provide combine functions per field to do something else.
+*/
 function combineConfig(configs, defaults, // Should hold only the optional properties of Config, but I haven't managed to express that
 combine = {}) {
     let result = {};
@@ -20866,9 +21262,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var unist_util_source__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! unist-util-source */ "./node_modules/unist-util-source/index.js");
 /* harmony import */ var unist_util_source__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(unist_util_source__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _CellMenu__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CellMenu */ "./src/components/CellMenu.jsx");
-/* harmony import */ var _SelectionContext__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SelectionContext */ "./src/components/SelectionContext.jsx");
-/* harmony import */ var _Editor__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Editor */ "./src/components/Editor.jsx");
+/* harmony import */ var _utils_unist_util_patch_source__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/unist-util-patch-source */ "./src/utils/unist-util-patch-source.js");
+/* harmony import */ var _CellMenu__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CellMenu */ "./src/components/CellMenu.jsx");
+/* harmony import */ var _SelectionContext__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SelectionContext */ "./src/components/SelectionContext.jsx");
+/* harmony import */ var _Editor__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Editor */ "./src/components/Editor.jsx");
+
 
 
 
@@ -20879,10 +21277,15 @@ __webpack_require__.r(__webpack_exports__);
 var Cell = function Cell(props) {
   var symbol = props.node.properties['data-symbol'];
 
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
       _useState2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__.default)(_useState, 2),
-      editing = _useState2[0],
-      setEditing = _useState2[1];
+      src = _useState2[0],
+      setSrc = _useState2[1];
+
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+      _useState4 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__.default)(_useState3, 2),
+      editing = _useState4[0],
+      setEditing = _useState4[1];
 
   var toggleEditing = function toggleEditing() {
     return setEditing(!editing);
@@ -20895,20 +21298,32 @@ var Cell = function Cell(props) {
   var toggleSelected = function toggleSelected(ctx) {
     return function () {
       var selected = isSelected(ctx);
-      if (!selected) ctx.setSelectedCell(symbol);
+      ctx.setSelectedCell(selected ? null : symbol);
     };
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_SelectionContext__WEBPACK_IMPORTED_MODULE_4__.default.Consumer, null, function (ctx) {
+  var save = function save(ctx) {
+    return function (args) {
+      console.log("current", src);
+      console.log('original', unist_util_source__WEBPACK_IMPORTED_MODULE_2___default()(props.node.position, ctx.src));
+      var patchedSrc = (0,_utils_unist_util_patch_source__WEBPACK_IMPORTED_MODULE_3__.default)(ctx.src, props.node.position, src);
+      console.log('patched', patchedSrc);
+      ctx.setSrc(patchedSrc);
+      setEditing(false);
+    };
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_SelectionContext__WEBPACK_IMPORTED_MODULE_5__.default.Consumer, null, function (ctx) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("cell", {
       onClick: toggleSelected(ctx),
       className: [isSelected(ctx) ? 'selected' : '', editing ? 'editing' : ''].join(' ')
-    }, editing ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Editor__WEBPACK_IMPORTED_MODULE_5__.default, {
+    }, editing ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Editor__WEBPACK_IMPORTED_MODULE_6__.default, {
       src: unist_util_source__WEBPACK_IMPORTED_MODULE_2___default()(props.node.position, ctx.src),
-      update: ctx.setSrc
-    }) : props.children, isSelected(ctx) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_CellMenu__WEBPACK_IMPORTED_MODULE_3__.default, {
+      update: setSrc
+    }) : props.children, isSelected(ctx) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_CellMenu__WEBPACK_IMPORTED_MODULE_4__.default, {
       editing: editing,
-      toggleEditing: toggleEditing
+      toggleEditing: toggleEditing,
+      save: save(ctx)
     }));
   });
 };
@@ -20952,19 +21367,27 @@ var CellMenu = function CellMenu(props) {
     console.log("Toggle CellMenu", open);
     setOpen(!open);
   });
-  var items = [props.editing ? {
-    title: "Cancel",
-    icon: "⨯",
-    handler: wrapHandler(props.toggleEditing)
-  } : {
-    title: "Edit",
-    icon: "✎",
-    handler: wrapHandler(props.toggleEditing)
-  }, {
+  var items = [{
     title: "Execute",
     icon: "▶",
     handler: wrapHandler(props.execute)
   }];
+  if (!props.editing) items.push({
+    title: "Edit",
+    icon: "✎",
+    handler: wrapHandler(props.toggleEditing)
+  });else {
+    items.push({
+      title: "Cancel",
+      icon: "c",
+      handler: wrapHandler(props.toggleEditing)
+    });
+    items.push({
+      title: "Save",
+      icon: "s",
+      handler: wrapHandler(props.save)
+    });
+  }
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("menu", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("ul", {
     className: "menu__items"
   }, !open ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("li", {
@@ -21022,10 +21445,6 @@ var Document = function Document(props) {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("link", {
     rel: "stylesheet",
     href: path__WEBPACK_IMPORTED_MODULE_1___default().join(props.root, 'style.css')
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("script", {
-    src: "//cdn.jsdelivr.net/npm/eruda"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("script", null, "eruda.init();"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("script", {
-    src: path__WEBPACK_IMPORTED_MODULE_1___default().join(props.root, 'web.bundle.js')
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("body", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     id: "app"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_App__WEBPACK_IMPORTED_MODULE_2__.default, props), " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -21033,7 +21452,11 @@ var Document = function Document(props) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Backlinks__WEBPACK_IMPORTED_MODULE_3__.default, {
     root: props.root,
     links: props.backlinks || []
-  }))));
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("script", {
+    src: "//cdn.jsdelivr.net/npm/eruda"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("script", null, "eruda.init();"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("script", {
+    src: path__WEBPACK_IMPORTED_MODULE_1___default().join(props.root, 'web.bundle.js')
+  })));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Document);
@@ -21058,7 +21481,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js");
 /* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _codemirror_basic_setup__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @codemirror/basic-setup */ "./node_modules/@codemirror/state/dist/index.js");
+/* harmony import */ var _codemirror_state__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @codemirror/state */ "./node_modules/@codemirror/state/dist/index.js");
 /* harmony import */ var _codemirror_basic_setup__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @codemirror/basic-setup */ "./node_modules/@codemirror/basic-setup/dist/index.js");
 /* harmony import */ var _codemirror_basic_setup__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @codemirror/basic-setup */ "./node_modules/@codemirror/view/dist/index.js");
 
@@ -21073,6 +21496,7 @@ function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflec
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 
+
  // import {html} from "@codemirror/lang-html"
 // import {oneDark} from "@codemirror/theme-one-dark"
 //import {esLint} from "@codemirror/lang-javascript"
@@ -21081,6 +21505,8 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 //import {linter} from "@codemirror/lint"
 //import {StreamLanguage} from "@codemirror/stream-parser"
 //import {javascript} from "@codemirror/legacy-modes/mode/javascript"
+
+var lineWrapping = new _codemirror_state__WEBPACK_IMPORTED_MODULE_7__.Compartment();
 
 var Editor = /*#__PURE__*/function (_React$Component) {
   (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3__.default)(Editor, _React$Component);
@@ -21094,28 +21520,28 @@ var Editor = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.editorRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6__.createRef();
-    _this.editorState = _codemirror_basic_setup__WEBPACK_IMPORTED_MODULE_7__.EditorState.create({
+    _this.editorState = window.cms = _codemirror_state__WEBPACK_IMPORTED_MODULE_7__.EditorState.create({
       doc: props.src,
-      extensions: [_codemirror_basic_setup__WEBPACK_IMPORTED_MODULE_8__.basicSetup //   html(),
+      extensions: [_codemirror_basic_setup__WEBPACK_IMPORTED_MODULE_8__.basicSetup, _codemirror_basic_setup__WEBPACK_IMPORTED_MODULE_9__.EditorView.lineWrapping, _codemirror_basic_setup__WEBPACK_IMPORTED_MODULE_9__.EditorView.updateListener.of(_this.onUpdate.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__.default)(_this))) //   html(),
       //   oneDark
       //  linter(esLint(new Linter)),
       //  StreamLanguage.define(javascript),
       ]
     });
-    _this.save = _this.save.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__.default)(_this));
     return _this;
   }
 
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__.default)(Editor, [{
-    key: "save",
-    value: function save() {
-      console.log('save', this.editorState.doc);
-      this.props.update(this.editorState.doc.toString());
+    key: "onUpdate",
+    value: function onUpdate(viewUpdate) {
+      if (this.props.update && typeof this.props.update === 'function') {
+        this.props.update(viewUpdate.state.doc.toString());
+      }
     }
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.view = new _codemirror_basic_setup__WEBPACK_IMPORTED_MODULE_9__.EditorView({
+      this.view = window.cmv = new _codemirror_basic_setup__WEBPACK_IMPORTED_MODULE_9__.EditorView({
         state: this.editorState,
         parent: this.editorRef.current
       });
@@ -21547,7 +21973,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var FRONTMATTER_OPEN = '<!--';
+var FRONTMATTER_OPEN = '<!-- data';
 var FRONTMATTER_CLOSE = '-->';
 /* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__() {
   return function (tree, file) {
@@ -21653,7 +22079,7 @@ function parse(_x, _x2) {
 
 function _parse() {
   _parse = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(vfile, options) {
-    var p, ast;
+    var p, parsed, ast;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -21663,15 +22089,16 @@ function _parse() {
             return p.parse(vfile);
 
           case 3:
-            ast = _context.sent;
+            parsed = _context.sent;
             _context.next = 6;
-            return p.run(ast);
+            return p.run(parsed);
 
           case 6:
-            vfile.data.ast = _context.sent;
+            ast = _context.sent;
+            vfile.data.ast = ast;
             return _context.abrupt("return", vfile);
 
-          case 8:
+          case 9:
           case "end":
             return _context.stop();
         }
@@ -22060,6 +22487,26 @@ module.exports = {
   time: console.time,
   timeEnd: console.timeEnd
 };
+
+/***/ }),
+
+/***/ "./src/utils/unist-util-patch-source.js":
+/*!**********************************************!*\
+  !*** ./src/utils/unist-util-patch-source.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var patchSource = function patchSource(src, originalLocation, value) {
+  var pos = originalLocation.position || originalLocation;
+  return src.slice(0, pos.start.offset) + value + src.slice(pos.end.offset);
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (patchSource);
 
 /***/ }),
 
@@ -84890,8 +85337,9 @@ function factory(key, options) {
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
-/******/ 		if(__webpack_module_cache__[moduleId]) {
-/******/ 			return __webpack_module_cache__[moduleId].exports;
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {

@@ -43,10 +43,12 @@ export const processor = (options={files: []}) => {
 
 export async function parse(vfile, options) {
     const p = processor(options)
-    const ast = await p.parse( vfile )
-    vfile.data.ast = await p.run(ast)
+    const parsed = await p.parse( vfile )
+    const ast = await p.run(parsed)
+    vfile.data.ast = ast
     return vfile
 }
+
 
 export function stringify(vfile) {
     return processor()
