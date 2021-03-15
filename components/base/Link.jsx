@@ -1,12 +1,13 @@
 import React from 'react'
 
-export default class Link extends React.Component {
-    render() {
-        const title = this.props.node.properties.title
-        return <a className={this.props.className}
-            href={this.props.href}
-            title={title}>
-                {this.props.children}
-            </a>
-    }
+const Link = props => {
+    const title = props.node.properties.title
+    console.log("<Link/>", props)
+    return <a className={props.className}
+        href={props.href}
+        title={title}>
+            {props.children}
+        </a>
 }
+
+export default Link
