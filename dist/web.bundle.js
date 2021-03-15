@@ -21274,6 +21274,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+var childIs = function childIs(node, nodeType) {
+  return node.children && node.children.length && node.children[0] && node.children[0].tagName === nodeType;
+};
+
 var Cell = function Cell(props) {
   var symbol = props.node.properties['data-symbol'];
 
@@ -21302,6 +21306,8 @@ var Cell = function Cell(props) {
     };
   };
 
+  var isCodeCell = childIs(props.node, 'pre');
+
   var save = function save(ctx) {
     return function (args) {
       console.log("current", src);
@@ -21313,10 +21319,14 @@ var Cell = function Cell(props) {
     };
   };
 
+  var getClasses = function getClasses(ctx) {
+    return [isSelected(ctx) ? 'selected' : '', editing ? 'editing' : '', isCodeCell ? 'code' : ''].join(' ').trim();
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_SelectionContext__WEBPACK_IMPORTED_MODULE_5__.default.Consumer, null, function (ctx) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("cell", {
       onClick: toggleSelected(ctx),
-      className: [isSelected(ctx) ? 'selected' : '', editing ? 'editing' : ''].join(' ')
+      className: getClasses(ctx)
     }, editing ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Editor__WEBPACK_IMPORTED_MODULE_6__.default, {
       src: unist_util_source__WEBPACK_IMPORTED_MODULE_2___default()(props.node.position, ctx.src),
       update: setSrc
@@ -21708,53 +21718,22 @@ var Codeblock = /*#__PURE__*/function (_React$Component2) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Link)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js");
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 
+var Link = function Link(props) {
+  var title = props.node.properties.title;
+  console.log("<Link/>", props);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+    className: props.className,
+    href: props.href,
+    title: title
+  }, props.children);
+};
 
-
-
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__.default)(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__.default)(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__.default)(this, result); }; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
-
-
-var Link = /*#__PURE__*/function (_React$Component) {
-  (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__.default)(Link, _React$Component);
-
-  var _super = _createSuper(Link);
-
-  function Link() {
-    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__.default)(this, Link);
-
-    return _super.apply(this, arguments);
-  }
-
-  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__.default)(Link, [{
-    key: "render",
-    value: function render() {
-      var title = this.props.node.properties.title;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("a", {
-        className: this.props.className,
-        href: this.props.href,
-        title: title
-      }, this.props.children);
-    }
-  }]);
-
-  return Link;
-}(react__WEBPACK_IMPORTED_MODULE_5__.Component);
-
-
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Link);
 
 /***/ }),
 
@@ -22273,22 +22252,46 @@ var wrapSection = function wrapSection(options) {
 
       (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.level)(3, _utils_console__WEBPACK_IMPORTED_MODULE_6__.log)("[Sections] child: ", node.type);
 
-      if (node.type === 'section') {}
-
-      if (node.type === 'code') {}
-
-      if (node.type !== 'section' && node.type !== 'code') {
+      if (node.type === "section") {
+        newCell = null;
+        cells.push(node);
+      } else if (node.type === "list") {
+        var listSection = {
+          type: "section",
+          data: {
+            hName: "section"
+          },
+          position: node.position,
+          children: [node]
+        };
+        cells.push(listSection);
+      } else if (node.type === "code") {
+        newCell = null;
+        var singleCell = {
+          type: "cell",
+          position: node.position,
+          data: {
+            hName: "cell",
+            hProperties: {
+              "class": "cell",
+              "data-symbol": symbolFromPos(node.position.start)
+            }
+          },
+          children: [node]
+        };
+        cells.push(singleCell);
+      } else {
         if (newCell) {
           newCell.children.push(node);
           newCell.position.end = node.position.end;
         } else {
           newCell = {
-            type: 'cell',
+            type: "cell",
             position: node.position,
             data: {
-              hName: 'cell',
+              hName: "cell",
               hProperties: {
-                "class": 'cell',
+                "class": "cell",
                 "data-symbol": symbolFromPos(node.position.start)
               }
             },
@@ -22296,19 +22299,13 @@ var wrapSection = function wrapSection(options) {
           };
           cells.push(newCell);
         }
-      } else {
-        if (newCell) {
-          newCell = null;
-        }
-
-        cells.push(node);
       }
     });
     return [{
-      type: 'section',
+      type: "section",
       data: {
         id: start.data.id,
-        hName: 'section',
+        hName: "section",
         hProperties: {
           href: start.data.id
         }
@@ -22324,7 +22321,7 @@ var wrapSection = function wrapSection(options) {
 
 var transform = function transform(options) {
   return function (node, index, parent) {
-    (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_6__.log)('[Sections] Visiting', node.data.id);
+    (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_6__.log)("[Sections] Visiting", node.data.id);
     return mdast_util_heading_range__WEBPACK_IMPORTED_MODULE_1___default()(parent, function (_, node2) {
       return node.data.id === node2.data.id;
     }, wrapSection(options));
@@ -22335,8 +22332,8 @@ var groupIntoSections = function groupIntoSections() {
   var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   return function () {
     return function (tree) {
-      (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.level)(1, _utils_console__WEBPACK_IMPORTED_MODULE_6__.log)('[Sections] Init');
-      unist_util_visit__WEBPACK_IMPORTED_MODULE_4___default()(tree, 'heading', transform(options), true);
+      (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.level)(1, _utils_console__WEBPACK_IMPORTED_MODULE_6__.log)("[Sections] Init");
+      unist_util_visit__WEBPACK_IMPORTED_MODULE_4___default()(tree, "heading", transform(options), true);
     };
   };
 };
@@ -22344,11 +22341,11 @@ var ungroupSections = function ungroupSections() {
   var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   return function () {
     return function (tree) {
-      (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.level)(1, _utils_console__WEBPACK_IMPORTED_MODULE_6__.log)('[UnSection] Init', options);
+      (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.level)(1, _utils_console__WEBPACK_IMPORTED_MODULE_6__.log)("[UnSection] Init", options);
       tree = unist_util_flatmap__WEBPACK_IMPORTED_MODULE_5___default()(tree, function (node) {
-        if (node.type === 'cell') {
+        if (node.type === "cell") {
           return node.children;
-        } else if (node.type === 'section') {
+        } else if (node.type === "section") {
           return node.children;
         } else {
           return [node];
