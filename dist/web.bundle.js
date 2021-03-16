@@ -21131,52 +21131,164 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _Editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Editor */ "./src/components/Editor.jsx");
-/* harmony import */ var _SelectionContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SelectionContext */ "./src/components/SelectionContext.jsx");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! path */ "./node_modules/path-browserify/index.js");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _SelectionContext__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SelectionContext */ "./src/components/SelectionContext.jsx");
+/* harmony import */ var _utils_unist_util_patch_source__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/unist-util-patch-source */ "./src/utils/unist-util-patch-source.js");
 
 
 
 
 
-var App = function App(props) {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(props.src),
-      _useState2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__.default)(_useState, 2),
+
+
+
+var App = function App(_ref) {
+  var file = _ref.file,
+      fs = _ref.fs,
+      processor = _ref.processor;
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(file.contents.toString()),
+      _useState2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__.default)(_useState, 2),
       src = _useState2[0],
       setSrc = _useState2[1];
 
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
-      _useState4 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__.default)(_useState3, 2),
-      showEditor = _useState4[0],
-      setShowEditor = _useState4[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(null),
+      _useState4 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__.default)(_useState3, 2),
+      selectedCell = _useState4[0],
+      setSelectedCell = _useState4[1];
 
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
-      _useState6 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__.default)(_useState5, 2),
-      selectedCell = _useState6[0],
-      setSelectedCell = _useState6[1];
+  var writeFileP = /*#__PURE__*/function () {
+    var _ref2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee() {
+      var _console;
 
-  var toggleEditor = function toggleEditor() {
-    return setShowEditor(!showEditor);
-  };
+      var _len,
+          args,
+          _key,
+          filepath,
+          p,
+          parts,
+          i,
+          subPath,
+          _args = arguments;
 
-  var updateSrc = function updateSrc(newSrc) {
-    console.log('update called', newSrc);
-    setSrc(newSrc);
-    toggleEditor(false);
-  };
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              for (_len = _args.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+                args[_key] = _args[_key];
+              }
+
+              filepath = args[0] = "/" + args[0];
+              p = path__WEBPACK_IMPORTED_MODULE_4___default().parse(filepath);
+              parts = p.dir.split((path__WEBPACK_IMPORTED_MODULE_4___default().sep));
+              console.log("\"Parts for \"".concat(filepath, "\""), parts);
+              i = 0;
+
+            case 6:
+              if (!(i < parts.length)) {
+                _context.next = 27;
+                break;
+              }
+
+              console.log("[".concat(i, "] <--- \"").concat(parts[i], "\""));
+
+              if (!(i === 0)) {
+                _context.next = 11;
+                break;
+              }
+
+              _context.next = 24;
+              break;
+
+            case 11:
+              subPath = parts.slice(0, i + 1).join((path__WEBPACK_IMPORTED_MODULE_4___default().sep));
+              console.log("\"".concat(subPath, "\" Sub path"));
+              _context.prev = 13;
+              _context.next = 16;
+              return fs.stat(subPath);
+
+            case 16:
+              console.log("\"".concat(subPath, "\" Existed, skipping"));
+              _context.next = 24;
+              break;
+
+            case 19:
+              _context.prev = 19;
+              _context.t0 = _context["catch"](13);
+              console.log("\"".concat(subPath, "\" Didnt exist, creating..."));
+              _context.next = 24;
+              return fs.mkdir(subPath);
+
+            case 24:
+              i++;
+              _context.next = 6;
+              break;
+
+            case 27:
+              (_console = console).log.apply(_console, ["Writing file"].concat(args));
+
+              return _context.abrupt("return", fs.writeFile.apply(fs, args));
+
+            case 29:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[13, 19]]);
+    }));
+
+    return function writeFileP() {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+
+  var setSrcWrapper = /*#__PURE__*/function () {
+    var _ref3 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee2(pos, cellSource) {
+      var patchedSrc;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              patchedSrc = (0,_utils_unist_util_patch_source__WEBPACK_IMPORTED_MODULE_6__.default)(src, pos, cellSource);
+              _context2.next = 3;
+              return writeFileP(file.path, patchedSrc, {
+                encoding: 'utf8'
+              });
+
+            case 3:
+              setSrc(patchedSrc);
+
+            case 4:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+
+    return function setSrcWrapper(_x, _x2) {
+      return _ref3.apply(this, arguments);
+    };
+  }();
 
   var state = {
     src: src,
     selectedCell: selectedCell,
     setSelectedCell: setSelectedCell,
-    setSrc: setSrc
+    setSrc: setSrcWrapper
   };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_SelectionContext__WEBPACK_IMPORTED_MODULE_3__.default.Provider, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_SelectionContext__WEBPACK_IMPORTED_MODULE_5__.default.Provider, {
     value: state
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("div", {
     id: "content"
-  }, props.processor.processSync(src).result));
+  }, processor.processSync(src).result));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
@@ -21262,11 +21374,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var unist_util_source__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! unist-util-source */ "./node_modules/unist-util-source/index.js");
 /* harmony import */ var unist_util_source__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(unist_util_source__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _utils_unist_util_patch_source__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/unist-util-patch-source */ "./src/utils/unist-util-patch-source.js");
-/* harmony import */ var _CellMenu__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CellMenu */ "./src/components/CellMenu.jsx");
-/* harmony import */ var _SelectionContext__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SelectionContext */ "./src/components/SelectionContext.jsx");
-/* harmony import */ var _Editor__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Editor */ "./src/components/Editor.jsx");
-
+/* harmony import */ var _CellMenu__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CellMenu */ "./src/components/CellMenu.jsx");
+/* harmony import */ var _SelectionContext__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SelectionContext */ "./src/components/SelectionContext.jsx");
+/* harmony import */ var _Editor__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Editor */ "./src/components/Editor.jsx");
 
 
 
@@ -21310,11 +21420,7 @@ var Cell = function Cell(props) {
 
   var save = function save(ctx) {
     return function (args) {
-      console.log("current", src);
-      console.log('original', unist_util_source__WEBPACK_IMPORTED_MODULE_2___default()(props.node.position, ctx.src));
-      var patchedSrc = (0,_utils_unist_util_patch_source__WEBPACK_IMPORTED_MODULE_3__.default)(ctx.src, props.node.position, src);
-      console.log('patched', patchedSrc);
-      ctx.setSrc(patchedSrc);
+      ctx.setSrc(props.node.position, src);
       setEditing(false);
     };
   };
@@ -21323,14 +21429,14 @@ var Cell = function Cell(props) {
     return [isSelected(ctx) ? 'selected' : '', editing ? 'editing' : '', isCodeCell ? 'code' : ''].join(' ').trim();
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_SelectionContext__WEBPACK_IMPORTED_MODULE_5__.default.Consumer, null, function (ctx) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_SelectionContext__WEBPACK_IMPORTED_MODULE_4__.default.Consumer, null, function (ctx) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("cell", {
       onClick: toggleSelected(ctx),
       className: getClasses(ctx)
-    }, editing ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Editor__WEBPACK_IMPORTED_MODULE_6__.default, {
+    }, editing ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Editor__WEBPACK_IMPORTED_MODULE_5__.default, {
       src: unist_util_source__WEBPACK_IMPORTED_MODULE_2___default()(props.node.position, ctx.src),
       update: setSrc
-    }) : props.children, isSelected(ctx) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_CellMenu__WEBPACK_IMPORTED_MODULE_4__.default, {
+    }) : props.children, isSelected(ctx) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_CellMenu__WEBPACK_IMPORTED_MODULE_3__.default, {
       editing: editing,
       toggleEditing: toggleEditing,
       save: save(ctx)
@@ -21443,9 +21549,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Document = function Document(props) {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("html", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("head", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("title", null, props.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("meta", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("html", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("head", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("title", null, props.file.stem), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("meta", {
     name: "litsrc",
-    value: props.path
+    value: props.file.path
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("meta", {
     name: "litroot",
     value: props.root
@@ -21462,7 +21568,7 @@ var Document = function Document(props) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Backlinks__WEBPACK_IMPORTED_MODULE_3__.default, {
     root: props.root,
     links: props.backlinks || []
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("script", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("script", null, "content.remove();"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("script", {
     src: "//cdn.jsdelivr.net/npm/eruda"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("script", null, "eruda.init();"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("script", {
     src: path__WEBPACK_IMPORTED_MODULE_1___default().join(props.root, 'web.bundle.js')
@@ -22397,7 +22503,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function processor(relroot, filepath) {
+function processor() {
   return (0,_parser__WEBPACK_IMPORTED_MODULE_6__.processor)().use(function () {
     return {};
   }).use((remark_rehype__WEBPACK_IMPORTED_MODULE_1___default()), {
@@ -22422,12 +22528,10 @@ function renderToVfile(vfile, cmd, links) {
   (0,_utils_console__WEBPACK_IMPORTED_MODULE_5__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_5__.log)('[Render] to vFile', vfile.path);
   var output = vfile;
   var notebook = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4__.createElement(_components_Document__WEBPACK_IMPORTED_MODULE_7__.default, {
-    title: vfile.stem,
-    src: vfile.contents.toString(),
+    file: output,
     root: relroot,
-    path: vfile.path,
     backlinks: links,
-    processor: processor(relroot, vfile.path)
+    processor: processor()
   });
   output.contents = react_dom_server__WEBPACK_IMPORTED_MODULE_3__.renderToString(notebook);
   output.extname = '.html';
@@ -85442,64 +85546,107 @@ var litsrc = document.querySelector('meta[name="litsrc"]').getAttribute('value')
 var litroot = document.querySelector('meta[name="litroot"]').getAttribute('value');
 var baseUrl = "".concat(location.protocol, "//").concat(location.host).concat(path.join(path.dirname(location.pathname), litroot));
 var fs = new FS(baseUrl);
-window.lit = {
-  select: select,
-  path: path,
+var lit = {
+  location: {
+    src: litsrc,
+    root: litroot,
+    base: baseUrl
+  },
   parser: parser,
-  App: App,
-  vfile: vfile,
-  fs: fs,
-  litsrc: litsrc,
-  litroot: litroot,
-  baseUrl: baseUrl
+  renderer: renderer,
+  fs: fs.promises,
+  utils: {
+    select: select,
+    path: path,
+    vfile: vfile
+  }
 };
+if (typeof window !== 'undefined') window.lit = lit;
 console.log('.lit Notebook client initializing...');
-console.log("litsrc:", litsrc);
-console.log("litroot:", litroot);
-console.log("baseUrl:", baseUrl);
-console.log("lit:", window.lit);
+console.log("lit:", lit);
 
 (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
-  var filecontents, file, parsedFile;
+  var file, stat, contents, _contents, parsedFile;
+
   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
-          console.log("Fetching file content", litroot, litsrc, path.join(litroot, litsrc));
-          _context.next = 3;
-          return fetch(path.join(litroot, litsrc));
+          console.log("Checking local (".concat(baseUrl, ") filesystem for: ").concat(litsrc));
+          _context.prev = 1;
+          _context.next = 4;
+          return lit.fs.stat('/' + litsrc);
 
-        case 3:
-          _context.next = 5;
-          return _context.sent.text();
-
-        case 5:
-          filecontents = _context.sent;
-          console.log('Fetched file contents:', filecontents);
+        case 4:
+          stat = _context.sent;
           _context.next = 9;
-          return vfile({
-            path: litsrc,
-            contents: filecontents
-          });
+          break;
+
+        case 7:
+          _context.prev = 7;
+          _context.t0 = _context["catch"](1);
 
         case 9:
+          if (!stat) {
+            _context.next = 19;
+            break;
+          }
+
+          console.log("Local file \"".concat('/' + litsrc, "\" exists, loading that instead."));
+          _context.next = 13;
+          return lit.fs.readFile('/' + litsrc, {
+            encoding: 'utf8'
+          });
+
+        case 13:
+          contents = _context.sent;
+          _context.next = 16;
+          return vfile({
+            path: litsrc,
+            contents: contents
+          });
+
+        case 16:
           file = _context.sent;
-          _context.next = 12;
+          _context.next = 28;
+          break;
+
+        case 19:
+          console.log("Fetching file content", litroot, litsrc, path.join(litroot, litsrc));
+          _context.next = 22;
+          return fetch(path.join(litroot, litsrc));
+
+        case 22:
+          _context.next = 24;
+          return _context.sent.text();
+
+        case 24:
+          _contents = _context.sent;
+          _context.next = 27;
+          return vfile({
+            path: litsrc,
+            contents: _contents
+          });
+
+        case 27:
+          file = _context.sent;
+
+        case 28:
+          _context.next = 30;
           return parser.parse(file);
 
-        case 12:
+        case 30:
           parsedFile = _context.sent;
           console.log(parsedFile);
           window.lit.ast = parsedFile.data.ast;
 
           try {
-            window.lit.notebook = /*#__PURE__*/React.createElement(App, {
-              title: file.stem,
-              src: file.contents.toString(),
+            lit.notebook = /*#__PURE__*/React.createElement(App, {
+              fs: lit.fs,
+              file: parsedFile,
               root: litroot,
-              path: file.path,
               permalinks: {},
-              processor: renderer.processor(litroot, file.path)
+              processor: renderer.processor()
             });
           } catch (err) {
             console.error("Error instantiating App", err);
@@ -85513,12 +85660,12 @@ console.log("lit:", window.lit);
             console.error("Error hydrating App", err);
           }
 
-        case 18:
+        case 36:
         case "end":
           return _context.stop();
       }
     }
-  }, _callee);
+  }, _callee, null, [[1, 7]]);
 }))();
 })();
 
