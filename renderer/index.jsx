@@ -13,7 +13,7 @@ import Link from '../components/base/Link'
 import Codeblock from '../components/base/Codeblock'
 import Cell from '../components/Cell'
 
-export function processor(relroot, filepath) {
+export function processor() {
     return parserProcessor()
     .use(()=> ({}))
     .use(remark2rehype, {allowDangerousHtml: true})
@@ -42,12 +42,10 @@ export function renderToVfile(vfile, cmd, links) {
     const output = vfile;
 
     const notebook = <Document
-        title={vfile.stem}
-        src={vfile.contents.toString()}
+        file={output}
         root={relroot}
-        path={vfile.path}
         backlinks={links}
-        processor={processor(relroot, vfile.path)}
+        processor={processor()}
     />
 
     output.contents = ReactDOMServer.renderToString(notebook)

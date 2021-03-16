@@ -1,6 +1,5 @@
 import React, {useState} from "react"
 import source from 'unist-util-source'
-import patchSource from '../utils/unist-util-patch-source'
 
 import CellMenu from './CellMenu'
 import SelectionContext from './SelectionContext'
@@ -29,11 +28,7 @@ const Cell = props => {
     const isCodeCell = childIs(props.node, 'pre')
 
     const save = ctx => args => {
-        console.log("current", src)
-        console.log('original', source(props.node.position, ctx.src))
-        const patchedSrc = patchSource(ctx.src, props.node.position, src)
-        console.log('patched', patchedSrc)
-        ctx.setSrc(patchedSrc)
+        ctx.setSrc(props.node.position, src)
         setEditing(false)
     }
 

@@ -14,42 +14,53 @@ const litroot = document.querySelector('meta[name="litroot"]').getAttribute('val
 const baseUrl =`${location.protocol}//${location.host}${path.join(path.dirname(location.pathname), litroot)}`
 const fs = new FS(baseUrl)
 
-window.lit = {
-    select,
-    path,
+const lit = {
+    location: {
+        src: litsrc,
+        root: litroot,
+        base: baseUrl
+    },
     parser,
-    App, 
-    vfile,
-    fs,
-    litsrc,
-    litroot,
-    baseUrl
+    renderer,
+    fs: fs.promises,
+    utils: {
+        select,
+        path,
+        vfile,
+    }
 }
 
+if (typeof window !== 'undefined') window.lit = lit
 console.log('.lit Notebook client initializing...')
-console.log(`litsrc:`, litsrc)
-console.log(`litroot:`, litroot)
-console.log(`baseUrl:`, baseUrl)
-console.log(`lit:`, window.lit)
+console.log(`lit:`, lit)
 
 ;(async () => {
-    console.log("Fetching file content", litroot, litsrc, path.join(litroot, litsrc))
-    const filecontents = await (await fetch(path.join(litroot, litsrc))).text()
-    console.log('Fetched file contents:', filecontents)
-    const file = await vfile({path: litsrc, contents: filecontents})
+
+    console.log(`Checking local (${baseUrl}) filesystem for: ${litsrc}`)
+    let file, stat;
+    try { stat = await lit.fs.stat('/' + litsrc) } catch(err) {}
+    if (stat) {
+        console.log(`Local file "${ '/' + litsrc}" exists, loading that instead.`)
+        const contents = await lit.fs.readFile('/' +  litsrc, {encoding: 'utf8'})
+        file = await vfile({path: litsrc, contents})
+    } else {
+        console.log("Fetching file content", litroot, litsrc, path.join(litroot, litsrc))
+        const contents = await (await fetch(path.join(litroot, litsrc))).text()
+        file = await vfile({path: litsrc, contents})
+    }
+    
     const parsedFile = await parser.parse(file)
     console.log(parsedFile)
     window.lit.ast = parsedFile.data.ast
 
     try {
-    window.lit.notebook = <App 
-        title={file.stem}
-        src={file.contents.toString()}
-        root={litroot}
-        path={file.path}
-        permalinks={{}}
-        processor={renderer.processor(litroot, file.path)}
-    />
+        lit.notebook = <App 
+            fs={lit.fs}
+            file={parsedFile}
+            root={litroot}
+            permalinks={{}}
+            processor={renderer.processor()}
+        />
     } catch(err) {
         console.error("Error instantiating App", err)
     }
