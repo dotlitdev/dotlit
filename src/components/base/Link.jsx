@@ -5,7 +5,8 @@ const Link = props => {
     console.log("<Link/>", props)
     return <a className={props.className}
         href={props.href}
-        title={title}>
+        title={title}
+        wikilink={props.wikilink ? 'true' : undefined}>
             {props.children}
         </a>
 }
