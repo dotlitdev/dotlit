@@ -16,9 +16,12 @@ const transform = options => (node, index, parent) => {
 }
 
 export const decorateLinkNode = (link, root, filepath) => {
-    link.data = link.data ? link.data : {}
+    
+    link.data = link.data || {}
+    link.data.hProperties = link.data.hProperties || {}
 
     if (link.type === 'wikiLink') {
+        link.data.hProperties.wikilink = true
         if (link.data.exists === 'false') {
             link.data.hProperties.title = 'Click to create new file'
         } else {
@@ -31,9 +34,7 @@ export const decorateLinkNode = (link, root, filepath) => {
     const isAbsolute = typeof root === 'undefined' || /(https?\:)?\/\//.test(link.url)
     const isFragment = /(\?|#).*/.test(link.url)
     const isRelative = typeof root !== 'undefined' && link.url && !(isAbsolute || isFragment)
-
-    link.data = link.data ? link.data : {}
-
+    
     if (isRelative) {
         const abs = path.resolve(root, path.dirname(filepath), link.url)
         const newPath = path.relative(path.resolve(root), abs)
@@ -50,7 +51,7 @@ export const decorateLinkNode = (link, root, filepath) => {
     link.data.isFragment = isFragment
     link.data.isRelative = isRelative
 
-    link.data.hProperties = link.data.hProperties || {}
+    
     link.data.hProperties.href = link.url
     // don't throw away wiki link classes (yet)
     link.data.hProperties.className = link.data.hProperties.className || ''

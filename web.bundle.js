@@ -21835,7 +21835,8 @@ var Link = function Link(props) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
     className: props.className,
     href: props.href,
-    title: title
+    title: title,
+    wikilink: props.wikilink ? 'true' : undefined
   }, props.children);
 };
 
@@ -22255,9 +22256,12 @@ var transform = function transform(options) {
 };
 
 var decorateLinkNode = function decorateLinkNode(link, root, filepath) {
-  link.data = link.data ? link.data : {};
+  link.data = link.data || {};
+  link.data.hProperties = link.data.hProperties || {};
 
   if (link.type === 'wikiLink') {
+    link.data.hProperties.wikilink = true;
+
     if (link.data.exists === 'false') {
       link.data.hProperties.title = 'Click to create new file';
     } else {
@@ -22269,7 +22273,6 @@ var decorateLinkNode = function decorateLinkNode(link, root, filepath) {
   var isAbsolute = typeof root === 'undefined' || /(https?\:)?\/\//.test(link.url);
   var isFragment = /(\?|#).*/.test(link.url);
   var isRelative = typeof root !== 'undefined' && link.url && !(isAbsolute || isFragment);
-  link.data = link.data ? link.data : {};
 
   if (isRelative) {
     var abs = path__WEBPACK_IMPORTED_MODULE_0___default().resolve(root, path__WEBPACK_IMPORTED_MODULE_0___default().dirname(filepath), link.url);
@@ -22284,7 +22287,6 @@ var decorateLinkNode = function decorateLinkNode(link, root, filepath) {
   link.data.isAbsolute = isAbsolute;
   link.data.isFragment = isFragment;
   link.data.isRelative = isRelative;
-  link.data.hProperties = link.data.hProperties || {};
   link.data.hProperties.href = link.url; // don't throw away wiki link classes (yet)
 
   link.data.hProperties.className = link.data.hProperties.className || '';
