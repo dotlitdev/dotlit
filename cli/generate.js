@@ -26,9 +26,12 @@ function generateBacklinks(files, root) {
         level(1, info)(`[Backlinks] ${file.path} (${links.length})`)
         links.map( link => {
             level(2, info)(`[Backlinks] ${link.type} >> ${link.url} >> ${link.data.canonical} `)
-            const linkNode = decorateLinkNode({
-                url: file.path
-            })
+            const linkNode = {
+                url: decorateLinkNode({
+                        url: file.path
+                    }).url,
+                title: "tbd",
+            }
             if (link.data.isRelative) {
                 if (manifest[link.data.canonical]) {
                     manifest[link.data.canonical].push(linkNode)
