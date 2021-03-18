@@ -27,7 +27,9 @@ function generateBacklinks(files, root) {
                         url: file.path
                     })
         console.log(`[Manifest] Adding "${file.path}" as "${fileLink.data.canonical}"`)
-        manifest[fileLink.data.canonical] = { backlinks: [] }
+        manifest[fileLink.data.canonical] = manifest[fileLink.data.canonical] || { backlinks: [] }
+        manifest[fileLink.data.canonical].exists = true
+
         level(1, info)(`[Backlinks] ${file.path} ${fileLink.data.canonical} ${fileLink.url} links: (${links.length})`)
         links.forEach( link => {
             level(2, info)(`[Backlinks] ${link.type} >> ${link.url} >> ${link.data.canonical} `)
@@ -39,7 +41,7 @@ function generateBacklinks(files, root) {
                 if (manifest[link.data.canonical] && manifest[link.data.canonical].backlinks) {
                     manifest[link.data.canonical].backlinks.push(linkNode)
                 } else {
-                    manifest[link.data.canonical] = { backlinks: [linkNode] }
+                    manifest[link.data.canonical] = { backlinks: [linkNode], exists: false }
                 }
             }
         })
