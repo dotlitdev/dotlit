@@ -23,25 +23,27 @@ function generateBacklinks(files, root) {
     level(0, info)(`[Backlinks] for (${files.length}) files, in ${root}`)
     return [files.map( file => {
         const links = getLinks(file, root)
+        const fileLink = decorateLinkNode({
+                        url: file.path
+                    })
+        manifest[fileLink.data.canonical] = { backlinks: [] }
         level(1, info)(`[Backlinks] ${file.path} (${links.length})`)
         links.map( link => {
             level(2, info)(`[Backlinks] ${link.type} >> ${link.url} >> ${link.data.canonical} `)
             const linkNode = {
-                url: decorateLinkNode({
-                        url: file.path
-                    }).url,
+                url: fileLink.url,
                 title: "tbd",
             }
             if (link.data.isRelative) {
                 if (manifest[link.data.canonical]) {
-                    manifest[link.data.canonical].push(linkNode)
+                    manifest[link.data.canonical].backlinks.push(linkNode)
                 } else {
-                    manifest[link.data.canonical] = [linkNode]
+                    manifest[link.data.canonical] = { backlinks: [linkNode] }
                 }
             }
         })
         files.forEach( (file, index) => {
-            file.data.backlinks = manifest[file.path]
+            file.data.backlinks = manifest[file.path].backlinks
         })
         return file
     }),manifest]
