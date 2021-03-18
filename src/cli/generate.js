@@ -92,11 +92,6 @@ export function generate(cmd) {
                     level(0, info)(`Wrote  ${file.path} to "${path.join(cmd.output, file.path)}" to disk`)
                     return html_file;
                 }))
-
-                const manifest = html_files.reduce( (memo, file) => {
-                    memo[file.path] = file.data.backlinks
-                    return memo
-                }, {}) 
                 
                 await fs.writeFile(path.join(cmd.output, 'manifest.json'), JSON.stringify(manifest, null, 4))
                 level(0, info)(`Wrote ${html_files.length} file(s) to disk`)
