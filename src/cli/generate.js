@@ -43,6 +43,7 @@ function generateBacklinks(files, root) {
             }
         })
         files.forEach( (file, index) => {
+            file.data = file.data || {}
             file.data.backlinks = manifest[file.path].backlinks
         })
         return file
