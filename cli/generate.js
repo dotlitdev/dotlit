@@ -21,7 +21,7 @@ function getLinks(file, root) {
 function generateBacklinks(files, root) {
     let manifest = {}
     level(0, info)(`[Backlinks] for (${files.length}) files, in ${root}`)
-    return files.map( file => {
+    return [files.map( file => {
         const links = getLinks(file, root)
         level(1, info)(`[Backlinks] ${file.path} (${links.length})`)
         links.map( link => {
@@ -41,7 +41,7 @@ function generateBacklinks(files, root) {
             file.data.backlinks = manifest[file.path]
         })
         return file
-    })
+    }),manifest]
 }
 
 export function generate(cmd) {
@@ -80,10 +80,10 @@ export function generate(cmd) {
                     })
                 })
 
-                let ast_files = await Promise.all(src_files.map( async file => parse(await file, {
+                let ast_files_prelinks = await Promise.all(src_files.map( async file => parse(await file, {
                     files: litFiles
                 })))
-                ast_files = generateBacklinks(ast_files, cmd.output)
+                const [ast_files, manifest] = generateBacklinks(ast_files_prelinks, cmd.output)
 
                 const html_files = await Promise.all(ast_files.map( async file => {
                     await fs.writeFile(path.join(cmd.output, file.path + '.json'), JSON.stringify(file.data.ast, null, 4))
@@ -92,11 +92,6 @@ export function generate(cmd) {
                     level(0, info)(`Wrote  ${file.path} to "${path.join(cmd.output, file.path)}" to disk`)
                     return html_file;
                 }))
-
-                const manifest = html_files.reduce( (memo, file) => {
-                    memo[file.path] = file.data.backlinks
-                    return memo
-                }, {}) 
                 
                 await fs.writeFile(path.join(cmd.output, 'manifest.json'), JSON.stringify(manifest, null, 4))
                 level(0, info)(`Wrote ${html_files.length} file(s) to disk`)
