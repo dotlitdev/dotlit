@@ -21347,7 +21347,7 @@ var Backlinks = /*#__PURE__*/function (_React$Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("a", {
           title: link.title,
           href: path__WEBPACK_IMPORTED_MODULE_6___default().join(_this.props.root, link.url)
-        }, link.url));
+        }, link.title));
       })));
     }
   }]);
