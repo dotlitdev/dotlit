@@ -26,6 +26,7 @@ function generateBacklinks(files, root) {
         const fileLink = decorateLinkNode({
                         url: file.path
                     })
+        console.log(`[Manifest] Adding "${file.path}" as "${fileLink.data.canonical}"`)
         manifest[fileLink.data.canonical] = { backlinks: [] }
         level(1, info)(`[Backlinks] ${file.path} ${fileLink.data.canonical} ${fileLink.url} links: (${links.length})`)
         links.map( link => {
