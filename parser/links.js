@@ -44,7 +44,7 @@ export const decorateLinkNode = (link, root, filepath) => {
 
     link.data.original = link.url
     link.url = link.url.replace(/\.(md|lit)/i, '.html')
-    link.data.hProperties.href = link.url
+
 
     link.data.isAbsolute = isAbsolute
     link.data.isFragment = isFragment
