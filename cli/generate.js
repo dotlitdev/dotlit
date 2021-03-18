@@ -33,7 +33,7 @@ function generateBacklinks(files, root) {
             level(2, info)(`[Backlinks] ${link.type} >> ${link.url} >> ${link.data.canonical} `)
             const linkNode = {
                 url: fileLink.url,
-                title: "tbd",
+                title: `Title TBD (${fileLink.data.canonical})`,
             }
             if (link.data.isRelative) {
                 if (manifest[link.data.canonical] && manifest[link.data.canonical].backlinks) {
