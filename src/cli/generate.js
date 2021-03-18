@@ -21,7 +21,7 @@ function getLinks(file, root) {
 function generateBacklinks(files, root) {
     let manifest = {}
     level(0, info)(`[Backlinks] for (${files.length}) files, in ${root}`)
-    return [files.map( file => {
+    files.forEach( file => {
         const links = getLinks(file, root)
         const fileLink = decorateLinkNode({
                         url: file.path
@@ -29,7 +29,7 @@ function generateBacklinks(files, root) {
         console.log(`[Manifest] Adding "${file.path}" as "${fileLink.data.canonical}"`)
         manifest[fileLink.data.canonical] = { backlinks: [] }
         level(1, info)(`[Backlinks] ${file.path} ${fileLink.data.canonical} ${fileLink.url} links: (${links.length})`)
-        links.map( link => {
+        links.forEach( link => {
             level(2, info)(`[Backlinks] ${link.type} >> ${link.url} >> ${link.data.canonical} `)
             const linkNode = {
                 url: fileLink.url,
@@ -43,13 +43,14 @@ function generateBacklinks(files, root) {
                 }
             }
         })
-        files.forEach( (file, index) => {
+    })
+
+    return files.map( (file, index) => {
             file.data = file.data || {}
             console.log(file.path, index, manifest[file.path])
             file.data.backlinks = manifest[file.path].backlinks
-        })
-        return file
-    }),manifest]
+            return file
+        }), manifest]
 }
 
 export function generate(cmd) {
