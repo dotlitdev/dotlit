@@ -22532,7 +22532,7 @@ function renderToVfile(vfile, cmd, links) {
   var output = vfile;
   var notebook = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4__.createElement(_components_Document__WEBPACK_IMPORTED_MODULE_7__.default, {
     file: output,
-    root: relroot,
+    root: cmd.base || relroot,
     backlinks: links,
     processor: processor()
   });
