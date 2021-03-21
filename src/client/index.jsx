@@ -16,7 +16,7 @@ const getMeta = (key,def) => {
 const litsrc = getMeta('src', '404.lit')
 const litroot = getMeta('root', '')
 const litbase = getMeta('base', '/')
-const baseUrl =`${location.protocol}//${location.host}${path.join(path.dirname(location.pathname), litroot)}`
+const baseUrl =`${location.protocol}//${location.host}${litroot ? path.join(path.dirname(location.pathname), litroot) : litbase}`
 const fs = new FS(baseUrl)
 
 const lit = {
