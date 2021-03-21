@@ -43,7 +43,7 @@ export function renderToVfile(vfile, cmd, links) {
 
     const notebook = <Document
         file={output}
-        root={relroot}
+        root={cmd.base || relroot}
         backlinks={links}
         processor={processor()}
     />
