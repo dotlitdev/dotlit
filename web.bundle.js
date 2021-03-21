@@ -85545,9 +85545,15 @@ var FS = __webpack_require__(/*! @isomorphic-git/lightning-fs */ "./node_modules
 
 var select = __webpack_require__(/*! unist-util-select */ "./node_modules/unist-util-select/index.js");
 
-var litsrc = document.querySelector('meta[name="litsrc"]').getAttribute('value');
-var litroot = document.querySelector('meta[name="litroot"]').getAttribute('value');
-var baseUrl = "".concat(location.protocol, "//").concat(location.host).concat(path.join(path.dirname(location.pathname), litroot));
+var getMeta = function getMeta(key, def) {
+  var el = document.querySelector("meta[name=\"lit".concat(key, "\"]"));
+  return el ? el.getAttribute('value') : def;
+};
+
+var litsrc = getMeta('src', '404.lit');
+var litroot = getMeta('root', '');
+var litbase = getMeta('base', '/');
+var baseUrl = "".concat(location.protocol, "//").concat(location.host).concat(litroot ? path.join(path.dirname(location.pathname), litroot) : litbase);
 var fs = new FS(baseUrl);
 var lit = {
   location: {
