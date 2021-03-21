@@ -11,7 +11,7 @@ const select = require('unist-util-select')
 
 const getMeta = (key,def) => {
     const el = document.querySelector(`meta[name="lit${key}"]`)
-    return el ? el.getAttribute('value') || def
+    return el ? el.getAttribute('value') : def
 }
 const litsrc = getMeta('src', '404.lit')
 const litroot = getMeta('root', '')
