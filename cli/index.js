@@ -93,6 +93,7 @@ program
     .option('-p, --prettify', 'Prettify the output')
     .option('-t, --tags <taglist>', 'Only include documents with tags')
     .option('-o, --output <path>', 'Output location')
+    .option('-b, --base <path>', 'Base path (output prefix)')
     .option('-w, --watch', 'Watch for changes and regenerate')
     .option('-g, --github-token <token>', 'GitHub Token')
     .option('-u, --github-user <username>', 'GitHub Username')
