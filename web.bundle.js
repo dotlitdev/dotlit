@@ -22364,6 +22364,7 @@ var createCell = function createCell(node) {
 };
 
 var createSection = function createSection(node) {
+  node.children = cellsFromNodes(node.children);
   return {
     type: "section",
     data: {
@@ -22385,7 +22386,7 @@ var cellsFromNodes = function cellsFromNodes(nodes) {
     if (node.type === "section") {
       newCell = null;
       cells.push(node);
-    } else if (node.type === "list" && node.spread) {
+    } else if (node.type === "list") {
       newCell = null;
       var listSection = createSection(node);
       cells.push(listSection);
