@@ -32,7 +32,8 @@ const wrapSection = (options) => (start, nodes, end) => {
       newCell = null;
       cells.push(node);
 
-    } else if (node.type === "list") {
+    } else if (node.type === "list" && node.spread) {
+      newCell = null;
       let listSection = {
         type: "section",
         data: {

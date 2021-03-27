@@ -22364,7 +22364,8 @@ var wrapSection = function wrapSection(options) {
       if (node.type === "section") {
         newCell = null;
         cells.push(node);
-      } else if (node.type === "list") {
+      } else if (node.type === "list" && node.spread) {
+        newCell = null;
         var listSection = {
           type: "section",
           data: {
