@@ -85552,7 +85552,7 @@ var getMeta = function getMeta(key, def) {
   return el ? el.getAttribute('value') : def;
 };
 
-var litsrc = getMeta('src', '404.lit');
+var litsrc = getMeta('src', '');
 var litroot = getMeta('root', '');
 var litbase = getMeta('base', '/');
 var baseUrl = "".concat(location.protocol, "//").concat(location.host).concat(litroot ? path.join(path.dirname(location.pathname), litroot) : litbase);
