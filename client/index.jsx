@@ -42,17 +42,18 @@ console.log(`lit:`, lit)
 ;(async () => {
 
     console.log(`Checking local (${baseUrl}) filesystem for: ${litsrc}`)
-    let file, stat;
+    let contents, file, stat;
     try { stat = await lit.fs.stat('/' + litsrc) } catch(err) {}
     if (stat) {
         console.log(`Local file "${ '/' + litsrc}" exists, loading that instead.`)
-        const contents = await lit.fs.readFile('/' +  litsrc, {encoding: 'utf8'})
-        file = await vfile({path: litsrc, contents})
+        contents = await lit.fs.readFile('/' +  litsrc, {encoding: 'utf8'})
     } else {
         console.log("Fetching file content", litroot, litsrc, path.join(litroot, litsrc))
-        const contents = await (await fetch(path.join(litroot, litsrc))).text()
-        file = await vfile({path: litsrc, contents})
+        contents = await (await fetch(path.join(litroot, litsrc))).text()
     }
+    console.log(contents)
+    file = await vfile({path: litsrc, contents})
+
     
     const parsedFile = await parser.parse(file)
     console.log(parsedFile)

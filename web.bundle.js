@@ -85601,8 +85601,7 @@ console.log('.lit Notebook client initializing...');
 console.log("lit:", lit);
 
 (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
-  var file, stat, contents, _contents, parsedFile;
-
+  var contents, file, stat, parsedFile;
   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
@@ -85623,7 +85622,7 @@ console.log("lit:", lit);
 
         case 9:
           if (!stat) {
-            _context.next = 19;
+            _context.next = 16;
             break;
           }
 
@@ -85635,42 +85634,35 @@ console.log("lit:", lit);
 
         case 13:
           contents = _context.sent;
-          _context.next = 16;
+          _context.next = 22;
+          break;
+
+        case 16:
+          console.log("Fetching file content", litroot, litsrc, path.join(litroot, litsrc));
+          _context.next = 19;
+          return fetch(path.join(litroot, litsrc));
+
+        case 19:
+          _context.next = 21;
+          return _context.sent.text();
+
+        case 21:
+          contents = _context.sent;
+
+        case 22:
+          console.log(contents);
+          _context.next = 25;
           return vfile({
             path: litsrc,
             contents: contents
           });
 
-        case 16:
+        case 25:
           file = _context.sent;
           _context.next = 28;
-          break;
-
-        case 19:
-          console.log("Fetching file content", litroot, litsrc, path.join(litroot, litsrc));
-          _context.next = 22;
-          return fetch(path.join(litroot, litsrc));
-
-        case 22:
-          _context.next = 24;
-          return _context.sent.text();
-
-        case 24:
-          _contents = _context.sent;
-          _context.next = 27;
-          return vfile({
-            path: litsrc,
-            contents: _contents
-          });
-
-        case 27:
-          file = _context.sent;
-
-        case 28:
-          _context.next = 30;
           return parser.parse(file);
 
-        case 30:
+        case 28:
           parsedFile = _context.sent;
           console.log(parsedFile);
           window.lit.ast = parsedFile.data.ast;
@@ -85695,7 +85687,7 @@ console.log("lit:", lit);
             console.error("Error hydrating App", err);
           }
 
-        case 36:
+        case 34:
         case "end":
           return _context.stop();
       }
