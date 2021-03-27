@@ -22390,6 +22390,10 @@ var cellsFromNodes = function cellsFromNodes(nodes) {
       newCell = null;
       var listSection = createSection(node);
       cells.push(listSection);
+    } else if (node.type === "listItem" && node.spread) {
+      newCell = null;
+      var listItemSection = createSection(node);
+      cells.push(listItemSection);
     } else if (node.type === "code") {
       newCell = null;
       var singleCell = createCell(node);
