@@ -13,7 +13,7 @@ const getMeta = (key,def) => {
     const el = document.querySelector(`meta[name="lit${key}"]`)
     return el ? el.getAttribute('value') : def
 }
-const litsrc = getMeta('src', '404.lit')
+const litsrc = getMeta('src', '')
 const litroot = getMeta('root', '')
 const litbase = getMeta('base', '/')
 const baseUrl =`${location.protocol}//${location.host}${litroot ? path.join(path.dirname(location.pathname), litroot) : litbase}`
