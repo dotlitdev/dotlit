@@ -69,7 +69,7 @@ export function generate(cmd) {
         glob(globAll, {cwd: `${cmd.path}/`, ignore}, async (err, matches) => {
             if (err) error(err)
             else {
-
+                try {
                 const copied = await Promise.all( matches.map( async filepath => {
                     const src = path.join(cmd.path, filepath)
                     const dest = path.join(cmd.output, filepath)
@@ -112,6 +112,11 @@ export function generate(cmd) {
                 await fs.copyFile( path.join(__dirname,'../../dist/style.css'), path.join(cmd.output, 'style.css'))
 
                 timeEnd('generate')
+
+               } catch(err) {
+                  error(err)
+                  process.exit(1)
+               }
             }
         })
     }
