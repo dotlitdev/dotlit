@@ -77,9 +77,9 @@ const wrapSection = (options) => (start, nodes, end) => {
     end && end.type
   );
 
-  // const children = nodes && nodes.length ? visit({type:'root', children: [...nodes]}, 'heading', transform(options)) || [] : []
   // log("[Section] children:", children)
- const cells = cellsFromNodes([start, ...nodes])
+  const nodes = [start, ...nodes]
+  const cells = cellsFromNodes(nodes)
 
   return [
     {
