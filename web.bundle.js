@@ -21390,6 +21390,7 @@ var childIs = function childIs(node, nodeType) {
 
 var Cell = function Cell(props) {
   var symbol = props.node.properties['data-symbol'];
+  var node = props.node;
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
       _useState2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__.default)(_useState, 2),
@@ -21416,6 +21417,10 @@ var Cell = function Cell(props) {
     };
   };
 
+  var posstr = function posstr(pos) {
+    return "".concat(pos.line, ":").concat(pos.column, "-").concat(pos.offset);
+  };
+
   var isCodeCell = childIs(props.node, 'pre');
 
   var save = function save(ctx) {
@@ -21432,7 +21437,8 @@ var Cell = function Cell(props) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_SelectionContext__WEBPACK_IMPORTED_MODULE_4__.default.Consumer, null, function (ctx) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("cell", {
       onClick: toggleSelected(ctx),
-      pos: symbol,
+      start: posstr(node.position.start),
+      end: posstr(node.position.end),
       className: getClasses(ctx)
     }, editing ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Editor__WEBPACK_IMPORTED_MODULE_5__.default, {
       src: unist_util_source__WEBPACK_IMPORTED_MODULE_2___default()(props.node.position, ctx.src),
