@@ -44,8 +44,8 @@ const Cell = props => {
         { ctx => {
             return <cell
                 onClick={toggleSelected(ctx)}
-                start={posstr(node.position.start)}
-                end={posstr(node.position.end)}
+                startpos={posstr(node.position.start)}
+                endpos={posstr(node.position.end)}
                 className={getClasses(ctx)}>
                     { editing ? <Editor src={source(props.node.position, ctx.src)} update={setSrc}/> : props.children }
                     { isSelected(ctx) && <CellMenu editing={editing} toggleEditing={toggleEditing} save={save(ctx)}/>}
