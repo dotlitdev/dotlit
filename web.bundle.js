@@ -22355,7 +22355,7 @@ var symbolFromPos = function symbolFromPos(pos) {
   return "cell-".concat(pos.line, ":").concat(pos.column, ":").concat(pos.offset);
 };
 
-var createCell = function createCell(node) {
+var createCell = function createCell(node, nodes) {
   var pos = node.position; // pos.start.offset = pos.start.offset - pos.start.column
   // pos.start.column = 0
 
@@ -22370,19 +22370,19 @@ var createCell = function createCell(node) {
         "data-symbol": symbolFromPos(node.position.start)
       }
     },
-    children: [node]
+    children: nodes || [node]
   };
 };
 
-var createSection = function createSection(node) {
-  node.children = cellsFromNodes(node.children);
+var createSection = function createSection(node, nodes) {
+  if (!nodes) node.children = cellsFromNodes(node.children);
   return {
     type: "section",
     data: {
       hName: "section"
     },
     position: node.position,
-    children: [node]
+    children: nodes || [node]
   };
 };
 
@@ -22401,10 +22401,19 @@ var cellsFromNodes = function cellsFromNodes(nodes) {
       newCell = null;
       var listSection = createSection(node);
       cells.push(listSection);
-    } else if (node.type === "listItem" && node.spread) {
+    } else if (node.type === "listItem") {
       newCell = null;
-      var listItemSection = createSection(node);
-      cells.push(listItemSection);
+      var listItem = node;
+
+      if (node.spread) {
+        if (node.children && node.children[0] && node.children[0].type === "section") {} else {
+          listItem.children = [createSection(node, node.children)];
+        }
+      } else {
+        listItem.children = [createCell(node, node.children)];
+      }
+
+      cells.push(listItem);
     } else if (node.type === "code") {
       newCell = null;
       var singleCell = createCell(node);
