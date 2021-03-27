@@ -14,6 +14,7 @@ const childIs = (node, nodeType) => node.children
 const Cell = props => {
 
     const symbol = props.node.properties['data-symbol']
+    const node = props.node
 
     const [src, setSrc] = useState('')
     const [editing, setEditing] = useState(false)
@@ -24,7 +25,8 @@ const Cell = props => {
         const selected = isSelected(ctx)
         ctx.setSelectedCell(selected ? null : symbol)
     }
-
+    
+    const posstr = pos => `${pos.line}:${pos.column}-${pos.offset}`
     const isCodeCell = childIs(props.node, 'pre')
 
     const save = ctx => args => {
@@ -42,7 +44,8 @@ const Cell = props => {
         { ctx => {
             return <cell
                 onClick={toggleSelected(ctx)}
-                pos={symbol}
+                start={posstr(node.position.start)}
+                end={posstr(node.position.end)}
                 className={getClasses(ctx)}>
                     { editing ? <Editor src={source(props.node.position, ctx.src)} update={setSrc}/> : props.children }
                     { isSelected(ctx) && <CellMenu editing={editing} toggleEditing={toggleEditing} save={save(ctx)}/>}
