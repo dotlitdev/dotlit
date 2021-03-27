@@ -23,14 +23,17 @@ const createCell = node => ( {
           children: [node],
         })
 
-const createSection = node => ( {
+const createSection = node => {
+  node.children = cellsFromNodes(node.children)
+  return {
         type: "section",
         data: {
           hName: "section",
         },
         position: node.position,
         children: [node],
-      })
+      }
+}
 
 const cellsFromNodes = nodes => {
 
@@ -45,7 +48,7 @@ const cellsFromNodes = nodes => {
       newCell = null;
       cells.push(node);
 
-    } else if (node.type === "list" && node.spread) {
+    } else if (node.type === "list") {
       newCell = null;
       let listSection = createSection(node)
       cells.push(listSection);
