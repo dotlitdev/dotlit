@@ -22405,10 +22405,9 @@ var cellsFromNodes = function cellsFromNodes(nodes) {
       newCell = null;
       var listItem = node;
 
-      if (node.spread) {
-        if (node.children && node.children[0] && node.children[0].type === "section") {} else {
-          listItem.children = [createSection(node, node.children)];
-        }
+      if (node.children && node.children[0] && node.children[0].type === "section") {// ignore?
+      } else if (node.spread) {
+        listItem.children = [createSection(node, node.children)];
       } else {
         listItem.children = [createCell(node, node.children)];
       }
