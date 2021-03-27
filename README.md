@@ -1,5 +1,5 @@
 # dotlit
 
-https://dotlit.org [![Deploy](https://github.com/dotlitdev/dotlit/actions/workflows/generate.yaml/badge.svg)](https://github.com/dotlitdev/dotlit/actions/workflows/generate.yaml)
+[![Deploy](https://github.com/dotlitdev/dotlit/actions/workflows/generate.yaml/badge.svg)](https://github.com/dotlitdev/dotlit/actions/workflows/generate.yaml)
 
-See `src/index.lit` for now
+See `src/index.lit` or https://dotlit.org for now
