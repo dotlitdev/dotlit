@@ -53,6 +53,11 @@ const cellsFromNodes = nodes => {
       let listSection = createSection(node)
       cells.push(listSection);
 
+    } else if (node.type === "listItem" && node.spread) {
+      newCell = null;
+      let listItemSection = createSection(node)
+      cells.push(listItemSection);
+
     } else if (node.type === "code") {
       newCell = null;
       let singleCell = createCell(node)
