@@ -10,6 +10,28 @@ const symbolFromPos = (pos) => {
   return `cell-${pos.line}:${pos.column}:${pos.offset}`;
 };
 
+const createCell = node => ( {
+          type: "cell",
+          position: node.position,
+          data: {
+            hName: "cell",
+            hProperties: {
+              class: "cell",
+              "data-symbol": symbolFromPos(node.position.start),
+            },
+          },
+          children: [node],
+        })
+
+const createSection = node => ( {
+        type: "section",
+        data: {
+          hName: "section",
+        },
+        position: node.position,
+        children: [node],
+      })
+
 const wrapSection = (options) => (start, nodes, end) => {
   level(2, log)(
     "[Sections] Wrapping:",
@@ -34,30 +56,12 @@ const wrapSection = (options) => (start, nodes, end) => {
 
     } else if (node.type === "list" && node.spread) {
       newCell = null;
-      let listSection = {
-        type: "section",
-        data: {
-          hName: "section",
-        },
-        position: node.position,
-        children: [node],
-      };
+      let listSection = createSection(node)
       cells.push(listSection);
 
     } else if (node.type === "code") {
       newCell = null;
-      let singleCell = {
-        type: "cell",
-        position: node.position,
-        data: {
-          hName: "cell",
-          hProperties: {
-            class: "cell",
-            "data-symbol": symbolFromPos(node.position.start),
-          },
-        },
-        children: [node],
-      };
+      let singleCell = createCell(node)
       cells.push(singleCell);
       
     } else {
@@ -65,18 +69,7 @@ const wrapSection = (options) => (start, nodes, end) => {
         newCell.children.push(node);
         newCell.position.end = node.position.end;
       } else {
-        newCell = {
-          type: "cell",
-          position: node.position,
-          data: {
-            hName: "cell",
-            hProperties: {
-              class: "cell",
-              "data-symbol": symbolFromPos(node.position.start),
-            },
-          },
-          children: [node],
-        };
+        newCell = createCell(node)
         cells.push(newCell);
       }
     }

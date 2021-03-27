@@ -22348,6 +22348,32 @@ var symbolFromPos = function symbolFromPos(pos) {
   return "cell-".concat(pos.line, ":").concat(pos.column, ":").concat(pos.offset);
 };
 
+var createCell = function createCell(node) {
+  return {
+    type: "cell",
+    position: node.position,
+    data: {
+      hName: "cell",
+      hProperties: {
+        "class": "cell",
+        "data-symbol": symbolFromPos(node.position.start)
+      }
+    },
+    children: [node]
+  };
+};
+
+var createSection = function createSection(node) {
+  return {
+    type: "section",
+    data: {
+      hName: "section"
+    },
+    position: node.position,
+    children: [node]
+  };
+};
+
 var wrapSection = function wrapSection(options) {
   return function (start, nodes, end) {
     (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_6__.log)("[Sections] Wrapping:", start && start.data.id, nodes && nodes.length, end && end.type); // const children = nodes && nodes.length ? visit({type:'root', children: [...nodes]}, 'heading', transform(options)) || [] : []
@@ -22366,47 +22392,18 @@ var wrapSection = function wrapSection(options) {
         cells.push(node);
       } else if (node.type === "list" && node.spread) {
         newCell = null;
-        var listSection = {
-          type: "section",
-          data: {
-            hName: "section"
-          },
-          position: node.position,
-          children: [node]
-        };
+        var listSection = createSection(node);
         cells.push(listSection);
       } else if (node.type === "code") {
         newCell = null;
-        var singleCell = {
-          type: "cell",
-          position: node.position,
-          data: {
-            hName: "cell",
-            hProperties: {
-              "class": "cell",
-              "data-symbol": symbolFromPos(node.position.start)
-            }
-          },
-          children: [node]
-        };
+        var singleCell = createCell(node);
         cells.push(singleCell);
       } else {
         if (newCell) {
           newCell.children.push(node);
           newCell.position.end = node.position.end;
         } else {
-          newCell = {
-            type: "cell",
-            position: node.position,
-            data: {
-              hName: "cell",
-              hProperties: {
-                "class": "cell",
-                "data-symbol": symbolFromPos(node.position.start)
-              }
-            },
-            children: [node]
-          };
+          newCell = createCell(node);
           cells.push(newCell);
         }
       }
