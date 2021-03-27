@@ -22349,9 +22349,9 @@ var symbolFromPos = function symbolFromPos(pos) {
 };
 
 var createCell = function createCell(node) {
-  var pos = node.position;
-  pos.start.offset = pos.start.offset - pos.start.column;
-  pos.start.column = 0;
+  var pos = node.position; // pos.start.offset = pos.start.offset - pos.start.column
+  // pos.start.column = 0
+
   return {
     type: "cell",
     position: pos,
@@ -22359,6 +22359,7 @@ var createCell = function createCell(node) {
       hName: "cell",
       hProperties: {
         "class": "cell",
+        pos: symbolFromPos(pos),
         "data-symbol": symbolFromPos(node.position.start)
       }
     },

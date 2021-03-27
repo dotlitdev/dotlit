@@ -12,8 +12,8 @@ const symbolFromPos = (pos) => {
 
 const createCell = node => {
      const pos = node.position
-     pos.start.offset = pos.start.offset - pos.start.column
-     pos.start.column = 0
+     // pos.start.offset = pos.start.offset - pos.start.column
+     // pos.start.column = 0
      return {
           type: "cell",
           position: pos,
@@ -21,6 +21,7 @@ const createCell = node => {
             hName: "cell",
             hProperties: {
               class: "cell",
+              pos: symbolFromPos(pos),
               "data-symbol": symbolFromPos(node.position.start),
             },
           },
