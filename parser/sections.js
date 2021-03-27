@@ -10,9 +10,13 @@ const symbolFromPos = (pos) => {
   return `cell-${pos.line}:${pos.column}:${pos.offset}`;
 };
 
-const createCell = node => ( {
+const createCell = node => {
+     const pos = node.position
+     pos.start.offset = pos.start.offset - pos.start.column
+     pos.start.column = 0
+     return {
           type: "cell",
-          position: node.position,
+          position: pos,
           data: {
             hName: "cell",
             hProperties: {
@@ -21,7 +25,8 @@ const createCell = node => ( {
             },
           },
           children: [node],
-        })
+        }
+}
 
 const createSection = node => {
   node.children = cellsFromNodes(node.children)
