@@ -32,20 +32,11 @@ const createSection = node => ( {
         children: [node],
       })
 
-const wrapSection = (options) => (start, nodes, end) => {
-  level(2, log)(
-    "[Sections] Wrapping:",
-    start && start.data.id,
-    nodes && nodes.length,
-    end && end.type
-  );
+const cellsFromNodes = nodes => {
 
-  // const children = nodes && nodes.length ? visit({type:'root', children: [...nodes]}, 'heading', transform(options)) || [] : []
-  // log("[Section] children:", children)
   const cells = [];
   let newCell = null;
 
-  nodes = [start, ...nodes];
   nodes.map((current) => {
     const node = current; //removePosition(current)
     level(3, log)("[Sections] child: ", node.type);
@@ -74,6 +65,21 @@ const wrapSection = (options) => (start, nodes, end) => {
       }
     }
   });
+  return cells;
+
+}
+
+const wrapSection = (options) => (start, nodes, end) => {
+  level(2, log)(
+    "[Sections] Wrapping:",
+    start && start.data.id,
+    nodes && nodes.length,
+    end && end.type
+  );
+
+  // const children = nodes && nodes.length ? visit({type:'root', children: [...nodes]}, 'heading', transform(options)) || [] : []
+  // log("[Section] children:", children)
+ const cells = cellsFromNodes([start, ...nodes])
 
   return [
     {
