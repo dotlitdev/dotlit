@@ -10,11 +10,13 @@ const FS = require('@isomorphic-git/lightning-fs')
 
 const select = require('unist-util-select')
 
-const getMeta = (key,def) => {
+const getMeta = (key,def,likeUndef) => {
     const el = document.querySelector(`meta[name="lit${key}"]`)
-    return el ? el.getAttribute('value') : def
+    const val = el ? el.getAttribute('value') : def
+    return val === likeUndef ? def : val
 }
-const litsrc = getMeta('src', '')
+const query = qs.parse(location.search.slice(1))
+const litsrc = getMeta('src', query.file || '', '404.lit')
 const litroot = getMeta('root', '')
 const litbase = getMeta('base', '/')
 const baseUrl =`${location.protocol}//${location.host}${litroot ? path.join(path.dirname(location.pathname), litroot) : litbase}`
@@ -25,7 +27,7 @@ const lit = {
         src: litsrc,
         root: litroot,
         base: baseUrl,
-        query: qs.parse(location.search.slice(1))
+        query: query,
     },
     parser,
     renderer,

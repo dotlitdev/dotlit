@@ -88474,12 +88474,14 @@ var FS = __webpack_require__(/*! @isomorphic-git/lightning-fs */ "./node_modules
 
 var select = __webpack_require__(/*! unist-util-select */ "./node_modules/unist-util-select/index.js");
 
-var getMeta = function getMeta(key, def) {
+var getMeta = function getMeta(key, def, likeUndef) {
   var el = document.querySelector("meta[name=\"lit".concat(key, "\"]"));
-  return el ? el.getAttribute('value') : def;
+  var val = el ? el.getAttribute('value') : def;
+  return val === likeUndef ? def : val;
 };
 
-var litsrc = getMeta('src', '');
+var query = qs.parse(location.search.slice(1));
+var litsrc = getMeta('src', query.file || '', '404.lit');
 var litroot = getMeta('root', '');
 var litbase = getMeta('base', '/');
 var baseUrl = "".concat(location.protocol, "//").concat(location.host).concat(litroot ? path.join(path.dirname(location.pathname), litroot) : litbase);
@@ -88489,7 +88491,7 @@ var lit = {
     src: litsrc,
     root: litroot,
     base: baseUrl,
-    query: qs.parse(location.search.slice(1))
+    query: query
   },
   parser: parser,
   renderer: renderer,
