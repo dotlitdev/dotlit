@@ -88481,7 +88481,7 @@ var getMeta = function getMeta(key, def, likeUndef) {
 };
 
 var query = qs.parse(location.search.slice(1));
-var litsrc = getMeta('src', query.file || '', '404.lit');
+var litsrc = getMeta('src', '');
 var litroot = getMeta('root', '');
 var litbase = getMeta('base', '/');
 var baseUrl = "".concat(location.protocol, "//").concat(location.host).concat(litroot ? path.join(path.dirname(location.pathname), litroot) : litbase);
@@ -88507,68 +88507,70 @@ console.log('.lit Notebook client initializing...');
 console.log("lit:", lit);
 
 (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
-  var contents, file, stat, parsedFile;
+  var src, contents, file, stat, parsedFile;
   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
-          console.log("Checking local (".concat(baseUrl, ") filesystem for: ").concat(litsrc));
-          _context.prev = 1;
-          _context.next = 4;
-          return lit.fs.stat('/' + litsrc);
+          src = litsrc;
+          if (src === '404.lit' && query.file) src = query.file;
+          console.log("Checking local (".concat(baseUrl, ") filesystem for: ").concat(src));
+          _context.prev = 3;
+          _context.next = 6;
+          return lit.fs.stat('/' + src);
 
-        case 4:
+        case 6:
           stat = _context.sent;
-          _context.next = 9;
+          _context.next = 11;
           break;
 
-        case 7:
-          _context.prev = 7;
-          _context.t0 = _context["catch"](1);
-
         case 9:
+          _context.prev = 9;
+          _context.t0 = _context["catch"](3);
+
+        case 11:
           if (!stat) {
-            _context.next = 16;
+            _context.next = 18;
             break;
           }
 
-          console.log("Local file \"".concat('/' + litsrc, "\" exists, loading that instead."));
-          _context.next = 13;
-          return lit.fs.readFile('/' + litsrc, {
+          console.log("Local file \"".concat('/' + src, "\" exists, loading that instead."));
+          _context.next = 15;
+          return lit.fs.readFile('/' + src, {
             encoding: 'utf8'
           });
 
-        case 13:
+        case 15:
           contents = _context.sent;
-          _context.next = 22;
+          _context.next = 24;
           break;
 
-        case 16:
+        case 18:
           console.log("Fetching file content", litroot, litsrc, path.join(litroot, litsrc));
-          _context.next = 19;
+          _context.next = 21;
           return fetch(path.join(litroot, litsrc));
 
-        case 19:
-          _context.next = 21;
+        case 21:
+          _context.next = 23;
           return _context.sent.text();
 
-        case 21:
+        case 23:
           contents = _context.sent;
 
-        case 22:
+        case 24:
           console.log(contents);
-          _context.next = 25;
+          _context.next = 27;
           return vfile({
-            path: litsrc,
+            path: src,
             contents: contents
           });
 
-        case 25:
+        case 27:
           file = _context.sent;
-          _context.next = 28;
+          _context.next = 30;
           return parser.parse(file);
 
-        case 28:
+        case 30:
           parsedFile = _context.sent;
           console.log(parsedFile);
           window.lit.ast = parsedFile.data.ast;
@@ -88593,12 +88595,12 @@ console.log("lit:", lit);
             console.error("Error hydrating App", err);
           }
 
-        case 34:
+        case 36:
         case "end":
           return _context.stop();
       }
     }
-  }, _callee, null, [[1, 7]]);
+  }, _callee, null, [[3, 9]]);
 }))();
 })();
 
