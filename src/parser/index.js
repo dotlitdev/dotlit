@@ -27,7 +27,7 @@ export const processor = (options={files: []}) => {
     .use(markdown, {})
     .use(gfm)
     .use(frontmatter, {})
-    .use(wikiLinkPlugin, wikiLinkOptions)
+    .use(wikiLinkPlugin, wikiLinkOptions(options.files))
     .use(slug)
     .use(toc, {})
     .use(headingIds)
