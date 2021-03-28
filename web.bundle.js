@@ -22635,6 +22635,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 var patchSource = function patchSource(src, originalLocation, value) {
   var pos = originalLocation.position || originalLocation;
+  if (!pos) throw Error("No location to patch");
   return src.slice(0, pos.start.offset) + value + src.slice(pos.end.offset);
 };
 
