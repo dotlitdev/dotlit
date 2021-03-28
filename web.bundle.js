@@ -21390,9 +21390,13 @@ var childIs = function childIs(node, nodeType) {
   return node.children && node.children.length && node.children[0] && node.children[0].tagName === nodeType;
 };
 
+var posstr = function posstr(pos) {
+  return pos ? "".concat(pos.line, ":").concat(pos.column, "-").concat(pos.offset) : undefined;
+};
+
 var Cell = function Cell(props) {
-  var symbol = props.node.properties['data-symbol'];
   var node = props.node;
+  var symbol = posstr(node.position.start);
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
       _useState2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__.default)(_useState, 2),
@@ -21417,10 +21421,6 @@ var Cell = function Cell(props) {
       var selected = isSelected(ctx);
       ctx.setSelectedCell(selected ? null : symbol);
     };
-  };
-
-  var posstr = function posstr(pos) {
-    return "".concat(pos.line, ":").concat(pos.column, "-").concat(pos.offset);
   };
 
   var isCodeCell = childIs(props.node, 'pre');
