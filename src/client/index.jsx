@@ -16,7 +16,7 @@ const getMeta = (key,def,likeUndef) => {
     return val === likeUndef ? def : val
 }
 const query = qs.parse(location.search.slice(1))
-const litsrc = getMeta('src', query.file || '', '404.lit')
+const litsrc = getMeta('src', '')
 const litroot = getMeta('root', '')
 const litbase = getMeta('base', '/')
 const baseUrl =`${location.protocol}//${location.host}${litroot ? path.join(path.dirname(location.pathname), litroot) : litbase}`
@@ -44,19 +44,20 @@ console.log('.lit Notebook client initializing...')
 console.log(`lit:`, lit)
 
 ;(async () => {
-
-    console.log(`Checking local (${baseUrl}) filesystem for: ${litsrc}`)
+    let src = litsrc
+    if (src === '404.lit' && query.file) src = query.file
+    console.log(`Checking local (${baseUrl}) filesystem for: ${src}`)
     let contents, file, stat;
-    try { stat = await lit.fs.stat('/' + litsrc) } catch(err) {}
+    try { stat = await lit.fs.stat('/' + src) } catch(err) {}
     if (stat) {
-        console.log(`Local file "${ '/' + litsrc}" exists, loading that instead.`)
-        contents = await lit.fs.readFile('/' +  litsrc, {encoding: 'utf8'})
+        console.log(`Local file "${ '/' + src}" exists, loading that instead.`)
+        contents = await lit.fs.readFile('/' +  src, {encoding: 'utf8'})
     } else {
         console.log("Fetching file content", litroot, litsrc, path.join(litroot, litsrc))
         contents = await (await fetch(path.join(litroot, litsrc))).text()
     }
     console.log(contents)
-    file = await vfile({path: litsrc, contents})
+    file = await vfile({path: src, contents})
 
     
     const parsedFile = await parser.parse(file)
