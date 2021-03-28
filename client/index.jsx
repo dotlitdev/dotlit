@@ -5,6 +5,7 @@ const renderer = require('../renderer')
 const App = require('../components/App').default
 const vfile = require('vfile')
 const path = require('path')
+const qs = require('querystring-es3')
 const FS = require('@isomorphic-git/lightning-fs')
 
 const select = require('unist-util-select')
@@ -23,7 +24,8 @@ const lit = {
     location: {
         src: litsrc,
         root: litroot,
-        base: baseUrl
+        base: baseUrl,
+        query: qs.parse(location.search.slice(1))
     },
     parser,
     renderer,
