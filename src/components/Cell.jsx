@@ -11,10 +11,12 @@ const childIs = (node, nodeType) => node.children
     && node.children[0] 
     && node.children[0].tagName === nodeType
 
+    const posstr = pos => pos ? `${pos.line}:${pos.column}-${pos.offset}` : undefined;
+
 const Cell = props => {
 
-    const symbol = props.node.properties['data-symbol']
     const node = props.node
+    const symbol = posstr(node.position.start)
 
     const [src, setSrc] = useState('')
     const [editing, setEditing] = useState(false)
@@ -26,7 +28,7 @@ const Cell = props => {
         ctx.setSelectedCell(selected ? null : symbol)
     }
     
-    const posstr = pos => `${pos.line}:${pos.column}-${pos.offset}`
+
     const isCodeCell = childIs(props.node, 'pre')
 
     const save = ctx => args => {
