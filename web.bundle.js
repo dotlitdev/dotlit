@@ -22164,12 +22164,11 @@ var processor = function processor() {
     hrefTemplate: function hrefTemplate(permalink) {
       return "".concat(permalink);
     }
-  }).use((remark_slug__WEBPACK_IMPORTED_MODULE_5___default())).use((remark_heading_id__WEBPACK_IMPORTED_MODULE_15___default())) // .use(headings)
-  // .use(toc, {})
+  }).use((remark_slug__WEBPACK_IMPORTED_MODULE_5___default())).use((remark_toc__WEBPACK_IMPORTED_MODULE_6___default()), {}).use((remark_heading_id__WEBPACK_IMPORTED_MODULE_15___default())) // .use(headings)
   .use((remark_footnotes__WEBPACK_IMPORTED_MODULE_7___default()), {
     inlineNotes: true
   }) // remark-litmd (rehype compatable)
-  .use((0,_links__WEBPACK_IMPORTED_MODULE_13__.resolveLinks)()).use((0,_sections__WEBPACK_IMPORTED_MODULE_10__.groupIntoSections)()).use(_codeblocks__WEBPACK_IMPORTED_MODULE_11__.default).use((remark_toc__WEBPACK_IMPORTED_MODULE_6___default()), {});
+  .use((0,_links__WEBPACK_IMPORTED_MODULE_13__.resolveLinks)()).use((0,_sections__WEBPACK_IMPORTED_MODULE_10__.groupIntoSections)()).use(_codeblocks__WEBPACK_IMPORTED_MODULE_11__.default);
 };
 function parse(_x, _x2) {
   return _parse.apply(this, arguments);
