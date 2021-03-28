@@ -10,6 +10,10 @@ const symbolFromPos = (pos) => {
   return `cell-${pos.line}:${pos.column}:${pos.offset}`;
 };
 
+const firstChild = (node,type) => node.children 
+            && node.children[0]
+            && node.children[0].type === type
+
 const createCell = (node,nodes) => {
      const pos = node.position
      // pos.start.offset = pos.start.offset - pos.start.column
@@ -52,25 +56,15 @@ const cellsFromNodes = nodes => {
       newCell = null;
       cells.push(node);
 
-    } else if (node.type === "list") {
+    } else if (node.type === "list" && node.spread) {
       newCell = null;
       let listSection = createSection(node)
       cells.push(listSection);
 
-    } else if (node.type === "listItem") {
+    } else if (node.type === "listItem" && !firstChild(node,"section") && node.spread) {
       newCell = null;
       let listItem = node
-      if (node.children 
-            && node.children[0]
-            && node.children[0].type === "section") {
-         // ignore?
-      }
-      else if (node.spread) {
-         listItem.children = [createSection(node, node.children)]
-      }
-      else {
-         listItem.children = [createCell(node, node.children)]
-      }
+      listItem.children = [createSection(node, node.children)]
       cells.push(listItem);
 
     } else if (node.type === "code") {
