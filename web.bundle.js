@@ -88474,10 +88474,10 @@ var FS = __webpack_require__(/*! @isomorphic-git/lightning-fs */ "./node_modules
 
 var select = __webpack_require__(/*! unist-util-select */ "./node_modules/unist-util-select/index.js");
 
-var getMeta = function getMeta(key, def, likeUndef) {
+var getMeta = function getMeta(key, def) {
   var el = document.querySelector("meta[name=\"lit".concat(key, "\"]"));
   var val = el ? el.getAttribute('value') : def;
-  return val === likeUndef ? def : val;
+  return val;
 };
 
 var query = qs.parse(location.search.slice(1));
