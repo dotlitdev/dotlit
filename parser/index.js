@@ -43,6 +43,7 @@ export const processor = (options={files: []}) => {
     .use(resolveLinks())
     .use(groupIntoSections())
     .use(litcodeblocks)
+    .use(toc,{})
 }   
 
 export async function parse(vfile, options) {
