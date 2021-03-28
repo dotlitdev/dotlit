@@ -22369,9 +22369,7 @@ var createCell = function createCell(node, nodes) {
     data: {
       hName: "cell",
       hProperties: {
-        "class": "cell",
-        pos: symbolFromPos(pos.start),
-        "data-symbol": symbolFromPos(node.position.start)
+        "class": "cell"
       }
     },
     children: nodes || [node]

@@ -21,8 +21,6 @@ const createCell = (node,nodes) => {
             hName: "cell",
             hProperties: {
               class: "cell",
-              pos: symbolFromPos(pos.start),
-              "data-symbol": symbolFromPos(node.position.start),
             },
           },
           children: nodes || [node],
