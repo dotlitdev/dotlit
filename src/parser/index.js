@@ -14,7 +14,7 @@ import {groupIntoSections, ungroupSections} from './sections'
 import litcodeblocks from './codeblocks'
 import frontmatter from './frontmatter'
 
-import {resolveLinks, nodeMappings, nameToPermalinks} from './links'
+import {resolveLinks, wikiLinkOptions, nodeMappings, nameToPermalinks} from './links'
 
 import {log} from '../utils/console'
 
@@ -27,11 +27,7 @@ export const processor = (options={files: []}) => {
     .use(markdown, {})
     .use(gfm)
     .use(frontmatter, {})
-    .use(wikiLinkPlugin, { 
-        permalinks: options.files,
-        pageResolver: nameToPermalinks,
-        hrefTemplate: (permalink) => `${permalink}?file=${permalink}`
-    })
+    .use(wikiLinkPlugin, wikiLinkOptions)
     .use(slug)
     .use(toc, {})
     .use(headingIds)
