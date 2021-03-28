@@ -16,6 +16,7 @@ const childIs = (node, nodeType) => node.children
 const Cell = props => {
 
     const node = props.node
+    node.position = node.position || {}
     const symbol = posstr(node.position.start)
 
     const [src, setSrc] = useState('')
@@ -40,7 +41,7 @@ const Cell = props => {
         isSelected(ctx) ? 'selected' : '',
         editing ? 'editing' : '',
         isCodeCell ? 'code' : '',
-    ].join(' ').trim()
+    ].join(' ').trim() || undefined
 
     return <SelectionContext.Consumer>
         { ctx => {

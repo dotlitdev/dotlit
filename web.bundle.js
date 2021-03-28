@@ -21396,6 +21396,7 @@ var posstr = function posstr(pos) {
 
 var Cell = function Cell(props) {
   var node = props.node;
+  node.position = node.position || {};
   var symbol = posstr(node.position.start);
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
@@ -21433,7 +21434,7 @@ var Cell = function Cell(props) {
   };
 
   var getClasses = function getClasses(ctx) {
-    return [isSelected(ctx) ? 'selected' : '', editing ? 'editing' : '', isCodeCell ? 'code' : ''].join(' ').trim();
+    return [isSelected(ctx) ? 'selected' : '', editing ? 'editing' : '', isCodeCell ? 'code' : ''].join(' ').trim() || undefined;
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_SelectionContext__WEBPACK_IMPORTED_MODULE_4__.default.Consumer, null, function (ctx) {
