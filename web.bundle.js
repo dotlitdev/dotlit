@@ -21397,7 +21397,8 @@ var posstr = function posstr(pos) {
 var Cell = function Cell(props) {
   var node = props.node;
   node.position = node.position || {};
-  var symbol = posstr(node.position.start);
+  var pos = node.position;
+  var symbol = posstr(pos.start);
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
       _useState2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__.default)(_useState, 2),
@@ -21428,7 +21429,7 @@ var Cell = function Cell(props) {
 
   var save = function save(ctx) {
     return function (args) {
-      ctx.setSrc(props.node.position, src);
+      ctx.setSrc(pos, src);
       setEditing(false);
     };
   };
@@ -21440,11 +21441,11 @@ var Cell = function Cell(props) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_SelectionContext__WEBPACK_IMPORTED_MODULE_4__.default.Consumer, null, function (ctx) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("cell", {
       onClick: toggleSelected(ctx),
-      startpos: posstr(node.position.start),
-      endpos: posstr(node.position.end),
+      startpos: posstr(pos.start),
+      endpos: posstr(pos.end),
       className: getClasses(ctx)
     }, editing ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Editor__WEBPACK_IMPORTED_MODULE_5__.default, {
-      src: unist_util_source__WEBPACK_IMPORTED_MODULE_2___default()(props.node.position, ctx.src),
+      src: unist_util_source__WEBPACK_IMPORTED_MODULE_2___default()(pos, ctx.src),
       update: setSrc
     }) : props.children, isSelected(ctx) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_CellMenu__WEBPACK_IMPORTED_MODULE_3__.default, {
       editing: editing,
