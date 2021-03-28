@@ -22281,9 +22281,9 @@ var decorateLinkNode = function decorateLinkNode(link, root, filepath) {
 
     if (link.data.exists === 'false') {
       link.data.hProperties.title = 'Click to create new file';
-    } else {
-      link.url = link.data.permalink;
     }
+
+    link.url = link.data.hProperties.href;
   }
 
   (0,_utils_console__WEBPACK_IMPORTED_MODULE_3__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_3__.log)("[Links] resolving (".concat(link.type, ")"), link.url, root, filepath);

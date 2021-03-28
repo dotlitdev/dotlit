@@ -30,9 +30,9 @@ export const decorateLinkNode = (link, root, filepath) => {
         link.data.hProperties.wikilink = true
         if (link.data.exists === 'false') {
             link.data.hProperties.title = 'Click to create new file'
-        } else {
-            link.url = link.data.permalink
         }
+        link.url = link.data.hProperties.href
+        
         
     }
 
