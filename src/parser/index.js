@@ -33,9 +33,9 @@ export const processor = (options={files: []}) => {
         hrefTemplate: (permalink) => `${permalink}`
     })
     .use(slug)
+    .use(toc, {})
     .use(headingIds)
     // .use(headings)
-    // .use(toc, {})
    
     .use(footnotes, {inlineNotes: true})
     
@@ -43,7 +43,6 @@ export const processor = (options={files: []}) => {
     .use(resolveLinks())
     .use(groupIntoSections())
     .use(litcodeblocks)
-    .use(toc,{})
 }   
 
 export async function parse(vfile, options) {
