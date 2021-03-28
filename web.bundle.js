@@ -22360,6 +22360,10 @@ var symbolFromPos = function symbolFromPos(pos) {
   return "cell-".concat(pos.line, ":").concat(pos.column, ":").concat(pos.offset);
 };
 
+var firstChild = function firstChild(node, type) {
+  return node.children && node.children[0] && node.children[0].type === type;
+};
+
 var createCell = function createCell(node, nodes) {
   var pos = node.position; // pos.start.offset = pos.start.offset - pos.start.column
   // pos.start.column = 0
@@ -22400,21 +22404,14 @@ var cellsFromNodes = function cellsFromNodes(nodes) {
     if (node.type === "section") {
       newCell = null;
       cells.push(node);
-    } else if (node.type === "list") {
+    } else if (node.type === "list" && node.spread) {
       newCell = null;
       var listSection = createSection(node);
       cells.push(listSection);
-    } else if (node.type === "listItem") {
+    } else if (node.type === "listItem" && !firstChild(node, "section") && node.spread) {
       newCell = null;
       var listItem = node;
-
-      if (node.children && node.children[0] && node.children[0].type === "section") {// ignore?
-      } else if (node.spread) {
-        listItem.children = [createSection(node, node.children)];
-      } else {
-        listItem.children = [createCell(node, node.children)];
-      }
-
+      listItem.children = [createSection(node, node.children)];
       cells.push(listItem);
     } else if (node.type === "code") {
       newCell = null;
