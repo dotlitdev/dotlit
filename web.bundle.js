@@ -22425,7 +22425,7 @@ var cellsFromNodes = function cellsFromNodes(nodes) {
     } else {
       if (newCell) {
         newCell.children.push(node);
-        if (node.position.end) newCell.position.end = node.position.end;
+        if (node.position) newCell.position.end = node.position.end;
       } else {
         newCell = createCell(node);
         cells.push(newCell);
