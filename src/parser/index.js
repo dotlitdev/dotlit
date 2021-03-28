@@ -30,7 +30,7 @@ export const processor = (options={files: []}) => {
     .use(wikiLinkPlugin, { 
         permalinks: options.files,
         pageResolver: nameToPermalinks,
-        hrefTemplate: (permalink) => `${permalink}`
+        hrefTemplate: (permalink) => `${permalink}?file=${permalink}`
     })
     .use(slug)
     .use(toc, {})
