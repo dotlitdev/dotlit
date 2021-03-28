@@ -5,6 +5,9 @@ import slug from 'remark-slug'
 import headingIds from 'remark-heading-id'
 import toc from 'remark-toc'
 import footnotes from 'remark-footnotes'
+
+import gfm from 'remark-gfm'
+
 import { wikiLinkPlugin } from 'remark-wiki-link'
 
 import {groupIntoSections, ungroupSections} from './sections'
@@ -22,6 +25,7 @@ export const processor = (options={files: []}) => {
 
     // remark
     .use(markdown, {})
+    .use(gfm)
     .use(frontmatter, {})
     .use(wikiLinkPlugin, { 
         permalinks: options.files,
