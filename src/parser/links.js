@@ -49,6 +49,7 @@ export const decorateLinkNode = (link, root, filepath) => {
         link.data.canonical = link.url
     }
 
+    link.data.canonical = link.data.canonical.split("?")[0]
     link.data.original = link.url
     link.url = link.url.replace(/\.(md|lit)/i, '.html')
 
