@@ -69,7 +69,7 @@ export async function renderedVFileToDoc(vfile, cmd) {
         backlinks={vfile.data.backlinks}
     />
 
-    output.contents = ReactDOMServer.renderToString(notebook)
-    output.extname = '.html'
-    return output
+    vfile.contents = ReactDOMServer.renderToString(notebook)
+    vfile.extname = '.html'
+    return vfile
 }
