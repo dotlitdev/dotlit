@@ -44,12 +44,11 @@ export function renderToVfile(vfile, cmd, links) {
     level(2, log)('[Render] to vFile', vfile.path)
 
     const output = processor().processSync(vfile)
-
+    output.contents = vfile.contents
     const notebook = <Document
         file={output}
         root={cmd.base || relroot}
         backlinks={links}
-        processor={processor()}
     />
 
     output.contents = ReactDOMServer.renderToString(notebook)
