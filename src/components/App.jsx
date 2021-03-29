@@ -39,9 +39,12 @@ const App = ({file, fs, processor}) => {
     }
 
     const state = {src, selectedCell, setSelectedCell, setSrc: setSrcWrapper}
+    const processed = processor.processSync(src)
+    console.log('Processed: ', processed)
+    const result = processed.result
 
     return <SelectionContext.Provider value={state}>
-        <div id="content">{processor.processSync(src).result}</div>
+        <div id="content">{result}</div>
     </SelectionContext.Provider>
 }
 
