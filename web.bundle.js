@@ -22222,7 +22222,7 @@ var decorateLinkNode = function decorateLinkNode(link, root, filepath) {
   (0,_utils_console__WEBPACK_IMPORTED_MODULE_3__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_3__.log)("[Links] resolving (".concat(link.type, ")"), link.url, root, filepath);
   var isAbsolute = typeof root === 'undefined' || /(https?\:)?\/\//.test(link.url);
   var isFragment = /(\?|#).*/.test(link.url);
-  var isRelative = typeof root !== 'undefined' && link.url && !(isAbsolute || isFragment);
+  var isRelative = typeof root !== 'undefined' && link.url && !isAbsolute;
 
   if (isRelative) {
     var abs = path__WEBPACK_IMPORTED_MODULE_0___default().resolve(root, path__WEBPACK_IMPORTED_MODULE_0___default().dirname(filepath), link.url);

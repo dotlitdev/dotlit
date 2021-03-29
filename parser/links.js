@@ -39,7 +39,7 @@ export const decorateLinkNode = (link, root, filepath) => {
     level(2, log)(`[Links] resolving (${link.type})`, link.url, root, filepath)
     const isAbsolute = typeof root === 'undefined' || /(https?\:)?\/\//.test(link.url)
     const isFragment = /(\?|#).*/.test(link.url)
-    const isRelative = typeof root !== 'undefined' && link.url && !(isAbsolute || isFragment)
+    const isRelative = typeof root !== 'undefined' && link.url && !isAbsolute
     
     if (isRelative) {
         const abs = path.resolve(root, path.dirname(filepath), link.url)
