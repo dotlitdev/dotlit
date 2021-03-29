@@ -88612,7 +88612,7 @@ console.log("lit:", lit);
         case 27:
           file = _context.sent;
           _context.next = 30;
-          return renderer.processor().processSync(vfile);
+          return renderer.processor().process(vfile);
 
         case 30:
           processedFile = _context.sent;

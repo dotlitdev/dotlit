@@ -60,7 +60,7 @@ console.log(`lit:`, lit)
     file = await vfile({path: src, contents})
 
     
-    const processedFile = await renderer.processor().processSync(vfile)
+    const processedFile = await renderer.processor().process(vfile)
     console.log("Processed client", processedFile)
     window.lit.ast = processedFile.data.ast
 
