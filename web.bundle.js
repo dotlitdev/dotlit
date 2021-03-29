@@ -88592,8 +88592,6 @@ console.log("lit:", lit);
             lit.notebook = /*#__PURE__*/React.createElement(App, {
               fs: lit.fs,
               file: processedFile,
-              root: litroot,
-              permalinks: {},
               result: processedFile.result
             });
           } catch (err) {

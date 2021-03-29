@@ -68,8 +68,6 @@ console.log(`lit:`, lit)
         lit.notebook = <App 
             fs={lit.fs}
             file={processedFile}
-            root={litroot}
-            permalinks={{}}
             result={processedFile.result}
         />
     } catch(err) {
