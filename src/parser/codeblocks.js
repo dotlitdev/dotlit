@@ -20,8 +20,10 @@ export default function (...args) {
 function transform (node, index, parent) {  
     level(1, log)( '[CodeBlocks] Visiting: ', node.lang, node.meta)
     const litMeta = parseMeta(node)
+    
     node.data = {
         ...node.data,
+        meta: litMeta,
         hProperties: {
             className: litMeta && litMeta.tags ? litMeta.tags.map( t => `tag-${t}`).join(' ') : '',
             meta: litMeta,
