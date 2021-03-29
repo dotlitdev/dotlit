@@ -22100,8 +22100,8 @@ var FRONTMATTER_CLOSE = '-->';
         matters.push(node.data);
       }
     });
-    file.data.frontmatter = matters.reduce(function (m, e) {
-      return Object.assign({}, m, e.data || {});
+    file.data.frontmatter = matters.reduce(function (memo, matter) {
+      return Object.assign({}, memo, matter || {});
     }, {});
   };
 }

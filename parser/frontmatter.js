@@ -26,7 +26,7 @@ export default function (...args) {
                matters.push(node.data)
             }
         })
-        file.data.frontmatter = matters.reduce( (m,e) => Object.assign({}, m, e.data || {}), {})
+        file.data.frontmatter = matters.reduce( (memo,matter) => Object.assign({}, memo, matter || {}), {})
     }
 }
 
