@@ -54,3 +54,22 @@ export async function renderToVfile(vfile, cmd, links) {
     output.extname = '.html'
     return output
 }
+
+export async function renderedVFileToDoc(vfile, cmd) {
+
+    const root = path.resolve( cmd.output )
+    const dir = path.dirname( path.join(root, vfile.path) )
+    const relroot = path.relative(dir, root) || '.'
+
+    level(2, log)('[Render] to document vFile', vfile.path)
+
+    const notebook = <Document
+        file={vfile}
+        root={cmd.base || relroot}
+        backlinks={vfile.data.backlinks}
+    />
+
+    output.contents = ReactDOMServer.renderToString(notebook)
+    output.extname = '.html'
+    return output
+}
