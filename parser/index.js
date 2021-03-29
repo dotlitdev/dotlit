@@ -14,6 +14,8 @@ import {groupIntoSections, ungroupSections} from './sections'
 import litcodeblocks from './codeblocks'
 import frontmatter from './frontmatter'
 
+import select from 'unist-util-select'
+
 import {resolveLinks, wikiLinkOptions, nodeMappings, nameToPermalinks} from './links'
 
 import {log} from '../utils/console'
@@ -46,6 +48,10 @@ export async function parse(vfile, options) {
     const parsed = await p.parse( vfile )
     const ast = await p.run(parsed)
     vfile.data.ast = ast
+    
+    vfile.data.frontmatter = select.selectAll('html',ast).reduce( (memo,el) => Object.assign(memo,el.data || {}),{})
+
+
     return vfile
 }
 
