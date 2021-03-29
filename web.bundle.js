@@ -21284,11 +21284,14 @@ var App = function App(_ref) {
     setSelectedCell: setSelectedCell,
     setSrc: setSrcWrapper
   };
+  var processed = processor.processSync(src);
+  console.log('Processed: ', processed);
+  var result = processed.result;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_SelectionContext__WEBPACK_IMPORTED_MODULE_5__.default.Provider, {
     value: state
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("div", {
     id: "content"
-  }, processor.processSync(src).result));
+  }, result));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
