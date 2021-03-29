@@ -4,7 +4,7 @@ import path from 'path'
 import SelectionContext from './SelectionContext'
 import patchSource from '../utils/unist-util-patch-source'
 
-const App = ({file, fs, processor}) => {
+const App = ({file, fs, result}) => {
 
     const [src, setSrc] = useState(file.contents.toString())
     const [selectedCell, setSelectedCell] = useState(null)
@@ -39,9 +39,7 @@ const App = ({file, fs, processor}) => {
     }
 
     const state = {src, selectedCell, setSelectedCell, setSrc: setSrcWrapper}
-    const processed = processor.processSync(src)
-    console.log('Processed: ', processed)
-    const result = processed.result
+
 
     return <SelectionContext.Provider value={state}>
         <div id="content">{result}</div>

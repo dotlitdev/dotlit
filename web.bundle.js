@@ -21182,7 +21182,7 @@ __webpack_require__.r(__webpack_exports__);
 var App = function App(_ref) {
   var file = _ref.file,
       fs = _ref.fs,
-      processor = _ref.processor;
+      result = _ref.result;
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(file.contents.toString()),
       _useState2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__.default)(_useState, 2),
@@ -21315,9 +21315,6 @@ var App = function App(_ref) {
     setSelectedCell: setSelectedCell,
     setSrc: setSrcWrapper
   };
-  var processed = processor.processSync(src);
-  console.log('Processed: ', processed);
-  var result = processed.result;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_SelectionContext__WEBPACK_IMPORTED_MODULE_5__.default.Provider, {
     value: state
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("div", {
