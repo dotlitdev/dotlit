@@ -15,7 +15,11 @@ import Cell from '../components/Cell'
 
 export function processor() {
     return parserProcessor()
-    .use(()=> ({}))
+    .use( (...args) => {
+         return (tree,file) => {
+             file.data.ast = tree
+         }
+     })
     .use(remark2rehype, {allowDangerousHtml: true})
     .use(rehype2react, {
         Fragment: React.Fragment,

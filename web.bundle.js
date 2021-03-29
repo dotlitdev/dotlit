@@ -22581,7 +22581,9 @@ __webpack_require__.r(__webpack_exports__);
 
 function processor() {
   return (0,_parser__WEBPACK_IMPORTED_MODULE_6__.processor)().use(function () {
-    return {};
+    return function (tree, file) {
+      file.data.ast = tree;
+    };
   }).use((remark_rehype__WEBPACK_IMPORTED_MODULE_1___default()), {
     allowDangerousHtml: true
   }).use((rehype_react__WEBPACK_IMPORTED_MODULE_2___default()), {
