@@ -206,37 +206,6 @@ function _defineProperty(obj, key, value) {
 
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/esm/extends.js":
-/*!************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/esm/extends.js ***!
-  \************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ _extends)
-/* harmony export */ });
-function _extends() {
-  _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
-/***/ }),
-
 /***/ "./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js":
 /*!*******************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js ***!
@@ -21580,13 +21549,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! path */ "./node_modules/path-browserify/index.js");
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./App */ "./src/components/App.jsx");
-/* harmony import */ var _Backlinks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Backlinks */ "./src/components/Backlinks.jsx");
-
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! path */ "./node_modules/path-browserify/index.js");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./App */ "./src/components/App.jsx");
+/* harmony import */ var _Backlinks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Backlinks */ "./src/components/Backlinks.jsx");
 
 
 
@@ -21595,31 +21562,33 @@ __webpack_require__.r(__webpack_exports__);
 var Document = function Document(props) {
   var result = props.file.result;
   var title = props.file.data.frontmatter.title || props.file.stem;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("html", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("head", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("title", null, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("meta", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("html", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("head", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("title", null, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("meta", {
     name: "litsrc",
     value: props.file.path
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("meta", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("meta", {
     name: "litroot",
     value: props.root
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("meta", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("meta", {
     name: "viewport",
     content: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("link", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("link", {
     rel: "stylesheet",
-    href: path__WEBPACK_IMPORTED_MODULE_2___default().join(props.root, 'style.css')
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("body", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
+    href: path__WEBPACK_IMPORTED_MODULE_1___default().join(props.root, 'style.css')
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("body", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     id: "app"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_App__WEBPACK_IMPORTED_MODULE_3__.default, (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__.default)({}, props, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_App__WEBPACK_IMPORTED_MODULE_2__.default, {
+    file: props.file,
+    fs: props.fs,
     result: result
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     id: "backlinks"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Backlinks__WEBPACK_IMPORTED_MODULE_4__.default, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Backlinks__WEBPACK_IMPORTED_MODULE_3__.default, {
     root: props.root,
     links: props.backlinks || []
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("script", null, "content.remove();"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("script", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("script", null, "content.remove();"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("script", {
     src: "//cdn.jsdelivr.net/npm/eruda"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("script", null, "eruda.init();"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("script", {
-    src: path__WEBPACK_IMPORTED_MODULE_2___default().join(props.root, 'web.bundle.js')
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("script", null, "eruda.init();"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("script", {
+    src: path__WEBPACK_IMPORTED_MODULE_1___default().join(props.root, 'web.bundle.js')
   })));
 };
 
