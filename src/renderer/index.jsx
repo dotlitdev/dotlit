@@ -39,7 +39,7 @@ export function renderToVfile(vfile, cmd, links) {
 
     level(2, log)('[Render] to vFile', vfile.path)
 
-    const output = vfile;
+    const output = processor().processSync(vfile)
 
     const notebook = <Document
         file={output}
