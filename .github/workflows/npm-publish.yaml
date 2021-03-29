@@ -18,11 +18,16 @@ jobs:
       with:
         node-version: '14.x'
         registry-url: 'https://registry.npmjs.org'
-    - name: Build
-      run: |
-        npm install
-        npm run build
     - name: Publish Npm
       env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-      run: npm publish --access public
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      run: |
+        PUBLISHED_VERSION=$(npm view @dotlit/dotlit version)
+        LOCAL_VERSION=$(node -p "require('./package.json').version")
+        if [ "$PUBLISHED_VERSION" = "$LOCAL_VERSION" ]; then
+            echo "No new version to publish. Latest is: $PUBLISHED_VERSION"
+        else
+            npm install
+            npm run build
+            npm publish --access public
+        fi
