@@ -35,7 +35,7 @@ export function processor() {
     })
 }
 
-export function renderToVfile(vfile, cmd, links) {
+export async function renderToVfile(vfile, cmd, links) {
 
     const root = path.resolve( cmd.output )
     const dir = path.dirname( path.join(root, vfile.path) )
@@ -43,8 +43,7 @@ export function renderToVfile(vfile, cmd, links) {
 
     level(2, log)('[Render] to vFile', vfile.path)
 
-    const output = processor().processSync(vfile)
-    output.contents = vfile.contents
+    const output = await processor().process(vfile)
     const notebook = <Document
         file={output}
         root={cmd.base || relroot}

@@ -16,10 +16,10 @@ const transform = options => (node, index, parent) => {
 }
 
 export const wikiLinkOptions = files => ({ 
-        permalinks: files,
-        pageResolver: nameToPermalinks,
-        hrefTemplate: (permalink) => `${permalink}?file=${permalink}`
-    })
+    permalinks: files,
+    pageResolver: nameToPermalinks,
+    hrefTemplate: (permalink) => `${permalink}?file=${permalink}`
+})
 
 export const decorateLinkNode = (link, root, filepath) => {
     

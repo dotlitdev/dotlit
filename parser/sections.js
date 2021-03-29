@@ -6,10 +6,6 @@ import flatMap from "unist-util-flatmap";
 
 import { log, level } from "../utils/console";
 
-const symbolFromPos = (pos) => {
-  return `cell-${pos.line}:${pos.column}:${pos.offset}`;
-};
-
 const firstChild = (node,type) => node.children 
             && node.children[0]
             && node.children[0].type === type
@@ -49,7 +45,7 @@ const cellsFromNodes = nodes => {
   let newCell = null;
 
   nodes.map((current) => {
-    const node = current; //removePosition(current)
+    const node = current;
     level(3, log)("[Sections] child: ", node.type);
 
     if (node.type === "section") {
@@ -61,10 +57,18 @@ const cellsFromNodes = nodes => {
       let listSection = createSection(node)
       cells.push(listSection);
 
-    } else if (node.type === "listItem" && !firstChild(node,"section") && node.spread) {
+    } else if (node.type === "listItem" && node.spread) {
       newCell = null;
       let listItem = node
-      listItem.children = [createSection(node, node.children)]
+      if (firstChild(listItem, 'section')) {
+        level(2, log)("[Sections] ListItem with section: ", node.type);
+        listItem.children = listItem.children.map( section => {
+          section.children = cellsFromNodes(section.children)
+        })
+      } else {
+        listItem.children = [createSection(node, node.children)]
+      }
+      
       cells.push(listItem);
 
     } else if (node.type === "code") {
@@ -72,14 +76,13 @@ const cellsFromNodes = nodes => {
       let singleCell = createCell(node)
       cells.push(singleCell);
       
+    } else if (newCell) {
+      newCell.children.push(node);
+      if (node.position) newCell.position.end = node.position.end;
+
     } else {
-      if (newCell) {
-        newCell.children.push(node);
-        if (node.position) newCell.position.end = node.position.end;
-      } else {
-        newCell = createCell(node)
-        cells.push(newCell);
-      }
+      newCell = createCell(node)
+      cells.push(newCell);
     }
   });
   return cells;
