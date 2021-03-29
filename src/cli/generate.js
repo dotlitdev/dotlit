@@ -30,9 +30,9 @@ function generateBacklinks(files, root) {
         manifest[fileLink.data.canonical] = manifest[fileLink.data.canonical] || { backlinks: [] }
         manifest[fileLink.data.canonical].exists = true
 
-        level(1, info)(`[Backlinks] ${file.path} ${fileLink.data.canonical} ${fileLink.url} links: (${links.length})`)
+        level(0, info)(`[Backlinks] ${file.path} ${fileLink.data.canonical} ${fileLink.url} links: (${links.length})`)
         links.forEach( link => {
-            level(2, info)(`[Backlinks] ${link.type} >> ${link.url} >> ${link.data.canonical} `)
+            level(0, info)(`[Backlinks] ${link.type} >> ${link.url} >> ${link.data.canonical} `)
             const linkNode = {
                 url: fileLink.url,
                 title: file.data.frontmatter.title || `Title TBD (${fileLink.data.canonical})`,
