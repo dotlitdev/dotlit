@@ -10,7 +10,7 @@ import {NoOp} from '../utils/functions'
 import {log, time, timeEnd, info, warn, dir, level, error} from '../utils/console'
 
 import {parse, stringify} from '../parser/index'
-import {renderToVfile} from '../renderer/index'
+import {renderToVfile, processor as renderProcessor} from '../renderer/index'
 import { diffieHellman } from 'crypto'
 import { decorateLinkNode } from '../parser/links'
 
@@ -91,9 +91,7 @@ export function generate(cmd) {
                     })
                 })
 
-                let ast_files_prelinks = await Promise.all(src_files.map( async file => parse(await file, {
-                    files: litFiles
-                })))
+                let ast_files_prelinks = await Promise.all(src_files.map( async file => await renderProcessor().process(await file)))
                 const [ast_files, manifest] = generateBacklinks(ast_files_prelinks, cmd.output)
 
                 const html_files = await Promise.all(ast_files.map( async file => {
