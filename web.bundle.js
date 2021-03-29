@@ -88581,10 +88581,11 @@ console.log("lit:", lit);
         case 27:
           file = _context.sent;
           _context.next = 30;
-          return renderer.processor().process(vfile);
+          return renderer.processor().process(file);
 
         case 30:
           processedFile = _context.sent;
+          // processedFile.contents = file.contents
           console.log("Processed client", processedFile);
           window.lit.ast = processedFile.data.ast;
 
