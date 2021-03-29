@@ -32,7 +32,7 @@ function generateBacklinks(files, root) {
 
         level(0, info)(`[Backlinks] ${file.path} ${fileLink.data.canonical} ${fileLink.url} links: (${links.length})`)
         links.forEach( link => {
-            level(0, info)(`[Backlinks] ${link.type} >> ${link.url} >> ${link.data.canonical} `)
+            level(0, info)(`[Backlinks] ${link.type} >> ${link.url} >> ${link.data.canonical} relative: ${link.data.isRelative}`)
             const linkNode = {
                 url: fileLink.url,
                 title: file.data.frontmatter.title || `Title TBD (${fileLink.data.canonical})`,
@@ -41,6 +41,7 @@ function generateBacklinks(files, root) {
                 if (manifest[link.data.canonical] && manifest[link.data.canonical].backlinks) {
                     manifest[link.data.canonical].backlinks.push(linkNode)
                 } else {
+                    console.log(`[Manifest] Adding "${link.data.canonical}"`)
                     manifest[link.data.canonical] = { backlinks: [linkNode], exists: false }
                 }
             }
