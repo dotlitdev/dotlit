@@ -22574,11 +22574,11 @@ function renderToVfile(vfile, cmd, links) {
   var relroot = path__WEBPACK_IMPORTED_MODULE_0___default().relative(dir, root) || '.';
   (0,_utils_console__WEBPACK_IMPORTED_MODULE_5__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_5__.log)('[Render] to vFile', vfile.path);
   var output = processor().processSync(vfile);
+  output.contents = vfile.contents;
   var notebook = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4__.createElement(_components_Document__WEBPACK_IMPORTED_MODULE_7__.default, {
     file: output,
     root: cmd.base || relroot,
-    backlinks: links,
-    processor: processor()
+    backlinks: links
   });
   output.contents = react_dom_server__WEBPACK_IMPORTED_MODULE_3__.renderToString(notebook);
   output.extname = '.html';
