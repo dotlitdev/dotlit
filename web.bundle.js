@@ -21883,6 +21883,7 @@ function transform(node, index, parent) {
   (0,_utils_console__WEBPACK_IMPORTED_MODULE_4__.level)(1, _utils_console__WEBPACK_IMPORTED_MODULE_4__.log)('[CodeBlocks] Visiting: ', node.lang, node.meta);
   var litMeta = parseMeta(node);
   node.data = _objectSpread(_objectSpread({}, node.data), {}, {
+    meta: litMeta,
     hProperties: {
       className: litMeta && litMeta.tags ? litMeta.tags.map(function (t) {
         return "tag-".concat(t);
