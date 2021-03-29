@@ -11,7 +11,7 @@ const FRONTMATTER_CLOSE = '-->'
 
 export default function (...args) {
     return (tree,file) => {
-        file.data.frontmatter = []
+        const matters = []
         visit( tree, 'html', (node, index, parent) => {  
             level(1, log)( '[FrontMatter]')
             if (node.value.indexOf(FRONTMATTER_OPEN) === 0 && node.value.indexOf(FRONTMATTER_CLOSE) === (node.value.length - FRONTMATTER_CLOSE.length)) {
@@ -23,9 +23,10 @@ export default function (...args) {
                     node.data = {error: err.toString()}
                 }
                level(2, log)( '[FrontMatter] Parsed', yamlString)
-               file.data.frontmatter.push(node.data)
+               matters.push(node.data)
             }
         })
+        file.data.frontmatter = matters.reduce( (memo,matter) => Object.assign({}, memo, matter || {}), {})
     }
 }
 

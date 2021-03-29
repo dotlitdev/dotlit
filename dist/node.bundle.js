@@ -18640,7 +18640,7 @@ __webpack_require__.r(__webpack_exports__);
 var App = function App(_ref) {
   var file = _ref.file,
       fs = _ref.fs,
-      processor = _ref.processor;
+      result = _ref.result;
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(file.contents.toString()),
       _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_useState, 2),
@@ -18777,7 +18777,7 @@ var App = function App(_ref) {
     value: state
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("div", {
     id: "content"
-  }, processor.processSync(src).result));
+  }, result));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
@@ -19056,7 +19056,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Document = function Document(props) {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("html", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("head", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("title", null, props.file.stem), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("meta", {
+  var result = props.file.result;
+  var title = props.file.data.frontmatter.title || props.file.stem;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("html", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("head", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("title", null, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("meta", {
     name: "litsrc",
     value: props.file.path
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("meta", {
@@ -19070,7 +19072,11 @@ var Document = function Document(props) {
     href: path__WEBPACK_IMPORTED_MODULE_1___default().join(props.root, 'style.css')
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("body", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     id: "app"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_App__WEBPACK_IMPORTED_MODULE_2__.default, props), " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_App__WEBPACK_IMPORTED_MODULE_2__.default, {
+    file: props.file,
+    fs: props.fs,
+    result: result
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     id: "backlinks"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Backlinks__WEBPACK_IMPORTED_MODULE_3__.default, {
     root: props.root,
@@ -19587,7 +19593,7 @@ var FRONTMATTER_OPEN = '<!-- data';
 var FRONTMATTER_CLOSE = '-->';
 /* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__() {
   return function (tree, file) {
-    file.data.frontmatter = [];
+    var matters = [];
     unist_util_visit__WEBPACK_IMPORTED_MODULE_0___default()(tree, 'html', function (node, index, parent) {
       (0,_utils_console__WEBPACK_IMPORTED_MODULE_4__.level)(1, _utils_console__WEBPACK_IMPORTED_MODULE_4__.log)('[FrontMatter]');
 
@@ -19604,9 +19610,12 @@ var FRONTMATTER_CLOSE = '-->';
         }
 
         (0,_utils_console__WEBPACK_IMPORTED_MODULE_4__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_4__.log)('[FrontMatter] Parsed', yamlString);
-        file.data.frontmatter.push(node.data);
+        matters.push(node.data);
       }
     });
+    file.data.frontmatter = matters.reduce(function (memo, matter) {
+      return Object.assign({}, memo, matter || {});
+    }, {});
   };
 }
 
@@ -19637,8 +19646,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var remark_stringify__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(remark_stringify__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var remark_slug__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! remark-slug */ "./node_modules/remark-slug/index.js");
 /* harmony import */ var remark_slug__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(remark_slug__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var remark_heading_id__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! remark-heading-id */ "./node_modules/remark-heading-id/index.js");
-/* harmony import */ var remark_heading_id__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(remark_heading_id__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var remark_heading_id__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! remark-heading-id */ "./node_modules/remark-heading-id/index.js");
+/* harmony import */ var remark_heading_id__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(remark_heading_id__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var remark_toc__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! remark-toc */ "./node_modules/remark-toc/index.js");
 /* harmony import */ var remark_toc__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(remark_toc__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var remark_footnotes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! remark-footnotes */ "./node_modules/remark-footnotes/index.js");
@@ -19649,9 +19658,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _sections__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./sections */ "./src/parser/sections.js");
 /* harmony import */ var _codeblocks__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./codeblocks */ "./src/parser/codeblocks.js");
 /* harmony import */ var _frontmatter__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./frontmatter */ "./src/parser/frontmatter.js");
-/* harmony import */ var _links__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./links */ "./src/parser/links.js");
-/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
-/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var unist_util_select__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! unist-util-select */ "./node_modules/unist-util-select/index.js");
+/* harmony import */ var _links__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./links */ "./src/parser/links.js");
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_15__);
+
 
 
 
@@ -19674,11 +19685,11 @@ var processor = function processor() {
     files: []
   };
   return unified__WEBPACK_IMPORTED_MODULE_2___default()() // remark
-  .use((remark_parse__WEBPACK_IMPORTED_MODULE_3___default()), {}).use((remark_gfm__WEBPACK_IMPORTED_MODULE_8___default())).use(_frontmatter__WEBPACK_IMPORTED_MODULE_12__.default, {}).use(remark_wiki_link__WEBPACK_IMPORTED_MODULE_9__.wikiLinkPlugin, (0,_links__WEBPACK_IMPORTED_MODULE_13__.wikiLinkOptions)(options.files)).use((remark_slug__WEBPACK_IMPORTED_MODULE_5___default())).use((remark_toc__WEBPACK_IMPORTED_MODULE_6___default()), {}).use((remark_heading_id__WEBPACK_IMPORTED_MODULE_15___default())) // .use(headings)
+  .use((remark_parse__WEBPACK_IMPORTED_MODULE_3___default()), {}).use((remark_gfm__WEBPACK_IMPORTED_MODULE_8___default())).use(_frontmatter__WEBPACK_IMPORTED_MODULE_12__.default, {}).use(remark_wiki_link__WEBPACK_IMPORTED_MODULE_9__.wikiLinkPlugin, (0,_links__WEBPACK_IMPORTED_MODULE_14__.wikiLinkOptions)(options.files)).use((remark_slug__WEBPACK_IMPORTED_MODULE_5___default())).use((remark_toc__WEBPACK_IMPORTED_MODULE_6___default()), {}).use((remark_heading_id__WEBPACK_IMPORTED_MODULE_16___default())) // .use(headings)
   .use((remark_footnotes__WEBPACK_IMPORTED_MODULE_7___default()), {
     inlineNotes: true
   }) // remark-litmd (rehype compatable)
-  .use((0,_links__WEBPACK_IMPORTED_MODULE_13__.resolveLinks)()).use((0,_sections__WEBPACK_IMPORTED_MODULE_10__.groupIntoSections)()).use(_codeblocks__WEBPACK_IMPORTED_MODULE_11__.default);
+  .use((0,_links__WEBPACK_IMPORTED_MODULE_14__.resolveLinks)()).use((0,_sections__WEBPACK_IMPORTED_MODULE_10__.groupIntoSections)()).use(_codeblocks__WEBPACK_IMPORTED_MODULE_11__.default);
 };
 function parse(_x, _x2) {
   return _parse.apply(this, arguments);
@@ -19703,9 +19714,12 @@ function _parse() {
           case 6:
             ast = _context.sent;
             vfile.data.ast = ast;
+            vfile.data.frontmatter = unist_util_select__WEBPACK_IMPORTED_MODULE_13__.selectAll('html', ast).reduce(function (memo, el) {
+              return Object.assign(memo, el.data || {});
+            }, {});
             return _context.abrupt("return", vfile);
 
-          case 9:
+          case 10:
           case "end":
             return _context.stop();
         }
@@ -19918,17 +19932,19 @@ var cellsFromNodes = function cellsFromNodes(nodes) {
 
     if (node.type === "section") {
       newCell = null;
-      cells.push(node); // } else if (node.type === "list" && node.spread) {
-      //   newCell = null;
-      //   let listSection = createSection(node)
-      //   cells.push(listSection);
+      cells.push(node);
+    } else if (node.type === "list" && node.spread) {
+      newCell = null;
+      var listSection = createSection(node);
+      cells.push(listSection);
     } else if (node.type === "listItem" && node.spread) {
       newCell = null;
       var listItem = node;
 
       if (firstChild(listItem, 'section')) {
-        listItem.children = listItem.children.map(function (node) {
-          node.children = cellsFromNodes(node.children);
+        (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_6__.log)("[Sections] ListItem with section: ", node.type);
+        listItem.children = listItem.children.map(function (section) {
+          section.children = cellsFromNodes(section.children);
         });
       } else {
         listItem.children = [createSection(node, node.children)];
@@ -20054,7 +20070,9 @@ __webpack_require__.r(__webpack_exports__);
 
 function processor() {
   return (0,_parser__WEBPACK_IMPORTED_MODULE_6__.processor)().use(function () {
-    return {};
+    return function (tree, file) {
+      file.data.ast = tree;
+    };
   }).use((remark_rehype__WEBPACK_IMPORTED_MODULE_1___default()), {
     allowDangerousHtml: true
   }).use((rehype_react__WEBPACK_IMPORTED_MODULE_2___default()), {
@@ -20075,12 +20093,12 @@ function renderToVfile(vfile, cmd, links) {
   var dir = path__WEBPACK_IMPORTED_MODULE_0___default().dirname(path__WEBPACK_IMPORTED_MODULE_0___default().join(root, vfile.path));
   var relroot = path__WEBPACK_IMPORTED_MODULE_0___default().relative(dir, root) || '.';
   (0,_utils_console__WEBPACK_IMPORTED_MODULE_5__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_5__.log)('[Render] to vFile', vfile.path);
-  var output = vfile;
+  var output = processor().processSync(vfile);
+  output.contents = vfile.contents;
   var notebook = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4__.createElement(_components_Document__WEBPACK_IMPORTED_MODULE_7__.default, {
     file: output,
     root: cmd.base || relroot,
-    backlinks: links,
-    processor: processor()
+    backlinks: links
   });
   output.contents = react_dom_server__WEBPACK_IMPORTED_MODULE_3__.renderToString(notebook);
   output.extname = '.html';
@@ -89806,7 +89824,7 @@ function factory(key, options) {
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"name":"@dotlit/dotlit","version":"0.1.1","description":"","main":"src/index.js","scripts":{"build-web":"webpack --config=./webpack.web.config.js && stylus ./src/client/style.styl -o ./dist/style.css","build-node":"webpack --config=./webpack.node.config.js","build":"npm run build-web && npm run build-node","start":"npm run build && rm -rf ./tests/out/* && dotlit -d 2 generate ./src -o ./build -w & http-server ./build"},"bin":{"dotlit":"./src/index.js"},"author":"dotlitdev","license":"UNLICENCED","dependencies":{"@babel/core":"^7.12.8","@babel/plugin-transform-runtime":"^7.12.1","@babel/preset-env":"^7.12.7","@babel/preset-react":"^7.12.7","@babel/preset-typescript":"^7.12.7","@babel/register":"^7.12.1","@codemirror/basic-setup":"^0.18.0","@isomorphic-git/lightning-fs":"^4.4.1","assert":"^2.0.0","babel-loader":"^8.2.1","commander":"^6.2.0","console-browserify":"^1.2.0","glob":"^7.1.6","glob-watcher":"^5.0.5","html-whitespace-sensitive-tag-names":"^1.0.3","js-yaml":"^4.0.0","mdast-util-heading-range":"^2.1.5","mkdirp":"^1.0.4","path-browserify":"^1.0.1","process":"^0.11.10","querystring-es3":"*","react":"^17.0.1","react-dom":"^17.0.1","rehype-document":"^5.1.0","rehype-format":"^3.1.0","rehype-react":"^6.2.0","rehype-stringify":"^8.0.0","remark-footnotes":"^3.0.0","remark-frontmatter":"^3.0.0","remark-heading-id":"^1.0.0","remark-parse":"^9.0.0","remark-react":"^8.0.0","remark-rehype":"^8.0.0","remark-slug":"^6.0.0","remark-stringify":"^9.0.0","remark-toc":"^7.0.0","remark-wiki-link":"^1.0.2","remark-gfm":"*","stylus":"^0.54.8","to-vfile":"^6.1.0","unified":"^9.2.0","unist-util-find-after":"^3.0.0","unist-util-find-before":"^2.0.5","unist-util-flatmap":"^1.0.0","unist-util-generated":"^1.1.6","unist-util-remove-position":"^3.0.0","unist-util-select":"^3.0.4","webpack":"^5.6.0","webpack-cli":"^4.2.0","unist-util-source":"^3.0.0"}}');
+module.exports = JSON.parse('{"name":"@dotlit/dotlit","version":"0.1.2","description":"","main":"src/index.js","scripts":{"build-web":"webpack --config=./webpack.web.config.js && stylus ./src/client/style.styl -o ./dist/style.css","build-node":"webpack --config=./webpack.node.config.js","build":"npm run build-web && npm run build-node","start":"npm run build && rm -rf ./tests/out/* && dotlit -d 2 generate ./src -o ./build -w & http-server ./build"},"bin":{"dotlit":"./src/index.js"},"author":"dotlitdev","license":"UNLICENCED","dependencies":{"@babel/core":"^7.12.8","@babel/plugin-transform-runtime":"^7.12.1","@babel/preset-env":"^7.12.7","@babel/preset-react":"^7.12.7","@babel/preset-typescript":"^7.12.7","@babel/register":"^7.12.1","@codemirror/basic-setup":"^0.18.0","@isomorphic-git/lightning-fs":"^4.4.1","assert":"^2.0.0","babel-loader":"^8.2.1","commander":"^6.2.0","console-browserify":"^1.2.0","glob":"^7.1.6","glob-watcher":"^5.0.5","html-whitespace-sensitive-tag-names":"^1.0.3","js-yaml":"^4.0.0","mdast-util-heading-range":"^2.1.5","mkdirp":"^1.0.4","path-browserify":"^1.0.1","process":"^0.11.10","querystring-es3":"*","react":"^17.0.1","react-dom":"^17.0.1","rehype-document":"^5.1.0","rehype-format":"^3.1.0","rehype-react":"^6.2.0","rehype-stringify":"^8.0.0","remark-footnotes":"^3.0.0","remark-frontmatter":"^3.0.0","remark-heading-id":"^1.0.0","remark-parse":"^9.0.0","remark-react":"^8.0.0","remark-rehype":"^8.0.0","remark-slug":"^6.0.0","remark-stringify":"^9.0.0","remark-toc":"^7.0.0","remark-wiki-link":"^1.0.2","remark-gfm":"*","stylus":"^0.54.8","to-vfile":"^6.1.0","unified":"^9.2.0","unist-util-find-after":"^3.0.0","unist-util-find-before":"^2.0.5","unist-util-flatmap":"^1.0.0","unist-util-generated":"^1.1.6","unist-util-remove-position":"^3.0.0","unist-util-select":"^3.0.4","webpack":"^5.6.0","webpack-cli":"^4.2.0","unist-util-source":"^3.0.0"}}');
 
 /***/ }),
 

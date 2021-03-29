@@ -15,7 +15,11 @@ import Cell from '../components/Cell'
 
 export function processor() {
     return parserProcessor()
-    .use(()=> ({}))
+    .use( (...args) => {
+         return (tree,file) => {
+             file.data.ast = tree
+         }
+     })
     .use(remark2rehype, {allowDangerousHtml: true})
     .use(rehype2react, {
         Fragment: React.Fragment,
@@ -39,13 +43,12 @@ export function renderToVfile(vfile, cmd, links) {
 
     level(2, log)('[Render] to vFile', vfile.path)
 
-    const output = vfile;
-
+    const output = processor().processSync(vfile)
+    output.contents = vfile.contents
     const notebook = <Document
         file={output}
         root={cmd.base || relroot}
         backlinks={links}
-        processor={processor()}
     />
 
     output.contents = ReactDOMServer.renderToString(notebook)

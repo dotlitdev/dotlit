@@ -52,17 +52,18 @@ const cellsFromNodes = nodes => {
       newCell = null;
       cells.push(node);
 
-    // } else if (node.type === "list" && node.spread) {
-    //   newCell = null;
-    //   let listSection = createSection(node)
-    //   cells.push(listSection);
+    } else if (node.type === "list" && node.spread) {
+      newCell = null;
+      let listSection = createSection(node)
+      cells.push(listSection);
 
     } else if (node.type === "listItem" && node.spread) {
       newCell = null;
       let listItem = node
       if (firstChild(listItem, 'section')) {
-        listItem.children = listItem.children.map( node => {
-          node.children = cellsFromNodes(node.children)
+        level(2, log)("[Sections] ListItem with section: ", node.type);
+        listItem.children = listItem.children.map( section => {
+          section.children = cellsFromNodes(section.children)
         })
       } else {
         listItem.children = [createSection(node, node.children)]

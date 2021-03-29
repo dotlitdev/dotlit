@@ -60,17 +60,16 @@ console.log(`lit:`, lit)
     file = await vfile({path: src, contents})
 
     
-    const parsedFile = await parser.parse(file)
-    console.log(parsedFile)
-    window.lit.ast = parsedFile.data.ast
+    const processedFile = await renderer.processor().process(file)
+    // processedFile.contents = file.contents
+    console.log("Processed client", processedFile)
+    window.lit.ast = processedFile.data.ast
 
     try {
         lit.notebook = <App 
             fs={lit.fs}
-            file={parsedFile}
-            root={litroot}
-            permalinks={{}}
-            processor={renderer.processor()}
+            file={processedFile}
+            result={processedFile.result}
         />
     } catch(err) {
         console.error("Error instantiating App", err)
