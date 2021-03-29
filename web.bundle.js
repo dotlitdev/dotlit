@@ -22568,7 +22568,7 @@ function renderToVfile(vfile, cmd, links) {
   var dir = path__WEBPACK_IMPORTED_MODULE_0___default().dirname(path__WEBPACK_IMPORTED_MODULE_0___default().join(root, vfile.path));
   var relroot = path__WEBPACK_IMPORTED_MODULE_0___default().relative(dir, root) || '.';
   (0,_utils_console__WEBPACK_IMPORTED_MODULE_5__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_5__.log)('[Render] to vFile', vfile.path);
-  var output = vfile;
+  var output = processor().processSync(vfile);
   var notebook = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4__.createElement(_components_Document__WEBPACK_IMPORTED_MODULE_7__.default, {
     file: output,
     root: cmd.base || relroot,
