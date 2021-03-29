@@ -88551,7 +88551,7 @@ console.log('.lit Notebook client initializing...');
 console.log("lit:", lit);
 
 (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
-  var src, contents, file, stat, parsedFile;
+  var src, contents, file, stat, processedFile;
   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
@@ -88612,20 +88612,20 @@ console.log("lit:", lit);
         case 27:
           file = _context.sent;
           _context.next = 30;
-          return parser.parse(file);
+          return renderer.processor().processSync(vfile);
 
         case 30:
-          parsedFile = _context.sent;
-          console.log(parsedFile);
-          window.lit.ast = parsedFile.data.ast;
+          processedFile = _context.sent;
+          console.log("Processed client", processedFile);
+          window.lit.ast = processedFile.data.ast;
 
           try {
             lit.notebook = /*#__PURE__*/React.createElement(App, {
               fs: lit.fs,
-              file: parsedFile,
+              file: processedFile,
               root: litroot,
               permalinks: {},
-              processor: renderer.processor()
+              result: processedFile.result
             });
           } catch (err) {
             console.error("Error instantiating App", err);
