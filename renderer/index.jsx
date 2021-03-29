@@ -1,8 +1,11 @@
 import path from 'path'
 import remark2rehype from 'remark-rehype'
 import rehype2react from 'rehype-react'
+import {selectAll} from 'unist-util-select'
+
 import ReactDOMServer from 'react-dom/server'
 import React from 'react'
+
 import {log, level} from '../utils/console'
 
 import {processor as parserProcessor} from '../parser'
@@ -15,9 +18,17 @@ import Cell from '../components/Cell'
 
 export function processor() {
     return parserProcessor()
+   
+    // hoist ast to data
     .use( (...args) => {
          return (tree,file) => {
              file.data.ast = tree
+         }
+     })
+    // extract files to data
+    .use( (...args) => {
+         return (tree,file) => {
+             file.data.files = selectAll("code", tree)
          }
      })
     .use(remark2rehype, {allowDangerousHtml: true})

@@ -22453,16 +22453,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var remark_rehype__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(remark_rehype__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var rehype_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rehype-react */ "./node_modules/rehype-react/index.js");
 /* harmony import */ var rehype_react__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(rehype_react__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var react_dom_server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-dom/server */ "./node_modules/react-dom/server.browser.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
-/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _parser__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../parser */ "./src/parser/index.js");
-/* harmony import */ var _components_Document__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/Document */ "./src/components/Document.jsx");
-/* harmony import */ var _components_base_Paragraph__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/base/Paragraph */ "./src/components/base/Paragraph.jsx");
-/* harmony import */ var _components_base_Link__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/base/Link */ "./src/components/base/Link.jsx");
-/* harmony import */ var _components_base_Codeblock__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../components/base/Codeblock */ "./src/components/base/Codeblock.jsx");
-/* harmony import */ var _components_Cell__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../components/Cell */ "./src/components/Cell.jsx");
+/* harmony import */ var unist_util_select__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! unist-util-select */ "./node_modules/unist-util-select/index.js");
+/* harmony import */ var react_dom_server__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-dom/server */ "./node_modules/react-dom/server.browser.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _parser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../parser */ "./src/parser/index.js");
+/* harmony import */ var _components_Document__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/Document */ "./src/components/Document.jsx");
+/* harmony import */ var _components_base_Paragraph__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/base/Paragraph */ "./src/components/base/Paragraph.jsx");
+/* harmony import */ var _components_base_Link__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../components/base/Link */ "./src/components/base/Link.jsx");
+/* harmony import */ var _components_base_Codeblock__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../components/base/Codeblock */ "./src/components/base/Codeblock.jsx");
+/* harmony import */ var _components_Cell__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../components/Cell */ "./src/components/Cell.jsx");
+
 
 
 
@@ -22478,22 +22480,28 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function processor() {
-  return (0,_parser__WEBPACK_IMPORTED_MODULE_8__.processor)().use(function () {
+  return (0,_parser__WEBPACK_IMPORTED_MODULE_9__.processor)() // hoist ast to data
+  .use(function () {
     return function (tree, file) {
       file.data.ast = tree;
+    };
+  }) // extract files to data
+  .use(function () {
+    return function (tree, file) {
+      file.data.files = (0,unist_util_select__WEBPACK_IMPORTED_MODULE_5__.selectAll)("code", tree);
     };
   }).use((remark_rehype__WEBPACK_IMPORTED_MODULE_3___default()), {
     allowDangerousHtml: true
   }).use((rehype_react__WEBPACK_IMPORTED_MODULE_4___default()), {
-    Fragment: react__WEBPACK_IMPORTED_MODULE_6__.Fragment,
+    Fragment: react__WEBPACK_IMPORTED_MODULE_7__.Fragment,
     allowDangerousHtml: true,
-    createElement: react__WEBPACK_IMPORTED_MODULE_6__.createElement,
+    createElement: react__WEBPACK_IMPORTED_MODULE_7__.createElement,
     passNode: true,
     components: {
-      p: _components_base_Paragraph__WEBPACK_IMPORTED_MODULE_10__.default,
-      a: _components_base_Link__WEBPACK_IMPORTED_MODULE_11__.default,
-      pre: _components_base_Codeblock__WEBPACK_IMPORTED_MODULE_12__.default,
-      cell: _components_Cell__WEBPACK_IMPORTED_MODULE_13__.default
+      p: _components_base_Paragraph__WEBPACK_IMPORTED_MODULE_11__.default,
+      a: _components_base_Link__WEBPACK_IMPORTED_MODULE_12__.default,
+      pre: _components_base_Codeblock__WEBPACK_IMPORTED_MODULE_13__.default,
+      cell: _components_Cell__WEBPACK_IMPORTED_MODULE_14__.default
     }
   });
 }
@@ -22511,18 +22519,18 @@ function _renderToVfile() {
             root = path__WEBPACK_IMPORTED_MODULE_2___default().resolve(cmd.output);
             dir = path__WEBPACK_IMPORTED_MODULE_2___default().dirname(path__WEBPACK_IMPORTED_MODULE_2___default().join(root, vfile.path));
             relroot = path__WEBPACK_IMPORTED_MODULE_2___default().relative(dir, root) || '.';
-            (0,_utils_console__WEBPACK_IMPORTED_MODULE_7__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_7__.log)('[Render] to vFile', vfile.path);
+            (0,_utils_console__WEBPACK_IMPORTED_MODULE_8__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_8__.log)('[Render] to vFile', vfile.path);
             _context.next = 6;
             return processor().process(vfile);
 
           case 6:
             output = _context.sent;
-            notebook = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6__.createElement(_components_Document__WEBPACK_IMPORTED_MODULE_9__.default, {
+            notebook = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(_components_Document__WEBPACK_IMPORTED_MODULE_10__.default, {
               file: output,
               root: cmd.base || relroot,
               backlinks: links
             });
-            output.contents = react_dom_server__WEBPACK_IMPORTED_MODULE_5__.renderToString(notebook);
+            output.contents = react_dom_server__WEBPACK_IMPORTED_MODULE_6__.renderToString(notebook);
             output.extname = '.html';
             return _context.abrupt("return", output);
 
@@ -22550,13 +22558,13 @@ function _renderedVFileToDoc() {
             root = path__WEBPACK_IMPORTED_MODULE_2___default().resolve(cmd.output);
             dir = path__WEBPACK_IMPORTED_MODULE_2___default().dirname(path__WEBPACK_IMPORTED_MODULE_2___default().join(root, vfile.path));
             relroot = path__WEBPACK_IMPORTED_MODULE_2___default().relative(dir, root) || '.';
-            (0,_utils_console__WEBPACK_IMPORTED_MODULE_7__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_7__.log)('[Render] to document vFile', vfile.path);
-            notebook = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6__.createElement(_components_Document__WEBPACK_IMPORTED_MODULE_9__.default, {
+            (0,_utils_console__WEBPACK_IMPORTED_MODULE_8__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_8__.log)('[Render] to document vFile', vfile.path);
+            notebook = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(_components_Document__WEBPACK_IMPORTED_MODULE_10__.default, {
               file: vfile,
               root: cmd.base || relroot,
               backlinks: vfile.data.backlinks
             });
-            vfile.contents = react_dom_server__WEBPACK_IMPORTED_MODULE_5__.renderToString(notebook);
+            vfile.contents = react_dom_server__WEBPACK_IMPORTED_MODULE_6__.renderToString(notebook);
             vfile.extname = '.html';
             return _context2.abrupt("return", vfile);
 
