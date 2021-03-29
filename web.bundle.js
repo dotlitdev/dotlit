@@ -22101,7 +22101,7 @@ var FRONTMATTER_CLOSE = '-->';
       }
     });
     file.data.frontmatter = matters.reduce(function (m, e) {
-      return Object.assign(m, e.data || {});
+      return Object.assign({}, m, e.data || {});
     }, {});
   };
 }
