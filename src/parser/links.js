@@ -24,7 +24,8 @@ export const wikiLinkOptions = files => undefined
 
 export const decorateLinkNode = (link, root = '', filepath = '') => {
     console.log(link)
-    const url = link.type === 'wikiLink' 
+    const wikiLink = link.type === 'wikiLink'
+    const url = wikiLink
         ? link.data.permalink + '.lit'
         : link.url
 
@@ -49,7 +50,12 @@ export const decorateLinkNode = (link, root = '', filepath = '') => {
         isFragment,
         isRelative,
         canonical,
-        wikiLink: link.type === 'wikiLink',
+        wikiLink,
+    }
+
+    if (wikiLink) {
+
+        link.children = [{type: 'text', value: link.value }]
     }
     
     delete link.value
