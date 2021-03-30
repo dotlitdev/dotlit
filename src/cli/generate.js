@@ -101,7 +101,7 @@ export function generate(cmd) {
                     await fs.writeFile(path.join(cmd.output, file.path), file.contents)
                     level(0, info)(`Wrote  ${file.path} to "${path.join(cmd.output, file.path)}" to disk`)
 
-                    html_file.data.files.forEach( codefile => {
+                    for (codefile of html_file.data.files) {
                         const filename = codefile.data && codefile.data.meta && codefile.data.meta.filename
                         if (!filename) return;
                         await fs.writeFile(path.join(cmd.output, file.path), codefile.value)
