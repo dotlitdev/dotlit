@@ -1,5 +1,4 @@
-
-
+import path from 'path'
 
 export const writeFileP = fs => async (...args) => {
     const filepath = args[0] = "/" + args[0]
@@ -16,7 +15,7 @@ export const writeFileP = fs => async (...args) => {
                 await fs.stat(subPath)
                 console.log(`"${subPath}" Existed, skipping`)
             } catch (err) { 
-                console.log(`"${subPath}" Didnt exist, creating...`)
+                console.log(`"${subPath}" Didn't exist, creating...`)
                 await fs.mkdir(subPath) }
         }
     }

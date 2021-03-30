@@ -19,7 +19,7 @@ const Document = props => {
             <header><a href={props.root}>Home</a></header>
             <div id="app"><App file={props.file} fs={props.fs} result={result}/></div>
             <div id="backlinks"><Backlinks root={props.root} links={props.backlinks || []}/></div>
-            <script>content.remove();</script>
+            {/* <script>content.remove();</script> */}
             <script src="//cdn.jsdelivr.net/npm/eruda"></script>
             <script>eruda.init();</script>
             <script src={path.join(props.root, 'web.bundle.js')}/>

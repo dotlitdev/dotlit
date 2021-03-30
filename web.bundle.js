@@ -21505,7 +21505,7 @@ var Document = function Document(props) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Backlinks__WEBPACK_IMPORTED_MODULE_3__.default, {
     root: props.root,
     links: props.backlinks || []
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("script", null, "content.remove();"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("script", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("script", {
     src: "//cdn.jsdelivr.net/npm/eruda"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("script", null, "eruda.init();"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("script", {
     src: path__WEBPACK_IMPORTED_MODULE_1___default().join(props.root, 'web.bundle.js')
@@ -22199,54 +22199,74 @@ var transform = function transform(options) {
 };
 
 var wikiLinkOptions = function wikiLinkOptions(files) {
-  return {
-    permalinks: files,
-    pageResolver: nameToPermalinks,
-    hrefTemplate: function hrefTemplate(permalink) {
-      return "".concat(permalink, "?file=").concat(permalink);
-    }
-  };
-};
-var decorateLinkNode = function decorateLinkNode(link, root, filepath) {
-  link.data = link.data || {};
-  link.data.hProperties = link.data.hProperties || {};
+  return undefined;
+}; // ({ 
+//     permalinks: files,
+//     pageResolver: nameToPermalinks,
+//     hrefTemplate: (permalink) => `${permalink}?file=${permalink}`
+// })
 
-  if (link.type === 'wikiLink') {
-    link.data.hProperties.wikilink = true;
+var decorateLinkNode = function decorateLinkNode(link) {
+  var root = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+  var filepath = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+  console.log(link);
+  var url = link.url || link.data.permalink; // level(2, log)(`[Links] resolving (${link.type}) [${url}] '${root}', "${filepath}"`)
 
-    if (link.data.exists === 'false') {
-      link.data.hProperties.title = 'Click to create new file';
-    }
-
-    link.url = link.data.hProperties.href;
-  }
-
-  (0,_utils_console__WEBPACK_IMPORTED_MODULE_3__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_3__.log)("[Links] resolving (".concat(link.type, ")"), link.url, root, filepath);
-  var isAbsolute = typeof root === 'undefined' || /(https?\:)?\/\//.test(link.url);
-  var isFragment = /(\?|#).*/.test(link.url);
-  var isRelative = typeof root !== 'undefined' && link.url && !isAbsolute;
+  var isAbsolute = /(https?\:)?\/\//.test(url);
+  var isFragment = /(\?|#).*/.test(url);
+  var isRelative = url && !isAbsolute;
+  var canonical = url;
+  var href = url;
 
   if (isRelative) {
-    var abs = path__WEBPACK_IMPORTED_MODULE_0___default().resolve(root, path__WEBPACK_IMPORTED_MODULE_0___default().dirname(filepath), link.url);
-    var newPath = path__WEBPACK_IMPORTED_MODULE_0___default().relative(path__WEBPACK_IMPORTED_MODULE_0___default().resolve(root), abs);
-    link.data.canonical = newPath;
-  } else {
-    link.data.canonical = link.url;
+    var abs = path__WEBPACK_IMPORTED_MODULE_0___default().resolve(root, path__WEBPACK_IMPORTED_MODULE_0___default().dirname(filepath), url);
+    canonical = path__WEBPACK_IMPORTED_MODULE_0___default().relative(path__WEBPACK_IMPORTED_MODULE_0___default().resolve(root), abs);
+    href = url.replace(/\.(md|lit)/i, '.html');
   }
 
-  link.data.canonical = link.data.canonical.split("?")[0];
-  link.data.original = link.url;
-  link.url = link.url.replace(/\.(md|lit)/i, '.html');
-  link.data.isAbsolute = isAbsolute;
-  link.data.isFragment = isFragment;
-  link.data.isRelative = isRelative;
-  link.data.hProperties.href = link.url; // don't throw away wiki link classes (yet)
-
-  link.data.hProperties.className = link.data.hProperties.className || '';
-  link.data.hProperties.className += isAbsolute ? ' absolute' : '';
-  link.data.hProperties.className += isRelative ? ' relative' : '';
-  link.data.hProperties.className += isFragment ? ' fragment' : '';
-  return link;
+  link.type = 'link';
+  link.url = href;
+  link.title = link.title || link.value;
+  link.data = {
+    isAbsolute: isAbsolute,
+    isFragment: isFragment,
+    isRelative: isRelative,
+    canonical: canonical
+  };
+  delete link.value;
+  return link; // link.data = link.data || {}
+  // link.data.hProperties = link.data.hProperties || {}
+  // if (link.type === 'wikiLink') {
+  //     link.data.hProperties.wikilink = true
+  //     if (link.data.exists === 'false') {
+  //         link.data.hProperties.title = 'Click to create new file'
+  //     }
+  //     link.url = link.data.hProperties.href
+  // }
+  // level(2, log)(`[Links] resolving (${link.type})`, link.url, root, filepath)
+  // const isAbsolute = typeof root === 'undefined' || /(https?\:)?\/\//.test(link.url)
+  // const isFragment = /(\?|#).*/.test(link.url)
+  // const isRelative = typeof root !== 'undefined' && link.url && !isAbsolute
+  // if (isRelative) {
+  //     const abs = path.resolve(root, path.dirname(filepath), link.url)
+  //     const newPath = path.relative(path.resolve(root), abs)
+  //     link.data.canonical = newPath
+  // } else {
+  //     link.data.canonical = link.url
+  // }
+  // link.data.canonical = link.data.canonical.split("?")[0]
+  // link.data.original = link.url
+  // link.url = link.url.replace(/\.(md|lit)/i, '.html')
+  // link.data.isAbsolute = isAbsolute
+  // link.data.isFragment = isFragment
+  // link.data.isRelative = isRelative
+  // link.data.hProperties.href = link.url
+  // // don't throw away wiki link classes (yet)
+  // link.data.hProperties.className = link.data.hProperties.className || ''
+  // link.data.hProperties.className += isAbsolute ? ' absolute' : ''
+  // link.data.hProperties.className += isRelative ? ' relative' : ''
+  // link.data.hProperties.className += isFragment ? ' fragment' : ''
+  // return link
 };
 var nameToPermalinks = function nameToPermalinks(name) {
   var full = name.replace(/ /g, '_').toLowerCase();
@@ -22649,6 +22669,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! path */ "./node_modules/path-browserify/index.js");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 var writeFileP = function writeFileP(fs) {
@@ -22674,8 +22697,8 @@ var writeFileP = function writeFileP(fs) {
             }
 
             filepath = args[0] = "/" + args[0];
-            p = path.parse(filepath);
-            parts = p.dir.split(path.sep);
+            p = path__WEBPACK_IMPORTED_MODULE_2___default().parse(filepath);
+            parts = p.dir.split((path__WEBPACK_IMPORTED_MODULE_2___default().sep));
             console.log("\"Parts for \"".concat(filepath, "\""), parts);
             i = 0;
 
@@ -22696,7 +22719,7 @@ var writeFileP = function writeFileP(fs) {
             break;
 
           case 11:
-            subPath = parts.slice(0, i + 1).join(path.sep);
+            subPath = parts.slice(0, i + 1).join((path__WEBPACK_IMPORTED_MODULE_2___default().sep));
             console.log("\"".concat(subPath, "\" Sub path"));
             _context.prev = 13;
             _context.next = 16;
@@ -22710,7 +22733,7 @@ var writeFileP = function writeFileP(fs) {
           case 19:
             _context.prev = 19;
             _context.t0 = _context["catch"](13);
-            console.log("\"".concat(subPath, "\" Didnt exist, creating..."));
+            console.log("\"".concat(subPath, "\" Didn't exist, creating..."));
             _context.next = 24;
             return fs.mkdir(subPath);
 

@@ -15,59 +15,89 @@ const transform = options => (node, index, parent) => {
     return decorateLinkNode(node, options.root, options.filepath)
 }
 
-export const wikiLinkOptions = files => ({ 
-    permalinks: files,
-    pageResolver: nameToPermalinks,
-    hrefTemplate: (permalink) => `${permalink}?file=${permalink}`
-})
+export const wikiLinkOptions = files => undefined
+// ({ 
+//     permalinks: files,
+//     pageResolver: nameToPermalinks,
+//     hrefTemplate: (permalink) => `${permalink}?file=${permalink}`
+// })
 
-export const decorateLinkNode = (link, root, filepath) => {
-    
-    link.data = link.data || {}
-    link.data.hProperties = link.data.hProperties || {}
+export const decorateLinkNode = (link, root = '', filepath = '') => {
+    console.log(link)
+    const url = link.url || link.data.permalink
 
-    if (link.type === 'wikiLink') {
-        link.data.hProperties.wikilink = true
-        if (link.data.exists === 'false') {
-            link.data.hProperties.title = 'Click to create new file'
-        }
-        link.url = link.data.hProperties.href
-        
-        
-    }
+    // level(2, log)(`[Links] resolving (${link.type}) [${url}] '${root}', "${filepath}"`)
+    const isAbsolute = /(https?\:)?\/\//.test(url)
+    const isFragment = /(\?|#).*/.test(url)
+    const isRelative = url && !isAbsolute
 
-    level(2, log)(`[Links] resolving (${link.type})`, link.url, root, filepath)
-    const isAbsolute = typeof root === 'undefined' || /(https?\:)?\/\//.test(link.url)
-    const isFragment = /(\?|#).*/.test(link.url)
-    const isRelative = typeof root !== 'undefined' && link.url && !isAbsolute
-    
+    let canonical = url
+    let href = url
     if (isRelative) {
-        const abs = path.resolve(root, path.dirname(filepath), link.url)
-        const newPath = path.relative(path.resolve(root), abs)
-        link.data.canonical = newPath
-    } else {
-        link.data.canonical = link.url
+        const abs = path.resolve(root, path.dirname(filepath), url)
+        canonical = path.relative(path.resolve(root), abs)
+        href = url.replace(/\.(md|lit)/i, '.html')
     }
 
-    link.data.canonical = link.data.canonical.split("?")[0]
-    link.data.original = link.url
-    link.url = link.url.replace(/\.(md|lit)/i, '.html')
-
-
-    link.data.isAbsolute = isAbsolute
-    link.data.isFragment = isFragment
-    link.data.isRelative = isRelative
-
+    link.type = 'link'
+    link.url = href
+    link.title = link.title || link.value
+    link.data = {
+        isAbsolute,
+        isFragment,
+        isRelative,
+        canonical
+    }
     
-    link.data.hProperties.href = link.url
-    // don't throw away wiki link classes (yet)
-    link.data.hProperties.className = link.data.hProperties.className || ''
-    
-    link.data.hProperties.className += isAbsolute ? ' absolute' : ''
-    link.data.hProperties.className += isRelative ? ' relative' : ''
-    link.data.hProperties.className += isFragment ? ' fragment' : ''
+    delete link.value
 
     return link
+    
+    // link.data = link.data || {}
+    // link.data.hProperties = link.data.hProperties || {}
+
+    // if (link.type === 'wikiLink') {
+    //     link.data.hProperties.wikilink = true
+    //     if (link.data.exists === 'false') {
+    //         link.data.hProperties.title = 'Click to create new file'
+    //     }
+    //     link.url = link.data.hProperties.href
+        
+        
+    // }
+
+    // level(2, log)(`[Links] resolving (${link.type})`, link.url, root, filepath)
+    // const isAbsolute = typeof root === 'undefined' || /(https?\:)?\/\//.test(link.url)
+    // const isFragment = /(\?|#).*/.test(link.url)
+    // const isRelative = typeof root !== 'undefined' && link.url && !isAbsolute
+    
+    // if (isRelative) {
+    //     const abs = path.resolve(root, path.dirname(filepath), link.url)
+    //     const newPath = path.relative(path.resolve(root), abs)
+    //     link.data.canonical = newPath
+    // } else {
+    //     link.data.canonical = link.url
+    // }
+
+    // link.data.canonical = link.data.canonical.split("?")[0]
+    // link.data.original = link.url
+    // link.url = link.url.replace(/\.(md|lit)/i, '.html')
+
+
+    // link.data.isAbsolute = isAbsolute
+    // link.data.isFragment = isFragment
+    // link.data.isRelative = isRelative
+
+    
+    // link.data.hProperties.href = link.url
+    // // don't throw away wiki link classes (yet)
+    // link.data.hProperties.className = link.data.hProperties.className || ''
+    
+    // link.data.hProperties.className += isAbsolute ? ' absolute' : ''
+    // link.data.hProperties.className += isRelative ? ' relative' : ''
+    // link.data.hProperties.className += isFragment ? ' fragment' : ''
+
+    // return link
 }
 
 export const nameToPermalinks = (name) => {
