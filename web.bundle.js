@@ -22423,7 +22423,7 @@ var groupIntoSections = function groupIntoSections() {
   return function () {
     return function (tree) {
       (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.level)(1, _utils_console__WEBPACK_IMPORTED_MODULE_6__.log)("[Sections] Init");
-      unist_util_visit__WEBPACK_IMPORTED_MODULE_4___default()(tree, "heading", transform(options), false);
+      unist_util_visit__WEBPACK_IMPORTED_MODULE_4___default()(tree, "heading", transform(options), true);
     };
   };
 };
