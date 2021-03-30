@@ -28,11 +28,11 @@ function generateBacklinks(files, root) {
         console.log(`[Manifest] Adding "${file.path}" as "${fileLink.data.canonical}"`)
         manifest[fileLink.data.canonical] = manifest[fileLink.data.canonical] || { backlinks: [] }
         manifest[fileLink.data.canonical].exists = true
-        console.log('fileLink', fileLink)
+        // console.log('fileLink', fileLink)
         level(0, info)(`[Backlinks] ${file.path} ${fileLink.data.canonical} ${fileLink.url} links: (${links.length})`)
         links.forEach( link => {
-            console.log(link)
-            level(0, info)(`[Backlinks] ${link.type} >> ${link.url} >> ${link.data.canonical} relative: ${link.data.isRelative}`)
+            // console.log(link)
+            level(2, info)(`[Backlinks] ${link.type} >> ${link.url} >> ${link.data.canonical} relative: ${link.data.isRelative}`)
             const linkNode = {
                 url: fileLink.url,
                 title: file.data.frontmatter.title || `Title TBD (${fileLink.data.canonical})`,
