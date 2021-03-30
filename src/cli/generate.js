@@ -100,6 +100,14 @@ export function generate(cmd) {
                     const html_file = await renderedVFileToDoc(await file, cmd)
                     await fs.writeFile(path.join(cmd.output, file.path), file.contents)
                     level(0, info)(`Wrote  ${file.path} to "${path.join(cmd.output, file.path)}" to disk`)
+
+                    html_file.data.files.forEach( codefile => {
+                        const filename = codefile.data.filename
+                        if (!filename) return;
+                        await fs.writeFile(path.join(cmd.output, file.path), file.contents)
+                        level(0, info)(`Wrote codefile ${filename} to "${path.join(cmd.output, filename)}" on disk`)
+
+                    })
                     return html_file;
                 }))
                 
