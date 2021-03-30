@@ -90,14 +90,14 @@ const cellsFromNodes = nodes => {
 }
 
 const wrapSection = (options) => (start, nodes, end) => {
-  level(2, log)(
+  level(0, log)(
     "[Sections] Wrapping:",
     start && start.data.id,
     nodes && nodes.length,
     end && end.type
   );
 
-  // log("[Section] children:", children)
+  log("[Section] children:", children)
   nodes = [start, ...nodes]
   const cells = cellsFromNodes(nodes)
 
