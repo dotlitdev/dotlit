@@ -22210,7 +22210,7 @@ var decorateLinkNode = function decorateLinkNode(link) {
   var root = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
   var filepath = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
   console.log(link);
-  var url = link.url || link.data.permalink; // level(2, log)(`[Links] resolving (${link.type}) [${url}] '${root}', "${filepath}"`)
+  var url = link.type === 'wikiLink' ? link.data.permalink + '.lit' : link.url; // level(2, log)(`[Links] resolving (${link.type}) [${url}] '${root}', "${filepath}"`)
 
   var isAbsolute = /(https?\:)?\/\//.test(url);
   var isFragment = /(\?|#).*/.test(url);
@@ -22231,7 +22231,8 @@ var decorateLinkNode = function decorateLinkNode(link) {
     isAbsolute: isAbsolute,
     isFragment: isFragment,
     isRelative: isRelative,
-    canonical: canonical
+    canonical: canonical,
+    wikiLink: link.type === 'wikiLink'
   };
   delete link.value;
   return link; // link.data = link.data || {}
