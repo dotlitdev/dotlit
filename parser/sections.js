@@ -97,8 +97,10 @@ const wrapSection = (options) => (start, nodes, end) => {
     end && end.type
   );
 
-  log("[Section] children:", children)
   nodes = [start, ...nodes]
+
+  log("[Section] nodes:", nodes)
+
   const cells = cellsFromNodes(nodes)
 
   return [
