@@ -138,7 +138,7 @@ const transform = (options) => (node, index, parent) => {
 
 export const groupIntoSections = (options = {}) => (...args) => (tree) => {
   level(1, log)("[Sections] Init");
-  visit(tree, "heading", transform(options), true);
+  visit(tree, "heading", transform(options), false);
 };
 
 export const ungroupSections = (options = {}) => (...args) => (tree) => {
