@@ -22237,6 +22237,7 @@ var decorateLinkNode = function decorateLinkNode(link) {
   };
 
   if (wikiLink) {
+    link.url = link.url + '?file=' + link.url;
     link.children = [{
       type: 'text',
       value: link.value

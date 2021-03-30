@@ -54,7 +54,7 @@ export const decorateLinkNode = (link, root = '', filepath = '') => {
     }
 
     if (wikiLink) {
-
+        link.url = link.url + '?file=' + link.url
         link.children = [{type: 'text', value: link.value }]
     }
     
