@@ -24,7 +24,9 @@ export const wikiLinkOptions = files => undefined
 
 export const decorateLinkNode = (link, root = '', filepath = '') => {
     console.log(link)
-    const url = link.url || link.data.permalink
+    const url = link.type === 'wikiLink' 
+        ? link.data.permalink + '.lit'
+        : link.url
 
     // level(2, log)(`[Links] resolving (${link.type}) [${url}] '${root}', "${filepath}"`)
     const isAbsolute = /(https?\:)?\/\//.test(url)
@@ -46,7 +48,8 @@ export const decorateLinkNode = (link, root = '', filepath = '') => {
         isAbsolute,
         isFragment,
         isRelative,
-        canonical
+        canonical,
+        wikiLink: link.type === 'wikiLink',
     }
     
     delete link.value
