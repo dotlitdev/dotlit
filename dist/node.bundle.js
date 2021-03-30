@@ -18348,18 +18348,21 @@ function generateBacklinks(files, root) {
       backlinks: []
     };
     manifest[fileLink.data.canonical].exists = true;
-    (0,_utils_console__WEBPACK_IMPORTED_MODULE_11__.level)(1, _utils_console__WEBPACK_IMPORTED_MODULE_11__.info)("[Backlinks] ".concat(file.path, " ").concat(fileLink.data.canonical, " ").concat(fileLink.url, " links: (").concat(links.length, ")"));
+    console.log('fileLink', fileLink);
+    (0,_utils_console__WEBPACK_IMPORTED_MODULE_11__.level)(0, _utils_console__WEBPACK_IMPORTED_MODULE_11__.info)("[Backlinks] ".concat(file.path, " ").concat(fileLink.data.canonical, " ").concat(fileLink.url, " links: (").concat(links.length, ")"));
     links.forEach(function (link) {
-      (0,_utils_console__WEBPACK_IMPORTED_MODULE_11__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_11__.info)("[Backlinks] ".concat(link.type, " >> ").concat(link.url, " >> ").concat(link.data.canonical, " "));
+      console.log(link);
+      (0,_utils_console__WEBPACK_IMPORTED_MODULE_11__.level)(0, _utils_console__WEBPACK_IMPORTED_MODULE_11__.info)("[Backlinks] ".concat(link.type, " >> ").concat(link.url, " >> ").concat(link.data.canonical, " relative: ").concat(link.data.isRelative));
       var linkNode = {
         url: fileLink.url,
-        title: "Title TBD (".concat(fileLink.data.canonical, ")")
+        title: file.data.frontmatter.title || "Title TBD (".concat(fileLink.data.canonical, ")")
       };
 
       if (link.data.isRelative) {
         if (manifest[link.data.canonical] && manifest[link.data.canonical].backlinks) {
           manifest[link.data.canonical].backlinks.push(linkNode);
         } else {
+          console.log("[Manifest] Adding \"".concat(link.data.canonical, "\""));
           manifest[link.data.canonical] = {
             backlinks: [linkNode],
             exists: false
@@ -18483,18 +18486,19 @@ function generate(cmd) {
                       while (1) {
                         switch (_context3.prev = _context3.next) {
                           case 0:
-                            _context3.t0 = _parser_index__WEBPACK_IMPORTED_MODULE_12__.parse;
+                            _context3.t0 = (0,_renderer_index__WEBPACK_IMPORTED_MODULE_13__.processor)();
                             _context3.next = 3;
                             return file;
 
                           case 3:
                             _context3.t1 = _context3.sent;
-                            _context3.t2 = {
-                              files: litFiles
-                            };
-                            return _context3.abrupt("return", (0, _context3.t0)(_context3.t1, _context3.t2));
+                            _context3.next = 6;
+                            return _context3.t0.process.call(_context3.t0, _context3.t1);
 
                           case 6:
+                            return _context3.abrupt("return", _context3.sent);
+
+                          case 7:
                           case "end":
                             return _context3.stop();
                         }
@@ -18522,27 +18526,26 @@ function generate(cmd) {
                             return fs__WEBPACK_IMPORTED_MODULE_8__.promises.writeFile(path__WEBPACK_IMPORTED_MODULE_7___default().join(cmd.output, file.path + '.json'), JSON.stringify(file.data.ast, null, 4));
 
                           case 2:
-                            _context4.t0 = _renderer_index__WEBPACK_IMPORTED_MODULE_13__.renderToVfile;
+                            _context4.t0 = _renderer_index__WEBPACK_IMPORTED_MODULE_13__.renderedVFileToDoc;
                             _context4.next = 5;
                             return file;
 
                           case 5:
                             _context4.t1 = _context4.sent;
                             _context4.t2 = cmd;
-                            _context4.t3 = file.data.backlinks;
-                            _context4.next = 10;
-                            return (0, _context4.t0)(_context4.t1, _context4.t2, _context4.t3);
+                            _context4.next = 9;
+                            return (0, _context4.t0)(_context4.t1, _context4.t2);
 
-                          case 10:
+                          case 9:
                             html_file = _context4.sent;
-                            _context4.next = 13;
+                            _context4.next = 12;
                             return fs__WEBPACK_IMPORTED_MODULE_8__.promises.writeFile(path__WEBPACK_IMPORTED_MODULE_7___default().join(cmd.output, file.path), file.contents);
 
-                          case 13:
+                          case 12:
                             (0,_utils_console__WEBPACK_IMPORTED_MODULE_11__.level)(0, _utils_console__WEBPACK_IMPORTED_MODULE_11__.info)("Wrote  ".concat(file.path, " to \"").concat(path__WEBPACK_IMPORTED_MODULE_7___default().join(cmd.output, file.path), "\" to disk"));
                             return _context4.abrupt("return", html_file);
 
-                          case 15:
+                          case 14:
                           case "end":
                             return _context4.stop();
                         }
@@ -18992,7 +18995,9 @@ var Document = function Document(props) {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("link", {
     rel: "stylesheet",
     href: path__WEBPACK_IMPORTED_MODULE_1___default().join(props.root, 'style.css')
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("body", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("body", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("header", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+    href: props.root
+  }, "Home")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     id: "app"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_App__WEBPACK_IMPORTED_MODULE_2__.default, {
     file: props.file,
@@ -19003,7 +19008,7 @@ var Document = function Document(props) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Backlinks__WEBPACK_IMPORTED_MODULE_3__.default, {
     root: props.root,
     links: props.backlinks || []
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("script", null, "content.remove();"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("script", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("script", {
     src: "//cdn.jsdelivr.net/npm/eruda"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("script", null, "eruda.init();"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("script", {
     src: path__WEBPACK_IMPORTED_MODULE_1___default().join(props.root, 'web.bundle.js')
@@ -19400,6 +19405,7 @@ function transform(node, index, parent) {
   (0,_utils_console__WEBPACK_IMPORTED_MODULE_4__.level)(1, _utils_console__WEBPACK_IMPORTED_MODULE_4__.log)('[CodeBlocks] Visiting: ', node.lang, node.meta);
   var litMeta = parseMeta(node);
   node.data = _objectSpread(_objectSpread({}, node.data), {}, {
+    meta: litMeta,
     hProperties: {
       className: litMeta && litMeta.tags ? litMeta.tags.map(function (t) {
         return "tag-".concat(t);
@@ -19714,53 +19720,74 @@ var transform = function transform(options) {
 };
 
 var wikiLinkOptions = function wikiLinkOptions(files) {
-  return {
-    permalinks: files,
-    pageResolver: nameToPermalinks,
-    hrefTemplate: function hrefTemplate(permalink) {
-      return "".concat(permalink, "?file=").concat(permalink);
-    }
-  };
-};
-var decorateLinkNode = function decorateLinkNode(link, root, filepath) {
-  link.data = link.data || {};
-  link.data.hProperties = link.data.hProperties || {};
+  return undefined;
+}; // ({ 
+//     permalinks: files,
+//     pageResolver: nameToPermalinks,
+//     hrefTemplate: (permalink) => `${permalink}?file=${permalink}`
+// })
 
-  if (link.type === 'wikiLink') {
-    link.data.hProperties.wikilink = true;
+var decorateLinkNode = function decorateLinkNode(link) {
+  var root = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+  var filepath = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+  console.log(link);
+  var url = link.url || link.data.permalink; // level(2, log)(`[Links] resolving (${link.type}) [${url}] '${root}', "${filepath}"`)
 
-    if (link.data.exists === 'false') {
-      link.data.hProperties.title = 'Click to create new file';
-    }
-
-    link.url = link.data.hProperties.href;
-  }
-
-  (0,_utils_console__WEBPACK_IMPORTED_MODULE_3__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_3__.log)("[Links] resolving (".concat(link.type, ")"), link.url, root, filepath);
-  var isAbsolute = typeof root === 'undefined' || /(https?\:)?\/\//.test(link.url);
-  var isFragment = /(\?|#).*/.test(link.url);
-  var isRelative = typeof root !== 'undefined' && link.url && !(isAbsolute || isFragment);
+  var isAbsolute = /(https?\:)?\/\//.test(url);
+  var isFragment = /(\?|#).*/.test(url);
+  var isRelative = url && !isAbsolute;
+  var canonical = url;
+  var href = url;
 
   if (isRelative) {
-    var abs = path__WEBPACK_IMPORTED_MODULE_0___default().resolve(root, path__WEBPACK_IMPORTED_MODULE_0___default().dirname(filepath), link.url);
-    var newPath = path__WEBPACK_IMPORTED_MODULE_0___default().relative(path__WEBPACK_IMPORTED_MODULE_0___default().resolve(root), abs);
-    link.data.canonical = newPath;
-  } else {
-    link.data.canonical = link.url;
+    var abs = path__WEBPACK_IMPORTED_MODULE_0___default().resolve(root, path__WEBPACK_IMPORTED_MODULE_0___default().dirname(filepath), url);
+    canonical = path__WEBPACK_IMPORTED_MODULE_0___default().relative(path__WEBPACK_IMPORTED_MODULE_0___default().resolve(root), abs);
+    href = url.replace(/\.(md|lit)/i, '.html');
   }
 
-  link.data.original = link.url;
-  link.url = link.url.replace(/\.(md|lit)/i, '.html');
-  link.data.isAbsolute = isAbsolute;
-  link.data.isFragment = isFragment;
-  link.data.isRelative = isRelative;
-  link.data.hProperties.href = link.url; // don't throw away wiki link classes (yet)
-
-  link.data.hProperties.className = link.data.hProperties.className || '';
-  link.data.hProperties.className += isAbsolute ? ' absolute' : '';
-  link.data.hProperties.className += isRelative ? ' relative' : '';
-  link.data.hProperties.className += isFragment ? ' fragment' : '';
-  return link;
+  link.type = 'link';
+  link.url = href;
+  link.title = link.title || link.value;
+  link.data = {
+    isAbsolute: isAbsolute,
+    isFragment: isFragment,
+    isRelative: isRelative,
+    canonical: canonical
+  };
+  delete link.value;
+  return link; // link.data = link.data || {}
+  // link.data.hProperties = link.data.hProperties || {}
+  // if (link.type === 'wikiLink') {
+  //     link.data.hProperties.wikilink = true
+  //     if (link.data.exists === 'false') {
+  //         link.data.hProperties.title = 'Click to create new file'
+  //     }
+  //     link.url = link.data.hProperties.href
+  // }
+  // level(2, log)(`[Links] resolving (${link.type})`, link.url, root, filepath)
+  // const isAbsolute = typeof root === 'undefined' || /(https?\:)?\/\//.test(link.url)
+  // const isFragment = /(\?|#).*/.test(link.url)
+  // const isRelative = typeof root !== 'undefined' && link.url && !isAbsolute
+  // if (isRelative) {
+  //     const abs = path.resolve(root, path.dirname(filepath), link.url)
+  //     const newPath = path.relative(path.resolve(root), abs)
+  //     link.data.canonical = newPath
+  // } else {
+  //     link.data.canonical = link.url
+  // }
+  // link.data.canonical = link.data.canonical.split("?")[0]
+  // link.data.original = link.url
+  // link.url = link.url.replace(/\.(md|lit)/i, '.html')
+  // link.data.isAbsolute = isAbsolute
+  // link.data.isFragment = isFragment
+  // link.data.isRelative = isRelative
+  // link.data.hProperties.href = link.url
+  // // don't throw away wiki link classes (yet)
+  // link.data.hProperties.className = link.data.hProperties.className || ''
+  // link.data.hProperties.className += isAbsolute ? ' absolute' : ''
+  // link.data.hProperties.className += isRelative ? ' relative' : ''
+  // link.data.hProperties.className += isFragment ? ' fragment' : ''
+  // return link
 };
 var nameToPermalinks = function nameToPermalinks(name) {
   var full = name.replace(/ /g, '_').toLowerCase();
@@ -19960,7 +19987,8 @@ var ungroupSections = function ungroupSections() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "processor": () => (/* binding */ processor),
-/* harmony export */   "renderToVfile": () => (/* binding */ renderToVfile)
+/* harmony export */   "renderToVfile": () => (/* binding */ renderToVfile),
+/* harmony export */   "renderedVFileToDoc": () => (/* binding */ renderedVFileToDoc)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__);
@@ -19972,16 +20000,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var remark_rehype__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(remark_rehype__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var rehype_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rehype-react */ "./node_modules/rehype-react/index.js");
 /* harmony import */ var rehype_react__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(rehype_react__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var react_dom_server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-dom/server */ "./node_modules/react-dom/server.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
-/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _parser__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../parser */ "./src/parser/index.js");
-/* harmony import */ var _components_Document__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/Document */ "./src/components/Document.jsx");
-/* harmony import */ var _components_base_Paragraph__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/base/Paragraph */ "./src/components/base/Paragraph.jsx");
-/* harmony import */ var _components_base_Link__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/base/Link */ "./src/components/base/Link.jsx");
-/* harmony import */ var _components_base_Codeblock__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../components/base/Codeblock */ "./src/components/base/Codeblock.jsx");
-/* harmony import */ var _components_Cell__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../components/Cell */ "./src/components/Cell.jsx");
+/* harmony import */ var unist_util_select__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! unist-util-select */ "./node_modules/unist-util-select/index.js");
+/* harmony import */ var react_dom_server__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-dom/server */ "./node_modules/react-dom/server.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _parser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../parser */ "./src/parser/index.js");
+/* harmony import */ var _components_Document__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/Document */ "./src/components/Document.jsx");
+/* harmony import */ var _components_base_Paragraph__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/base/Paragraph */ "./src/components/base/Paragraph.jsx");
+/* harmony import */ var _components_base_Link__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../components/base/Link */ "./src/components/base/Link.jsx");
+/* harmony import */ var _components_base_Codeblock__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../components/base/Codeblock */ "./src/components/base/Codeblock.jsx");
+/* harmony import */ var _components_Cell__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../components/Cell */ "./src/components/Cell.jsx");
+
 
 
 
@@ -19997,22 +20027,28 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function processor() {
-  return (0,_parser__WEBPACK_IMPORTED_MODULE_8__.processor)().use(function () {
+  return (0,_parser__WEBPACK_IMPORTED_MODULE_9__.processor)() // hoist ast to data
+  .use(function () {
     return function (tree, file) {
       file.data.ast = tree;
+    };
+  }) // extract files to data
+  .use(function () {
+    return function (tree, file) {
+      file.data.files = (0,unist_util_select__WEBPACK_IMPORTED_MODULE_5__.selectAll)("code", tree);
     };
   }).use((remark_rehype__WEBPACK_IMPORTED_MODULE_3___default()), {
     allowDangerousHtml: true
   }).use((rehype_react__WEBPACK_IMPORTED_MODULE_4___default()), {
-    Fragment: react__WEBPACK_IMPORTED_MODULE_6__.Fragment,
+    Fragment: react__WEBPACK_IMPORTED_MODULE_7__.Fragment,
     allowDangerousHtml: true,
-    createElement: react__WEBPACK_IMPORTED_MODULE_6__.createElement,
+    createElement: react__WEBPACK_IMPORTED_MODULE_7__.createElement,
     passNode: true,
     components: {
-      p: _components_base_Paragraph__WEBPACK_IMPORTED_MODULE_10__.default,
-      a: _components_base_Link__WEBPACK_IMPORTED_MODULE_11__.default,
-      pre: _components_base_Codeblock__WEBPACK_IMPORTED_MODULE_12__.default,
-      cell: _components_Cell__WEBPACK_IMPORTED_MODULE_13__.default
+      p: _components_base_Paragraph__WEBPACK_IMPORTED_MODULE_11__.default,
+      a: _components_base_Link__WEBPACK_IMPORTED_MODULE_12__.default,
+      pre: _components_base_Codeblock__WEBPACK_IMPORTED_MODULE_13__.default,
+      cell: _components_Cell__WEBPACK_IMPORTED_MODULE_14__.default
     }
   });
 }
@@ -20030,18 +20066,18 @@ function _renderToVfile() {
             root = path__WEBPACK_IMPORTED_MODULE_2___default().resolve(cmd.output);
             dir = path__WEBPACK_IMPORTED_MODULE_2___default().dirname(path__WEBPACK_IMPORTED_MODULE_2___default().join(root, vfile.path));
             relroot = path__WEBPACK_IMPORTED_MODULE_2___default().relative(dir, root) || '.';
-            (0,_utils_console__WEBPACK_IMPORTED_MODULE_7__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_7__.log)('[Render] to vFile', vfile.path);
+            (0,_utils_console__WEBPACK_IMPORTED_MODULE_8__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_8__.log)('[Render] to vFile', vfile.path);
             _context.next = 6;
             return processor().process(vfile);
 
           case 6:
             output = _context.sent;
-            notebook = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6__.createElement(_components_Document__WEBPACK_IMPORTED_MODULE_9__.default, {
+            notebook = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(_components_Document__WEBPACK_IMPORTED_MODULE_10__.default, {
               file: output,
               root: cmd.base || relroot,
               backlinks: links
             });
-            output.contents = react_dom_server__WEBPACK_IMPORTED_MODULE_5__.renderToString(notebook);
+            output.contents = react_dom_server__WEBPACK_IMPORTED_MODULE_6__.renderToString(notebook);
             output.extname = '.html';
             return _context.abrupt("return", output);
 
@@ -20053,6 +20089,40 @@ function _renderToVfile() {
     }, _callee);
   }));
   return _renderToVfile.apply(this, arguments);
+}
+
+function renderedVFileToDoc(_x4, _x5) {
+  return _renderedVFileToDoc.apply(this, arguments);
+}
+
+function _renderedVFileToDoc() {
+  _renderedVFileToDoc = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2(vfile, cmd) {
+    var root, dir, relroot, notebook;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            root = path__WEBPACK_IMPORTED_MODULE_2___default().resolve(cmd.output);
+            dir = path__WEBPACK_IMPORTED_MODULE_2___default().dirname(path__WEBPACK_IMPORTED_MODULE_2___default().join(root, vfile.path));
+            relroot = path__WEBPACK_IMPORTED_MODULE_2___default().relative(dir, root) || '.';
+            (0,_utils_console__WEBPACK_IMPORTED_MODULE_8__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_8__.log)('[Render] to document vFile', vfile.path);
+            notebook = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(_components_Document__WEBPACK_IMPORTED_MODULE_10__.default, {
+              file: vfile,
+              root: cmd.base || relroot,
+              backlinks: vfile.data.backlinks
+            });
+            vfile.contents = react_dom_server__WEBPACK_IMPORTED_MODULE_6__.renderToString(notebook);
+            vfile.extname = '.html';
+            return _context2.abrupt("return", vfile);
+
+          case 8:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  }));
+  return _renderedVFileToDoc.apply(this, arguments);
 }
 
 /***/ }),
@@ -20123,6 +20193,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! path */ "path");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 var writeFileP = function writeFileP(fs) {
@@ -20148,8 +20221,8 @@ var writeFileP = function writeFileP(fs) {
             }
 
             filepath = args[0] = "/" + args[0];
-            p = path.parse(filepath);
-            parts = p.dir.split(path.sep);
+            p = path__WEBPACK_IMPORTED_MODULE_2___default().parse(filepath);
+            parts = p.dir.split((path__WEBPACK_IMPORTED_MODULE_2___default().sep));
             console.log("\"Parts for \"".concat(filepath, "\""), parts);
             i = 0;
 
@@ -20170,7 +20243,7 @@ var writeFileP = function writeFileP(fs) {
             break;
 
           case 11:
-            subPath = parts.slice(0, i + 1).join(path.sep);
+            subPath = parts.slice(0, i + 1).join((path__WEBPACK_IMPORTED_MODULE_2___default().sep));
             console.log("\"".concat(subPath, "\" Sub path"));
             _context.prev = 13;
             _context.next = 16;
@@ -20184,7 +20257,7 @@ var writeFileP = function writeFileP(fs) {
           case 19:
             _context.prev = 19;
             _context.t0 = _context["catch"](13);
-            console.log("\"".concat(subPath, "\" Didnt exist, creating..."));
+            console.log("\"".concat(subPath, "\" Didn't exist, creating..."));
             _context.next = 24;
             return fs.mkdir(subPath);
 
