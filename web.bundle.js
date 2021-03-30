@@ -22546,7 +22546,7 @@ function _renderToVfile() {
               root: cmd.base || relroot,
               backlinks: links
             });
-            output.contents = react_dom_server__WEBPACK_IMPORTED_MODULE_6__.renderToString(notebook);
+            output.contents = '<!DOCTYPE html>' + react_dom_server__WEBPACK_IMPORTED_MODULE_6__.renderToString(notebook);
             output.extname = '.html';
             return _context.abrupt("return", output);
 
