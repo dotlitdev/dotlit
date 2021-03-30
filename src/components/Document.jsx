@@ -16,6 +16,7 @@ const Document = props => {
             <link rel="stylesheet" href={path.join(props.root, 'style.css')}/>
         </head>
         <body>
+            <header><a href={props.root}>Home</a></header>
             <div id="app"><App file={props.file} fs={props.fs} result={result}/></div>
             <div id="backlinks"><Backlinks root={props.root} links={props.backlinks || []}/></div>
             <script>content.remove();</script>
