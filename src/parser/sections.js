@@ -52,12 +52,12 @@ const cellsFromNodes = nodes => {
       newCell = null;
       cells.push(node);
 
-    } else if (node.type === "list" && node.spread) {
+    } else if (false && node.type === "list" && node.spread) {
       newCell = null;
       let listSection = createSection(node)
       cells.push(listSection);
 
-    } else if (node.type === "listItem" && node.spread) {
+    } else if (false && node.type === "listItem" && node.spread) {
       newCell = null;
       let listItem = node
       if (firstChild(listItem, 'section')) {
