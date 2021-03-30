@@ -22361,25 +22361,7 @@ var cellsFromNodes = function cellsFromNodes(nodes) {
     if (node.type === "section") {
       newCell = null;
       cells.push(node);
-    } else if (node.type === "list" && node.spread) {
-      newCell = null;
-      var listSection = createSection(node);
-      cells.push(listSection);
-    } else if (node.type === "listItem" && node.spread) {
-      newCell = null;
-      var listItem = node;
-
-      if (firstChild(listItem, 'section')) {
-        (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_6__.log)("[Sections] ListItem with section: ", node.type);
-        listItem.children = listItem.children.map(function (section) {
-          section.children = cellsFromNodes(section.children);
-        });
-      } else {
-        listItem.children = [createSection(node, node.children)];
-      }
-
-      cells.push(listItem);
-    } else if (node.type === "code") {
+    } else if (false) { var listSection; } else if (false) { var listItem; } else if (node.type === "code") {
       newCell = null;
       var singleCell = createCell(node);
       cells.push(singleCell);
