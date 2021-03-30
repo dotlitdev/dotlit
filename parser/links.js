@@ -23,7 +23,7 @@ export const wikiLinkOptions = files => undefined
 // })
 
 export const decorateLinkNode = (link, root = '', filepath = '') => {
-    console.log(link)
+    // console.log(link)
     const wikiLink = link.type === 'wikiLink'
     const url = wikiLink
         ? link.data.permalink + '.lit'
