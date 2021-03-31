@@ -88727,7 +88727,7 @@ var litsrc = getMeta('src', '');
 var litroot = getMeta('root', '');
 var litbase = getMeta('base', '/');
 var baseUrl = "".concat(location.protocol, "//").concat(location.host).concat(litroot ? path.join(path.dirname(location.pathname), litroot) : litbase);
-var fs = new FS(baseUrl);
+var fs = new FS(baseUrl).promises;
 var rf = fs.readFile;
 fs.readFile = /*#__PURE__*/(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
   var _args = arguments;
@@ -88810,7 +88810,7 @@ var lit = {
   },
   parser: parser,
   renderer: renderer,
-  fs: fs.promises,
+  fs: fs,
   utils: {
     select: select,
     path: path,

@@ -21,7 +21,7 @@ const litsrc = getMeta('src', '')
 const litroot = getMeta('root', '')
 const litbase = getMeta('base', '/')
 const baseUrl =`${location.protocol}//${location.host}${litroot ? path.join(path.dirname(location.pathname), litroot) : litbase}`
-const fs = new FS(baseUrl)
+const fs = (new FS(baseUrl)).promises 
 
 
 const rf = fs.readFile
@@ -57,7 +57,7 @@ const lit = {
     },
     parser,
     renderer,
-    fs: fs.promises,
+    fs,
     utils: {
         select,
         path,
