@@ -92,7 +92,7 @@ export function generate(cmd) {
                     })
                 })
 
-                let ast_files_prelinks = await Promise.all(src_files.map( async file => await renderProcessor().process(await file)))
+                let ast_files_prelinks = await Promise.all(src_files.map( async file => await renderProcessor(fs).process(await file)))
                 const [ast_files, manifest] = generateBacklinks(ast_files_prelinks, cmd.output)
 
                 const html_files = await Promise.all(ast_files.map( async file => {
