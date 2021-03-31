@@ -22356,9 +22356,9 @@ var cellsFromNodes = function cellsFromNodes(nodes) {
 
 var wrapSection = function wrapSection(options) {
   return function (start, nodes, end) {
-    (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.level)(0, _utils_console__WEBPACK_IMPORTED_MODULE_6__.log)("[Sections] Wrapping:", start && start.data.id, nodes && nodes.length, end && end.type);
-    nodes = [start].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__.default)(nodes));
-    (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.log)("[Section] nodes:", nodes);
+    (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_6__.log)("[Sections] Wrapping:", start && start.data.id, nodes && nodes.length, end && end.type);
+    nodes = [start].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__.default)(nodes)); // log("[Section] nodes:", nodes)
+
     var cells = cellsFromNodes(nodes);
     return [{
       type: "section",
