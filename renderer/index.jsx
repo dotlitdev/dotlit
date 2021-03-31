@@ -31,11 +31,15 @@ export function processor(fs) {
     .use( (...args) => {
          return async (tree,file) => {
              if(!fs) return;
-             
+             console.log("Checking for files to transclude")
              for (const block of selectAll("code", tree)) {
                  if (block.data && block.data.meta && block.data.meta.fromSource) {
+                    console.log("has fromSource", block.data.meta.fromSource)
                     const filePath = path.join(path.dirname(file.path), block.data.meta.fromSource)
-                    block.value = await fs.readFile(filePath)
+                    console.log("to filePath", filePath) 
+                    const value = await fs.readFile(filePath)
+                    console.log("has value", value)
+                    block.value = value
                  }
              }
          }

@@ -22482,7 +22482,7 @@ function processor(fs) {
   .use(function () {
     return /*#__PURE__*/function () {
       var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(tree, file) {
-        var _iterator, _step, block, filePath;
+        var _iterator, _step, block, filePath, value;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
           while (1) {
@@ -22496,58 +22496,63 @@ function processor(fs) {
                 return _context.abrupt("return");
 
               case 2:
+                console.log("Checking for files to transclude");
                 _iterator = _createForOfIteratorHelper((0,unist_util_select__WEBPACK_IMPORTED_MODULE_5__.selectAll)("code", tree));
-                _context.prev = 3;
+                _context.prev = 4;
 
                 _iterator.s();
 
-              case 5:
+              case 6:
                 if ((_step = _iterator.n()).done) {
-                  _context.next = 14;
+                  _context.next = 19;
                   break;
                 }
 
                 block = _step.value;
 
                 if (!(block.data && block.data.meta && block.data.meta.fromSource)) {
-                  _context.next = 12;
+                  _context.next = 17;
                   break;
                 }
 
+                console.log("has fromSource", block.data.meta.fromSource);
                 filePath = path__WEBPACK_IMPORTED_MODULE_2___default().join(path__WEBPACK_IMPORTED_MODULE_2___default().dirname(file.path), block.data.meta.fromSource);
-                _context.next = 11;
+                console.log("to filePath", filePath);
+                _context.next = 14;
                 return fs.readFile(filePath);
 
-              case 11:
-                block.value = _context.sent;
-
-              case 12:
-                _context.next = 5;
-                break;
-
               case 14:
-                _context.next = 19;
+                value = _context.sent;
+                console.log("has value", value);
+                block.value = value;
+
+              case 17:
+                _context.next = 6;
                 break;
 
-              case 16:
-                _context.prev = 16;
-                _context.t0 = _context["catch"](3);
+              case 19:
+                _context.next = 24;
+                break;
+
+              case 21:
+                _context.prev = 21;
+                _context.t0 = _context["catch"](4);
 
                 _iterator.e(_context.t0);
 
-              case 19:
-                _context.prev = 19;
+              case 24:
+                _context.prev = 24;
 
                 _iterator.f();
 
-                return _context.finish(19);
+                return _context.finish(24);
 
-              case 22:
+              case 27:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[3, 16, 19, 22]]);
+        }, _callee, null, [[4, 21, 24, 27]]);
       }));
 
       return function (_x, _x2) {
