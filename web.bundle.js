@@ -88766,7 +88766,7 @@ var wf = fs.writeFile;
 var ghwf = ghWriteFile({
   username: 'dotlitdev',
   repository: 'dotlit',
-  prefix: 'src/',
+  prefix: '/src',
   token: localStorage.getItem('ghToken') || ''
 });
 fs.writeFile = /*#__PURE__*/(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2() {
