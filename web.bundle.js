@@ -22426,7 +22426,6 @@ var ungroupSections = function ungroupSections() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "processor": () => (/* binding */ processor),
-/* harmony export */   "renderToVfile": () => (/* binding */ renderToVfile),
 /* harmony export */   "renderedVFileToDoc": () => (/* binding */ renderedVFileToDoc)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
@@ -22579,55 +22578,16 @@ function processor(fs) {
     }
   });
 }
-function renderToVfile(_x3, _x4, _x5) {
-  return _renderToVfile.apply(this, arguments);
-}
-
-function _renderToVfile() {
-  _renderToVfile = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2(vfile, cmd, links) {
-    var root, dir, relroot, output, notebook;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            root = path__WEBPACK_IMPORTED_MODULE_2___default().resolve(cmd.output);
-            dir = path__WEBPACK_IMPORTED_MODULE_2___default().dirname(path__WEBPACK_IMPORTED_MODULE_2___default().join(root, vfile.path));
-            relroot = path__WEBPACK_IMPORTED_MODULE_2___default().relative(dir, root) || '.';
-            (0,_utils_console__WEBPACK_IMPORTED_MODULE_8__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_8__.log)('[Render] to vFile', vfile.path);
-            _context2.next = 6;
-            return processor().process(vfile);
-
-          case 6:
-            output = _context2.sent;
-            notebook = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(_components_Document__WEBPACK_IMPORTED_MODULE_10__.default, {
-              file: output,
-              root: cmd.base || relroot,
-              backlinks: links
-            });
-            output.contents = '<!DOCTYPE html>' + react_dom_server__WEBPACK_IMPORTED_MODULE_6__.renderToString(notebook);
-            output.extname = '.html';
-            return _context2.abrupt("return", output);
-
-          case 11:
-          case "end":
-            return _context2.stop();
-        }
-      }
-    }, _callee2);
-  }));
-  return _renderToVfile.apply(this, arguments);
-}
-
-function renderedVFileToDoc(_x6, _x7) {
+function renderedVFileToDoc(_x3, _x4) {
   return _renderedVFileToDoc.apply(this, arguments);
 }
 
 function _renderedVFileToDoc() {
-  _renderedVFileToDoc = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee3(vfile, cmd) {
+  _renderedVFileToDoc = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2(vfile, cmd) {
     var root, dir, relroot, notebook;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee3$(_context3) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee2$(_context2) {
       while (1) {
-        switch (_context3.prev = _context3.next) {
+        switch (_context2.prev = _context2.next) {
           case 0:
             root = path__WEBPACK_IMPORTED_MODULE_2___default().resolve(cmd.output);
             dir = path__WEBPACK_IMPORTED_MODULE_2___default().dirname(path__WEBPACK_IMPORTED_MODULE_2___default().join(root, vfile.path));
@@ -22640,14 +22600,14 @@ function _renderedVFileToDoc() {
             });
             vfile.contents = react_dom_server__WEBPACK_IMPORTED_MODULE_6__.renderToString(notebook);
             vfile.extname = '.html';
-            return _context3.abrupt("return", vfile);
+            return _context2.abrupt("return", vfile);
 
           case 8:
           case "end":
-            return _context3.stop();
+            return _context2.stop();
         }
       }
-    }, _callee3);
+    }, _callee2);
   }));
   return _renderedVFileToDoc.apply(this, arguments);
 }

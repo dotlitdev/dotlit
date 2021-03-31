@@ -66,26 +66,6 @@ export function processor(fs) {
     })
 }
 
-export async function renderToVfile(vfile, cmd, links) {
-
-    const root = path.resolve( cmd.output )
-    const dir = path.dirname( path.join(root, vfile.path) )
-    const relroot = path.relative(dir, root) || '.'
-
-    level(2, log)('[Render] to vFile', vfile.path)
-
-    const output = await processor().process(vfile)
-    const notebook = <Document
-        file={output}
-        root={cmd.base || relroot}
-        backlinks={links}
-    />
-
-    output.contents = '<!DOCTYPE html>' + ReactDOMServer.renderToString(notebook)
-    output.extname = '.html'
-    return output
-}
-
 export async function renderedVFileToDoc(vfile, cmd) {
 
     const root = path.resolve( cmd.output )
