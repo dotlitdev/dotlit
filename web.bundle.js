@@ -22452,6 +22452,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 
 
@@ -22464,12 +22469,91 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function processor() {
+
+
+function processor(fs) {
   return (0,_parser__WEBPACK_IMPORTED_MODULE_9__.processor)() // hoist ast to data
   .use(function () {
     return function (tree, file) {
       file.data.ast = tree;
     };
+  }) // transclude codeblocks with source
+  // when available 
+  .use(function () {
+    return /*#__PURE__*/function () {
+      var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(tree, file) {
+        var _iterator, _step, block, filePath;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (fs) {
+                  _context.next = 2;
+                  break;
+                }
+
+                return _context.abrupt("return");
+
+              case 2:
+                _iterator = _createForOfIteratorHelper((0,unist_util_select__WEBPACK_IMPORTED_MODULE_5__.selectAll)("code", tree));
+                _context.prev = 3;
+
+                _iterator.s();
+
+              case 5:
+                if ((_step = _iterator.n()).done) {
+                  _context.next = 14;
+                  break;
+                }
+
+                block = _step.value;
+
+                if (!(block.data && block.data.meta && block.data.meta.fromSource)) {
+                  _context.next = 12;
+                  break;
+                }
+
+                filePath = path__WEBPACK_IMPORTED_MODULE_2___default().join(path__WEBPACK_IMPORTED_MODULE_2___default().dirname(file.path), block.data.meta.fromSource);
+                _context.next = 11;
+                return fs.readFile(filePath);
+
+              case 11:
+                block.value = _context.sent;
+
+              case 12:
+                _context.next = 5;
+                break;
+
+              case 14:
+                _context.next = 19;
+                break;
+
+              case 16:
+                _context.prev = 16;
+                _context.t0 = _context["catch"](3);
+
+                _iterator.e(_context.t0);
+
+              case 19:
+                _context.prev = 19;
+
+                _iterator.f();
+
+                return _context.finish(19);
+
+              case 22:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[3, 16, 19, 22]]);
+      }));
+
+      return function (_x, _x2) {
+        return _ref.apply(this, arguments);
+      };
+    }();
   }) // extract files to data
   .use(function () {
     return function (tree, file) {
@@ -22490,26 +22574,26 @@ function processor() {
     }
   });
 }
-function renderToVfile(_x, _x2, _x3) {
+function renderToVfile(_x3, _x4, _x5) {
   return _renderToVfile.apply(this, arguments);
 }
 
 function _renderToVfile() {
-  _renderToVfile = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(vfile, cmd, links) {
+  _renderToVfile = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2(vfile, cmd, links) {
     var root, dir, relroot, output, notebook;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee2$(_context2) {
       while (1) {
-        switch (_context.prev = _context.next) {
+        switch (_context2.prev = _context2.next) {
           case 0:
             root = path__WEBPACK_IMPORTED_MODULE_2___default().resolve(cmd.output);
             dir = path__WEBPACK_IMPORTED_MODULE_2___default().dirname(path__WEBPACK_IMPORTED_MODULE_2___default().join(root, vfile.path));
             relroot = path__WEBPACK_IMPORTED_MODULE_2___default().relative(dir, root) || '.';
             (0,_utils_console__WEBPACK_IMPORTED_MODULE_8__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_8__.log)('[Render] to vFile', vfile.path);
-            _context.next = 6;
+            _context2.next = 6;
             return processor().process(vfile);
 
           case 6:
-            output = _context.sent;
+            output = _context2.sent;
             notebook = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(_components_Document__WEBPACK_IMPORTED_MODULE_10__.default, {
               file: output,
               root: cmd.base || relroot,
@@ -22517,28 +22601,28 @@ function _renderToVfile() {
             });
             output.contents = '<!DOCTYPE html>' + react_dom_server__WEBPACK_IMPORTED_MODULE_6__.renderToString(notebook);
             output.extname = '.html';
-            return _context.abrupt("return", output);
+            return _context2.abrupt("return", output);
 
           case 11:
           case "end":
-            return _context.stop();
+            return _context2.stop();
         }
       }
-    }, _callee);
+    }, _callee2);
   }));
   return _renderToVfile.apply(this, arguments);
 }
 
-function renderedVFileToDoc(_x4, _x5) {
+function renderedVFileToDoc(_x6, _x7) {
   return _renderedVFileToDoc.apply(this, arguments);
 }
 
 function _renderedVFileToDoc() {
-  _renderedVFileToDoc = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2(vfile, cmd) {
+  _renderedVFileToDoc = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee3(vfile, cmd) {
     var root, dir, relroot, notebook;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee2$(_context2) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee3$(_context3) {
       while (1) {
-        switch (_context2.prev = _context2.next) {
+        switch (_context3.prev = _context3.next) {
           case 0:
             root = path__WEBPACK_IMPORTED_MODULE_2___default().resolve(cmd.output);
             dir = path__WEBPACK_IMPORTED_MODULE_2___default().dirname(path__WEBPACK_IMPORTED_MODULE_2___default().join(root, vfile.path));
@@ -22551,14 +22635,14 @@ function _renderedVFileToDoc() {
             });
             vfile.contents = react_dom_server__WEBPACK_IMPORTED_MODULE_6__.renderToString(notebook);
             vfile.extname = '.html';
-            return _context2.abrupt("return", vfile);
+            return _context3.abrupt("return", vfile);
 
           case 8:
           case "end":
-            return _context2.stop();
+            return _context3.stop();
         }
       }
-    }, _callee2);
+    }, _callee3);
   }));
   return _renderedVFileToDoc.apply(this, arguments);
 }
