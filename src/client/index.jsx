@@ -22,6 +22,17 @@ const litbase = getMeta('base', '/')
 const baseUrl =`${location.protocol}//${location.host}${litroot ? path.join(path.dirname(location.pathname), litroot) : litbase}`
 const fs = new FS(baseUrl)
 
+
+const rf = fs.readFile
+fs.readFile = async (...args) => {
+  try {
+    return await rf(...args)
+  } catch (err) {
+    return await (await fetch(path.join(litroot, litsrc))).text()
+  }
+
+}
+
 const lit = {
     location: {
         src: litsrc,
