@@ -28,7 +28,7 @@ fs.readFile = async (...args) => {
   try {
     return await rf(...args)
   } catch (err) {
-    return await (await fetch(path.join(litroot, litsrc))).text()
+    return await (await fetch(path.join(litroot, args[0]))).text()
   }
 
 }

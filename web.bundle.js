@@ -88669,7 +88669,7 @@ fs.readFile = /*#__PURE__*/(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_I
           _context.prev = 6;
           _context.t0 = _context["catch"](0);
           _context.next = 10;
-          return fetch(path.join(litroot, litsrc));
+          return fetch(path.join(litroot, _args.length <= 0 ? undefined : _args[0]));
 
         case 10:
           _context.next = 12;
