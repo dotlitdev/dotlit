@@ -21767,8 +21767,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Link = function Link(props) {
-  var title = props.node.properties.title;
-  console.log("<Link/>", props);
+  var title = props.node.properties.title; // console.log("<Link/>", props)
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
     className: props.className,
     href: props.href,
