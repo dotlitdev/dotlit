@@ -88763,14 +88763,10 @@ fs.readFile = /*#__PURE__*/(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_I
   }, _callee, null, [[0, 6]]);
 }));
 var wf = fs.writeFile;
-var ghwf = ghWriteFile({
-  username: 'dotlitdev',
-  repository: 'dotlit',
-  prefix: '/src',
-  token: localStorage.getItem('ghToken') || ''
-});
-fs.writeFile = /*#__PURE__*/(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2() {
-  var ghResp,
+var ghToken = localStorage.getItem('ghToken');
+if (ghToken) fs.writeFile = /*#__PURE__*/(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2() {
+  var ghwf,
+      ghResp,
       _args2 = arguments;
   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee2$(_context2) {
     while (1) {
@@ -88780,27 +88776,33 @@ fs.writeFile = /*#__PURE__*/(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_
           return wf.apply(void 0, _args2);
 
         case 2:
-          _context2.prev = 2;
-          _context2.next = 5;
+          ghwf = ghWriteFile({
+            username: 'dotlitdev',
+            repository: 'dotlit',
+            prefix: '/src',
+            token: ghToken
+          });
+          _context2.prev = 3;
+          _context2.next = 6;
           return ghwf.apply(void 0, _args2);
 
-        case 5:
+        case 6:
           ghResp = _context2.sent;
           console.log("GitHub write resp", ghResp);
-          _context2.next = 12;
+          _context2.next = 13;
           break;
 
-        case 9:
-          _context2.prev = 9;
-          _context2.t0 = _context2["catch"](2);
+        case 10:
+          _context2.prev = 10;
+          _context2.t0 = _context2["catch"](3);
           console.error("GitHub write threw", _context2.t0);
 
-        case 12:
+        case 13:
         case "end":
           return _context2.stop();
       }
     }
-  }, _callee2, null, [[2, 9]]);
+  }, _callee2, null, [[3, 10]]);
 }));
 var lit = {
   location: {
