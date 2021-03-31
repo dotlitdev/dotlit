@@ -34,7 +34,7 @@ fs.readFile = async (...args) => {
 }
 const wf = fs.writeFile
 const ghToken = localStorage.getItem('ghToken')
-ghToken && fs.writeFile = async (...args) => {
+if (ghToken) fs.writeFile = async (...args) => {
   await wf(...args)
   const ghwf = ghWriteFile({
     username: 'dotlitdev',
