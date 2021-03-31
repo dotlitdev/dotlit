@@ -6,7 +6,7 @@ import pkg from '../../package.json'
 import {NoOp, Identity, AsInt} from '../utils/functions'
 
 import {parse, stringify} from '../parser/index'
-import {renderToVfile} from '../renderer/index'
+import {renderToVfileDoc} from '../renderer/index'
 import {log, time, timeEnd, info, warn, dir, level, error} from '../utils/console'
 
 import {generate} from './generate'
@@ -29,7 +29,7 @@ async function convert(cmd) {
     time('convert')
     const input = vfile.readSync(cmd.file)
     if (!cmd.format || cmd.format === 'html') {
-        output((await renderToVfile(input, cmd)).contents)
+        output((await renderToVfileDoc(input, cmd)).contents)
     } else if (cmd.format === 'json') {
         parse(input, cmd).then( (file) => output(JSON.stringify(file, null, cmd.prettify ? 2 : undefined)) ) 
     } else if (cmd.format === 'md') {
