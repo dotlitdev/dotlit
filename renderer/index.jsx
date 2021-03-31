@@ -34,12 +34,16 @@ export function processor(fs) {
              console.log("Checking for files to transclude")
              for (const block of selectAll("code", tree)) {
                  if (block.data && block.data.meta && block.data.meta.fromSource) {
+                 try {
                     console.log("has fromSource", block.data.meta.fromSource)
                     const filePath = path.join(path.dirname(file.path), block.data.meta.fromSource)
                     console.log("to filePath", filePath) 
                     const value = await fs.readFile(filePath)
                     console.log("has value", value)
                     block.value = value
+                 } catch(err) {
+                    file.message("Failed to load " + filePath)
+                 }
                  }
              }
          }
