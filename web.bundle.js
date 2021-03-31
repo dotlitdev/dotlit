@@ -88651,6 +88651,40 @@ var litroot = getMeta('root', '');
 var litbase = getMeta('base', '/');
 var baseUrl = "".concat(location.protocol, "//").concat(location.host).concat(litroot ? path.join(path.dirname(location.pathname), litroot) : litbase);
 var fs = new FS(baseUrl);
+var rf = fs.readFile;
+fs.readFile = /*#__PURE__*/(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
+  var _args = arguments;
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          _context.prev = 0;
+          _context.next = 3;
+          return rf.apply(void 0, _args);
+
+        case 3:
+          return _context.abrupt("return", _context.sent);
+
+        case 6:
+          _context.prev = 6;
+          _context.t0 = _context["catch"](0);
+          _context.next = 10;
+          return fetch(path.join(litroot, litsrc));
+
+        case 10:
+          _context.next = 12;
+          return _context.sent.text();
+
+        case 12:
+          return _context.abrupt("return", _context.sent);
+
+        case 13:
+        case "end":
+          return _context.stop();
+      }
+    }
+  }, _callee, null, [[0, 6]]);
+}));
 var lit = {
   location: {
     src: litsrc,
@@ -88671,72 +88705,72 @@ if (typeof window !== 'undefined') window.lit = lit;
 console.log('.lit Notebook client initializing...');
 console.log("lit:", lit);
 
-(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
+(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2() {
   var src, contents, file, stat, processedFile;
-  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee2$(_context2) {
     while (1) {
-      switch (_context.prev = _context.next) {
+      switch (_context2.prev = _context2.next) {
         case 0:
           src = litsrc;
           if (src === '404.lit' && query.file) src = query.file;
           console.log("Checking local (".concat(baseUrl, ") filesystem for: ").concat(src));
-          _context.prev = 3;
-          _context.next = 6;
+          _context2.prev = 3;
+          _context2.next = 6;
           return lit.fs.stat('/' + src);
 
         case 6:
-          stat = _context.sent;
-          _context.next = 11;
+          stat = _context2.sent;
+          _context2.next = 11;
           break;
 
         case 9:
-          _context.prev = 9;
-          _context.t0 = _context["catch"](3);
+          _context2.prev = 9;
+          _context2.t0 = _context2["catch"](3);
 
         case 11:
           if (!stat) {
-            _context.next = 18;
+            _context2.next = 18;
             break;
           }
 
           console.log("Local file \"".concat('/' + src, "\" exists, loading that instead."));
-          _context.next = 15;
+          _context2.next = 15;
           return lit.fs.readFile('/' + src, {
             encoding: 'utf8'
           });
 
         case 15:
-          contents = _context.sent;
-          _context.next = 24;
+          contents = _context2.sent;
+          _context2.next = 24;
           break;
 
         case 18:
           console.log("Fetching file content", litroot, litsrc, path.join(litroot, litsrc));
-          _context.next = 21;
+          _context2.next = 21;
           return fetch(path.join(litroot, litsrc));
 
         case 21:
-          _context.next = 23;
-          return _context.sent.text();
+          _context2.next = 23;
+          return _context2.sent.text();
 
         case 23:
-          contents = _context.sent;
+          contents = _context2.sent;
 
         case 24:
           console.log(contents);
-          _context.next = 27;
+          _context2.next = 27;
           return vfile({
             path: src,
             contents: contents
           });
 
         case 27:
-          file = _context.sent;
-          _context.next = 30;
+          file = _context2.sent;
+          _context2.next = 30;
           return renderer.processor().process(file);
 
         case 30:
-          processedFile = _context.sent;
+          processedFile = _context2.sent;
           console.log("Processed client", processedFile);
           window.lit.ast = processedFile.data.ast;
 
@@ -88760,10 +88794,10 @@ console.log("lit:", lit);
 
         case 36:
         case "end":
-          return _context.stop();
+          return _context2.stop();
       }
     }
-  }, _callee, null, [[3, 9]]);
+  }, _callee2, null, [[3, 9]]);
 }))();
 })();
 
