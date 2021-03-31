@@ -33,14 +33,15 @@ fs.readFile = async (...args) => {
   }
 }
 const wf = fs.writeFile
-const ghwf = ghWriteFile({
+const ghToken = localStorage.getItem('ghToken')
+ghToken && fs.writeFile = async (...args) => {
+  await wf(...args)
+  const ghwf = ghWriteFile({
     username: 'dotlitdev',
     repository: 'dotlit',
     prefix: '/src',
-    token: localStorage.getItem('ghToken') || '',
-})
-fs.writeFile = async (...args) => {
-  await wf(...args)
+    token: ghToken,
+  })
   try {
     const ghResp = await ghwf(...args)
     console.log("GitHub write resp", ghResp)
