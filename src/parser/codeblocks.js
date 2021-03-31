@@ -42,12 +42,15 @@ function parseMeta (node) {
     const hasSource = node.meta && node.meta.indexOf('<') >= 0
 
     let input = raw
+    let fromSource;
+
     if (isOutput) {
         input = raw.split('>')[1].trim()
     } else if (hasOutput) {
         input = raw.split('>')[0].trim()
     } else if (hasSource) {
         input = raw.split('<')[0].trim()
+        fromSource = getSource(raw).filename
     }
 
     const meta = input
@@ -59,8 +62,16 @@ function parseMeta (node) {
     meta.isOutput = isOutput
     meta.hasOutput = hasOutput
     meta.hasSource = hasSource
+    meta.fromSource = fromSource
 
     return meta
+}
+
+function getSource(meta) {
+    const tail = meta.split('<')[1]
+    if (tail) {
+        return parseMeta({ lang: 'txt', meta: tail.trim() })
+    }
 }
 
 function ident (x, i) {
