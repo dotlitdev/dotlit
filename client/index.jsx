@@ -34,9 +34,10 @@ fs.readFile = async (...args) => {
 }
 const wf = fs.writeFile
 const ghwf = ghWriteFile({
-    username: '',
-    repository: '',
-    token: '',
+    username: 'dotlitdev',
+    repository: 'dotlit',
+    prefix: 'src/',
+    token: localStorage.getItem('ghToken') || '',
 })
 fs.writeFile = async (...args) => {
   await wf(...args)
