@@ -16,7 +16,7 @@ import Link from '../components/base/Link'
 import Codeblock from '../components/base/Codeblock'
 import Cell from '../components/Cell'
 
-export function processor() {
+export function processor(fs) {
     return parserProcessor()
    
     // hoist ast to data
@@ -25,6 +25,22 @@ export function processor() {
              file.data.ast = tree
          }
      })
+
+    // transclude codeblocks with source
+    // when available 
+    .use( (...args) => {
+         return async (tree,file) => {
+             if(!fs) return;
+             
+             for (const block of selectAll("code", tree)) {
+                 if (block.data && block.data.meta && block.data.meta.fromSource) {
+                    const filePath = path.join(path.dirname(file.path), block.data.meta.fromSource)
+                    block.value = await fs.readFile(filePath)
+                 }
+             }
+         }
+     })
+
     // extract files to data
     .use( (...args) => {
          return (tree,file) => {
