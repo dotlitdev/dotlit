@@ -88767,7 +88767,7 @@ console.log("lit:", lit);
         case 27:
           file = _context2.sent;
           _context2.next = 30;
-          return renderer.processor().process(file);
+          return renderer.processor(fs).process(file);
 
         case 30:
           processedFile = _context2.sent;
