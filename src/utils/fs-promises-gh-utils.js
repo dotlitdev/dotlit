@@ -1,4 +1,4 @@
-exports const ghWriteFile = (opts) => async (...args) => {
+export const ghWriteFile = (opts) => async (...args) => {
     const file = args[0]
     const content = args[1]
     const endpoint = `https://api.github.com/repos/${opts.username}/${opts.repository}/contents/${}${file}`
