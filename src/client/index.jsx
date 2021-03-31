@@ -7,6 +7,7 @@ const vfile = require('vfile')
 const path = require('path')
 const qs = require('querystring-es3')
 const FS = require('@isomorphic-git/lightning-fs')
+const { ghWriteFile } = require('../utils/fs-promises-gh-utils.js')
 
 const select = require('unist-util-select')
 
@@ -30,7 +31,21 @@ fs.readFile = async (...args) => {
   } catch (err) {
     return await (await fetch(path.join(litroot, args[0]))).text()
   }
-
+}
+const wf = fs.writeFile
+const ghwf = ghWriteFile({
+    username: '',
+    repository: '',
+    token: '',
+})
+fs.writeFile = async (...args) => {
+  await wf(...args)
+  try {
+    const ghResp = await ghwf(...args)
+    console.log("GitHub write resp", ghResp)
+  } catch(err) {
+    console.error("GitHub write threw", err)
+  }
 }
 
 const lit = {
