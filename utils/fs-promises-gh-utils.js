@@ -22,8 +22,9 @@ export const ghWriteFile = (opts) => async (...args) => {
         })
     }
     console.log("params", params)
+    let resp2;
     try {
-      const resp2 = await fetch(endpoint, params)
+      resp2 = await fetch(endpoint, params)
     } catch(err) {
       console.log("PUT failed", err)
     }

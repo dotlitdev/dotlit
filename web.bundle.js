@@ -32792,9 +32792,8 @@ var ghWriteFile = function ghWriteFile(opts) {
         resp1,
         json1,
         params,
-        _resp,
+        resp2,
         _args = arguments;
-
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -32831,7 +32830,7 @@ var ghWriteFile = function ghWriteFile(opts) {
             return fetch(endpoint, params);
 
           case 15:
-            _resp = _context.sent;
+            resp2 = _context.sent;
             _context.next = 21;
             break;
 
