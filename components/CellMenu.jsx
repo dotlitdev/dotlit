@@ -1,4 +1,5 @@
 import React, {useState} from "react"
+import { MenuIcon, EditIcon, ExecIcon, CloseIcon, SaveIcon } from './Icons'
 
 const wrapHandler = fn => ev => {
     ev.preventDefault()
@@ -6,6 +7,8 @@ const wrapHandler = fn => ev => {
     if (typeof fn === 'function') fn(ev)
     return false
 }
+
+console.log({ MenuIcon, EditIcon, ExecIcon, CloseIcon, SaveIcon })
 
 const CellMenu = props => {
 
@@ -16,21 +19,24 @@ const CellMenu = props => {
     })
 
     const items = [
-        {title: "Execute", icon: "▶", handler: wrapHandler(props.execute)}
+        {title: "Execute", icon: ExecIcon, handler: wrapHandler(props.execute)}
     ]
 
-    if (!props.editing) items.push({title: "Edit", icon: "✎", handler: wrapHandler(props.toggleEditing)})
+    if (!props.editing) items.push({title: "Edit", icon: EditIcon, handler: wrapHandler(props.toggleEditing)})
     else {
-        items.push({title: "Cancel", icon: "c", handler: wrapHandler(props.toggleEditing)})
-        items.push({title: "Save", icon: "s", handler: wrapHandler(props.save)})
+        items.push({title: "Cancel", icon: CloseIcon, handler: wrapHandler(props.toggleEditing)})
+        items.push({title: "Save", icon: SaveIcon, handler: wrapHandler(props.save)})
     }
 
     return <menu>
         <ul className="menu__items">
+            { open && items.map( item => {
+                const Icon = item.icon
+                return <li title={item.title} key={item.title} onClick={item.handler}><Icon/></li>
+            })}
             { !open 
-                ? <li title="Open" key="open" onClick={toggleOpen}>☰</li>
-                : <li title="Close" key="close"onClick={toggleOpen}>⨯</li>}
-            { open && items.map( item => <li title={item.title} key={item.title} onClick={item.handler}>{item.icon}</li>)}
+                ? <li title="Open" key="open" onClick={toggleOpen}><MenuIcon/></li>
+                : <li title="Close" key="close"onClick={toggleOpen}><CloseIcon/></li> }
         </ul>
     </menu>
 }
