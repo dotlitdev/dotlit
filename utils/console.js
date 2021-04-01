@@ -28,9 +28,8 @@ const debug_level = () => typeof process !== 'undefined' ? parseInt(process.env.
 const debugKeys = (...args) => {
   let debugStr = ''
   if (typeof window !== 'undefined' && window.location) {
-      const hash = window.location.hash.slice(1)
-      const debugKeys = hash.match(/db:([^;]*);?/)
-      if (debugKeys && debugKeys[1]) debugStr = debugKeys[1]
+      const debugKeys = localStorage.getItem('litDebug') || ''
+      if (debugKeys) debugStr = debugKeys
   }
 
   if (typeof process !== 'undefined' && process.env && process.env.DEBUG) {

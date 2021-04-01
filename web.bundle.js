@@ -32705,11 +32705,9 @@ var debugKeys = function debugKeys() {
   var debugStr = '';
 
   if (typeof window !== 'undefined' && window.location) {
-    var hash = window.location.hash.slice(1);
+    var _debugKeys = localStorage.getItem('litDebug') || '';
 
-    var _debugKeys = hash.match(/db:([^;]*);?/);
-
-    if (_debugKeys && _debugKeys[1]) debugStr = _debugKeys[1];
+    if (_debugKeys) debugStr = _debugKeys;
   }
 
   if (typeof process !== 'undefined' && process.env && process.env.DEBUG) {
