@@ -32211,7 +32211,11 @@ var transform = function transform(options) {
 };
 
 var wikiLinkOptions = function wikiLinkOptions(files) {
-  return undefined;
+  return {
+    pageResolver: function pageResolver(name) {
+      return [name.replace(/ /g, '_').toLowerCase()];
+    }
+  };
 }; // ({ 
 //     permalinks: files,
 //     pageResolver: nameToPermalinks,

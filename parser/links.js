@@ -15,7 +15,9 @@ const transform = options => (node, index, parent) => {
     return decorateLinkNode(node, options.root, options.filepath)
 }
 
-export const wikiLinkOptions = files => undefined
+export const wikiLinkOptions = files => ({
+     pageResolver: (name) => [name.replace(/ /g, '_').toLowerCase()]
+})
 // ({ 
 //     permalinks: files,
 //     pageResolver: nameToPermalinks,
