@@ -34,6 +34,7 @@ const Cell = props => {
     const isCodeCell = childIs(props.node, 'pre')
 
     const save = ctx => args => {
+        console.log("Saving cell", pos, src)
         ctx.setSrc(pos, src)
         setEditing(false)
     }
