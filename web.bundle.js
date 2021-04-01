@@ -21140,15 +21140,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var path__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _SelectionContext__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SelectionContext */ "./src/components/SelectionContext.jsx");
 /* harmony import */ var _utils_unist_util_patch_source__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/unist-util-patch-source */ "./src/utils/unist-util-patch-source.js");
-/* harmony import */ var _utils_fs_promises_utils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/fs-promises-utils */ "./src/utils/fs-promises-utils.js");
 
 
 
 
 
 
-
-
+ // import {writeFileP} from '../utils/fs-promises-utils'
 
 var App = function App(_ref) {
   var file = _ref.file,
@@ -21163,9 +21161,8 @@ var App = function App(_ref) {
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(null),
       _useState4 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__.default)(_useState3, 2),
       selectedCell = _useState4[0],
-      setSelectedCell = _useState4[1];
+      setSelectedCell = _useState4[1]; // const writeFile = writeFileP(fs)
 
-  var writeFile = (0,_utils_fs_promises_utils__WEBPACK_IMPORTED_MODULE_7__.writeFileP)(fs);
 
   var setSrcWrapper = /*#__PURE__*/function () {
     var _ref2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee(pos, cellSource) {
@@ -21176,7 +21173,7 @@ var App = function App(_ref) {
             case 0:
               patchedSrc = (0,_utils_unist_util_patch_source__WEBPACK_IMPORTED_MODULE_6__.default)(src, pos, cellSource);
               _context.next = 3;
-              return writeFile(file.path, patchedSrc, {
+              return fs.writeFile(file.path, patchedSrc, {
                 encoding: 'utf8'
               });
 
@@ -22761,105 +22758,31 @@ var ghWriteFile = function ghWriteFile(opts) {
 
 /***/ }),
 
-/***/ "./src/utils/fs-promises-utils.js":
-/*!****************************************!*\
-  !*** ./src/utils/fs-promises-utils.js ***!
-  \****************************************/
+/***/ "./src/utils/functions.js":
+/*!********************************!*\
+  !*** ./src/utils/functions.js ***!
+  \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "writeFileP": () => (/* binding */ writeFileP)
+/* harmony export */   "NoOp": () => (/* binding */ NoOp),
+/* harmony export */   "Identity": () => (/* binding */ Identity),
+/* harmony export */   "AsInt": () => (/* binding */ AsInt),
+/* harmony export */   "getMeta": () => (/* binding */ getMeta)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! path */ "./node_modules/path-browserify/index.js");
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_2__);
-
-
-
-var writeFileP = function writeFileP(fs) {
-  return /*#__PURE__*/(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
-    var _console;
-
-    var _len,
-        args,
-        _key,
-        filepath,
-        p,
-        parts,
-        i,
-        subPath,
-        _args = arguments;
-
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            for (_len = _args.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-              args[_key] = _args[_key];
-            }
-
-            filepath = args[0] = "/" + args[0];
-            p = path__WEBPACK_IMPORTED_MODULE_2___default().parse(filepath);
-            parts = p.dir.split((path__WEBPACK_IMPORTED_MODULE_2___default().sep));
-            console.log("\"Parts for \"".concat(filepath, "\""), parts);
-            i = 0;
-
-          case 6:
-            if (!(i < parts.length)) {
-              _context.next = 27;
-              break;
-            }
-
-            console.log("[".concat(i, "] <--- \"").concat(parts[i], "\""));
-
-            if (!(i === 0)) {
-              _context.next = 11;
-              break;
-            }
-
-            _context.next = 24;
-            break;
-
-          case 11:
-            subPath = parts.slice(0, i + 1).join((path__WEBPACK_IMPORTED_MODULE_2___default().sep));
-            console.log("\"".concat(subPath, "\" Sub path"));
-            _context.prev = 13;
-            _context.next = 16;
-            return fs.stat(subPath);
-
-          case 16:
-            console.log("\"".concat(subPath, "\" Existed, skipping"));
-            _context.next = 24;
-            break;
-
-          case 19:
-            _context.prev = 19;
-            _context.t0 = _context["catch"](13);
-            console.log("\"".concat(subPath, "\" Didn't exist, creating..."));
-            _context.next = 24;
-            return fs.mkdir(subPath);
-
-          case 24:
-            i++;
-            _context.next = 6;
-            break;
-
-          case 27:
-            (_console = console).log.apply(_console, ["Writing file"].concat(args));
-
-            return _context.abrupt("return", fs.writeFile.apply(fs, args));
-
-          case 29:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee, null, [[13, 19]]);
-  }));
+var NoOp = function NoOp() {};
+var Identity = function Identity(x) {
+  return x;
+};
+var AsInt = function AsInt(x) {
+  return parseInt(x);
+};
+var getMeta = function getMeta(key, def) {
+  var el = document.querySelector("meta[name=\"lit".concat(key, "\"]"));
+  var val = el ? el.getAttribute('value') : def;
+  return val;
 };
 
 /***/ }),
@@ -88697,12 +88620,6 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 
-var parser = __webpack_require__(/*! ../parser */ "./src/parser/index.js");
-
-var renderer = __webpack_require__(/*! ../renderer */ "./src/renderer/index.jsx");
-
-var App = __webpack_require__(/*! ../components/App */ "./src/components/App.jsx").default;
-
 var vfile = __webpack_require__(/*! vfile */ "./node_modules/vfile/index.js");
 
 var path = __webpack_require__(/*! path */ "./node_modules/path-browserify/index.js");
@@ -88711,16 +88628,19 @@ var qs = __webpack_require__(/*! querystring-es3 */ "./node_modules/querystring-
 
 var FS = __webpack_require__(/*! @isomorphic-git/lightning-fs */ "./node_modules/@isomorphic-git/lightning-fs/src/index.js");
 
+var select = __webpack_require__(/*! unist-util-select */ "./node_modules/unist-util-select/index.js");
+
+var parser = __webpack_require__(/*! ../parser */ "./src/parser/index.js");
+
+var renderer = __webpack_require__(/*! ../renderer */ "./src/renderer/index.jsx");
+
+var App = __webpack_require__(/*! ../components/App */ "./src/components/App.jsx").default;
+
 var _require = __webpack_require__(/*! ../utils/fs-promises-gh-utils.js */ "./src/utils/fs-promises-gh-utils.js"),
     ghWriteFile = _require.ghWriteFile;
 
-var select = __webpack_require__(/*! unist-util-select */ "./node_modules/unist-util-select/index.js");
-
-var getMeta = function getMeta(key, def) {
-  var el = document.querySelector("meta[name=\"lit".concat(key, "\"]"));
-  var val = el ? el.getAttribute('value') : def;
-  return val;
-};
+var _require2 = __webpack_require__(/*! ../utils/functions */ "./src/utils/functions.js"),
+    getMeta = _require2.getMeta;
 
 var query = qs.parse(location.search.slice(1));
 var litsrc = getMeta('src', '');
