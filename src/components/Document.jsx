@@ -11,9 +11,11 @@ const Document = props => {
     const result = props.file.result
     const title = props.file.data.frontmatter.title || props.file.stem
 
-    const setDebug = () => {
+    const setDebug = ev => {
+        ev.preventDefault()
         let [d,l] = ['litDebug',localStorage]
         l.setItem( d, prompt(d, l.getItem(d) || '*,fs,client,Cell,sections,etc...') )
+        return false
     }
     
     return <html>
