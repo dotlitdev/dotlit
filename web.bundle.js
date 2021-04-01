@@ -33007,7 +33007,7 @@ var passThroughWrite = function passThroughWrite(fs) {
             ghwf = (0,_utils_fs_promises_gh_utils__WEBPACK_IMPORTED_MODULE_3__.ghWriteFile)({
               username: "dotlitdev",
               repository: "dotlit",
-              prefix: "/src",
+              prefix: "src/",
               token: localStorage.getItem("ghToken")
             });
             _context3.prev = 4;
