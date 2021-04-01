@@ -1,10 +1,17 @@
 import React, {useState} from "react"
 import { MenuIcon, EditIcon, ExecIcon, CloseIcon, SaveIcon } from './Icons'
+import { getConsoleForNamespace } from '../utils/console'
+
+const console = getConsoleForNamespace('CellMenu')
 
 const wrapHandler = fn => ev => {
+    console.log("Cell menu wrapper", fn, ev)
     ev.preventDefault()
     ev.stopPropagation()
-    if (typeof fn === 'function') fn(ev)
+    if (typeof fn === 'function'){
+        const resp = fn(ev)
+        console.log("Cell menu wrapper fn executed", resp)
+    }
     return false
 }
 
@@ -12,7 +19,7 @@ const CellMenu = props => {
 
     const [open, setOpen] = useState(false)
     const toggleOpen = wrapHandler(ev => {
-        // console.log("Toggle CellMenu", open)
+        console.log("Toggle CellMenu", open)
         setOpen(!open)
     })
 
