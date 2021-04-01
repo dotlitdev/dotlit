@@ -31104,16 +31104,17 @@ var App = function App(_ref) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              console.log("<App/> Set src wrapper", pos, cellSource);
               patchedSrc = (0,_utils_unist_util_patch_source__WEBPACK_IMPORTED_MODULE_6__.default)(src, pos, cellSource);
-              _context.next = 3;
+              _context.next = 4;
               return fs.writeFile(file.path, patchedSrc, {
                 encoding: 'utf8'
               });
 
-            case 3:
+            case 4:
               setSrc(patchedSrc);
 
-            case 4:
+            case 5:
             case "end":
               return _context.stop();
           }

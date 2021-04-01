@@ -12,6 +12,7 @@ const App = ({file, fs, result}) => {
     // const writeFile = writeFileP(fs)
     
     const setSrcWrapper = async (pos, cellSource) => {
+        console.log("<App/> Set src wrapper", pos, cellSource)
         const patchedSrc = patchSource(src, pos, cellSource)
         await fs.writeFile(file.path, patchedSrc, {encoding: 'utf8'})
         setSrc(patchedSrc)
