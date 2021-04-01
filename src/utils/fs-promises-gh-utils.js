@@ -4,7 +4,7 @@ const console = getConsoleForNamespace('fs')
 
 export const ghWriteFile = (opts) => async (...args) => {
     const file = (opts.prefix || '') + args[0]
-    const content = args[1]
+    const content = args[1].toString()
     const endpoint = `https://api.github.com/repos/${opts.username}/${opts.repository}/contents/${file}`
     const resp1 = await fetch(endpoint)
     const json1 = await resp1.json()
@@ -28,5 +28,5 @@ export const ghWriteFile = (opts) => async (...args) => {
     } catch(err) {
       console.log("PUT failed", err)
     }
-    return resp2.status
+    return resp2 && resp2.status
 }
