@@ -9,6 +9,7 @@ const select = require('unist-util-select')
 const parser = require('../parser')
 const renderer = require('../renderer')
 const App = require('../components/App').default
+const { Header } = require('../components/Header')
 const { extendFs } = require('../utils/fs-promises-utils')
 
 const { getMeta } = require('../utils/functions')
@@ -81,6 +82,7 @@ console.log(`lit:`, lit)
     
     try {
         ReactDOM.hydrate(window.lit.notebook, document.getElementById('app'))
+        ReactDOM.hydrate(<Header root={litroot} />, document.getElementById('header'))
     } catch (err) {
         console.error("Error hydrating App", err)
     }
