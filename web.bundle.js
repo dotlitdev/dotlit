@@ -32811,7 +32811,7 @@ var ghWriteFile = function ghWriteFile(opts) {
 
           case 8:
             json1 = _context.sent;
-            console.log(json1.sha ? "Exists, updating..." : "Dosn't exist, creating...");
+            console.log(endpoint, json1.sha ? "Exists, updating..." : "Dosn't exist, creating...");
             params = {
               method: "PUT",
               headers: {
