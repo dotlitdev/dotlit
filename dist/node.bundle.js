@@ -28912,15 +28912,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _Icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Icons */ "./src/components/Icons.jsx");
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_3__);
 
 
 
+
+var console = (0,_utils_console__WEBPACK_IMPORTED_MODULE_3__.getConsoleForNamespace)('CellMenu');
 
 var wrapHandler = function wrapHandler(fn) {
   return function (ev) {
+    console.log("Cell menu wrapper", fn, ev);
     ev.preventDefault();
     ev.stopPropagation();
-    if (typeof fn === 'function') fn(ev);
+
+    if (typeof fn === 'function') {
+      var resp = fn(ev);
+      console.log("Cell menu wrapper fn executed", resp);
+    }
+
     return false;
   };
 };
@@ -28932,7 +28942,7 @@ var CellMenu = function CellMenu(props) {
       setOpen = _useState2[1];
 
   var toggleOpen = wrapHandler(function (ev) {
-    // console.log("Toggle CellMenu", open)
+    console.log("Toggle CellMenu", open);
     setOpen(!open);
   });
   var items = [{
