@@ -31277,6 +31277,7 @@ var Cell = function Cell(props) {
 
   var save = function save(ctx) {
     return function (args) {
+      console.log("Saving cell", pos, src);
       ctx.setSrc(pos, src);
       setEditing(false);
     };
