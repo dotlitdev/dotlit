@@ -54,7 +54,7 @@ const passThroughWrite = (fs) => {
       username: "dotlitdev",
       repository: "dotlit",
       prefix: "/src",
-      token: ghToken,
+      token: localStorage.getItem("ghToken"),
     });
     try {
       const ghResp = await ghwf(...args);
@@ -69,7 +69,6 @@ export const extendFs = (fs) => {
   fs.readFile = passThroughRead(fs);
   fs.writeFile = writeFileP(fs);
 
-  const ghToken = localStorage.getItem("ghToken");
-  if (ghToken) fs.writeFile = passThroughWrite(fs);
+  if (localStorage.getItem("ghToken")) fs.writeFile = passThroughWrite(fs);
   return fs
 };

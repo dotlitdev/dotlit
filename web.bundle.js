@@ -33010,7 +33010,7 @@ var passThroughWrite = function passThroughWrite(fs) {
               username: "dotlitdev",
               repository: "dotlit",
               prefix: "/src",
-              token: ghToken
+              token: localStorage.getItem("ghToken")
             });
             _context3.prev = 4;
             _context3.next = 7;
@@ -33039,8 +33039,7 @@ var passThroughWrite = function passThroughWrite(fs) {
 var extendFs = function extendFs(fs) {
   fs.readFile = passThroughRead(fs);
   fs.writeFile = writeFileP(fs);
-  var ghToken = localStorage.getItem("ghToken");
-  if (ghToken) fs.writeFile = passThroughWrite(fs);
+  if (localStorage.getItem("ghToken")) fs.writeFile = passThroughWrite(fs);
   return fs;
 };
 
