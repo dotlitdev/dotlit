@@ -4,7 +4,7 @@ export const Header = props => {
 
    const [d,l,ex] = [
      'litDebug',
-     localStorage,
+     typeof localStorage !== 'undefined' && localStorage,
      '*,fs,client,Cell,sections,etc...',
    ]
    const setDebug = ev => {
