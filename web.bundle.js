@@ -31460,10 +31460,12 @@ var Document = function Document(props) {
   var result = props.file.result;
   var title = props.file.data.frontmatter.title || props.file.stem;
 
-  var setDebug = function setDebug() {
+  var setDebug = function setDebug(ev) {
+    ev.preventDefault();
     var d = 'litDebug',
         l = localStorage;
     l.setItem(d, prompt(d, l.getItem(d) || '*,fs,client,Cell,sections,etc...'));
+    return false;
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("html", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("head", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("title", null, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("meta", {
