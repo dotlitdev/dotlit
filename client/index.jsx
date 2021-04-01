@@ -9,45 +9,22 @@ const select = require('unist-util-select')
 const parser = require('../parser')
 const renderer = require('../renderer')
 const App = require('../components/App').default
-const { ghWriteFile } = require('../utils/fs-promises-gh-utils.js')
+const { extendFs } = require('../utils/fs-promises-utils')
+
 const { getMeta } = require('../utils/functions')
+import { getConsoleForNamespace } from '../utils/console'
 
-
-
+const console = getConsoleForNamespace('client')
 
 const query = qs.parse(location.search.slice(1))
 const litsrc = getMeta('src', '')
 const litroot = getMeta('root', '')
 const litbase = getMeta('base', '/')
 const baseUrl =`${location.protocol}//${location.host}${litroot ? path.join(path.dirname(location.pathname), litroot) : litbase}`
-const fs = (new FS(baseUrl)).promises 
 
+const lfs = (new FS(baseUrl)).promises 
+const fs = extendFs(lfs)
 
-const rf = fs.readFile
-fs.readFile = async (...args) => {
-  try {
-    return await rf(...args)
-  } catch (err) {
-    return await (await fetch(path.join(litroot, args[0]))).text()
-  }
-}
-const wf = fs.writeFile
-const ghToken = localStorage.getItem('ghToken')
-if (ghToken) fs.writeFile = async (...args) => {
-  await wf(...args)
-  const ghwf = ghWriteFile({
-    username: 'dotlitdev',
-    repository: 'dotlit',
-    prefix: '/src',
-    token: ghToken,
-  })
-  try {
-    const ghResp = await ghwf(...args)
-    console.log("GitHub write resp", ghResp)
-  } catch(err) {
-    console.error("GitHub write threw", err)
-  }
-}
 
 const lit = {
     location: {

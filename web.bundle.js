@@ -31069,17 +31069,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! path */ "./node_modules/path-browserify/index.js");
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _SelectionContext__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SelectionContext */ "./src/components/SelectionContext.jsx");
-/* harmony import */ var _utils_unist_util_patch_source__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/unist-util-patch-source */ "./src/utils/unist-util-patch-source.js");
+/* harmony import */ var _SelectionContext__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SelectionContext */ "./src/components/SelectionContext.jsx");
+/* harmony import */ var _utils_unist_util_patch_source__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/unist-util-patch-source */ "./src/utils/unist-util-patch-source.js");
+/* harmony import */ var _renderer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../renderer */ "./src/renderer/index.jsx");
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_7__);
 
 
 
 
 
 
- // import {writeFileP} from '../utils/fs-promises-utils'
+
+
+var console = (0,_utils_console__WEBPACK_IMPORTED_MODULE_7__.getConsoleForNamespace)('App');
 
 var App = function App(_ref) {
   var file = _ref.file,
@@ -31091,35 +31094,57 @@ var App = function App(_ref) {
       src = _useState2[0],
       setSrc = _useState2[1];
 
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(null),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(result),
       _useState4 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__.default)(_useState3, 2),
-      selectedCell = _useState4[0],
-      setSelectedCell = _useState4[1]; // const writeFile = writeFileP(fs)
+      res = _useState4[0],
+      setResult = _useState4[1];
 
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(null),
+      _useState6 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__.default)(_useState5, 2),
+      selectedCell = _useState6[0],
+      setSelectedCell = _useState6[1];
 
   var setSrcWrapper = /*#__PURE__*/function () {
     var _ref2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee(pos, cellSource) {
-      var patchedSrc;
+      var patchedSrc, processedFile;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               console.log("<App/> Set src wrapper", pos, cellSource);
-              patchedSrc = (0,_utils_unist_util_patch_source__WEBPACK_IMPORTED_MODULE_6__.default)(src, pos, cellSource);
-              _context.next = 4;
+              patchedSrc = (0,_utils_unist_util_patch_source__WEBPACK_IMPORTED_MODULE_5__.default)(src, pos, cellSource);
+              _context.prev = 2;
+              _context.next = 5;
               return fs.writeFile(file.path, patchedSrc, {
                 encoding: 'utf8'
               });
 
-            case 4:
-              setSrc(patchedSrc);
-
             case 5:
+              _context.next = 10;
+              break;
+
+            case 7:
+              _context.prev = 7;
+              _context.t0 = _context["catch"](2);
+              console.log("Failed to write file source to fs", file.path, _context.t0);
+
+            case 10:
+              setSrc(patchedSrc);
+              file.contents = patchedSrc;
+              _context.next = 14;
+              return (0,_renderer__WEBPACK_IMPORTED_MODULE_6__.processor)(fs).process(file);
+
+            case 14:
+              processedFile = _context.sent;
+              console.log("Processed client", processedFile);
+              setResult(processedFile.result);
+
+            case 17:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee);
+      }, _callee, null, [[2, 7]]);
     }));
 
     return function setSrcWrapper(_x, _x2) {
@@ -31133,11 +31158,12 @@ var App = function App(_ref) {
     setSelectedCell: setSelectedCell,
     setSrc: setSrcWrapper
   };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_SelectionContext__WEBPACK_IMPORTED_MODULE_5__.default.Provider, {
+  console.log('<App/> render', res, src, setSelectedCell);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_SelectionContext__WEBPACK_IMPORTED_MODULE_4__.default.Provider, {
     value: state
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("div", {
     id: "content"
-  }, result));
+  }, res));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
@@ -31228,12 +31254,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _CellMenu__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CellMenu */ "./src/components/CellMenu.jsx");
 /* harmony import */ var _SelectionContext__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SelectionContext */ "./src/components/SelectionContext.jsx");
 /* harmony import */ var _Editor__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Editor */ "./src/components/Editor.jsx");
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_6__);
 
 
 
 
 
 
+
+var console = (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.getConsoleForNamespace)('Cell');
 
 var childIs = function childIs(node, nodeType) {
   return node.children && node.children.length && node.children[0] && node.children[0].tagName === nodeType;
@@ -31329,22 +31359,12 @@ __webpack_require__.r(__webpack_exports__);
 
 var wrapHandler = function wrapHandler(fn) {
   return function (ev) {
-    console.log("Cell menu wrapper", fn, ev);
     ev.preventDefault();
     ev.stopPropagation();
     if (typeof fn === 'function') fn(ev);
-    console.log("wrapped fn called if valid");
     return false;
   };
 };
-
-console.log({
-  MenuIcon: _Icons__WEBPACK_IMPORTED_MODULE_2__.MenuIcon,
-  EditIcon: _Icons__WEBPACK_IMPORTED_MODULE_2__.EditIcon,
-  ExecIcon: _Icons__WEBPACK_IMPORTED_MODULE_2__.ExecIcon,
-  CloseIcon: _Icons__WEBPACK_IMPORTED_MODULE_2__.CloseIcon,
-  SaveIcon: _Icons__WEBPACK_IMPORTED_MODULE_2__.SaveIcon
-});
 
 var CellMenu = function CellMenu(props) {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
@@ -31353,7 +31373,7 @@ var CellMenu = function CellMenu(props) {
       setOpen = _useState2[1];
 
   var toggleOpen = wrapHandler(function (ev) {
-    console.log("Toggle CellMenu", open);
+    // console.log("Toggle CellMenu", open)
     setOpen(!open);
   });
   var items = [{
@@ -31417,10 +31437,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var path__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./App */ "./src/components/App.jsx");
 /* harmony import */ var _Backlinks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Backlinks */ "./src/components/Backlinks.jsx");
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_4__);
 
 
 
 
+
+var console = (0,_utils_console__WEBPACK_IMPORTED_MODULE_4__.getConsoleForNamespace)('Document');
 
 var Document = function Document(props) {
   var result = props.file.result;
@@ -31673,6 +31697,8 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 
 
+var console = (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.getConsoleForNamespace)('codeblocks');
+
 var Meta = /*#__PURE__*/function (_React$Component) {
   (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__.default)(Meta, _React$Component);
 
@@ -31736,7 +31762,7 @@ var Codeblock = /*#__PURE__*/function (_React$Component2) {
       var meta = codeNode ? codeNode.properties.meta : null;
 
       if (codeNode) {
-        (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_6__.log)("[Codeblock]", codeNode.properties.meta);
+        console.log("[Codeblock]", codeNode.properties.meta);
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("codecell", null, meta && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement(Meta, {
           meta: meta
         }), meta && meta.isOutput ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("output", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("pre", null, this.props.children)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("pre", null, this.props.children));
@@ -31766,11 +31792,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/console */ "./src/utils/console.js");
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_1__);
 
+
+var console = (0,_utils_console__WEBPACK_IMPORTED_MODULE_1__.getConsoleForNamespace)('Link');
 
 var Link = function Link(props) {
-  var title = props.node.properties.title; // console.log("<Link/>", props)
-
+  var title = props.node.properties.title;
+  console.log("<Link/>", props);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
     className: props.className,
     href: props.href,
@@ -31851,14 +31881,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
 /* harmony import */ var unist_util_visit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! unist-util-visit */ "./node_modules/unist-util-visit/index.js");
 /* harmony import */ var unist_util_visit__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(unist_util_visit__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var unist_util_find_before__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! unist-util-find-before */ "./node_modules/unist-util-find-before/index.js");
-/* harmony import */ var unist_util_find_before__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(unist_util_find_before__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var unist_util_find_after__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! unist-util-find-after */ "./node_modules/unist-util-find-after/index.js");
-/* harmony import */ var unist_util_find_after__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(unist_util_find_after__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
-/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var assert__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! assert */ "./node_modules/assert/build/assert.js");
-/* harmony import */ var assert__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(assert__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_2__);
 
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -31867,9 +31891,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 
 
-
-
-
+var console = (0,_utils_console__WEBPACK_IMPORTED_MODULE_2__.getConsoleForNamespace)('codeblocks');
 var LSP = '__.litsp__';
 var NONESCAPEDSPACES_REGEX = /([^\\])\s/g;
 var LANG = 'lang';
@@ -31884,7 +31906,7 @@ var FILENAME = 'filename';
 }
 
 function transform(node, index, parent) {
-  (0,_utils_console__WEBPACK_IMPORTED_MODULE_4__.level)(1, _utils_console__WEBPACK_IMPORTED_MODULE_4__.log)('[CodeBlocks] Visiting: ', node.lang, node.meta);
+  console.log('[CodeBlocks] Visiting: ', node.lang, node.meta);
   var litMeta = parseMeta(node);
   node.data = _objectSpread(_objectSpread({}, node.data), {}, {
     meta: litMeta,
@@ -31900,7 +31922,7 @@ function transform(node, index, parent) {
 
 function parseMeta(node) {
   var raw = "".concat(node.lang || '', " ").concat(node.meta || '').trim();
-  (0,_utils_console__WEBPACK_IMPORTED_MODULE_4__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_4__.log)("[CodeBlocks] lang: \"".concat(node.lang, "\" meta: \"").concat(node.meta, "\", raw: \"").concat(raw, "\""));
+  console.log("[CodeBlocks] lang: \"".concat(node.lang, "\" meta: \"").concat(node.meta, "\", raw: \"").concat(raw, "\""));
   var isOutput = raw.indexOf('>') === 0;
   var hasOutput = node.meta && node.meta.indexOf('>') >= 0;
   var hasSource = node.meta && node.meta.indexOf('<') >= 0;
@@ -32013,16 +32035,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+var console = (0,_utils_console__WEBPACK_IMPORTED_MODULE_4__.getConsoleForNamespace)('frontmatter');
 var FRONTMATTER_OPEN = '<!-- data';
 var FRONTMATTER_CLOSE = '-->';
 /* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__() {
   return function (tree, file) {
     var matters = [];
     unist_util_visit__WEBPACK_IMPORTED_MODULE_0___default()(tree, 'html', function (node, index, parent) {
-      (0,_utils_console__WEBPACK_IMPORTED_MODULE_4__.level)(1, _utils_console__WEBPACK_IMPORTED_MODULE_4__.log)('[FrontMatter]');
+      console.log('[FrontMatter]');
 
       if (node.value.indexOf(FRONTMATTER_OPEN) === 0 && node.value.indexOf(FRONTMATTER_CLOSE) === node.value.length - FRONTMATTER_CLOSE.length) {
-        (0,_utils_console__WEBPACK_IMPORTED_MODULE_4__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_4__.log)('[FrontMatter] Raw', node.value);
+        console.log('[FrontMatter] Raw', node.value);
         var yamlString = node.value.slice(FRONTMATTER_OPEN.length, node.value.length - FRONTMATTER_CLOSE.length).trim();
 
         try {
@@ -32033,7 +32057,7 @@ var FRONTMATTER_CLOSE = '-->';
           };
         }
 
-        (0,_utils_console__WEBPACK_IMPORTED_MODULE_4__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_4__.log)('[FrontMatter] Parsed', yamlString);
+        console.log('[FrontMatter] Parsed', yamlString);
         matters.push(node.data);
       }
     });
@@ -32183,14 +32207,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var unist_util_visit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! unist-util-visit */ "./node_modules/unist-util-visit/index.js");
 /* harmony import */ var unist_util_visit__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(unist_util_visit__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var unist_util_flatmap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! unist-util-flatmap */ "./node_modules/unist-util-flatmap/index.js");
-/* harmony import */ var unist_util_flatmap__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(unist_util_flatmap__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
-/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_2__);
 
 
 
-
+var console = (0,_utils_console__WEBPACK_IMPORTED_MODULE_2__.getConsoleForNamespace)('links');
 var resolveLinks = function resolveLinks() {
   var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
     root: '',
@@ -32198,7 +32220,7 @@ var resolveLinks = function resolveLinks() {
   };
   return function () {
     return function (tree) {
-      (0,_utils_console__WEBPACK_IMPORTED_MODULE_3__.level)(1, _utils_console__WEBPACK_IMPORTED_MODULE_3__.log)('[Links] Init', options);
+      console.log('[Links] Init', options);
       return unist_util_visit__WEBPACK_IMPORTED_MODULE_1___default()(tree, isLink, transform(options));
     };
   };
@@ -32231,7 +32253,7 @@ var decorateLinkNode = function decorateLinkNode(link) {
   var filepath = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
   // console.log(link)
   var wikiLink = link.type === 'wikiLink';
-  var url = wikiLink ? link.data.permalink + '.lit' : link.url; // level(2, log)(`[Links] resolving (${link.type}) [${url}] '${root}', "${filepath}"`)
+  var url = wikiLink ? link.data.permalink + '.lit' : link.url; // console.log(`[Links] resolving (${link.type}) [${url}] '${root}', "${filepath}"`)
 
   var isAbsolute = /(https?\:)?\/\//.test(url);
   var isFragment = /^(\?|#).*/.test(url);
@@ -32298,23 +32320,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ "./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js");
 /* harmony import */ var mdast_util_heading_range__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! mdast-util-heading-range */ "./node_modules/mdast-util-heading-range/index.js");
 /* harmony import */ var mdast_util_heading_range__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(mdast_util_heading_range__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var unist_util_generated__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! unist-util-generated */ "./node_modules/unist-util-generated/index.js");
-/* harmony import */ var unist_util_generated__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(unist_util_generated__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var unist_util_remove_position__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! unist-util-remove-position */ "./node_modules/unist-util-remove-position/index.js");
-/* harmony import */ var unist_util_remove_position__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(unist_util_remove_position__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var unist_util_visit__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! unist-util-visit */ "./node_modules/unist-util-visit/index.js");
-/* harmony import */ var unist_util_visit__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(unist_util_visit__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var unist_util_flatmap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! unist-util-flatmap */ "./node_modules/unist-util-flatmap/index.js");
-/* harmony import */ var unist_util_flatmap__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(unist_util_flatmap__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
-/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var unist_util_visit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! unist-util-visit */ "./node_modules/unist-util-visit/index.js");
+/* harmony import */ var unist_util_visit__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(unist_util_visit__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var unist_util_flatmap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! unist-util-flatmap */ "./node_modules/unist-util-flatmap/index.js");
+/* harmony import */ var unist_util_flatmap__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(unist_util_flatmap__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_4__);
 
 
 
 
 
-
-
+var console = (0,_utils_console__WEBPACK_IMPORTED_MODULE_4__.getConsoleForNamespace)('sections');
 
 var firstChild = function firstChild(node, type) {
   return node.children && node.children[0] && node.children[0].type === type;
@@ -32354,7 +32371,7 @@ var cellsFromNodes = function cellsFromNodes(nodes) {
   var newCell = null;
   nodes.map(function (current) {
     var node = current;
-    (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.level)(3, _utils_console__WEBPACK_IMPORTED_MODULE_6__.log)("[Sections] child: ", node.type);
+    console.log("[Sections] child: ", node.type);
 
     if (node.type === "section") {
       newCell = null;
@@ -32376,7 +32393,7 @@ var cellsFromNodes = function cellsFromNodes(nodes) {
 
 var wrapSection = function wrapSection(options) {
   return function (start, nodes, end) {
-    (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_6__.log)("[Sections] Wrapping:", start && start.data.id, nodes && nodes.length, end && end.type);
+    console.log("[Sections] Wrapping:", start && start.data.id, nodes && nodes.length, end && end.type);
     nodes = [start].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__.default)(nodes)); // log("[Section] nodes:", nodes)
 
     var cells = cellsFromNodes(nodes);
@@ -32400,7 +32417,7 @@ var wrapSection = function wrapSection(options) {
 
 var transform = function transform(options) {
   return function (node, index, parent) {
-    (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_6__.log)("[Sections] Visiting", node.data.id);
+    console.log("[Sections] Visiting", node.data.id);
     return mdast_util_heading_range__WEBPACK_IMPORTED_MODULE_1___default()(parent, function (_, node2) {
       return node.data.id === node2.data.id;
     }, wrapSection(options));
@@ -32411,8 +32428,8 @@ var groupIntoSections = function groupIntoSections() {
   var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   return function () {
     return function (tree) {
-      (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.level)(1, _utils_console__WEBPACK_IMPORTED_MODULE_6__.log)("[Sections] Init");
-      unist_util_visit__WEBPACK_IMPORTED_MODULE_4___default()(tree, "heading", transform(options), true);
+      console.log("[Sections] Init");
+      unist_util_visit__WEBPACK_IMPORTED_MODULE_2___default()(tree, "heading", transform(options), true);
     };
   };
 };
@@ -32420,8 +32437,8 @@ var ungroupSections = function ungroupSections() {
   var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   return function () {
     return function (tree) {
-      (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.level)(1, _utils_console__WEBPACK_IMPORTED_MODULE_6__.log)("[UnSection] Init", options);
-      tree = unist_util_flatmap__WEBPACK_IMPORTED_MODULE_5___default()(tree, function (node) {
+      console.log("[UnSection] Init", options);
+      tree = unist_util_flatmap__WEBPACK_IMPORTED_MODULE_3___default()(tree, function (node) {
         if (node.type === "cell") {
           return node.children;
         } else if (node.type === "section") {
@@ -32460,14 +32477,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var unist_util_select__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! unist-util-select */ "./node_modules/unist-util-select/index.js");
 /* harmony import */ var react_dom_server__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-dom/server */ "./node_modules/react-dom/server.browser.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
-/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _parser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../parser */ "./src/parser/index.js");
-/* harmony import */ var _components_Document__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/Document */ "./src/components/Document.jsx");
-/* harmony import */ var _components_base_Paragraph__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/base/Paragraph */ "./src/components/base/Paragraph.jsx");
-/* harmony import */ var _components_base_Link__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../components/base/Link */ "./src/components/base/Link.jsx");
-/* harmony import */ var _components_base_Codeblock__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../components/base/Codeblock */ "./src/components/base/Codeblock.jsx");
-/* harmony import */ var _components_Cell__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../components/Cell */ "./src/components/Cell.jsx");
+/* harmony import */ var _parser__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../parser */ "./src/parser/index.js");
+/* harmony import */ var _components_Document__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/Document */ "./src/components/Document.jsx");
+/* harmony import */ var _components_base_Paragraph__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/base/Paragraph */ "./src/components/base/Paragraph.jsx");
+/* harmony import */ var _components_base_Link__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/base/Link */ "./src/components/base/Link.jsx");
+/* harmony import */ var _components_base_Codeblock__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../components/base/Codeblock */ "./src/components/base/Codeblock.jsx");
+/* harmony import */ var _components_Cell__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../components/Cell */ "./src/components/Cell.jsx");
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_14__);
 
 
 
@@ -32490,8 +32507,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
 
+var console = (0,_utils_console__WEBPACK_IMPORTED_MODULE_14__.getConsoleForNamespace)('codeblocks');
 function processor(fs) {
-  return (0,_parser__WEBPACK_IMPORTED_MODULE_9__.processor)() // hoist ast to data
+  return (0,_parser__WEBPACK_IMPORTED_MODULE_8__.processor)() // hoist ast to data
   .use(function () {
     return function (tree, file) {
       file.data.ast = tree;
@@ -32599,10 +32617,10 @@ function processor(fs) {
     createElement: react__WEBPACK_IMPORTED_MODULE_7__.createElement,
     passNode: true,
     components: {
-      p: _components_base_Paragraph__WEBPACK_IMPORTED_MODULE_11__.default,
-      a: _components_base_Link__WEBPACK_IMPORTED_MODULE_12__.default,
-      pre: _components_base_Codeblock__WEBPACK_IMPORTED_MODULE_13__.default,
-      cell: _components_Cell__WEBPACK_IMPORTED_MODULE_14__.default
+      p: _components_base_Paragraph__WEBPACK_IMPORTED_MODULE_10__.default,
+      a: _components_base_Link__WEBPACK_IMPORTED_MODULE_11__.default,
+      pre: _components_base_Codeblock__WEBPACK_IMPORTED_MODULE_12__.default,
+      cell: _components_Cell__WEBPACK_IMPORTED_MODULE_13__.default
     }
   });
 }
@@ -32620,8 +32638,8 @@ function _renderedVFileToDoc() {
             root = path__WEBPACK_IMPORTED_MODULE_2___default().resolve(cmd.output);
             dir = path__WEBPACK_IMPORTED_MODULE_2___default().dirname(path__WEBPACK_IMPORTED_MODULE_2___default().join(root, vfile.path));
             relroot = path__WEBPACK_IMPORTED_MODULE_2___default().relative(dir, root) || '.';
-            (0,_utils_console__WEBPACK_IMPORTED_MODULE_8__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_8__.log)('[Render] to document vFile', vfile.path);
-            notebook = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(_components_Document__WEBPACK_IMPORTED_MODULE_10__.default, {
+            console.log('[Render] to document vFile', vfile.path);
+            notebook = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(_components_Document__WEBPACK_IMPORTED_MODULE_9__.default, {
               file: vfile,
               root: cmd.base || relroot,
               backlinks: vfile.data.backlinks
@@ -32650,6 +32668,9 @@ function _renderedVFileToDoc() {
 
 /* provided dependency */ var process = __webpack_require__(/*! process/browser */ "./node_modules/process/browser.js");
 // const {Console} = require('console')
+var _require = __webpack_require__(/*! ./functions */ "./src/utils/functions.js"),
+    NoOp = _require.NoOp;
+
 if (process && process.env) console.log("DEBUG:", process.env.DEBUG);
 
 var debug_level = function debug_level() {
@@ -32670,6 +32691,29 @@ var debug_level = function debug_level() {
 // module.exports = custom_console
 
 
+var debugKeys = function debugKeys() {
+  var debugStr = '';
+
+  if (typeof window !== 'undefined' && window.location) {
+    var hash = window.location.hash.slice(1);
+
+    var _debugKeys = hash.match(/db:([^;]*);?/);
+
+    if (_debugKeys && _debugKeys[1]) debugStr = _debugKeys[1];
+  }
+
+  if (typeof process !== 'undefined' && process.env && process.env.DEBUG) {
+    debugStr = process.env.DEBUG;
+  }
+
+  return debugStr.split(',');
+};
+
+var shouldLog = function shouldLog(ns) {
+  var keys = debugKeys();
+  return keys.indexOf('*') >= 0 || keys.indexOf(ns) >= 0;
+};
+
 var level = function level(_level, fn) {
   var lvlIndent = Array(_level).fill('  ').join('');
   return function () {
@@ -32677,19 +32721,38 @@ var level = function level(_level, fn) {
       args[_key] = arguments[_key];
     }
 
-    if (_level <= debug_level()) fn.apply(void 0, ["[lit]{".concat(_level, "}").concat(lvlIndent)].concat(args));
+    if (_level <= debug_level() || shouldLog(_level)) fn.apply(void 0, ["[lit]{".concat(_level, "}").concat(lvlIndent)].concat(args));
   };
 };
 
-module.exports = {
+var Console = {
   level: level,
   log: console.log,
   dir: console.dir,
   info: console.info,
   error: console.error,
   time: console.time,
-  timeEnd: console.timeEnd
+  timeEnd: console.timeEnd,
+  getConsoleForNamespace: getConsoleForNamespace
 };
+
+function getConsoleForNamespace(ns) {
+  if (shouldLog(ns)) {
+    return Console;
+  } else {
+    return {
+      level: NoOp,
+      log: NoOp,
+      dir: NoOp,
+      info: NoOp,
+      error: NoOp,
+      time: NoOp,
+      timeEnd: NoOp
+    };
+  }
+}
+
+module.exports = Console;
 
 /***/ }),
 
@@ -32707,8 +32770,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _console__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./console */ "./src/utils/console.js");
+/* harmony import */ var _console__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_console__WEBPACK_IMPORTED_MODULE_2__);
 
 
+
+var console = (0,_console__WEBPACK_IMPORTED_MODULE_2__.getConsoleForNamespace)('fs');
 var ghWriteFile = function ghWriteFile(opts) {
   return /*#__PURE__*/(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
     var file,
@@ -32763,6 +32830,208 @@ var ghWriteFile = function ghWriteFile(opts) {
       }
     }, _callee);
   }));
+};
+
+/***/ }),
+
+/***/ "./src/utils/fs-promises-utils.js":
+/*!****************************************!*\
+  !*** ./src/utils/fs-promises-utils.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "extendFs": () => (/* binding */ extendFs)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! path */ "./node_modules/path-browserify/index.js");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _utils_fs_promises_gh_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/fs-promises-gh-utils */ "./src/utils/fs-promises-gh-utils.js");
+/* harmony import */ var _console__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./console */ "./src/utils/console.js");
+/* harmony import */ var _console__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_console__WEBPACK_IMPORTED_MODULE_4__);
+
+
+
+
+
+var console = (0,_console__WEBPACK_IMPORTED_MODULE_4__.getConsoleForNamespace)('fs');
+
+var passThroughRead = function passThroughRead(fs) {
+  var rf = fs.readFile;
+  return /*#__PURE__*/(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
+    var _args = arguments;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            console.log('fs.passThroughRead');
+            _context.prev = 1;
+            _context.next = 4;
+            return rf.apply(void 0, _args);
+
+          case 4:
+            return _context.abrupt("return", _context.sent);
+
+          case 7:
+            _context.prev = 7;
+            _context.t0 = _context["catch"](1);
+            console.log('fs.passThroughRead passing through to fetch');
+            _context.next = 12;
+            return fetch(path__WEBPACK_IMPORTED_MODULE_2___default().join(litroot, _args.length <= 0 ? undefined : _args[0]));
+
+          case 12:
+            _context.next = 14;
+            return _context.sent.text();
+
+          case 14:
+            return _context.abrupt("return", _context.sent);
+
+          case 15:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, null, [[1, 7]]);
+  }));
+};
+
+var writeFileP = function writeFileP(fs) {
+  var wf = fs.writeFile;
+  return /*#__PURE__*/(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2() {
+    var _len,
+        args,
+        _key,
+        filepath,
+        p,
+        parts,
+        i,
+        subPath,
+        _args2 = arguments;
+
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            console.log("fs.writeFileP");
+
+            for (_len = _args2.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+              args[_key] = _args2[_key];
+            }
+
+            filepath = args[0] = "/" + args[0];
+            p = path__WEBPACK_IMPORTED_MODULE_2___default().parse(filepath);
+            parts = p.dir.split((path__WEBPACK_IMPORTED_MODULE_2___default().sep));
+            console.log("\"Parts for \"".concat(filepath, "\""), parts);
+            i = 0;
+
+          case 7:
+            if (!(i < parts.length)) {
+              _context2.next = 28;
+              break;
+            }
+
+            console.log("[".concat(i, "] <--- \"").concat(parts[i], "\""));
+
+            if (!(i === 0)) {
+              _context2.next = 12;
+              break;
+            }
+
+            _context2.next = 25;
+            break;
+
+          case 12:
+            subPath = parts.slice(0, i + 1).join((path__WEBPACK_IMPORTED_MODULE_2___default().sep));
+            console.log("\"".concat(subPath, "\" Sub path"));
+            _context2.prev = 14;
+            _context2.next = 17;
+            return fs.stat(subPath);
+
+          case 17:
+            console.log("\"".concat(subPath, "\" Existed, skipping"));
+            _context2.next = 25;
+            break;
+
+          case 20:
+            _context2.prev = 20;
+            _context2.t0 = _context2["catch"](14);
+            console.log("\"".concat(subPath, "\" Didn't exist, creating..."));
+            _context2.next = 25;
+            return fs.mkdir(subPath);
+
+          case 25:
+            i++;
+            _context2.next = 7;
+            break;
+
+          case 28:
+            console.log.apply(console, ["Writing file"].concat(args));
+            return _context2.abrupt("return", wf.apply(void 0, args));
+
+          case 30:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2, null, [[14, 20]]);
+  }));
+};
+
+var passThroughWrite = function passThroughWrite(fs) {
+  var wf = fs.writeFile;
+  return /*#__PURE__*/(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee3() {
+    var ghwf,
+        ghResp,
+        _args3 = arguments;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            console.log('fs.passThroughWrite');
+            _context3.next = 3;
+            return wf.apply(void 0, _args3);
+
+          case 3:
+            ghwf = (0,_utils_fs_promises_gh_utils__WEBPACK_IMPORTED_MODULE_3__.ghWriteFile)({
+              username: "dotlitdev",
+              repository: "dotlit",
+              prefix: "/src",
+              token: ghToken
+            });
+            _context3.prev = 4;
+            _context3.next = 7;
+            return ghwf.apply(void 0, _args3);
+
+          case 7:
+            ghResp = _context3.sent;
+            console.log("GitHub write resp", ghResp);
+            _context3.next = 14;
+            break;
+
+          case 11:
+            _context3.prev = 11;
+            _context3.t0 = _context3["catch"](4);
+            console.error("GitHub write threw", _context3.t0);
+
+          case 14:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3, null, [[4, 11]]);
+  }));
+};
+
+var extendFs = function extendFs(fs) {
+  fs.readFile = passThroughRead(fs);
+  fs.writeFile = writeFileP(fs);
+  var ghToken = localStorage.getItem("ghToken");
+  if (ghToken) fs.writeFile = passThroughWrite(fs);
+  return fs;
 };
 
 /***/ }),
@@ -95948,75 +96217,6 @@ function factory(type) {
 
 /***/ }),
 
-/***/ "./node_modules/unist-util-remove-position/index.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/unist-util-remove-position/index.js ***!
-  \**********************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var visit = __webpack_require__(/*! unist-util-visit */ "./node_modules/unist-util-remove-position/node_modules/unist-util-visit/index.js")
-
-module.exports = removePosition
-
-function removePosition(node, force) {
-  visit(node, force ? hard : soft)
-  return node
-}
-
-function hard(node) {
-  delete node.position
-}
-
-function soft(node) {
-  node.position = undefined
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/unist-util-remove-position/node_modules/unist-util-visit/index.js":
-/*!****************************************************************************************!*\
-  !*** ./node_modules/unist-util-remove-position/node_modules/unist-util-visit/index.js ***!
-  \****************************************************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-module.exports = visit
-
-var visitParents = __webpack_require__(/*! unist-util-visit-parents */ "./node_modules/unist-util-visit-parents/index.js")
-
-var CONTINUE = visitParents.CONTINUE
-var SKIP = visitParents.SKIP
-var EXIT = visitParents.EXIT
-
-visit.CONTINUE = CONTINUE
-visit.SKIP = SKIP
-visit.EXIT = EXIT
-
-function visit(tree, test, visitor, reverse) {
-  if (typeof test === 'function' && typeof visitor !== 'function') {
-    reverse = visitor
-    visitor = test
-    test = null
-  }
-
-  visitParents(tree, test, overload, reverse)
-
-  function overload(node, parents) {
-    var parent = parents[parents.length - 1]
-    var index = parent ? parent.children.indexOf(node) : null
-    return visitor(node, index, parent)
-  }
-}
-
-
-/***/ }),
-
 /***/ "./node_modules/unist-util-select/index.js":
 /*!*************************************************!*\
   !*** ./node_modules/unist-util-select/index.js ***!
@@ -99593,6 +99793,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_2__);
 
 
 
@@ -99616,94 +99818,21 @@ var renderer = __webpack_require__(/*! ../renderer */ "./src/renderer/index.jsx"
 
 var App = __webpack_require__(/*! ../components/App */ "./src/components/App.jsx").default;
 
-var _require = __webpack_require__(/*! ../utils/fs-promises-gh-utils.js */ "./src/utils/fs-promises-gh-utils.js"),
-    ghWriteFile = _require.ghWriteFile;
+var _require = __webpack_require__(/*! ../utils/fs-promises-utils */ "./src/utils/fs-promises-utils.js"),
+    extendFs = _require.extendFs;
 
 var _require2 = __webpack_require__(/*! ../utils/functions */ "./src/utils/functions.js"),
     getMeta = _require2.getMeta;
 
+
+var console = (0,_utils_console__WEBPACK_IMPORTED_MODULE_2__.getConsoleForNamespace)('client');
 var query = qs.parse(location.search.slice(1));
 var litsrc = getMeta('src', '');
 var litroot = getMeta('root', '');
 var litbase = getMeta('base', '/');
 var baseUrl = "".concat(location.protocol, "//").concat(location.host).concat(litroot ? path.join(path.dirname(location.pathname), litroot) : litbase);
-var fs = new FS(baseUrl).promises;
-var rf = fs.readFile;
-fs.readFile = /*#__PURE__*/(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
-  var _args = arguments;
-  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
-    while (1) {
-      switch (_context.prev = _context.next) {
-        case 0:
-          _context.prev = 0;
-          _context.next = 3;
-          return rf.apply(void 0, _args);
-
-        case 3:
-          return _context.abrupt("return", _context.sent);
-
-        case 6:
-          _context.prev = 6;
-          _context.t0 = _context["catch"](0);
-          _context.next = 10;
-          return fetch(path.join(litroot, _args.length <= 0 ? undefined : _args[0]));
-
-        case 10:
-          _context.next = 12;
-          return _context.sent.text();
-
-        case 12:
-          return _context.abrupt("return", _context.sent);
-
-        case 13:
-        case "end":
-          return _context.stop();
-      }
-    }
-  }, _callee, null, [[0, 6]]);
-}));
-var wf = fs.writeFile;
-var ghToken = localStorage.getItem('ghToken');
-if (ghToken) fs.writeFile = /*#__PURE__*/(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2() {
-  var ghwf,
-      ghResp,
-      _args2 = arguments;
-  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee2$(_context2) {
-    while (1) {
-      switch (_context2.prev = _context2.next) {
-        case 0:
-          _context2.next = 2;
-          return wf.apply(void 0, _args2);
-
-        case 2:
-          ghwf = ghWriteFile({
-            username: 'dotlitdev',
-            repository: 'dotlit',
-            prefix: '/src',
-            token: ghToken
-          });
-          _context2.prev = 3;
-          _context2.next = 6;
-          return ghwf.apply(void 0, _args2);
-
-        case 6:
-          ghResp = _context2.sent;
-          console.log("GitHub write resp", ghResp);
-          _context2.next = 13;
-          break;
-
-        case 10:
-          _context2.prev = 10;
-          _context2.t0 = _context2["catch"](3);
-          console.error("GitHub write threw", _context2.t0);
-
-        case 13:
-        case "end":
-          return _context2.stop();
-      }
-    }
-  }, _callee2, null, [[3, 10]]);
-}));
+var lfs = new FS(baseUrl).promises;
+var fs = extendFs(lfs);
 var lit = {
   location: {
     src: litsrc,
@@ -99724,72 +99853,72 @@ if (typeof window !== 'undefined') window.lit = lit;
 console.log('.lit Notebook client initializing...');
 console.log("lit:", lit);
 
-(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee3() {
+(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
   var src, contents, file, stat, processedFile;
-  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee3$(_context3) {
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
     while (1) {
-      switch (_context3.prev = _context3.next) {
+      switch (_context.prev = _context.next) {
         case 0:
           src = litsrc;
           if (src === '404.lit' && query.file) src = query.file;
           console.log("Checking local (".concat(baseUrl, ") filesystem for: ").concat(src));
-          _context3.prev = 3;
-          _context3.next = 6;
+          _context.prev = 3;
+          _context.next = 6;
           return lit.fs.stat('/' + src);
 
         case 6:
-          stat = _context3.sent;
-          _context3.next = 11;
+          stat = _context.sent;
+          _context.next = 11;
           break;
 
         case 9:
-          _context3.prev = 9;
-          _context3.t0 = _context3["catch"](3);
+          _context.prev = 9;
+          _context.t0 = _context["catch"](3);
 
         case 11:
           if (!stat) {
-            _context3.next = 18;
+            _context.next = 18;
             break;
           }
 
           console.log("Local file \"".concat('/' + src, "\" exists, loading that instead."));
-          _context3.next = 15;
+          _context.next = 15;
           return lit.fs.readFile('/' + src, {
             encoding: 'utf8'
           });
 
         case 15:
-          contents = _context3.sent;
-          _context3.next = 24;
+          contents = _context.sent;
+          _context.next = 24;
           break;
 
         case 18:
           console.log("Fetching file content", litroot, litsrc, path.join(litroot, litsrc));
-          _context3.next = 21;
+          _context.next = 21;
           return fetch(path.join(litroot, litsrc));
 
         case 21:
-          _context3.next = 23;
-          return _context3.sent.text();
+          _context.next = 23;
+          return _context.sent.text();
 
         case 23:
-          contents = _context3.sent;
+          contents = _context.sent;
 
         case 24:
           console.log(contents);
-          _context3.next = 27;
+          _context.next = 27;
           return vfile({
             path: src,
             contents: contents
           });
 
         case 27:
-          file = _context3.sent;
-          _context3.next = 30;
+          file = _context.sent;
+          _context.next = 30;
           return renderer.processor(fs).process(file);
 
         case 30:
-          processedFile = _context3.sent;
+          processedFile = _context.sent;
           console.log("Processed client", processedFile);
           window.lit.ast = processedFile.data.ast;
 
@@ -99813,10 +99942,10 @@ console.log("lit:", lit);
 
         case 36:
         case "end":
-          return _context3.stop();
+          return _context.stop();
       }
     }
-  }, _callee3, null, [[3, 9]]);
+  }, _callee, null, [[3, 9]]);
 }))();
 })();
 

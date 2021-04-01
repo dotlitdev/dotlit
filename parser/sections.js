@@ -1,10 +1,9 @@
 import heading from "mdast-util-heading-range";
-import isGenerated from "unist-util-generated";
-import removePosition from "unist-util-remove-position";
 import visit from "unist-util-visit";
 import flatMap from "unist-util-flatmap";
+import { getConsoleForNamespace } from '../utils/console'
 
-import { log, level } from "../utils/console";
+const console = getConsoleForNamespace('sections')
 
 const firstChild = (node,type) => node.children 
             && node.children[0]
@@ -46,7 +45,7 @@ const cellsFromNodes = nodes => {
 
   nodes.map((current) => {
     const node = current;
-    level(3, log)("[Sections] child: ", node.type);
+    console.log("[Sections] child: ", node.type);
 
     if (node.type === "section") {
       newCell = null;
@@ -61,7 +60,7 @@ const cellsFromNodes = nodes => {
       newCell = null;
       let listItem = node
       if (firstChild(listItem, 'section')) {
-        level(2, log)("[Sections] ListItem with section: ", node.type);
+        console.log("[Sections] ListItem with section: ", node.type);
         listItem.children = listItem.children.map( section => {
           section.children = cellsFromNodes(section.children)
         })
@@ -90,7 +89,7 @@ const cellsFromNodes = nodes => {
 }
 
 const wrapSection = (options) => (start, nodes, end) => {
-  level(2, log)(
+  console.log(
     "[Sections] Wrapping:",
     start && start.data.id,
     nodes && nodes.length,
@@ -128,7 +127,7 @@ const wrapSection = (options) => (start, nodes, end) => {
 };
 
 const transform = (options) => (node, index, parent) => {
-  level(2, log)("[Sections] Visiting", node.data.id);
+  console.log("[Sections] Visiting", node.data.id);
   return heading(
     parent,
     (_, node2) => node.data.id === node2.data.id,
@@ -137,12 +136,12 @@ const transform = (options) => (node, index, parent) => {
 };
 
 export const groupIntoSections = (options = {}) => (...args) => (tree) => {
-  level(1, log)("[Sections] Init");
+  console.log("[Sections] Init");
   visit(tree, "heading", transform(options), true);
 };
 
 export const ungroupSections = (options = {}) => (...args) => (tree) => {
-  level(1, log)("[UnSection] Init", options);
+  console.log("[UnSection] Init", options);
   tree = flatMap(tree, (node) => {
     if (node.type === "cell") {
       return node.children;

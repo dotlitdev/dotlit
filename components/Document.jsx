@@ -2,11 +2,15 @@ import React, {useState} from 'react'
 import path from 'path'
 import App from './App'
 import Backlinks from './Backlinks'
+import { getConsoleForNamespace } from '../utils/console'
+
+const console = getConsoleForNamespace('Document')
 
 const Document = props => {
 
     const result = props.file.result
     const title = props.file.data.frontmatter.title || props.file.stem
+    
     return <html>
         <head>
             <title>{title}</title>
