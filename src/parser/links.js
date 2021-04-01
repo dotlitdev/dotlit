@@ -17,7 +17,7 @@ const transform = options => (node, index, parent) => {
 
 export const wikiLinkOptions = files => ({
      pageResolver: (name) => [
-       name.replace(/[^\w\s/-]+/i,'')
+       name.replace(/[^\w\s/-]+/g,'')
            .replace(/ /g, '_')
            .toLowerCase()
      ],
