@@ -32378,7 +32378,7 @@ var wrapSection = function wrapSection(options) {
         id: start.data.id,
         hName: "section",
         hProperties: {
-          href: start.data.id
+          name: start.data.id
         }
       },
       position: {
