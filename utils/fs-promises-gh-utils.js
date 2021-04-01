@@ -21,6 +21,11 @@ export const ghWriteFile = (opts) => async (...args) => {
             content: btoa(content)
         })
     }
-    const resp2 = await fetch(endpoint, params)
+    console.log("params", params)
+    try {
+      const resp2 = await fetch(endpoint, params)
+    } catch(err) {
+      console.log("PUT failed", err)
+    }
     return resp2.status
 }

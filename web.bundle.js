@@ -32792,8 +32792,9 @@ var ghWriteFile = function ghWriteFile(opts) {
         resp1,
         json1,
         params,
-        resp2,
+        _resp,
         _args = arguments;
+
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -32824,19 +32825,30 @@ var ghWriteFile = function ghWriteFile(opts) {
                 content: btoa(content)
               })
             };
-            _context.next = 13;
+            console.log("params", params);
+            _context.prev = 12;
+            _context.next = 15;
             return fetch(endpoint, params);
 
-          case 13:
-            resp2 = _context.sent;
+          case 15:
+            _resp = _context.sent;
+            _context.next = 21;
+            break;
+
+          case 18:
+            _context.prev = 18;
+            _context.t0 = _context["catch"](12);
+            console.log("PUT failed", _context.t0);
+
+          case 21:
             return _context.abrupt("return", resp2.status);
 
-          case 15:
+          case 22:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee);
+    }, _callee, null, [[12, 18]]);
   }));
 };
 
