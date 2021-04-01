@@ -1,3 +1,4 @@
+import { b64EncodeUnicode } from './safe-encoders'
 import { getConsoleForNamespace } from './console'
 
 const console = getConsoleForNamespace('fs')
@@ -19,7 +20,7 @@ export const ghWriteFile = (opts) => async (...args) => {
         body: JSON.stringify({
             sha: json1.sha,
             message: opts.commitMessage || `Updated ${file}`,
-            content: btoa(content)
+            content: b64EncodeUnicode(content)
         })
     }
     console.log("params", params)
