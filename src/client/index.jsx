@@ -23,7 +23,7 @@ const litbase = getMeta('base', '/')
 const baseUrl =`${location.protocol}//${location.host}${litroot ? path.join(path.dirname(location.pathname), litroot) : litbase}`
 
 const lfs = (new FS(baseUrl)).promises 
-const fs = extendFs(lfs)
+const fs = extendFs(lfs, litroot)
 
 
 const lit = {
