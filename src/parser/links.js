@@ -1,11 +1,11 @@
 import path from 'path'
 import visit from 'unist-util-visit'
-import flatMap from 'unist-util-flatmap'
-import {log, level} from '../utils/console'
+import { getConsoleForNamespace } from '../utils/console'
 
+const console = getConsoleForNamespace('links')
 
 export const resolveLinks = (options = { root: '', filepath: ''}) => (...args) => tree => {
-    level(1, log)('[Links] Init', options)
+    console.log('[Links] Init', options)
     return visit(tree, isLink, transform(options))
 }
 
@@ -36,7 +36,7 @@ export const decorateLinkNode = (link, root = '', filepath = '') => {
         ? link.data.permalink + '.lit'
         : link.url
 
-    // level(2, log)(`[Links] resolving (${link.type}) [${url}] '${root}', "${filepath}"`)
+    // console.log(`[Links] resolving (${link.type}) [${url}] '${root}', "${filepath}"`)
     const isAbsolute = /(https?\:)?\/\//.test(url)
     const isFragment = /^(\?|#).*/.test(url)
     const isRelative = url && !isAbsolute && !isFragment

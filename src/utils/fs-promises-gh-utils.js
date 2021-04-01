@@ -1,3 +1,7 @@
+import { getConsoleForNamespace } from './console'
+
+const console = getConsoleForNamespace('fs')
+
 export const ghWriteFile = (opts) => async (...args) => {
     const file = (opts.prefix || '') + args[0]
     const content = args[1]

@@ -2,21 +2,17 @@ import React, {useState} from "react"
 import { MenuIcon, EditIcon, ExecIcon, CloseIcon, SaveIcon } from './Icons'
 
 const wrapHandler = fn => ev => {
-    console.log("Cell menu wrapper", fn, ev)
     ev.preventDefault()
     ev.stopPropagation()
     if (typeof fn === 'function') fn(ev)
-    console.log("wrapped fn called if valid")
     return false
 }
-
-console.log({ MenuIcon, EditIcon, ExecIcon, CloseIcon, SaveIcon })
 
 const CellMenu = props => {
 
     const [open, setOpen] = useState(false)
     const toggleOpen = wrapHandler(ev => {
-        console.log("Toggle CellMenu", open)
+        // console.log("Toggle CellMenu", open)
         setOpen(!open)
     })
 

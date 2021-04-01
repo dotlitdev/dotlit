@@ -5,6 +5,9 @@ import CellMenu from './CellMenu'
 import SelectionContext from './SelectionContext'
 import Editor from './Editor'
 
+import { getConsoleForNamespace } from '../utils/console'
+
+const console = getConsoleForNamespace('Cell')
 
 const childIs = (node, nodeType) => node.children 
     && node.children.length

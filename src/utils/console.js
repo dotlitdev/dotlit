@@ -1,6 +1,8 @@
 
 // const {Console} = require('console')
 
+const { NoOp } = require("./functions");
+
 if (process && process.env) console.log("DEBUG:",process.env.DEBUG )
 
 const debug_level = () => typeof process !== 'undefined' ? parseInt(process.env.DEBUG || 0, 10) : 99;
@@ -23,23 +25,61 @@ const debug_level = () => typeof process !== 'undefined' ? parseInt(process.env.
 // custom_console.level = level
 // module.exports = custom_console
 
+const debugKeys = (...args) => {
+  let debugStr = ''
+  if (typeof window !== 'undefined' && window.location) {
+      const hash = window.location.hash.slice(1)
+      const debugKeys = hash.match(/db:([^;]*);?/)
+      if (debugKeys && debugKeys[1]) debugStr = debugKeys[1]
+  }
+
+  if (typeof process !== 'undefined' && process.env && process.env.DEBUG) {
+    debugStr = process.env.DEBUG
+  }
+
+  return debugStr.split(',')
+}
+
+const shouldLog = ns => {
+  const keys = debugKeys()
+  return (keys.indexOf('*') >= 0) || (keys.indexOf(ns) >= 0)
+}
 
 const level = function(level, fn) {
   const lvlIndent = Array(level).fill('  ').join('')
   return function(...args) {
-    if (level <= debug_level()) fn(`[lit]{${level}}${lvlIndent}`, ...args)
+    if (level <= debug_level() || shouldLog(level)) fn(`[lit]{${level}}${lvlIndent}`, ...args)
   }
 }
 
-module.exports = {
+const Console = {
   level: level,
   log: console.log,
   dir: console.dir,
   info: console.info,
   error: console.error,
   time: console.time,
-  timeEnd: console.timeEnd
+  timeEnd: console.timeEnd,
+  getConsoleForNamespace,
 }
+
+function getConsoleForNamespace(ns) {
+  if (shouldLog(ns)) {
+    return Console
+  } else {
+    return {
+      level: NoOp,
+      log: NoOp,
+      dir: NoOp,
+      info: NoOp,
+      error: NoOp,
+      time: NoOp,
+      timeEnd: NoOp,
+    }
+  }
+}
+
+module.exports = Console
 
 
 

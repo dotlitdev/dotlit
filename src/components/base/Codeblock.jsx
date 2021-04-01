@@ -1,5 +1,8 @@
 import React from 'react'
 import {log, level} from '../../utils/console'
+import { getConsoleForNamespace } from '../../utils/console'
+
+const console = getConsoleForNamespace('codeblocks')
 
 class Meta extends React.Component {
     render() {
@@ -30,7 +33,7 @@ export default class Codeblock extends React.Component {
         const meta = codeNode ? codeNode.properties.meta : null
         
         if (codeNode) {
-            level(2, log)("[Codeblock]", codeNode.properties.meta )
+            console.log("[Codeblock]", codeNode.properties.meta )
             return <codecell>
                 { meta && <Meta meta={meta}/> }
                 { meta &&  meta.isOutput

@@ -1,9 +1,7 @@
 import visit from 'unist-util-visit'
-import before from 'unist-util-find-before'
-import after from 'unist-util-find-after'
+import { getConsoleForNamespace } from '../utils/console'
 
-import {log, level} from '../utils/console'
-import { notEqual } from 'assert'
+const console = getConsoleForNamespace('codeblocks')
 
 const LSP = '__.litsp__'
 const NONESCAPEDSPACES_REGEX = /([^\\])\s/g
@@ -18,7 +16,7 @@ export default function (...args) {
 }
 
 function transform (node, index, parent) {  
-    level(1, log)( '[CodeBlocks] Visiting: ', node.lang, node.meta)
+    console.log( '[CodeBlocks] Visiting: ', node.lang, node.meta)
     const litMeta = parseMeta(node)
     
     node.data = {
@@ -35,7 +33,7 @@ function transform (node, index, parent) {
 
 function parseMeta (node) {
     const raw = `${node.lang || ''} ${node.meta || ''}`.trim()
-    level(2, log)(`[CodeBlocks] lang: "${node.lang}" meta: "${node.meta}", raw: "${raw}"`)
+    console.log(`[CodeBlocks] lang: "${node.lang}" meta: "${node.meta}", raw: "${raw}"`)
 
     const isOutput = raw.indexOf('>') === 0
     const hasOutput = node.meta && node.meta.indexOf('>') >= 0
