@@ -14,7 +14,7 @@ const App = ({file, fs, result}) => {
     
     const setSrcWrapper = async (pos, cellSource) => {
         console.log("<App/> Set src wrapper", pos, cellSource)
-        const patchedSrc = patchSource(src, pos, cellSource)
+        const patchedSrc = patchSource(src, pos, cellSource.trimEnd())
         
 
         try {
