@@ -32213,7 +32213,7 @@ var transform = function transform(options) {
 var wikiLinkOptions = function wikiLinkOptions(files) {
   return {
     pageResolver: function pageResolver(name) {
-      return [name.replace(/[^\w\s/-]+/g, '').replace(/\s+/g, '_').toLowerCase()];
+      return [name.replace(/[^\w\s/-]+/g, '').replace(/\s+/g, '_').toLowerCase().trim()];
     }
   };
 }; // ({ 
