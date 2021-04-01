@@ -20,6 +20,7 @@ export const wikiLinkOptions = files => ({
        name.replace(/[^\w\s/-]+/g,'')
            .replace(/\s+/g, '_')
            .toLowerCase()
+           .trim()
      ],
 })
 // ({ 
