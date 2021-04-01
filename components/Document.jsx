@@ -13,7 +13,7 @@ const Document = props => {
 
     const setDebug = () => {
         let [d,l] = ['litDebug',localStorage]
-        l.setItem( d, prompt(d) )
+        l.setItem( d, prompt(d, l.getItem(d) || '*,fs,client,Cell,sections,etc...') )
     }
     
     return <html>

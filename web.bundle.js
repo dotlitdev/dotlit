@@ -31463,7 +31463,7 @@ var Document = function Document(props) {
   var setDebug = function setDebug() {
     var d = 'litDebug',
         l = localStorage;
-    l.setItem(d, prompt(d));
+    l.setItem(d, prompt(d, l.getItem(d) || '*,fs,client,Cell,sections,etc...'));
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("html", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("head", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("title", null, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("meta", {
