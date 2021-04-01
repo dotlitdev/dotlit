@@ -32800,7 +32800,7 @@ var ghWriteFile = function ghWriteFile(opts) {
           case 0:
             file = (opts.prefix || '') + (_args.length <= 0 ? undefined : _args[0]);
             content = _args.length <= 1 ? undefined : _args[1];
-            endpoint = "https://api.github.com/repos/".concat(opts.username, "/").concat(opts.repository, "/contents").concat(file);
+            endpoint = "https://api.github.com/repos/".concat(opts.username, "/").concat(opts.repository, "/contents/").concat(file);
             _context.next = 5;
             return fetch(endpoint);
 
