@@ -31329,9 +31329,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var wrapHandler = function wrapHandler(fn) {
   return function (ev) {
+    console.log("Cell menu wrapper", fn, ev);
     ev.preventDefault();
     ev.stopPropagation();
     if (typeof fn === 'function') fn(ev);
+    console.log("wrapped fn called if valid");
     return false;
   };
 };
