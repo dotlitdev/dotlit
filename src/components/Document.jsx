@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import path from 'path'
 import App from './App'
 import Backlinks from './Backlinks'
+import { Header } from './Header'
 import { getConsoleForNamespace } from '../utils/console'
 
 const console = getConsoleForNamespace('Document')
@@ -10,13 +11,6 @@ const Document = props => {
 
     const result = props.file.result
     const title = props.file.data.frontmatter.title || props.file.stem
-
-    const setDebug = ev => {
-        ev.preventDefault()
-        let [d,l] = ['litDebug',localStorage]
-        l.setItem( d, prompt(d, l.getItem(d) || '*,fs,client,Cell,sections,etc...') )
-        return false
-    }
     
     return <html>
         <head>
@@ -27,10 +21,7 @@ const Document = props => {
             <link rel="stylesheet" href={path.join(props.root, 'style.css')}/>
         </head>
         <body>
-            <header>
-                 <a href={props.root}>Home</a>
-                 <span onClick={setDebug}>Debug</span>
-            </header>
+            <div id="header"><Header root={props.root} /></div>
             <div id="app"><App file={props.file} fs={props.fs} result={result}/></div>
             <div id="backlinks"><Backlinks root={props.root} links={props.backlinks || []}/></div>
             {/* <script>content.remove();</script> */}
