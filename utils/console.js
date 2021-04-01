@@ -3,7 +3,6 @@
 
 const { NoOp } = require("./functions");
 
-if (process && process.env) console.log("DEBUG:",process.env.DEBUG )
 
 const debug_level = () => typeof process !== 'undefined' ? parseInt(process.env.DEBUG || 0, 10) : 99;
 
@@ -27,17 +26,19 @@ const debug_level = () => typeof process !== 'undefined' ? parseInt(process.env.
 
 const debugKeys = (...args) => {
   let debugStr = ''
+  if (typeof process !== 'undefined' && process.env && process.env.DEBUG) {
+    debugStr = process.env.DEBUG
+  }
+
   if (typeof window !== 'undefined' && window.location) {
       const debugKeys = localStorage.getItem('litDebug') || ''
       if (debugKeys) debugStr = debugKeys
   }
 
-  if (typeof process !== 'undefined' && process.env && process.env.DEBUG) {
-    debugStr = process.env.DEBUG
-  }
-
   return debugStr.split(',')
 }
+
+console.log("DEBUG:", debugKeys() )
 
 const shouldLog = ns => {
   const keys = debugKeys()

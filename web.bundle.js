@@ -32681,8 +32681,6 @@ function _renderedVFileToDoc() {
 var _require = __webpack_require__(/*! ./functions */ "./src/utils/functions.js"),
     NoOp = _require.NoOp;
 
-if (process && process.env) console.log("DEBUG:", process.env.DEBUG);
-
 var debug_level = function debug_level() {
   return typeof process !== 'undefined' ? parseInt(process.env.DEBUG || 0, 10) : 99;
 }; // const level = function(level, fn) {
@@ -32704,18 +32702,20 @@ var debug_level = function debug_level() {
 var debugKeys = function debugKeys() {
   var debugStr = '';
 
+  if (typeof process !== 'undefined' && process.env && process.env.DEBUG) {
+    debugStr = process.env.DEBUG;
+  }
+
   if (typeof window !== 'undefined' && window.location) {
     var _debugKeys = localStorage.getItem('litDebug') || '';
 
     if (_debugKeys) debugStr = _debugKeys;
   }
 
-  if (typeof process !== 'undefined' && process.env && process.env.DEBUG) {
-    debugStr = process.env.DEBUG;
-  }
-
   return debugStr.split(',');
 };
+
+console.log("DEBUG:", debugKeys());
 
 var shouldLog = function shouldLog(ns) {
   var keys = debugKeys();
