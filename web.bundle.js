@@ -32787,12 +32787,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _console__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./console */ "./src/utils/console.js");
-/* harmony import */ var _console__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_console__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _safe_encoders__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./safe-encoders */ "./src/utils/safe-encoders.js");
+/* harmony import */ var _console__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./console */ "./src/utils/console.js");
+/* harmony import */ var _console__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_console__WEBPACK_IMPORTED_MODULE_3__);
 
 
 
-var console = (0,_console__WEBPACK_IMPORTED_MODULE_2__.getConsoleForNamespace)('fs');
+
+var console = (0,_console__WEBPACK_IMPORTED_MODULE_3__.getConsoleForNamespace)('fs');
 var ghWriteFile = function ghWriteFile(opts) {
   return /*#__PURE__*/(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
     var _len,
@@ -32839,7 +32841,7 @@ var ghWriteFile = function ghWriteFile(opts) {
               body: JSON.stringify({
                 sha: json1.sha,
                 message: opts.commitMessage || "Updated ".concat(file),
-                content: btoa(content)
+                content: (0,_safe_encoders__WEBPACK_IMPORTED_MODULE_2__.b64EncodeUnicode)(content)
               })
             };
             console.log("params", params);
@@ -33100,6 +33102,37 @@ var getMeta = function getMeta(key, def) {
   var val = el ? el.getAttribute('value') : def;
   return val;
 };
+
+/***/ }),
+
+/***/ "./src/utils/safe-encoders.js":
+/*!************************************!*\
+  !*** ./src/utils/safe-encoders.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "b64EncodeUnicode": () => (/* binding */ b64EncodeUnicode),
+/* harmony export */   "b64DecodeUnicode": () => (/* binding */ b64DecodeUnicode)
+/* harmony export */ });
+var newlineRegex = /\n/g;
+function b64EncodeUnicode(str) {
+  return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function (match, p1) {
+    return String.fromCharCode('0x' + p1);
+  }));
+}
+function b64DecodeUnicode(str) {
+  // atob on Mobile Safari for iOS 9 will throw an exception if there's a newline.
+  var b64Decoded = atob(str.replace(newlineRegex, ''));
+  var decodedWithUnicodeHexesRestored = Array.prototype.map.call(b64Decoded, hexEncodeCharCode).join('');
+  return decodeURIComponent(decodedWithUnicodeHexesRestored);
+}
+
+function hexEncodeCharCode(c) {
+  return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+}
 
 /***/ }),
 
