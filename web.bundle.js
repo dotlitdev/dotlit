@@ -31112,7 +31112,7 @@ var App = function App(_ref) {
           switch (_context.prev = _context.next) {
             case 0:
               console.log("<App/> Set src wrapper", pos, cellSource);
-              patchedSrc = (0,_utils_unist_util_patch_source__WEBPACK_IMPORTED_MODULE_5__.default)(src, pos, cellSource);
+              patchedSrc = (0,_utils_unist_util_patch_source__WEBPACK_IMPORTED_MODULE_5__.default)(src, pos, cellSource.trimEnd());
               _context.prev = 2;
               _context.next = 5;
               return fs.writeFile(file.path, patchedSrc, {
