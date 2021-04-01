@@ -29,7 +29,7 @@ const Document = props => {
         <body>
             <header>
                  <a href={props.root}>Home</a>
-                 <a href="#" onClick={setDebug}>Debug</a>
+                 <span onClick={setDebug}>Debug</span>
             </header>
             <div id="app"><App file={props.file} fs={props.fs} result={result}/></div>
             <div id="backlinks"><Backlinks root={props.root} links={props.backlinks || []}/></div>
