@@ -31459,6 +31459,13 @@ var console = (0,_utils_console__WEBPACK_IMPORTED_MODULE_4__.getConsoleForNamesp
 var Document = function Document(props) {
   var result = props.file.result;
   var title = props.file.data.frontmatter.title || props.file.stem;
+
+  var setDebug = function setDebug() {
+    var d = 'litDebug',
+        l = localStorage;
+    l.setItem(d, prompt(d));
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("html", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("head", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("title", null, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("meta", {
     name: "litsrc",
     value: props.file.path
@@ -31473,7 +31480,9 @@ var Document = function Document(props) {
     href: path__WEBPACK_IMPORTED_MODULE_1___default().join(props.root, 'style.css')
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("body", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("header", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
     href: props.root
-  }, "Home")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, "Home"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+    onClick: setDebug
+  }, "Debug")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     id: "app"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_App__WEBPACK_IMPORTED_MODULE_2__.default, {
     file: props.file,
@@ -32786,7 +32795,10 @@ __webpack_require__.r(__webpack_exports__);
 var console = (0,_console__WEBPACK_IMPORTED_MODULE_2__.getConsoleForNamespace)('fs');
 var ghWriteFile = function ghWriteFile(opts) {
   return /*#__PURE__*/(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
-    var file,
+    var _len,
+        args,
+        _key,
+        file,
         content,
         endpoint,
         resp1,
@@ -32794,22 +32806,28 @@ var ghWriteFile = function ghWriteFile(opts) {
         params,
         resp2,
         _args = arguments;
+
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            file = (opts.prefix || '') + (_args.length <= 0 ? undefined : _args[0]);
-            content = _args.length <= 1 ? undefined : _args[1];
+            for (_len = _args.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+              args[_key] = _args[_key];
+            }
+
+            console.log(args);
+            file = (opts.prefix || '') + args[0];
+            content = args[1].toString();
             endpoint = "https://api.github.com/repos/".concat(opts.username, "/").concat(opts.repository, "/contents/").concat(file);
-            _context.next = 5;
+            _context.next = 7;
             return fetch(endpoint);
 
-          case 5:
+          case 7:
             resp1 = _context.sent;
-            _context.next = 8;
+            _context.next = 10;
             return resp1.json();
 
-          case 8:
+          case 10:
             json1 = _context.sent;
             console.log(endpoint, json1.sha ? "Exists, updating..." : "Dosn't exist, creating...");
             params = {
@@ -32825,29 +32843,29 @@ var ghWriteFile = function ghWriteFile(opts) {
               })
             };
             console.log("params", params);
-            _context.prev = 12;
-            _context.next = 15;
+            _context.prev = 14;
+            _context.next = 17;
             return fetch(endpoint, params);
 
-          case 15:
+          case 17:
             resp2 = _context.sent;
-            _context.next = 21;
+            _context.next = 23;
             break;
 
-          case 18:
-            _context.prev = 18;
-            _context.t0 = _context["catch"](12);
+          case 20:
+            _context.prev = 20;
+            _context.t0 = _context["catch"](14);
             console.log("PUT failed", _context.t0);
 
-          case 21:
-            return _context.abrupt("return", resp2.status);
+          case 23:
+            return _context.abrupt("return", resp2 && resp2.status);
 
-          case 22:
+          case 24:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[12, 18]]);
+    }, _callee, null, [[14, 20]]);
   }));
 };
 
@@ -32879,10 +32897,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var console = (0,_console__WEBPACK_IMPORTED_MODULE_4__.getConsoleForNamespace)('fs');
 
-var passThroughRead = function passThroughRead(fs) {
+var passThroughRead = function passThroughRead(fs, litroot) {
   var rf = fs.readFile;
   return /*#__PURE__*/(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
-    var _args = arguments;
+    var filePath,
+        _args = arguments;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -32898,18 +32917,19 @@ var passThroughRead = function passThroughRead(fs) {
           case 7:
             _context.prev = 7;
             _context.t0 = _context["catch"](1);
-            console.log('fs.passThroughRead passing through to fetch');
-            _context.next = 12;
-            return fetch(path__WEBPACK_IMPORTED_MODULE_2___default().join(litroot, _args.length <= 0 ? undefined : _args[0]));
+            filePath = path__WEBPACK_IMPORTED_MODULE_2___default().join(litroot, _args.length <= 0 ? undefined : _args[0]);
+            console.log('fs.passThroughRead passing through to fetch', filePath);
+            _context.next = 13;
+            return fetch(filePath);
 
-          case 12:
-            _context.next = 14;
+          case 13:
+            _context.next = 15;
             return _context.sent.text();
 
-          case 14:
+          case 15:
             return _context.abrupt("return", _context.sent);
 
-          case 15:
+          case 16:
           case "end":
             return _context.stop();
         }
@@ -33000,7 +33020,7 @@ var writeFileP = function writeFileP(fs) {
   }));
 };
 
-var passThroughWrite = function passThroughWrite(fs) {
+var passThroughWrite = function passThroughWrite(fs, litroot) {
   var wf = fs.writeFile;
   return /*#__PURE__*/(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee3() {
     var ghwf,
@@ -33045,8 +33065,8 @@ var passThroughWrite = function passThroughWrite(fs) {
   }));
 };
 
-var extendFs = function extendFs(fs) {
-  fs.readFile = passThroughRead(fs);
+var extendFs = function extendFs(fs, litroot) {
+  fs.readFile = passThroughRead(fs, litroot);
   fs.writeFile = writeFileP(fs);
   if (localStorage.getItem("ghToken")) fs.writeFile = passThroughWrite(fs);
   return fs;
@@ -99850,7 +99870,7 @@ var litroot = getMeta('root', '');
 var litbase = getMeta('base', '/');
 var baseUrl = "".concat(location.protocol, "//").concat(location.host).concat(litroot ? path.join(path.dirname(location.pathname), litroot) : litbase);
 var lfs = new FS(baseUrl).promises;
-var fs = extendFs(lfs);
+var fs = extendFs(lfs, litroot);
 var lit = {
   location: {
     src: litsrc,

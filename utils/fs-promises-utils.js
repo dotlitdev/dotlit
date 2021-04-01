@@ -4,15 +4,16 @@ import { getConsoleForNamespace } from './console'
 
 const console = getConsoleForNamespace('fs')
 
-const passThroughRead = (fs) => {
+const passThroughRead = (fs, litroot) => {
   const rf = fs.readFile
   return async (...args) => {
     console.log('fs.passThroughRead')
     try {
       return await rf(...args);
     } catch (err) {
-      console.log('fs.passThroughRead passing through to fetch')
-      return await (await fetch(path.join(litroot, args[0]))).text();
+      const filePath = path.join(litroot, args[0])
+      console.log('fs.passThroughRead passing through to fetch', filePath)
+      return await (await fetch(filePath)).text();
     }
   };
 }
@@ -45,7 +46,7 @@ const writeFileP = (fs) => {
   };
 }
 
-const passThroughWrite = (fs) => {
+const passThroughWrite = (fs,litroot) => {
   const wf = fs.writeFile
   return async (...args) => {
     console.log('fs.passThroughWrite')
@@ -65,8 +66,8 @@ const passThroughWrite = (fs) => {
   };
 }
 
-export const extendFs = (fs) => {
-  fs.readFile = passThroughRead(fs);
+export const extendFs = (fs, litroot) => {
+  fs.readFile = passThroughRead(fs,litroot);
   fs.writeFile = writeFileP(fs);
 
   if (localStorage.getItem("ghToken")) fs.writeFile = passThroughWrite(fs);
