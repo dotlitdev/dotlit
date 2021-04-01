@@ -32230,8 +32230,8 @@ var decorateLinkNode = function decorateLinkNode(link) {
   var url = wikiLink ? link.data.permalink + '.lit' : link.url; // level(2, log)(`[Links] resolving (${link.type}) [${url}] '${root}', "${filepath}"`)
 
   var isAbsolute = /(https?\:)?\/\//.test(url);
-  var isFragment = /(\?|#).*/.test(url);
-  var isRelative = url && !isAbsolute;
+  var isFragment = /^(\?|#).*/.test(url);
+  var isRelative = url && !isAbsolute && !isFragment;
   var canonical = url;
   var href = url;
 

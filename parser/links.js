@@ -38,8 +38,8 @@ export const decorateLinkNode = (link, root = '', filepath = '') => {
 
     // level(2, log)(`[Links] resolving (${link.type}) [${url}] '${root}', "${filepath}"`)
     const isAbsolute = /(https?\:)?\/\//.test(url)
-    const isFragment = /(\?|#).*/.test(url)
-    const isRelative = url && !isAbsolute
+    const isFragment = /^(\?|#).*/.test(url)
+    const isRelative = url && !isAbsolute && !isFragment
 
     let canonical = url
     let href = url
