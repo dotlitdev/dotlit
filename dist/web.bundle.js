@@ -21140,15 +21140,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var path__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _SelectionContext__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SelectionContext */ "./src/components/SelectionContext.jsx");
 /* harmony import */ var _utils_unist_util_patch_source__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/unist-util-patch-source */ "./src/utils/unist-util-patch-source.js");
-/* harmony import */ var _utils_fs_promises_utils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/fs-promises-utils */ "./src/utils/fs-promises-utils.js");
 
 
 
 
 
 
-
-
+ // import {writeFileP} from '../utils/fs-promises-utils'
 
 var App = function App(_ref) {
   var file = _ref.file,
@@ -21163,9 +21161,8 @@ var App = function App(_ref) {
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(null),
       _useState4 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__.default)(_useState3, 2),
       selectedCell = _useState4[0],
-      setSelectedCell = _useState4[1];
+      setSelectedCell = _useState4[1]; // const writeFile = writeFileP(fs)
 
-  var writeFile = (0,_utils_fs_promises_utils__WEBPACK_IMPORTED_MODULE_7__.writeFileP)(fs);
 
   var setSrcWrapper = /*#__PURE__*/function () {
     var _ref2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee(pos, cellSource) {
@@ -21176,7 +21173,7 @@ var App = function App(_ref) {
             case 0:
               patchedSrc = (0,_utils_unist_util_patch_source__WEBPACK_IMPORTED_MODULE_6__.default)(src, pos, cellSource);
               _context.next = 3;
-              return writeFile(file.path, patchedSrc, {
+              return fs.writeFile(file.path, patchedSrc, {
                 encoding: 'utf8'
               });
 
@@ -21903,6 +21900,7 @@ function parseMeta(node) {
   var hasOutput = node.meta && node.meta.indexOf('>') >= 0;
   var hasSource = node.meta && node.meta.indexOf('<') >= 0;
   var input = raw;
+  var fromSource;
 
   if (isOutput) {
     input = raw.split('>')[1].trim();
@@ -21910,13 +21908,26 @@ function parseMeta(node) {
     input = raw.split('>')[0].trim();
   } else if (hasSource) {
     input = raw.split('<')[0].trim();
+    fromSource = getSource(raw).filename;
   }
 
   var meta = input.replace(NONESCAPEDSPACES_REGEX, "$1" + LSP).split(LSP).map(ident).reduce(reduceParts, {});
   meta.isOutput = isOutput;
   meta.hasOutput = hasOutput;
   meta.hasSource = hasSource;
+  meta.fromSource = fromSource;
   return meta;
+}
+
+function getSource(meta) {
+  var tail = meta.split('<')[1];
+
+  if (tail) {
+    return parseMeta({
+      lang: 'txt',
+      meta: tail.trim()
+    });
+  }
 }
 
 function ident(x, i) {
@@ -22209,8 +22220,9 @@ var wikiLinkOptions = function wikiLinkOptions(files) {
 var decorateLinkNode = function decorateLinkNode(link) {
   var root = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
   var filepath = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-  console.log(link);
-  var url = link.url || link.data.permalink; // level(2, log)(`[Links] resolving (${link.type}) [${url}] '${root}', "${filepath}"`)
+  // console.log(link)
+  var wikiLink = link.type === 'wikiLink';
+  var url = wikiLink ? link.data.permalink + '.lit' : link.url; // level(2, log)(`[Links] resolving (${link.type}) [${url}] '${root}', "${filepath}"`)
 
   var isAbsolute = /(https?\:)?\/\//.test(url);
   var isFragment = /(\?|#).*/.test(url);
@@ -22231,42 +22243,20 @@ var decorateLinkNode = function decorateLinkNode(link) {
     isAbsolute: isAbsolute,
     isFragment: isFragment,
     isRelative: isRelative,
-    canonical: canonical
+    canonical: canonical,
+    wikiLink: wikiLink
   };
+
+  if (wikiLink) {
+    link.url = link.url + '?file=' + canonical;
+    link.children = [{
+      type: 'text',
+      value: link.value
+    }];
+  }
+
   delete link.value;
-  return link; // link.data = link.data || {}
-  // link.data.hProperties = link.data.hProperties || {}
-  // if (link.type === 'wikiLink') {
-  //     link.data.hProperties.wikilink = true
-  //     if (link.data.exists === 'false') {
-  //         link.data.hProperties.title = 'Click to create new file'
-  //     }
-  //     link.url = link.data.hProperties.href
-  // }
-  // level(2, log)(`[Links] resolving (${link.type})`, link.url, root, filepath)
-  // const isAbsolute = typeof root === 'undefined' || /(https?\:)?\/\//.test(link.url)
-  // const isFragment = /(\?|#).*/.test(link.url)
-  // const isRelative = typeof root !== 'undefined' && link.url && !isAbsolute
-  // if (isRelative) {
-  //     const abs = path.resolve(root, path.dirname(filepath), link.url)
-  //     const newPath = path.relative(path.resolve(root), abs)
-  //     link.data.canonical = newPath
-  // } else {
-  //     link.data.canonical = link.url
-  // }
-  // link.data.canonical = link.data.canonical.split("?")[0]
-  // link.data.original = link.url
-  // link.url = link.url.replace(/\.(md|lit)/i, '.html')
-  // link.data.isAbsolute = isAbsolute
-  // link.data.isFragment = isFragment
-  // link.data.isRelative = isRelative
-  // link.data.hProperties.href = link.url
-  // // don't throw away wiki link classes (yet)
-  // link.data.hProperties.className = link.data.hProperties.className || ''
-  // link.data.hProperties.className += isAbsolute ? ' absolute' : ''
-  // link.data.hProperties.className += isRelative ? ' relative' : ''
-  // link.data.hProperties.className += isFragment ? ' fragment' : ''
-  // return link
+  return link;
 };
 var nameToPermalinks = function nameToPermalinks(name) {
   var full = name.replace(/ /g, '_').toLowerCase();
@@ -22360,25 +22350,7 @@ var cellsFromNodes = function cellsFromNodes(nodes) {
     if (node.type === "section") {
       newCell = null;
       cells.push(node);
-    } else if (node.type === "list" && node.spread) {
-      newCell = null;
-      var listSection = createSection(node);
-      cells.push(listSection);
-    } else if (node.type === "listItem" && node.spread) {
-      newCell = null;
-      var listItem = node;
-
-      if (firstChild(listItem, 'section')) {
-        (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_6__.log)("[Sections] ListItem with section: ", node.type);
-        listItem.children = listItem.children.map(function (section) {
-          section.children = cellsFromNodes(section.children);
-        });
-      } else {
-        listItem.children = [createSection(node, node.children)];
-      }
-
-      cells.push(listItem);
-    } else if (node.type === "code") {
+    } else if (false) { var listSection; } else if (false) { var listItem; } else if (node.type === "code") {
       newCell = null;
       var singleCell = createCell(node);
       cells.push(singleCell);
@@ -22395,9 +22367,9 @@ var cellsFromNodes = function cellsFromNodes(nodes) {
 
 var wrapSection = function wrapSection(options) {
   return function (start, nodes, end) {
-    (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_6__.log)("[Sections] Wrapping:", start && start.data.id, nodes && nodes.length, end && end.type); // log("[Section] children:", children)
+    (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_6__.log)("[Sections] Wrapping:", start && start.data.id, nodes && nodes.length, end && end.type);
+    nodes = [start].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__.default)(nodes)); // log("[Section] nodes:", nodes)
 
-    nodes = [start].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__.default)(nodes));
     var cells = cellsFromNodes(nodes);
     return [{
       type: "section",
@@ -22465,7 +22437,6 @@ var ungroupSections = function ungroupSections() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "processor": () => (/* binding */ processor),
-/* harmony export */   "renderToVfile": () => (/* binding */ renderToVfile),
 /* harmony export */   "renderedVFileToDoc": () => (/* binding */ renderedVFileToDoc)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
@@ -22491,6 +22462,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 
 
@@ -22503,12 +22479,104 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function processor() {
+
+
+function processor(fs) {
   return (0,_parser__WEBPACK_IMPORTED_MODULE_9__.processor)() // hoist ast to data
   .use(function () {
     return function (tree, file) {
       file.data.ast = tree;
     };
+  }) // transclude codeblocks with source
+  // when available 
+  .use(function () {
+    return /*#__PURE__*/function () {
+      var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(tree, file) {
+        var _iterator, _step, block, filePath, value;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (fs) {
+                  _context.next = 2;
+                  break;
+                }
+
+                return _context.abrupt("return");
+
+              case 2:
+                console.log("Checking for files to transclude");
+                _iterator = _createForOfIteratorHelper((0,unist_util_select__WEBPACK_IMPORTED_MODULE_5__.selectAll)("code", tree));
+                _context.prev = 4;
+
+                _iterator.s();
+
+              case 6:
+                if ((_step = _iterator.n()).done) {
+                  _context.next = 25;
+                  break;
+                }
+
+                block = _step.value;
+
+                if (!(block.data && block.data.meta && block.data.meta.fromSource)) {
+                  _context.next = 23;
+                  break;
+                }
+
+                console.log("has fromSource", block.data.meta.fromSource);
+                filePath = path__WEBPACK_IMPORTED_MODULE_2___default().join(path__WEBPACK_IMPORTED_MODULE_2___default().dirname(file.path), block.data.meta.fromSource);
+                console.log("to filePath", filePath);
+                _context.prev = 12;
+                _context.next = 15;
+                return fs.readFile(filePath);
+
+              case 15:
+                value = _context.sent;
+                console.log("has value", value);
+                block.value = value;
+                _context.next = 23;
+                break;
+
+              case 20:
+                _context.prev = 20;
+                _context.t0 = _context["catch"](12);
+                file.message("Failed to load " + block.data.meta.fromSource + " as " + filePath);
+
+              case 23:
+                _context.next = 6;
+                break;
+
+              case 25:
+                _context.next = 30;
+                break;
+
+              case 27:
+                _context.prev = 27;
+                _context.t1 = _context["catch"](4);
+
+                _iterator.e(_context.t1);
+
+              case 30:
+                _context.prev = 30;
+
+                _iterator.f();
+
+                return _context.finish(30);
+
+              case 33:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[4, 27, 30, 33], [12, 20]]);
+      }));
+
+      return function (_x, _x2) {
+        return _ref.apply(this, arguments);
+      };
+    }();
   }) // extract files to data
   .use(function () {
     return function (tree, file) {
@@ -22529,46 +22597,7 @@ function processor() {
     }
   });
 }
-function renderToVfile(_x, _x2, _x3) {
-  return _renderToVfile.apply(this, arguments);
-}
-
-function _renderToVfile() {
-  _renderToVfile = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(vfile, cmd, links) {
-    var root, dir, relroot, output, notebook;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            root = path__WEBPACK_IMPORTED_MODULE_2___default().resolve(cmd.output);
-            dir = path__WEBPACK_IMPORTED_MODULE_2___default().dirname(path__WEBPACK_IMPORTED_MODULE_2___default().join(root, vfile.path));
-            relroot = path__WEBPACK_IMPORTED_MODULE_2___default().relative(dir, root) || '.';
-            (0,_utils_console__WEBPACK_IMPORTED_MODULE_8__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_8__.log)('[Render] to vFile', vfile.path);
-            _context.next = 6;
-            return processor().process(vfile);
-
-          case 6:
-            output = _context.sent;
-            notebook = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(_components_Document__WEBPACK_IMPORTED_MODULE_10__.default, {
-              file: output,
-              root: cmd.base || relroot,
-              backlinks: links
-            });
-            output.contents = react_dom_server__WEBPACK_IMPORTED_MODULE_6__.renderToString(notebook);
-            output.extname = '.html';
-            return _context.abrupt("return", output);
-
-          case 11:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee);
-  }));
-  return _renderToVfile.apply(this, arguments);
-}
-
-function renderedVFileToDoc(_x4, _x5) {
+function renderedVFileToDoc(_x3, _x4) {
   return _renderedVFileToDoc.apply(this, arguments);
 }
 
@@ -22655,105 +22684,105 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./src/utils/fs-promises-utils.js":
-/*!****************************************!*\
-  !*** ./src/utils/fs-promises-utils.js ***!
-  \****************************************/
+/***/ "./src/utils/fs-promises-gh-utils.js":
+/*!*******************************************!*\
+  !*** ./src/utils/fs-promises-gh-utils.js ***!
+  \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "writeFileP": () => (/* binding */ writeFileP)
+/* harmony export */   "ghWriteFile": () => (/* binding */ ghWriteFile)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! path */ "./node_modules/path-browserify/index.js");
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_2__);
 
 
-
-var writeFileP = function writeFileP(fs) {
+var ghWriteFile = function ghWriteFile(opts) {
   return /*#__PURE__*/(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
-    var _console;
-
-    var _len,
-        args,
-        _key,
-        filepath,
-        p,
-        parts,
-        i,
-        subPath,
+    var file,
+        content,
+        endpoint,
+        resp1,
+        json1,
+        params,
+        resp2,
         _args = arguments;
-
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            for (_len = _args.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-              args[_key] = _args[_key];
-            }
+            file = (opts.prefix || '') + (_args.length <= 0 ? undefined : _args[0]);
+            content = _args.length <= 1 ? undefined : _args[1];
+            endpoint = "https://api.github.com/repos/".concat(opts.username, "/").concat(opts.repository, "/contents").concat(file);
+            _context.next = 5;
+            return fetch(endpoint);
 
-            filepath = args[0] = "/" + args[0];
-            p = path__WEBPACK_IMPORTED_MODULE_2___default().parse(filepath);
-            parts = p.dir.split((path__WEBPACK_IMPORTED_MODULE_2___default().sep));
-            console.log("\"Parts for \"".concat(filepath, "\""), parts);
-            i = 0;
+          case 5:
+            resp1 = _context.sent;
+            _context.next = 8;
+            return resp1.json();
 
-          case 6:
-            if (!(i < parts.length)) {
-              _context.next = 27;
-              break;
-            }
+          case 8:
+            json1 = _context.sent;
+            console.log(json1.sha ? "Exists, updating..." : "Dosn't exist, creating...");
+            params = {
+              method: "PUT",
+              headers: {
+                "Authorization": "token ".concat(opts.token),
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                sha: json1.sha,
+                message: opts.commitMessage || "Updated ".concat(file),
+                content: btoa(content)
+              })
+            };
+            _context.next = 13;
+            return fetch(endpoint, params);
 
-            console.log("[".concat(i, "] <--- \"").concat(parts[i], "\""));
+          case 13:
+            resp2 = _context.sent;
+            return _context.abrupt("return", resp2.status);
 
-            if (!(i === 0)) {
-              _context.next = 11;
-              break;
-            }
-
-            _context.next = 24;
-            break;
-
-          case 11:
-            subPath = parts.slice(0, i + 1).join((path__WEBPACK_IMPORTED_MODULE_2___default().sep));
-            console.log("\"".concat(subPath, "\" Sub path"));
-            _context.prev = 13;
-            _context.next = 16;
-            return fs.stat(subPath);
-
-          case 16:
-            console.log("\"".concat(subPath, "\" Existed, skipping"));
-            _context.next = 24;
-            break;
-
-          case 19:
-            _context.prev = 19;
-            _context.t0 = _context["catch"](13);
-            console.log("\"".concat(subPath, "\" Didn't exist, creating..."));
-            _context.next = 24;
-            return fs.mkdir(subPath);
-
-          case 24:
-            i++;
-            _context.next = 6;
-            break;
-
-          case 27:
-            (_console = console).log.apply(_console, ["Writing file"].concat(args));
-
-            return _context.abrupt("return", fs.writeFile.apply(fs, args));
-
-          case 29:
+          case 15:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[13, 19]]);
+    }, _callee);
   }));
+};
+
+/***/ }),
+
+/***/ "./src/utils/functions.js":
+/*!********************************!*\
+  !*** ./src/utils/functions.js ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "NoOp": () => (/* binding */ NoOp),
+/* harmony export */   "Identity": () => (/* binding */ Identity),
+/* harmony export */   "AsInt": () => (/* binding */ AsInt),
+/* harmony export */   "getMeta": () => (/* binding */ getMeta)
+/* harmony export */ });
+var NoOp = function NoOp() {};
+var Identity = function Identity(x) {
+  return x;
+};
+var AsInt = function AsInt(x) {
+  return parseInt(x);
+};
+var getMeta = function getMeta(key, def) {
+  var el = document.querySelector("meta[name=\"lit".concat(key, "\"]"));
+  var val = el ? el.getAttribute('value') : def;
+  return val;
 };
 
 /***/ }),
@@ -88591,12 +88620,6 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 
-var parser = __webpack_require__(/*! ../parser */ "./src/parser/index.js");
-
-var renderer = __webpack_require__(/*! ../renderer */ "./src/renderer/index.jsx");
-
-var App = __webpack_require__(/*! ../components/App */ "./src/components/App.jsx").default;
-
 var vfile = __webpack_require__(/*! vfile */ "./node_modules/vfile/index.js");
 
 var path = __webpack_require__(/*! path */ "./node_modules/path-browserify/index.js");
@@ -88607,18 +88630,100 @@ var FS = __webpack_require__(/*! @isomorphic-git/lightning-fs */ "./node_modules
 
 var select = __webpack_require__(/*! unist-util-select */ "./node_modules/unist-util-select/index.js");
 
-var getMeta = function getMeta(key, def) {
-  var el = document.querySelector("meta[name=\"lit".concat(key, "\"]"));
-  var val = el ? el.getAttribute('value') : def;
-  return val;
-};
+var parser = __webpack_require__(/*! ../parser */ "./src/parser/index.js");
+
+var renderer = __webpack_require__(/*! ../renderer */ "./src/renderer/index.jsx");
+
+var App = __webpack_require__(/*! ../components/App */ "./src/components/App.jsx").default;
+
+var _require = __webpack_require__(/*! ../utils/fs-promises-gh-utils.js */ "./src/utils/fs-promises-gh-utils.js"),
+    ghWriteFile = _require.ghWriteFile;
+
+var _require2 = __webpack_require__(/*! ../utils/functions */ "./src/utils/functions.js"),
+    getMeta = _require2.getMeta;
 
 var query = qs.parse(location.search.slice(1));
 var litsrc = getMeta('src', '');
 var litroot = getMeta('root', '');
 var litbase = getMeta('base', '/');
 var baseUrl = "".concat(location.protocol, "//").concat(location.host).concat(litroot ? path.join(path.dirname(location.pathname), litroot) : litbase);
-var fs = new FS(baseUrl);
+var fs = new FS(baseUrl).promises;
+var rf = fs.readFile;
+fs.readFile = /*#__PURE__*/(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
+  var _args = arguments;
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          _context.prev = 0;
+          _context.next = 3;
+          return rf.apply(void 0, _args);
+
+        case 3:
+          return _context.abrupt("return", _context.sent);
+
+        case 6:
+          _context.prev = 6;
+          _context.t0 = _context["catch"](0);
+          _context.next = 10;
+          return fetch(path.join(litroot, _args.length <= 0 ? undefined : _args[0]));
+
+        case 10:
+          _context.next = 12;
+          return _context.sent.text();
+
+        case 12:
+          return _context.abrupt("return", _context.sent);
+
+        case 13:
+        case "end":
+          return _context.stop();
+      }
+    }
+  }, _callee, null, [[0, 6]]);
+}));
+var wf = fs.writeFile;
+var ghToken = localStorage.getItem('ghToken');
+if (ghToken) fs.writeFile = /*#__PURE__*/(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2() {
+  var ghwf,
+      ghResp,
+      _args2 = arguments;
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee2$(_context2) {
+    while (1) {
+      switch (_context2.prev = _context2.next) {
+        case 0:
+          _context2.next = 2;
+          return wf.apply(void 0, _args2);
+
+        case 2:
+          ghwf = ghWriteFile({
+            username: 'dotlitdev',
+            repository: 'dotlit',
+            prefix: '/src',
+            token: ghToken
+          });
+          _context2.prev = 3;
+          _context2.next = 6;
+          return ghwf.apply(void 0, _args2);
+
+        case 6:
+          ghResp = _context2.sent;
+          console.log("GitHub write resp", ghResp);
+          _context2.next = 13;
+          break;
+
+        case 10:
+          _context2.prev = 10;
+          _context2.t0 = _context2["catch"](3);
+          console.error("GitHub write threw", _context2.t0);
+
+        case 13:
+        case "end":
+          return _context2.stop();
+      }
+    }
+  }, _callee2, null, [[3, 10]]);
+}));
 var lit = {
   location: {
     src: litsrc,
@@ -88628,7 +88733,7 @@ var lit = {
   },
   parser: parser,
   renderer: renderer,
-  fs: fs.promises,
+  fs: fs,
   utils: {
     select: select,
     path: path,
@@ -88639,72 +88744,72 @@ if (typeof window !== 'undefined') window.lit = lit;
 console.log('.lit Notebook client initializing...');
 console.log("lit:", lit);
 
-(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
+(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee3() {
   var src, contents, file, stat, processedFile;
-  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee3$(_context3) {
     while (1) {
-      switch (_context.prev = _context.next) {
+      switch (_context3.prev = _context3.next) {
         case 0:
           src = litsrc;
           if (src === '404.lit' && query.file) src = query.file;
           console.log("Checking local (".concat(baseUrl, ") filesystem for: ").concat(src));
-          _context.prev = 3;
-          _context.next = 6;
+          _context3.prev = 3;
+          _context3.next = 6;
           return lit.fs.stat('/' + src);
 
         case 6:
-          stat = _context.sent;
-          _context.next = 11;
+          stat = _context3.sent;
+          _context3.next = 11;
           break;
 
         case 9:
-          _context.prev = 9;
-          _context.t0 = _context["catch"](3);
+          _context3.prev = 9;
+          _context3.t0 = _context3["catch"](3);
 
         case 11:
           if (!stat) {
-            _context.next = 18;
+            _context3.next = 18;
             break;
           }
 
           console.log("Local file \"".concat('/' + src, "\" exists, loading that instead."));
-          _context.next = 15;
+          _context3.next = 15;
           return lit.fs.readFile('/' + src, {
             encoding: 'utf8'
           });
 
         case 15:
-          contents = _context.sent;
-          _context.next = 24;
+          contents = _context3.sent;
+          _context3.next = 24;
           break;
 
         case 18:
           console.log("Fetching file content", litroot, litsrc, path.join(litroot, litsrc));
-          _context.next = 21;
+          _context3.next = 21;
           return fetch(path.join(litroot, litsrc));
 
         case 21:
-          _context.next = 23;
-          return _context.sent.text();
+          _context3.next = 23;
+          return _context3.sent.text();
 
         case 23:
-          contents = _context.sent;
+          contents = _context3.sent;
 
         case 24:
           console.log(contents);
-          _context.next = 27;
+          _context3.next = 27;
           return vfile({
             path: src,
             contents: contents
           });
 
         case 27:
-          file = _context.sent;
-          _context.next = 30;
-          return renderer.processor().process(file);
+          file = _context3.sent;
+          _context3.next = 30;
+          return renderer.processor(fs).process(file);
 
         case 30:
-          processedFile = _context.sent;
+          processedFile = _context3.sent;
           console.log("Processed client", processedFile);
           window.lit.ast = processedFile.data.ast;
 
@@ -88728,10 +88833,10 @@ console.log("lit:", lit);
 
         case 36:
         case "end":
-          return _context.stop();
+          return _context3.stop();
       }
     }
-  }, _callee, null, [[3, 9]]);
+  }, _callee3, null, [[3, 9]]);
 }))();
 })();
 

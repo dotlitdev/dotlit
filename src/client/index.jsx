@@ -1,21 +1,20 @@
 const React = require('react')
 const ReactDOM = require('react-dom')
-const parser = require('../parser')
-const renderer = require('../renderer')
-const App = require('../components/App').default
 const vfile = require('vfile')
 const path = require('path')
 const qs = require('querystring-es3')
 const FS = require('@isomorphic-git/lightning-fs')
-const { ghWriteFile } = require('../utils/fs-promises-gh-utils.js')
-
 const select = require('unist-util-select')
 
-const getMeta = (key,def) => {
-    const el = document.querySelector(`meta[name="lit${key}"]`)
-    const val = el ? el.getAttribute('value') : def
-    return val
-}
+const parser = require('../parser')
+const renderer = require('../renderer')
+const App = require('../components/App').default
+const { ghWriteFile } = require('../utils/fs-promises-gh-utils.js')
+const { getMeta } = require('../utils/functions')
+
+
+
+
 const query = qs.parse(location.search.slice(1))
 const litsrc = getMeta('src', '')
 const litroot = getMeta('root', '')

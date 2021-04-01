@@ -1,7 +1,8 @@
-const NoOp = () => {}
-const Identity = x => x
-const AsInt = x => parseInt(x)
-
-module.exports = {
-    NoOp, Identity, AsInt
+export const NoOp = () => {}
+export const Identity = x => x
+export const AsInt = x => parseInt(x)
+export const getMeta = (key,def) => {
+    const el = document.querySelector(`meta[name="lit${key}"]`)
+    const val = el ? el.getAttribute('value') : def
+    return val
 }

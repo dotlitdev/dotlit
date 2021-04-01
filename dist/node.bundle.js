@@ -18306,7 +18306,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var unist_util_select__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! unist-util-select */ "./node_modules/unist-util-select/index.js");
 /* harmony import */ var _utils_functions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/functions */ "./src/utils/functions.js");
-/* harmony import */ var _utils_functions__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_functions__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
 /* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _parser_index__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../parser/index */ "./src/parser/index.js");
@@ -18315,6 +18314,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var crypto__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(crypto__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _parser_links__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../parser/links */ "./src/parser/links.js");
 
+
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 
 
@@ -18347,12 +18353,12 @@ function generateBacklinks(files, root) {
     manifest[fileLink.data.canonical] = manifest[fileLink.data.canonical] || {
       backlinks: []
     };
-    manifest[fileLink.data.canonical].exists = true;
-    console.log('fileLink', fileLink);
+    manifest[fileLink.data.canonical].exists = true; // console.log('fileLink', fileLink)
+
     (0,_utils_console__WEBPACK_IMPORTED_MODULE_11__.level)(0, _utils_console__WEBPACK_IMPORTED_MODULE_11__.info)("[Backlinks] ".concat(file.path, " ").concat(fileLink.data.canonical, " ").concat(fileLink.url, " links: (").concat(links.length, ")"));
     links.forEach(function (link) {
-      console.log(link);
-      (0,_utils_console__WEBPACK_IMPORTED_MODULE_11__.level)(0, _utils_console__WEBPACK_IMPORTED_MODULE_11__.info)("[Backlinks] ".concat(link.type, " >> ").concat(link.url, " >> ").concat(link.data.canonical, " relative: ").concat(link.data.isRelative));
+      // console.log(link)
+      (0,_utils_console__WEBPACK_IMPORTED_MODULE_11__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_11__.info)("[Backlinks] ".concat(link.type, " >> ").concat(link.url, " >> ").concat(link.data.canonical, " relative: ").concat(link.data.isRelative));
       var linkNode = {
         url: fileLink.url,
         title: file.data.frontmatter.title || "Title TBD (".concat(fileLink.data.canonical, ")")
@@ -18486,7 +18492,7 @@ function generate(cmd) {
                       while (1) {
                         switch (_context3.prev = _context3.next) {
                           case 0:
-                            _context3.t0 = (0,_renderer_index__WEBPACK_IMPORTED_MODULE_13__.processor)();
+                            _context3.t0 = (0,_renderer_index__WEBPACK_IMPORTED_MODULE_13__.processor)(fs__WEBPACK_IMPORTED_MODULE_8__.promises);
                             _context3.next = 3;
                             return file;
 
@@ -18517,7 +18523,8 @@ function generate(cmd) {
                 _context5.next = 18;
                 return Promise.all(ast_files.map( /*#__PURE__*/function () {
                   var _ref5 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee4(file) {
-                    var html_file;
+                    var html_file, _iterator, _step, codefile, filename, filepath;
+
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee4$(_context4) {
                       while (1) {
                         switch (_context4.prev = _context4.next) {
@@ -18543,14 +18550,62 @@ function generate(cmd) {
 
                           case 12:
                             (0,_utils_console__WEBPACK_IMPORTED_MODULE_11__.level)(0, _utils_console__WEBPACK_IMPORTED_MODULE_11__.info)("Wrote  ".concat(file.path, " to \"").concat(path__WEBPACK_IMPORTED_MODULE_7___default().join(cmd.output, file.path), "\" to disk"));
+                            _iterator = _createForOfIteratorHelper(html_file.data.files);
+                            _context4.prev = 14;
+
+                            _iterator.s();
+
+                          case 16:
+                            if ((_step = _iterator.n()).done) {
+                              _context4.next = 26;
+                              break;
+                            }
+
+                            codefile = _step.value;
+                            filename = codefile.data && codefile.data.meta && codefile.data.meta.filename;
+
+                            if (!filename) {
+                              _context4.next = 24;
+                              break;
+                            }
+
+                            filepath = path__WEBPACK_IMPORTED_MODULE_7___default().join(cmd.output, path__WEBPACK_IMPORTED_MODULE_7___default().dirname(file.path), filename);
+                            _context4.next = 23;
+                            return fs__WEBPACK_IMPORTED_MODULE_8__.promises.writeFile(filepath, codefile.value);
+
+                          case 23:
+                            (0,_utils_console__WEBPACK_IMPORTED_MODULE_11__.level)(0, _utils_console__WEBPACK_IMPORTED_MODULE_11__.info)("Wrote codefile ".concat(filename, " to \"").concat(filepath, "\" on disk"));
+
+                          case 24:
+                            _context4.next = 16;
+                            break;
+
+                          case 26:
+                            _context4.next = 31;
+                            break;
+
+                          case 28:
+                            _context4.prev = 28;
+                            _context4.t3 = _context4["catch"](14);
+
+                            _iterator.e(_context4.t3);
+
+                          case 31:
+                            _context4.prev = 31;
+
+                            _iterator.f();
+
+                            return _context4.finish(31);
+
+                          case 34:
                             return _context4.abrupt("return", html_file);
 
-                          case 14:
+                          case 35:
                           case "end":
                             return _context4.stop();
                         }
                       }
-                    }, _callee4);
+                    }, _callee4, null, [[14, 28, 31, 34]]);
                   }));
 
                   return function (_x6) {
@@ -18636,15 +18691,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var path__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _SelectionContext__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SelectionContext */ "./src/components/SelectionContext.jsx");
 /* harmony import */ var _utils_unist_util_patch_source__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/unist-util-patch-source */ "./src/utils/unist-util-patch-source.js");
-/* harmony import */ var _utils_fs_promises_utils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/fs-promises-utils */ "./src/utils/fs-promises-utils.js");
 
 
 
 
 
 
-
-
+ // import {writeFileP} from '../utils/fs-promises-utils'
 
 var App = function App(_ref) {
   var file = _ref.file,
@@ -18659,9 +18712,8 @@ var App = function App(_ref) {
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(null),
       _useState4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_useState3, 2),
       selectedCell = _useState4[0],
-      setSelectedCell = _useState4[1];
+      setSelectedCell = _useState4[1]; // const writeFile = writeFileP(fs)
 
-  var writeFile = (0,_utils_fs_promises_utils__WEBPACK_IMPORTED_MODULE_7__.writeFileP)(fs);
 
   var setSrcWrapper = /*#__PURE__*/function () {
     var _ref2 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee(pos, cellSource) {
@@ -18672,7 +18724,7 @@ var App = function App(_ref) {
             case 0:
               patchedSrc = (0,_utils_unist_util_patch_source__WEBPACK_IMPORTED_MODULE_6__.default)(src, pos, cellSource);
               _context.next = 3;
-              return writeFile(file.path, patchedSrc, {
+              return fs.writeFile(file.path, patchedSrc, {
                 encoding: 'utf8'
               });
 
@@ -19423,6 +19475,7 @@ function parseMeta(node) {
   var hasOutput = node.meta && node.meta.indexOf('>') >= 0;
   var hasSource = node.meta && node.meta.indexOf('<') >= 0;
   var input = raw;
+  var fromSource;
 
   if (isOutput) {
     input = raw.split('>')[1].trim();
@@ -19430,13 +19483,26 @@ function parseMeta(node) {
     input = raw.split('>')[0].trim();
   } else if (hasSource) {
     input = raw.split('<')[0].trim();
+    fromSource = getSource(raw).filename;
   }
 
   var meta = input.replace(NONESCAPEDSPACES_REGEX, "$1" + LSP).split(LSP).map(ident).reduce(reduceParts, {});
   meta.isOutput = isOutput;
   meta.hasOutput = hasOutput;
   meta.hasSource = hasSource;
+  meta.fromSource = fromSource;
   return meta;
+}
+
+function getSource(meta) {
+  var tail = meta.split('<')[1];
+
+  if (tail) {
+    return parseMeta({
+      lang: 'txt',
+      meta: tail.trim()
+    });
+  }
 }
 
 function ident(x, i) {
@@ -19730,8 +19796,9 @@ var wikiLinkOptions = function wikiLinkOptions(files) {
 var decorateLinkNode = function decorateLinkNode(link) {
   var root = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
   var filepath = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-  console.log(link);
-  var url = link.url || link.data.permalink; // level(2, log)(`[Links] resolving (${link.type}) [${url}] '${root}', "${filepath}"`)
+  // console.log(link)
+  var wikiLink = link.type === 'wikiLink';
+  var url = wikiLink ? link.data.permalink + '.lit' : link.url; // level(2, log)(`[Links] resolving (${link.type}) [${url}] '${root}', "${filepath}"`)
 
   var isAbsolute = /(https?\:)?\/\//.test(url);
   var isFragment = /(\?|#).*/.test(url);
@@ -19752,42 +19819,20 @@ var decorateLinkNode = function decorateLinkNode(link) {
     isAbsolute: isAbsolute,
     isFragment: isFragment,
     isRelative: isRelative,
-    canonical: canonical
+    canonical: canonical,
+    wikiLink: wikiLink
   };
+
+  if (wikiLink) {
+    link.url = link.url + '?file=' + canonical;
+    link.children = [{
+      type: 'text',
+      value: link.value
+    }];
+  }
+
   delete link.value;
-  return link; // link.data = link.data || {}
-  // link.data.hProperties = link.data.hProperties || {}
-  // if (link.type === 'wikiLink') {
-  //     link.data.hProperties.wikilink = true
-  //     if (link.data.exists === 'false') {
-  //         link.data.hProperties.title = 'Click to create new file'
-  //     }
-  //     link.url = link.data.hProperties.href
-  // }
-  // level(2, log)(`[Links] resolving (${link.type})`, link.url, root, filepath)
-  // const isAbsolute = typeof root === 'undefined' || /(https?\:)?\/\//.test(link.url)
-  // const isFragment = /(\?|#).*/.test(link.url)
-  // const isRelative = typeof root !== 'undefined' && link.url && !isAbsolute
-  // if (isRelative) {
-  //     const abs = path.resolve(root, path.dirname(filepath), link.url)
-  //     const newPath = path.relative(path.resolve(root), abs)
-  //     link.data.canonical = newPath
-  // } else {
-  //     link.data.canonical = link.url
-  // }
-  // link.data.canonical = link.data.canonical.split("?")[0]
-  // link.data.original = link.url
-  // link.url = link.url.replace(/\.(md|lit)/i, '.html')
-  // link.data.isAbsolute = isAbsolute
-  // link.data.isFragment = isFragment
-  // link.data.isRelative = isRelative
-  // link.data.hProperties.href = link.url
-  // // don't throw away wiki link classes (yet)
-  // link.data.hProperties.className = link.data.hProperties.className || ''
-  // link.data.hProperties.className += isAbsolute ? ' absolute' : ''
-  // link.data.hProperties.className += isRelative ? ' relative' : ''
-  // link.data.hProperties.className += isFragment ? ' fragment' : ''
-  // return link
+  return link;
 };
 var nameToPermalinks = function nameToPermalinks(name) {
   var full = name.replace(/ /g, '_').toLowerCase();
@@ -19882,25 +19927,7 @@ var cellsFromNodes = function cellsFromNodes(nodes) {
     if (node.type === "section") {
       newCell = null;
       cells.push(node);
-    } else if (node.type === "list" && node.spread) {
-      newCell = null;
-      var listSection = createSection(node);
-      cells.push(listSection);
-    } else if (node.type === "listItem" && node.spread) {
-      newCell = null;
-      var listItem = node;
-
-      if (firstChild(listItem, 'section')) {
-        (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_6__.log)("[Sections] ListItem with section: ", node.type);
-        listItem.children = listItem.children.map(function (section) {
-          section.children = cellsFromNodes(section.children);
-        });
-      } else {
-        listItem.children = [createSection(node, node.children)];
-      }
-
-      cells.push(listItem);
-    } else if (node.type === "code") {
+    } else if (false) { var listSection; } else if (false) { var listItem; } else if (node.type === "code") {
       newCell = null;
       var singleCell = createCell(node);
       cells.push(singleCell);
@@ -19917,9 +19944,9 @@ var cellsFromNodes = function cellsFromNodes(nodes) {
 
 var wrapSection = function wrapSection(options) {
   return function (start, nodes, end) {
-    (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_6__.log)("[Sections] Wrapping:", start && start.data.id, nodes && nodes.length, end && end.type); // log("[Section] children:", children)
+    (0,_utils_console__WEBPACK_IMPORTED_MODULE_6__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_6__.log)("[Sections] Wrapping:", start && start.data.id, nodes && nodes.length, end && end.type);
+    nodes = [start].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(nodes)); // log("[Section] nodes:", nodes)
 
-    nodes = [start].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(nodes));
     var cells = cellsFromNodes(nodes);
     return [{
       type: "section",
@@ -19987,7 +20014,6 @@ var ungroupSections = function ungroupSections() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "processor": () => (/* binding */ processor),
-/* harmony export */   "renderToVfile": () => (/* binding */ renderToVfile),
 /* harmony export */   "renderedVFileToDoc": () => (/* binding */ renderedVFileToDoc)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
@@ -20014,6 +20040,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 
 
@@ -20026,12 +20057,104 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function processor() {
+
+
+function processor(fs) {
   return (0,_parser__WEBPACK_IMPORTED_MODULE_9__.processor)() // hoist ast to data
   .use(function () {
     return function (tree, file) {
       file.data.ast = tree;
     };
+  }) // transclude codeblocks with source
+  // when available 
+  .use(function () {
+    return /*#__PURE__*/function () {
+      var _ref = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(tree, file) {
+        var _iterator, _step, block, filePath, value;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (fs) {
+                  _context.next = 2;
+                  break;
+                }
+
+                return _context.abrupt("return");
+
+              case 2:
+                console.log("Checking for files to transclude");
+                _iterator = _createForOfIteratorHelper((0,unist_util_select__WEBPACK_IMPORTED_MODULE_5__.selectAll)("code", tree));
+                _context.prev = 4;
+
+                _iterator.s();
+
+              case 6:
+                if ((_step = _iterator.n()).done) {
+                  _context.next = 25;
+                  break;
+                }
+
+                block = _step.value;
+
+                if (!(block.data && block.data.meta && block.data.meta.fromSource)) {
+                  _context.next = 23;
+                  break;
+                }
+
+                console.log("has fromSource", block.data.meta.fromSource);
+                filePath = path__WEBPACK_IMPORTED_MODULE_2___default().join(path__WEBPACK_IMPORTED_MODULE_2___default().dirname(file.path), block.data.meta.fromSource);
+                console.log("to filePath", filePath);
+                _context.prev = 12;
+                _context.next = 15;
+                return fs.readFile(filePath);
+
+              case 15:
+                value = _context.sent;
+                console.log("has value", value);
+                block.value = value;
+                _context.next = 23;
+                break;
+
+              case 20:
+                _context.prev = 20;
+                _context.t0 = _context["catch"](12);
+                file.message("Failed to load " + block.data.meta.fromSource + " as " + filePath);
+
+              case 23:
+                _context.next = 6;
+                break;
+
+              case 25:
+                _context.next = 30;
+                break;
+
+              case 27:
+                _context.prev = 27;
+                _context.t1 = _context["catch"](4);
+
+                _iterator.e(_context.t1);
+
+              case 30:
+                _context.prev = 30;
+
+                _iterator.f();
+
+                return _context.finish(30);
+
+              case 33:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[4, 27, 30, 33], [12, 20]]);
+      }));
+
+      return function (_x, _x2) {
+        return _ref.apply(this, arguments);
+      };
+    }();
   }) // extract files to data
   .use(function () {
     return function (tree, file) {
@@ -20052,46 +20175,7 @@ function processor() {
     }
   });
 }
-function renderToVfile(_x, _x2, _x3) {
-  return _renderToVfile.apply(this, arguments);
-}
-
-function _renderToVfile() {
-  _renderToVfile = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(vfile, cmd, links) {
-    var root, dir, relroot, output, notebook;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            root = path__WEBPACK_IMPORTED_MODULE_2___default().resolve(cmd.output);
-            dir = path__WEBPACK_IMPORTED_MODULE_2___default().dirname(path__WEBPACK_IMPORTED_MODULE_2___default().join(root, vfile.path));
-            relroot = path__WEBPACK_IMPORTED_MODULE_2___default().relative(dir, root) || '.';
-            (0,_utils_console__WEBPACK_IMPORTED_MODULE_8__.level)(2, _utils_console__WEBPACK_IMPORTED_MODULE_8__.log)('[Render] to vFile', vfile.path);
-            _context.next = 6;
-            return processor().process(vfile);
-
-          case 6:
-            output = _context.sent;
-            notebook = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(_components_Document__WEBPACK_IMPORTED_MODULE_10__.default, {
-              file: output,
-              root: cmd.base || relroot,
-              backlinks: links
-            });
-            output.contents = react_dom_server__WEBPACK_IMPORTED_MODULE_6__.renderToString(notebook);
-            output.extname = '.html';
-            return _context.abrupt("return", output);
-
-          case 11:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee);
-  }));
-  return _renderToVfile.apply(this, arguments);
-}
-
-function renderedVFileToDoc(_x4, _x5) {
+function renderedVFileToDoc(_x3, _x4) {
   return _renderedVFileToDoc.apply(this, arguments);
 }
 
@@ -20178,130 +20262,31 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./src/utils/fs-promises-utils.js":
-/*!****************************************!*\
-  !*** ./src/utils/fs-promises-utils.js ***!
-  \****************************************/
+/***/ "./src/utils/functions.js":
+/*!********************************!*\
+  !*** ./src/utils/functions.js ***!
+  \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "writeFileP": () => (/* binding */ writeFileP)
+/* harmony export */   "NoOp": () => (/* binding */ NoOp),
+/* harmony export */   "Identity": () => (/* binding */ Identity),
+/* harmony export */   "AsInt": () => (/* binding */ AsInt),
+/* harmony export */   "getMeta": () => (/* binding */ getMeta)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! path */ "path");
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_2__);
-
-
-
-var writeFileP = function writeFileP(fs) {
-  return /*#__PURE__*/_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
-    var _console;
-
-    var _len,
-        args,
-        _key,
-        filepath,
-        p,
-        parts,
-        i,
-        subPath,
-        _args = arguments;
-
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            for (_len = _args.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-              args[_key] = _args[_key];
-            }
-
-            filepath = args[0] = "/" + args[0];
-            p = path__WEBPACK_IMPORTED_MODULE_2___default().parse(filepath);
-            parts = p.dir.split((path__WEBPACK_IMPORTED_MODULE_2___default().sep));
-            console.log("\"Parts for \"".concat(filepath, "\""), parts);
-            i = 0;
-
-          case 6:
-            if (!(i < parts.length)) {
-              _context.next = 27;
-              break;
-            }
-
-            console.log("[".concat(i, "] <--- \"").concat(parts[i], "\""));
-
-            if (!(i === 0)) {
-              _context.next = 11;
-              break;
-            }
-
-            _context.next = 24;
-            break;
-
-          case 11:
-            subPath = parts.slice(0, i + 1).join((path__WEBPACK_IMPORTED_MODULE_2___default().sep));
-            console.log("\"".concat(subPath, "\" Sub path"));
-            _context.prev = 13;
-            _context.next = 16;
-            return fs.stat(subPath);
-
-          case 16:
-            console.log("\"".concat(subPath, "\" Existed, skipping"));
-            _context.next = 24;
-            break;
-
-          case 19:
-            _context.prev = 19;
-            _context.t0 = _context["catch"](13);
-            console.log("\"".concat(subPath, "\" Didn't exist, creating..."));
-            _context.next = 24;
-            return fs.mkdir(subPath);
-
-          case 24:
-            i++;
-            _context.next = 6;
-            break;
-
-          case 27:
-            (_console = console).log.apply(_console, ["Writing file"].concat(args));
-
-            return _context.abrupt("return", fs.writeFile.apply(fs, args));
-
-          case 29:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee, null, [[13, 19]]);
-  }));
-};
-
-/***/ }),
-
-/***/ "./src/utils/functions.js":
-/*!********************************!*\
-  !*** ./src/utils/functions.js ***!
-  \********************************/
-/***/ ((module) => {
-
 var NoOp = function NoOp() {};
-
 var Identity = function Identity(x) {
   return x;
 };
-
 var AsInt = function AsInt(x) {
   return parseInt(x);
 };
-
-module.exports = {
-  NoOp: NoOp,
-  Identity: Identity,
-  AsInt: AsInt
+var getMeta = function getMeta(key, def) {
+  var el = document.querySelector("meta[name=\"lit".concat(key, "\"]"));
+  var val = el ? el.getAttribute('value') : def;
+  return val;
 };
 
 /***/ }),
@@ -89948,7 +89933,7 @@ function factory(key, options) {
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"name":"@dotlit/dotlit","version":"0.1.2","description":"","main":"src/index.js","scripts":{"build-web":"webpack --config=./webpack.web.config.js && stylus ./src/client/style.styl -o ./dist/style.css","build-node":"webpack --config=./webpack.node.config.js","build":"npm run build-web && npm run build-node","start":"npm run build && rm -rf ./tests/out/* && dotlit -d 2 generate ./src -o ./build -w & http-server ./build"},"bin":{"dotlit":"./src/index.js"},"author":"dotlitdev","license":"UNLICENCED","dependencies":{"@babel/core":"^7.12.8","@babel/plugin-transform-runtime":"^7.12.1","@babel/preset-env":"^7.12.7","@babel/preset-react":"^7.12.7","@babel/preset-typescript":"^7.12.7","@babel/register":"^7.12.1","@codemirror/basic-setup":"^0.18.0","@isomorphic-git/lightning-fs":"^4.4.1","assert":"^2.0.0","babel-loader":"^8.2.1","commander":"^6.2.0","console-browserify":"^1.2.0","glob":"^7.1.6","glob-watcher":"^5.0.5","html-whitespace-sensitive-tag-names":"^1.0.3","js-yaml":"^4.0.0","mdast-util-heading-range":"^2.1.5","mkdirp":"^1.0.4","path-browserify":"^1.0.1","process":"^0.11.10","querystring-es3":"*","react":"^17.0.1","react-dom":"^17.0.1","rehype-document":"^5.1.0","rehype-format":"^3.1.0","rehype-react":"^6.2.0","rehype-stringify":"^8.0.0","remark-footnotes":"^3.0.0","remark-frontmatter":"^3.0.0","remark-heading-id":"^1.0.0","remark-parse":"^9.0.0","remark-react":"^8.0.0","remark-rehype":"^8.0.0","remark-slug":"^6.0.0","remark-stringify":"^9.0.0","remark-toc":"^7.0.0","remark-wiki-link":"^1.0.2","remark-gfm":"*","stylus":"^0.54.8","to-vfile":"^6.1.0","unified":"^9.2.0","unist-util-find-after":"^3.0.0","unist-util-find-before":"^2.0.5","unist-util-flatmap":"^1.0.0","unist-util-generated":"^1.1.6","unist-util-remove-position":"^3.0.0","unist-util-select":"^3.0.4","webpack":"^5.6.0","webpack-cli":"^4.2.0","unist-util-source":"^3.0.0"}}');
+module.exports = JSON.parse('{"name":"@dotlit/dotlit","version":"0.2.0","description":"","main":"src/index.js","scripts":{"build-web":"webpack --config=./webpack.web.config.js && stylus ./src/client/style.styl -o ./dist/style.css","build-node":"webpack --config=./webpack.node.config.js","build":"npm run build-web && npm run build-node","start":"npm run build && rm -rf ./tests/out/* && dotlit -d 2 generate ./src -o ./build -w & http-server ./build"},"bin":{"dotlit":"./src/index.js"},"author":"dotlitdev","license":"UNLICENCED","dependencies":{"@babel/core":"^7.12.8","@babel/plugin-transform-runtime":"^7.12.1","@babel/preset-env":"^7.12.7","@babel/preset-react":"^7.12.7","@babel/preset-typescript":"^7.12.7","@babel/register":"^7.12.1","@codemirror/basic-setup":"^0.18.0","@isomorphic-git/lightning-fs":"^4.4.1","assert":"^2.0.0","babel-loader":"^8.2.1","commander":"^6.2.0","console-browserify":"^1.2.0","glob":"^7.1.6","glob-watcher":"^5.0.5","html-whitespace-sensitive-tag-names":"^1.0.3","js-yaml":"^4.0.0","mdast-util-heading-range":"^2.1.5","mkdirp":"^1.0.4","path-browserify":"^1.0.1","process":"^0.11.10","querystring-es3":"*","react":"^17.0.1","react-dom":"^17.0.1","rehype-document":"^5.1.0","rehype-format":"^3.1.0","rehype-react":"^6.2.0","rehype-stringify":"^8.0.0","remark-footnotes":"^3.0.0","remark-frontmatter":"^3.0.0","remark-heading-id":"^1.0.0","remark-parse":"^9.0.0","remark-react":"^8.0.0","remark-rehype":"^8.0.0","remark-slug":"^6.0.0","remark-stringify":"^9.0.0","remark-toc":"^7.0.0","remark-wiki-link":"^1.0.2","remark-gfm":"*","stylus":"^0.54.8","to-vfile":"^6.1.0","unified":"^9.2.0","unist-util-find-after":"^3.0.0","unist-util-find-before":"^2.0.5","unist-util-flatmap":"^1.0.0","unist-util-generated":"^1.1.6","unist-util-remove-position":"^3.0.0","unist-util-select":"^3.0.4","webpack":"^5.6.0","webpack-cli":"^4.2.0","unist-util-source":"^3.0.0"}}');
 
 /***/ }),
 
@@ -90207,7 +90192,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var to_vfile__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(to_vfile__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _package_json__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../package.json */ "./package.json");
 /* harmony import */ var _utils_functions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/functions */ "./src/utils/functions.js");
-/* harmony import */ var _utils_functions__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_functions__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _parser_index__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../parser/index */ "./src/parser/index.js");
 /* harmony import */ var _renderer_index__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../renderer/index */ "./src/renderer/index.jsx");
 /* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
@@ -90271,7 +90255,7 @@ function _convert() {
 
             _context.t0 = output;
             _context.next = 7;
-            return (0,_renderer_index__WEBPACK_IMPORTED_MODULE_9__.renderToVfile)(input, cmd);
+            return (0,_renderer_index__WEBPACK_IMPORTED_MODULE_9__.renderToVfileDoc)(input, cmd);
 
           case 7:
             _context.t1 = _context.sent.contents;
