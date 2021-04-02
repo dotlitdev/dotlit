@@ -31090,7 +31090,7 @@ var console = (0,_utils_console__WEBPACK_IMPORTED_MODULE_7__.getConsoleForNamesp
 var atPos = function atPos(pos) {
   return function (node) {
     var pos2 = node.position;
-    return pos2.start.line >= pos.start.line && pos2.start.line <= pos.end.line || pos2.end.line >= pos.start.line && pos2.end.line <= pos.end.line;
+    return pos2.start.line >= pos.start.line && pos2.start.line <= pos.end.line && pos2.end.line >= pos.start.line && pos2.end.line <= pos.end.line;
   };
 };
 
