@@ -1,1 +1,1 @@
-A named and configured fenced code block
+A named and configured fenced code block which is execute in a yet to be implemented nodejs repl.
