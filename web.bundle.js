@@ -31074,6 +31074,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _renderer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../renderer */ "./src/renderer/index.jsx");
 /* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
 /* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var unist_util_select__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! unist-util-select */ "./node_modules/unist-util-select/index.js");
+
 
 
 
@@ -31096,10 +31098,13 @@ var App = function App(_ref) {
       fs = _ref.fs,
       result = _ref.result;
 
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(file.contents.toString()),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)({
+    src: file.contents.toString(),
+    res: result
+  }),
       _useState2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__.default)(_useState, 2),
-      src = _useState2[0],
-      setSrc = _useState2[1];
+      srcAndRes = _useState2[0],
+      setSrcAndRes = _useState2[1];
 
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(result),
       _useState4 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__.default)(_useState3, 2),
@@ -31119,7 +31124,7 @@ var App = function App(_ref) {
           switch (_context.prev = _context.next) {
             case 0:
               console.log("<App/> Set src wrapper", pos, cellSource);
-              patchedSrc = (0,_utils_unist_util_patch_source__WEBPACK_IMPORTED_MODULE_5__.default)(src, pos, cellSource.trimEnd());
+              patchedSrc = (0,_utils_unist_util_patch_source__WEBPACK_IMPORTED_MODULE_5__.default)(srcAndRes.src, pos, cellSource.trimEnd());
               setSrc(patchedSrc);
               file.contents = patchedSrc;
               _context.next = 6;
@@ -31145,8 +31150,8 @@ var App = function App(_ref) {
               console.log("Failed to write file source to fs", file.path, _context.t0);
 
             case 17:
-              nodes = selectAll(atPos(pos), processedFile.data.ast);
-              console.log("pos to nodes", pos, file.path, nodes);
+              nodes = (0,unist_util_select__WEBPACK_IMPORTED_MODULE_8__.selectAll)(atPos(pos), processedFile.data.ast);
+              console.log("=====> pos to nodes", pos, file.path, nodes);
               filename = cellSource.data && cellSource.data.meta && cellSource.data.meta.filename;
 
               if (!filename) {
@@ -31175,17 +31180,17 @@ var App = function App(_ref) {
   }();
 
   var state = {
-    src: src,
+    src: srcAndRes.src,
     selectedCell: selectedCell,
     setSelectedCell: setSelectedCell,
     setSrc: setSrcWrapper
   };
-  console.log('<App/> render', res, src, setSelectedCell);
+  console.log('<App/> render', srcAndRes.res, srcAndRes.src, selectedCell);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_SelectionContext__WEBPACK_IMPORTED_MODULE_4__.default.Provider, {
     value: state
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("div", {
     id: "content"
-  }, res));
+  }, srcAndRes.res));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
