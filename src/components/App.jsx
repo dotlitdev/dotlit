@@ -3,6 +3,7 @@ import SelectionContext from './SelectionContext'
 import patchSource from '../utils/unist-util-patch-source'
 import { processor } from '../renderer'
 import { getConsoleForNamespace } from '../utils/console'
+import { selectAll } from 'unist-util-select'
 
 const console = getConsoleForNamespace('App')
 
