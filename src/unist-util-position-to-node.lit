@@ -10,6 +10,17 @@ aka `unist-util-select-pos` Given a *Position* and an AST tree return the nodes 
 
 ## Source
 
+```js ./utils/unist-util-select-pos
+export const atPos = pos => (node) => {
+  const pos2 = node.position
+  return (pos2.start.line >= pos.start.line
+    && pos2.start.line <= pos.end.line)
+    ||
+    (pos2.end.line >= pos.start.line
+     && pos2.end.line <= pos.end.line)
+}
+```
+
 ```js ./utils/unist-util-position-to-node.js
 export const positionToNode = (pos,tree) => {
 
