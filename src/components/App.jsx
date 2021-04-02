@@ -53,7 +53,12 @@ const App = ({file, fs, result}) => {
        
     }
 
-    const state = {srcAndRes.src, selectedCell, setSelectedCell, setSrc: setSrcWrapper}
+    const state = {
+      src: srcAndRes.src, 
+      selectedCell, 
+      setSelectedCell, 
+      setSrc: setSrcWrapper
+    }
 
     console.log('<App/> render', srcAndRes.res, srcAndRes.src, selectedCell)
 
