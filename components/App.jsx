@@ -29,11 +29,13 @@ const App = ({file, fs, result}) => {
         console.log("<App/> Set src wrapper", pos, cellSource)
         const patchedSrc = patchSource(srcAndRes.src, pos, cellSource.trimEnd())
         
-        setSrc(patchedSrc)
         file.contents = patchedSrc
         const processedFile = await processor(fs).process(file)
         console.log("Processed client", processedFile)
-        setResult(processedFile.result)
+        setSrcAndRes({
+            src: patchedSrc,
+            res: processedFile.result
+        })
 
         try {
             await fs.writeFile(file.path, patchedSrc, {encoding: 'utf8'})

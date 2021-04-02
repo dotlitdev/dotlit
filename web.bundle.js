@@ -31126,53 +31126,55 @@ var App = function App(_ref) {
             case 0:
               console.log("<App/> Set src wrapper", pos, cellSource);
               patchedSrc = (0,_utils_unist_util_patch_source__WEBPACK_IMPORTED_MODULE_5__.default)(srcAndRes.src, pos, cellSource.trimEnd());
-              setSrc(patchedSrc);
               file.contents = patchedSrc;
-              _context.next = 6;
+              _context.next = 5;
               return (0,_renderer__WEBPACK_IMPORTED_MODULE_6__.processor)(fs).process(file);
 
-            case 6:
+            case 5:
               processedFile = _context.sent;
               console.log("Processed client", processedFile);
-              setResult(processedFile.result);
-              _context.prev = 9;
-              _context.next = 12;
+              setSrcAndRes({
+                src: patchedSrc,
+                res: processedFile.result
+              });
+              _context.prev = 8;
+              _context.next = 11;
               return fs.writeFile(file.path, patchedSrc, {
                 encoding: 'utf8'
               });
 
-            case 12:
-              _context.next = 17;
+            case 11:
+              _context.next = 16;
               break;
 
-            case 14:
-              _context.prev = 14;
-              _context.t0 = _context["catch"](9);
+            case 13:
+              _context.prev = 13;
+              _context.t0 = _context["catch"](8);
               console.log("Failed to write file source to fs", file.path, _context.t0);
 
-            case 17:
+            case 16:
               nodes = unist_util_filter__WEBPACK_IMPORTED_MODULE_8___default()(processedFile.data.ast, atPos(pos));
               console.log("=====> pos to nodes", pos, file.path, nodes);
               filename = cellSource.data && cellSource.data.meta && cellSource.data.meta.filename;
 
               if (!filename) {
-                _context.next = 25;
+                _context.next = 24;
                 break;
               }
 
               filepath = path.join(path.dirname(file.path), filename);
-              _context.next = 24;
+              _context.next = 23;
               return fs.writeFile(filepath, cellSource.value);
 
-            case 24:
+            case 23:
               console.log("Wrote codefile ".concat(filename, " to \"").concat(filepath, "\" on disk"));
 
-            case 25:
+            case 24:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[9, 14]]);
+      }, _callee, null, [[8, 13]]);
     }));
 
     return function setSrcWrapper(_x, _x2) {
