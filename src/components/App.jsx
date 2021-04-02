@@ -17,13 +17,16 @@ const atPos = pos => (node) => {
 
 const App = ({file, fs, result}) => {
 
-    const [src, setSrc] = useState(file.contents.toString())
+    const [srcAndRes, setSrcAndRes] = useState({
+        src: file.contents.toString(),
+        res: result
+    })
     const [res, setResult] = useState(result)
     const [selectedCell, setSelectedCell] = useState(null)
     
     const setSrcWrapper = async (pos, cellSource) => {
         console.log("<App/> Set src wrapper", pos, cellSource)
-        const patchedSrc = patchSource(src, pos, cellSource.trimEnd())
+        const patchedSrc = patchSource(srcAndRes.src, pos, cellSource.trimEnd())
         
         setSrc(patchedSrc)
         file.contents = patchedSrc
@@ -38,7 +41,7 @@ const App = ({file, fs, result}) => {
         }
         
         const nodes = selectAll( atPos(pos), processedFile.data.ast )
-        console.log("pos to nodes", pos, file.path, nodes)
+        console.log("=====> pos to nodes", pos, file.path, nodes)
         const filename = cellSource.data && cellSource.data.meta && cellSource.data.meta.filename
         if (filename) {
              const filepath = path.join( path.dirname(file.path), filename)
@@ -49,12 +52,12 @@ const App = ({file, fs, result}) => {
        
     }
 
-    const state = {src, selectedCell, setSelectedCell, setSrc: setSrcWrapper}
+    const state = {srcAndRes.src, selectedCell, setSelectedCell, setSrc: setSrcWrapper}
 
-    console.log('<App/> render', res, src, setSelectedCell)
+    console.log('<App/> render', srcAndRes.res, srcAndRes.src, selectedCell)
 
     return <SelectionContext.Provider value={state}>
-        <div id="content">{res}</div>
+        <div id="content">{srcAndRes.res}</div>
     </SelectionContext.Provider>
 }
 
