@@ -31084,6 +31084,13 @@ __webpack_require__.r(__webpack_exports__);
 
 var console = (0,_utils_console__WEBPACK_IMPORTED_MODULE_7__.getConsoleForNamespace)('App');
 
+var atPos = function atPos(pos) {
+  return function (node) {
+    var pos2 = node.position;
+    return pos2.start.line >= pos.start.line && pos2.start.line <= pos.end.line || pos2.end.line >= pos.start.line && pos2.end.line <= pos.end.line;
+  };
+};
+
 var App = function App(_ref) {
   var file = _ref.file,
       fs = _ref.fs,
@@ -31106,60 +31113,60 @@ var App = function App(_ref) {
 
   var setSrcWrapper = /*#__PURE__*/function () {
     var _ref2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee(pos, cellSource) {
-      var patchedSrc, filename, filepath, processedFile;
+      var patchedSrc, processedFile, nodes, filename, filepath;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               console.log("<App/> Set src wrapper", pos, cellSource);
               patchedSrc = (0,_utils_unist_util_patch_source__WEBPACK_IMPORTED_MODULE_5__.default)(src, pos, cellSource.trimEnd());
-              _context.prev = 2;
-              _context.next = 5;
+              setSrc(patchedSrc);
+              file.contents = patchedSrc;
+              _context.next = 6;
+              return (0,_renderer__WEBPACK_IMPORTED_MODULE_6__.processor)(fs).process(file);
+
+            case 6:
+              processedFile = _context.sent;
+              console.log("Processed client", processedFile);
+              setResult(processedFile.result);
+              _context.prev = 9;
+              _context.next = 12;
               return fs.writeFile(file.path, patchedSrc, {
                 encoding: 'utf8'
               });
 
-            case 5:
-              _context.next = 10;
+            case 12:
+              _context.next = 17;
               break;
 
-            case 7:
-              _context.prev = 7;
-              _context.t0 = _context["catch"](2);
+            case 14:
+              _context.prev = 14;
+              _context.t0 = _context["catch"](9);
               console.log("Failed to write file source to fs", file.path, _context.t0);
 
-            case 10:
+            case 17:
+              nodes = selectAll(atPos(pos), processedFile.data.ast);
+              console.log("pos to nodes", pos, file.path, nodes);
               filename = cellSource.data && cellSource.data.meta && cellSource.data.meta.filename;
 
               if (!filename) {
-                _context.next = 16;
+                _context.next = 25;
                 break;
               }
 
               filepath = path.join(path.dirname(file.path), filename);
-              _context.next = 15;
+              _context.next = 24;
               return fs.writeFile(filepath, cellSource.value);
 
-            case 15:
+            case 24:
               console.log("Wrote codefile ".concat(filename, " to \"").concat(filepath, "\" on disk"));
 
-            case 16:
-              setSrc(patchedSrc);
-              file.contents = patchedSrc;
-              _context.next = 20;
-              return (0,_renderer__WEBPACK_IMPORTED_MODULE_6__.processor)(fs).process(file);
-
-            case 20:
-              processedFile = _context.sent;
-              console.log("Processed client", processedFile);
-              setResult(processedFile.result);
-
-            case 23:
+            case 25:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[2, 7]]);
+      }, _callee, null, [[9, 14]]);
     }));
 
     return function setSrcWrapper(_x, _x2) {
