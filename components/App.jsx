@@ -23,6 +23,13 @@ const App = ({file, fs, result}) => {
             console.log("Failed to write file source to fs", file.path, err)
         }
 
+        const filename = cellSource.data && cellSource.data.meta && cellSource.data.meta.filename
+        if (filename) {
+             const filepath = path.join( path.dirname(file.path), filename)
+             await fs.writeFile(filepath, cellSource.value)
+             console.log(`Wrote codefile ${filename} to "${filepath}" on disk`)
+        }
+
         setSrc(patchedSrc)
         file.contents = patchedSrc
         const processedFile = await processor(fs).process(file)

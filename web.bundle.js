@@ -31106,7 +31106,7 @@ var App = function App(_ref) {
 
   var setSrcWrapper = /*#__PURE__*/function () {
     var _ref2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee(pos, cellSource) {
-      var patchedSrc, processedFile;
+      var patchedSrc, filename, filepath, processedFile;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -31129,17 +31129,32 @@ var App = function App(_ref) {
               console.log("Failed to write file source to fs", file.path, _context.t0);
 
             case 10:
+              filename = cellSource.data && cellSource.data.meta && cellSource.data.meta.filename;
+
+              if (!filename) {
+                _context.next = 16;
+                break;
+              }
+
+              filepath = path.join(path.dirname(file.path), filename);
+              _context.next = 15;
+              return fs.writeFile(filepath, cellSource.value);
+
+            case 15:
+              console.log("Wrote codefile ".concat(filename, " to \"").concat(filepath, "\" on disk"));
+
+            case 16:
               setSrc(patchedSrc);
               file.contents = patchedSrc;
-              _context.next = 14;
+              _context.next = 20;
               return (0,_renderer__WEBPACK_IMPORTED_MODULE_6__.processor)(fs).process(file);
 
-            case 14:
+            case 20:
               processedFile = _context.sent;
               console.log("Processed client", processedFile);
               setResult(processedFile.result);
 
-            case 17:
+            case 23:
             case "end":
               return _context.stop();
           }
