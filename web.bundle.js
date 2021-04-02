@@ -31074,7 +31074,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _renderer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../renderer */ "./src/renderer/index.jsx");
 /* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
 /* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var unist_util_select__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! unist-util-select */ "./node_modules/unist-util-select/index.js");
+/* harmony import */ var unist_util_filter__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! unist-util-filter */ "./node_modules/unist-util-filter/index.js");
+/* harmony import */ var unist_util_filter__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(unist_util_filter__WEBPACK_IMPORTED_MODULE_8__);
 
 
 
@@ -31150,7 +31151,7 @@ var App = function App(_ref) {
               console.log("Failed to write file source to fs", file.path, _context.t0);
 
             case 17:
-              nodes = (0,unist_util_select__WEBPACK_IMPORTED_MODULE_8__.selectAll)(atPos(pos), processedFile.data.ast);
+              nodes = unist_util_filter__WEBPACK_IMPORTED_MODULE_8___default()(processedFile.data.ast, atPos(pos));
               console.log("=====> pos to nodes", pos, file.path, nodes);
               filename = cellSource.data && cellSource.data.meta && cellSource.data.meta.filename;
 
@@ -96052,6 +96053,68 @@ function u(type, props, value) {
   }
 
   return node
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/unist-util-filter/index.js":
+/*!*************************************************!*\
+  !*** ./node_modules/unist-util-filter/index.js ***!
+  \*************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var convert = __webpack_require__(/*! unist-util-is/convert */ "./node_modules/unist-util-is/convert.js")
+
+module.exports = filter
+
+var own = {}.hasOwnProperty
+
+function filter(tree, options, test) {
+  var is = convert(test || options)
+  var cascade = options.cascade == null ? true : options.cascade
+
+  return preorder(tree, null, null)
+
+  function preorder(node, index, parent) {
+    var children
+    var childIndex
+    var result
+    var next
+    var key
+
+    if (!is(node, index, parent)) return null
+
+    if (node.children) {
+      children = []
+      childIndex = -1
+
+      while (++childIndex < node.children.length) {
+        result = preorder(node.children[childIndex], childIndex, node)
+
+        if (result) {
+          children.push(result)
+        }
+      }
+
+      if (cascade && node.children.length && !children.length) return null
+    }
+
+    // Create a shallow clone, using the new children.
+    next = {}
+
+    for (key in node) {
+      /* istanbul ignore else - Prototype injection. */
+      if (own.call(node, key)) {
+        next[key] = key === 'children' ? children : node[key]
+      }
+    }
+
+    return next
+  }
 }
 
 

@@ -3,7 +3,7 @@ import SelectionContext from './SelectionContext'
 import patchSource from '../utils/unist-util-patch-source'
 import { processor } from '../renderer'
 import { getConsoleForNamespace } from '../utils/console'
-import { selectAll } from 'unist-util-select'
+import filter from 'unist-util-filter'
 
 const console = getConsoleForNamespace('App')
 
@@ -41,7 +41,7 @@ const App = ({file, fs, result}) => {
             console.log("Failed to write file source to fs", file.path, err)
         }
         
-        const nodes = selectAll( atPos(pos), processedFile.data.ast )
+        const nodes = filter(processedFile.data.ast, atPos(pos))
         console.log("=====> pos to nodes", pos, file.path, nodes)
         const filename = cellSource.data && cellSource.data.meta && cellSource.data.meta.filename
         if (filename) {
