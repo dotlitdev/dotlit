@@ -12,9 +12,11 @@ export const positionToNode = (pos,tree) => {
       ? pos
       : undefined
 
+  if (tree.position.start.line >= end.line) {
+    return undefined
+  }
+
   if (tree.children) {
 
-  } if (tree.position.start.line >= start.line && tree.position.end.line <= end.line) {
-    return tree
   }
 }
