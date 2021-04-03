@@ -31882,10 +31882,15 @@ var viewers = {
     });
   },
   svg: function svg(val) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("svg", {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("div", {
       dangerouslySetInnerHTML: {
         __html: val
       }
+    });
+  },
+  uri: function uri(val) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("iframe", {
+      src: val
     });
   }
 };
