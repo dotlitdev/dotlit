@@ -32055,6 +32055,12 @@ var ATTR = 'attribute';
 var TAG = 'tag';
 var DIREC = 'directive';
 var FILENAME = 'filename';
+var URI = 'uri';
+
+var isListType = function isListType(t) {
+  return [TAG, DIREC].indexOf(t) >= 0;
+};
+
 /* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__() {
   return function (tree) {
     return unist_util_visit__WEBPACK_IMPORTED_MODULE_1___default()(tree, 'code', transform);
@@ -32113,6 +32119,10 @@ function getSource(meta) {
   }
 }
 
+function isUri(str) {
+  return str.startsWith('http') || str.startsWith('//');
+}
+
 function ident(x, i) {
   var type,
       value = x;
@@ -32133,7 +32143,9 @@ function ident(x, i) {
         type: value[0],
         value: value[1]
       };
-    } else if (i === 1) type = FILENAME;else if (!type) type = undefined;
+    } else if (i === 1) {
+      if (isUri(x)) type = URI;else type = FILENAME;
+    } else if (!type) type = undefined;
   }
 
   return {
@@ -32145,15 +32157,14 @@ function ident(x, i) {
 function reduceParts(memo, item, i) {
   if (item.type === ATTR) {
     item = item.value;
-  }
+  } else if (isListType(item.type)) {
+    var collective = "".concat(item.type, "s");
 
-  var collective = "".concat(item.type, "s");
-
-  if (memo[collective]) {
-    memo[collective].push(item.value);
-  } else if (typeof memo[item.type] != 'undefined') {
-    memo[collective] = [memo[item.type], item.value];
-    delete memo[item.type];
+    if (memo[collective]) {
+      memo[collective].push(item.value);
+    } else {
+      memo[collective] = [item.value];
+    }
   } else {
     memo[item.type] = item.value;
   }
