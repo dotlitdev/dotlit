@@ -31902,7 +31902,7 @@ var Codeblock = /*#__PURE__*/function (_React$Component2) {
         console.log("[Codeblock]", codeNode.properties.meta);
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("codecell", null, meta && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement(Meta, {
           meta: meta
-        }), viewer && viewer(this.props.children), !viewer && meta && meta.isOutput ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("output", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("pre", null, this.props.children)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("pre", null, this.props.children));
+        }), viewer ? viewer(this.props.children) : meta && meta.isOutput ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("output", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("pre", null, this.props.children)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("pre", null, this.props.children));
       } else {
         console.log("Default codeblock", this.props.node.children[0]);
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("codecell", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("pre", null, this.props.children));

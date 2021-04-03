@@ -46,8 +46,9 @@ export default class Codeblock extends React.Component {
             console.log("[Codeblock]", codeNode.properties.meta )
             return <codecell>
                 { meta && <Meta meta={meta}/> }
-                { viewer && viewer(this.props.children) }
-                { !viewer && meta && meta.isOutput
+                { viewer 
+                  ? viewer(this.props.children)
+                  : meta && meta.isOutput
                     ? <output><pre>{this.props.children}</pre></output>
                     : <pre>{this.props.children}</pre> }
             </codecell>
