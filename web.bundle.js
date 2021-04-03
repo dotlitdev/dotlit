@@ -33287,8 +33287,10 @@ var atPos = function atPos(pos) {
     var pos2 = node.position;
     var startInside = pos2.start.line >= pos.start.line && pos2.start.line <= pos.end.line;
     var endInside = pos2.end.line >= pos.start.line && pos2.end.line <= pos.end.line;
-    console.log("atPos: " + node.type, startInside || endInside, pos2.start.line, pos2.end.line, startInside, endInside, pos.start.line, pos.end.line);
-    return startInside || endInside;
+    var wraps = pos2.start.line <= pos.start.line && pos2.end.line >= pos.end.line;
+    var any = wraps || startInside || endInside;
+    console.log("atPos: " + node.type, any, pos2.start.line, pos2.end.line, wraps, startInside, endInside, pos.start.line, pos.end.line);
+    return any;
   };
 };
 var selectAll = function selectAll(type, pos, tree) {
