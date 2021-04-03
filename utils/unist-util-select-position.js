@@ -4,6 +4,7 @@ import { getConsoleForNamespace } from './console'
 
 const console = getConsoleForNamespace('util')
 
+// written from client
 export const atPos = pos => (node) => {
   const pos2 = node.position
   const startInside = (pos2.start.line >= pos.start.line

@@ -27,7 +27,7 @@ const viewers = {
 }
 
 const getViewer = meta => {
-  return meta && (meta.isOutput || meta.directives.indexOf('inline') >= 0) && viewers[meta.lang]
+  return meta && (meta.isOutput || (meta.directives && meta.directives.indexOf('inline') >= 0)) && viewers[meta.lang]
 }
 
 export default class Codeblock extends React.Component {
