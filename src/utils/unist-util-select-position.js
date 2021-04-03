@@ -12,3 +12,9 @@ export const atPos = pos => (node) => {
   console.log("atPos: " + node.type, startInside || endInside ,pos2.start.line, pos2.end.line, startInside, endInside, pos.start.line, pos.end.line)
   return startInside || endInside
 }
+
+export const selectAll = (type, pos, tree) => {
+  const filteredTree = filter(tree, atPos(pos))
+  const nodes = selectAll(type, filteredTree)
+  return nodes
+}
