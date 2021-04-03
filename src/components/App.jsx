@@ -14,7 +14,7 @@ const atPos = pos => (node) => {
   const endInside = (pos2.end.line >= pos.start.line
      && pos2.end.line <= pos.end.line)
   console.log(node, startInside, endInside)
-  return startInside && endInside
+  return startInside || endInside
 }
 
 const App = ({file, fs, result}) => {
