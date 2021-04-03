@@ -31076,6 +31076,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var unist_util_filter__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! unist-util-filter */ "./node_modules/unist-util-filter/index.js");
 /* harmony import */ var unist_util_filter__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(unist_util_filter__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var unist_util_select__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! unist-util-select */ "./node_modules/unist-util-select/index.js");
+
 
 
 
@@ -31164,7 +31166,7 @@ var App = function App(_ref) {
                 end: tmpEnd
               };
               tree = unist_util_filter__WEBPACK_IMPORTED_MODULE_8___default()(processedFile.data.ast, atPos(tmpPos));
-              nodes = selectAll('code', tree);
+              nodes = (0,unist_util_select__WEBPACK_IMPORTED_MODULE_9__.selectAll)('code', tree);
               console.log("=====> pos to nodes", tmpPos, file.path, tree, nodes);
               filename = cellSource.data && cellSource.data.meta && cellSource.data.meta.filename;
 
