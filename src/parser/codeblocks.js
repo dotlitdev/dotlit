@@ -10,6 +10,9 @@ const ATTR = 'attribute'
 const TAG = 'tag'
 const DIREC = 'directive'
 const FILENAME = 'filename'
+const URI = 'uri'
+
+const isListType = t => [TAG,DIREC].indexOf(t) >= 0
 
 export default function (...args) {
     return (tree) => visit( tree, 'code', transform )
@@ -72,6 +75,10 @@ function getSource(meta) {
     }
 }
 
+function isUri(str) {
+  return str.startsWith('http') || str.startsWith('//')
+}
+
 function ident (x, i) {
     let type, value = x
     if (i === 0) {
@@ -94,7 +101,11 @@ function ident (x, i) {
           value: value[1]
         }
       }
-      else if(i===1) type = FILENAME
+      else if(i===1) {
+
+        if (isUri(x) type = URI
+        else type = FILENAME
+      }
       else if (!type) type = undefined
     }
     return {type, value}
@@ -104,14 +115,14 @@ function ident (x, i) {
     if (item.type === ATTR){
         item = item.value
     }
-    const collective = `${item.type}s`
-    if(memo[collective]) {
-        memo[collective]
-        .push(item.value)
-    }
-    else if(typeof memo[item.type] != 'undefined') {
-        memo[collective] = [memo[item.type], item.value]
-        delete memo[item.type]
+    else if (isListType(item.type)) {
+        const collective = `${item.type}s`
+        if(memo[collective]) {
+             memo[collective]
+             .push(item.value)
+        } else {
+            memo[collective] = [item.value]
+        }
     } else {
         memo[item.type] = item.value
     }
