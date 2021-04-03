@@ -43,4 +43,38 @@ jobs:
           CLEAN: true # Automatically remove deleted files from the deploy branch
      
 
-</code></pre></codecell></cell><section name="npm-publish"><cell startpos="8:1-78" endpos="8:15-92"><h2 id="npm-publish">NPM Publish</h2></cell></section></section></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title=".lit" href="index.html">.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="web.bundle.js"></script></body></html>
+</code></pre></codecell></cell><section name="npm-publish"><cell startpos="8:1-78" endpos="8:15-92"><h2 id="npm-publish">NPM Publish</h2></cell><cell startpos="10:1-94" endpos="11:4-142" class="code"><codecell><span class="meta"><span class="lang">yaml</span><span class="repl"></span><span class="filename"></span></span><pre><code class="" meta="[object Object]">name: npm-publish
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  npm-publish:
+    name: npm-publish
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@master
+    - name: Set up Node.js
+      uses: actions/setup-node@master
+      with:
+        node-version: &#x27;14.x&#x27;
+        registry-url: &#x27;https://registry.npmjs.org&#x27;
+    - name: Publish Npm
+      env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      run: |
+        PUBLISHED_VERSION=$(npm view @dotlit/dotlit version)
+        LOCAL_VERSION=$(node -p &quot;require(&#x27;./package.json&#x27;).version&quot;)
+        if [ &quot;$PUBLISHED_VERSION&quot; = &quot;$LOCAL_VERSION&quot; ]; then
+            echo &quot;No new version to publish. Latest is: $PUBLISHED_VERSION&quot;
+        else
+            npm install
+            npm run build
+            npm publish --access public
+        fi
+
+</code></pre></codecell></cell></section></section></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title=".lit" href="index.html">.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="web.bundle.js"></script></body></html>
