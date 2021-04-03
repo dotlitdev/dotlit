@@ -1,5 +1,5 @@
 import filter from 'unist-util-filter'
-import {selectAll} from 'unist-util-select'
+import {selectAll as select} from 'unist-util-select'
 
 const console = getConsoleForNamespace('util')
 
@@ -15,6 +15,6 @@ export const atPos = pos => (node) => {
 
 export const selectAll = (type, pos, tree) => {
   const filteredTree = filter(tree, atPos(pos))
-  const nodes = selectAll(type, filteredTree)
+  const nodes = select(type, filteredTree)
   return nodes
 }
