@@ -31081,6 +31081,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+
 
 
 
@@ -31124,7 +31131,8 @@ var App = function App(_ref) {
 
   var setSrcWrapper = /*#__PURE__*/function () {
     var _ref2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee(pos, cellSource) {
-      var patchedSrc, processedFile, tmpEnd, tmpPos, tree, nodes, filename, filepath;
+      var patchedSrc, processedFile, tmpEnd, tmpPos, tree, nodes, _iterator, _step, filename, filepath;
+
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -31167,27 +31175,60 @@ var App = function App(_ref) {
               };
               tree = unist_util_filter__WEBPACK_IMPORTED_MODULE_8___default()(processedFile.data.ast, atPos(tmpPos));
               nodes = (0,unist_util_select__WEBPACK_IMPORTED_MODULE_9__.selectAll)('code', tree);
-              console.log("=====> pos to nodes", tmpPos, file.path, tree, nodes);
-              filename = cellSource.data && cellSource.data.meta && cellSource.data.meta.filename;
+              console.log("[CodeCells in Change (pos)]", tmpPos, file.path, tree, nodes);
+              _iterator = _createForOfIteratorHelper(nodes);
+              _context.prev = 22;
+
+              _iterator.s();
+
+            case 24:
+              if ((_step = _iterator.n()).done) {
+                _context.next = 34;
+                break;
+              }
+
+              codeCell = _step.value;
+              filename = codeCell.data && codeCell.data.meta && codeCell.data.meta.filename;
 
               if (!filename) {
-                _context.next = 27;
+                _context.next = 32;
                 break;
               }
 
               filepath = path.join(path.dirname(file.path), filename);
-              _context.next = 26;
-              return fs.writeFile(filepath, cellSource.value);
+              _context.next = 31;
+              return fs.writeFile(filepath, codeCell.value);
 
-            case 26:
+            case 31:
               console.log("Wrote codefile ".concat(filename, " to \"").concat(filepath, "\" on disk"));
 
-            case 27:
+            case 32:
+              _context.next = 24;
+              break;
+
+            case 34:
+              _context.next = 39;
+              break;
+
+            case 36:
+              _context.prev = 36;
+              _context.t1 = _context["catch"](22);
+
+              _iterator.e(_context.t1);
+
+            case 39:
+              _context.prev = 39;
+
+              _iterator.f();
+
+              return _context.finish(39);
+
+            case 42:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[8, 13]]);
+      }, _callee, null, [[8, 13], [22, 36, 39, 42]]);
     }));
 
     return function setSrcWrapper(_x, _x2) {
