@@ -4,19 +4,10 @@ import patchSource from '../utils/unist-util-patch-source'
 import { processor } from '../renderer'
 import { getConsoleForNamespace } from '../utils/console'
 import filter from 'unist-util-filter'
+import {atPos} from '../utils/unist-util-select-position'
 import {selectAll} from 'unist-util-select'
 
 const console = getConsoleForNamespace('App')
-
-const atPos = pos => (node) => {
-  const pos2 = node.position
-  const startInside = (pos2.start.line >= pos.start.line
-    && pos2.start.line <= pos.end.line)
-  const endInside = (pos2.end.line >= pos.start.line
-     && pos2.end.line <= pos.end.line)
-  console.log(node.type, pos2.start.line, pos2.end.line, startInside, endInside, pos.start.line, pos.end.line)
-  return startInside || endInside
-}
 
 const App = ({file, fs, result}) => {
 

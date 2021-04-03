@@ -31076,7 +31076,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var unist_util_filter__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! unist-util-filter */ "./node_modules/unist-util-filter/index.js");
 /* harmony import */ var unist_util_filter__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(unist_util_filter__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var unist_util_select__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! unist-util-select */ "./node_modules/unist-util-select/index.js");
+/* harmony import */ var _utils_unist_util_select_position__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/unist-util-select-position */ "./src/utils/unist-util-select-position.js");
+/* harmony import */ var unist_util_select__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! unist-util-select */ "./node_modules/unist-util-select/index.js");
 
 
 
@@ -31094,17 +31095,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
 
-var console = (0,_utils_console__WEBPACK_IMPORTED_MODULE_7__.getConsoleForNamespace)('App');
 
-var atPos = function atPos(pos) {
-  return function (node) {
-    var pos2 = node.position;
-    var startInside = pos2.start.line >= pos.start.line && pos2.start.line <= pos.end.line;
-    var endInside = pos2.end.line >= pos.start.line && pos2.end.line <= pos.end.line;
-    console.log(node.type, pos2.start.line, pos2.end.line, startInside, endInside, pos.start.line, pos.end.line);
-    return startInside || endInside;
-  };
-};
+var console = (0,_utils_console__WEBPACK_IMPORTED_MODULE_7__.getConsoleForNamespace)('App');
 
 var App = function App(_ref) {
   var file = _ref.file,
@@ -31173,8 +31165,8 @@ var App = function App(_ref) {
                 start: pos.start,
                 end: tmpEnd
               };
-              tree = unist_util_filter__WEBPACK_IMPORTED_MODULE_8___default()(processedFile.data.ast, atPos(tmpPos));
-              nodes = (0,unist_util_select__WEBPACK_IMPORTED_MODULE_9__.selectAll)('code', tree);
+              tree = unist_util_filter__WEBPACK_IMPORTED_MODULE_8___default()(processedFile.data.ast, (0,_utils_unist_util_select_position__WEBPACK_IMPORTED_MODULE_9__.atPos)(tmpPos));
+              nodes = (0,unist_util_select__WEBPACK_IMPORTED_MODULE_10__.selectAll)('code', tree);
               console.log("[CodeCells in Change (pos)]", tmpPos, file.path, tree, nodes);
               _iterator = _createForOfIteratorHelper(nodes);
               _context.prev = 22;
@@ -33266,6 +33258,44 @@ var patchSource = function patchSource(src, originalLocation, value) {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (patchSource);
+
+/***/ }),
+
+/***/ "./src/utils/unist-util-select-position.js":
+/*!*************************************************!*\
+  !*** ./src/utils/unist-util-select-position.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "atPos": () => (/* binding */ atPos),
+/* harmony export */   "selectAll": () => (/* binding */ selectAll)
+/* harmony export */ });
+/* harmony import */ var unist_util_filter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! unist-util-filter */ "./node_modules/unist-util-filter/index.js");
+/* harmony import */ var unist_util_filter__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(unist_util_filter__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var unist_util_select__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! unist-util-select */ "./node_modules/unist-util-select/index.js");
+/* harmony import */ var _console__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./console */ "./src/utils/console.js");
+/* harmony import */ var _console__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_console__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+var console = (0,_console__WEBPACK_IMPORTED_MODULE_2__.getConsoleForNamespace)('util');
+var atPos = function atPos(pos) {
+  return function (node) {
+    var pos2 = node.position;
+    var startInside = pos2.start.line >= pos.start.line && pos2.start.line <= pos.end.line;
+    var endInside = pos2.end.line >= pos.start.line && pos2.end.line <= pos.end.line;
+    console.log("atPos: " + node.type, startInside || endInside, pos2.start.line, pos2.end.line, startInside, endInside, pos.start.line, pos.end.line);
+    return startInside || endInside;
+  };
+};
+var selectAll = function selectAll(type, pos, tree) {
+  var filteredTree = unist_util_filter__WEBPACK_IMPORTED_MODULE_0___default()(tree, atPos(pos));
+  var nodes = (0,unist_util_select__WEBPACK_IMPORTED_MODULE_1__.selectAll)(type, filteredTree);
+  return nodes;
+};
 
 /***/ }),
 
