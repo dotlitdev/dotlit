@@ -31122,7 +31122,7 @@ var App = function App(_ref) {
 
   var setSrcWrapper = /*#__PURE__*/function () {
     var _ref2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee(pos, cellSource) {
-      var patchedSrc, processedFile, tmpEnd, tmpPos, nodes, filename, filepath;
+      var patchedSrc, processedFile, tmpEnd, tmpPos, tree, nodes, filename, filepath;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -31163,23 +31163,24 @@ var App = function App(_ref) {
                 start: pos.start,
                 end: tmpEnd
               };
-              nodes = unist_util_filter__WEBPACK_IMPORTED_MODULE_8___default()(processedFile.data.ast, atPos(tmpPos));
-              console.log("=====> pos to nodes", tmpPos, file.path, nodes);
+              tree = unist_util_filter__WEBPACK_IMPORTED_MODULE_8___default()(processedFile.data.ast, atPos(tmpPos));
+              nodes = selectAll('code', tree);
+              console.log("=====> pos to nodes", tmpPos, file.path, tree, nodes);
               filename = cellSource.data && cellSource.data.meta && cellSource.data.meta.filename;
 
               if (!filename) {
-                _context.next = 26;
+                _context.next = 27;
                 break;
               }
 
               filepath = path.join(path.dirname(file.path), filename);
-              _context.next = 25;
+              _context.next = 26;
               return fs.writeFile(filepath, cellSource.value);
 
-            case 25:
+            case 26:
               console.log("Wrote codefile ".concat(filename, " to \"").concat(filepath, "\" on disk"));
 
-            case 26:
+            case 27:
             case "end":
               return _context.stop();
           }
