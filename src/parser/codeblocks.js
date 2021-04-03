@@ -103,7 +103,7 @@ function ident (x, i) {
       }
       else if(i===1) {
 
-        if (isUri(x) type = URI
+        if (isUri(x)) type = URI
         else type = FILENAME
       }
       else if (!type) type = undefined
