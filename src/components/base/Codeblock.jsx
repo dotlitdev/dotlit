@@ -22,6 +22,14 @@ class Meta extends React.Component {
     }
 }
 
+const viewers = {
+  csv: val => <pre>//CSV Viewer\n{val}</pre>
+}
+
+const getViewer = meta => {
+  return meta && (meta.isOutput || meta.directives.indexOf('inline') >= 0) && viewers[meta.lang]
+}
+
 export default class Codeblock extends React.Component {
     render() {
         
@@ -31,12 +39,15 @@ export default class Codeblock extends React.Component {
                             ? this.props.node.children[0] 
                             : null;
         const meta = codeNode ? codeNode.properties.meta : null
+
+        const viewer = getViewer(meta)
         
         if (codeNode) {
             console.log("[Codeblock]", codeNode.properties.meta )
             return <codecell>
                 { meta && <Meta meta={meta}/> }
-                { meta &&  meta.isOutput
+                { viewer && viewer(this.props.children) }
+                { !viewer && meta && meta.isOutput
                     ? <output><pre>{this.props.children}</pre></output>
                     : <pre>{this.props.children}</pre> }
             </codecell>
