@@ -31094,7 +31094,7 @@ var atPos = function atPos(pos) {
     var pos2 = node.position;
     var startInside = pos2.start.line >= pos.start.line && pos2.start.line <= pos.end.line;
     var endInside = pos2.end.line >= pos.start.line && pos2.end.line <= pos.end.line;
-    console.log(node, startInside, endInside);
+    console.log(node.type, pos2.start.line, pos2.end.line, startInside, endInside, pos.start.line, pos.end.line);
     return startInside || endInside;
   };
 };

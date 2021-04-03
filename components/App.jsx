@@ -14,7 +14,7 @@ const atPos = pos => (node) => {
     && pos2.start.line <= pos.end.line)
   const endInside = (pos2.end.line >= pos.start.line
      && pos2.end.line <= pos.end.line)
-  console.log(node, startInside, endInside)
+  console.log(node.type, pos2.start.line, pos2.end.line, startInside, endInside, pos.start.line, pos.end.line)
   return startInside || endInside
 }
 
