@@ -31872,7 +31872,18 @@ var Meta = /*#__PURE__*/function (_React$Component) {
 
 var viewers = {
   csv: function csv(val) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("pre", null, "//CSV Viewer\\n", val);
+    // return <pre>//CSV Viewer\n{val}</pre>
+    var rows = val.split("\n").map(function (row, i) {
+      var cols = row.split(",").map(function (col, j) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("td", {
+          key: j
+        }, col);
+      });
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("tr", {
+        key: i
+      }, cols);
+    });
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("table", null, rows);
   },
   html: function html(val) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("div", {

@@ -23,7 +23,16 @@ class Meta extends React.Component {
 }
 
 const viewers = {
-  csv: val => <pre>//CSV Viewer\n{val}</pre>,
+  csv: val => {
+    // return <pre>//CSV Viewer\n{val}</pre>
+
+    const rows = val.split("\n").map( (row,i) => {
+       const cols = row.split(",").map( (col,j) => <td key={j}>{col}</td>)
+       return <tr key={i}>{cols}</tr>
+    })
+
+    return <table>{rows}</table>
+  },
   html: val => <div dangerouslySetInnerHTML={{__html: val}}></div>,
   svg: val => <div dangerouslySetInnerHTML={{__html: val}}></div>,
   uri: val => <iframe src={val}></iframe>
