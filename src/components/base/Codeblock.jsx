@@ -23,7 +23,9 @@ class Meta extends React.Component {
 }
 
 const viewers = {
-  csv: val => <pre>//CSV Viewer\n{val}</pre>
+  csv: val => <pre>//CSV Viewer\n{val}</pre>,
+  html: val => <div dangerouslySetInnerHTML={{__html: val}}></div>,
+  svg: val => <svg dangerouslySetInnerHTML={{__html: val}}></svg>,
 }
 
 const getViewer = meta => {
