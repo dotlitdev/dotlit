@@ -32034,20 +32034,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* export default binding */ __WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
-/* harmony import */ var unist_util_visit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! unist-util-visit */ "./node_modules/unist-util-visit/index.js");
-/* harmony import */ var unist_util_visit__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(unist_util_visit__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
-/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var unist_util_visit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! unist-util-visit */ "./node_modules/unist-util-visit/index.js");
+/* harmony import */ var unist_util_visit__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(unist_util_visit__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_3__);
+
 
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 
 
-var console = (0,_utils_console__WEBPACK_IMPORTED_MODULE_2__.getConsoleForNamespace)('codeblocks');
+var console = (0,_utils_console__WEBPACK_IMPORTED_MODULE_3__.getConsoleForNamespace)('codeblocks');
 var LSP = '__.litsp__';
 var NONESCAPEDSPACES_REGEX = /([^\\])\s/g;
 var LANG = 'lang';
@@ -32063,7 +32065,7 @@ var isListType = function isListType(t) {
 
 /* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__() {
   return function (tree) {
-    return unist_util_visit__WEBPACK_IMPORTED_MODULE_1___default()(tree, 'code', transform);
+    return unist_util_visit__WEBPACK_IMPORTED_MODULE_2___default()(tree, 'code', transform);
   };
 }
 
@@ -32089,33 +32091,56 @@ function parseMeta(node) {
   var hasOutput = node.meta && node.meta.indexOf('>') >= 0;
   var hasSource = node.meta && node.meta.indexOf('<') >= 0;
   var input = raw;
+
+  var _, output, source;
+
   var fromSource;
 
   if (isOutput) {
-    input = raw.split('>')[1].trim();
+    var _raw$split$map = raw.split('>').map(function (x) {
+      return x.trim();
+    });
+
+    var _raw$split$map2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__.default)(_raw$split$map, 2);
+
+    _ = _raw$split$map2[0];
+    input = _raw$split$map2[1];
   } else if (hasOutput) {
-    input = raw.split('>')[0].trim();
+    var _raw$split$map3 = raw.split('>').map(function (x) {
+      return x.trim();
+    });
+
+    var _raw$split$map4 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__.default)(_raw$split$map3, 2);
+
+    input = _raw$split$map4[0];
+    output = _raw$split$map4[1];
   } else if (hasSource) {
-    input = raw.split('<')[0].trim();
-    hasSource = getSource(raw);
-    fromSource = hasSource.filename || hasSource.uri;
+    var _raw$split$map5 = raw.split('<').map(function (x) {
+      return x.trim();
+    });
+
+    var _raw$split$map6 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__.default)(_raw$split$map5, 2);
+
+    input = _raw$split$map6[0];
+    source = _raw$split$map6[1];
+    source = getSource(source);
   }
 
   var meta = input.replace(NONESCAPEDSPACES_REGEX, "$1" + LSP).split(LSP).map(ident).reduce(reduceParts, {});
   meta.isOutput = isOutput;
-  meta.hasOutput = hasOutput;
-  meta.hasSource = hasSource;
-  meta.fromSource = fromSource;
+  meta.output = output;
+  meta.hasOutput = !!output;
+  meta.hasSource = !!source;
+  meta.source = source;
+  if (source) meta.fromSource = source.filename || source.uri;
   return meta;
 }
 
-function getSource(meta) {
-  var tail = meta.split('<')[1];
-
-  if (tail) {
+function getSource(source) {
+  if (source) {
     return parseMeta({
       lang: 'txt',
-      meta: tail.trim()
+      meta: source
     });
   }
 }
