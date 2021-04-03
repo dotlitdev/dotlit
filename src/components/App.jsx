@@ -41,7 +41,7 @@ const App = ({file, fs, result}) => {
         const tree = filter(processedFile.data.ast, atPos(tmpPos))
         const nodes = selectAll('code', tree)
         console.log("[CodeCells in Change (pos)]", tmpPos, file.path, tree, nodes)
-        for (codeCell of nodes) {
+        for (const codeCell of nodes) {
             const filename = codeCell.data && codeCell.data.meta && codeCell.data.meta.filename
             if (filename) {
                 const filepath = path.join( path.dirname(file.path), filename)
