@@ -4,7 +4,7 @@ import patchSource from '../utils/unist-util-patch-source'
 import { processor } from '../renderer'
 import { getConsoleForNamespace } from '../utils/console'
 import filter from 'unist-util-filter'
-import {atPos} from 'unist-util-select-position'
+import {atPos} from '../utils/unist-util-select-position'
 import {selectAll} from 'unist-util-select'
 
 const console = getConsoleForNamespace('App')
