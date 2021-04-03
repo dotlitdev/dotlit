@@ -33051,6 +33051,7 @@ var passThroughRead = function passThroughRead(fs, litroot) {
   var rf = fs.readFile;
   return /*#__PURE__*/(0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
     var filePath,
+        resp,
         _args = arguments;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
       while (1) {
@@ -33073,13 +33074,23 @@ var passThroughRead = function passThroughRead(fs, litroot) {
             return fetch(filePath);
 
           case 13:
-            _context.next = 15;
-            return _context.sent.text();
+            resp = _context.sent;
 
-          case 15:
-            return _context.abrupt("return", _context.sent);
+            if (!(resp.status === 404)) {
+              _context.next = 16;
+              break;
+            }
+
+            throw new Error("404 File ".concat(filePath, " not found."));
 
           case 16:
+            _context.next = 18;
+            return resp.text();
+
+          case 18:
+            return _context.abrupt("return", _context.sent);
+
+          case 19:
           case "end":
             return _context.stop();
         }
