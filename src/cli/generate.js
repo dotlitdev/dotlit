@@ -18,6 +18,8 @@ import { getConsoleForNamespace } from '../utils/console'
 
 const console = getConsoleForNamespace('generate')
 
+global.fetch = require("node-fetch")
+
 function getLinks(file, root) {
     return selectAll('link, wikiLink', file.data.ast)
 }
