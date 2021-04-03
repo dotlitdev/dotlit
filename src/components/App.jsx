@@ -50,12 +50,14 @@ const App = ({file, fs, result}) => {
         const tree = filter(processedFile.data.ast, atPos(tmpPos))
         const nodes = selectAll('code', tree)
         console.log("=====> pos to nodes", tmpPos, file.path, tree, nodes)
-        const filename = cellSource.data && cellSource.data.meta && cellSource.data.meta.filename
-        if (filename) {
-             const filepath = path.join( path.dirname(file.path), filename)
-             await fs.writeFile(filepath, cellSource.value)
-             console.log(`Wrote codefile ${filename} to "${filepath}" on disk`)
-        }
+        for (codeCell of nodes) {
+
+            const filename = codeCell.data && codeCell.data.meta && codeCell.data.meta.filename
+            if (filename) {
+                const filepath = path.join( path.dirname(file.path), filename)
+                await fs.writeFile(filepath, codeCell.value)
+                console.log(`Wrote codefile ${filename} to "${filepath}" on disk`)
+            }
 
        
     }
