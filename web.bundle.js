@@ -32097,7 +32097,8 @@ function parseMeta(node) {
     input = raw.split('>')[0].trim();
   } else if (hasSource) {
     input = raw.split('<')[0].trim();
-    fromSource = getSource(raw).filename;
+    hasSource = getSource(raw);
+    fromSource = hasSource.filename || hasSource.uri;
   }
 
   var meta = input.replace(NONESCAPEDSPACES_REGEX, "$1" + LSP).split(LSP).map(ident).reduce(reduceParts, {});

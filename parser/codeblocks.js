@@ -40,7 +40,7 @@ function parseMeta (node) {
 
     const isOutput = raw.indexOf('>') === 0
     const hasOutput = node.meta && node.meta.indexOf('>') >= 0
-    const hasSource = node.meta && node.meta.indexOf('<') >= 0
+    let hasSource = node.meta && node.meta.indexOf('<') >= 0
 
     let input = raw
     let fromSource;
@@ -51,7 +51,8 @@ function parseMeta (node) {
         input = raw.split('>')[0].trim()
     } else if (hasSource) {
         input = raw.split('<')[0].trim()
-        fromSource = getSource(raw).filename
+        hasSource = getSource(raw)
+        fromSource = hasSource.filename || hasSource.uri
     }
 
     const meta = input
