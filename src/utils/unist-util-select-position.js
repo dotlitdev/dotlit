@@ -1,5 +1,6 @@
 import filter from 'unist-util-filter'
 import {selectAll as select} from 'unist-util-select'
+import { getConsoleForNamespace } from './functions'
 
 const console = getConsoleForNamespace('util')
 
