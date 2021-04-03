@@ -31123,7 +31123,7 @@ var App = function App(_ref) {
 
   var setSrcWrapper = /*#__PURE__*/function () {
     var _ref2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee(pos, cellSource) {
-      var patchedSrc, processedFile, tmpEnd, tmpPos, tree, nodes, _iterator, _step, filename, filepath;
+      var patchedSrc, processedFile, tmpEnd, tmpPos, tree, nodes, _iterator, _step, codeCell, filename, filepath;
 
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee$(_context) {
         while (1) {
