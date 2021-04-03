@@ -31069,15 +31069,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _SelectionContext__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SelectionContext */ "./src/components/SelectionContext.jsx");
-/* harmony import */ var _utils_unist_util_patch_source__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/unist-util-patch-source */ "./src/utils/unist-util-patch-source.js");
-/* harmony import */ var _renderer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../renderer */ "./src/renderer/index.jsx");
-/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
-/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var unist_util_filter__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! unist-util-filter */ "./node_modules/unist-util-filter/index.js");
-/* harmony import */ var unist_util_filter__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(unist_util_filter__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_unist_util_select_position__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/unist-util-select-position */ "./src/utils/unist-util-select-position.js");
-/* harmony import */ var unist_util_select__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! unist-util-select */ "./node_modules/unist-util-select/index.js");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! path */ "./node_modules/path-browserify/index.js");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _SelectionContext__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SelectionContext */ "./src/components/SelectionContext.jsx");
+/* harmony import */ var _utils_unist_util_patch_source__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/unist-util-patch-source */ "./src/utils/unist-util-patch-source.js");
+/* harmony import */ var _renderer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../renderer */ "./src/renderer/index.jsx");
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/console */ "./src/utils/console.js");
+/* harmony import */ var _utils_console__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_console__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var unist_util_filter__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! unist-util-filter */ "./node_modules/unist-util-filter/index.js");
+/* harmony import */ var unist_util_filter__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(unist_util_filter__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _utils_unist_util_select_position__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/unist-util-select-position */ "./src/utils/unist-util-select-position.js");
+/* harmony import */ var unist_util_select__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! unist-util-select */ "./node_modules/unist-util-select/index.js");
 
 
 
@@ -31096,7 +31098,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
 
-var console = (0,_utils_console__WEBPACK_IMPORTED_MODULE_7__.getConsoleForNamespace)('App');
+
+var console = (0,_utils_console__WEBPACK_IMPORTED_MODULE_8__.getConsoleForNamespace)('App');
 
 var App = function App(_ref) {
   var file = _ref.file,
@@ -31130,10 +31133,10 @@ var App = function App(_ref) {
           switch (_context.prev = _context.next) {
             case 0:
               console.log("<App/> Set src wrapper", pos, cellSource);
-              patchedSrc = (0,_utils_unist_util_patch_source__WEBPACK_IMPORTED_MODULE_5__.default)(srcAndRes.src, pos, cellSource.trimEnd());
+              patchedSrc = (0,_utils_unist_util_patch_source__WEBPACK_IMPORTED_MODULE_6__.default)(srcAndRes.src, pos, cellSource.trimEnd());
               file.contents = patchedSrc;
               _context.next = 5;
-              return (0,_renderer__WEBPACK_IMPORTED_MODULE_6__.processor)(fs).process(file);
+              return (0,_renderer__WEBPACK_IMPORTED_MODULE_7__.processor)(fs).process(file);
 
             case 5:
               processedFile = _context.sent;
@@ -31165,8 +31168,8 @@ var App = function App(_ref) {
                 start: pos.start,
                 end: tmpEnd
               };
-              tree = unist_util_filter__WEBPACK_IMPORTED_MODULE_8___default()(processedFile.data.ast, (0,_utils_unist_util_select_position__WEBPACK_IMPORTED_MODULE_9__.atPos)(tmpPos));
-              nodes = (0,unist_util_select__WEBPACK_IMPORTED_MODULE_10__.selectAll)('code', tree);
+              tree = unist_util_filter__WEBPACK_IMPORTED_MODULE_9___default()(processedFile.data.ast, (0,_utils_unist_util_select_position__WEBPACK_IMPORTED_MODULE_10__.atPos)(tmpPos));
+              nodes = (0,unist_util_select__WEBPACK_IMPORTED_MODULE_11__.selectAll)('code', tree);
               console.log("[CodeCells in Change (pos)]", tmpPos, file.path, tree, nodes);
               _iterator = _createForOfIteratorHelper(nodes);
               _context.prev = 22;
@@ -31187,7 +31190,7 @@ var App = function App(_ref) {
                 break;
               }
 
-              filepath = path.join(path.dirname(file.path), filename);
+              filepath = path__WEBPACK_IMPORTED_MODULE_4___default().join(path__WEBPACK_IMPORTED_MODULE_4___default().dirname(file.path), filename);
               _context.next = 31;
               return fs.writeFile(filepath, codeCell.value);
 
@@ -31235,7 +31238,7 @@ var App = function App(_ref) {
     setSrc: setSrcWrapper
   };
   console.log('<App/> render', srcAndRes.res, srcAndRes.src, selectedCell);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_SelectionContext__WEBPACK_IMPORTED_MODULE_4__.default.Provider, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_SelectionContext__WEBPACK_IMPORTED_MODULE_5__.default.Provider, {
     value: state
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("div", {
     id: "content"

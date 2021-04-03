@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import path from 'path'
 import SelectionContext from './SelectionContext'
 import patchSource from '../utils/unist-util-patch-source'
 import { processor } from '../renderer'
