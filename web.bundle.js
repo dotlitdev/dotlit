@@ -31093,7 +31093,7 @@ var atPos = function atPos(pos) {
     var startInside = pos2.start.line >= pos.start.line && pos2.start.line <= pos.end.line;
     var endInside = pos2.end.line >= pos.start.line && pos2.end.line <= pos.end.line;
     console.log(node, startInside, endInside);
-    return startInside && endInside;
+    return startInside || endInside;
   };
 };
 
