@@ -43,7 +43,7 @@ const App = ({file, fs, result}) => {
             console.log("Failed to write file source to fs", file.path, err)
         }
         
-        const tmpEnd = {line: pos.start.line + cellSource.split('\n').length })
+        const tmpEnd = {line: pos.start.line + cellSource.split('\n').length }
         const tmpPos = {start: pos.start, end: tmpEnd }
         const nodes = filter(processedFile.data.ast, atPos(tmpPos))
         console.log("=====> pos to nodes", tmpPos, file.path, nodes)
