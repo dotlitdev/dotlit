@@ -31918,7 +31918,7 @@ var Codeblock = /*#__PURE__*/function (_React$Component2) {
       var viewer = getViewer(meta);
 
       if (codeNode) {
-        console.log("[Codeblock]", codeNode.properties.meta, this.props.children);
+        console.log("[Codeblock]", codeNode.properties.meta, this.props.node, this.props.children);
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("codecell", null, meta && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement(Meta, {
           meta: meta
         }), viewer ? viewer(this.props.children) : meta && meta.isOutput ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("output", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("pre", null, this.props.children)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("pre", null, this.props.children));

@@ -46,7 +46,7 @@ export default class Codeblock extends React.Component {
         const viewer = getViewer(meta)
         
         if (codeNode) {
-            console.log("[Codeblock]", codeNode.properties.meta, this.props.children )
+            console.log("[Codeblock]", codeNode.properties.meta, this.props.node, this.props.children )
             return <codecell>
                 { meta && <Meta meta={meta}/> }
                 { viewer 
