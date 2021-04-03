@@ -31873,6 +31873,20 @@ var Meta = /*#__PURE__*/function (_React$Component) {
 var viewers = {
   csv: function csv(val) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("pre", null, "//CSV Viewer\\n", val);
+  },
+  html: function html(val) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("div", {
+      dangerouslySetInnerHTML: {
+        __html: val
+      }
+    });
+  },
+  svg: function svg(val) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("svg", {
+      dangerouslySetInnerHTML: {
+        __html: val
+      }
+    });
   }
 };
 
