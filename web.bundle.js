@@ -31119,7 +31119,7 @@ var App = function App(_ref) {
 
   var setSrcWrapper = /*#__PURE__*/function () {
     var _ref2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee(pos, cellSource) {
-      var patchedSrc, processedFile, nodes, filename, filepath;
+      var patchedSrc, processedFile, tmpEnd, tmpPos, nodes, filename, filepath;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -31153,23 +31153,30 @@ var App = function App(_ref) {
               console.log("Failed to write file source to fs", file.path, _context.t0);
 
             case 16:
-              nodes = unist_util_filter__WEBPACK_IMPORTED_MODULE_8___default()(processedFile.data.ast, atPos(pos));
-              console.log("=====> pos to nodes", pos, file.path, nodes);
+              tmpEnd = {
+                line: pos.start.line + cellSource.split('\n').length
+              };
+              tmpPos = {
+                start: pos.start,
+                end: tmpEnd
+              };
+              nodes = unist_util_filter__WEBPACK_IMPORTED_MODULE_8___default()(processedFile.data.ast, atPos(tmpPos));
+              console.log("=====> pos to nodes", tmpPos, file.path, nodes);
               filename = cellSource.data && cellSource.data.meta && cellSource.data.meta.filename;
 
               if (!filename) {
-                _context.next = 24;
+                _context.next = 26;
                 break;
               }
 
               filepath = path.join(path.dirname(file.path), filename);
-              _context.next = 23;
+              _context.next = 25;
               return fs.writeFile(filepath, cellSource.value);
 
-            case 23:
+            case 25:
               console.log("Wrote codefile ".concat(filename, " to \"").concat(filepath, "\" on disk"));
 
-            case 24:
+            case 26:
             case "end":
               return _context.stop();
           }

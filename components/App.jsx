@@ -43,8 +43,10 @@ const App = ({file, fs, result}) => {
             console.log("Failed to write file source to fs", file.path, err)
         }
         
-        const nodes = filter(processedFile.data.ast, atPos(pos))
-        console.log("=====> pos to nodes", pos, file.path, nodes)
+        const tmpEnd = {line: pos.start.line + cellSource.split('\n').length }
+        const tmpPos = {start: pos.start, end: tmpEnd }
+        const nodes = filter(processedFile.data.ast, atPos(tmpPos))
+        console.log("=====> pos to nodes", tmpPos, file.path, nodes)
         const filename = cellSource.data && cellSource.data.meta && cellSource.data.meta.filename
         if (filename) {
              const filepath = path.join( path.dirname(file.path), filename)
