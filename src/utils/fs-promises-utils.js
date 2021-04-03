@@ -13,7 +13,9 @@ const passThroughRead = (fs, litroot) => {
     } catch (err) {
       const filePath = path.join(litroot, args[0])
       console.log('fs.passThroughRead passing through to fetch', filePath)
-      return await (await fetch(filePath)).text();
+      const resp = await fetch(filePath)
+      if (resp.status === 404) throw new Error(`404 File ${filePath} not found.`)
+      return await resp.text();
     }
   };
 }
