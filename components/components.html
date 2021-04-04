@@ -345,11 +345,7 @@ export const EditIcon = props =&gt; (&lt;FontAwesomeIcon icon={faEdit} {...props
 export const ExecIcon = props =&gt; (&lt;FontAwesomeIcon icon={faPlay} {...props} /&gt;)
 export const CloseIcon = props =&gt; (&lt;FontAwesomeIcon icon={faTimes} {...props} /&gt;)
 export const SaveIcon = props =&gt; (&lt;FontAwesomeIcon icon={faSave} {...props} /&gt;)
-</code></pre></codecell></cell><section name="code"><cell startpos="359:1-10870" endpos="359:8-10877"><h2 id="code">Code</h2></cell><cell startpos="361:1-10879" endpos="433:4-13635" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">base/Codeblock.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
-import {log, level} from &#x27;../../utils/console&#x27;
-import { getConsoleForNamespace } from &#x27;../../utils/console&#x27;
-import Highlight from &#x27;react-highlight.js&#x27;
-const console = getConsoleForNamespace(&#x27;codeblocks&#x27;)
+</code></pre></codecell></cell><section name="code"><cell startpos="359:1-10870" endpos="359:8-10877"><h2 id="code">Code</h2></cell><cell startpos="361:1-10879" endpos="382:4-11681" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">CodeMeta.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
 
 class Meta extends React.Component {
     render() {
@@ -368,6 +364,14 @@ class Meta extends React.Component {
         &lt;/span&gt;
     }
 }
+module.exports = CodeMeta
+</code></pre></codecell></cell><cell startpos="385:1-11684" endpos="441:4-13753" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">base/Codeblock.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
+import {log, level} from &#x27;../../utils/console&#x27;
+import { getConsoleForNamespace } from &#x27;../../utils/console&#x27;
+import Highlight from &#x27;react-highlight.js&#x27;
+import CodeMeta from &#x27;../CodeMeta&#x27;
+const console = getConsoleForNamespace(&#x27;codeblocks&#x27;)
+
 
 const viewers = {
   csv: val =&gt; {
@@ -403,7 +407,7 @@ export default class Codeblock extends React.Component {
         if (codeNode) {const source = codeNode.children[0].value
             console.log(&quot;[Codeblock]&quot;, meta)
             return &lt;codecell&gt;
-                { meta &amp;&amp; &lt;Meta meta={meta}/&gt; }
+                { meta &amp;&amp; &lt;CodeMeta meta={meta}/&gt; }
                 { viewer 
                   ? viewer(source)
                   : meta &amp;&amp; meta.isOutput
@@ -416,7 +420,7 @@ export default class Codeblock extends React.Component {
         }
     }
 }
-</code></pre></codecell></cell><section name="link"><cell startpos="435:1-13637" endpos="435:8-13644"><h2 id="link">Link</h2></cell><cell startpos="437:1-13646" endpos="455:4-14121" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">base/Link.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
+</code></pre></codecell></cell><section name="link"><cell startpos="443:1-13755" endpos="443:8-13762"><h2 id="link">Link</h2></cell><cell startpos="445:1-13764" endpos="463:4-14239" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">base/Link.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
 import { getConsoleForNamespace } from &#x27;../../utils/console&#x27;
 
 const console = getConsoleForNamespace(&#x27;Link&#x27;)
@@ -433,7 +437,7 @@ const Link = props =&gt; {
 }
 
 export default Link
-</code></pre></codecell></cell><section name="backlinks"><cell startpos="457:1-14123" endpos="457:13-14135"><h2 id="backlinks">Backlinks</h2></cell><cell startpos="459:1-14137" endpos="475:4-14627" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">Backlinks.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
+</code></pre></codecell></cell><section name="backlinks"><cell startpos="465:1-14241" endpos="465:13-14253"><h2 id="backlinks">Backlinks</h2></cell><cell startpos="467:1-14255" endpos="483:4-14745" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">Backlinks.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
 import path from &#x27;path&#x27;
 
 export default class Backlinks extends React.Component {

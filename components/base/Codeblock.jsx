@@ -2,25 +2,9 @@ import React from 'react'
 import {log, level} from '../../utils/console'
 import { getConsoleForNamespace } from '../../utils/console'
 import Highlight from 'react-highlight.js'
+import CodeMeta from '../CodeMeta'
 const console = getConsoleForNamespace('codeblocks')
 
-class Meta extends React.Component {
-    render() {
-        return <span className="meta">
-            <span className="lang">{this.props.meta.lang}</span>
-            <span className="repl">{this.props.meta.repl}</span>
-            <span className="filename">{this.props.meta.filename}</span>
-
-            {this.props.meta.tags && <ul className="tags">{
-                this.props.meta.tags.map( (tag, i) => <li key={tag+i}><span className="tag">{tag}</span></li>)
-            }</ul>}
-
-            {this.props.meta.directives && <ul className="directives">{
-                this.props.meta.directives.map( (dir, i) => <li key={dir+1}><span className="directive">{dir}</span></li>)
-            }</ul>}
-        </span>
-    }
-}
 
 const viewers = {
   csv: val => {
@@ -56,7 +40,7 @@ export default class Codeblock extends React.Component {
         if (codeNode) {const source = codeNode.children[0].value
             console.log("[Codeblock]", meta)
             return <codecell>
-                { meta && <Meta meta={meta}/> }
+                { meta && <CodeMeta meta={meta}/> }
                 { viewer 
                   ? viewer(source)
                   : meta && meta.isOutput
