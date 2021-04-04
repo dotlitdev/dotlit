@@ -31,8 +31,8 @@ export const wikiLinkOptions = files => ({
 
 export const decorateLinkNode = (link, root = '', filepath = '') => {
     // console.log(link)
-    const wikiLink = link.type === 'wikiLink'
-    const url = wikiLink
+    const wikilink = link.type === 'wikiLink'
+    const url = wikilink
         ? link.data.permalink + '.lit'
         : link.url
 
@@ -60,8 +60,9 @@ export const decorateLinkNode = (link, root = '', filepath = '') => {
         wikiLink,
     }
 
-    if (wikiLink) {
-        link.url = link.url + '?file=' + canonical
+    if (wikilink) {
+        const [base,frag] = link.url.split("#")
+        link.url = base + '?file=' + canonical + (frag ? `#${frag}` : '')
         link.children = [{type: 'text', value: link.value }]
         link.data.hProperties = {
             wikilink
