@@ -1,6 +1,6 @@
 import React from 'react'
 
-class CodeMeta extends React.Component {
+export default class CodeMeta extends React.Component {
     render() {
         return <span className="meta">
             <span className="lang">{this.props.meta.lang}</span>
@@ -17,4 +17,3 @@ class CodeMeta extends React.Component {
         </span>
     }
 }
-module.exports = CodeMeta
