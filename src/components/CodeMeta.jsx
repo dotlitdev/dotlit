@@ -1,6 +1,6 @@
 import React from 'react'
 
-class Meta extends React.Component {
+class CodeMeta extends React.Component {
     render() {
         return <span className="meta">
             <span className="lang">{this.props.meta.lang}</span>
