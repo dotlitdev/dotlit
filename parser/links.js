@@ -63,6 +63,9 @@ export const decorateLinkNode = (link, root = '', filepath = '') => {
     if (wikiLink) {
         link.url = link.url + '?file=' + canonical
         link.children = [{type: 'text', value: link.value }]
+        link.data.hProperties = {
+            wikilink
+        }
     }
     
     delete link.value

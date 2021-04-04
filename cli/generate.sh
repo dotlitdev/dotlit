@@ -1,1 +1,0 @@
-dotlit -d 2 generate ./src -o ./build

@@ -1,1 +1,0 @@
-dotlit -d 2 convert ./src/index.lit -o ./build/index.json -f json
