@@ -11,4 +11,3 @@ export const EditIcon = props => (<FontAwesomeIcon icon={faEdit} {...props} />)
 export const ExecIcon = props => (<FontAwesomeIcon icon={faPlay} {...props} />)
 export const CloseIcon = props => (<FontAwesomeIcon icon={faTimes} {...props} />)
 export const SaveIcon = props => (<FontAwesomeIcon icon={faSave} {...props} />)
-
