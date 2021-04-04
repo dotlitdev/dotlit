@@ -34,7 +34,7 @@ program
         description: "Literate programming ...",
         examples: ["lit notebook --open"]
     }))
-    .option('-d, --debug <level>', 'Output debugging information', AsInt, 0)
+    .option('-d, --debug <level>', 'Output debugging information', Identity, "")
     .helpOption('-h, --help', 'Output usage information')
 
 program
@@ -57,7 +57,7 @@ program
         cmd.cwd = process.cwd()
         cmd.path = path
         cmd.debug = program.debug
-        console.log("[cli] cmd:", cmd)
+        console.log("[cli] cmd: generate", path, cmd.base, cmd.cwd, cmd.debug, cmd.output)
         process.env.DEBUG = cmd.debug
         generate(cmd)
     })
