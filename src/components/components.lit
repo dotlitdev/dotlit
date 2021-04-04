@@ -1,6 +1,404 @@
 
 
+# React Components
+
+## Table of Contents
+
+## Document
+
+```jsx Document.jsx
+import React, {useState} from 'react'
+import path from 'path'
+import App from './App'
+import Backlinks from './Backlinks'
+import { Header } from './Header'
+import { getConsoleForNamespace } from '../utils/console'
+
+const console = getConsoleForNamespace('Document')
+
+const Document = props => {
+
+    const result = props.file.result
+    const title = props.file.data.frontmatter.title || props.file.stem
+    
+    return <html>
+        <head>
+            <title>{title}</title>
+            <meta name="litsrc" value={props.file.path}/>
+            <meta name="litroot" value={props.root}/>
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+            <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css" />
+            <link rel="stylesheet" href={path.join(props.root, 'style.css')}/>
+        </head>
+        <body>
+            <div id="header"><Header root={props.root} /></div>
+            <div id="app"><App file={props.file} fs={props.fs} result={result}/></div>
+            <div id="backlinks"><Backlinks root={props.root} links={props.backlinks || []}/></div>
+            {/* <script>content.remove();</script> */}
+            <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+            <script>eruda.init();</script>
+            <script src={path.join(props.root, 'web.bundle.js')}/>
+        </body>
+    </html>
+}
+
+export default Document
+```
+
 ## Header
+
+```jsx Header.jsx
+import React from 'react'
+
+export const Header = props => {
+
+   const [d,l,ex] = [
+     'litDebug',
+     typeof localStorage !== 'undefined' && localStorage,
+     '*,fs,client,Cell,sections,etc...',
+   ]
+   const setDebug = ev => {
+        ev.preventDefault()
+        l.setItem( d, prompt(d, l.getItem(d) || ex) )
+        return false
+    }
+    
+    return <header>
+                 <a href={props.root}>Home</a>
+                 <span onClick={setDebug}>Debug</span>
+            </header>
+}
+```
+## App
+
+```jsx App.jsx
+import React, {useState} from 'react'
+import path from 'path'
+import SelectionContext from './SelectionContext'
+import patchSource from '../utils/unist-util-patch-source'
+import { processor } from '../renderer'
+import { getConsoleForNamespace } from '../utils/console'
+import filter from 'unist-util-filter'
+import {atPos} from '../utils/unist-util-select-position'
+import {selectAll} from 'unist-util-select'
+
+const console = getConsoleForNamespace('App')
+
+const App = ({file, fs, result}) => {
+
+    const [srcAndRes, setSrcAndRes] = useState({
+        src: file.contents.toString(),
+        res: result
+    })
+    const [res, setResult] = useState(result)
+    const [selectedCell, setSelectedCell] = useState(null)
+    
+    const setSrcWrapper = async (pos, cellSource) => {
+        console.log("<App/> Set src wrapper", pos, cellSource)
+        const patchedSrc = patchSource(srcAndRes.src, pos, cellSource.trimEnd())
+        
+        file.contents = patchedSrc
+        const processedFile = await processor(fs).process(file)
+        console.log("Processed client", processedFile)
+        setSrcAndRes({
+            src: patchedSrc,
+            res: processedFile.result
+        })
+
+        try {
+            await fs.writeFile(file.path, patchedSrc, {encoding: 'utf8'})
+        } catch (err) {
+            console.log("Failed to write file source to fs", file.path, err)
+        }
+        
+        const tmpEnd = {line: pos.start.line + cellSource.split('\n').length }
+        const tmpPos = {start: pos.start, end: tmpEnd }
+        const tree = filter(processedFile.data.ast, atPos(tmpPos))
+        const nodes = selectAll('code', tree)
+        console.log("[CodeCells in Change (pos)]", tmpPos, file.path, tree, nodes)
+        for (const codeCell of nodes) {
+            const filename = codeCell.data && codeCell.data.meta && codeCell.data.meta.filename
+            if (filename) {
+                const filepath = path.join( path.dirname(file.path), filename)
+                await fs.writeFile(filepath, codeCell.value)
+                console.log(`Wrote codefile ${filename} to "${filepath}" on disk`)
+            }
+       }
+    }
+
+    const state = {
+      src: srcAndRes.src, 
+      selectedCell, 
+      setSelectedCell, 
+      setSrc: setSrcWrapper
+    }
+
+    console.log('<App/> render', srcAndRes.res, srcAndRes.src, selectedCell)
+
+    return <SelectionContext.Provider value={state}>
+        <div id="content">{srcAndRes.res}</div>
+    </SelectionContext.Provider>
+}
+
+export default App
+```
+## 
+
+
+## Selection Context
+
+```jsx SelectionContext.jsx
+import React from 'react'
+
+// SelectedCell is the hast node corresponding to the cell.
+
+export default React.createContext({
+    src: '',
+    selectedCell: null,
+    setSelectedCell: ()=>{},
+    setSrc: () => {},
+});
+```
+## Cell
+
+```jsx Cell.jsx
+import React, {useState} from "react"
+import source from 'unist-util-source'
+
+import CellMenu from './CellMenu'
+import SelectionContext from './SelectionContext'
+import Editor from './Editor'
+
+import { getConsoleForNamespace } from '../utils/console'
+
+const console = getConsoleForNamespace('Cell')
+
+const childIs = (node, nodeType) => node.children 
+    && node.children.length
+    && node.children[0] 
+    && node.children[0].tagName === nodeType
+
+    const posstr = pos => pos ? `${pos.line}:${pos.column}-${pos.offset}` : undefined;
+
+const Cell = props => {
+
+    const node = props.node
+    node.position = node.position || {}
+    const pos = node.position
+    const symbol = posstr(pos.start)
+
+    const [src, setSrc] = useState('')
+    const [editing, setEditing] = useState(false)
+    const toggleEditing = () => setEditing(!editing)
+    
+    const isSelected = ctx => symbol === ctx.selectedCell
+    const toggleSelected = ctx => () => {
+        const selected = isSelected(ctx)
+        ctx.setSelectedCell(selected ? null : symbol)
+    }
+    
+
+    const isCodeCell = childIs(props.node, 'pre')
+
+    const save = ctx => args => {
+        console.log("Saving cell", pos, src)
+        ctx.setSrc(pos, src)
+        setEditing(false)
+    }
+
+    const getClasses = ctx => [
+        isSelected(ctx) ? 'selected' : '',
+        editing ? 'editing' : '',
+        isCodeCell ? 'code' : '',
+    ].join(' ').trim() || undefined
+
+    return <SelectionContext.Consumer>
+        { ctx => {
+            return <cell
+                onClick={toggleSelected(ctx)}
+                startpos={posstr(pos.start)}
+                endpos={posstr(pos.end)}
+                className={getClasses(ctx)}>
+                    { editing ? <Editor src={source(pos, ctx.src)} update={setSrc}/> : props.children }
+                    { isSelected(ctx) && <CellMenu editing={editing} toggleEditing={toggleEditing} save={save(ctx)}/>}
+            </cell>
+        }}
+    </SelectionContext.Consumer>
+}
+
+export default Cell
+```
+
+### CellMenu
+
+```jsx CellMenu.jsx
+import React, {useState} from "react"
+import { MenuIcon, EditIcon, ExecIcon, CloseIcon, SaveIcon } from './Icons'
+import { getConsoleForNamespace } from '../utils/console'
+
+const console = getConsoleForNamespace('CellMenu')
+
+const wrapHandler = fn => ev => {
+    console.log("Cell menu wrapper", fn, ev)
+    ev.preventDefault()
+    ev.stopPropagation()
+    if (typeof fn === 'function'){
+        const resp = fn(ev)
+        console.log("Cell menu wrapper fn executed", resp)
+    }
+    return false
+}
+
+const CellMenu = props => {
+
+    const [open, setOpen] = useState(false)
+    const toggleOpen = wrapHandler(ev => {
+        console.log("Toggle CellMenu", open)
+        setOpen(!open)
+    })
+
+    const items = [
+        {title: "Execute", icon: ExecIcon, handler: wrapHandler(props.execute)}
+    ]
+
+    if (!props.editing) items.push({title: "Edit", icon: EditIcon, handler: wrapHandler(props.toggleEditing)})
+    else {
+        items.push({title: "Cancel", icon: CloseIcon, handler: wrapHandler(props.toggleEditing)})
+        items.push({title: "Save", icon: SaveIcon, handler: wrapHandler(props.save)})
+    }
+
+    return <menu>
+        <ul className="menu__items">
+            { open && items.map( item => {
+                const Icon = item.icon
+                return <li title={item.title} key={item.title} onClick={item.handler}><Icon/></li>
+            })}
+            { !open 
+                ? <li title="Open" key="open" onClick={toggleOpen}><MenuIcon/></li>
+                : <li title="Close" key="close"onClick={toggleOpen}><CloseIcon/></li> }
+        </ul>
+    </menu>
+}
+
+export default CellMenu
+```
+## Code
+
+```jsx base/Codeblock.jsx
+import React from 'react'
+import {log, level} from '../../utils/console'
+import { getConsoleForNamespace } from '../../utils/console'
+import Highlight from 'react-highlight.js'
+const console = getConsoleForNamespace('codeblocks')
+
+class Meta extends React.Component {
+    render() {
+        return <span className="meta">
+            <span className="lang">{this.props.meta.lang}</span>
+            <span className="repl">{this.props.meta.repl}</span>
+            <span className="filename">{this.props.meta.filename}</span>
+
+            {this.props.meta.tags && <ul className="tags">{
+                this.props.meta.tags.map( (tag, i) => <li key={tag+i}><span className="tag">{tag}</span></li>)
+            }</ul>}
+
+            {this.props.meta.directives && <ul className="directives">{
+                this.props.meta.directives.map( (dir, i) => <li key={dir+1}><span className="directive">{dir}</span></li>)
+            }</ul>}
+        </span>
+    }
+}
+
+const viewers = {
+  csv: val => {
+    // return <pre>//CSV Viewer\n{val}</pre>
+
+    const rows = val.split("\n").map( (row,i) => {
+       const cols = row.split(",").map( (col,j) => <td key={j}>{col}</td>)
+       return <tr key={i}>{cols}</tr>
+    })
+
+    return <table>{rows}</table>
+  },
+  html: val => <div dangerouslySetInnerHTML={{__html: val}}></div>,
+  svg: val => <div dangerouslySetInnerHTML={{__html: val}}></div>,
+  uri: val => <iframe src={val}></iframe>,
+}
+
+const getViewer = meta => {
+  return meta && (meta.isOutput || (meta.directives && meta.directives.indexOf('inline') >= 0)) && viewers[meta.lang]
+}
+
+export default class Codeblock extends React.Component {
+    render() {
+        
+        const codeNode = this.props.node.children
+                            && this.props.node.children.length == 1
+                            && this.props.node.children[0].tagName === 'code'
+                            ? this.props.node.children[0] 
+                            : null;
+        const meta = codeNode ? codeNode.properties.meta : null
+        const viewer = getViewer(meta)
+       
+        if (codeNode) {const source = codeNode.children[0].value
+            console.log("[Codeblock]", meta)
+            return <codecell>
+                { meta && <Meta meta={meta}/> }
+                { viewer 
+                  ? viewer(source)
+                  : meta && meta.isOutput
+                    ? <output><Highlight language={meta.lang}>{source}</Highlight></output>
+                    : <Highlight language={meta.lang}>{source}</Highlight> }
+            </codecell>
+        } else {
+            console.log("Default codeblock", this.props.node.children[0])
+            return <codecell><pre>{this.props.children}</pre></codecell>
+        }
+    }
+}
+```
+
+## Link
+
+```jsx base/Link.jsx
+import React from 'react'
+import { getConsoleForNamespace } from '../../utils/console'
+
+const console = getConsoleForNamespace('Link')
+
+const Link = props => {
+    const title = props.node.properties.title
+    console.log("<Link/>", props)
+    return <a className={props.className}
+        href={props.href}
+        title={title}
+        wikilink={props.wikilink ? 'true' : undefined}>
+            {props.children}
+        </a>
+}
+
+export default Link
+```
+
+## Backlinks
+
+```jsx Backlinks.jsx
+import React from 'react'
+import path from 'path'
+
+export default class Backlinks extends React.Component {
+    render() {
+        return <>
+            <h4>{`Backlinks (${this.props.links.length})`}</h4>
+            <ol>
+                {this.props.links.map( (link) => {
+                    return  <li key={link.url}><a title={link.title} href={path.join(this.props.root, link.url)}>{link.title}</a></li>
+                })}
+            </ol>
+        </>
+    }
+}
+```
 
 
 
