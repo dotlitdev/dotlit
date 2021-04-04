@@ -358,12 +358,8 @@ export const SaveIcon = props => (<FontAwesomeIcon icon={faSave} {...props} />)
 
 ## Code
 
-```jsx base/Codeblock.jsx
+```jsx CodeMeta.jsx
 import React from 'react'
-import {log, level} from '../../utils/console'
-import { getConsoleForNamespace } from '../../utils/console'
-import Highlight from 'react-highlight.js'
-const console = getConsoleForNamespace('codeblocks')
 
 class Meta extends React.Component {
     render() {
@@ -382,6 +378,18 @@ class Meta extends React.Component {
         </span>
     }
 }
+module.exports = CodeMeta
+```
+
+
+```jsx base/Codeblock.jsx
+import React from 'react'
+import {log, level} from '../../utils/console'
+import { getConsoleForNamespace } from '../../utils/console'
+import Highlight from 'react-highlight.js'
+import CodeMeta from '../CodeMeta'
+const console = getConsoleForNamespace('codeblocks')
+
 
 const viewers = {
   csv: val => {
@@ -417,7 +425,7 @@ export default class Codeblock extends React.Component {
         if (codeNode) {const source = codeNode.children[0].value
             console.log("[Codeblock]", meta)
             return <codecell>
-                { meta && <Meta meta={meta}/> }
+                { meta && <CodeMeta meta={meta}/> }
                 { viewer 
                   ? viewer(source)
                   : meta && meta.isOutput
