@@ -1,7 +1,7 @@
 import React from 'react'
 import {log, level} from '../../utils/console'
 import { getConsoleForNamespace } from '../../utils/console'
-
+import Highlight from 'react-highlight.js'
 const console = getConsoleForNamespace('codeblocks')
 
 class Meta extends React.Component {
@@ -35,7 +35,8 @@ const viewers = {
   },
   html: val => <div dangerouslySetInnerHTML={{__html: val}}></div>,
   svg: val => <div dangerouslySetInnerHTML={{__html: val}}></div>,
-  uri: val => <iframe src={val}></iframe>
+  uri: val => <iframe src={val}></iframe>,
+  js: val => <Highlight language="js">{val}</Highlight>,
 }
 
 const getViewer = meta => {
