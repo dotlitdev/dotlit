@@ -18,6 +18,7 @@ const Document = props => {
             <meta name="litsrc" value={props.file.path}/>
             <meta name="litroot" value={props.root}/>
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+            <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css" />
             <link rel="stylesheet" href={path.join(props.root, 'style.css')}/>
         </head>
         <body>
