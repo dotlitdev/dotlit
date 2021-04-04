@@ -1,0 +1,79 @@
+<html data-reactroot=""><head><title>github_workflows</title><meta name="litsrc" value="meta/github_workflows.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="/style.css"/></head><body><div id="header"><header><a href="/">Home</a><span>Debug</span></header></div><div id="app"><div id="content"><section name="github-workflows"><cell startpos="1:1-0" endpos="1:19-18"><h1 id="github-workflows">GitHub Workflows</h1></cell><section name="deploy"><cell startpos="3:1-20" endpos="5:160-190"><h2 id="deploy">Deploy</h2><p><a href="https://github.com/dotlitdev/dotlit/actions/workflows/generate.yaml"><img src="https://github.com/dotlitdev/dotlit/actions/workflows/generate.yaml/badge.svg" alt="Deploy"/></a></p></cell><cell startpos="7:1-192" endpos="8:4-240" class="code"><codecell><span class="meta"><span class="lang">yaml</span><span class="repl"></span><span class="filename"></span></span><pre><code class="" meta="[object Object]">name: Deploy  
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: &#x27;14.x&#x27;
+      - name: Generate gh-pages from source
+        run: |
+          npm install
+          npm install -g .
+          npm run build-web
+          mkdir build
+          dotlit -d &quot;*&quot; generate -b &quot;/&quot; ./src -o ./build
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: build # The folder the action should deploy.
+          CLEAN: true # Automatically remove deleted files from the deploy branch
+
+</code></pre></codecell></cell><cell startpos="10:1-242" endpos="11:4-274" class="code"><codecell><span class="meta"><span class="lang">yaml</span><span class="repl"></span><span class="filename"></span></span><pre><code class="" meta="[object Object]">&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Example Domain&lt;/title&gt;
+
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;meta http-equiv=&quot;Content-type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot; /&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+    body {
+        background-color: #f0f0f2;
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, system-ui, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;
+        
+    }
+    div {
+        width: 600px;
+        margin: 5em auto;
+        padding: 2em;
+        background-color: #fdfdff;
+        border-radius: 0.5em;
+        box-shadow: 2px 3px 7px 2px rgba(0,0,0,0.02);
+    }
+    a:link, a:visited {
+        color: #38488f;
+        text-decoration: none;
+    }
+    @media (max-width: 700px) {
+        div {
+            margin: 0 auto;
+            width: auto;
+        }
+    }
+    &lt;/style&gt;    
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;div&gt;
+    &lt;h1&gt;Example Domain&lt;/h1&gt;
+    &lt;p&gt;This domain is for use in illustrative examples in documents. You may use this
+    domain in literature without prior coordination or asking for permission.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;https://www.iana.org/domains/example&quot;&gt;More information...&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+</code></pre></codecell></cell><section name="npm-publish"><cell startpos="13:1-276" endpos="15:167-458"><h2 id="npm-publish">NPM Publish</h2><p><a href="https://github.com/dotlitdev/dotlit/actions/workflows/npm-publish.yaml"><img src="https://github.com/dotlitdev/dotlit/actions/workflows/npm-publish.yaml/badge.svg" alt="Publish"/></a></p></cell><cell startpos="17:1-460" endpos="18:4-508" class="code"><codecell><span class="meta"><span class="lang">yaml</span><span class="repl"></span><span class="filename"></span></span><pre><code class="" meta="[object Object]"></code></pre></codecell></cell></section></section></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>

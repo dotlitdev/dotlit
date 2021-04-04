@@ -57,7 +57,7 @@ export const decorateLinkNode = (link, root = '', filepath = '') => {
         isFragment,
         isRelative,
         canonical,
-        wikiLink,
+        wikilink,
     }
 
     if (wikilink) {
