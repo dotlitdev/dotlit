@@ -17,9 +17,9 @@
                     "offset": 0
                 },
                 "end": {
-                    "line": 4,
+                    "line": 95,
                     "column": 4,
-                    "offset": 32
+                    "offset": 2803
                 }
             },
             "children": [
@@ -95,9 +95,9 @@
                             "offset": 10
                         },
                         "end": {
-                            "line": 4,
+                            "line": 95,
                             "column": 4,
-                            "offset": 32
+                            "offset": 2803
                         }
                     },
                     "data": {
@@ -110,8 +110,8 @@
                         {
                             "type": "code",
                             "lang": "jsx",
-                            "meta": "< index.jsx",
-                            "value": "",
+                            "meta": "index.jsx",
+                            "value": "const React = require('react')\nconst ReactDOM = require('react-dom')\nconst vfile = require('vfile')\nconst path = require('path')\nconst qs = require('querystring-es3')\nconst FS = require('@isomorphic-git/lightning-fs')\nconst select = require('unist-util-select')\n\nconst parser = require('../parser')\nconst renderer = require('../renderer')\nconst App = require('../components/App').default\nconst { Header } = require('../components/Header')\nconst { extendFs } = require('../utils/fs-promises-utils')\n\nconst { getMeta } = require('../utils/functions')\nimport { getConsoleForNamespace } from '../utils/console'\n\nconst console = getConsoleForNamespace('client')\n\nconst query = qs.parse(location.search.slice(1))\nconst litsrc = getMeta('src', '')\nconst litroot = getMeta('root', '')\nconst litbase = getMeta('base', '/')\nconst baseUrl =`${location.protocol}//${location.host}${litroot ? path.join(path.dirname(location.pathname), litroot) : litbase}`\n\nconst lfs = (new FS(baseUrl)).promises \nconst fs = extendFs(lfs, litroot)\n\n\nconst lit = {\n    location: {\n        src: litsrc,\n        root: litroot,\n        base: baseUrl,\n        query: query,\n    },\n    parser,\n    renderer,\n    fs,\n    utils: {\n        select,\n        path,\n        vfile,\n    }\n}\n\nif (typeof window !== 'undefined') window.lit = lit\nconsole.log('.lit Notebook client initializing...')\nconsole.log(`lit:`, lit)\n\n;(async () => {\n    let src = litsrc\n    if (src === '404.lit' && query.file) src = query.file\n    console.log(`Checking local (${baseUrl}) filesystem for: ${src}`)\n    let contents, file, stat;\n    try { stat = await lit.fs.stat('/' + src) } catch(err) {}\n    if (stat) {\n        console.log(`Local file \"${ '/' + src}\" exists, loading that instead.`)\n        contents = await lit.fs.readFile('/' +  src, {encoding: 'utf8'})\n    } else {\n        console.log(\"Fetching file content\", litroot, litsrc, path.join(litroot, litsrc))\n        contents = await (await fetch(path.join(litroot, litsrc))).text()\n    }\n    console.log(contents)\n    file = await vfile({path: src, contents})\n\n    \n    const processedFile = await renderer.processor(fs).process(file)\n    console.log(\"Processed client\", processedFile)\n    window.lit.ast = processedFile.data.ast\n\n    try {\n        lit.notebook = <App \n            fs={lit.fs}\n            file={processedFile}\n            result={processedFile.result}\n        />\n    } catch(err) {\n        console.error(\"Error instantiating App\", err)\n    }\n    console.log('notebook', window.lit.notebook)\n    \n    try {\n        ReactDOM.hydrate(window.lit.notebook, document.getElementById('app'))\n        ReactDOM.hydrate(<Header root={litroot} />, document.getElementById('header'))\n    } catch (err) {\n        console.error(\"Error hydrating App\", err)\n    }\n\n   \n})()",
                             "position": {
                                 "start": {
                                     "line": 3,
@@ -119,41 +119,27 @@
                                     "offset": 10
                                 },
                                 "end": {
-                                    "line": 4,
+                                    "line": 95,
                                     "column": 4,
-                                    "offset": 32
+                                    "offset": 2803
                                 }
                             },
                             "data": {
                                 "meta": {
                                     "lang": "jsx",
+                                    "filename": "index.jsx",
                                     "isOutput": false,
                                     "hasOutput": false,
-                                    "hasSource": true,
-                                    "source": {
-                                        "lang": "txt",
-                                        "filename": "index.jsx",
-                                        "isOutput": false,
-                                        "hasOutput": false,
-                                        "hasSource": false
-                                    },
-                                    "fromSource": "index.jsx"
+                                    "hasSource": false
                                 },
                                 "hProperties": {
                                     "className": "",
                                     "meta": {
                                         "lang": "jsx",
+                                        "filename": "index.jsx",
                                         "isOutput": false,
                                         "hasOutput": false,
-                                        "hasSource": true,
-                                        "source": {
-                                            "lang": "txt",
-                                            "filename": "index.jsx",
-                                            "isOutput": false,
-                                            "hasOutput": false,
-                                            "hasSource": false
-                                        },
-                                        "fromSource": "index.jsx"
+                                        "hasSource": false
                                     }
                                 }
                             }
@@ -170,9 +156,9 @@
             "offset": 0
         },
         "end": {
-            "line": 4,
+            "line": 95,
             "column": 4,
-            "offset": 32
+            "offset": 2803
         }
     }
 }
