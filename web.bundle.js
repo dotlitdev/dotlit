@@ -31551,6 +31551,9 @@ var Document = function Document(props) {
     content: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("link", {
     rel: "stylesheet",
+    href: "https://highlightjs.org/static/demo/styles/railscasts.css"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("link", {
+    rel: "stylesheet",
     href: path__WEBPACK_IMPORTED_MODULE_1___default().join(props.root, 'style.css')
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("body", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     id: "header"
