@@ -36,7 +36,6 @@ const viewers = {
   html: val => <div dangerouslySetInnerHTML={{__html: val}}></div>,
   svg: val => <div dangerouslySetInnerHTML={{__html: val}}></div>,
   uri: val => <iframe src={val}></iframe>,
-  js: val => <Highlight language="js">{val}</Highlight>,
 }
 
 const getViewer = meta => {
@@ -52,18 +51,17 @@ export default class Codeblock extends React.Component {
                             ? this.props.node.children[0] 
                             : null;
         const meta = codeNode ? codeNode.properties.meta : null
-
         const viewer = getViewer(meta)
-        
-        if (codeNode) {
-            console.log("[Codeblock]", codeNode.properties.meta, this.props.node, this.props.children )
+       
+        if (codeNode) {const source = codeNode.children[0].value
+            console.log("[Codeblock]", meta)
             return <codecell>
                 { meta && <Meta meta={meta}/> }
                 { viewer 
-                  ? viewer(codeNode.children[0].value)
+                  ? viewer(source)
                   : meta && meta.isOutput
-                    ? <output><pre>{this.props.children}</pre></output>
-                    : <pre>{this.props.children}</pre> }
+                    ? <output><Highlight language={meta.lang}>{source}</Highlight></output>
+                    : <Highlight language={meta.lang}>{source}</Highlight> }
             </codecell>
         } else {
             console.log("Default codeblock", this.props.node.children[0])
