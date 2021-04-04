@@ -17,9 +17,9 @@
                     "offset": 2
                 },
                 "end": {
-                    "line": 409,
+                    "line": 460,
                     "column": 4,
-                    "offset": 12358
+                    "offset": 13949
                 }
             },
             "children": [
@@ -102,9 +102,9 @@
                             "offset": 22
                         },
                         "end": {
-                            "line": 409,
+                            "line": 460,
                             "column": 4,
-                            "offset": 12358
+                            "offset": 13949
                         }
                     },
                     "children": [
@@ -481,9 +481,9 @@
                                     "offset": 44
                                 },
                                 "end": {
-                                    "line": 409,
+                                    "line": 460,
                                     "column": 4,
-                                    "offset": 12358
+                                    "offset": 13949
                                 }
                             },
                             "children": [
@@ -626,9 +626,9 @@
                                             "offset": 1535
                                         },
                                         "end": {
-                                            "line": 409,
+                                            "line": 460,
                                             "column": 4,
-                                            "offset": 12358
+                                            "offset": 13949
                                         }
                                     },
                                     "children": [
@@ -771,9 +771,9 @@
                                                     "offset": 2060
                                                 },
                                                 "end": {
-                                                    "line": 409,
+                                                    "line": 460,
                                                     "column": 4,
-                                                    "offset": 12358
+                                                    "offset": 13949
                                                 }
                                             },
                                             "children": [
@@ -916,9 +916,9 @@
                                                             "offset": 4590
                                                         },
                                                         "end": {
-                                                            "line": 409,
+                                                            "line": 460,
                                                             "column": 4,
-                                                            "offset": 12358
+                                                            "offset": 13949
                                                         }
                                                     },
                                                     "children": [
@@ -984,9 +984,9 @@
                                                                     "offset": 4596
                                                                 },
                                                                 "end": {
-                                                                    "line": 409,
+                                                                    "line": 460,
                                                                     "column": 4,
-                                                                    "offset": 12358
+                                                                    "offset": 13949
                                                                 }
                                                             },
                                                             "children": [
@@ -1129,9 +1129,9 @@
                                                                             "offset": 4867
                                                                         },
                                                                         "end": {
-                                                                            "line": 409,
+                                                                            "line": 460,
                                                                             "column": 4,
-                                                                            "offset": 12358
+                                                                            "offset": 13949
                                                                         }
                                                                     },
                                                                     "children": [
@@ -1274,9 +1274,9 @@
                                                                                     "offset": 6892
                                                                                 },
                                                                                 "end": {
-                                                                                    "line": 409,
+                                                                                    "line": 460,
                                                                                     "column": 4,
-                                                                                    "offset": 12358
+                                                                                    "offset": 13949
                                                                                 }
                                                                             },
                                                                             "children": [
@@ -1419,9 +1419,9 @@
                                                                                             "offset": 8541
                                                                                         },
                                                                                         "end": {
-                                                                                            "line": 409,
+                                                                                            "line": 460,
                                                                                             "column": 4,
-                                                                                            "offset": 12358
+                                                                                            "offset": 13949
                                                                                         }
                                                                                     },
                                                                                     "children": [
@@ -1497,9 +1497,9 @@
                                                                                                     "offset": 8552
                                                                                                 },
                                                                                                 "end": {
-                                                                                                    "line": 288,
+                                                                                                    "line": 339,
                                                                                                     "column": 4,
-                                                                                                    "offset": 8575
+                                                                                                    "offset": 10166
                                                                                                 }
                                                                                             },
                                                                                             "data": {
@@ -1512,8 +1512,8 @@
                                                                                                 {
                                                                                                     "type": "code",
                                                                                                     "lang": "jax",
-                                                                                                    "meta": "< Editor.jsx",
-                                                                                                    "value": "",
+                                                                                                    "meta": "Editor.jsx",
+                                                                                                    "value": "import React from 'react'\nimport {EditorState, EditorView, basicSetup} from \"@codemirror/basic-setup\"\nimport {Compartment} from '@codemirror/state'\n\n// import {html} from \"@codemirror/lang-html\"\n// import {oneDark} from \"@codemirror/theme-one-dark\"\n\n//import {esLint} from \"@codemirror/lang-javascript\"\n// @ts-ignore\n//import Linter from \"eslint4b-prebuilt\"\n//import {linter} from \"@codemirror/lint\"\n\n//import {StreamLanguage} from \"@codemirror/stream-parser\"\n//import {javascript} from \"@codemirror/legacy-modes/mode/javascript\"\n\nconst lineWrapping = new Compartment\n\nexport default class Editor extends React.Component {\n    constructor(props) {\n        super(props)\n        this.editorRef = React.createRef();\n        this.editorState = window.cms = EditorState.create({\n            doc: props.src, \n            extensions: [\n                basicSetup,\n                EditorView.lineWrapping,\n                EditorView.updateListener.of(this.onUpdate.bind(this))\n            //   html(),\n            //   oneDark\n            //  linter(esLint(new Linter)),\n            //  StreamLanguage.define(javascript),\n            ]\n        })\n    }\n\n    onUpdate(viewUpdate) {\n        if (this.props.update && typeof this.props.update === 'function') {\n            this.props.update(viewUpdate.state.doc.toString())\n        }\n    }\n\n    componentDidMount() {\n        this.view = window.cmv = new EditorView({\n            state: this.editorState, \n            parent: this.editorRef.current\n        })\n    }\n    render() {\n        return <div className=\"editor\" ref={this.editorRef}></div>\n    }\n}",
                                                                                                     "position": {
                                                                                                         "start": {
                                                                                                             "line": 287,
@@ -1521,41 +1521,27 @@
                                                                                                             "offset": 8552
                                                                                                         },
                                                                                                         "end": {
-                                                                                                            "line": 288,
+                                                                                                            "line": 339,
                                                                                                             "column": 4,
-                                                                                                            "offset": 8575
+                                                                                                            "offset": 10166
                                                                                                         }
                                                                                                     },
                                                                                                     "data": {
                                                                                                         "meta": {
                                                                                                             "lang": "jax",
+                                                                                                            "filename": "Editor.jsx",
                                                                                                             "isOutput": false,
                                                                                                             "hasOutput": false,
-                                                                                                            "hasSource": true,
-                                                                                                            "source": {
-                                                                                                                "lang": "txt",
-                                                                                                                "filename": "Editor.jsx",
-                                                                                                                "isOutput": false,
-                                                                                                                "hasOutput": false,
-                                                                                                                "hasSource": false
-                                                                                                            },
-                                                                                                            "fromSource": "Editor.jsx"
+                                                                                                            "hasSource": false
                                                                                                         },
                                                                                                         "hProperties": {
                                                                                                             "className": "",
                                                                                                             "meta": {
                                                                                                                 "lang": "jax",
+                                                                                                                "filename": "Editor.jsx",
                                                                                                                 "isOutput": false,
                                                                                                                 "hasOutput": false,
-                                                                                                                "hasSource": true,
-                                                                                                                "source": {
-                                                                                                                    "lang": "txt",
-                                                                                                                    "filename": "Editor.jsx",
-                                                                                                                    "isOutput": false,
-                                                                                                                    "hasOutput": false,
-                                                                                                                    "hasSource": false
-                                                                                                                },
-                                                                                                                "fromSource": "Editor.jsx"
+                                                                                                                "hasSource": false
                                                                                                             }
                                                                                                         }
                                                                                                     }
@@ -1566,14 +1552,14 @@
                                                                                             "type": "cell",
                                                                                             "position": {
                                                                                                 "start": {
-                                                                                                    "line": 290,
+                                                                                                    "line": 341,
                                                                                                     "column": 1,
-                                                                                                    "offset": 8577
+                                                                                                    "offset": 10168
                                                                                                 },
                                                                                                 "end": {
-                                                                                                    "line": 291,
+                                                                                                    "line": 342,
                                                                                                     "column": 4,
-                                                                                                    "offset": 8599
+                                                                                                    "offset": 10190
                                                                                                 }
                                                                                             },
                                                                                             "data": {
@@ -1590,14 +1576,14 @@
                                                                                                     "value": "",
                                                                                                     "position": {
                                                                                                         "start": {
-                                                                                                            "line": 290,
+                                                                                                            "line": 341,
                                                                                                             "column": 1,
-                                                                                                            "offset": 8577
+                                                                                                            "offset": 10168
                                                                                                         },
                                                                                                         "end": {
-                                                                                                            "line": 291,
+                                                                                                            "line": 342,
                                                                                                             "column": 4,
-                                                                                                            "offset": 8599
+                                                                                                            "offset": 10190
                                                                                                         }
                                                                                                     },
                                                                                                     "data": {
@@ -1647,14 +1633,14 @@
                                                                                             },
                                                                                             "position": {
                                                                                                 "start": {
-                                                                                                    "line": 293,
+                                                                                                    "line": 344,
                                                                                                     "column": 1,
-                                                                                                    "offset": 8601
+                                                                                                    "offset": 10192
                                                                                                 },
                                                                                                 "end": {
-                                                                                                    "line": 409,
+                                                                                                    "line": 460,
                                                                                                     "column": 4,
-                                                                                                    "offset": 12358
+                                                                                                    "offset": 13949
                                                                                                 }
                                                                                             },
                                                                                             "children": [
@@ -1662,14 +1648,14 @@
                                                                                                     "type": "cell",
                                                                                                     "position": {
                                                                                                         "start": {
-                                                                                                            "line": 293,
+                                                                                                            "line": 344,
                                                                                                             "column": 1,
-                                                                                                            "offset": 8601
+                                                                                                            "offset": 10192
                                                                                                         },
                                                                                                         "end": {
-                                                                                                            "line": 293,
+                                                                                                            "line": 344,
                                                                                                             "column": 8,
-                                                                                                            "offset": 8608
+                                                                                                            "offset": 10199
                                                                                                         }
                                                                                                     },
                                                                                                     "data": {
@@ -1688,28 +1674,28 @@
                                                                                                                     "value": "Code",
                                                                                                                     "position": {
                                                                                                                         "start": {
-                                                                                                                            "line": 293,
+                                                                                                                            "line": 344,
                                                                                                                             "column": 4,
-                                                                                                                            "offset": 8604
+                                                                                                                            "offset": 10195
                                                                                                                         },
                                                                                                                         "end": {
-                                                                                                                            "line": 293,
+                                                                                                                            "line": 344,
                                                                                                                             "column": 8,
-                                                                                                                            "offset": 8608
+                                                                                                                            "offset": 10199
                                                                                                                         }
                                                                                                                     }
                                                                                                                 }
                                                                                                             ],
                                                                                                             "position": {
                                                                                                                 "start": {
-                                                                                                                    "line": 293,
+                                                                                                                    "line": 344,
                                                                                                                     "column": 1,
-                                                                                                                    "offset": 8601
+                                                                                                                    "offset": 10192
                                                                                                                 },
                                                                                                                 "end": {
-                                                                                                                    "line": 293,
+                                                                                                                    "line": 344,
                                                                                                                     "column": 8,
-                                                                                                                    "offset": 8608
+                                                                                                                    "offset": 10199
                                                                                                                 }
                                                                                                             },
                                                                                                             "data": {
@@ -1725,14 +1711,14 @@
                                                                                                     "type": "cell",
                                                                                                     "position": {
                                                                                                         "start": {
-                                                                                                            "line": 295,
+                                                                                                            "line": 346,
                                                                                                             "column": 1,
-                                                                                                            "offset": 8610
+                                                                                                            "offset": 10201
                                                                                                         },
                                                                                                         "end": {
-                                                                                                            "line": 367,
+                                                                                                            "line": 418,
                                                                                                             "column": 4,
-                                                                                                            "offset": 11366
+                                                                                                            "offset": 12957
                                                                                                         }
                                                                                                     },
                                                                                                     "data": {
@@ -1749,14 +1735,14 @@
                                                                                                             "value": "import React from 'react'\nimport {log, level} from '../../utils/console'\nimport { getConsoleForNamespace } from '../../utils/console'\nimport Highlight from 'react-highlight.js'\nconst console = getConsoleForNamespace('codeblocks')\n\nclass Meta extends React.Component {\n    render() {\n        return <span className=\"meta\">\n            <span className=\"lang\">{this.props.meta.lang}</span>\n            <span className=\"repl\">{this.props.meta.repl}</span>\n            <span className=\"filename\">{this.props.meta.filename}</span>\n\n            {this.props.meta.tags && <ul className=\"tags\">{\n                this.props.meta.tags.map( (tag, i) => <li key={tag+i}><span className=\"tag\">{tag}</span></li>)\n            }</ul>}\n\n            {this.props.meta.directives && <ul className=\"directives\">{\n                this.props.meta.directives.map( (dir, i) => <li key={dir+1}><span className=\"directive\">{dir}</span></li>)\n            }</ul>}\n        </span>\n    }\n}\n\nconst viewers = {\n  csv: val => {\n    // return <pre>//CSV Viewer\\n{val}</pre>\n\n    const rows = val.split(\"\\n\").map( (row,i) => {\n       const cols = row.split(\",\").map( (col,j) => <td key={j}>{col}</td>)\n       return <tr key={i}>{cols}</tr>\n    })\n\n    return <table>{rows}</table>\n  },\n  html: val => <div dangerouslySetInnerHTML={{__html: val}}></div>,\n  svg: val => <div dangerouslySetInnerHTML={{__html: val}}></div>,\n  uri: val => <iframe src={val}></iframe>,\n}\n\nconst getViewer = meta => {\n  return meta && (meta.isOutput || (meta.directives && meta.directives.indexOf('inline') >= 0)) && viewers[meta.lang]\n}\n\nexport default class Codeblock extends React.Component {\n    render() {\n        \n        const codeNode = this.props.node.children\n                            && this.props.node.children.length == 1\n                            && this.props.node.children[0].tagName === 'code'\n                            ? this.props.node.children[0] \n                            : null;\n        const meta = codeNode ? codeNode.properties.meta : null\n        const viewer = getViewer(meta)\n       \n        if (codeNode) {const source = codeNode.children[0].value\n            console.log(\"[Codeblock]\", meta)\n            return <codecell>\n                { meta && <Meta meta={meta}/> }\n                { viewer \n                  ? viewer(source)\n                  : meta && meta.isOutput\n                    ? <output><Highlight language={meta.lang}>{source}</Highlight></output>\n                    : <Highlight language={meta.lang}>{source}</Highlight> }\n            </codecell>\n        } else {\n            console.log(\"Default codeblock\", this.props.node.children[0])\n            return <codecell><pre>{this.props.children}</pre></codecell>\n        }\n    }\n}",
                                                                                                             "position": {
                                                                                                                 "start": {
-                                                                                                                    "line": 295,
+                                                                                                                    "line": 346,
                                                                                                                     "column": 1,
-                                                                                                                    "offset": 8610
+                                                                                                                    "offset": 10201
                                                                                                                 },
                                                                                                                 "end": {
-                                                                                                                    "line": 367,
+                                                                                                                    "line": 418,
                                                                                                                     "column": 4,
-                                                                                                                    "offset": 11366
+                                                                                                                    "offset": 12957
                                                                                                                 }
                                                                                                             },
                                                                                                             "data": {
@@ -1792,14 +1778,14 @@
                                                                                                     },
                                                                                                     "position": {
                                                                                                         "start": {
-                                                                                                            "line": 369,
+                                                                                                            "line": 420,
                                                                                                             "column": 1,
-                                                                                                            "offset": 11368
+                                                                                                            "offset": 12959
                                                                                                         },
                                                                                                         "end": {
-                                                                                                            "line": 409,
+                                                                                                            "line": 460,
                                                                                                             "column": 4,
-                                                                                                            "offset": 12358
+                                                                                                            "offset": 13949
                                                                                                         }
                                                                                                     },
                                                                                                     "children": [
@@ -1807,14 +1793,14 @@
                                                                                                             "type": "cell",
                                                                                                             "position": {
                                                                                                                 "start": {
-                                                                                                                    "line": 369,
+                                                                                                                    "line": 420,
                                                                                                                     "column": 1,
-                                                                                                                    "offset": 11368
+                                                                                                                    "offset": 12959
                                                                                                                 },
                                                                                                                 "end": {
-                                                                                                                    "line": 369,
+                                                                                                                    "line": 420,
                                                                                                                     "column": 8,
-                                                                                                                    "offset": 11375
+                                                                                                                    "offset": 12966
                                                                                                                 }
                                                                                                             },
                                                                                                             "data": {
@@ -1833,28 +1819,28 @@
                                                                                                                             "value": "Link",
                                                                                                                             "position": {
                                                                                                                                 "start": {
-                                                                                                                                    "line": 369,
+                                                                                                                                    "line": 420,
                                                                                                                                     "column": 4,
-                                                                                                                                    "offset": 11371
+                                                                                                                                    "offset": 12962
                                                                                                                                 },
                                                                                                                                 "end": {
-                                                                                                                                    "line": 369,
+                                                                                                                                    "line": 420,
                                                                                                                                     "column": 8,
-                                                                                                                                    "offset": 11375
+                                                                                                                                    "offset": 12966
                                                                                                                                 }
                                                                                                                             }
                                                                                                                         }
                                                                                                                     ],
                                                                                                                     "position": {
                                                                                                                         "start": {
-                                                                                                                            "line": 369,
+                                                                                                                            "line": 420,
                                                                                                                             "column": 1,
-                                                                                                                            "offset": 11368
+                                                                                                                            "offset": 12959
                                                                                                                         },
                                                                                                                         "end": {
-                                                                                                                            "line": 369,
+                                                                                                                            "line": 420,
                                                                                                                             "column": 8,
-                                                                                                                            "offset": 11375
+                                                                                                                            "offset": 12966
                                                                                                                         }
                                                                                                                     },
                                                                                                                     "data": {
@@ -1870,14 +1856,14 @@
                                                                                                             "type": "cell",
                                                                                                             "position": {
                                                                                                                 "start": {
-                                                                                                                    "line": 371,
+                                                                                                                    "line": 422,
                                                                                                                     "column": 1,
-                                                                                                                    "offset": 11377
+                                                                                                                    "offset": 12968
                                                                                                                 },
                                                                                                                 "end": {
-                                                                                                                    "line": 389,
+                                                                                                                    "line": 440,
                                                                                                                     "column": 4,
-                                                                                                                    "offset": 11852
+                                                                                                                    "offset": 13443
                                                                                                                 }
                                                                                                             },
                                                                                                             "data": {
@@ -1894,14 +1880,14 @@
                                                                                                                     "value": "import React from 'react'\nimport { getConsoleForNamespace } from '../../utils/console'\n\nconst console = getConsoleForNamespace('Link')\n\nconst Link = props => {\n    const title = props.node.properties.title\n    console.log(\"<Link/>\", props)\n    return <a className={props.className}\n        href={props.href}\n        title={title}\n        wikilink={props.wikilink ? 'true' : undefined}>\n            {props.children}\n        </a>\n}\n\nexport default Link",
                                                                                                                     "position": {
                                                                                                                         "start": {
-                                                                                                                            "line": 371,
+                                                                                                                            "line": 422,
                                                                                                                             "column": 1,
-                                                                                                                            "offset": 11377
+                                                                                                                            "offset": 12968
                                                                                                                         },
                                                                                                                         "end": {
-                                                                                                                            "line": 389,
+                                                                                                                            "line": 440,
                                                                                                                             "column": 4,
-                                                                                                                            "offset": 11852
+                                                                                                                            "offset": 13443
                                                                                                                         }
                                                                                                                     },
                                                                                                                     "data": {
@@ -1937,14 +1923,14 @@
                                                                                                             },
                                                                                                             "position": {
                                                                                                                 "start": {
-                                                                                                                    "line": 391,
+                                                                                                                    "line": 442,
                                                                                                                     "column": 1,
-                                                                                                                    "offset": 11854
+                                                                                                                    "offset": 13445
                                                                                                                 },
                                                                                                                 "end": {
-                                                                                                                    "line": 409,
+                                                                                                                    "line": 460,
                                                                                                                     "column": 4,
-                                                                                                                    "offset": 12358
+                                                                                                                    "offset": 13949
                                                                                                                 }
                                                                                                             },
                                                                                                             "children": [
@@ -1952,14 +1938,14 @@
                                                                                                                     "type": "cell",
                                                                                                                     "position": {
                                                                                                                         "start": {
-                                                                                                                            "line": 391,
+                                                                                                                            "line": 442,
                                                                                                                             "column": 1,
-                                                                                                                            "offset": 11854
+                                                                                                                            "offset": 13445
                                                                                                                         },
                                                                                                                         "end": {
-                                                                                                                            "line": 391,
+                                                                                                                            "line": 442,
                                                                                                                             "column": 13,
-                                                                                                                            "offset": 11866
+                                                                                                                            "offset": 13457
                                                                                                                         }
                                                                                                                     },
                                                                                                                     "data": {
@@ -1978,28 +1964,28 @@
                                                                                                                                     "value": "Backlinks",
                                                                                                                                     "position": {
                                                                                                                                         "start": {
-                                                                                                                                            "line": 391,
+                                                                                                                                            "line": 442,
                                                                                                                                             "column": 4,
-                                                                                                                                            "offset": 11857
+                                                                                                                                            "offset": 13448
                                                                                                                                         },
                                                                                                                                         "end": {
-                                                                                                                                            "line": 391,
+                                                                                                                                            "line": 442,
                                                                                                                                             "column": 13,
-                                                                                                                                            "offset": 11866
+                                                                                                                                            "offset": 13457
                                                                                                                                         }
                                                                                                                                     }
                                                                                                                                 }
                                                                                                                             ],
                                                                                                                             "position": {
                                                                                                                                 "start": {
-                                                                                                                                    "line": 391,
+                                                                                                                                    "line": 442,
                                                                                                                                     "column": 1,
-                                                                                                                                    "offset": 11854
+                                                                                                                                    "offset": 13445
                                                                                                                                 },
                                                                                                                                 "end": {
-                                                                                                                                    "line": 391,
+                                                                                                                                    "line": 442,
                                                                                                                                     "column": 13,
-                                                                                                                                    "offset": 11866
+                                                                                                                                    "offset": 13457
                                                                                                                                 }
                                                                                                                             },
                                                                                                                             "data": {
@@ -2015,14 +2001,14 @@
                                                                                                                     "type": "cell",
                                                                                                                     "position": {
                                                                                                                         "start": {
-                                                                                                                            "line": 393,
+                                                                                                                            "line": 444,
                                                                                                                             "column": 1,
-                                                                                                                            "offset": 11868
+                                                                                                                            "offset": 13459
                                                                                                                         },
                                                                                                                         "end": {
-                                                                                                                            "line": 409,
+                                                                                                                            "line": 460,
                                                                                                                             "column": 4,
-                                                                                                                            "offset": 12358
+                                                                                                                            "offset": 13949
                                                                                                                         }
                                                                                                                     },
                                                                                                                     "data": {
@@ -2039,14 +2025,14 @@
                                                                                                                             "value": "import React from 'react'\nimport path from 'path'\n\nexport default class Backlinks extends React.Component {\n    render() {\n        return <>\n            <h4>{`Backlinks (${this.props.links.length})`}</h4>\n            <ol>\n                {this.props.links.map( (link) => {\n                    return  <li key={link.url}><a title={link.title} href={path.join(this.props.root, link.url)}>{link.title}</a></li>\n                })}\n            </ol>\n        </>\n    }\n}",
                                                                                                                             "position": {
                                                                                                                                 "start": {
-                                                                                                                                    "line": 393,
+                                                                                                                                    "line": 444,
                                                                                                                                     "column": 1,
-                                                                                                                                    "offset": 11868
+                                                                                                                                    "offset": 13459
                                                                                                                                 },
                                                                                                                                 "end": {
-                                                                                                                                    "line": 409,
+                                                                                                                                    "line": 460,
                                                                                                                                     "column": 4,
-                                                                                                                                    "offset": 12358
+                                                                                                                                    "offset": 13949
                                                                                                                                 }
                                                                                                                             },
                                                                                                                             "data": {
@@ -2105,9 +2091,9 @@
             "offset": 0
         },
         "end": {
-            "line": 420,
+            "line": 471,
             "column": 1,
-            "offset": 12369
+            "offset": 13960
         }
     }
 }

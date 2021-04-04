@@ -278,7 +278,58 @@ const CellMenu = props =&gt; {
 }
 
 export default CellMenu
-</code></pre></codecell></cell><section name="editor"><cell startpos="285:1-8541" endpos="285:10-8550"><h2 id="editor">Editor</h2></cell><cell startpos="287:1-8552" endpos="288:4-8575" class="code"><codecell><span class="meta"><span class="lang">jax</span><span class="repl"></span><span class="filename"></span></span><pre><code class="jax"></code></pre></codecell></cell><cell startpos="290:1-8577" endpos="291:4-8599" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename"></span></span><pre><code class="jsx"></code></pre></codecell></cell><section name="code"><cell startpos="293:1-8601" endpos="293:8-8608"><h2 id="code">Code</h2></cell><cell startpos="295:1-8610" endpos="367:4-11366" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">base/Codeblock.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
+</code></pre></codecell></cell><section name="editor"><cell startpos="285:1-8541" endpos="285:10-8550"><h2 id="editor">Editor</h2></cell><cell startpos="287:1-8552" endpos="339:4-10166" class="code"><codecell><span class="meta"><span class="lang">jax</span><span class="repl"></span><span class="filename">Editor.jsx</span></span><pre><code class="jax">import React from &#x27;react&#x27;
+import {EditorState, EditorView, basicSetup} from &quot;@codemirror/basic-setup&quot;
+import {Compartment} from &#x27;@codemirror/state&#x27;
+
+// import {html} from &quot;@codemirror/lang-html&quot;
+// import {oneDark} from &quot;@codemirror/theme-one-dark&quot;
+
+//import {esLint} from &quot;@codemirror/lang-javascript&quot;
+// @ts-ignore
+//import Linter from &quot;eslint4b-prebuilt&quot;
+//import {linter} from &quot;@codemirror/lint&quot;
+
+//import {StreamLanguage} from &quot;@codemirror/stream-parser&quot;
+//import {javascript} from &quot;@codemirror/legacy-modes/mode/javascript&quot;
+
+const lineWrapping = new Compartment
+
+export default class Editor extends React.Component {
+    constructor(props) {
+        super(props)
+        this.editorRef = React.createRef();
+        this.editorState = window.cms = EditorState.create({
+            doc: props.src, 
+            extensions: [
+                basicSetup,
+                EditorView.lineWrapping,
+                EditorView.updateListener.of(this.onUpdate.bind(this))
+            //   html(),
+            //   oneDark
+            //  linter(esLint(new Linter)),
+            //  StreamLanguage.define(javascript),
+            ]
+        })
+    }
+
+    onUpdate(viewUpdate) {
+        if (this.props.update &amp;&amp; typeof this.props.update === &#x27;function&#x27;) {
+            this.props.update(viewUpdate.state.doc.toString())
+        }
+    }
+
+    componentDidMount() {
+        this.view = window.cmv = new EditorView({
+            state: this.editorState, 
+            parent: this.editorRef.current
+        })
+    }
+    render() {
+        return &lt;div className=&quot;editor&quot; ref={this.editorRef}&gt;&lt;/div&gt;
+    }
+}
+</code></pre></codecell></cell><cell startpos="341:1-10168" endpos="342:4-10190" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename"></span></span><pre><code class="jsx"></code></pre></codecell></cell><section name="code"><cell startpos="344:1-10192" endpos="344:8-10199"><h2 id="code">Code</h2></cell><cell startpos="346:1-10201" endpos="418:4-12957" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">base/Codeblock.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
 import {log, level} from &#x27;../../utils/console&#x27;
 import { getConsoleForNamespace } from &#x27;../../utils/console&#x27;
 import Highlight from &#x27;react-highlight.js&#x27;
@@ -349,7 +400,7 @@ export default class Codeblock extends React.Component {
         }
     }
 }
-</code></pre></codecell></cell><section name="link"><cell startpos="369:1-11368" endpos="369:8-11375"><h2 id="link">Link</h2></cell><cell startpos="371:1-11377" endpos="389:4-11852" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">base/Link.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
+</code></pre></codecell></cell><section name="link"><cell startpos="420:1-12959" endpos="420:8-12966"><h2 id="link">Link</h2></cell><cell startpos="422:1-12968" endpos="440:4-13443" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">base/Link.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
 import { getConsoleForNamespace } from &#x27;../../utils/console&#x27;
 
 const console = getConsoleForNamespace(&#x27;Link&#x27;)
@@ -366,7 +417,7 @@ const Link = props =&gt; {
 }
 
 export default Link
-</code></pre></codecell></cell><section name="backlinks"><cell startpos="391:1-11854" endpos="391:13-11866"><h2 id="backlinks">Backlinks</h2></cell><cell startpos="393:1-11868" endpos="409:4-12358" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">Backlinks.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
+</code></pre></codecell></cell><section name="backlinks"><cell startpos="442:1-13445" endpos="442:13-13457"><h2 id="backlinks">Backlinks</h2></cell><cell startpos="444:1-13459" endpos="460:4-13949" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">Backlinks.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
 import path from &#x27;path&#x27;
 
 export default class Backlinks extends React.Component {
