@@ -46,7 +46,7 @@ const lit = {
            console.log("Removing local file:", f)
            await lit.fs.unlink('/' + f)
            console.log("Unlinked:",f)
-        }),
+        },
     }
 }
 
