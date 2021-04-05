@@ -15,7 +15,7 @@ import { diffieHellman } from 'crypto'
 import { decorateLinkNode } from '../parser/links'
 
 import { getConsoleForNamespace } from '../utils/console'
-import { Identity } from '../../build/utils/functions'
+import { Identity } from '../utils/functions'
 
 const console = getConsoleForNamespace('generate')
 
@@ -105,7 +105,7 @@ export function generate(cmd) {
                         const renderedFile = await renderProcessor(fs).process(fetchedFile)
                         return renderedFile
                     } catch (err) {
-                        console.error(`Failed to process ${file.path}`)
+                        console.error(`Failed to process ${file.path}`, err)
                     }
                 }))
                 const [ast_files, manifest] = generateBacklinks(ast_files_prelinks, cmd.output)
@@ -125,7 +125,7 @@ export function generate(cmd) {
                             }
                         }
                         return html_file;
-                    } catch (err) { console.error(`Failed to process ${file.path}`)}
+                    } catch (err) { console.error(`Failed to process ${file.path}`, err) }
                 }))
                 
                 await fs.writeFile(path.join(cmd.output, 'manifest.json'), JSON.stringify(manifest, null, 4))

@@ -72,7 +72,8 @@ console.log(`lit:`, lit)
     window.lit.ast = processedFile.data.ast
 
     try {
-        lit.notebook = <App 
+        lit.notebook = <App
+            root={litroot}
             fs={lit.fs}
             file={processedFile}
             result={processedFile.result}
@@ -84,7 +85,7 @@ console.log(`lit:`, lit)
     
     try {
         ReactDOM.hydrate(window.lit.notebook, document.getElementById('app'))
-        ReactDOM.hydrate(<Header root={litroot} />, document.getElementById('header'))
+        // ReactDOM.hydrate(<Header root={litroot} />, document.getElementById('header'))
     } catch (err) {
         console.error("Error hydrating App", err)
     }
