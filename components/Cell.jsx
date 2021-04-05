@@ -9,10 +9,10 @@ import { getConsoleForNamespace } from '../utils/console'
 
 const console = getConsoleForNamespace('Cell')
 
-const childIs = (node, nodeType) => node.children 
+const childIs = (node, nodeType) => (node && node.children 
     && node.children.length
     && node.children[0] 
-    && node.children[0].tagName === nodeType
+    && node.children[0].tagName === nodeType) ? node.children[0] : null
 
     const posstr = pos => pos ? `${pos.line}:${pos.column}-${pos.offset}` : undefined;
 
@@ -36,7 +36,11 @@ const Cell = props => {
     
 
     const isCodeCell = childIs(props.node, 'pre')
+    const codeNode = childIs(isCodeCell, 'code');
+    const meta = codeNode ? codeNode.properties.meta : null
+    const source = codeNode && codeNode.children[0].value
 
+    console.log("[Cell]", isCodeCell, codeNode, meta, source)
     const save = ctx => args => {
         console.log("Saving cell", pos, src)
         ctx.setSrc(pos, src)
