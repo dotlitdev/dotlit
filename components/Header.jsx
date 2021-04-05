@@ -71,7 +71,7 @@ export const Header = props => {
   const resetFile = ctx => async ev => {
     console.log("Reset File:", ctx.file)
     if (confirm(`Are you sure you want to delete the local copy of "${ctx.file}"`)) {
-      await ctx.fs.unlink(ctx.file)
+      await ctx.fs.unlink(lit.location.src)
       console.log("Deleted ", ctx.file, "reloading page")
       location.reload()
     }
