@@ -1,0 +1,454 @@
+<html data-reactroot=""><head><title>components</title><meta name="litsrc" value="components/components.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="header"><header><a href="/">Home</a><span>Debug</span></header></div><div id="app"><div id="content"><section name="react-components"><cell startpos="3:1-2" endpos="3:19-20"><h1 id="react-components">React Components</h1></cell><section name="table-of-contents"><cell startpos="5:1-22" endpos="5:21-42"><h2 id="table-of-contents">Table of Contents</h2><ul>
+<li>
+<p><a href="#document">Document</a></p>
+</li>
+<li>
+<p><a href="#header">Header</a></p>
+</li>
+<li>
+<p><a href="#app">App</a></p>
+</li>
+<li>
+<p><a href="#selection-context">Selection Context</a></p>
+</li>
+<li>
+<p><a href="#cell">Cell</a></p>
+<ul>
+<li><a href="#cellmenu">CellMenu</a></li>
+</ul>
+</li>
+<li>
+<p><a href="#editor">Editor</a></p>
+</li>
+<li>
+<p><a href="#icons">Icons</a></p>
+</li>
+<li>
+<p><a href="#code">Code</a></p>
+</li>
+<li>
+<p><a href="#link">Link</a></p>
+</li>
+<li>
+<p><a href="#backlinks">Backlinks</a></p>
+</li>
+</ul></cell><section name="document"><cell startpos="7:1-44" endpos="7:12-55"><h2 id="document">Document</h2></cell><cell startpos="9:1-57" endpos="46:4-1533" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">Document.jsx</span></span><pre><code class="jsx">import React, {useState} from &#x27;react&#x27;
+import path from &#x27;path&#x27;
+import App from &#x27;./App&#x27;
+import Backlinks from &#x27;./Backlinks&#x27;
+import { Header } from &#x27;./Header&#x27;
+import { getConsoleForNamespace } from &#x27;../utils/console&#x27;
+
+const console = getConsoleForNamespace(&#x27;Document&#x27;)
+
+const Document = props =&gt; {
+
+    const result = props.file.result
+    const title = props.file.data.frontmatter.title || props.file.stem
+    
+    return &lt;html&gt;
+        &lt;head&gt;
+            &lt;title&gt;{title}&lt;/title&gt;
+            &lt;meta name=&quot;litsrc&quot; value={props.file.path}/&gt;
+            &lt;meta name=&quot;litroot&quot; value={props.root}/&gt;
+            &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0&quot;/&gt;
+            &lt;link rel=&quot;stylesheet&quot; href=&quot;https://highlightjs.org/static/demo/styles/railscasts.css&quot; /&gt;
+            &lt;link rel=&quot;stylesheet&quot; href={path.join(props.root, &#x27;style.css&#x27;)}/&gt;
+        &lt;/head&gt;
+        &lt;body&gt;
+            &lt;div id=&quot;header&quot;&gt;&lt;Header root={props.root} /&gt;&lt;/div&gt;
+            &lt;div id=&quot;app&quot;&gt;&lt;App file={props.file} fs={props.fs} result={result}/&gt;&lt;/div&gt;
+            &lt;div id=&quot;backlinks&quot;&gt;&lt;Backlinks root={props.root} links={props.backlinks || []}/&gt;&lt;/div&gt;
+            {/* &lt;script&gt;content.remove();&lt;/script&gt; */}
+            &lt;script src=&quot;//cdn.jsdelivr.net/npm/eruda&quot;&gt;&lt;/script&gt;
+            &lt;script&gt;eruda.init();&lt;/script&gt;
+            &lt;script src={path.join(props.root, &#x27;web.bundle.js&#x27;)}/&gt;
+        &lt;/body&gt;
+    &lt;/html&gt;
+}
+
+export default Document
+</code></pre></codecell></cell><section name="header"><cell startpos="48:1-1535" endpos="48:10-1544"><h2 id="header">Header</h2></cell><cell startpos="50:1-1546" endpos="71:4-2059" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">Header.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
+
+export const Header = props =&gt; {
+
+   const [d,l,ex] = [
+     &#x27;litDebug&#x27;,
+     typeof localStorage !== &#x27;undefined&#x27; &amp;&amp; localStorage,
+     &#x27;*,fs,client,Cell,sections,etc...&#x27;,
+   ]
+   const setDebug = ev =&gt; {
+        ev.preventDefault()
+        l.setItem( d, prompt(d, l.getItem(d) || ex) )
+        return false
+    }
+    
+    return &lt;header&gt;
+                 &lt;a href={props.root}&gt;Home&lt;/a&gt;
+                 &lt;span onClick={setDebug}&gt;Debug&lt;/span&gt;
+            &lt;/header&gt;
+}
+</code></pre></codecell></cell><section name="app"><cell startpos="72:1-2060" endpos="72:7-2066"><h2 id="app">App</h2></cell><cell startpos="74:1-2068" endpos="144:4-4589" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">App.jsx</span></span><pre><code class="jsx">import React, {useState} from &#x27;react&#x27;
+import path from &#x27;path&#x27;
+import SelectionContext from &#x27;./SelectionContext&#x27;
+import patchSource from &#x27;../utils/unist-util-patch-source&#x27;
+import { processor } from &#x27;../renderer&#x27;
+import { getConsoleForNamespace } from &#x27;../utils/console&#x27;
+import filter from &#x27;unist-util-filter&#x27;
+import {atPos} from &#x27;../utils/unist-util-select-position&#x27;
+import {selectAll} from &#x27;unist-util-select&#x27;
+
+const console = getConsoleForNamespace(&#x27;App&#x27;)
+
+const App = ({file, fs, result}) =&gt; {
+
+    const [srcAndRes, setSrcAndRes] = useState({
+        src: file.contents.toString(),
+        res: result
+    })
+    const [res, setResult] = useState(result)
+    const [selectedCell, setSelectedCell] = useState(null)
+    
+    const setSrcWrapper = async (pos, cellSource) =&gt; {
+        console.log(&quot;&lt;App/&gt; Set src wrapper&quot;, pos, cellSource)
+        const patchedSrc = patchSource(srcAndRes.src, pos, cellSource.trimEnd())
+        
+        file.contents = patchedSrc
+        const processedFile = await processor(fs).process(file)
+        console.log(&quot;Processed client&quot;, processedFile)
+        setSrcAndRes({
+            src: patchedSrc,
+            res: processedFile.result
+        })
+
+        try {
+            await fs.writeFile(file.path, patchedSrc, {encoding: &#x27;utf8&#x27;})
+        } catch (err) {
+            console.log(&quot;Failed to write file source to fs&quot;, file.path, err)
+        }
+        
+        const tmpEnd = {line: pos.start.line + cellSource.split(&#x27;\n&#x27;).length }
+        const tmpPos = {start: pos.start, end: tmpEnd }
+        const tree = filter(processedFile.data.ast, atPos(tmpPos))
+        const nodes = selectAll(&#x27;code&#x27;, tree)
+        console.log(&quot;[CodeCells in Change (pos)]&quot;, tmpPos, file.path, tree, nodes)
+        for (const codeCell of nodes) {
+            const filename = codeCell.data &amp;&amp; codeCell.data.meta &amp;&amp; codeCell.data.meta.filename
+            if (filename) {
+                const filepath = path.join( path.dirname(file.path), filename)
+                await fs.writeFile(filepath, codeCell.value)
+                console.log(`Wrote codefile ${filename} to &quot;${filepath}&quot; on disk`)
+            }
+       }
+    }
+
+    const state = {
+      src: srcAndRes.src, 
+      selectedCell, 
+      setSelectedCell, 
+      setSrc: setSrcWrapper
+    }
+
+    console.log(&#x27;&lt;App/&gt; render&#x27;, srcAndRes.res, srcAndRes.src, selectedCell)
+
+    return &lt;SelectionContext.Provider value={state}&gt;
+        &lt;div id=&quot;content&quot;&gt;{srcAndRes.res}&lt;/div&gt;
+    &lt;/SelectionContext.Provider&gt;
+}
+
+export default App
+</code></pre></codecell></cell><section name=""><cell startpos="145:1-4590" endpos="145:4-4593"><h2 id=""></h2></cell><section name="selection-context"><cell startpos="148:1-4596" endpos="148:21-4616"><h2 id="selection-context">Selection Context</h2></cell><cell startpos="150:1-4618" endpos="161:4-4866" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">SelectionContext.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
+
+// SelectedCell is the hast node corresponding to the cell.
+
+export default React.createContext({
+    src: &#x27;&#x27;,
+    selectedCell: null,
+    setSelectedCell: ()=&gt;{},
+    setSrc: () =&gt; {},
+});
+</code></pre></codecell></cell><section name="cell"><cell startpos="162:1-4867" endpos="162:8-4874"><h2 id="cell">Cell</h2></cell><cell startpos="164:1-4876" endpos="230:4-6890" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">Cell.jsx</span></span><pre><code class="jsx">import React, {useState} from &quot;react&quot;
+import source from &#x27;unist-util-source&#x27;
+
+import CellMenu from &#x27;./CellMenu&#x27;
+import SelectionContext from &#x27;./SelectionContext&#x27;
+import Editor from &#x27;./Editor&#x27;
+
+import { getConsoleForNamespace } from &#x27;../utils/console&#x27;
+
+const console = getConsoleForNamespace(&#x27;Cell&#x27;)
+
+const childIs = (node, nodeType) =&gt; node.children 
+    &amp;&amp; node.children.length
+    &amp;&amp; node.children[0] 
+    &amp;&amp; node.children[0].tagName === nodeType
+
+    const posstr = pos =&gt; pos ? `${pos.line}:${pos.column}-${pos.offset}` : undefined;
+
+const Cell = props =&gt; {
+
+    const node = props.node
+    node.position = node.position || {}
+    const pos = node.position
+    const symbol = posstr(pos.start)
+
+    const [src, setSrc] = useState(&#x27;&#x27;)
+    const [editing, setEditing] = useState(false)
+    const toggleEditing = () =&gt; setEditing(!editing)
+    
+    const isSelected = ctx =&gt; symbol === ctx.selectedCell
+    const toggleSelected = ctx =&gt; () =&gt; {
+        const selected = isSelected(ctx)
+        ctx.setSelectedCell(selected ? null : symbol)
+    }
+    
+
+    const isCodeCell = childIs(props.node, &#x27;pre&#x27;)
+
+    const save = ctx =&gt; args =&gt; {
+        console.log(&quot;Saving cell&quot;, pos, src)
+        ctx.setSrc(pos, src)
+        setEditing(false)
+    }
+
+    const getClasses = ctx =&gt; [
+        isSelected(ctx) ? &#x27;selected&#x27; : &#x27;&#x27;,
+        editing ? &#x27;editing&#x27; : &#x27;&#x27;,
+        isCodeCell ? &#x27;code&#x27; : &#x27;&#x27;,
+    ].join(&#x27; &#x27;).trim() || undefined
+
+    return &lt;SelectionContext.Consumer&gt;
+        { ctx =&gt; {
+            return &lt;cell
+                onClick={toggleSelected(ctx)}
+                startpos={posstr(pos.start)}
+                endpos={posstr(pos.end)}
+                className={getClasses(ctx)}&gt;
+                    { editing ? &lt;Editor src={source(pos, ctx.src)} update={setSrc}/&gt; : props.children }
+                    { isSelected(ctx) &amp;&amp; &lt;CellMenu editing={editing} toggleEditing={toggleEditing} save={save(ctx)}/&gt;}
+            &lt;/cell&gt;
+        }}
+    &lt;/SelectionContext.Consumer&gt;
+}
+
+export default Cell
+</code></pre></codecell></cell><section name="cellmenu"><cell startpos="232:1-6892" endpos="232:13-6904"><h3 id="cellmenu">CellMenu</h3></cell><cell startpos="234:1-6906" endpos="284:4-8540" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">CellMenu.jsx</span></span><pre><code class="jsx">import React, {useState} from &quot;react&quot;
+import { MenuIcon, EditIcon, ExecIcon, CloseIcon, SaveIcon } from &#x27;./Icons&#x27;
+import { getConsoleForNamespace } from &#x27;../utils/console&#x27;
+
+const console = getConsoleForNamespace(&#x27;CellMenu&#x27;)
+
+const wrapHandler = fn =&gt; ev =&gt; {
+    console.log(&quot;Cell menu wrapper&quot;, fn, ev)
+    ev.preventDefault()
+    ev.stopPropagation()
+    if (typeof fn === &#x27;function&#x27;){
+        const resp = fn(ev)
+        console.log(&quot;Cell menu wrapper fn executed&quot;, resp)
+    }
+    return false
+}
+
+const CellMenu = props =&gt; {
+
+    const [open, setOpen] = useState(false)
+    const toggleOpen = wrapHandler(ev =&gt; {
+        console.log(&quot;Toggle CellMenu&quot;, open)
+        setOpen(!open)
+    })
+
+    const items = [
+        {title: &quot;Execute&quot;, icon: ExecIcon, handler: wrapHandler(props.execute)}
+    ]
+
+    if (!props.editing) items.push({title: &quot;Edit&quot;, icon: EditIcon, handler: wrapHandler(props.toggleEditing)})
+    else {
+        items.push({title: &quot;Cancel&quot;, icon: CloseIcon, handler: wrapHandler(props.toggleEditing)})
+        items.push({title: &quot;Save&quot;, icon: SaveIcon, handler: wrapHandler(props.save)})
+    }
+
+    return &lt;menu&gt;
+        &lt;ul className=&quot;menu__items&quot;&gt;
+            { open &amp;&amp; items.map( item =&gt; {
+                const Icon = item.icon
+                return &lt;li title={item.title} key={item.title} onClick={item.handler}&gt;&lt;Icon/&gt;&lt;/li&gt;
+            })}
+            { !open 
+                ? &lt;li title=&quot;Open&quot; key=&quot;open&quot; onClick={toggleOpen}&gt;&lt;MenuIcon/&gt;&lt;/li&gt;
+                : &lt;li title=&quot;Close&quot; key=&quot;close&quot;onClick={toggleOpen}&gt;&lt;CloseIcon/&gt;&lt;/li&gt; }
+        &lt;/ul&gt;
+    &lt;/menu&gt;
+}
+
+export default CellMenu
+</code></pre></codecell></cell><section name="editor"><cell startpos="285:1-8541" endpos="285:10-8550"><h2 id="editor">Editor</h2></cell><cell startpos="287:1-8552" endpos="339:4-10166" class="code"><codecell><span class="meta"><span class="lang">jax</span><span class="repl"></span><span class="filename">Editor.jsx</span></span><pre><code class="jax">import React from &#x27;react&#x27;
+import {EditorState, EditorView, basicSetup} from &quot;@codemirror/basic-setup&quot;
+import {Compartment} from &#x27;@codemirror/state&#x27;
+
+// import {html} from &quot;@codemirror/lang-html&quot;
+// import {oneDark} from &quot;@codemirror/theme-one-dark&quot;
+
+//import {esLint} from &quot;@codemirror/lang-javascript&quot;
+// @ts-ignore
+//import Linter from &quot;eslint4b-prebuilt&quot;
+//import {linter} from &quot;@codemirror/lint&quot;
+
+//import {StreamLanguage} from &quot;@codemirror/stream-parser&quot;
+//import {javascript} from &quot;@codemirror/legacy-modes/mode/javascript&quot;
+
+const lineWrapping = new Compartment
+
+export default class Editor extends React.Component {
+    constructor(props) {
+        super(props)
+        this.editorRef = React.createRef();
+        this.editorState = window.cms = EditorState.create({
+            doc: props.src, 
+            extensions: [
+                basicSetup,
+                EditorView.lineWrapping,
+                EditorView.updateListener.of(this.onUpdate.bind(this))
+            //   html(),
+            //   oneDark
+            //  linter(esLint(new Linter)),
+            //  StreamLanguage.define(javascript),
+            ]
+        })
+    }
+
+    onUpdate(viewUpdate) {
+        if (this.props.update &amp;&amp; typeof this.props.update === &#x27;function&#x27;) {
+            this.props.update(viewUpdate.state.doc.toString())
+        }
+    }
+
+    componentDidMount() {
+        this.view = window.cmv = new EditorView({
+            state: this.editorState, 
+            parent: this.editorRef.current
+        })
+    }
+    render() {
+        return &lt;div className=&quot;editor&quot; ref={this.editorRef}&gt;&lt;/div&gt;
+    }
+}
+</code></pre></codecell></cell><section name="icons"><cell startpos="341:1-10168" endpos="341:9-10176"><h2 id="icons">Icons</h2></cell><cell startpos="343:1-10178" endpos="357:4-10868" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">Icons.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;;
+import { FontAwesomeIcon } from &#x27;@fortawesome/react-fontawesome&#x27;
+import { faBars, faPlay, faEdit, faTimes, faSave } from &#x27;@fortawesome/free-solid-svg-icons&#x27;
+
+export const Icon = (props) =&gt; {
+  return &lt;FontAwesomeIcon icon={props.name} /&gt;
+}
+
+export const MenuIcon = props =&gt; (&lt;FontAwesomeIcon icon={faBars} {...props} /&gt;)
+export const EditIcon = props =&gt; (&lt;FontAwesomeIcon icon={faEdit} {...props} /&gt;)
+export const ExecIcon = props =&gt; (&lt;FontAwesomeIcon icon={faPlay} {...props} /&gt;)
+export const CloseIcon = props =&gt; (&lt;FontAwesomeIcon icon={faTimes} {...props} /&gt;)
+export const SaveIcon = props =&gt; (&lt;FontAwesomeIcon icon={faSave} {...props} /&gt;)
+</code></pre></codecell></cell><section name="code"><cell startpos="359:1-10870" endpos="359:8-10877"><h2 id="code">Code</h2></cell><cell startpos="361:1-10879" endpos="381:4-11599" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">CodeMeta.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
+
+export const CodeMeta = props =&gt; {
+        return &lt;span className=&quot;meta&quot;&gt;
+            &lt;span className=&quot;lang&quot;&gt;{props.meta.lang}&lt;/span&gt;
+            &lt;span className=&quot;repl&quot;&gt;{props.meta.repl}&lt;/span&gt;
+            &lt;span className=&quot;filename&quot;&gt;{props.meta.filename}&lt;/span&gt;
+
+            {props.meta.tags &amp;&amp; &lt;ul className=&quot;tags&quot;&gt;{
+                props.meta.tags.map( (tag, i) =&gt; &lt;li key={tag+i}&gt;&lt;span className=&quot;tag&quot;&gt;{tag}&lt;/span&gt;&lt;/li&gt;)
+            }&lt;/ul&gt;}
+
+            {props.meta.directives &amp;&amp; &lt;ul className=&quot;directives&quot;&gt;{
+                
+props.meta.directives.map( (dir, i) =&gt; &lt;li key={dir+1}&gt;&lt;span className=&quot;directive&quot;&gt;{dir}&lt;/span&gt;&lt;/li&gt;)
+            }&lt;/ul&gt;}
+        &lt;/span&gt;
+}
+
+</code></pre></codecell></cell><cell startpos="384:1-11602" endpos="440:4-13671" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">base/Codeblock.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
+import {log, level} from &#x27;../../utils/console&#x27;
+import { getConsoleForNamespace } from &#x27;../../utils/console&#x27;
+import Highlight from &#x27;react-highlight.js&#x27;
+import CodeMeta from &#x27;../CodeMeta&#x27;
+const console = getConsoleForNamespace(&#x27;codeblocks&#x27;)
+
+
+const viewers = {
+  csv: val =&gt; {
+    // return &lt;pre&gt;//CSV Viewer\n{val}&lt;/pre&gt;
+
+    const rows = val.split(&quot;\n&quot;).map( (row,i) =&gt; {
+       const cols = row.split(&quot;,&quot;).map( (col,j) =&gt; &lt;td key={j}&gt;{col}&lt;/td&gt;)
+       return &lt;tr key={i}&gt;{cols}&lt;/tr&gt;
+    })
+
+    return &lt;table&gt;{rows}&lt;/table&gt;
+  },
+  html: val =&gt; &lt;div dangerouslySetInnerHTML={{__html: val}}&gt;&lt;/div&gt;,
+  svg: val =&gt; &lt;div dangerouslySetInnerHTML={{__html: val}}&gt;&lt;/div&gt;,
+  uri: val =&gt; &lt;iframe src={val}&gt;&lt;/iframe&gt;,
+}
+
+const getViewer = meta =&gt; {
+  return meta &amp;&amp; (meta.isOutput || (meta.directives &amp;&amp; meta.directives.indexOf(&#x27;inline&#x27;) &gt;= 0)) &amp;&amp; viewers[meta.lang]
+}
+
+export default class Codeblock extends React.Component {
+    render() {
+        
+        const codeNode = this.props.node.children
+                            &amp;&amp; this.props.node.children.length == 1
+                            &amp;&amp; this.props.node.children[0].tagName === &#x27;code&#x27;
+                            ? this.props.node.children[0] 
+                            : null;
+        const meta = codeNode ? codeNode.properties.meta : null
+        const viewer = getViewer(meta)
+       
+        if (codeNode) {const source = codeNode.children[0].value
+            console.log(&quot;[Codeblock]&quot;, meta)
+            return &lt;codecell&gt;
+                { meta &amp;&amp; &lt;CodeMeta meta={meta}/&gt; }
+                { viewer 
+                  ? viewer(source)
+                  : meta &amp;&amp; meta.isOutput
+                    ? &lt;output&gt;&lt;Highlight language={meta.lang}&gt;{source}&lt;/Highlight&gt;&lt;/output&gt;
+                    : &lt;Highlight language={meta.lang}&gt;{source}&lt;/Highlight&gt; }
+            &lt;/codecell&gt;
+        } else {
+            console.log(&quot;Default codeblock&quot;, this.props.node.children[0])
+            return &lt;codecell&gt;&lt;pre&gt;{this.props.children}&lt;/pre&gt;&lt;/codecell&gt;
+        }
+    }
+}
+</code></pre></codecell></cell><section name="link"><cell startpos="442:1-13673" endpos="442:8-13680"><h2 id="link">Link</h2></cell><cell startpos="444:1-13682" endpos="462:4-14157" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">base/Link.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
+import { getConsoleForNamespace } from &#x27;../../utils/console&#x27;
+
+const console = getConsoleForNamespace(&#x27;Link&#x27;)
+
+const Link = props =&gt; {
+    const title = props.node.properties.title
+    console.log(&quot;&lt;Link/&gt;&quot;, props)
+    return &lt;a className={props.className}
+        href={props.href}
+        title={title}
+        wikilink={props.wikilink ? &#x27;true&#x27; : undefined}&gt;
+            {props.children}
+        &lt;/a&gt;
+}
+
+export default Link
+</code></pre></codecell></cell><section name="backlinks"><cell startpos="464:1-14159" endpos="464:13-14171"><h2 id="backlinks">Backlinks</h2></cell><cell startpos="466:1-14173" endpos="482:4-14663" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">Backlinks.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
+import path from &#x27;path&#x27;
+
+export default class Backlinks extends React.Component {
+    render() {
+        return &lt;&gt;
+            &lt;h4&gt;{`Backlinks (${this.props.links.length})`}&lt;/h4&gt;
+            &lt;ol&gt;
+                {this.props.links.map( (link) =&gt; {
+                    return  &lt;li key={link.url}&gt;&lt;a title={link.title} href={path.join(this.props.root, link.url)}&gt;{link.title}&lt;/a&gt;&lt;/li&gt;
+                })}
+            &lt;/ol&gt;
+        &lt;/&gt;
+    }
+}
+</code></pre></codecell></cell></section></section></section></section></section></section></section></section></section></section></section></section></section></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
