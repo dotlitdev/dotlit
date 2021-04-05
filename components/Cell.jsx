@@ -30,7 +30,6 @@ const Cell = props => {
     const isSelected = ctx => symbol === ctx.selectedCell
     const toggleSelected = ctx => () => {
         const selected = isSelected(ctx)
-        console.log(`Toggle selected (was ${selected}) ${symbol}`, ctx)
         ctx.setSelectedCell(selected ? null : symbol)
     }
     

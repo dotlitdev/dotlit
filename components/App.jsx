@@ -1,17 +1,16 @@
 import React, {useState} from 'react'
 import path from 'path'
 import SelectionContext from './SelectionContext'
-import { Header } from './Header'
 import patchSource from '../utils/unist-util-patch-source'
 import { processor } from '../renderer'
 import { getConsoleForNamespace } from '../utils/console'
 import filter from 'unist-util-filter'
-import { atPos } from '../utils/unist-util-select-position'
-import { selectAll } from 'unist-util-select'
+import {atPos} from '../utils/unist-util-select-position'
+import {selectAll} from 'unist-util-select'
 
 const console = getConsoleForNamespace('App')
 
-const App = ({root, file, fs, result}) => {
+const App = ({file, fs, result}) => {
 
     const [srcAndRes, setSrcAndRes] = useState({
         src: file.contents.toString(),
@@ -54,18 +53,15 @@ const App = ({root, file, fs, result}) => {
     }
 
     const state = {
-        fs: fs,
-        file: file.path,  
-        src: srcAndRes.src, 
-        selectedCell, 
-        setSelectedCell, 
-        setSrc: setSrcWrapper
+      src: srcAndRes.src, 
+      selectedCell, 
+      setSelectedCell, 
+      setSrc: setSrcWrapper
     }
 
-    console.log(`<App/> render "${file.path}" (selected: ${selectedCell} `)
+    console.log('<App/> render', selectedCell)
 
     return <SelectionContext.Provider value={state}>
-        <div id="header"><Header root={root} /></div>
         <div id="content">{srcAndRes.res}</div>
     </SelectionContext.Provider>
 }
