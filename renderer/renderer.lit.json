@@ -33,9 +33,9 @@
                     "offset": 28
                 },
                 "end": {
-                    "line": 59,
+                    "line": 132,
                     "column": 4,
-                    "offset": 1862
+                    "offset": 3859
                 }
             },
             "children": [
@@ -215,9 +215,9 @@
                             "offset": 155
                         },
                         "end": {
-                            "line": 59,
+                            "line": 132,
                             "column": 4,
-                            "offset": 1862
+                            "offset": 3859
                         }
                     },
                     "children": [
@@ -316,9 +316,9 @@
                                     "offset": 173
                                 },
                                 "end": {
-                                    "line": 59,
+                                    "line": 132,
                                     "column": 4,
-                                    "offset": 1862
+                                    "offset": 3859
                                 }
                             },
                             "children": [
@@ -508,9 +508,9 @@
                                             "offset": 299
                                         },
                                         "end": {
-                                            "line": 59,
+                                            "line": 132,
                                             "column": 4,
-                                            "offset": 1862
+                                            "offset": 3859
                                         }
                                     },
                                     "children": [
@@ -586,9 +586,9 @@
                                                     "offset": 310
                                                 },
                                                 "end": {
-                                                    "line": 22,
+                                                    "line": 95,
                                                     "column": 4,
-                                                    "offset": 332
+                                                    "offset": 2329
                                                 }
                                             },
                                             "data": {
@@ -601,8 +601,8 @@
                                                 {
                                                     "type": "code",
                                                     "lang": "js",
-                                                    "meta": "< index.jsx",
-                                                    "value": "",
+                                                    "meta": "index.jsx",
+                                                    "value": "import path from 'path'\nimport remark2rehype from 'remark-rehype'\nimport rehype2react from 'rehype-react'\nimport {selectAll} from 'unist-util-select'\n\nimport ReactDOMServer from 'react-dom/server'\nimport React from 'react'\n\nimport {processor as parserProcessor} from '../parser'\nimport {transcludeCode} from './transcludeCode'\n\nimport Document from '../components/Document'\nimport Paragraph from '../components/base/Paragraph'\nimport Link from '../components/base/Link'\nimport Codeblock from '../components/base/Codeblock'\nimport Cell from '../components/Cell'\n\nimport { getConsoleForNamespace } from '../utils/console'\n\nconst console = getConsoleForNamespace('codeblocks')\n\nexport function processor(fs) {\n    return parserProcessor()\n\n    // transclude codeblocks with source\n    // when available \n    .use( transcludeCode )\n   \n    // hoist ast to data\n    .use( (...args) => {\n         return (tree,file) => {\n             file.data.ast = tree\n         }\n     })\n\n    // extract files to data\n    .use( (...args) => {\n         return (tree,file) => {\n             file.data.files = selectAll(\"code\", tree)\n         }\n     })\n    .use(remark2rehype, {allowDangerousHtml: true})\n    .use(rehype2react, {\n        Fragment: React.Fragment,\n        allowDangerousHtml: true,\n        createElement: React.createElement,\n        passNode: true,\n        components: {\n            p: Paragraph,\n            a: Link,\n            pre: Codeblock,\n            cell: Cell,\n        }\n    })\n}\n\nexport async function renderedVFileToDoc(vfile, cmd) {\n\n    const root = path.resolve( cmd.output )\n    const dir = path.dirname( path.join(root, vfile.path) )\n    const relroot = path.relative(dir, root) || '.'\n\n    console.log('[Render] to document vFile', vfile.path)\n\n    const notebook = <Document\n        file={vfile}\n        root={cmd.base || relroot}\n        backlinks={vfile.data.backlinks}\n    />\n\n    vfile.contents = ReactDOMServer.renderToString(notebook)\n    vfile.extname = '.html'\n    return vfile\n}",
                                                     "position": {
                                                         "start": {
                                                             "line": 20,
@@ -610,41 +610,27 @@
                                                             "offset": 310
                                                         },
                                                         "end": {
-                                                            "line": 22,
+                                                            "line": 95,
                                                             "column": 4,
-                                                            "offset": 332
+                                                            "offset": 2329
                                                         }
                                                     },
                                                     "data": {
                                                         "meta": {
                                                             "lang": "js",
+                                                            "filename": "index.jsx",
                                                             "isOutput": false,
                                                             "hasOutput": false,
-                                                            "hasSource": true,
-                                                            "source": {
-                                                                "lang": "txt",
-                                                                "filename": "index.jsx",
-                                                                "isOutput": false,
-                                                                "hasOutput": false,
-                                                                "hasSource": false
-                                                            },
-                                                            "fromSource": "index.jsx"
+                                                            "hasSource": false
                                                         },
                                                         "hProperties": {
                                                             "className": "",
                                                             "meta": {
                                                                 "lang": "js",
+                                                                "filename": "index.jsx",
                                                                 "isOutput": false,
                                                                 "hasOutput": false,
-                                                                "hasSource": true,
-                                                                "source": {
-                                                                    "lang": "txt",
-                                                                    "filename": "index.jsx",
-                                                                    "isOutput": false,
-                                                                    "hasOutput": false,
-                                                                    "hasSource": false
-                                                                },
-                                                                "fromSource": "index.jsx"
+                                                                "hasSource": false
                                                             }
                                                         }
                                                     }
@@ -655,14 +641,14 @@
                                             "type": "cell",
                                             "position": {
                                                 "start": {
-                                                    "line": 24,
+                                                    "line": 97,
                                                     "column": 1,
-                                                    "offset": 334
+                                                    "offset": 2331
                                                 },
                                                 "end": {
-                                                    "line": 59,
+                                                    "line": 132,
                                                     "column": 4,
-                                                    "offset": 1862
+                                                    "offset": 3859
                                                 }
                                             },
                                             "data": {
@@ -679,14 +665,14 @@
                                                     "value": "export const transcludeCode = (...args) => {\n         return async (tree,file) => {\n             if(!fs) return;\n             console.log(\"Checking for files to transclude\")\n             for (const block of selectAll(\"code\", tree)) {\n                 if (block.data && block.data.meta && block.data.meta.source) {\n                    const source = block.data.meta.source\n                    console.log(\"has source\", source)\n\n                    if (source.uri) {\n                        const resp = await fetch(source.uri)\n                        if (resp.status >= 200 && resp.status < 400) {\n                            const value = await resp.text()\n                            console.log(\"has value\", value)\n                            block.value = value\n                        }\n                    }\n                    else if (source.filename) {\n                        const filePath = path.join(path.dirname(file.path), source.filename)\n                        console.log(\"to filePath\", filePath)\n\n                        try {\n                            \n                            const value = await fs.readFile(filePath)\n                            console.log(\"has value\", value)\n                            block.value = value\n                        } catch(err) {\n                            file.message(\"Failed to load \" + block.data.meta.fromSource + \" as \" + filePath)\n                        }\n                    }\n                 }\n             }\n         }\n     }",
                                                     "position": {
                                                         "start": {
-                                                            "line": 24,
+                                                            "line": 97,
                                                             "column": 1,
-                                                            "offset": 334
+                                                            "offset": 2331
                                                         },
                                                         "end": {
-                                                            "line": 59,
+                                                            "line": 132,
                                                             "column": 4,
-                                                            "offset": 1862
+                                                            "offset": 3859
                                                         }
                                                     },
                                                     "data": {
@@ -727,9 +713,9 @@
             "offset": 0
         },
         "end": {
-            "line": 59,
+            "line": 132,
             "column": 4,
-            "offset": 1862
+            "offset": 3859
         }
     }
 }
