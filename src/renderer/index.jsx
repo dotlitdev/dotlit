@@ -39,7 +39,7 @@ export function processor(fs) {
                  if (block.data && block.data.meta && block.data.meta.source) {
                     const source = block.data.meta.source
                     console.log("has source", source)
-
+                    block.data.originalSource = block.value
                     if (source.uri) {
                         const resp = await fetch(source.uri)
                         if (resp.status >= 200 && resp.status < 400) {
