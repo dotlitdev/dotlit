@@ -225,56 +225,7 @@ const App = ({file, fs, result}) =&gt; {
 }
 
 export default App
-</code></pre></codecell></cell><section name=""><cell startpos="214:1-5998" endpos="214:4-6001"><h2 id=""></h2></cell><section name="selection-context"><cell startpos="217:1-6004" endpos="217:21-6024"><h2 id="selection-context">Selection Context</h2></cell><cell startpos="219:1-6026" endpos="221:4-6060" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename"></span></span><pre><code class="jsx"></code></pre></codecell></cell><section name="cell"><cell startpos="222:1-6061" endpos="222:8-6068"><h2 id="cell">Cell</h2></cell><cell startpos="224:1-6070" endpos="226:4-6092" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename"></span></span><pre><code class="jsx"></code></pre></codecell></cell><section name="cellmenu"><cell startpos="228:1-6094" endpos="228:13-6106"><h3 id="cellmenu">CellMenu</h3></cell><cell startpos="230:1-6108" endpos="280:4-7742" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">CellMenu.jsx</span></span><pre><code class="jsx">import React, {useState} from &quot;react&quot;
-import { MenuIcon, EditIcon, ExecIcon, CloseIcon, SaveIcon } from &#x27;./Icons&#x27;
-import { getConsoleForNamespace } from &#x27;../utils/console&#x27;
-
-const console = getConsoleForNamespace(&#x27;CellMenu&#x27;)
-
-const wrapHandler = fn =&gt; ev =&gt; {
-    console.log(&quot;Cell menu wrapper&quot;, fn, ev)
-    ev.preventDefault()
-    ev.stopPropagation()
-    if (typeof fn === &#x27;function&#x27;){
-        const resp = fn(ev)
-        console.log(&quot;Cell menu wrapper fn executed&quot;, resp)
-    }
-    return false
-}
-
-const CellMenu = props =&gt; {
-
-    const [open, setOpen] = useState(false)
-    const toggleOpen = wrapHandler(ev =&gt; {
-        console.log(&quot;Toggle CellMenu&quot;, open)
-        setOpen(!open)
-    })
-
-    const items = [
-        {title: &quot;Execute&quot;, icon: ExecIcon, handler: wrapHandler(props.execute)}
-    ]
-
-    if (!props.editing) items.push({title: &quot;Edit&quot;, icon: EditIcon, handler: wrapHandler(props.toggleEditing)})
-    else {
-        items.push({title: &quot;Cancel&quot;, icon: CloseIcon, handler: wrapHandler(props.toggleEditing)})
-        items.push({title: &quot;Save&quot;, icon: SaveIcon, handler: wrapHandler(props.save)})
-    }
-
-    return &lt;menu&gt;
-        &lt;ul className=&quot;menu__items&quot;&gt;
-            { open &amp;&amp; items.map( item =&gt; {
-                const Icon = item.icon
-                return &lt;li title={item.title} key={item.title} onClick={item.handler}&gt;&lt;Icon/&gt;&lt;/li&gt;
-            })}
-            { !open 
-                ? &lt;li title=&quot;Open&quot; key=&quot;open&quot; onClick={toggleOpen}&gt;&lt;MenuIcon/&gt;&lt;/li&gt;
-                : &lt;li title=&quot;Close&quot; key=&quot;close&quot;onClick={toggleOpen}&gt;&lt;CloseIcon/&gt;&lt;/li&gt; }
-        &lt;/ul&gt;
-    &lt;/menu&gt;
-}
-
-export default CellMenu
-</code></pre></codecell></cell><section name="editor"><cell startpos="281:1-7743" endpos="281:10-7752"><h2 id="editor">Editor</h2></cell><cell startpos="283:1-7754" endpos="335:4-9368" class="code"><codecell><span class="meta"><span class="lang">jax</span><span class="repl"></span><span class="filename">Editor.jsx</span></span><pre><code class="jax">import React from &#x27;react&#x27;
+</code></pre></codecell></cell><section name=""><cell startpos="214:1-5998" endpos="214:4-6001"><h2 id=""></h2></cell><section name="selection-context"><cell startpos="217:1-6004" endpos="217:21-6024"><h2 id="selection-context">Selection Context</h2></cell><cell startpos="219:1-6026" endpos="221:4-6060" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename"></span></span><pre><code class="jsx"></code></pre></codecell></cell><section name="cell"><cell startpos="222:1-6061" endpos="222:8-6068"><h2 id="cell">Cell</h2></cell><cell startpos="224:1-6070" endpos="226:4-6092" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename"></span></span><pre><code class="jsx"></code></pre></codecell></cell><section name="cellmenu"><cell startpos="228:1-6094" endpos="228:13-6106"><h3 id="cellmenu">CellMenu</h3></cell><cell startpos="230:1-6108" endpos="232:4-6134" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename"></span></span><pre><code class="jsx"></code></pre></codecell></cell><section name="editor"><cell startpos="233:1-6135" endpos="233:10-6144"><h2 id="editor">Editor</h2></cell><cell startpos="235:1-6146" endpos="287:4-7760" class="code"><codecell><span class="meta"><span class="lang">jax</span><span class="repl"></span><span class="filename">Editor.jsx</span></span><pre><code class="jax">import React from &#x27;react&#x27;
 import {EditorState, EditorView, basicSetup} from &quot;@codemirror/basic-setup&quot;
 import {Compartment} from &#x27;@codemirror/state&#x27;
 
@@ -325,7 +276,7 @@ export default class Editor extends React.Component {
         return &lt;div className=&quot;editor&quot; ref={this.editorRef}&gt;&lt;/div&gt;
     }
 }
-</code></pre></codecell></cell><section name="icons"><cell startpos="337:1-9370" endpos="337:9-9378"><h2 id="icons">Icons</h2></cell><cell startpos="339:1-9380" endpos="353:4-10070" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">Icons.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;;
+</code></pre></codecell></cell><section name="icons"><cell startpos="289:1-7762" endpos="289:9-7770"><h2 id="icons">Icons</h2></cell><cell startpos="291:1-7772" endpos="305:4-8462" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">Icons.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;;
 import { FontAwesomeIcon } from &#x27;@fortawesome/react-fontawesome&#x27;
 import { faBars, faPlay, faEdit, faTimes, faSave } from &#x27;@fortawesome/free-solid-svg-icons&#x27;
 
@@ -338,7 +289,7 @@ export const EditIcon = props =&gt; (&lt;FontAwesomeIcon icon={faEdit} {...props
 export const ExecIcon = props =&gt; (&lt;FontAwesomeIcon icon={faPlay} {...props} /&gt;)
 export const CloseIcon = props =&gt; (&lt;FontAwesomeIcon icon={faTimes} {...props} /&gt;)
 export const SaveIcon = props =&gt; (&lt;FontAwesomeIcon icon={faSave} {...props} /&gt;)
-</code></pre></codecell></cell><section name="code"><cell startpos="355:1-10072" endpos="355:8-10079"><h2 id="code">Code</h2></cell><cell startpos="357:1-10081" endpos="377:4-10801" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">CodeMeta.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
+</code></pre></codecell></cell><section name="code"><cell startpos="307:1-8464" endpos="307:8-8471"><h2 id="code">Code</h2></cell><cell startpos="309:1-8473" endpos="329:4-9193" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">CodeMeta.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
 
 export const CodeMeta = props =&gt; {
         return &lt;span className=&quot;meta&quot;&gt;
@@ -357,7 +308,7 @@ props.meta.directives.map( (dir, i) =&gt; &lt;li key={dir+1}&gt;&lt;span classNa
         &lt;/span&gt;
 }
 
-</code></pre></codecell></cell><cell startpos="380:1-10804" endpos="436:4-12875" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">base/Codeblock.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
+</code></pre></codecell></cell><cell startpos="332:1-9196" endpos="388:4-11267" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">base/Codeblock.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
 import {log, level} from &#x27;../../utils/console&#x27;
 import { getConsoleForNamespace } from &#x27;../../utils/console&#x27;
 import Highlight from &#x27;react-highlight.js&#x27;
@@ -412,7 +363,7 @@ export default class Codeblock extends React.Component {
         }
     }
 }
-</code></pre></codecell></cell><section name="link"><cell startpos="438:1-12877" endpos="438:8-12884"><h2 id="link">Link</h2></cell><cell startpos="440:1-12886" endpos="458:4-13361" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">base/Link.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
+</code></pre></codecell></cell><section name="link"><cell startpos="390:1-11269" endpos="390:8-11276"><h2 id="link">Link</h2></cell><cell startpos="392:1-11278" endpos="410:4-11753" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">base/Link.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
 import { getConsoleForNamespace } from &#x27;../../utils/console&#x27;
 
 const console = getConsoleForNamespace(&#x27;Link&#x27;)
@@ -429,7 +380,7 @@ const Link = props =&gt; {
 }
 
 export default Link
-</code></pre></codecell></cell><section name="backlinks"><cell startpos="460:1-13363" endpos="460:13-13375"><h2 id="backlinks">Backlinks</h2></cell><cell startpos="462:1-13377" endpos="478:4-13867" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">Backlinks.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
+</code></pre></codecell></cell><section name="backlinks"><cell startpos="412:1-11755" endpos="412:13-11767"><h2 id="backlinks">Backlinks</h2></cell><cell startpos="414:1-11769" endpos="430:4-12259" class="code"><codecell><span class="meta"><span class="lang">jsx</span><span class="repl"></span><span class="filename">Backlinks.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
 import path from &#x27;path&#x27;
 
 export default class Backlinks extends React.Component {
