@@ -41,8 +41,16 @@ const lit = {
         select,
         path,
         vfile,
+        delete: async (fp) => {
+           const f = fp || litsrc
+           console.log("Removing local file:", f)
+           await lit.fs.unlink('/' + f)
+           console.log("Unlinked:",f)
+        },
     }
 }
+
+lit.u = lit.utils
 
 if (typeof window !== 'undefined') window.lit = lit
 console.log('.lit Notebook client initializing...')
