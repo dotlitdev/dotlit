@@ -2,7 +2,7 @@ import React from 'react'
 import {log, level} from '../../utils/console'
 import { getConsoleForNamespace } from '../../utils/console'
 import Highlight from 'react-highlight.js'
-import CodeMeta from '../CodeMeta'
+import {CodeMeta} from '../CodeMeta'
 const console = getConsoleForNamespace('codeblocks')
 
 
