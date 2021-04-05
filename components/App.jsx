@@ -59,7 +59,7 @@ const App = ({file, fs, result}) => {
       setSrc: setSrcWrapper
     }
 
-    console.log('<App/> render', srcAndRes.res, srcAndRes.src, selectedCell)
+    console.log('<App/> render', selectedCell)
 
     return <SelectionContext.Provider value={state}>
         <div id="content">{srcAndRes.res}</div>
