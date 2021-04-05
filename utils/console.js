@@ -42,7 +42,7 @@ console.log("DEBUG:", debugKeys() )
 
 const shouldLog = ns => {
   const keys = debugKeys()
-  return (keys.indexOf('*') >= 0) || (keys.indexOf(ns) >= 0)
+  return keys.indexOf('*') >= 0 || keys.indexOf('All') >= 0 || keys.indexOf(ns) >= 0
 }
 
 const level = function(level, fn) {
