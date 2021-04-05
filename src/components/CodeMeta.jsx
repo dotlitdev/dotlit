@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default const CodeMeta = props => {
+export const CodeMeta = props => {
         return <span className="meta">
             <span className="lang">{props.meta.lang}</span>
             <span className="repl">{props.meta.repl}</span>
