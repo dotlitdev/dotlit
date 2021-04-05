@@ -45,7 +45,9 @@ const App = ({root, file, fs, result}) => {
         console.log("[CodeCells in Change (pos)]", tmpPos, file.path, tree, nodes)
         for (const codeCell of nodes) {
             const filename = codeCell.data && codeCell.data.meta && codeCell.data.meta.filename
-            if (filename) {
+            const fromSource = codeCell.data && codeCell.data.meta && codeCell.data.meta.fromSource
+            
+            if (filename && fromSource && fromSource === filename) {
                 const filepath = path.join( path.dirname(file.path), filename)
                 await fs.writeFile(filepath, codeCell.value)
                 console.log(`Wrote codefile ${filename} to "${filepath}" on disk`)
