@@ -6,43 +6,8 @@
 
 ## Document
 
-```jsx Document.jsx
-import React, {useState} from 'react'
-import path from 'path'
-import App from './App'
-import Backlinks from './Backlinks'
-import { Header } from './Header'
-import { getConsoleForNamespace } from '../utils/console'
+```jsx < Document.jsx
 
-const console = getConsoleForNamespace('Document')
-
-const Document = props => {
-
-    const result = props.file.result
-    const title = props.file.data.frontmatter.title || props.file.stem
-    
-    return <html>
-        <head>
-            <title>{title}</title>
-            <meta name="litsrc" value={props.file.path}/>
-            <meta name="litroot" value={props.root}/>
-            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-            <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css" />
-            <link rel="stylesheet" href={path.join(props.root, 'style.css')}/>
-        </head>
-        <body>
-            <div id="header"><Header root={props.root} /></div>
-            <div id="app"><App file={props.file} fs={props.fs} result={result}/></div>
-            <div id="backlinks"><Backlinks root={props.root} links={props.backlinks || []}/></div>
-            {/* <script>content.remove();</script> */}
-            <script src="//cdn.jsdelivr.net/npm/eruda"></script>
-            <script>eruda.init();</script>
-            <script src={path.join(props.root, 'web.bundle.js')}/>
-        </body>
-    </html>
-}
-
-export default Document
 ```
 
 ## Header
