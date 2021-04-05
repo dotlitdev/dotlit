@@ -1,4 +1,4 @@
-export const transcludeCode = (...args) => {
+export const transcludeCode = ({fs}) => {
          return async (tree,file) => {
              if(!fs) return;
              console.log("Checking for files to transclude")
