@@ -21,10 +21,6 @@ const console = getConsoleForNamespace('codeblocks')
 
 export function processor(fs) {
     return parserProcessor()
-
-    // transclude codeblocks with source
-    // when available 
-    .use( transcludeCode )
    
     // hoist ast to data
     .use( (...args) => {
@@ -32,6 +28,10 @@ export function processor(fs) {
              file.data.ast = tree
          }
      })
+
+    // transclude codeblocks with source
+    // when available 
+    .use( transcludeCode, {fs})
 
     // extract files to data
     .use( (...args) => {
