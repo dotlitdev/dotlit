@@ -72,6 +72,18 @@ export function processor(fs) {
              file.data.files = selectAll("code", tree)
          }
      })
+
+    // hoist mdast data to hast data
+    .use( (...args) => {
+         return (tree,file) => {
+             for (const code of selectAll("code", tree)) {
+                 if (code.data) {
+                     code.data.hProperties = code.data.hProperties || {}
+                     code.data.hProperties.data = code.data
+                 }
+             }
+         }
+     })
     .use(remark2rehype, {allowDangerousHtml: true})
     .use(rehype2react, {
         Fragment: React.Fragment,
