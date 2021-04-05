@@ -1,4 +1,9 @@
-export const transcludeCode = (...args) => {
+
+import { getConsoleForNamespace } from '../utils/console'
+
+const console = getConsoleForNamespace('transcludeCode')
+
+export const transcludeCode = ({fs}) => {
          return async (tree,file) => {
              if(!fs) return;
              console.log("Checking for files to transclude")
