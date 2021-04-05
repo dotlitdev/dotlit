@@ -6,6 +6,8 @@ export const CodeMeta = props => {
             <span className="repl">{props.meta.repl}</span>
             <span className="filename">{props.meta.filename}</span>
 
+            { props.meta.fromSource && <span className="source">{'&gt; ' + props.meta.fromSource}</span> }
+
             {props.meta.tags && <ul className="tags">{
                 props.meta.tags.map( (tag, i) => <li key={tag+i}><span className="tag">{tag}</span></li>)
             }</ul>}
