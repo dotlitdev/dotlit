@@ -1,27 +1,3 @@
-<!--
-title: "Renderer"
--->
-
-# Renderer
-
-The default render output is `html` which includes client-side `javascript` which hydrates a React application.
-
-
-
-## Static `html`
-
-## Interactive Components
-
-[[Components]] (wiki link) alternativly regular link: [Components](../components/components.lit)
-
-
-## Source
-
-```js < index.jsx
-
-```
-
-```js transcludeCode.js
 export const transcludeCode = (...args) => {
          return async (tree,file) => {
              if(!fs) return;
@@ -56,4 +32,3 @@ export const transcludeCode = (...args) => {
              }
          }
      }
-```
