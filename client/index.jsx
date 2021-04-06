@@ -29,7 +29,7 @@ const fs = extendFs(lfs, litroot)
 
 const lit = {
     location: {
-        src: litsrc,
+        src: (litsrc === '404.lit' && query.file) ? query.file : litsrc,
         root: litroot,
         base: baseUrl,
         query: query,
@@ -64,15 +64,14 @@ console.log(`lit:`, lit)
 
 ;(async () => {
     let src = litsrc
-    if (src === '404.lit' && query.file) src = query.file
     console.log(`Checking local (${baseUrl}) filesystem for: ${src}`)
     let contents, file, stat;
     try { stat = await lit.fs.stat('/' + src) } catch(err) {}
     if (stat) {
-        console.log(`Local file "${ '/' + src}" exists, loading that instead.`, stat)
+        console.log(`Fetching Local file "${ '/' + src}" exists, loading that instead.`, stat)
         contents = await lit.fs.readFile('/' +  src, {encoding: 'utf8'})
     } else {
-        console.log("Fetching file content", litroot, litsrc, path.join(litroot, litsrc))
+        console.log("Fetching Remote file content", litroot, litsrc, path.join(litroot, litsrc))
         const resp = await fetch(path.join(litroot, litsrc))
         console.log("Fetch resp", resp)
         contents = await resp.text()
