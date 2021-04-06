@@ -65,24 +65,19 @@ console.log(`lit:`, lit)
 ;(async () => {
     
     console.log(`Checking local (${baseUrl}) filesystem for: ${lit.location.src}`)
-    let contents, file, stat;
-    try { stat = await lit.fs.stat('/' + lit.location.src) } catch(err) {}
-    if (stat) {
-        console.log(`Fetching Local file "${ '/' + lit.location.src}" exists, loading that instead.`, stat)
-        contents = await lit.fs.readFile('/' +  lit.location.src, {encoding: 'utf8'})
-    } else {
-        console.log("Fetching Remote file content", litroot, lit.location.src, path.join(litroot, lit.location.src))
-        const resp = await fetch(path.join(litroot, lit.location.src))
-        console.log("Fetch resp", resp)
+    let contents, file;
 
-        if (resp.status === 404) {
 
-            const resp404 = await lit.fs.readStat( path.join(litroot, "404.lit") )
-            contents = resp404.value
-
-        }
-        else contents = await resp.text()
+    try {
+        const resp = await lit.fs.readStat('/' +  lit.location.src, {encoding: 'utf8'})
+        contents = resp.value
+    } catch(err) {
+        console.error(`Error 404 File not found local or remote`)
+        // const resp404 = await lit.fs.readStat( '/' + path.join(litroot, "404.lit") )
+        // contents = resp404.value
+        contents = `# ${lit.location.src}\n\nFile not yet found, edit this to change that.`
     }
+  
     console.log(contents)
     file = await vfile({path: lit.location.src, contents})
 
