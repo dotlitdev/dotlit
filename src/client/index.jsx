@@ -11,6 +11,7 @@ const renderer = require('../renderer')
 const App = require('../components/App').default
 const { Header } = require('../components/Header')
 const { extendFs } = require('../utils/fs-promises-utils')
+const { DatesToRelativeDelta } = require('../utils/momento')
 
 const { getMeta } = require('../utils/functions')
 import { getConsoleForNamespace } from '../utils/console'
@@ -43,16 +44,22 @@ const lit = {
         path,
         vfile,
         delete: async (fp) => {
-           const f = fp || litsrc
-           console.log("Removing local file:", f)
-           await lit.fs.unlink('/' + f)
-           console.log("Unlinked:",f)
+            const f = fp || litsrc
+            const filepath = f[0] === '/' ? f : ('/' + f)
+            console.log(`Removing local file: "${filepath}"`)
+            await lit.fs.unlink(filepath)
+            console.log(`Unlinked: "${Unlinked}"`)
         },
         read: async (fp) => {
-           const f = fp || litsrc
-           console.log("Getting Stat and Reading local file:", f)
-           const resp = await lit.fs.readStat('/' + f)
-           console.log("readStat:",f,resp)
+            const f = fp || litsrc
+            const filepath = f[0] === '/' ? f : ('/' + f)
+            const resp = await lit.fs.readStat(filepath, {encoding: 'utf8'})
+            console.log(`Loaded file: ${filepath} local: ${!!resp.local.stat} remote: ${!!resp.remote.stat} resp: `, resp)
+
+            if (resp.local.stat && resp.remote.stat) {
+                const ageMessage = DatesToRelativeDelta(resp.local.stat.mtimeMs, resp.remote.stat.mtimeMs)
+                console.log(`Local file is ${ageMessage} than remote file.`)
+            }
         },
     }
 }
@@ -65,22 +72,29 @@ console.log(`lit:`, lit)
 
 ;(async () => {
     
-    console.log(`Checking local (${baseUrl}) filesystem for: ${lit.location.src}`)
-    let contents, file;
-
-
+    const filepath = `/${lit.location.src}`
+    console.log(`Checking local (${baseUrl}) filesystem for: ${filepath}`)
+    let contents;
     try {
-        const resp = await lit.fs.readStat('/' +  lit.location.src, {encoding: 'utf8'})
-        contents = resp.value
+        const resp = await lit.fs.readStat(filepath, {encoding: 'utf8'})
+        console.log(`Loaded file: ${filepath} local: ${!!resp.local.stat} remote: ${!!resp.remote.stat} resp: `, resp)
+
+        if (resp.local.stat && resp.remote.stat) {
+            const ageMessage = DatesToRelativeDelta(resp.local.stat.mtimeMs, resp.remote.stat.mtimeM)
+            console.log(`Local file is ${ageMessage} than remote file.`)
+        }
+        
+        contents = resp.local.value || resp.remote.value
     } catch(err) {
-        console.error(`Error 404 File not found local or remote`)
+        console.error(`Error fething local ot remote file`, err)
+        console.log(`Showing 404 page`)
         // const resp404 = await lit.fs.readStat( '/' + path.join(litroot, "404.lit") )
         // contents = resp404.value
-        contents = `# ${lit.location.src}\n\nFile not yet found, edit this to change that.`
+        contents = `# ${lit.location.src}\n\nFile not *yet* found, edit this to change that.`
     }
   
     console.log(contents)
-    file = await vfile({path: lit.location.src, contents})
+    const file = await vfile({path: filepath, contents})
 
     
     const processedFile = await renderer.processor(fs).process(file)
