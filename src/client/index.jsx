@@ -63,21 +63,28 @@ console.log('.lit Notebook client initializing...')
 console.log(`lit:`, lit)
 
 ;(async () => {
-    let src = litsrc
-    console.log(`Checking local (${baseUrl}) filesystem for: ${src}`)
+    
+    console.log(`Checking local (${baseUrl}) filesystem for: ${lit.location.src}`)
     let contents, file, stat;
-    try { stat = await lit.fs.stat('/' + src) } catch(err) {}
+    try { stat = await lit.fs.stat('/' + lit.location.src) } catch(err) {}
     if (stat) {
-        console.log(`Fetching Local file "${ '/' + src}" exists, loading that instead.`, stat)
-        contents = await lit.fs.readFile('/' +  src, {encoding: 'utf8'})
+        console.log(`Fetching Local file "${ '/' + lit.location.src}" exists, loading that instead.`, stat)
+        contents = await lit.fs.readFile('/' +  lit.location.src, {encoding: 'utf8'})
     } else {
-        console.log("Fetching Remote file content", litroot, litsrc, path.join(litroot, litsrc))
-        const resp = await fetch(path.join(litroot, litsrc))
+        console.log("Fetching Remote file content", litroot, lit.location.src, path.join(litroot, lit.location.src))
+        const resp = await fetch(path.join(litroot, lit.location.src))
         console.log("Fetch resp", resp)
-        contents = await resp.text()
+
+        if (resp.status === 404) {
+
+            const resp404 = await lit.fs.readStat( path.join(litroot, "404.lit") )
+            contents = resp404.value
+
+        }
+        else contents = await resp.text()
     }
     console.log(contents)
-    file = await vfile({path: src, contents})
+    file = await vfile({path: lit.location.src, contents})
 
     
     const processedFile = await renderer.processor(fs).process(file)
