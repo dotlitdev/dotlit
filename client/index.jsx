@@ -80,13 +80,13 @@ console.log(`lit:`, lit)
         console.log(`Loaded file: ${filepath} local: ${!!resp.local.stat} remote: ${!!resp.remote.stat} resp: `, resp)
 
         if (resp.local.stat && resp.remote.stat) {
-            const ageMessage = DatesToRelativeDelta(resp.local.stat.mtimeMs, resp.remote.stat.mtimeM)
+            const ageMessage = DatesToRelativeDelta(resp.local.stat.mtimeMs, resp.remote.stat.mtimeMs)
             console.log(`Local file is ${ageMessage} than remote file.`)
         }
         
         contents = resp.local.value || resp.remote.value
     } catch(err) {
-        console.error(`Error fething local ot remote file`, err)
+        console.error(`Error fething local or remote file`, err)
         console.log(`Showing 404 page`)
         // const resp404 = await lit.fs.readStat( '/' + path.join(litroot, "404.lit") )
         // contents = resp404.value
