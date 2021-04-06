@@ -47,6 +47,12 @@ const lit = {
            await lit.fs.unlink('/' + f)
            console.log("Unlinked:",f)
         },
+        read: async (fp) => {
+           const f = fp || litsrc
+           console.log("Reading local file:", f)
+           const c = await lit.fs.readFile('/' + f)
+           console.log("content:",f,c)
+        },
     }
 }
 
