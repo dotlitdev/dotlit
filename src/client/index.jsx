@@ -48,7 +48,7 @@ const lit = {
             const filepath = f[0] === '/' ? f : ('/' + f)
             console.log(`Removing local file: "${filepath}"`)
             await lit.fs.unlink(filepath)
-            console.log(`Unlinked: "${Unlinked}"`)
+            console.log(`Unlinked: "${filepath}"`)
         },
         read: async (fp) => {
             const f = fp || litsrc
