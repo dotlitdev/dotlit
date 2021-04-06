@@ -74,10 +74,11 @@ export function processor(fs) {
      })
 
     // hoist mdast data to hast data
+    // Dosabled as failed to process due to JSON stringify error
     .use( (...args) => {
          return (tree,file) => {
              for (const code of selectAll("code", tree)) {
-                 if (code.data) {
+                 if (false && code.data) {
                      code.data.hProperties = code.data.hProperties || {}
                      code.data.hProperties.data = code.data
                  }
