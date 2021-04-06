@@ -20,23 +20,49 @@ const passThroughRead = (origReadFile, litroot) => {
   };
 }
 
-const passThroughReadWithStat = (origReadFile, origStat, litroot) => {
+const passThroughReadWithStat = (origReadFile, origStat) => {
 
   return async (...args) => {
     console.log('fs.passThroughRead')
+
+    const resp = {
+      local: { stat: undefined, value: undefined },
+      remote: { stat: undefined, value: undefined },
+    }
     try {
       const stat = await origStat(...args)
       const value = await origReadFile(...args)
-      return { stat, value }
-    } catch (err) {
-      const filePath = path.join(litroot, args[0])
-      console.log('fs.passThroughRead passing through to fetch', filePath)
-      const resp = await fetch(filePath)
-      if (resp.status === 404) throw new Error(`404 File ${filePath} not found.`)
-      const value = await resp.text()
-      const stat = { lastMod: resp.headers.get('last-modified')}
-      return {stat,value}
+      resp.local = {stat, value}
+    } catch (err) { 
+      console.log('fs.passThoughRead no local file', err)
     }
+
+    const filePath = args[0]
+    console.log('fs.passThroughRead passing through to fetch', filePath)
+    const remoteResp = await fetch(filePath)
+
+    if (remoteResp.status < 200 || remoteResp.status >= 400) {
+      if (!resp.local.stat) {
+        console.log('fs.passThroughRead failed local and remote read')
+        throw new Error(`${remoteResp.status} Error. Fetching File.`)
+      }
+    } else {
+      console.log("fs.passThroughRead found remote file")
+      const value = await remoteResp.text()
+      const lastModified = remoteResp.headers && remoteResp.headers.get('last-modified')
+      const contentLength = remoteResp.headers && remoteResp.headers.get('content-length')
+      const stat = {
+        dev: 1,
+        gid: 1,
+        ino: 1,
+        uid: 1,
+        mtimeMs: lastModified && (new Date(lastModified)).getTime(),
+        size: contentLength,
+      }
+      resp.remote = {stat,value}
+    }
+
+    return resp
   };
 }
 
@@ -93,7 +119,7 @@ export const extendFs = (fs, litroot) => {
   const origStat = fs.stat
   fs.readFile = passThroughRead(origReadFile,litroot);
   fs.writeFile = writeFileP(fs);
-  fs.readStat = passThroughReadWithStat(origReadFile, origStat,litroot)
+  fs.readStat = passThroughReadWithStat(origReadFile, origStat)
 
   if (localStorage.getItem("ghToken")) fs.writeFile = passThroughWrite(fs);
   return fs
