@@ -4,18 +4,38 @@ import { getConsoleForNamespace } from './console'
 
 const console = getConsoleForNamespace('fs')
 
-const passThroughRead = (fs, litroot) => {
-  const rf = fs.readFile
+const passThroughRead = (origReadFile, litroot) => {
+  
   return async (...args) => {
     console.log('fs.passThroughRead')
     try {
-      return await rf(...args);
+      return await origReadFile(...args);
     } catch (err) {
       const filePath = path.join(litroot, args[0])
       console.log('fs.passThroughRead passing through to fetch', filePath)
       const resp = await fetch(filePath)
       if (resp.status === 404) throw new Error(`404 File ${filePath} not found.`)
       return await resp.text();
+    }
+  };
+}
+
+const passThroughReadWithStat = (origReadFile, origStat, litroot) => {
+
+  return async (...args) => {
+    console.log('fs.passThroughRead')
+    try {
+      const stat = await origStat(...args)
+      const value = await origReadFile(...args)
+      return { stat, value }
+    } catch (err) {
+      const filePath = path.join(litroot, args[0])
+      console.log('fs.passThroughRead passing through to fetch', filePath)
+      const resp = await fetch(filePath)
+      if (resp.status === 404) throw new Error(`404 File ${filePath} not found.`)
+      const value = await resp.text()
+      const stat = { lastMod: resp.headers.get('last-modified')}
+      return {stat,value}
     }
   };
 }
@@ -69,8 +89,11 @@ const passThroughWrite = (fs,litroot) => {
 }
 
 export const extendFs = (fs, litroot) => {
-  fs.readFile = passThroughRead(fs,litroot);
+  const origReadFile = fs.readFile
+  const origStat = fs.stat
+  fs.readFile = passThroughRead(origReadFile,litroot);
   fs.writeFile = writeFileP(fs);
+  fs.readStat = passThroughReadWithStat(origReadFile, origStat,litroot)
 
   if (localStorage.getItem("ghToken")) fs.writeFile = passThroughWrite(fs);
   return fs
