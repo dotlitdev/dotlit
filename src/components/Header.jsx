@@ -57,7 +57,7 @@ const Menu = props => {
       { props.href
         ? <a href={props.href}>{props.title}</a>
         : props.title}
-      { !horizonal && <span>{'>'}</span>
+      { !horizonal && <span>{'>'}</span> }
     </li>
     { open && <li className="MenuItems">{ props.children }</li> }
   </menu>
