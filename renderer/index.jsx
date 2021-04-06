@@ -39,7 +39,7 @@ export function processor(fs) {
                  if (block.data && block.data.meta && block.data.meta.source) {
                     const source = block.data.meta.source
                     console.log("has source", source)
-                    block.data.originalSource = block.value
+
                     if (source.uri) {
                         const resp = await fetch(source.uri)
                         if (resp.status >= 200 && resp.status < 400) {
@@ -70,19 +70,6 @@ export function processor(fs) {
     .use( (...args) => {
          return (tree,file) => {
              file.data.files = selectAll("code", tree)
-         }
-     })
-
-    // hoist mdast data to hast data
-    // Dosabled as failed to process due to JSON stringify error
-    .use( (...args) => {
-         return (tree,file) => {
-             for (const code of selectAll("code", tree)) {
-                 if (false && code.data) {
-                     code.data.hProperties = code.data.hProperties || {}
-                     code.data.hProperties.data = code.data
-                 }
-             }
          }
      })
     .use(remark2rehype, {allowDangerousHtml: true})
