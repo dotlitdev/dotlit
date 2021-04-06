@@ -49,9 +49,9 @@ const lit = {
         },
         read: async (fp) => {
            const f = fp || litsrc
-           console.log("Reading local file:", f)
-           const c = await lit.fs.readFile('/' + f)
-           console.log("content:",f,c)
+           console.log("Getting Stat and Reading local file:", f)
+           const resp = await lit.fs.readStat('/' + f)
+           console.log("readStat:",f,resp)
         },
     }
 }
