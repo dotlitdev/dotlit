@@ -19,7 +19,7 @@ const console = getConsoleForNamespace('client')
 
 const query = qs.parse(location.search.slice(1))
 const litsrcMeta = getMeta('src', '')
-const litsrc = (litsrcMeta === '404.lit' && query.file) ? query.file : litsrcMeta,
+const litsrc = (litsrcMeta === '404.lit' && query.file) ? query.file : litsrcMeta
 const litroot = getMeta('root', '')
 const litbase = getMeta('base', '/')
 const baseUrl =`${location.protocol}//${location.host}${litroot ? path.join(path.dirname(location.pathname), litroot) : litbase}`
@@ -30,7 +30,7 @@ const fs = extendFs(lfs, litroot)
 
 const lit = {
     location: {
-        src: litsrc
+        src: litsrc,
         root: litroot,
         base: baseUrl,
         query: query,
