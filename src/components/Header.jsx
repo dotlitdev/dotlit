@@ -11,9 +11,9 @@ const console = getConsoleForNamespace('Header')
 const setDebug = ev => {
   ev.preventDefault()
   const key = 'litDebug'
-  const example = '*,fs,client,Cell,sections,etc...'
+  const example = 'All,fs,client,Cell,sections,etc...'
   const storage = typeof localStorage !== 'undefined' && localStorage
-  const val = prompt(key, storage.getItem(key) || example)
+  const val = prompt("Set debug mask", storage.getItem(key) || example)
   storage.setItem( key, val )
   console.log(`Set ${key} to "${val}"`)
   return false
@@ -57,7 +57,7 @@ const Menu = props => {
       { props.href
         ? <a href={props.href}>{props.title}</a>
         : props.title}
-      { open && props.horizontal && <span>|</span> }
+      { !horizonal && <span>{'>'}</span>
     </li>
     { open && <li className="MenuItems">{ props.children }</li> }
   </menu>
@@ -99,24 +99,27 @@ export const Header = props => {
       <span disabled>Execute</span>
       <span disabled>Reset</span>
       <Menu title="Move">
-        <span>Up</span>
-        <span>Down</span>
+        <span disabled >Up</span>
+        <span disabled >Down</span>
       </Menu>
       <Menu title="Copy">
-        <span>Source</span>
-        <span>Cell</span>
+        <span disabled >Source</span>
+        <span disabled >Cell</span>
       </Menu>
     </Menu>
     <Menu title="Section">
       <span disabled>Collapse</span>
       <span disabled>Remove</span>
       <Menu title="Move">
-        <span>Up</span>
-        <span>Down</span>
+        <span disabled >Up</span>
+        <span disabled >Down</span>
       </Menu>
     </Menu>
     <Menu title="Help">
-      <span onClick={setDebug}>Debug</span>
+      <Menu title="Debug">
+          <span onClick={setDebug}>Set Mask</span>
+          <span onClick={showInspector}>Show Inspector</span>
+      </Menu>
     </Menu>
   </Menu>
   }}
