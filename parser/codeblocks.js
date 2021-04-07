@@ -117,7 +117,8 @@ function ident (x, i) {
     if (item.type === ATTR){
         item = item.value
     }
-    else if (isListType(item.type)) {
+
+    if (isListType(item.type)) {
         const collective = `${item.type}s`
         if(memo[collective]) {
              memo[collective]
