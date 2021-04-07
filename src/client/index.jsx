@@ -74,13 +74,13 @@ console.log(`lit:`, lit)
     
     const filepath = `/${lit.location.src}`
     console.log(`Checking local (${baseUrl}) filesystem for: ${filepath}`)
-    let contents;
+    let contents, ageMessage
     try {
         const resp = await lit.fs.readStat(filepath, {encoding: 'utf8'})
         console.log(`Loaded file: ${filepath} local: ${!!resp.local.stat} remote: ${!!resp.remote.stat} resp: `, resp)
 
         if (resp.local.stat && resp.remote.stat) {
-            const ageMessage = DatesToRelativeDelta(resp.local.stat.mtimeMs, resp.remote.stat.mtimeMs)
+            ageMessage = DatesToRelativeDelta(resp.local.stat.mtimeMs, resp.remote.stat.mtimeMs)
             console.log(`Local file is ${ageMessage} than remote file.`)
         }
         
@@ -95,7 +95,7 @@ console.log(`lit:`, lit)
   
     console.log(contents)
     const file = await vfile({path: filepath, contents})
-
+    file.data.times = { agesMessage }
     
     const processedFile = await renderer.processor(fs).process(file)
     console.log("Processed client", processedFile)
