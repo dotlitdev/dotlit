@@ -20,10 +20,15 @@ const viewers = {
   html: val => <div dangerouslySetInnerHTML={{__html: val}}></div>,
   svg: val => <div dangerouslySetInnerHTML={{__html: val}}></div>,
   uri: val => <iframe src={val}></iframe>,
+  style: val => <style dangerouslySetInnerHTML={{__html: val}}></style>,
+  script: val => <script dangerouslySetInnerHTML={{__html: val}}></script>,
 }
 
 const getViewer = meta => {
-  return meta && (meta.isOutput || (meta.directives && meta.directives.indexOf('inline') >= 0)) && viewers[meta.lang]
+  return meta 
+    && (meta.isOutput || (meta.directives && meta.directives.indexOf('inline') >= 0))
+    && ((meta.viewer && viewers[meta.viewer])
+       || viewers[meta.lang])
 }
 
 export default class Codeblock extends React.Component {
