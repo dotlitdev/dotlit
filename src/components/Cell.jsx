@@ -27,11 +27,16 @@ const Cell = props => {
     const [editing, setEditing] = useState(false)
     const toggleEditing = () => setEditing(!editing)
     
-    const isSelected = ctx => symbol === ctx.selectedCell
+    const isSelected = ctx => {
+        return ctx.selectedCell
+            && ctx.selectedCell.start && ctx.selectedCell.end
+            && ctx.selectedCell.start.line === pos.start.line
+            && ctx.selectedCell.end.line === pos.end.line
+    }
     const toggleSelected = ctx => () => {
         const selected = isSelected(ctx)
-        console.log(`Toggle selected (was ${selected}) ${symbol}`, ctx)
-        ctx.setSelectedCell(selected ? null : symbol)
+        console.log(`Toggle selected (was ${selected})`, ctx.selectedCell)
+        ctx.setSelectedCell(selected ? null : pos)
     }
     
 

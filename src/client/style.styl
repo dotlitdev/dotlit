@@ -1,3 +1,6 @@
+
+primary-border = 2px solid #9999f7
+
 body
     max-width 1024px
     margin 0 auto
@@ -20,6 +23,7 @@ body
         display: flex
         flex-direction: row
         position relative
+        white-space: nowrap
 
         .MenuTitle
             list-style: none
@@ -33,20 +37,45 @@ body
             display: flex
             flex-direction: column
 
-            &[disbled]
-                opacity: 0.5
-                cursor: default
+        &.open > .MenuTitle
+            // font-weight: bold
+        
+        &:not(.horizontal) > .MenuItems 
+            & > * 
+                padding-top: 0.4em
+                &:first-child 
+                    padding-top: 0
 
-                menu
-                    display: none
+            & > menu
+                display: flex
+                flex-direction: column
 
-        &.open:not(.horizontal) > .MenuItems
-            position: absolute
-            top: 1em
-            background-color: white
-            padding: 0.4em
-            margin: 0 -0.4em
-            box-shadow: 0 12px 5px rgba(0,0,0,0.2)
+                & > .MenuTitle:after
+                    padding: 0 .4em
+                    content: '\203A'
+
+                &.open > .MenuTitle:after
+                    transform: rotate(90deg)
+
+                & > .MenuItems
+                    position: static
+                    padding-top: 0.4em
+
+                    & > *
+                        padding-left: 0.4em
+                        border-left: primary-border
+
+        &.open:not(.horizontal)
+
+            & > .MenuItems
+                position: absolute
+                top: 1.6em
+                background-color: white
+                padding: 0.6em
+                margin: 0 -0.6em
+                box-shadow: 0 3px 3px rgba(0,0,0,0.2)
+                min-width: 100%
+                padding-top: 0;
 
         &.horizontal
             display: flex
