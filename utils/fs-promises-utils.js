@@ -102,7 +102,7 @@ const passThroughWrite = (fs,litroot) => {
     const ghwf = ghWriteFile({
       username: "dotlitdev",
       repository: "dotlit",
-      prefix: "src/",
+      prefix: "src",
       token: localStorage.getItem("ghToken"),
     });
     try {
