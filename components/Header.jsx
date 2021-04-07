@@ -24,7 +24,7 @@ const showInspector = ev => {
 }
 
 const Menu = props => {
-  console.log('<Menu/>', props.title, props)
+  // console.log('<Menu/>', props.title,)
   const [open, setOpen] = useState(props.horizontal)
   const toggleOpen = _ => setOpen(!open)
   const disabled = props.disabled || (!props.onClick && !props.href && !props.children)
@@ -84,6 +84,11 @@ export const Header = props => {
     console.log("Copied src to clipboard")
   }
 
+  const ghToken = typeof localStorage !== 'undefined' && localStorage.getItem('ghToken')
+  const setGhToken = (ev) => {
+    localStorage.getItem('ghToken', prompt("GitHub personal access token"))
+  }
+
   return <SelectionContext.Consumer>{(ctx) => {
 
     const cellSelected = (ctx.selectedCell && ctx.selectedCell.start) || false
@@ -127,6 +132,7 @@ export const Header = props => {
     <Menu title="Help">
       <span disabled>About</span>
       <span disabled>Documentation</span>
+      <span disabled={!!ghToken} onClick={setGhToken}>GitHub Token</span>
       <Menu title="Debug">
           <span onClick={setDebug}>Set Mask</span>
           <span onClick={showInspector}>Show Inspector</span>

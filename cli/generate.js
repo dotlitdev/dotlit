@@ -22,13 +22,14 @@ const console = getConsoleForNamespace('generate')
 global.fetch = require("node-fetch")
 
 function getLinks(file, root) {
-    return selectAll('link, wikiLink', file.data.ast)
+    return file && file.data && file.data.ast ? selectAll('link, wikiLink', file.data.ast) : []
 }
 
 function generateBacklinks(files, root) {
     let manifest = {}
     console.log(`[Backlinks] for (${files.length}) files, in ${root}`)
     files.forEach( file => {
+        console.log("About to get links for file", file)
         const links = getLinks(file, root)
         const fileLink = decorateLinkNode({ url: file.path })
 

@@ -45,7 +45,7 @@ const Cell = props => {
     const meta = codeNode ? codeNode.properties.meta : null
     const codeSource = codeNode && codeNode.children[0].value
 
-    console.log("[Cell]", isCodeCell, codeNode, meta, codeSource)
+    console.log("[Cell] code: ", !!isCodeCell) // codeNode, meta, codeSource)
     const save = ctx => args => {
         console.log("Saving cell", pos, src)
         ctx.setSrc(pos, src)
