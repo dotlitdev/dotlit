@@ -90,6 +90,7 @@ export const Header = props => {
 
     return <Menu title="Home" horizontal href={props.root}>
     <Menu title="File">
+      <span disabled className="meta">{props.ageMessage}</span>
       <span disabled>New</span>
       <span disabled>Open</span>
       <span disabled>Save</span>
@@ -98,6 +99,9 @@ export const Header = props => {
       <span disabled>Delete</span>
     </Menu>
     <Menu title="Cell" disabled={!cellSelected}>
+      <span disabled className="meta">
+        {cellSelected && `Lines ${ctx.selectedCell.start.line}-${ctx.selectedCell.end.line}`}
+      </span>
       <span disabled>Add</span>
       <span disabled>Remove</span>
       <span disabled>Edit</span>
