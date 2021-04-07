@@ -95,7 +95,7 @@ console.log(`lit:`, lit)
   
     console.log(contents)
     const file = await vfile({path: filepath, contents})
-    file.data.times = { agesMessage }
+    file.data.times = { ageMessage }
     
     const processedFile = await renderer.processor(fs).process(file)
     console.log("Processed client", processedFile)
