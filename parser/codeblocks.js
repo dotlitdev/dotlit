@@ -11,8 +11,9 @@ const TAG = 'tag'
 const DIREC = 'directive'
 const FILENAME = 'filename'
 const URI = 'uri'
+const UNKNOWN = 'unknown'
 
-const isListType = t => [TAG,DIREC].indexOf(t) >= 0
+const isListType = t => [TAG,DIREC,UNKNOWN].indexOf(t) >= 0
 
 export default function (...args) {
     return (tree) => visit( tree, 'code', transform )
@@ -108,7 +109,7 @@ function ident (x, i) {
         if (isUri(x)) type = URI
         else type = FILENAME
       }
-      else if (!type) type = undefined
+      else if (!type) type = UNKNOWN
     }
     return {type, value}
   }
