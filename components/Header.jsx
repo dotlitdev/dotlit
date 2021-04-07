@@ -25,17 +25,14 @@ const showInspector = ev => {
 
 const Menu = props => {
   console.log('<Menu/>', props.title, props)
-
   const [open, setOpen] = useState(props.horizontal)
   const toggleOpen = _ => setOpen(!open)
-
-  const classes = [
-    props.horizontal ? 'horizontal' : null,
-    open ? 'open' : null,
-  ].filter(Identity).join(' ')
+  const disabled = props.disabled || (!props.onClick && !props.href && !props.children)
 
   const handleClickTitle = ev => {
     ev.stopPropagation()
+    if (disabled) return false
+
     if (props.onClick) props.onClick()
     else if (props.href) location.href = props.href
     else toggleOpen()
@@ -44,22 +41,27 @@ const Menu = props => {
 
   const catchClicks = ev => {
     ev.stopPropagation()
-    if (!props.horizontal) {
+    if (!disabled && !props.horizontal) {
       toggleOpen()
     }
     return false
   }
 
-  const disabled = !props.onClick && !props.href && !props.children
+  const classes = [
+    props.horizontal ? 'horizontal' : null,
+    open ? 'open' : null,
+    props.children ? 'has-children' : null,
+  ].filter(Identity).join(' ')
+
+  
 
   return <menu className={classes} disabled={disabled} onClick={catchClicks}>
-    <li className={"MenuTitle"} key="menu-title" onClick={handleClickTitle} >
+    <li className={"MenuTitle"} key="menu-title" onClick={handleClickTitle}>
       { props.href
         ? <a href={props.href}>{props.title}</a>
-        : props.title}
-      { ! props.horizontal && <span>&rsaquo;</span> }
+        : props.title }
     </li>
-    { open && <li className="MenuItems">{ props.children }</li> }
+    { !disabled && open && <li className="MenuItems">{ props.children }</li> }
   </menu>
 }
 
@@ -83,6 +85,9 @@ export const Header = props => {
   }
 
   return <SelectionContext.Consumer>{(ctx) => {
+
+    const cellSelected = (ctx.selectedCell && ctx.selectedCell.start) || false
+
     return <Menu title="Home" horizontal href={props.root}>
     <Menu title="File">
       <span disabled>New</span>
@@ -92,30 +97,32 @@ export const Header = props => {
       <span onClick={resetFile(ctx)}>Reset</span>
       <span disabled>Delete</span>
     </Menu>
-    <Menu title="Cell">
+    <Menu title="Cell" disabled={!cellSelected}>
       <span disabled>Add</span>
       <span disabled>Remove</span>
       <span disabled>Edit</span>
       <span disabled>Execute</span>
       <span disabled>Reset</span>
       <Menu title="Move">
-        <span disabled >Up</span>
-        <span disabled >Down</span>
+        <span disabled>Up</span>
+        <span disabled>Down</span>
       </Menu>
       <Menu title="Copy">
-        <span disabled >Source</span>
-        <span disabled >Cell</span>
+        <span disabled>Source</span>
+        <span disabled>Cell</span>
       </Menu>
     </Menu>
-    <Menu title="Section">
+    <Menu title="Section" disabled={!cellSelected}>
       <span disabled>Collapse</span>
       <span disabled>Remove</span>
       <Menu title="Move">
-        <span disabled >Up</span>
-        <span disabled >Down</span>
+        <span disabled>Up</span>
+        <span disabled>Down</span>
       </Menu>
     </Menu>
     <Menu title="Help">
+      <span disabled>About</span>
+      <span disabled>Documentation</span>
       <Menu title="Debug">
           <span onClick={setDebug}>Set Mask</span>
           <span onClick={showInspector}>Show Inspector</span>

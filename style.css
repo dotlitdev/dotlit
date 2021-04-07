@@ -20,6 +20,7 @@ body {
   display: flex;
   flex-direction: row;
   position: relative;
+  white-space: nowrap;
 }
 #header menu .MenuTitle {
   list-style: none;
@@ -33,20 +34,40 @@ body {
   display: flex;
   flex-direction: column;
 }
-#header menu .MenuItems[disbled] {
-  opacity: 0.5;
-  cursor: default;
+#header menu:not(.horizontal) > .MenuItems > * {
+  padding-top: 0.4em;
 }
-#header menu .MenuItems[disbled] menu {
-  display: none;
+#header menu:not(.horizontal) > .MenuItems > *:first-child {
+  padding-top: 0;
+}
+#header menu:not(.horizontal) > .MenuItems > menu {
+  display: flex;
+  flex-direction: column;
+}
+#header menu:not(.horizontal) > .MenuItems > menu > .MenuTitle:after {
+  padding: 0 0.4em;
+  content: '\203A';
+}
+#header menu:not(.horizontal) > .MenuItems > menu.open > .MenuTitle:after {
+  transform: rotate(90deg);
+}
+#header menu:not(.horizontal) > .MenuItems > menu > .MenuItems {
+  position: static;
+  padding-top: 0.4em;
+}
+#header menu:not(.horizontal) > .MenuItems > menu > .MenuItems > * {
+  padding-left: 0.4em;
+  border-left: 2px solid #9999f7;
 }
 #header menu.open:not(.horizontal) > .MenuItems {
   position: absolute;
-  top: 1em;
+  top: 1.6em;
   background-color: #fff;
-  padding: 0.4em;
-  margin: 0 -0.4em;
-  box-shadow: 0 12px 5px rgba(0,0,0,0.2);
+  padding: 0.6em;
+  margin: 0 -0.6em;
+  box-shadow: 0 3px 3px rgba(0,0,0,0.2);
+  min-width: 100%;
+  padding-top: 0;
 }
 #header menu.horizontal {
   display: flex;
