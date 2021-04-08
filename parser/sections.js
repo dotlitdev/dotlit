@@ -176,8 +176,8 @@ export const sections = (...args) => (tree) => {
       const children = parent.children
       
       for (let i = index + 1; i < children.length; i++) {
-        if (!children[i]) {
-          console.log('Skipping removed')
+        if (!children[i] || children[i].processed) {
+          console.log('Skipping removed', children[i])
           break
         }
         const nextNode = children[i]
@@ -188,7 +188,8 @@ export const sections = (...args) => (tree) => {
         }
         console.log(`[Sections II] child index: ${i}, type: ${nextNode.type} depth: ${nextNode.depth} id: ${nextNode.data && (nextNode.data.id || nextNode.data.name)}`)
         section.children.push(nextNode)
-        parent.children[i].processed = true
+        if (nextNode.position) section.position.end = nextNode.position.end
+        delete parent.children[i]
       }
       headings++
       node = section 
