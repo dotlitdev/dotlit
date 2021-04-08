@@ -4,24 +4,13 @@
         {
             "type": "section",
             "data": {
-                "id": "unist-util-position-to-node",
+                "name": "unist-util-position-to-node",
                 "hName": "section",
                 "hProperties": {
-                    "name": "unist-util-position-to-node"
+                    "depth": 1
                 }
             },
-            "position": {
-                "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                },
-                "end": {
-                    "line": 71,
-                    "column": 4,
-                    "offset": 1708
-                }
-            },
+            "depth": 1,
             "children": [
                 {
                     "type": "cell",
@@ -82,7 +71,8 @@
                                     "id": "unist-util-position-to-node"
                                 },
                                 "id": "unist-util-position-to-node"
-                            }
+                            },
+                            "processed": true
                         },
                         {
                             "type": "paragraph",
@@ -252,24 +242,13 @@
                 {
                     "type": "section",
                     "data": {
-                        "id": "to-do",
+                        "name": "to-do",
                         "hName": "section",
                         "hProperties": {
-                            "name": "to-do"
+                            "depth": 2
                         }
                     },
-                    "position": {
-                        "start": {
-                            "line": 5,
-                            "column": 1,
-                            "offset": 139
-                        },
-                        "end": {
-                            "line": 71,
-                            "column": 4,
-                            "offset": 1708
-                        }
-                    },
+                    "depth": 2,
                     "children": [
                         {
                             "type": "cell",
@@ -330,7 +309,8 @@
                                             "id": "to-do"
                                         },
                                         "id": "to-do"
-                                    }
+                                    },
+                                    "processed": true
                                 },
                                 {
                                     "type": "list",
@@ -581,16 +561,88 @@
                                     }
                                 }
                             ]
+                        }
+                    ],
+                    "position": {
+                        "start": {
+                            "line": 5,
+                            "column": 1,
+                            "offset": 139
                         },
+                        "end": {
+                            "line": 5,
+                            "column": 9,
+                            "offset": 147
+                        }
+                    }
+                }
+            ],
+            "position": {
+                "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                },
+                "end": {
+                    "line": 1,
+                    "column": 30,
+                    "offset": 29
+                }
+            }
+        },
+        {
+            "type": "section",
+            "data": {
+                "name": "source",
+                "hName": "section",
+                "hProperties": {
+                    "depth": 2
+                }
+            },
+            "depth": 2,
+            "children": [
+                {
+                    "type": "cell",
+                    "position": {
+                        "start": {
+                            "line": 12,
+                            "column": 1,
+                            "offset": 288
+                        },
+                        "end": {
+                            "line": 12,
+                            "column": 10,
+                            "offset": 297
+                        }
+                    },
+                    "data": {
+                        "hName": "cell",
+                        "hProperties": {
+                            "class": "cell"
+                        }
+                    },
+                    "children": [
                         {
-                            "type": "section",
-                            "data": {
-                                "id": "source",
-                                "hName": "section",
-                                "hProperties": {
-                                    "name": "source"
+                            "type": "heading",
+                            "depth": 2,
+                            "children": [
+                                {
+                                    "type": "text",
+                                    "value": "Source",
+                                    "position": {
+                                        "start": {
+                                            "line": 12,
+                                            "column": 4,
+                                            "offset": 291
+                                        },
+                                        "end": {
+                                            "line": 12,
+                                            "column": 10,
+                                            "offset": 297
+                                        }
+                                    }
                                 }
-                            },
+                            ],
                             "position": {
                                 "start": {
                                     "line": 12,
@@ -598,144 +650,134 @@
                                     "offset": 288
                                 },
                                 "end": {
-                                    "line": 71,
+                                    "line": 12,
+                                    "column": 10,
+                                    "offset": 297
+                                }
+                            },
+                            "data": {
+                                "hProperties": {
+                                    "id": "source"
+                                },
+                                "id": "source"
+                            },
+                            "processed": true
+                        }
+                    ]
+                },
+                {
+                    "type": "cell",
+                    "position": {
+                        "start": {
+                            "line": 14,
+                            "column": 1,
+                            "offset": 299
+                        },
+                        "end": {
+                            "line": 41,
+                            "column": 4,
+                            "offset": 1264
+                        }
+                    },
+                    "data": {
+                        "hName": "cell",
+                        "hProperties": {
+                            "class": "cell"
+                        }
+                    },
+                    "children": [
+                        {
+                            "type": "code",
+                            "lang": "js",
+                            "meta": "./utils/unist-util-select-position.js",
+                            "value": "import filter from 'unist-util-filter'\nimport {selectAll as select} from 'unist-util-select'\nimport { getConsoleForNamespace } from './console'\n\nconst console = getConsoleForNamespace('util')\n\n// written from client\nexport const atPos = pos => (node) => {\n  const pos2 = node.position\n  const startInside = (pos2.start.line >= pos.start.line\n    && pos2.start.line <= pos.end.line)\n  const endInside = (pos2.end.line >= pos.start.line\n    && pos2.end.line <= pos.end.line)\n  const wraps = pos2.start.line <= pos.start.line \n    && pos2.end.line >= pos.end.line\n\n  const any = wraps || startInside || endInside \n  console.log(\"atPos: \" + node.type, any ,pos2.start.line, pos2.end.line, wraps, startInside, endInside, pos.start.line, pos.end.line)\n  return any\n}\n\nexport const selectAll = (type, pos, tree) => {\n  const filteredTree = filter(tree, atPos(pos))\n  const nodes = select(type, filteredTree)\n  return nodes\n}",
+                            "position": {
+                                "start": {
+                                    "line": 14,
+                                    "column": 1,
+                                    "offset": 299
+                                },
+                                "end": {
+                                    "line": 41,
                                     "column": 4,
-                                    "offset": 1708
+                                    "offset": 1264
+                                }
+                            },
+                            "data": {
+                                "meta": {
+                                    "lang": "js",
+                                    "filename": "./utils/unist-util-select-position.js",
+                                    "isOutput": false,
+                                    "hasOutput": false,
+                                    "hasSource": false
+                                },
+                                "hProperties": {
+                                    "className": "",
+                                    "meta": {
+                                        "lang": "js",
+                                        "filename": "./utils/unist-util-select-position.js",
+                                        "isOutput": false,
+                                        "hasOutput": false,
+                                        "hasSource": false
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "section",
+                    "data": {
+                        "name": "misc",
+                        "hName": "section",
+                        "hProperties": {
+                            "depth": 3
+                        }
+                    },
+                    "depth": 3,
+                    "children": [
+                        {
+                            "type": "cell",
+                            "position": {
+                                "start": {
+                                    "line": 44,
+                                    "column": 1,
+                                    "offset": 1267
+                                },
+                                "end": {
+                                    "line": 46,
+                                    "column": 35,
+                                    "offset": 1311
+                                }
+                            },
+                            "data": {
+                                "hName": "cell",
+                                "hProperties": {
+                                    "class": "cell"
                                 }
                             },
                             "children": [
                                 {
-                                    "type": "cell",
-                                    "position": {
-                                        "start": {
-                                            "line": 12,
-                                            "column": 1,
-                                            "offset": 288
-                                        },
-                                        "end": {
-                                            "line": 12,
-                                            "column": 10,
-                                            "offset": 297
-                                        }
-                                    },
-                                    "data": {
-                                        "hName": "cell",
-                                        "hProperties": {
-                                            "class": "cell"
-                                        }
-                                    },
+                                    "type": "heading",
+                                    "depth": 3,
                                     "children": [
                                         {
-                                            "type": "heading",
-                                            "depth": 2,
-                                            "children": [
-                                                {
-                                                    "type": "text",
-                                                    "value": "Source",
-                                                    "position": {
-                                                        "start": {
-                                                            "line": 12,
-                                                            "column": 4,
-                                                            "offset": 291
-                                                        },
-                                                        "end": {
-                                                            "line": 12,
-                                                            "column": 10,
-                                                            "offset": 297
-                                                        }
-                                                    }
-                                                }
-                                            ],
+                                            "type": "text",
+                                            "value": "Misc",
                                             "position": {
                                                 "start": {
-                                                    "line": 12,
-                                                    "column": 1,
-                                                    "offset": 288
+                                                    "line": 44,
+                                                    "column": 5,
+                                                    "offset": 1271
                                                 },
                                                 "end": {
-                                                    "line": 12,
-                                                    "column": 10,
-                                                    "offset": 297
-                                                }
-                                            },
-                                            "data": {
-                                                "hProperties": {
-                                                    "id": "source"
-                                                },
-                                                "id": "source"
-                                            }
-                                        }
-                                    ]
-                                },
-                                {
-                                    "type": "cell",
-                                    "position": {
-                                        "start": {
-                                            "line": 14,
-                                            "column": 1,
-                                            "offset": 299
-                                        },
-                                        "end": {
-                                            "line": 41,
-                                            "column": 4,
-                                            "offset": 1264
-                                        }
-                                    },
-                                    "data": {
-                                        "hName": "cell",
-                                        "hProperties": {
-                                            "class": "cell"
-                                        }
-                                    },
-                                    "children": [
-                                        {
-                                            "type": "code",
-                                            "lang": "js",
-                                            "meta": "./utils/unist-util-select-position.js",
-                                            "value": "import filter from 'unist-util-filter'\nimport {selectAll as select} from 'unist-util-select'\nimport { getConsoleForNamespace } from './console'\n\nconst console = getConsoleForNamespace('util')\n\n// written from client\nexport const atPos = pos => (node) => {\n  const pos2 = node.position\n  const startInside = (pos2.start.line >= pos.start.line\n    && pos2.start.line <= pos.end.line)\n  const endInside = (pos2.end.line >= pos.start.line\n    && pos2.end.line <= pos.end.line)\n  const wraps = pos2.start.line <= pos.start.line \n    && pos2.end.line >= pos.end.line\n\n  const any = wraps || startInside || endInside \n  console.log(\"atPos: \" + node.type, any ,pos2.start.line, pos2.end.line, wraps, startInside, endInside, pos.start.line, pos.end.line)\n  return any\n}\n\nexport const selectAll = (type, pos, tree) => {\n  const filteredTree = filter(tree, atPos(pos))\n  const nodes = select(type, filteredTree)\n  return nodes\n}",
-                                            "position": {
-                                                "start": {
-                                                    "line": 14,
-                                                    "column": 1,
-                                                    "offset": 299
-                                                },
-                                                "end": {
-                                                    "line": 41,
-                                                    "column": 4,
-                                                    "offset": 1264
-                                                }
-                                            },
-                                            "data": {
-                                                "meta": {
-                                                    "lang": "js",
-                                                    "filename": "./utils/unist-util-select-position.js",
-                                                    "isOutput": false,
-                                                    "hasOutput": false,
-                                                    "hasSource": false
-                                                },
-                                                "hProperties": {
-                                                    "className": "",
-                                                    "meta": {
-                                                        "lang": "js",
-                                                        "filename": "./utils/unist-util-select-position.js",
-                                                        "isOutput": false,
-                                                        "hasOutput": false,
-                                                        "hasSource": false
-                                                    }
+                                                    "line": 44,
+                                                    "column": 9,
+                                                    "offset": 1275
                                                 }
                                             }
                                         }
-                                    ]
-                                },
-                                {
-                                    "type": "section",
-                                    "data": {
-                                        "id": "misc",
-                                        "hName": "section",
-                                        "hProperties": {
-                                            "name": "misc"
-                                        }
-                                    },
+                                    ],
                                     "position": {
                                         "start": {
                                             "line": 44,
@@ -743,175 +785,141 @@
                                             "offset": 1267
                                         },
                                         "end": {
-                                            "line": 71,
-                                            "column": 4,
-                                            "offset": 1708
+                                            "line": 46,
+                                            "column": 35,
+                                            "offset": 1311
                                         }
                                     },
+                                    "data": {
+                                        "hProperties": {
+                                            "id": "misc"
+                                        },
+                                        "id": "misc"
+                                    },
+                                    "processed": true
+                                },
+                                {
+                                    "type": "paragraph",
                                     "children": [
                                         {
-                                            "type": "cell",
+                                            "type": "text",
+                                            "value": "Initial pass saved for reflection:",
                                             "position": {
                                                 "start": {
-                                                    "line": 44,
+                                                    "line": 46,
                                                     "column": 1,
-                                                    "offset": 1267
+                                                    "offset": 1277
                                                 },
                                                 "end": {
                                                     "line": 46,
                                                     "column": 35,
                                                     "offset": 1311
                                                 }
-                                            },
-                                            "data": {
-                                                "hName": "cell",
-                                                "hProperties": {
-                                                    "class": "cell"
-                                                }
-                                            },
-                                            "children": [
-                                                {
-                                                    "type": "heading",
-                                                    "depth": 3,
-                                                    "children": [
-                                                        {
-                                                            "type": "text",
-                                                            "value": "Misc",
-                                                            "position": {
-                                                                "start": {
-                                                                    "line": 44,
-                                                                    "column": 5,
-                                                                    "offset": 1271
-                                                                },
-                                                                "end": {
-                                                                    "line": 44,
-                                                                    "column": 9,
-                                                                    "offset": 1275
-                                                                }
-                                                            }
-                                                        }
-                                                    ],
-                                                    "position": {
-                                                        "start": {
-                                                            "line": 44,
-                                                            "column": 1,
-                                                            "offset": 1267
-                                                        },
-                                                        "end": {
-                                                            "line": 46,
-                                                            "column": 35,
-                                                            "offset": 1311
-                                                        }
-                                                    },
-                                                    "data": {
-                                                        "hProperties": {
-                                                            "id": "misc"
-                                                        },
-                                                        "id": "misc"
-                                                    }
-                                                },
-                                                {
-                                                    "type": "paragraph",
-                                                    "children": [
-                                                        {
-                                                            "type": "text",
-                                                            "value": "Initial pass saved for reflection:",
-                                                            "position": {
-                                                                "start": {
-                                                                    "line": 46,
-                                                                    "column": 1,
-                                                                    "offset": 1277
-                                                                },
-                                                                "end": {
-                                                                    "line": 46,
-                                                                    "column": 35,
-                                                                    "offset": 1311
-                                                                }
-                                                            }
-                                                        }
-                                                    ],
-                                                    "position": {
-                                                        "start": {
-                                                            "line": 46,
-                                                            "column": 1,
-                                                            "offset": 1277
-                                                        },
-                                                        "end": {
-                                                            "line": 46,
-                                                            "column": 35,
-                                                            "offset": 1311
-                                                        }
-                                                    }
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "type": "cell",
-                                            "position": {
-                                                "start": {
-                                                    "line": 48,
-                                                    "column": 1,
-                                                    "offset": 1313
-                                                },
-                                                "end": {
-                                                    "line": 71,
-                                                    "column": 4,
-                                                    "offset": 1708
-                                                }
-                                            },
-                                            "data": {
-                                                "hName": "cell",
-                                                "hProperties": {
-                                                    "class": "cell"
-                                                }
-                                            },
-                                            "children": [
-                                                {
-                                                    "type": "code",
-                                                    "lang": "js",
-                                                    "meta": "./utils/unist-util-position-to-node.js",
-                                                    "value": "export const positionToNode = (pos,tree) => {\n\n  const start = pos.start\n    ? pos.start\n    : pos.line && pos.column\n      ? pos\n      : undefined\n\n  const end = pos.end\n    ? pos.end\n    : pos.line && pos.column\n      ? pos\n      : undefined\n\n  if (tree.position.start.line >= end.line) {\n    return undefined\n  }\n\n  if (tree.children) {\n\n  }\n}",
-                                                    "position": {
-                                                        "start": {
-                                                            "line": 48,
-                                                            "column": 1,
-                                                            "offset": 1313
-                                                        },
-                                                        "end": {
-                                                            "line": 71,
-                                                            "column": 4,
-                                                            "offset": 1708
-                                                        }
-                                                    },
-                                                    "data": {
-                                                        "meta": {
-                                                            "lang": "js",
-                                                            "filename": "./utils/unist-util-position-to-node.js",
-                                                            "isOutput": false,
-                                                            "hasOutput": false,
-                                                            "hasSource": false
-                                                        },
-                                                        "hProperties": {
-                                                            "className": "",
-                                                            "meta": {
-                                                                "lang": "js",
-                                                                "filename": "./utils/unist-util-position-to-node.js",
-                                                                "isOutput": false,
-                                                                "hasOutput": false,
-                                                                "hasSource": false
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            ]
+                                            }
                                         }
-                                    ]
+                                    ],
+                                    "position": {
+                                        "start": {
+                                            "line": 46,
+                                            "column": 1,
+                                            "offset": 1277
+                                        },
+                                        "end": {
+                                            "line": 46,
+                                            "column": 35,
+                                            "offset": 1311
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "cell",
+                            "position": {
+                                "start": {
+                                    "line": 48,
+                                    "column": 1,
+                                    "offset": 1313
+                                },
+                                "end": {
+                                    "line": 71,
+                                    "column": 4,
+                                    "offset": 1708
+                                }
+                            },
+                            "data": {
+                                "hName": "cell",
+                                "hProperties": {
+                                    "class": "cell"
+                                }
+                            },
+                            "children": [
+                                {
+                                    "type": "code",
+                                    "lang": "js",
+                                    "meta": "./utils/unist-util-position-to-node.js",
+                                    "value": "export const positionToNode = (pos,tree) => {\n\n  const start = pos.start\n    ? pos.start\n    : pos.line && pos.column\n      ? pos\n      : undefined\n\n  const end = pos.end\n    ? pos.end\n    : pos.line && pos.column\n      ? pos\n      : undefined\n\n  if (tree.position.start.line >= end.line) {\n    return undefined\n  }\n\n  if (tree.children) {\n\n  }\n}",
+                                    "position": {
+                                        "start": {
+                                            "line": 48,
+                                            "column": 1,
+                                            "offset": 1313
+                                        },
+                                        "end": {
+                                            "line": 71,
+                                            "column": 4,
+                                            "offset": 1708
+                                        }
+                                    },
+                                    "data": {
+                                        "meta": {
+                                            "lang": "js",
+                                            "filename": "./utils/unist-util-position-to-node.js",
+                                            "isOutput": false,
+                                            "hasOutput": false,
+                                            "hasSource": false
+                                        },
+                                        "hProperties": {
+                                            "className": "",
+                                            "meta": {
+                                                "lang": "js",
+                                                "filename": "./utils/unist-util-position-to-node.js",
+                                                "isOutput": false,
+                                                "hasOutput": false,
+                                                "hasSource": false
+                                            }
+                                        }
+                                    }
                                 }
                             ]
                         }
-                    ]
+                    ],
+                    "position": {
+                        "start": {
+                            "line": 44,
+                            "column": 1,
+                            "offset": 1267
+                        },
+                        "end": {
+                            "line": 44,
+                            "column": 9,
+                            "offset": 1275
+                        }
+                    }
                 }
-            ]
+            ],
+            "position": {
+                "start": {
+                    "line": 12,
+                    "column": 1,
+                    "offset": 288
+                },
+                "end": {
+                    "line": 12,
+                    "column": 10,
+                    "offset": 297
+                }
+            }
         }
     ],
     "position": {
