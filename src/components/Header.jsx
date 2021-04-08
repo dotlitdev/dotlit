@@ -65,6 +65,7 @@ const Menu = props => {
     props.horizontal ? 'horizontal' : null,
     open ? 'open' : null,
     props.children ? 'has-children' : null,
+    props.right ? 'right' : '',
   ].filter(Identity).join(' ')
 
   
@@ -152,7 +153,7 @@ export const Header = props => {
           <span onClick={showInspector}>Show Inspector</span>
       </Menu>
     </Menu>
-    <Menu title={<LED color="#33cc33" title="Status"/>}>
+    <Menu right title={<LED color="#33cc33" title="Status"/>}>
       { props.ageMessage && 
         <span disabled>{props.ageMessage}</span> }
       { cellSelected && 
