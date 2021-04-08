@@ -199,7 +199,7 @@ export const sections = (...args) => (tree) => {
     }
   }, true)
 
-  tree.children = tree.children.filter(n => !node.processed)
+  tree.children = tree.children.filter(Identity)
 
   console.log("Headings: ", headings)
 }
