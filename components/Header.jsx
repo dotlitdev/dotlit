@@ -25,13 +25,14 @@ const showInspector = ev => {
   else alert("🚨 Eruda console not available")
 }
 
-const LED = ({color,status, size = "0.6em"}) => {
+const LED = ({color,status, size = "0.6em", margin = "0.4em"}) => {
 
   return <span title={status} style={{
     display: "inline-block",
     width: size,
     height: size,
     borderRadius: size,
+    marginTop: margin,
     backgroundColor: color,
   }}></span>
 }
