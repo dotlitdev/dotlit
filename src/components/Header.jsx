@@ -21,6 +21,8 @@ const setDebug = ev => {
 
 const showInspector = ev => {
   console.log('Show mobile inspector')
+  if (typeof eruda !== 'undefined' && eruda) eruda.show()
+  else alert("🚨 Eruda console not available")
 }
 
 const Menu = props => {
@@ -132,7 +134,7 @@ export const Header = props => {
     <Menu title="Help">
       <span disabled>About</span>
       <span disabled>Documentation</span>
-      <span disabled={!!ghToken} onClick={setGhToken}>GitHub Token</span>
+      <span disabled={!ghToken} onClick={setGhToken}>GitHub Token</span>
       <Menu title="Debug">
           <span onClick={setDebug}>Set Mask</span>
           <span onClick={showInspector}>Show Inspector</span>
