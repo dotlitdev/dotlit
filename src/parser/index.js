@@ -10,21 +10,20 @@ import gfm from 'remark-gfm'
 
 import { wikiLinkPlugin } from 'remark-wiki-link'
 
-import {groupIntoSections, ungroupSections} from './sections'
+import {sections, groupIntoSections, ungroupSections} from './sections'
 import litcodeblocks from './codeblocks'
 import frontmatter from './frontmatter'
 
 import select from 'unist-util-select'
 
-import {resolveLinks, wikiLinkOptions, nodeMappings, nameToPermalinks} from './links'
+import {resolveLinks, wikiLinkOptions} from './links'
 
-import {log} from '../utils/console'
+import { getConsoleForNamespace} from '../utils/console'
 
-// const { stringify } = require('querystring')
+const console = getConsoleForNamespace('parser')
 
-export const processor = (options={files: []}) => {
+const baseProcessor = (options = {}) => {
     return unified()
-
     // remark
     .use(markdown, {})
     .use(gfm)
@@ -33,13 +32,15 @@ export const processor = (options={files: []}) => {
     .use(slug)
     .use(toc, {})
     .use(headingIds)
-    // .use(headings)
-   
     .use(footnotes, {inlineNotes: true})
-    
+}
+
+export const processor = (options={files: []}) => {
+    console.log('[Parser]', options)
+    return baseProcessor(options)
     // remark-litmd (rehype compatable)
     .use(resolveLinks())
-    .use(groupIntoSections())
+    .use(sections, {})
     .use(litcodeblocks)
 }   
 
@@ -47,12 +48,10 @@ export async function parse(vfile, options) {
     const p = processor(options)
     const parsed = await p.parse( vfile )
     const ast = await p.run(parsed)
-    vfile.data.ast = ast
-    
-    vfile.data.frontmatter = select.selectAll('html',ast).reduce( (memo,el) => Object.assign(memo,el.data || {}),{})
-
-
-    return vfile
+    if (!parsed.data) parsed.data = {}
+    parsed.data.ast = ast
+    // parsed.data.frontmatter = select.selectAll('html',ast).reduce( (memo,el) => Object.assign(memo,el.data || {}),{})
+    return parsed
 }
 
 

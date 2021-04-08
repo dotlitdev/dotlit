@@ -2,6 +2,7 @@ import heading from "mdast-util-heading-range";
 import visit from "unist-util-visit";
 import flatMap from "unist-util-flatmap";
 import { getConsoleForNamespace } from '../utils/console'
+import { Identity } from "../utils/functions";
 
 const console = getConsoleForNamespace('sections')
 
@@ -127,29 +128,96 @@ const wrapSection = (options) => (start, nodes, end) => {
 };
 
 const transform = (options) => (node, index, parent) => {
-  console.log("[Sections] Visiting", node.data.id);
+  console.log("[Sections] Visiting", node.data.id)
   return heading(
     parent,
     (_, node2) => node.data.id === node2.data.id,
     wrapSection(options)
-  );
-};
+  )
+}
 
 export const groupIntoSections = (options = {}) => (...args) => (tree) => {
   console.log("[Sections] Init");
   visit(tree, "heading", transform(options), true);
-};
+}
+
+export const sections = (...args) => (tree) => {
+  console.log('[Sections II] Init.', args, tree.type, tree.children.length)
+  let headings = 0
+  const newSection = (children) => {
+    const first = children[0]
+    const last = children[ children.length - 1]
+    const depth = first.depth || 0
+    first.processed = true
+    return {
+      type: 'section',
+      data: {
+        name: first.data.id,
+        hName: 'section',
+        hProperties: {
+          depth: depth
+        }
+      },
+      depth: depth,
+      children: children,
+      position: {
+        start: first.position.start,
+        end: last.position.end
+      }
+    }
+  }
+
+  visit(tree, 'heading', (node, index, parent) => {
+    if (node.processed) {
+      console.log(`[Sections II] Ignoring already processed node ${node.data.id}`)
+    } else if (parent.type === 'root') {
+      console.log(`[Sections II] heading "${node.data.id}" ${headings}, depth: ${node.depth}`)
+      const section = parent.children[index] = newSection([node])
+      const children = parent.children
+      
+      for (let i = index + 1; i < children.length; i++) {
+        if (!children[i]) {
+          console.log('Skipping removed')
+          break
+        }
+        const nextNode = children[i]
+        if ((nextNode.type === 'heading' || nextNode.type === 'section') && nextNode.depth <= node.depth) {
+          console.log(`[Sections II] ended "${node.data.id}" due to "${nextNode.data.id || nextNode.data.name}"`, nextNode.type, nextNode.depth)
+          console.log(`[Sections II] contains: "${node.data.id}"`, section.children.map( n => n.type).join(','))
+          break;
+        }
+        console.log(`[Sections II] child index: ${i}, type: ${nextNode.type} depth: ${nextNode.depth} id: ${nextNode.data && (nextNode.data.id || nextNode.data.name)}`)
+        section.children.push(nextNode)
+        delete children[i]
+      }
+      headings++
+      node = section 
+      node.children = cellsFromNodes(node.children)
+    } else {
+      console.log('[Sections II] WARN: Header parent not root', node.data.id)
+    }
+  }, true)
+
+  tree.children = tree.children.filter(Identity)
+
+  console.log("Headings: ", headings)
+}
+
+
+const cells = (...args) => (tree) => {
+  visit( tree, cells )
+}
+
 
 export const ungroupSections = (options = {}) => (...args) => (tree) => {
-  console.log("[UnSection] Init", options);
+  console.log("[UnSection] Init", options)
   tree = flatMap(tree, (node) => {
     if (node.type === "cell") {
-      return node.children;
+      return node.children
     } else if (node.type === "section") {
-      return node.children;
+      return node.children
     } else {
-      return [node];
+      return [node]
     }
-  });
-  // return tree
-};
+  })
+}

@@ -1,14 +1,12 @@
 import fs from 'fs'
 import program from 'commander'
+import util from 'util'
 import vfile from 'to-vfile'
 import pkg from '../../package.json'
 
 import {NoOp, Identity, AsInt} from '../utils/functions'
 
-import {parse, stringify} from '../parser/index'
-import {renderToVfileDoc} from '../renderer/index'
-import {log, time, timeEnd, info, warn, dir, level, error} from '../utils/console'
-
+import {parse} from '../parser'
 import {generate} from './generate'
 
 function betterDescription({usage, description, examples}) {
@@ -60,6 +58,30 @@ program
         console.log("[cli] cmd: generate", path, cmd.base, cmd.cwd, cmd.debug, cmd.output)
         process.env.DEBUG = 'All'
         generate(cmd)
+    })
+
+program
+    .command('parse <path>')
+    .description('Parse a .lit file')
+    .usage(betterDescription({
+        usage: "[options] <path>",
+        examples: ["lit parse ./my-notes/example.lit "]
+    }))
+    .option('-o, --output <path>', 'Output location')
+    .option('-f, --format <ext>', 'Output format')
+    .action(async (path, cmd)=>{
+        console.time('parse')
+        cmd.cwd = process.cwd()
+        cmd.path = path
+        cmd.debug = program.debug
+        const file = await vfile.read(cmd.path)
+        console.log("Contents:", file.contents)
+        console.log("[cli] cmd: parse", path, cmd.base, cmd.cwd, cmd.debug, cmd.output, cmd.format)
+        process.env.DEBUG = 'All'
+        const resp = await parse(file, cmd)
+        console.log("DONE: ", util.inspect(resp, false, 3, true))
+        console.timeEnd('parse')
+
     })
 
 program.parse(process.argv)    
