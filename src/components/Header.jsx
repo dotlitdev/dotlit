@@ -140,6 +140,13 @@ export const Header = props => {
           <span onClick={showInspector}>Show Inspector</span>
       </Menu>
     </Menu>
+    <Menu title="Status">
+      { props.ageMessage && 
+        <span disabled>{props.ageMessage}</span> }
+      { cellSelected && 
+        <span disabled>{`Lines ${ctx.selectedCell.start.line}-${ctx.selectedCell.end.line}`}</span> }
+
+    </Menu>
   </Menu>
   }}
 </SelectionContext.Consumer>
