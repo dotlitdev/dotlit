@@ -189,7 +189,7 @@ export const sections = (...args) => (tree) => {
         console.log(`[Sections II] child index: ${i}, type: ${nextNode.type} depth: ${nextNode.depth} id: ${nextNode.data && (nextNode.data.id || nextNode.data.name)}`)
         section.children.push(nextNode)
         section.position.end = nextNode.position.end
-        parent.children[i].processed = true
+        delete parent.children[i]
       }
       headings++
       node = section 
