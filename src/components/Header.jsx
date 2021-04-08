@@ -25,12 +25,13 @@ const showInspector = ev => {
   else alert("🚨 Eruda console not available")
 }
 
-const LED = ({color,status}) => {
+const LED = ({color,status, size = "0.6em"}) => {
+
   return <span title={status} style={{
     display: "inline-block",
-    width: "1em",
-    height: "1em",
-    borderRadius: "1em",
+    width: size,
+    height: size,
+    borderRadius: size,
     backgroundColor: color,
   }}></span>
 }
@@ -150,7 +151,7 @@ export const Header = props => {
           <span onClick={showInspector}>Show Inspector</span>
       </Menu>
     </Menu>
-    <Menu title={<LED color="green" title="Status"/>}>
+    <Menu title={<LED color="#33cc33" title="Status"/>}>
       { props.ageMessage && 
         <span disabled>{props.ageMessage}</span> }
       { cellSelected && 
