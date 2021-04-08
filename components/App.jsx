@@ -73,8 +73,8 @@ const App = ({root, file, fs, result}) => {
     console.log(`<App/> render "${file.path}" (selected: ${selectedCell} `)
 
     return <SelectionContext.Provider value={state}>
-        <div id="header"><Header root={root} ageMessage={ageMessage}/></div>
-        <div id="content">{srcAndRes.res}</div>
+        <div suppressHydrationWarning={true} id="header"><Header root={root} ageMessage={ageMessage}/></div>
+        <div suppressHydrationWarning={true} id="content">{srcAndRes.res}</div>
     </SelectionContext.Provider>
 }
 
