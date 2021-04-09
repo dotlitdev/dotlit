@@ -1,0 +1,174 @@
+<html data-reactroot=""><head><title>styling_and_themes</title><meta name="litsrc" value="meta/styling_and_themes.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="app"><div id="header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span style="display:inline-block;width:0.6em;height:0.6em;border-radius:0.6em;margin-top:0.4em;background-color:#cccccc"></span></li></menu></li></menu></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="193:4-3873"><cell startpos="1:1-0" endpos="1:22-21"><h1 id="-styling--themes">🎨 Styling &amp; Themes</h1></cell><cell startpos="3:1-23" endpos="53:4-785" class="code"><codecell><span class="meta"><span class="lang">styl</span><span class="source">&lt; ../client/style.styl</span></span><pre><code class="styl">body
+    max-width 1024px
+    margin 0 auto
+
+#header
+    top: 0
+    position: sticky
+    background-color: white
+    z-index: 99999
+    border-bottom: 1px solid #efefef;
+
+    &amp; &gt; header
+        display: flex
+        padding: 0.6em
+        gap: 0.6em
+
+        &amp; &gt; *
+            margin-right: 0.6em
+        
+
+section, cell, codecell
+    display: block
+
+#backlinks
+    color: tint(black, 60%)
+
+a[wikilink=&quot;true&quot;]
+    &amp;:before,
+    &amp;:after
+        color: grey
+    &amp;:before 
+        content: &#x27;[&#x27;
+    &amp;:after 
+        content: &#x27;]&#x27;
+
+@import &quot;styles/cell&quot;
+
+@import &quot;styles/codecell&quot;
+
+cell, codecell
+    position: relative
+    @import &quot;./styles/cellmenu&quot;
+
+codecell 
+  @import &quot;styles/viewers&quot;
+
+#backlinks,
+.footnotes
+    padding: 0 1em;
+</code></pre></codecell></cell><cell startpos="55:1-787" endpos="80:4-1302" class="code"><codecell><span class="meta"><span class="lang">styl</span><span class="filename">../client/styles/cell.styl</span></span><pre><code class="styl">cell
+    cell-border-width = 1px 3px
+    cell-border-color = #9999f7
+
+    padding: 0.6em
+    margin: 0
+    border-color: transparent
+    border-style: solid
+    border-width: cell-border-width
+        
+    &amp; &gt; *:first-child
+        margin-top 0
+    
+    &amp;.selected
+        border-color: cell-border-color
+    
+    &amp;.editing
+        padding: 0
+
+cell:not(.code) code
+    border: 1px solid #00000012;
+    padding: 0 0.2em;
+    background-color: #00000005;
+    border-radius: 2px;
+</code></pre></codecell></cell><cell startpos="82:1-1304" endpos="131:4-2499" class="code"><codecell><span class="meta"><span class="lang">styl</span><span class="filename">../client/styles/codecell.styl</span></span><pre><code class="styl">codecell
+    code-cell-spacing = 0.4em
+
+    &amp; &gt; .meta
+        font-family monospace
+
+        .lang
+            font-weight bold
+            margin-right code-cell-spacing
+        
+        .repl
+            font-style: italic
+            color: tint(black, 60%)
+            margin-right code-cell-spacing
+
+        .filename
+            color: tint(black, 60%)
+            margin-right code-cell-spacing
+        
+        ul, ol
+            display inline-flex
+            margin 0
+            padding 0
+            list-style none
+            float right
+            
+            li 
+                padding 0 (code-cell-spacing / 2)
+                margin 0 (code-cell-spacing / 2)
+                border-radius 2px
+                background-color: tint(black, 90%)
+        .tag
+            &amp;:before
+                content &#x27;#&#x27;
+        .directive
+            &amp;:before
+                content &#x27;!&#x27;
+    &amp; pre
+        margin: 0
+        padding: code-cell-spacing
+        min-height: 1em
+        background-color: darkslategrey
+        color: white
+        white-space: pre-wrap
+    
+    &amp; &gt; output &gt; pre
+        background-color: white
+        color: black
+</code></pre></codecell></cell><cell startpos="133:1-2501" endpos="175:4-3638" class="code"><codecell><span class="meta"><span class="lang">styl</span><span class="filename">../client/styles/cellmenu.styl</span></span><pre><code class="styl">    &amp; &gt; menu
+        margin: 0;
+        padding: 0;
+        z-index: 99999;
+        position: absolute;
+        top: 0.5em;
+        left: 0;
+        right: 0;
+        bottom: 0.5em;
+        display: flex;
+        place-items: flex-end;
+        pointer-events: none;
+
+        .menu__items
+            list-style: none
+            margin: 0
+            padding: 0;
+            pointer-events: none;
+            position: sticky;
+            bottom: 50%;
+            display: flex;
+            justify-content: flex-end;
+            width: 100%;
+            flex-direction: row;
+            gap: 0.5em;
+            padding-right: 0.5em;
+
+            li 
+                background-color: #9999f7;
+                width: 2em;
+                height: 2em;
+                border-radius: 1em;
+                overflow: hidden;
+                margin: 0 .25em;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                pointer-events: all;
+                color: white;
+                line-height: 1;
+</code></pre></codecell></cell><section depth="3" class="" startpos="177:1-3640" endpos="193:4-3873"><cell startpos="177:1-3640" endpos="179:43-3695"><h3 id="viewers">Viewers</h3><p><a href="../scratch_pad.html#viewers">see examples</a></p></cell><cell startpos="181:1-3697" endpos="193:4-3873" class="code"><codecell><span class="meta"><span class="lang">styl</span><span class="filename">../client/styles/viewers.styl</span></span><pre><code class="styl">
+&amp; &gt; iframe 
+  display: block
+  width: 100%
+
+&amp; &gt; table
+  border-collapse: collapse
+  border: 1px solid #ccc
+  
+  td
+    padding: 0.4em
+</code></pre></codecell></cell></section></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>

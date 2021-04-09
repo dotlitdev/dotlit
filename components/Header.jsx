@@ -104,11 +104,13 @@ export const Header = props => {
     localStorage.getItem('ghToken', prompt("GitHub personal access token"))
   }
 
-  const light = typeof window === 'undefined'
+  const light = typeof localStorage === 'undefined'
     ? <LED color="#cccccc" title="Status"/>
     : props.times && (props.times.local && !props.times.remote )
       ? <LED color="orange" title="Status"/>
-      : <LED color="#33cc33" title="Status"/>
+      : props.times && !props.times.local
+        ? <LED color="red" title="Status"/>
+        : <LED color="#33cc33" title="Status"/>
 
   return <SelectionContext.Consumer>{(ctx) => {
 
@@ -162,11 +164,11 @@ export const Header = props => {
     <Menu right title={light}>
       {props.file && 
         <span disabled>{`File: ${props.file}`}</span>}
-    { props.times.local && 
+    { props.times && props.times.local && 
         <span disabled>{`Local last updated ${props.times.local}`}</span> }
-    { props.times.remote && 
+    { props.times && props.times.remote && 
         <span disabled>{`Remote last updated ${props.times.remote}`}</span> }
-      { props.times.ageMessage && 
+      { props.times && props.times.ageMessage && 
         <span disabled>{`Local is ${props.times.ageMessage} than remote.`}</span> }
       { cellSelected && 
         <span disabled>{`Lines ${ctx.selectedCell.start.line}-${ctx.selectedCell.end.line}`}</span> }
