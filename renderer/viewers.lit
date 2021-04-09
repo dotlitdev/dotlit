@@ -9,26 +9,25 @@ export const viewer = (node) => {
 ```html > iframe
 <!DOCTYPE html>
 <html>
-<head>
-<title>Page Title</title>
-</head>
-<body>
-<script>
-    var moduleData = "export function hello() { alert('hello'); };";
-    var b64moduleData = "data:text/javascript;base64," + btoa(moduleData);
+  <head>
+    <title>Test page</title>
+  </head>
+  <body>
+  <script>
+    var moduleData = `export function viewer(node) { return "Bar"; };`;
+    var b64moduleData = `data:text/javascript;base64,${ btoa(moduleData)}`;
+  </script>
 
-</script>
-<script type="module">
+  <script type="module">
 
     async function doimport() {
       const module = await import(b64moduleData);
-      module.hello();
+      module.viewer({value: 'Foo'});
     }
 
     doimport();
 
-</script>
-
-</body>
+  </script>
+  </body>
 </html>
 ```
