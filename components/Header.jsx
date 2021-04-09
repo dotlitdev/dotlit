@@ -104,6 +104,12 @@ export const Header = props => {
     localStorage.getItem('ghToken', prompt("GitHub personal access token"))
   }
 
+  let light = typeof window === 'undefined'
+    ? <LED color="#cccccc" title="Status"/>
+    : times && (times.local && !times.remote )
+      ? <LED color="orange" title="Status"/>
+      : <LED color="#33cc33" title="Status"/>
+
   return <SelectionContext.Consumer>{(ctx) => {
 
     const cellSelected = (ctx.selectedCell && ctx.selectedCell.start) || false
@@ -153,7 +159,7 @@ export const Header = props => {
           <span onClick={showInspector}>Show Inspector</span>
       </Menu>
     </Menu>
-    <Menu right title={<LED color="#33cc33" title="Status"/>}>
+    <Menu right title={light}>
       {props.file && 
         <span disabled>{`File: ${props.file}`}</span>}
     { props.times.local && 
