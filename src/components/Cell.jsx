@@ -48,7 +48,7 @@ const Cell = props => {
     const viewer = getViewer(meta)
     const content = viewer
                        ? viewer({value: codeSource})
-                       props.children
+                       : props.children
 
     console.log("[Cell] code: ", !!isCodeCell) // codeNode, meta, codeSource)
     const save = ctx => args => {
