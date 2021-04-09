@@ -25,16 +25,9 @@ const showInspector = ev => {
   else alert("🚨 Eruda console not available")
 }
 
-const LED = ({color,status, size = "0.6em", margin = "0.4em"}) => {
+const LED = ({color,status}) => {
 
-  return <span title={status} style={{
-    display: "inline-block",
-    width: size,
-    height: size,
-    borderRadius: size,
-    marginTop: margin,
-    backgroundColor: color,
-  }}></span>
+  return <span title={status} className={`led led-${color}`}></span>
 }
 
 const Menu = props => {
@@ -106,14 +99,15 @@ export const Header = (props) => {
   }
 
   const light = (typeof window === 'undefined' || typeof window.localStorage === 'undefined')
-    ? <LED color="#cccccc" title="Status"/>
+    ? <LED color="grey" title="Status"/>
     : (local && !remote)
       ? <LED color="orange" title="Status"/>
       : (remote && !local)
         ? <LED color="blue" title="Status"/>
         : (!remote && !local)
         ? <LED color="red" title="Status"/>
-        : <LED color="#33cc33" title="Status"/>
+        : <LED color="green" title="Status"/>
+
 
   return <SelectionContext.Consumer>{(ctx) => {
 
