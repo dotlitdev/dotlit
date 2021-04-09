@@ -20,9 +20,9 @@ export const Section = (props) => {
 
         return <section
             depth={props.depth}
+            className={classes}
             startpos={`${pos.start.line}:${pos.start.column}-${pos.start.offset}`}
-            endpos={`${pos.end.line}:${pos.end.column}-${pos.end.offset}`}
-            className={classes}>
+            endpos={`${pos.end.line}:${pos.end.column}-${pos.end.offset}`}>
             {props.children}
         </section>
     }
