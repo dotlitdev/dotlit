@@ -64,16 +64,14 @@ const App = ({root, file, fs, result}) => {
         setSrc: setSrcWrapper
     }
 
-    const ageMessage = file 
+    const times = file  
         && file.data 
-        && file.data.times 
-        && file.data.times.ageMessage 
-        && `${file.path} is ${file.data.times.ageMessage} than remote.`
+        && file.data.times
 
     console.log(`<App/> render "${file.path}" (selected: ${selectedCell} `)
 
     return <SelectionContext.Provider value={state}>
-        <div suppressHydrationWarning={true} id="header"><Header root={root} ageMessage={ageMessage}/></div>
+        <div suppressHydrationWarning={true} id="header"><Header root={root} file={file.path} times={times}/></div>
         <div suppressHydrationWarning={true} id="content">{srcAndRes.res}</div>
     </SelectionContext.Provider>
 }

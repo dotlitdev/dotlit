@@ -1,5 +1,5 @@
 export const MsToRelative = (ms, p, f) => {
-    console.log('MsToRelative', ms, p, f)
+    // console.log('MsToRelative', ms, p, f)
     const abs = Math.abs(ms)
     const nowish = abs <= 1000
     if (nowish) return 'now'
@@ -18,7 +18,7 @@ export const MsToRelative = (ms, p, f) => {
 
     let suffix = future ? (f || 'from now') : (p || 'ago')
     let val, unit;
-    console.log({ms, abs, seconds, minutes, hours, days, weeks})
+    // console.log({ms, abs, seconds, minutes, hours, days, weeks})
     if (abs < minute) {
         val = Math.round(seconds)
         unit = 'second'
@@ -42,7 +42,7 @@ export const MsToRelative = (ms, p, f) => {
 }
 
 export const DatesToRelativeDelta = (a, b) => {
-    console.log('DatesToRelativeDelta', a, b)
+    // console.log('DatesToRelativeDelta', a, b)
     const A = new Date(a)
     const B = new Date(b)
     const deltaMs = A.getTime() - B.getTime()
