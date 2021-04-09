@@ -4,6 +4,7 @@ import source from 'unist-util-source'
 import CellMenu from './CellMenu'
 import SelectionContext from './SelectionContext'
 import Editor from './Editor'
+import {getViewer} from '../renderer/Viewers'
 
 import { getConsoleForNamespace } from '../utils/console'
 
@@ -44,6 +45,10 @@ const Cell = props => {
     const codeNode = childIs(isCodeCell, 'code');
     const meta = codeNode ? codeNode.properties.meta : null
     const codeSource = codeNode && codeNode.children[0].value
+    const viewer = getViewer(meta)
+    const content = viewer
+                       ? viewer({value: codeSource})
+                       : props.children
 
     console.log("[Cell] code: ", !!isCodeCell) // codeNode, meta, codeSource)
     const save = ctx => args => {
@@ -65,7 +70,7 @@ const Cell = props => {
                 startpos={posstr(pos.start)}
                 endpos={posstr(pos.end)}
                 className={getClasses(ctx)}>
-                    { editing ? <Editor src={source(pos, ctx.src)} update={setSrc}/> : props.children }
+                    { editing ? <Editor src={(meta && meta.remote && codeSource) || source(pos, ctx.src)} update={setSrc}/> : content }
                     { isSelected(ctx) && <CellMenu editing={editing} toggleEditing={toggleEditing} save={save(ctx)}/>}
             </cell>
         }}
