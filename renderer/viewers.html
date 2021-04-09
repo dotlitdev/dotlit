@@ -1,0 +1,27 @@
+<html data-reactroot=""><head><title>viewers</title><meta name="litsrc" value="renderer/viewers.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="app"><div id="header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="33:4-562"><cell startpos="1:1-0" endpos="1:17-16"><h1 id="custom-viewers">Custom Viewers</h1></cell><cell startpos="3:1-18" endpos="7:4-98" class="code"><codecell><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node) =&gt; {
+  return &quot;Foooooo!&quot;
+}
+</code></pre></codecell></cell><cell startpos="9:1-100" endpos="33:4-562" class="code"><codecell><span class="meta"><span class="lang">html</span></span><pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Test page&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;script&gt;
+    var moduleData = `export function viewer(node) { return &quot;Bar&quot;; };`;
+    var b64moduleData = `data:text/javascript;base64,${ btoa(moduleData)}`;
+  &lt;/script&gt;
+
+  &lt;script type=&quot;module&quot;&gt;
+
+    async function doimport() {
+      const module = await import(b64moduleData);
+      module.viewer({value: &#x27;Foo&#x27;});
+    }
+
+    doimport();
+
+  &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></codecell></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
