@@ -74,7 +74,7 @@ console.log(`lit:`, lit)
     
     const filepath = `/${lit.location.src}`
     console.log(`Checking local (${baseUrl}) filesystem for: ${filepath}`)
-    let contents, times = {}
+    let contents, times = {local: null, remote: null}
     try {
         const resp = await lit.fs.readStat(filepath, {encoding: 'utf8'})
         console.log(`Loaded file: ${filepath} local: ${!!resp.local.stat} remote: ${!!resp.remote.stat} resp: `, resp)
