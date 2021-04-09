@@ -70,7 +70,7 @@ const Cell = props => {
                 startpos={posstr(pos.start)}
                 endpos={posstr(pos.end)}
                 className={getClasses(ctx)}>
-                    { editing ? <Editor src={source(pos, ctx.src)} update={setSrc}/> : content }
+                    { editing ? <Editor src={(meta && meta.remote && codeSource) || source(pos, ctx.src)} update={setSrc}/> : content }
                     { isSelected(ctx) && <CellMenu editing={editing} toggleEditing={toggleEditing} save={save(ctx)}/>}
             </cell>
         }}
