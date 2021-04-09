@@ -82,8 +82,9 @@ const Menu = props => {
 
 
 
-export const Header = props => {
+export const Header = (props) => {
   console.log('<Header/>', props)
+  const { file, root, local, remote, ageMessage } = props
 
   const resetFile = ctx => async ev => {
     console.log("Reset File:", ctx.file)
@@ -104,11 +105,13 @@ export const Header = props => {
     localStorage.getItem('ghToken', prompt("GitHub personal access token"))
   }
 
-  const light = typeof window === 'undefined' || typeof window.localStorage === 'undefined'
+  const light = (typeof window === 'undefined' || typeof window.localStorage === 'undefined')
     ? <LED color="#cccccc" title="Status"/>
-    : props.times && (props.times.local && !props.times.remote )
+    : (local && !remote)
       ? <LED color="orange" title="Status"/>
-      : props.times && !props.times.local
+      : (remote && !local)
+        ? <LED color="blue" title="Status"/>
+        : (!remote && !local)
         ? <LED color="red" title="Status"/>
         : <LED color="#33cc33" title="Status"/>
 
@@ -116,9 +119,9 @@ export const Header = props => {
 
     const cellSelected = (ctx.selectedCell && ctx.selectedCell.start) || false
 
-    return <Menu title="Home" horizontal href={props.root}>
+    return <Menu title="Home" horizontal href={root}>
     <Menu title="File">
-      <span disabled className="meta">{props.ageMessage}</span>
+      <span disabled className="meta">{ageMessage}</span>
       <span disabled>New</span>
       <span disabled>Open</span>
       <span disabled>Save</span>
@@ -162,14 +165,14 @@ export const Header = props => {
       </Menu>
     </Menu>
     <Menu right title={light}>
-      {props.file && 
-        <span disabled>{`File: ${props.file}`}</span>}
-    { props.times && props.times.local && 
-        <span disabled>{`Local last updated ${props.times.local}`}</span> }
-    { props.times && props.times.remote && 
-        <span disabled>{`Remote last updated ${props.times.remote}`}</span> }
-      { props.times && props.times.ageMessage && 
-        <span disabled>{`Local is ${props.times.ageMessage} than remote.`}</span> }
+      {file && 
+        <span disabled>{`File: ${file}`}</span>}
+    {local && 
+        <span disabled>{`Local last updated ${local}`}</span> }
+    {remote && 
+        <span disabled>{`Remote last updated ${remote}`}</span> }
+      {ageMessage && 
+        <span disabled>{`Local is ${ageMessage} than remote.`}</span> }
       { cellSelected && 
         <span disabled>{`Lines ${ctx.selectedCell.start.line}-${ctx.selectedCell.end.line}`}</span> }
 
