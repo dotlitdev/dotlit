@@ -19,5 +19,5 @@ export const getViewer = (meta, customViewers = {}) => {
   return meta 
     && (meta.isOutput 
        || (meta.directives && meta.directives.indexOf('inline') >= 0)) 
-    && (customViewers[view] || viewers[view]
+    && (customViewers[view] || viewers[view])
 }
