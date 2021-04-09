@@ -154,8 +154,14 @@ export const Header = props => {
       </Menu>
     </Menu>
     <Menu right title={<LED color="#33cc33" title="Status"/>}>
-      { props.ageMessage && 
-        <span disabled>{props.ageMessage}</span> }
+      {props.file && 
+        <span disabled>{`File: ${props.file}`}</span>}
+    { props.times.local && 
+        <span disabled>{`Local last updated ${props.times.local}`}</span> }
+    { props.times.remote && 
+        <span disabled>{`Remote last updated ${props.times.remote}`}</span> }
+      { props.times.ageMessage && 
+        <span disabled>{`Local is ${props.times.ageMessage} than remote.`}</span> }
       { cellSelected && 
         <span disabled>{`Lines ${ctx.selectedCell.start.line}-${ctx.selectedCell.end.line}`}</span> }
 

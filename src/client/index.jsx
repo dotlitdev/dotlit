@@ -11,7 +11,7 @@ const renderer = require('../renderer')
 const App = require('../components/App').default
 const { Header } = require('../components/Header')
 const { extendFs } = require('../utils/fs-promises-utils')
-const { DatesToRelativeDelta } = require('../utils/momento')
+const { DatesToRelativeDelta, MsToRelative } = require('../utils/momento')
 
 const { getMeta } = require('../utils/functions')
 import { getConsoleForNamespace } from '../utils/console'
@@ -74,13 +74,16 @@ console.log(`lit:`, lit)
     
     const filepath = `/${lit.location.src}`
     console.log(`Checking local (${baseUrl}) filesystem for: ${filepath}`)
-    let contents, ageMessage
+    let contents, times = {}
     try {
         const resp = await lit.fs.readStat(filepath, {encoding: 'utf8'})
         console.log(`Loaded file: ${filepath} local: ${!!resp.local.stat} remote: ${!!resp.remote.stat} resp: `, resp)
+        times.local = resp.local.stat && MsToRelative(resp.local.stat.mtimeMs - Date.now())
+        times.remote = resp.remote.stat && MsToRelative(resp.remote.stat.mtimeMs - Date.now())
 
         if (resp.local.stat && resp.remote.stat) {
-            ageMessage = DatesToRelativeDelta(resp.local.stat.mtimeMs, resp.remote.stat.mtimeMs)
+            const ageMessage = DatesToRelativeDelta(resp.local.stat.mtimeMs, resp.remote.stat.mtimeMs)
+            times.ageMessage = ageMessage
             console.log(`Local file is ${ageMessage} than remote file.`)
         }
         
@@ -95,7 +98,7 @@ console.log(`lit:`, lit)
   
     console.log(contents)
     const file = await vfile({path: filepath, contents})
-    file.data.times = { ageMessage }
+    file.data.times = times
     
     const processedFile = await renderer.processor(fs).process(file)
     console.log("Processed client", processedFile)
