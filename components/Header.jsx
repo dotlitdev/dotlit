@@ -104,9 +104,9 @@ export const Header = props => {
     localStorage.getItem('ghToken', prompt("GitHub personal access token"))
   }
 
-  let light = typeof window === 'undefined'
+  const light = typeof window === 'undefined'
     ? <LED color="#cccccc" title="Status"/>
-    : times && (times.local && !times.remote )
+    : props.times && (props.times.local && !props.times.remote )
       ? <LED color="orange" title="Status"/>
       : <LED color="#33cc33" title="Status"/>
 
