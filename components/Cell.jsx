@@ -45,6 +45,7 @@ const Cell = props => {
     const codeNode = childIs(isCodeCell, 'code');
     const meta = codeNode ? codeNode.properties.meta : null
     const codeSource = codeNode && codeNode.children[0].value
+    const rawSource = codeSource && ("```" + (meta.lang || '') + " " + (codeNode.meta||'') + "\n" + codeSource + "\n```")
     const viewer = getViewer(meta)
     const content = viewer
                        ? viewer({value: codeSource})
@@ -65,12 +66,14 @@ const Cell = props => {
 
     return <SelectionContext.Consumer>
         { ctx => {
+            const src = (meta && meta.remote && rawSource)
+                        || source(pos, ctx.src)
             return <cell
                 onClick={toggleSelected(ctx)}
                 startpos={posstr(pos.start)}
                 endpos={posstr(pos.end)}
                 className={getClasses(ctx)}>
-                    { editing ? <Editor src={(meta && meta.remote && codeSource) || source(pos, ctx.src)} update={setSrc}/> : content }
+                    { editing ? <Editor src={src} update={setSrc}/> : content }
                     { isSelected(ctx) && <CellMenu editing={editing} toggleEditing={toggleEditing} save={save(ctx)}/>}
             </cell>
         }}
