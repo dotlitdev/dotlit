@@ -1,9 +1,8 @@
 const path = require('path')
 const webpack = require('webpack')
 
-const { spawn } = require('child_process')
 const distDir = path.resolve(__dirname, './dist')
-const stage = "development"
+const stage = "production"
 
 module.exports = {
   mode: stage,
@@ -18,7 +17,7 @@ module.exports = {
   },
   target: 'node',
   externals:{
-    fs: "commonjs fs",
+    // fs: "commonjs fs",
   },
   module: {
     rules: [
@@ -70,17 +69,5 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(stage)
     }),
-    new webpack.ProvidePlugin({
-      process: 'process/browser',
-    }),
   ],
-  devtool: 'cheap-source-map',
-  devServer: {
-    contentBase: distDir,
-    stats: {
-      colors: true,
-      chunks: false,
-      children: false
-    },
-  }
 }
