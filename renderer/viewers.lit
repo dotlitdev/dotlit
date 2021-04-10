@@ -13,19 +13,16 @@ export const viewer = (node) => {
     <title>Test page</title>
   </head>
   <body>
-  <script>
-    var moduleData = `export function viewer(node) { return "Bar"; };`;
-    var b64moduleData = `data:text/javascript;base64,${ btoa(moduleData)}`;
-  </script>
-
   <script type="module">
 
-    async function doimport() {
-      const module = await import(b64moduleData);
-      module.viewer({value: 'Foo'});
+    async function getViewer(src) {
+      const module = await import(`data:text/javascript;base64,${ btoa(src)}`);
+      return module.viewer;
     }
 
-    doimport();
+    getViewer(`export const fn = () => "foo!"`).then(viewer => {
+       alert("🔥 Got viewer " + !!viewer)
+    })
 
   </script>
   </body>
