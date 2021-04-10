@@ -14,6 +14,7 @@ export const transcludeCode = ({fs}) => {
                const source = block.data.meta.source
                console.log("[Transclude] has source", source)
                block.data.originalSource = block.value
+               block.data.hProperties.data = {originalSource: block.value}
                if (source.uri) {
                    const resp = await fetch(source.uri)
                    if (resp.status >= 200 && resp.status < 400) {
