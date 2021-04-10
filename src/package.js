@@ -1,7 +1,7 @@
 const fs = require('fs')
 const pkg = require('../package.json')
 
-pkg.bin = './node.bundle.js'
+pkg.bin = { dotlit: './node.bundle.js' }
 pkg.dependencies = {}
 
 const pkgSrc = JSON.stringify(pkg,null,2)
