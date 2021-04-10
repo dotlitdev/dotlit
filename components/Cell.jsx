@@ -46,12 +46,15 @@ const Cell = props => {
     const meta = codeNode ? codeNode.properties.meta : null
     const codeSource = codeNode && codeNode.children[0].value
     const rawSource = codeSource && ("```" + (meta.lang || '') + " " + (codeNode.meta||'') + "\n" + codeSource + "\n```")
+    const originalSource = codeSource && codeNode.properties.data.originalSource 
+
     const viewer = getViewer(meta)
     const content = viewer
                        ? viewer({value: codeSource})
                        : props.children
 
-    console.log("[Cell] code: ", !!isCodeCell) // codeNode, meta, codeSource)
+    console.log("[Cell] code: ", !!isCodeCell, codeNode) // meta, codeSource)
+
     const save = ctx => args => {
         console.log("Saving cell", pos, src)
         ctx.setSrc(pos, src)
