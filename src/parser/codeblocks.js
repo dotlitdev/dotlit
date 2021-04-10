@@ -67,7 +67,7 @@ function parseMeta (node) {
     meta.hasOutput = !!output
     meta.hasSource = !!source
     meta.source = source
-    meta.raw = node.meta
+    meta.raw = raw
     if (source) meta.fromSource = source.filename || source.uri
 
     return meta
