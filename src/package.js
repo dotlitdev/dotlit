@@ -7,7 +7,7 @@ pkg.dependencies = {}
 const pkgSrc = JSON.stringify(pkg,null,2)
 console.log(pkg)
 
-const indexSrc = "#!/usr/bin/env node\nrequire('./node.bundle.js')\n"
+const indexSrc = "#!/usr/bin/env node\nglobal.litenv = 'production'\nrequire('./node.bundle.js')\n"
 console.log(indexSrc)
 
 fs.writeFileSync('./dist/package.json', pkgSrc, {encoding: 'utf8'})
