@@ -8,6 +8,7 @@ import React from 'react'
 
 import {processor as parserProcessor} from '../parser'
 import {transcludeCode} from './transcludeCode'
+import {extractViewers} from './extractViewers'
 
 import Document from '../components/Document'
 import Paragraph from '../components/base/Paragraph'
@@ -35,6 +36,9 @@ export function processor(fs) {
     // transclude codeblocks with source
     // when available 
     .use( transcludeCode, {fs} )
+
+    // extract custom viewers
+    .use( extractViewers )
 
     // extract files to data
     .use( (...args) => {
