@@ -4,7 +4,7 @@ import React from 'react'
 
 export default React.createContext({
     fs: {},
-    file: '',
+    file: {},
     src: '',
     selectedCell: null,
     setSelectedCell: ()=>{},
