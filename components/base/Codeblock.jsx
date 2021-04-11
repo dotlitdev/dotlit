@@ -2,34 +2,11 @@ import React from 'react'
 import {log, level} from '../../utils/console'
 import { getConsoleForNamespace } from '../../utils/console'
 import Highlight from 'react-highlight.js'
+
+import {getViewer} from '../../renderer/Viewers'
 import {CodeMeta} from '../CodeMeta'
+
 const console = getConsoleForNamespace('codeblocks')
-
-
-const viewers = {
-  csv: val => {
-    // return <pre>//CSV Viewer\n{val}</pre>
-
-    const rows = val.split("\n").map( (row,i) => {
-       const cols = row.split(",").map( (col,j) => <td key={j}>{col}</td>)
-       return <tr key={i}>{cols}</tr>
-    })
-
-    return <table>{rows}</table>
-  },
-  html: val => <div dangerouslySetInnerHTML={{__html: val}}></div>,
-  svg: val => <div dangerouslySetInnerHTML={{__html: val}}></div>,
-  uri: val => <iframe src={val}></iframe>,
-  style: val => <style dangerouslySetInnerHTML={{__html: val}}></style>,
-  script: val => <script dangerouslySetInnerHTML={{__html: val}}></script>,
-}
-
-const getViewer = meta => {
-  return meta 
-    && (meta.isOutput || (meta.directives && meta.directives.indexOf('inline') >= 0))
-    && ((meta.viewer && viewers[meta.viewer])
-       || viewers[meta.lang])
-}
 
 export default class Codeblock extends React.Component {
     render() {
@@ -41,13 +18,14 @@ export default class Codeblock extends React.Component {
                             : null;
         const meta = codeNode ? codeNode.properties.meta : null
         const viewer = getViewer(meta)
+
        
         if (codeNode) {const source = codeNode.children[0].value
             console.log("[Codeblock]", meta)
             return <codecell>
                 { meta && <CodeMeta meta={meta}/> }
                 { viewer 
-                  ? viewer(source)
+                  ? viewer({value: source})
                   : meta && meta.isOutput
                     ? <output><Highlight language={meta.lang}>{source}</Highlight></output>
                     : <Highlight language={meta.lang}>{source}</Highlight> }
