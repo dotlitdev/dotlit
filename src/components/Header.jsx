@@ -80,10 +80,10 @@ export const Header = (props) => {
   const { file, root, local, remote, ageMessage } = props
 
   const resetFile = ctx => async ev => {
-    console.log("Reset File:", ctx.file)
+    console.log("Reset File:", ctx.file.path)
     if (confirm(`Are you sure you want to delete the local copy of "${ctx.file}"`)) {
       await ctx.fs.unlink('/' + ctx.file)
-      console.log("Deleted ", ctx.file, "reloading page")
+      console.log("Deleted ", ctx.file.path, "reloading page")
       location.reload()
     }
   }
@@ -160,7 +160,7 @@ export const Header = (props) => {
     </Menu>
     <Menu right title={light}>
       {file && 
-        <span disabled>{`File: ${file}`}</span>}
+        <span disabled>{`File: ${file.path}`}</span>}
     {local && 
         <span disabled>{`Local last updated ${local}`}</span> }
     {remote && 
