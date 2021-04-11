@@ -20,7 +20,7 @@ const passThroughRead = (origReadFile, litroot) => {
   };
 }
 
-const passThroughReadWithStat = (origReadFile, origStat) => {
+const passThroughReadWithStat = (origReadFile, origStat, litroot) => {
 
   return async (...args) => {
     console.log('fs.passThroughRead')
@@ -37,7 +37,7 @@ const passThroughReadWithStat = (origReadFile, origStat) => {
       console.log('fs.passThoughRead no local file', err)
     }
 
-    const filePath = args[0]
+    const filePath = path.join(litroot, args[0])
     console.log('fs.passThroughRead passing through to fetch', filePath)
     const remoteResp = await fetch(filePath)
 
@@ -119,7 +119,7 @@ export const extendFs = (fs, litroot) => {
   const origStat = fs.stat
   fs.readFile = passThroughRead(origReadFile,litroot);
   fs.writeFile = writeFileP(fs);
-  fs.readStat = passThroughReadWithStat(origReadFile, origStat)
+  fs.readStat = passThroughReadWithStat(origReadFile, origStat, litroot)
 
   if (localStorage.getItem("ghToken")) fs.writeFile = passThroughWrite(fs);
   return fs
