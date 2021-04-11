@@ -4,7 +4,6 @@ import source from 'unist-util-source'
 import CellMenu from './CellMenu'
 import SelectionContext from './SelectionContext'
 import Editor from './Editor'
-import {getViewer} from '../renderer/Viewers'
 
 import { getConsoleForNamespace } from '../utils/console'
 
@@ -51,10 +50,7 @@ const Cell = props => {
              && codeNode.properties.data
              && codeNode.properties.data.originalSource 
 
-    const viewer = getViewer(meta)
-    const content = viewer
-                       ? viewer({value: codeSource})
-                       : props.children
+    const content = props.children
 
     console.log("[Cell] code: ", !!isCodeCell, codeNode, {src: codeSource, orig: originalSource} ) // meta, codeSource)
 

@@ -1,0 +1,24 @@
+<html data-reactroot=""><head><title>viewers</title><meta name="litsrc" value="renderer/viewers.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="app"><div id="header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="30:4-536"><cell startpos="1:1-0" endpos="1:17-16"><h1 id="custom-viewers">Custom Viewers</h1></cell><cell startpos="3:1-18" endpos="7:4-98" class="code"><codecell><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node) =&gt; {
+  return &quot;Foooooo!&quot;
+}
+</code></pre></codecell></cell><cell startpos="9:1-100" endpos="30:4-536" class="code"><codecell><span class="meta"><span class="lang">html</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><div><!DOCTYPE html>
+<html>
+  <head>
+    <title>Test page</title>
+  </head>
+  <body>
+  <script type="module">
+
+    async function getViewer(src) {
+      const module = await import(`data:text/javascript;base64,${ btoa(src)}`);
+      return module.viewer;
+    }
+
+    getViewer(`export const viewer = () => "foo!"`).then(viewer => {
+       alert("Got viewer " + !!viewer)
+    })
+
+  </script>
+  </body>
+</html>
+</div></codecell></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
