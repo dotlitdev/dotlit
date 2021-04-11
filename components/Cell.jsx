@@ -52,8 +52,6 @@ const Cell = props => {
 
     const content = props.children
 
-    console.log("[Cell] code: ", !!isCodeCell, codeNode, {src: codeSource, orig: originalSource} ) // meta, codeSource)
-
     const save = ctx => args => {
         console.log("Saving cell", pos, src)
         ctx.setSrc(pos, src)
@@ -68,6 +66,7 @@ const Cell = props => {
 
     return <SelectionContext.Consumer>
         { ctx => {
+            console.log("[Cell] code: ", !!isCodeCell, codeNode, {src: codeSource, orig: originalSource}, ctx ) // meta, codeSource)
             const src = (meta && meta.remote && rawSource)
                         || source(pos, ctx.src)
             return <cell
