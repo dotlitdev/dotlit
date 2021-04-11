@@ -103,6 +103,7 @@ console.log(`lit:`, lit)
     const processedFile = await renderer.processor(fs).process(file)
     console.log("Processed client", processedFile)
     window.lit.ast = processedFile.data.ast
+    window.lit.file = processedFile
 
     try {
         lit.notebook = <App
