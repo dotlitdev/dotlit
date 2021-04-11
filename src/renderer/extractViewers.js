@@ -4,7 +4,7 @@ import { selectAll } from 'unist-util-select'
 
 const console = getConsoleForNamespace('extractViewers')
 
-export const extractViewers = ({fs}) => {
+export const extractViewers = ({fs} = {}) => {
     return async (tree,file) => {
         console.log("[ExtractViewers] Checking for custom viewers")
         for (const block of selectAll("code", tree)) {
