@@ -29,7 +29,7 @@ export const Codeblock = props => {
             return <codecell>
                 { meta && <CodeMeta meta={meta}/> }
                 { viewer 
-                  ? viewer({value: source})
+                  ? viewer({value: source, data: {meta}}, {React})
                   : meta && meta.isOutput
                     ? <output><Highlight language={meta.lang}>{source}</Highlight></output>
                     : <Highlight language={meta.lang}>{source}</Highlight> }
