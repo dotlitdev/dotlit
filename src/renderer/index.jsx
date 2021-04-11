@@ -13,7 +13,7 @@ import {extractViewers} from './extractViewers'
 import Document from '../components/Document'
 import Paragraph from '../components/base/Paragraph'
 import Link from '../components/base/Link'
-import Codeblock from '../components/base/Codeblock'
+import {Codeblock} from '../components/base/Codeblock'
 import Cell from '../components/Cell'
 import { Section } from '../components/Section'
 
