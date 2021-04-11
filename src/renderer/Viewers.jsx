@@ -20,6 +20,6 @@ export const getViewer = (meta, customViewers = {}) => {
   const useViewer = view && (meta.isOutput 
        || (meta.directives && meta.directives.indexOf('inline') >= 0))
   const viewer = customViewer || viewers[view]
-  console.log(`[Viewer] view: ${view} custom: ${!!customViewer} use: {useViewer} viewer:`, viewer)
+  console.log(`[Viewer] view: ${view} custom: ${!!customViewer} use: ${useViewer} viewer:`, viewer)
   return view && useViewer && viewer
 }
