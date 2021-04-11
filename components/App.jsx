@@ -57,7 +57,7 @@ const App = ({root, file, fs, result}) => {
 
     const state = {
         fs: fs,
-        file: file.path,  
+        file: file,  
         src: srcAndRes.src, 
         selectedCell, 
         setSelectedCell, 
