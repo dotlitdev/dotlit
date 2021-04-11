@@ -16,7 +16,11 @@ export const extractViewers = ({fs} = {}) => {
                 console.log('Found Viewer', block)
                 file.data = file.data || {}
                 file.data.viewers = file.data.viewers || {}
-                file.data.viewers[block.data.meta.of] = block
+                try {
+                    file.data.viewers[block.data.meta.of] = await import(`data:text/javascript;base64,${ btoa(block.value)}`)
+                } catch(err) {
+                    console.log("Failed to init viewer", err)
+                }
             }
         }
     }
