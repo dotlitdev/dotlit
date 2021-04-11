@@ -15,11 +15,14 @@ export const Codeblock = props => {
                             && props.node.children[0].tagName === 'code'
                             ? props.node.children[0] 
                             : null;
-        const meta = codeNode ? codeNode.properties.meta : null
-        const viewer = getViewer(meta)
+       
 
         return <SelectionContext.Consumer>
         { ctx => {
+
+        const meta = codeNode ? codeNode.properties.meta : null
+        const viewer = getViewer(meta, ctx.file.data.viewers)
+
        
         if (codeNode) {const source = codeNode.children[0].value
             console.log("[Codeblock]", meta,ctx)
