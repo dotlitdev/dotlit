@@ -199,7 +199,7 @@ https://example.com
   <div id="graph"></div>
 
   <script>
-    fetch('../datasets/miserables.json').then(res => res.json()).then(data => {
+    false && fetch('../datasets/miserables.json').then(res => res.json()).then(data => {
       const Graph = ForceGraph()
       (document.getElementById('graph'))
         .graphData(data)
@@ -210,6 +210,23 @@ https://example.com
         .linkSource('source')
         .linkTarget('target')
     });
+
+   // Random tree
+    const N = 300;
+    const gData = {
+      nodes: [...Array(N).keys()].map(i => ({ id: i })),
+      links: [...Array(N).keys()]
+        .filter(id => id)
+        .map(id => ({
+          source: id,
+          target: Math.round(Math.random() * (id-1))
+        }))
+    };
+
+    const Graph = ForceGraph()
+      (document.getElementById('graph'))
+        .linkDirectionalParticles(2)
+        .graphData(gData);
   </script>
 </body>
 ```
