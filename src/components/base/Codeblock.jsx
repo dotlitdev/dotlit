@@ -25,7 +25,7 @@ export const Codeblock = props => {
 
        
         if (codeNode) {const source = codeNode.children[0].value
-            console.log("[Codeblock]", meta,ctx)
+            console.log("[Codeblock]", meta, viewer)
             return <codecell>
                 { meta && <CodeMeta meta={meta}/> }
                 { viewer 
