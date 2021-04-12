@@ -190,46 +190,36 @@ https://example.com
 ```>html viewer=iframe
 <head>
   <style> body { margin: 0; } </style>
-
   <script src="https://unpkg.com/force-graph"></script>
-  <!--<script src="../../dist/force-graph.js"></script>-->
   <!-- from: https://github.com/vasturiano/force-graph -->
 </head>
-
 <body>
   <div id="graph"></div>
-
   <script>
     fetch('/manifest.json').then(res => res.json()).then(data => {
-      const Graph = ForceGraph()
-      (document.getElementById('graph'))
+      const elem = document.getElementById('graph')
+      const Graph = ForceGraph()(elem)
         .graphData(data)
         .nodeId('id')
-        //.nodeVal('val')
+        .nodeVal((n) => n.backlinks.length)
         .nodeLabel('id')
-        //.nodeAutoColorBy('group')
-        //.linkSource('source')
-        //.linkTarget('target')
+        //.nodeAutoColorBy('exists')
+        .nodeColor(d => {
+            if (!d.exists) return '#cccccc'
+            else return '#9999f7'
+        })
+        // .linkColor(d => data.nodes[d.source].exists ? 'red' : 'lightblue')
+        .linkDirectionalArrowLength(6)
+        .onNodeHover(node => elem.style.cursor = node ? 'pointer' : null)
+        .onNodeClick(node => {
+          // Center/zoom on node
+          Graph.centerAt(node.x, node.y, 1000);
+          Graph.zoom(8, 2000);
+        });
+
+     // Graph.zoomToFit(1000, 10, (node) => node.id === '/scratch_pad.lit')
+
     });
-
-   // Random tree 
-    (disable => {
-    const N = 300;
-    const gData = {
-      nodes: [...Array(N).keys()].map(i => ({ id: i })),
-      links: [...Array(N).keys()]
-        .filter(id => id)
-        .map(id => ({
-          source: id,
-          target: Math.round(Math.random() * (id-1))
-        }))
-    };
-
-    const Graph = ForceGraph()
-      (document.getElementById('graph'))
-        .linkDirectionalParticles(2)
-        .graphData(gData);
-    })
   </script>
 </body>
 ```
