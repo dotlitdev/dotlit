@@ -6433,9 +6433,9 @@
                             "offset": 4506
                         },
                         "end": {
-                            "line": 235,
+                            "line": 225,
                             "column": 4,
-                            "offset": 5627
+                            "offset": 5622
                         }
                     },
                     "data": {
@@ -6449,7 +6449,7 @@
                             "type": "code",
                             "lang": ">html",
                             "meta": "viewer=iframe",
-                            "value": "<head>\n  <style> body { margin: 0; } </style>\n\n  <script src=\"https://unpkg.com/force-graph\"></script>\n  <!--<script src=\"../../dist/force-graph.js\"></script>-->\n  <!-- from: https://github.com/vasturiano/force-graph -->\n</head>\n\n<body>\n  <div id=\"graph\"></div>\n\n  <script>\n    fetch('/manifest.json').then(res => res.json()).then(data => {\n      const Graph = ForceGraph()\n      (document.getElementById('graph'))\n        .graphData(data)\n        .nodeId('id')\n        //.nodeVal('val')\n        .nodeLabel('id')\n        //.nodeAutoColorBy('group')\n        //.linkSource('source')\n        //.linkTarget('target')\n    });\n\n   // Random tree \n    (disable => {\n    const N = 300;\n    const gData = {\n      nodes: [...Array(N).keys()].map(i => ({ id: i })),\n      links: [...Array(N).keys()]\n        .filter(id => id)\n        .map(id => ({\n          source: id,\n          target: Math.round(Math.random() * (id-1))\n        }))\n    };\n\n    const Graph = ForceGraph()\n      (document.getElementById('graph'))\n        .linkDirectionalParticles(2)\n        .graphData(gData);\n    })\n  </script>\n</body>",
+                            "value": "<head>\n  <style> body { margin: 0; } </style>\n  <script src=\"https://unpkg.com/force-graph\"></script>\n  <!-- from: https://github.com/vasturiano/force-graph -->\n</head>\n<body>\n  <div id=\"graph\"></div>\n  <script>\n    fetch('/manifest.json').then(res => res.json()).then(data => {\n      const elem = document.getElementById('graph')\n      const Graph = ForceGraph()(elem)\n        .graphData(data)\n        .nodeId('id')\n        .nodeVal((n) => n.backlinks.length)\n        .nodeLabel('id')\n        //.nodeAutoColorBy('exists')\n        .nodeColor(d => {\n            if (!d.exists) return '#cccccc'\n            else return '#9999f7'\n        })\n        // .linkColor(d => data.nodes[d.source].exists ? 'red' : 'lightblue')\n        .linkDirectionalArrowLength(6)\n        .onNodeHover(node => elem.style.cursor = node ? 'pointer' : null)\n        .onNodeClick(node => {\n          // Center/zoom on node\n          Graph.centerAt(node.x, node.y, 1000);\n          Graph.zoom(8, 2000);\n        });\n\n     // Graph.zoomToFit(1000, 10, (node) => node.id === '/scratch_pad.lit')\n\n    });\n  </script>\n</body>",
                             "position": {
                                 "start": {
                                     "line": 190,
@@ -6457,9 +6457,9 @@
                                     "offset": 4506
                                 },
                                 "end": {
-                                    "line": 235,
+                                    "line": 225,
                                     "column": 4,
-                                    "offset": 5627
+                                    "offset": 5622
                                 }
                             },
                             "data": {
@@ -6490,14 +6490,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 237,
+                            "line": 227,
                             "column": 1,
-                            "offset": 5629
+                            "offset": 5624
                         },
                         "end": {
-                            "line": 239,
+                            "line": 229,
                             "column": 4,
-                            "offset": 5689
+                            "offset": 5684
                         }
                     },
                     "data": {
@@ -6514,14 +6514,14 @@
                             "value": "confirm(\"It lives 🌱 from \")",
                             "position": {
                                 "start": {
-                                    "line": 237,
+                                    "line": 227,
                                     "column": 1,
-                                    "offset": 5629
+                                    "offset": 5624
                                 },
                                 "end": {
-                                    "line": 239,
+                                    "line": 229,
                                     "column": 4,
-                                    "offset": 5689
+                                    "offset": 5684
                                 }
                             },
                             "data": {
@@ -6558,14 +6558,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 241,
+                            "line": 231,
                             "column": 1,
-                            "offset": 5691
+                            "offset": 5686
                         },
                         "end": {
-                            "line": 241,
+                            "line": 231,
                             "column": 135,
-                            "offset": 5825
+                            "offset": 5820
                         }
                     },
                     "data": {
@@ -6583,14 +6583,14 @@
                                     "value": "The above has a strange behaviour, in that it only executes the ",
                                     "position": {
                                         "start": {
-                                            "line": 241,
+                                            "line": 231,
                                             "column": 1,
-                                            "offset": 5691
+                                            "offset": 5686
                                         },
                                         "end": {
-                                            "line": 241,
+                                            "line": 231,
                                             "column": 65,
-                                            "offset": 5755
+                                            "offset": 5750
                                         }
                                     }
                                 },
@@ -6599,14 +6599,14 @@
                                     "value": "static",
                                     "position": {
                                         "start": {
-                                            "line": 241,
+                                            "line": 231,
                                             "column": 65,
-                                            "offset": 5755
+                                            "offset": 5750
                                         },
                                         "end": {
-                                            "line": 241,
+                                            "line": 231,
                                             "column": 73,
-                                            "offset": 5763
+                                            "offset": 5758
                                         }
                                     }
                                 },
@@ -6615,28 +6615,28 @@
                                     "value": " value, and hydration with a diffent (local) value is ignored.",
                                     "position": {
                                         "start": {
-                                            "line": 241,
+                                            "line": 231,
                                             "column": 73,
-                                            "offset": 5763
+                                            "offset": 5758
                                         },
                                         "end": {
-                                            "line": 241,
+                                            "line": 231,
                                             "column": 135,
-                                            "offset": 5825
+                                            "offset": 5820
                                         }
                                     }
                                 }
                             ],
                             "position": {
                                 "start": {
-                                    "line": 241,
+                                    "line": 231,
                                     "column": 1,
-                                    "offset": 5691
+                                    "offset": 5686
                                 },
                                 "end": {
-                                    "line": 241,
+                                    "line": 231,
                                     "column": 135,
-                                    "offset": 5825
+                                    "offset": 5820
                                 }
                             }
                         }
@@ -6646,14 +6646,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 243,
+                            "line": 233,
                             "column": 1,
-                            "offset": 5827
+                            "offset": 5822
                         },
                         "end": {
-                            "line": 249,
+                            "line": 239,
                             "column": 4,
-                            "offset": 5935
+                            "offset": 5930
                         }
                     },
                     "data": {
@@ -6670,14 +6670,14 @@
                             "value": "#header { color: green; }\nh1,h2,h3,h4,h5,h6 {\n  position: sticky;\n  top:0;\n}",
                             "position": {
                                 "start": {
-                                    "line": 243,
+                                    "line": 233,
                                     "column": 1,
-                                    "offset": 5827
+                                    "offset": 5822
                                 },
                                 "end": {
-                                    "line": 249,
+                                    "line": 239,
                                     "column": 4,
-                                    "offset": 5935
+                                    "offset": 5930
                                 }
                             },
                             "data": {
@@ -6725,14 +6725,14 @@
                             "type": "cell",
                             "position": {
                                 "start": {
-                                    "line": 251,
+                                    "line": 241,
                                     "column": 1,
-                                    "offset": 5937
+                                    "offset": 5932
                                 },
                                 "end": {
-                                    "line": 253,
+                                    "line": 243,
                                     "column": 4,
-                                    "offset": 5962
+                                    "offset": 5957
                                 }
                             },
                             "data": {
@@ -6751,28 +6751,28 @@
                                             "value": "Custom Viewers",
                                             "position": {
                                                 "start": {
-                                                    "line": 251,
+                                                    "line": 241,
                                                     "column": 7,
-                                                    "offset": 5943
+                                                    "offset": 5938
                                                 },
                                                 "end": {
-                                                    "line": 251,
+                                                    "line": 241,
                                                     "column": 21,
-                                                    "offset": 5957
+                                                    "offset": 5952
                                                 }
                                             }
                                         }
                                     ],
                                     "position": {
                                         "start": {
-                                            "line": 251,
+                                            "line": 241,
                                             "column": 1,
-                                            "offset": 5937
+                                            "offset": 5932
                                         },
                                         "end": {
-                                            "line": 253,
+                                            "line": 243,
                                             "column": 4,
-                                            "offset": 5962
+                                            "offset": 5957
                                         }
                                     },
                                     "data": {
@@ -6791,28 +6791,28 @@
                                             "value": "TBD",
                                             "position": {
                                                 "start": {
-                                                    "line": 253,
+                                                    "line": 243,
                                                     "column": 1,
-                                                    "offset": 5959
+                                                    "offset": 5954
                                                 },
                                                 "end": {
-                                                    "line": 253,
+                                                    "line": 243,
                                                     "column": 4,
-                                                    "offset": 5962
+                                                    "offset": 5957
                                                 }
                                             }
                                         }
                                     ],
                                     "position": {
                                         "start": {
-                                            "line": 253,
+                                            "line": 243,
                                             "column": 1,
-                                            "offset": 5959
+                                            "offset": 5954
                                         },
                                         "end": {
-                                            "line": 253,
+                                            "line": 243,
                                             "column": 4,
-                                            "offset": 5962
+                                            "offset": 5957
                                         }
                                     }
                                 }
@@ -6822,14 +6822,14 @@
                             "type": "cell",
                             "position": {
                                 "start": {
-                                    "line": 255,
+                                    "line": 245,
                                     "column": 1,
-                                    "offset": 5964
+                                    "offset": 5959
                                 },
                                 "end": {
-                                    "line": 259,
+                                    "line": 249,
                                     "column": 4,
-                                    "offset": 6044
+                                    "offset": 6039
                                 }
                             },
                             "data": {
@@ -6846,14 +6846,14 @@
                                     "value": "export const viewer = () => {\n  return \"Foooooooooo!\"\n}",
                                     "position": {
                                         "start": {
-                                            "line": 255,
+                                            "line": 245,
                                             "column": 1,
-                                            "offset": 5964
+                                            "offset": 5959
                                         },
                                         "end": {
-                                            "line": 259,
+                                            "line": 249,
                                             "column": 4,
-                                            "offset": 6044
+                                            "offset": 6039
                                         }
                                     },
                                     "data": {
@@ -6890,14 +6890,14 @@
                             "type": "cell",
                             "position": {
                                 "start": {
-                                    "line": 261,
+                                    "line": 251,
                                     "column": 1,
-                                    "offset": 6046
+                                    "offset": 6041
                                 },
                                 "end": {
-                                    "line": 263,
+                                    "line": 253,
                                     "column": 4,
-                                    "offset": 6069
+                                    "offset": 6064
                                 }
                             },
                             "data": {
@@ -6914,14 +6914,14 @@
                                     "value": "Bar ",
                                     "position": {
                                         "start": {
-                                            "line": 261,
+                                            "line": 251,
                                             "column": 1,
-                                            "offset": 6046
+                                            "offset": 6041
                                         },
                                         "end": {
-                                            "line": 263,
+                                            "line": 253,
                                             "column": 4,
-                                            "offset": 6069
+                                            "offset": 6064
                                         }
                                     },
                                     "data": {
@@ -6956,14 +6956,14 @@
                             "type": "cell",
                             "position": {
                                 "start": {
-                                    "line": 266,
+                                    "line": 256,
                                     "column": 1,
-                                    "offset": 6072
+                                    "offset": 6067
                                 },
                                 "end": {
-                                    "line": 275,
+                                    "line": 265,
                                     "column": 10,
-                                    "offset": 6245
+                                    "offset": 6240
                                 }
                             },
                             "data": {
@@ -6981,28 +6981,28 @@
                                             "value": "Suggested or planned viewers",
                                             "position": {
                                                 "start": {
-                                                    "line": 266,
+                                                    "line": 256,
                                                     "column": 1,
-                                                    "offset": 6072
+                                                    "offset": 6067
                                                 },
                                                 "end": {
-                                                    "line": 266,
+                                                    "line": 256,
                                                     "column": 29,
-                                                    "offset": 6100
+                                                    "offset": 6095
                                                 }
                                             }
                                         }
                                     ],
                                     "position": {
                                         "start": {
-                                            "line": 266,
+                                            "line": 256,
                                             "column": 1,
-                                            "offset": 6072
+                                            "offset": 6067
                                         },
                                         "end": {
-                                            "line": 275,
+                                            "line": 265,
                                             "column": 10,
-                                            "offset": 6245
+                                            "offset": 6240
                                         }
                                     }
                                 },
@@ -7025,42 +7025,42 @@
                                                             "value": "JSON",
                                                             "position": {
                                                                 "start": {
-                                                                    "line": 268,
+                                                                    "line": 258,
                                                                     "column": 7,
-                                                                    "offset": 6108
+                                                                    "offset": 6103
                                                                 },
                                                                 "end": {
-                                                                    "line": 268,
+                                                                    "line": 258,
                                                                     "column": 11,
-                                                                    "offset": 6112
+                                                                    "offset": 6107
                                                                 }
                                                             }
                                                         }
                                                     ],
                                                     "position": {
                                                         "start": {
-                                                            "line": 268,
+                                                            "line": 258,
                                                             "column": 7,
-                                                            "offset": 6108
+                                                            "offset": 6103
                                                         },
                                                         "end": {
-                                                            "line": 268,
+                                                            "line": 258,
                                                             "column": 11,
-                                                            "offset": 6112
+                                                            "offset": 6107
                                                         }
                                                     }
                                                 }
                                             ],
                                             "position": {
                                                 "start": {
-                                                    "line": 268,
+                                                    "line": 258,
                                                     "column": 1,
-                                                    "offset": 6102
+                                                    "offset": 6097
                                                 },
                                                 "end": {
-                                                    "line": 268,
+                                                    "line": 258,
                                                     "column": 11,
-                                                    "offset": 6112
+                                                    "offset": 6107
                                                 }
                                             }
                                         },
@@ -7077,42 +7077,42 @@
                                                             "value": "HTML (inclined)",
                                                             "position": {
                                                                 "start": {
-                                                                    "line": 269,
+                                                                    "line": 259,
                                                                     "column": 7,
-                                                                    "offset": 6119
+                                                                    "offset": 6114
                                                                 },
                                                                 "end": {
-                                                                    "line": 269,
+                                                                    "line": 259,
                                                                     "column": 22,
-                                                                    "offset": 6134
+                                                                    "offset": 6129
                                                                 }
                                                             }
                                                         }
                                                     ],
                                                     "position": {
                                                         "start": {
-                                                            "line": 269,
+                                                            "line": 259,
                                                             "column": 7,
-                                                            "offset": 6119
+                                                            "offset": 6114
                                                         },
                                                         "end": {
-                                                            "line": 269,
+                                                            "line": 259,
                                                             "column": 22,
-                                                            "offset": 6134
+                                                            "offset": 6129
                                                         }
                                                     }
                                                 }
                                             ],
                                             "position": {
                                                 "start": {
-                                                    "line": 269,
+                                                    "line": 259,
                                                     "column": 1,
-                                                    "offset": 6113
+                                                    "offset": 6108
                                                 },
                                                 "end": {
-                                                    "line": 269,
+                                                    "line": 259,
                                                     "column": 22,
-                                                    "offset": 6134
+                                                    "offset": 6129
                                                 }
                                             }
                                         },
@@ -7129,42 +7129,42 @@
                                                             "value": "SVG (basically the above)",
                                                             "position": {
                                                                 "start": {
-                                                                    "line": 270,
+                                                                    "line": 260,
                                                                     "column": 7,
-                                                                    "offset": 6141
+                                                                    "offset": 6136
                                                                 },
                                                                 "end": {
-                                                                    "line": 270,
+                                                                    "line": 260,
                                                                     "column": 32,
-                                                                    "offset": 6166
+                                                                    "offset": 6161
                                                                 }
                                                             }
                                                         }
                                                     ],
                                                     "position": {
                                                         "start": {
-                                                            "line": 270,
+                                                            "line": 260,
                                                             "column": 7,
-                                                            "offset": 6141
+                                                            "offset": 6136
                                                         },
                                                         "end": {
-                                                            "line": 270,
+                                                            "line": 260,
                                                             "column": 32,
-                                                            "offset": 6166
+                                                            "offset": 6161
                                                         }
                                                     }
                                                 }
                                             ],
                                             "position": {
                                                 "start": {
-                                                    "line": 270,
+                                                    "line": 260,
                                                     "column": 1,
-                                                    "offset": 6135
+                                                    "offset": 6130
                                                 },
                                                 "end": {
-                                                    "line": 270,
+                                                    "line": 260,
                                                     "column": 32,
-                                                    "offset": 6166
+                                                    "offset": 6161
                                                 }
                                             }
                                         },
@@ -7181,42 +7181,42 @@
                                                             "value": "CSV: Table",
                                                             "position": {
                                                                 "start": {
-                                                                    "line": 271,
+                                                                    "line": 261,
                                                                     "column": 7,
-                                                                    "offset": 6173
+                                                                    "offset": 6168
                                                                 },
                                                                 "end": {
-                                                                    "line": 271,
+                                                                    "line": 261,
                                                                     "column": 17,
-                                                                    "offset": 6183
+                                                                    "offset": 6178
                                                                 }
                                                             }
                                                         }
                                                     ],
                                                     "position": {
                                                         "start": {
-                                                            "line": 271,
+                                                            "line": 261,
                                                             "column": 7,
-                                                            "offset": 6173
+                                                            "offset": 6168
                                                         },
                                                         "end": {
-                                                            "line": 271,
+                                                            "line": 261,
                                                             "column": 17,
-                                                            "offset": 6183
+                                                            "offset": 6178
                                                         }
                                                     }
                                                 }
                                             ],
                                             "position": {
                                                 "start": {
-                                                    "line": 271,
+                                                    "line": 261,
                                                     "column": 1,
-                                                    "offset": 6167
+                                                    "offset": 6162
                                                 },
                                                 "end": {
-                                                    "line": 271,
+                                                    "line": 261,
                                                     "column": 17,
-                                                    "offset": 6183
+                                                    "offset": 6178
                                                 }
                                             }
                                         },
@@ -7233,42 +7233,42 @@
                                                             "value": "URI: Iframe",
                                                             "position": {
                                                                 "start": {
-                                                                    "line": 272,
+                                                                    "line": 262,
                                                                     "column": 7,
-                                                                    "offset": 6190
+                                                                    "offset": 6185
                                                                 },
                                                                 "end": {
-                                                                    "line": 272,
+                                                                    "line": 262,
                                                                     "column": 18,
-                                                                    "offset": 6201
+                                                                    "offset": 6196
                                                                 }
                                                             }
                                                         }
                                                     ],
                                                     "position": {
                                                         "start": {
-                                                            "line": 272,
+                                                            "line": 262,
                                                             "column": 7,
-                                                            "offset": 6190
+                                                            "offset": 6185
                                                         },
                                                         "end": {
-                                                            "line": 272,
+                                                            "line": 262,
                                                             "column": 18,
-                                                            "offset": 6201
+                                                            "offset": 6196
                                                         }
                                                     }
                                                 }
                                             ],
                                             "position": {
                                                 "start": {
-                                                    "line": 272,
+                                                    "line": 262,
                                                     "column": 1,
-                                                    "offset": 6184
+                                                    "offset": 6179
                                                 },
                                                 "end": {
-                                                    "line": 272,
+                                                    "line": 262,
                                                     "column": 18,
-                                                    "offset": 6201
+                                                    "offset": 6196
                                                 }
                                             }
                                         },
@@ -7285,42 +7285,42 @@
                                                             "value": "CSS: Style",
                                                             "position": {
                                                                 "start": {
-                                                                    "line": 273,
+                                                                    "line": 263,
                                                                     "column": 7,
-                                                                    "offset": 6208
+                                                                    "offset": 6203
                                                                 },
                                                                 "end": {
-                                                                    "line": 273,
+                                                                    "line": 263,
                                                                     "column": 17,
-                                                                    "offset": 6218
+                                                                    "offset": 6213
                                                                 }
                                                             }
                                                         }
                                                     ],
                                                     "position": {
                                                         "start": {
-                                                            "line": 273,
+                                                            "line": 263,
                                                             "column": 7,
-                                                            "offset": 6208
+                                                            "offset": 6203
                                                         },
                                                         "end": {
-                                                            "line": 273,
+                                                            "line": 263,
                                                             "column": 17,
-                                                            "offset": 6218
+                                                            "offset": 6213
                                                         }
                                                     }
                                                 }
                                             ],
                                             "position": {
                                                 "start": {
-                                                    "line": 273,
+                                                    "line": 263,
                                                     "column": 1,
-                                                    "offset": 6202
+                                                    "offset": 6197
                                                 },
                                                 "end": {
-                                                    "line": 273,
+                                                    "line": 263,
                                                     "column": 17,
-                                                    "offset": 6218
+                                                    "offset": 6213
                                                 }
                                             }
                                         },
@@ -7337,42 +7337,42 @@
                                                             "value": "JS: Script",
                                                             "position": {
                                                                 "start": {
-                                                                    "line": 274,
+                                                                    "line": 264,
                                                                     "column": 7,
-                                                                    "offset": 6225
+                                                                    "offset": 6220
                                                                 },
                                                                 "end": {
-                                                                    "line": 274,
+                                                                    "line": 264,
                                                                     "column": 17,
-                                                                    "offset": 6235
+                                                                    "offset": 6230
                                                                 }
                                                             }
                                                         }
                                                     ],
                                                     "position": {
                                                         "start": {
-                                                            "line": 274,
+                                                            "line": 264,
                                                             "column": 7,
-                                                            "offset": 6225
+                                                            "offset": 6220
                                                         },
                                                         "end": {
-                                                            "line": 274,
+                                                            "line": 264,
                                                             "column": 17,
-                                                            "offset": 6235
+                                                            "offset": 6230
                                                         }
                                                     }
                                                 }
                                             ],
                                             "position": {
                                                 "start": {
-                                                    "line": 274,
+                                                    "line": 264,
                                                     "column": 1,
-                                                    "offset": 6219
+                                                    "offset": 6214
                                                 },
                                                 "end": {
-                                                    "line": 274,
+                                                    "line": 264,
                                                     "column": 17,
-                                                    "offset": 6235
+                                                    "offset": 6230
                                                 }
                                             }
                                         },
@@ -7389,56 +7389,56 @@
                                                             "value": "UML",
                                                             "position": {
                                                                 "start": {
-                                                                    "line": 275,
+                                                                    "line": 265,
                                                                     "column": 7,
-                                                                    "offset": 6242
+                                                                    "offset": 6237
                                                                 },
                                                                 "end": {
-                                                                    "line": 275,
+                                                                    "line": 265,
                                                                     "column": 10,
-                                                                    "offset": 6245
+                                                                    "offset": 6240
                                                                 }
                                                             }
                                                         }
                                                     ],
                                                     "position": {
                                                         "start": {
-                                                            "line": 275,
+                                                            "line": 265,
                                                             "column": 7,
-                                                            "offset": 6242
+                                                            "offset": 6237
                                                         },
                                                         "end": {
-                                                            "line": 275,
+                                                            "line": 265,
                                                             "column": 10,
-                                                            "offset": 6245
+                                                            "offset": 6240
                                                         }
                                                     }
                                                 }
                                             ],
                                             "position": {
                                                 "start": {
-                                                    "line": 275,
+                                                    "line": 265,
                                                     "column": 1,
-                                                    "offset": 6236
+                                                    "offset": 6231
                                                 },
                                                 "end": {
-                                                    "line": 275,
+                                                    "line": 265,
                                                     "column": 10,
-                                                    "offset": 6245
+                                                    "offset": 6240
                                                 }
                                             }
                                         }
                                     ],
                                     "position": {
                                         "start": {
-                                            "line": 268,
+                                            "line": 258,
                                             "column": 1,
-                                            "offset": 6102
+                                            "offset": 6097
                                         },
                                         "end": {
-                                            "line": 275,
+                                            "line": 265,
                                             "column": 10,
-                                            "offset": 6245
+                                            "offset": 6240
                                         }
                                     }
                                 }
@@ -7447,14 +7447,14 @@
                     ],
                     "position": {
                         "start": {
-                            "line": 251,
+                            "line": 241,
                             "column": 1,
-                            "offset": 5937
+                            "offset": 5932
                         },
                         "end": {
-                            "line": 275,
+                            "line": 265,
                             "column": 10,
-                            "offset": 6245
+                            "offset": 6240
                         }
                     }
                 }
@@ -7466,9 +7466,9 @@
                     "offset": 3996
                 },
                 "end": {
-                    "line": 275,
+                    "line": 265,
                     "column": 10,
-                    "offset": 6245
+                    "offset": 6240
                 }
             }
         },
@@ -7487,14 +7487,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 277,
+                            "line": 267,
                             "column": 1,
-                            "offset": 6247
+                            "offset": 6242
                         },
                         "end": {
-                            "line": 279,
+                            "line": 269,
                             "column": 206,
-                            "offset": 6471
+                            "offset": 6466
                         }
                     },
                     "data": {
@@ -7513,28 +7513,28 @@
                                     "value": "Transformers",
                                     "position": {
                                         "start": {
-                                            "line": 277,
+                                            "line": 267,
                                             "column": 6,
-                                            "offset": 6252
+                                            "offset": 6247
                                         },
                                         "end": {
-                                            "line": 277,
+                                            "line": 267,
                                             "column": 18,
-                                            "offset": 6264
+                                            "offset": 6259
                                         }
                                     }
                                 }
                             ],
                             "position": {
                                 "start": {
-                                    "line": 277,
+                                    "line": 267,
                                     "column": 1,
-                                    "offset": 6247
+                                    "offset": 6242
                                 },
                                 "end": {
-                                    "line": 279,
+                                    "line": 269,
                                     "column": 206,
-                                    "offset": 6471
+                                    "offset": 6466
                                 }
                             },
                             "data": {
@@ -7553,14 +7553,14 @@
                                     "value": "As opposed to viewers which change how a source file is viewed, a ",
                                     "position": {
                                         "start": {
-                                            "line": 279,
+                                            "line": 269,
                                             "column": 1,
-                                            "offset": 6266
+                                            "offset": 6261
                                         },
                                         "end": {
-                                            "line": 279,
+                                            "line": 269,
                                             "column": 67,
-                                            "offset": 6332
+                                            "offset": 6327
                                         }
                                     }
                                 },
@@ -7569,14 +7569,14 @@
                                     "value": "transformer",
                                     "position": {
                                         "start": {
-                                            "line": 279,
+                                            "line": 269,
                                             "column": 67,
-                                            "offset": 6332
+                                            "offset": 6327
                                         },
                                         "end": {
-                                            "line": 279,
+                                            "line": 269,
                                             "column": 80,
-                                            "offset": 6345
+                                            "offset": 6340
                                         }
                                     }
                                 },
@@ -7585,14 +7585,14 @@
                                     "value": " looks at an input and output pair and sees if it knows how to convert between the two ",
                                     "position": {
                                         "start": {
-                                            "line": 279,
+                                            "line": 269,
                                             "column": 80,
-                                            "offset": 6345
+                                            "offset": 6340
                                         },
                                         "end": {
-                                            "line": 279,
+                                            "line": 269,
                                             "column": 167,
-                                            "offset": 6432
+                                            "offset": 6427
                                         }
                                     }
                                 },
@@ -7601,14 +7601,14 @@
                                     "value": "lang",
                                     "position": {
                                         "start": {
-                                            "line": 279,
+                                            "line": 269,
                                             "column": 167,
-                                            "offset": 6432
+                                            "offset": 6427
                                         },
                                         "end": {
-                                            "line": 279,
+                                            "line": 269,
                                             "column": 173,
-                                            "offset": 6438
+                                            "offset": 6433
                                         }
                                     }
                                 },
@@ -7617,14 +7617,14 @@
                                     "value": " ie ",
                                     "position": {
                                         "start": {
-                                            "line": 279,
+                                            "line": 269,
                                             "column": 173,
-                                            "offset": 6438
+                                            "offset": 6433
                                         },
                                         "end": {
-                                            "line": 279,
+                                            "line": 269,
                                             "column": 177,
-                                            "offset": 6442
+                                            "offset": 6437
                                         }
                                     }
                                 },
@@ -7633,14 +7633,14 @@
                                     "value": "styl > css",
                                     "position": {
                                         "start": {
-                                            "line": 279,
+                                            "line": 269,
                                             "column": 177,
-                                            "offset": 6442
+                                            "offset": 6437
                                         },
                                         "end": {
-                                            "line": 279,
+                                            "line": 269,
                                             "column": 189,
-                                            "offset": 6454
+                                            "offset": 6449
                                         }
                                     }
                                 },
@@ -7649,14 +7649,14 @@
                                     "value": " or ",
                                     "position": {
                                         "start": {
-                                            "line": 279,
+                                            "line": 269,
                                             "column": 189,
-                                            "offset": 6454
+                                            "offset": 6449
                                         },
                                         "end": {
-                                            "line": 279,
+                                            "line": 269,
                                             "column": 193,
-                                            "offset": 6458
+                                            "offset": 6453
                                         }
                                     }
                                 },
@@ -7665,14 +7665,14 @@
                                     "value": "ts > js",
                                     "position": {
                                         "start": {
-                                            "line": 279,
+                                            "line": 269,
                                             "column": 193,
-                                            "offset": 6458
+                                            "offset": 6453
                                         },
                                         "end": {
-                                            "line": 279,
+                                            "line": 269,
                                             "column": 202,
-                                            "offset": 6467
+                                            "offset": 6462
                                         }
                                     }
                                 },
@@ -7681,28 +7681,28 @@
                                     "value": " etc",
                                     "position": {
                                         "start": {
-                                            "line": 279,
+                                            "line": 269,
                                             "column": 202,
-                                            "offset": 6467
+                                            "offset": 6462
                                         },
                                         "end": {
-                                            "line": 279,
+                                            "line": 269,
                                             "column": 206,
-                                            "offset": 6471
+                                            "offset": 6466
                                         }
                                     }
                                 }
                             ],
                             "position": {
                                 "start": {
-                                    "line": 279,
+                                    "line": 269,
                                     "column": 1,
-                                    "offset": 6266
+                                    "offset": 6261
                                 },
                                 "end": {
-                                    "line": 279,
+                                    "line": 269,
                                     "column": 206,
-                                    "offset": 6471
+                                    "offset": 6466
                                 }
                             }
                         }
@@ -7711,14 +7711,14 @@
             ],
             "position": {
                 "start": {
-                    "line": 277,
+                    "line": 267,
                     "column": 1,
-                    "offset": 6247
+                    "offset": 6242
                 },
                 "end": {
-                    "line": 279,
+                    "line": 269,
                     "column": 206,
-                    "offset": 6471
+                    "offset": 6466
                 }
             }
         }
@@ -7730,9 +7730,9 @@
             "offset": 0
         },
         "end": {
-            "line": 279,
+            "line": 269,
             "column": 206,
-            "offset": 6471
+            "offset": 6466
         }
     }
 }
