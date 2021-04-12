@@ -15,7 +15,18 @@ const wrapHandler = fn => ev => {
     return false
 }
 
-const CellMenu = props => {
+
+const CellMenuItem = ({title, icon, handler}) => {
+    const Icon = icon
+    const onClick = handler ? wrapHandler(handler) : null
+    return <li title={title} key={title} onClick={onClick}>{<Icon/>}</li>
+}
+
+const isExecutable = (meta) => {
+    return meta && (meta.repl || meta.lang === 'js')
+}
+
+const CellMenu = ({meta, editing, toggleEditing, save, execute} = {}) => {
 
     const [open, setOpen] = useState(false)
     const toggleOpen = wrapHandler(ev => {
@@ -23,25 +34,15 @@ const CellMenu = props => {
         setOpen(!open)
     })
 
-    const items = [
-        {title: "Execute", icon: ExecIcon, handler: wrapHandler(props.execute)}
-    ]
-
-    if (!props.editing) items.push({title: "Edit", icon: EditIcon, handler: wrapHandler(props.toggleEditing)})
-    else {
-        items.push({title: "Cancel", icon: CloseIcon, handler: wrapHandler(props.toggleEditing)})
-        items.push({title: "Save", icon: SaveIcon, handler: wrapHandler(props.save)})
-    }
-
     return <menu>
         <ul className="menu__items">
-            { open && items.map( item => {
-                const Icon = item.icon
-                return <li title={item.title} key={item.title} onClick={item.handler}><Icon/></li>
-            })}
+            { open && isExecutable(meta) && <CellMenuItem title="Execute" icon={ExecIcon} handler={execute}/>}
+            { open && !editing && <CellMenuItem title="Edit" icon={EditIcon} handler={toggleEditing}/>}
+            { open && editing && <CellMenuItem title="Cancel" icon={CloseIcon} handler={toggleEditing}/>}
+            { open && editing && <CellMenuItem title="Save" icon={SaveIcon} handler={save}/>}
             { !open 
-                ? <li title="Open" key="open" onClick={toggleOpen}><MenuIcon/></li>
-                : <li title="Close" key="close"onClick={toggleOpen}><CloseIcon/></li> }
+                ? <CellMenuItem title="Open" icon={MenuIcon} handler={toggleOpen} />
+                : <CellMenuItem title="Close" icon={CloseIcon} handler={toggleOpen} /> }
         </ul>
     </menu>
 }

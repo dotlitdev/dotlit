@@ -75,7 +75,7 @@ const Cell = props => {
                 endpos={posstr(pos.end)}
                 className={getClasses(ctx)}>
                     { editing ? <Editor src={src} update={setSrc}/> : content }
-                    { isSelected(ctx) && <CellMenu editing={editing} toggleEditing={toggleEditing} save={save(ctx)}/>}
+                    { isSelected(ctx) && <CellMenu meta={meta} editing={editing} toggleEditing={toggleEditing} save={save(ctx)}/>}
             </cell>
         }}
     </SelectionContext.Consumer>

@@ -77,7 +77,7 @@ const Menu = props => {
 
 export const Header = (props) => {
   console.log('<Header/>', props)
-  const { file, root, local, remote, ageMessage } = props
+  const { root, local, remote, ageMessage } = props
 
   const resetFile = ctx => async ev => {
     console.log("Reset File:", ctx.file.path)
@@ -159,8 +159,8 @@ export const Header = (props) => {
       </Menu>
     </Menu>
     <Menu right title={light}>
-      {file && 
-        <span disabled>{`File: ${file.path}`}</span>}
+      {ctx.file && 
+        <span disabled>{`File: ${ctx.file.path}`}</span>}
     {local && 
         <span disabled>{`Local last updated ${local}`}</span> }
     {remote && 
