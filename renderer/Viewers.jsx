@@ -2,6 +2,9 @@ import React from 'react'
 import { getConsoleForNamespace } from '../utils/console'
 
 const console = getConsoleForNamespace('Viewers')
+const btoa = typeof btoa !== 'undefined' ? btoa : str => Buffer.from(str, 'binary').toString('base64')
+const atob = typeof atob !== 'undefined' ? atob : str => Buffer.from(str, 'base64').toString('binary')
+
 
 const viewers = {
   csv: ({value}) => {

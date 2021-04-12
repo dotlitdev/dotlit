@@ -128,8 +128,16 @@ export function generate(cmd) {
                         return html_file;
                     } catch (err) { console.error(`Failed to process ${file.path}`, err) }
                 }))
+
+                const graph = {nodes: [], links: []}
+                Object.keys(manifest).forEach( key => {
+                   graph.nodes.push({id: key })
+                   manifest[key].backlinks.forEach( link => {
+                       graph.links.push({source: link.url, target: key})
+                   })
+                })
                 
-                await fs.writeFile(path.join(cmd.output, 'manifest.json'), JSON.stringify(manifest, null, 4))
+                await fs.writeFile(path.join(cmd.output, 'manifest.json'), JSON.stringify(graph, null, 4))
                 console.log(`Wrote ${html_files.filter(Identity).length}/${html_files.length} .lit file(s) to disk`)
 
                 if (global.litenv) {
