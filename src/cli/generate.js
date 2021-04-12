@@ -130,9 +130,9 @@ export function generate(cmd) {
                 }))
 
                 const graph = {nodes: [], links: []}
-                Object.keys(metadata).forEach( key => {
+                Object.keys(manifest).forEach( key => {
                    graph.nodes.push({id: key })
-                   metadata[key].backlinks.forEach( link => {
+                   manifest[key].backlinks.forEach( link => {
                        graph.links.push({source: link.url, target: key})
                    })
                 })
