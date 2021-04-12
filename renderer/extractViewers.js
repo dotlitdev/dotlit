@@ -23,6 +23,10 @@ export const extractViewers = ({fs} = {}) => {
                     = await import(/* webpackIgnore: true */ `data:text/javascript;base64,${ btoa(block.value)}`)
                 } catch(err) {
                     console.log("Failed to init viewer", err)
+                    const msg = "Viewer Error: " + (err.message || err.toString())
+                    file.data.viewers[block.data.meta.of] 
+                     = () => msg
+                    file.message(msg)
                 }
             }
         }
