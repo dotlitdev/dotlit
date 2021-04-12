@@ -168,7 +168,51 @@ C
   <circle cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow" />
 </svg>
 </div></codecell></cell><cell startpos="186:1-4473" endpos="188:4-4504" class="code"><codecell><span class="meta"><span class="lang">uri</span></span><iframe src="https://example.com
-"></iframe></codecell></cell><cell startpos="190:1-4506" endpos="235:4-5627" class="code"><codecell><span class="meta"><span class="lang">html</span></span><iframe src="data:text/html;base64,PGhlYWQ+CiAgPHN0eWxlPiBib2R5IHsgbWFyZ2luOiAwOyB9IDwvc3R5bGU+CgogIDxzY3JpcHQgc3JjPSJodHRwczovL3VucGtnLmNvbS9mb3JjZS1ncmFwaCI+PC9zY3JpcHQ+CiAgPCEtLTxzY3JpcHQgc3JjPSIuLi8uLi9kaXN0L2ZvcmNlLWdyYXBoLmpzIj48L3NjcmlwdD4tLT4KICA8IS0tIGZyb206IGh0dHBzOi8vZ2l0aHViLmNvbS92YXN0dXJpYW5vL2ZvcmNlLWdyYXBoIC0tPgo8L2hlYWQ+Cgo8Ym9keT4KICA8ZGl2IGlkPSJncmFwaCI+PC9kaXY+CgogIDxzY3JpcHQ+CiAgICBmZXRjaCgnL21hbmlmZXN0Lmpzb24nKS50aGVuKHJlcyA9PiByZXMuanNvbigpKS50aGVuKGRhdGEgPT4gewogICAgICBjb25zdCBHcmFwaCA9IEZvcmNlR3JhcGgoKQogICAgICAoZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2dyYXBoJykpCiAgICAgICAgLmdyYXBoRGF0YShkYXRhKQogICAgICAgIC5ub2RlSWQoJ2lkJykKICAgICAgICAvLy5ub2RlVmFsKCd2YWwnKQogICAgICAgIC5ub2RlTGFiZWwoJ2lkJykKICAgICAgICAvLy5ub2RlQXV0b0NvbG9yQnkoJ2dyb3VwJykKICAgICAgICAvLy5saW5rU291cmNlKCdzb3VyY2UnKQogICAgICAgIC8vLmxpbmtUYXJnZXQoJ3RhcmdldCcpCiAgICB9KTsKCiAgIC8vIFJhbmRvbSB0cmVlIAogICAgKGRpc2FibGUgPT4gewogICAgY29uc3QgTiA9IDMwMDsKICAgIGNvbnN0IGdEYXRhID0gewogICAgICBub2RlczogWy4uLkFycmF5KE4pLmtleXMoKV0ubWFwKGkgPT4gKHsgaWQ6IGkgfSkpLAogICAgICBsaW5rczogWy4uLkFycmF5KE4pLmtleXMoKV0KICAgICAgICAuZmlsdGVyKGlkID0+IGlkKQogICAgICAgIC5tYXAoaWQgPT4gKHsKICAgICAgICAgIHNvdXJjZTogaWQsCiAgICAgICAgICB0YXJnZXQ6IE1hdGgucm91bmQoTWF0aC5yYW5kb20oKSAqIChpZC0xKSkKICAgICAgICB9KSkKICAgIH07CgogICAgY29uc3QgR3JhcGggPSBGb3JjZUdyYXBoKCkKICAgICAgKGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdncmFwaCcpKQogICAgICAgIC5saW5rRGlyZWN0aW9uYWxQYXJ0aWNsZXMoMikKICAgICAgICAuZ3JhcGhEYXRhKGdEYXRhKTsKICAgIH0pCiAgPC9zY3JpcHQ+CjwvYm9keT4K"></iframe></codecell></cell><cell startpos="237:1-5629" endpos="239:4-5689" class="code"><codecell><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="js">confirm(&quot;It lives 🌱 from &quot;)
+"></iframe></codecell></cell><cell startpos="190:1-4506" endpos="235:4-5627" class="code"><codecell><span class="meta"><span class="lang">html</span></span><iframe srcDoc="&lt;head&gt;
+  &lt;style&gt; body { margin: 0; } &lt;/style&gt;
+
+  &lt;script src=&quot;https://unpkg.com/force-graph&quot;&gt;&lt;/script&gt;
+  &lt;!--&lt;script src=&quot;../../dist/force-graph.js&quot;&gt;&lt;/script&gt;--&gt;
+  &lt;!-- from: https://github.com/vasturiano/force-graph --&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;div id=&quot;graph&quot;&gt;&lt;/div&gt;
+
+  &lt;script&gt;
+    fetch(&#x27;/manifest.json&#x27;).then(res =&gt; res.json()).then(data =&gt; {
+      const Graph = ForceGraph()
+      (document.getElementById(&#x27;graph&#x27;))
+        .graphData(data)
+        .nodeId(&#x27;id&#x27;)
+        //.nodeVal(&#x27;val&#x27;)
+        .nodeLabel(&#x27;id&#x27;)
+        //.nodeAutoColorBy(&#x27;group&#x27;)
+        //.linkSource(&#x27;source&#x27;)
+        //.linkTarget(&#x27;target&#x27;)
+    });
+
+   // Random tree 
+    (disable =&gt; {
+    const N = 300;
+    const gData = {
+      nodes: [...Array(N).keys()].map(i =&gt; ({ id: i })),
+      links: [...Array(N).keys()]
+        .filter(id =&gt; id)
+        .map(id =&gt; ({
+          source: id,
+          target: Math.round(Math.random() * (id-1))
+        }))
+    };
+
+    const Graph = ForceGraph()
+      (document.getElementById(&#x27;graph&#x27;))
+        .linkDirectionalParticles(2)
+        .graphData(gData);
+    })
+  &lt;/script&gt;
+&lt;/body&gt;
+" style="aspect-ratio:1.6"></iframe></codecell></cell><cell startpos="237:1-5629" endpos="239:4-5689" class="code"><codecell><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="js">confirm(&quot;It lives 🌱 from &quot;)
 </code></pre></codecell></cell><cell startpos="241:1-5691" endpos="241:135-5825"><p>The above has a strange behaviour, in that it only executes the <code>static</code> value, and hydration with a diffent (local) value is ignored.</p></cell><cell startpos="243:1-5827" endpos="249:4-5935" class="code"><codecell><span class="meta"><span class="lang">css</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="css">#header { color: green; }
 h1,h2,h3,h4,h5,h6 {
   position: sticky;

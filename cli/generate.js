@@ -29,21 +29,31 @@ function generateBacklinks(files, root) {
     let manifest = {}
     console.log(`[Backlinks] for (${files.length}) files, in ${root}`)
     files.forEach( file => {
-        console.log("About to get links for file", file)
-        const links = getLinks(file, root)
         const fileLink = decorateLinkNode({ url: file.path })
-
+        const title = file.data.frontmatter.title || `Title TBD (${fileLink.data.canonical})`
         console.log(`[Manifest] Adding "${file.path}" as "${fileLink.data.canonical}"`)
-        manifest[fileLink.data.canonical] = manifest[fileLink.data.canonical] || { backlinks: [] }
-        manifest[fileLink.data.canonical].exists = true
+        manifest[fileLink.data.canonical] = manifest[fileLink.data.canonical] || {
+            backlinks: [],
+            exists: true,
+            title: title
+        }
+    })
+    files.forEach( file => {
+        
+        const fileLink = decorateLinkNode({ url: file.path })
+        const title = file.data.frontmatter.title || `Title TBD (${fileLink.data.canonical})`
+        console.log("About to get links for file", file.path, title)
+        
+        const links = getLinks(file, root)
         // console.log('fileLink', fileLink)
-        console.log(`[Backlinks] ${file.path} ${fileLink.data.canonical} ${fileLink.url} links: (${links.length})`)
+        console.log(`[Backlinks] ${title} ${fileLink.data.canonical} links: (${links.length})`)
         links.forEach( link => {
             // console.log(link)
-            console.log(`[Backlinks] ${link.type} >> ${link.url} >> ${link.data.canonical} relative: ${link.data.isRelative}`)
+            // console.log(`[Backlinks] ${link.type} >> ${link.url} >> ${link.data.canonical} relative: ${link.data.isRelative}`)
             const linkNode = {
+                id: fileLink.data.canonical,
                 url: fileLink.url,
-                title: file.data.frontmatter.title || `Title TBD (${fileLink.data.canonical})`,
+                title: title,
             }
             if (link.data.isRelative) {
                 if (manifest[link.data.canonical] && manifest[link.data.canonical].backlinks) {
@@ -131,10 +141,11 @@ export function generate(cmd) {
 
                 const graph = {nodes: [], links: []}
                 Object.keys(manifest).forEach( key => {
-                   graph.nodes.push({id: key })
-                   manifest[key].backlinks.forEach( link => {
-                       graph.links.push({source: link.url, target: key})
-                   })
+                    const node = manifest[key]
+                    graph.nodes.push({ id: key, ...node})
+                    node.backlinks.forEach( link => {
+                       graph.links.push({source: link.id, target: key})
+                    })
                 })
                 
                 await fs.writeFile(path.join(cmd.output, 'manifest.json'), JSON.stringify(graph, null, 4))
