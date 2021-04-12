@@ -1,4 +1,7 @@
 import React from 'react'
+import { getConsoleForNamespace } from '../utils/console'
+
+const console = getConsoleForNamespace('Viewers')
 
 const viewers = {
   csv: ({value}) => {
