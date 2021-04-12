@@ -21,7 +21,7 @@ const Document = props => {
             <link rel="stylesheet" href={path.join(props.root, 'style.css')}/>
         </head>
         <body>
-            <div id="app"><App root={props.root} file={props.file} fs={props.fs} result={result}/></div>
+            <div id="lit-app"><App root={props.root} file={props.file} fs={props.fs} result={result}/></div>
             <div id="backlinks"><Backlinks root={props.root} links={props.backlinks || []}/></div>
             {/* <script>content.remove();</script> */}
             <script src="//cdn.jsdelivr.net/npm/eruda"></script>

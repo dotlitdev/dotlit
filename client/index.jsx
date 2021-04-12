@@ -118,7 +118,8 @@ console.log(`lit:`, lit)
     console.log('notebook', window.lit.notebook)
     
     try {
-        ReactDOM.hydrate(window.lit.notebook, document.getElementById('app'))
+        ReactDOM.render(window.lit.notebook, document.getElementById('lit-app'))
+        // ReactDOM.hydrate(window.lit.notebook, document.getElementById('app'))
         // ReactDOM.hydrate(<Header root={litroot} />, document.getElementById('header'))
     } catch (err) {
         console.error("Error hydrating App", err)

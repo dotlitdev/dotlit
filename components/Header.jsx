@@ -26,8 +26,20 @@ const showInspector = ev => {
 }
 
 const LED = ({color,status}) => {
-
   return <span title={status} className={`led led-${color}`}></span>
+}
+
+const Status = ({local, remote}) => {
+  const color = (typeof window === 'undefined' || typeof window.localStorage === 'undefined)')
+    ? 'grey'
+    : (local && !remote)
+      ? 'orange'
+      : (remote && !local) 
+        ? 'blue'
+        : (!remote && !local)
+          ? 'red'
+          : 'green'
+  return <LED color={color} title="Status" />
 }
 
 const Menu = props => {
@@ -97,16 +109,8 @@ export const Header = (props) => {
   const setGhToken = (ev) => {
     localStorage.getItem('ghToken', prompt("GitHub personal access token"))
   }
-
-  const light = (typeof window === 'undefined' || typeof window.localStorage === 'undefined')
-    ? <LED color="grey" title="Status"/>
-    : (local && !remote)
-      ? <LED color="orange" title="Status"/>
-      : (remote && !local)
-        ? <LED color="blue" title="Status"/>
-        : (!remote && !local)
-        ? <LED color="red" title="Status"/>
-        : <LED color="green" title="Status"/>
+  
+  
 
 
   return <SelectionContext.Consumer>{(ctx) => {
@@ -158,7 +162,7 @@ export const Header = (props) => {
           <span onClick={showInspector}>Show Inspector</span>
       </Menu>
     </Menu>
-    <Menu right title={light}>
+    <Menu right title={<Status local={local} remote={remote} />}>
       {ctx.file && 
         <span disabled>{`File: ${ctx.file.path}`}</span>}
     {local && 
