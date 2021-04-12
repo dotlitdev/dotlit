@@ -22,7 +22,45 @@ const console = getConsoleForNamespace('generate')
 global.fetch = require("node-fetch")
 
 function getLinks(file, root) {
-    return file && file.data && file.data.ast ? selectAll('link, wikiLink', file.data.ast) : []
+    const links = []
+    if (file && file.data && file.data.ast) {
+        selectAll('link, wikiLink', file.data.ast).forEach( link => {
+            links.push(link)
+        })
+    }
+    if (file && file.data && file.data.files) {
+        file.data.files.forEach( codeblock => {
+            if (codeblock
+                && codeblock.data 
+                && codeblock.data.meta
+                && codeblock.data.meta.filename){
+                links.push({
+                    exists: true,
+                    type: 'code',
+                    data: {
+                        isCode: true,
+                        canonical: codeblock.data.meta.filename
+                    }
+                })
+            }
+            if (codeblock
+                && codeblock.data 
+                && codeblock.data.meta
+                && codeblock.data.meta.source 
+                && codeblock.data.meta.source.filename){
+                links.push({
+                    type: 'transclude',
+                    exists: true,
+                    data: {
+                        isCode: true,
+                        canonical: codeblock.data.meta.source.filename
+                    }
+                })
+            }
+        })
+    }
+    
+    return links
 }
 
 function generateBacklinks(files, root) {
@@ -47,7 +85,7 @@ function generateBacklinks(files, root) {
         const links = getLinks(file, root)
         // console.log('fileLink', fileLink)
         console.log(`[Backlinks] ${title} ${fileLink.data.canonical} links: (${links.length})`)
-        links.forEach( link => {
+        links.forEach( (link, i) => {
             // console.log(link)
             // console.log(`[Backlinks] ${link.type} >> ${link.url} >> ${link.data.canonical} relative: ${link.data.isRelative}`)
             const linkNode = {
@@ -55,13 +93,20 @@ function generateBacklinks(files, root) {
                 url: fileLink.url,
                 title: title,
             }
-            if (link.data.isRelative) {
+            if (link.data.isRelative || link.data.isCode) {
                 if (manifest[link.data.canonical] && manifest[link.data.canonical].backlinks) {
+                    console.log(`[Manifest]:${i} Adding link ${fileLink.data.canonical} to existing "${link.data.canonical}"`)
                     manifest[link.data.canonical].backlinks.push(linkNode)
                 } else {
-                    console.log(`[Manifest] Adding "${link.data.canonical}"`)
-                    manifest[link.data.canonical] = { backlinks: [linkNode], exists: false }
+                    console.log(`[Manifest]:${i} Adding link ${fileLink.data.canonical} to "${link.data.canonical}"`)
+                    manifest[link.data.canonical] = {
+                        backlinks: [linkNode], 
+                        exists: link.exists || false,
+                        type: link.type
+                    }
                 }
+            } else {
+                console.log(`[Backlinks]:${i} Other`, link.data.canonical)
             }
         })
     })
