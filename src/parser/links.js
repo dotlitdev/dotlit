@@ -31,7 +31,8 @@ export const wikiLinkOptions = files => ({
 
 const linkToUrl = (link) => {
     if (link.type === 'wikiLink') {
-        return link.data.permalink + '.lit'
+        const [base,frag] = link.data.permalink.split("#")
+        return `${base}.lit${frag ? ('#' + frag) : ''}`
     } else {
         return link.url
     }
