@@ -1,5 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
+// const nodeExternals = require('webpack-node-externals')
 
 const distDir = path.resolve(__dirname, './dist')
 const stage = "production"
@@ -16,9 +17,7 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
   target: 'node',
-  externals:{
-    // fs: "commonjs fs",
-  },
+  // externals: [nodeExternals],
   module: {
     rules: [
       {

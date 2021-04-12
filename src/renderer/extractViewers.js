@@ -1,10 +1,9 @@
 import path from 'path'
 import { getConsoleForNamespace } from '../utils/console'
 import { selectAll } from 'unist-util-select'
+import {btoa, atob } from '../utils/safe-encoders'
 
 const console = getConsoleForNamespace('extractViewers')
-const btoa = typeof btoa !== 'undefined' ? btoa : str => Buffer.from(str, 'binary').toString('base64')
-const atob = typeof atob !== 'undefined' ? atob : str => Buffer.from(str, 'base64').toString('binary')
 
 export const extractViewers = ({fs} = {}) => {
     return async (tree,file) => {

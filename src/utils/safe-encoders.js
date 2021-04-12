@@ -1,7 +1,20 @@
 var newlineRegex = /\n/g;
 
-const btoa = typeof btoa !== 'undefined' ? btoa : str => Buffer.from(str, 'binary').toString('base64')
-const atob = typeof atob !== 'undefined' ? atob : str => Buffer.from(str, 'base64').toString('binary')
+
+export const btoa = (str) => {
+  if (typeof window === 'undefined' || !window.btoa)  {
+    // const Buffer = require('buffer')
+    return Buffer.from(str, 'binary').toString('base64')
+  } else return window.btoa(str)
+}
+
+export const atob = (str) => {
+  if (typeof window === 'undefined' || !window.atob)  {
+    // const Buffer = require('buffer')
+    return Buffer.from(str, 'base64').toString('binary')
+  }
+  else return window.atob(str)
+}
 
 export function b64EncodeUnicode(str) {
   return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {

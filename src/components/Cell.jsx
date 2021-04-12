@@ -66,7 +66,7 @@ const Cell = props => {
 
     return <SelectionContext.Consumer>
         { ctx => {
-            console.log("[Cell] code: ", !!isCodeCell, codeNode, {src: codeSource, orig: originalSource}, ctx ) // meta, codeSource)
+            console.log("[Cell] code: ", !!isCodeCell, meta && meta.raw )//, codeNode, {src: codeSource, orig: originalSource}, ctx ) // meta, codeSource)
             const src = (meta && meta.remote && rawSource)
                         || source(pos, ctx.src)
             return <cell

@@ -1,5 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
+// const nodeExternals = require('webpack-node-externals')
 
 const { spawn } = require('child_process')
 const distDir = path.resolve(__dirname, './dist')
@@ -22,9 +23,7 @@ module.exports = {
     }
   },
   target: 'web',
-  externals:{
-    fs: "commonjs fs",
-  },
+  // externals: [nodeExternals],
   module: {
     rules: [
       {
