@@ -30,33 +30,31 @@ function getLinks(file, root) {
     }
     if (file && file.data && file.data.files) {
         file.data.files.forEach( codeblock => {
-            if (codeblock
+           if (codeblock
                 && codeblock.data 
-                && codeblock.data.meta
-                && codeblock.data.meta.filename){
-                links.push({
+                && codeblock.data.meta) {
+            const meta = codeblock.data.meta
+            let type, url;
+            if (meta.filename){
+               type = 'file'
+               url = meta.filename
+            }
+            if (meta.source 
+                && meta.source.filename){
+               type = 'file'
+               url = meta.source.filename
+            }
+
+            if (type) links.push({
+                    type,
                     exists: true,
-                    type: 'code',
+                    url,
                     data: {
                         isCode: true,
-                        canonical: codeblock.data.meta.filename
+                        canonical: url
                     }
                 })
-            }
-            if (codeblock
-                && codeblock.data 
-                && codeblock.data.meta
-                && codeblock.data.meta.source 
-                && codeblock.data.meta.source.filename){
-                links.push({
-                    type: 'transclude',
-                    exists: true,
-                    data: {
-                        isCode: true,
-                        canonical: codeblock.data.meta.source.filename
-                    }
-                })
-            }
+          }
         })
     }
     
