@@ -135,51 +135,24 @@ Docs: <a href="https://vega.github.io/vega-lite/usage/compile.html">vega-lite</a
   &lt;/body&gt;
 &lt;/html&gt;
 " style="aspect-ratio:1.6"></iframe></codecell></cell></section>
-<section depth="3" class="" startpos="172:1-3788" endpos="237:4-5701"><cell startpos="172:1-3788" endpos="174:53-3866"><h3 id="example-d3-graphviz">Example: D3 Graphviz</h3><p>Docs: <a href="https://github.com/magjac/d3-graphviz#examples">https://github.com/magjac/d3-graphviz#examples</a></p></cell><cell startpos="176:1-3868" endpos="221:4-5289" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node, {React}) =&gt; {
+<section depth="3" class="" startpos="172:1-3788" endpos="210:4-4826"><cell startpos="172:1-3788" endpos="174:53-3866"><h3 id="example-d3-graphviz">Example: D3 Graphviz</h3><p>Docs: <a href="https://github.com/magjac/d3-graphviz#examples">https://github.com/magjac/d3-graphviz#examples</a></p></cell><cell startpos="176:1-3868" endpos="194:4-4414" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node, {React}) =&gt; {
    const c = React.createElement
-   const data = node.value
-
-   const el = c(&#x27;iframe&#x27;, {srcDoc: `&lt;head&gt;
-  &lt;style&gt; body { margin: 0; } &lt;/style&gt;
-  &lt;script src=&quot;https://unpkg.com/force-graph&quot;&gt;&lt;/script&gt;
-  &lt;!-- from: https://github.com/vasturiano/force-graph --&gt;
-&lt;/head&gt;
+   const el = c(&#x27;iframe&#x27;, {srcDoc: `&lt;!DOCTYPE html&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
 &lt;body&gt;
-  &lt;div id=&quot;graph&quot;&gt;&lt;/div&gt;
-  &lt;script&gt;
-    const data = ${data};
-      const thisfile = window.parent.lit.location.src
-      // alert(thisfile)
-      const elem = document.getElementById(&#x27;graph&#x27;)
-      const Graph = ForceGraph()(elem)
-        .graphData(data)
-        .nodeId(&#x27;id&#x27;)
-        .nodeVal((n) =&gt; 2 * (n.backlinks &amp;&amp; n.backlinks.length ? n.backlinks.length : 1))
-        .nodeLabel(&#x27;id&#x27;)
-        .nodeAutoColorBy(&#x27;type&#x27;)
-        
-        // .linkColor(d =&gt; data.nodes[d.source].exists ? &#x27;red&#x27; : &#x27;lightblue&#x27;)
-        .linkDirectionalArrowLength(6)
-        .onNodeHover(node =&gt; elem.style.cursor = node ? &#x27;pointer&#x27; : null)
-        .onNodeClick(node =&gt; {
-          // Center/zoom on node
-          Graph.centerAt(node.x, node.y, 1000);
-          Graph.zoom(2, 2000);
-        });
+&lt;script src=&quot;//d3js.org/d3.v5.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js&quot;&gt;&lt;/script&gt;
+&lt;div id=&quot;graph&quot; style=&quot;text-align: center;&quot;&gt;&lt;/div&gt;
+&lt;script&gt;
 
-        setTimeout( () =&gt; {
-            const { nodes, links } = Graph.graphData()
-            const node = nodes.filter( n =&gt; n.id === thisfile)[0]
-            Graph.centerAt(node.x, node.y, 1000);
-            Graph.zoom(2, 2000);
+d3.select(&quot;#graph&quot;).graphviz()
+    .renderDot(&#x27;${node.value}&#x27;);
 
-        }, 2000)
-
-  &lt;/script&gt;
-&lt;/body&gt;`})
+&lt;/script&gt;`})
    return el
 }
-</code></pre></codecell></cell><cell startpos="223:1-5291" endpos="237:4-5701" class="code"><codecell class="local"><span class="meta"><span class="lang">iframe</span></span><iframe srcDoc="&lt;!DOCTYPE html&gt;
+</code></pre></codecell></cell><cell startpos="196:1-4416" endpos="210:4-4826" class="code"><codecell class="local"><span class="meta"><span class="lang">iframe</span></span><iframe srcDoc="&lt;!DOCTYPE html&gt;
 &lt;meta charset=&quot;utf-8&quot;&gt;
 &lt;body&gt;
 &lt;script src=&quot;//d3js.org/d3.v5.min.js&quot;&gt;&lt;/script&gt;
@@ -193,16 +166,16 @@ d3.select(&quot;#graph&quot;).graphviz()
 
 &lt;/script&gt;
 " style="aspect-ratio:1.6"></iframe></codecell></cell></section>
-<section depth="2" class="" startpos="239:1-5703" endpos="248:140-5980"><cell startpos="239:1-5703" endpos="239:10-5712"><h2 id="errors">Errors</h2></cell><section depth="3" class="" startpos="241:1-5714" endpos="248:140-5980"><cell startpos="241:1-5714" endpos="241:12-5725"><h3 id="runtime">Runtime</h3></cell><cell startpos="243:1-5727" endpos="247:4-5840" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node) =&gt; {
+<section depth="2" class="" startpos="212:1-4828" endpos="221:140-5105"><cell startpos="212:1-4828" endpos="212:10-4837"><h2 id="errors">Errors</h2></cell><section depth="3" class="" startpos="214:1-4839" endpos="221:140-5105"><cell startpos="214:1-4839" endpos="214:12-4850"><h3 id="runtime">Runtime</h3></cell><cell startpos="216:1-4852" endpos="220:4-4965" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node) =&gt; {
   throw new Error(&quot;Test Error: Broken Viewer&quot;)
 }
-</code></pre></codecell></cell><cell startpos="248:1-5841" endpos="248:140-5980"><p>The above viewer breaks the document render, destroying the page, but therefore use of it is not persisted. Consider adding <code>ErrorBoundry</code>.</p></cell></section></section>
-<section depth="3" class="" startpos="250:1-5982" endpos="257:4-6123"><cell startpos="250:1-5982" endpos="250:11-5992"><h3 id="import">Import</h3></cell><cell startpos="252:1-5994" endpos="257:4-6123" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">throw new Error(&quot;Test Error: Broken Viewer&quot;)
+</code></pre></codecell></cell><cell startpos="221:1-4966" endpos="221:140-5105"><p>The above viewer breaks the document render, destroying the page, but therefore use of it is not persisted. Consider adding <code>ErrorBoundry</code>.</p></cell></section></section>
+<section depth="3" class="" startpos="223:1-5107" endpos="230:4-5248"><cell startpos="223:1-5107" endpos="223:11-5117"><h3 id="import">Import</h3></cell><cell startpos="225:1-5119" endpos="230:4-5248" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">throw new Error(&quot;Test Error: Broken Viewer&quot;)
 export const viewer = (node) =&gt; {
   return &quot;never&quot;
 }
 </code></pre></codecell></cell></section>
-<section depth="2" class="" startpos="259:1-6125" endpos="282:4-6561"><cell startpos="259:1-6125" endpos="259:21-6145"><h2 id="initial-prototype">Initial prototype</h2></cell><cell startpos="261:1-6147" endpos="282:4-6561" class="code"><codecell class="local"><span class="meta"><span class="lang">html</span></span><pre><code class="html">&lt;!DOCTYPE html&gt;
+<section depth="2" class="" startpos="232:1-5250" endpos="255:4-5686"><cell startpos="232:1-5250" endpos="232:21-5270"><h2 id="initial-prototype">Initial prototype</h2></cell><cell startpos="234:1-5272" endpos="255:4-5686" class="code"><codecell class="local"><span class="meta"><span class="lang">html</span></span><pre><code class="html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
   &lt;head&gt;
     &lt;title&gt;Test page&lt;/title&gt;
