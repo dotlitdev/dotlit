@@ -39,7 +39,7 @@
 }
 </code></pre></codecell></cell><cell startpos="54:1-684" endpos="56:4-776" class="code"><codecell class="local"><span class="meta"><span class="lang">txt</span><span class="filename">file.txt</span><ul class="tags"><li><span class="tag">example</span></li></ul><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="txt">show meta content instead
 </code></pre></codecell></cell></section>
-<section depth="3" class="" startpos="58:1-778" endpos="124:92-2558"><cell startpos="58:1-778" endpos="60:73-879"><h3 id="example-graph-viewer">Example: <code>graph</code> viewer</h3><p>✅ This viewer has been folded into <code>.lit</code> as one of the default viewers.</p></cell><cell startpos="62:1-881" endpos="107:4-2274" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node, {React}) =&gt; {
+<section depth="3" class="" startpos="58:1-778" endpos="124:92-2587"><cell startpos="58:1-778" endpos="60:73-879"><h3 id="example-graph-viewer">Example: <code>graph</code> viewer</h3><p>✅ This viewer has been folded into <code>.lit</code> as one of the default viewers.</p></cell><cell startpos="62:1-881" endpos="107:4-2303" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node, {React}) =&gt; {
    const c = React.createElement
    const data = node.value
 
@@ -58,7 +58,7 @@
       const Graph = ForceGraph()(elem)
         .graphData(data)
         .nodeId(&#x27;id&#x27;)
-        .nodeVal((n) =&gt; n.backlinks ? n.backlinks.length : 1)
+        .nodeVal((n) =&gt; 10 * (n.backlinks &amp;&amp; n.backlinks.length ? n.backlinks.length : 1))
         .nodeLabel(&#x27;id&#x27;)
         .nodeAutoColorBy(&#x27;type&#x27;)
         
@@ -83,7 +83,7 @@
 &lt;/body&gt;`})
    return el
 }
-</code></pre></codecell></cell><cell startpos="109:1-2276" endpos="119:4-2417" class="code"><codecell class="local"><span class="meta"><span class="lang">custom-graph</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="custom-graph">{
+</code></pre></codecell></cell><cell startpos="109:1-2305" endpos="119:4-2446" class="code"><codecell class="local"><span class="meta"><span class="lang">custom-graph</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="custom-graph">{
   &quot;nodes&quot;:[
     {&quot;id&quot;: &quot;foo&quot;},
     {&quot;id&quot;: &quot;bar&quot;}
@@ -92,17 +92,17 @@
     {&quot;source&quot;: &quot;foo&quot;, &quot;target&quot;: &quot;bar&quot;}
   ]
 }
-</code></pre></codecell></cell><cell startpos="121:1-2419" endpos="122:4-2465" class="code"><codecell class="local"><span class="meta"><span class="lang">custom-graph</span><span class="source">&lt; ../manifest.json</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="custom-graph"></code></pre></codecell></cell><cell startpos="124:1-2467" endpos="124:92-2558"><p>The above automatically transcludes the <code>.lit</code> manifest and focuses on the current document</p></cell></section>
-<section depth="2" class="" startpos="126:1-2560" endpos="135:140-2837"><cell startpos="126:1-2560" endpos="126:10-2569"><h2 id="errors">Errors</h2></cell><section depth="3" class="" startpos="128:1-2571" endpos="135:140-2837"><cell startpos="128:1-2571" endpos="128:12-2582"><h3 id="runtime">Runtime</h3></cell><cell startpos="130:1-2584" endpos="134:4-2697" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node) =&gt; {
+</code></pre></codecell></cell><cell startpos="121:1-2448" endpos="122:4-2494" class="code"><codecell class="local"><span class="meta"><span class="lang">custom-graph</span><span class="source">&lt; ../manifest.json</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="custom-graph"></code></pre></codecell></cell><cell startpos="124:1-2496" endpos="124:92-2587"><p>The above automatically transcludes the <code>.lit</code> manifest and focuses on the current document</p></cell></section>
+<section depth="2" class="" startpos="126:1-2589" endpos="135:140-2866"><cell startpos="126:1-2589" endpos="126:10-2598"><h2 id="errors">Errors</h2></cell><section depth="3" class="" startpos="128:1-2600" endpos="135:140-2866"><cell startpos="128:1-2600" endpos="128:12-2611"><h3 id="runtime">Runtime</h3></cell><cell startpos="130:1-2613" endpos="134:4-2726" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node) =&gt; {
   throw new Error(&quot;Test Error: Broken Viewer&quot;)
 }
-</code></pre></codecell></cell><cell startpos="135:1-2698" endpos="135:140-2837"><p>The above viewer breaks the document render, destroying the page, but therefore use of it is not persisted. Consider adding <code>ErrorBoundry</code>.</p></cell></section></section>
-<section depth="3" class="" startpos="137:1-2839" endpos="144:4-2980"><cell startpos="137:1-2839" endpos="137:11-2849"><h3 id="import">Import</h3></cell><cell startpos="139:1-2851" endpos="144:4-2980" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">throw new Error(&quot;Test Error: Broken Viewer&quot;)
+</code></pre></codecell></cell><cell startpos="135:1-2727" endpos="135:140-2866"><p>The above viewer breaks the document render, destroying the page, but therefore use of it is not persisted. Consider adding <code>ErrorBoundry</code>.</p></cell></section></section>
+<section depth="3" class="" startpos="137:1-2868" endpos="144:4-3009"><cell startpos="137:1-2868" endpos="137:11-2878"><h3 id="import">Import</h3></cell><cell startpos="139:1-2880" endpos="144:4-3009" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">throw new Error(&quot;Test Error: Broken Viewer&quot;)
 export const viewer = (node) =&gt; {
   return &quot;never&quot;
 }
 </code></pre></codecell></cell></section>
-<section depth="2" class="" startpos="146:1-2982" endpos="169:4-3418"><cell startpos="146:1-2982" endpos="146:21-3002"><h2 id="initial-prototype">Initial prototype</h2></cell><cell startpos="148:1-3004" endpos="169:4-3418" class="code"><codecell class="local"><span class="meta"><span class="lang">html</span></span><pre><code class="html">&lt;!DOCTYPE html&gt;
+<section depth="2" class="" startpos="146:1-3011" endpos="169:4-3447"><cell startpos="146:1-3011" endpos="146:21-3031"><h2 id="initial-prototype">Initial prototype</h2></cell><cell startpos="148:1-3033" endpos="169:4-3447" class="code"><codecell class="local"><span class="meta"><span class="lang">html</span></span><pre><code class="html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
   &lt;head&gt;
     &lt;title&gt;Test page&lt;/title&gt;
