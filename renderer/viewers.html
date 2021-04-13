@@ -39,7 +39,7 @@
 }
 </code></pre></codecell></cell><cell startpos="54:1-684" endpos="56:4-776" class="code"><codecell class="local"><span class="meta"><span class="lang">txt</span><span class="filename">file.txt</span><ul class="tags"><li><span class="tag">example</span></li></ul><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="txt">show meta content instead
 </code></pre></codecell></cell></section>
-<section depth="3" class="" startpos="58:1-778" endpos="125:92-2612"><cell startpos="58:1-778" endpos="60:39-845"><h3 id="example-graph-viewer">Example: <code>graph</code> viewer</h3><p>ToDo: convert to a generalised viewer.</p></cell><cell startpos="62:1-847" endpos="109:4-2363" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node, {React}) =&gt; {
+<section depth="3" class="" startpos="58:1-778" endpos="123:92-2482"><cell startpos="58:1-778" endpos="60:39-845"><h3 id="example-graph-viewer">Example: <code>graph</code> viewer</h3><p>ToDo: convert to a generalised viewer.</p></cell><cell startpos="62:1-847" endpos="107:4-2233" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node, {React}) =&gt; {
    const c = React.createElement
    const data = node.value
 
@@ -52,7 +52,6 @@
   &lt;div id=&quot;graph&quot;&gt;&lt;/div&gt;
   &lt;script&gt;
     const data = ${data};
-    //fetch(&#x27;/manifest.json&#x27;).then(res =&gt; res.json()).then(data =&gt; {
       const thisfile = window.parent.lit.location.src
       // alert(thisfile)
       const elem = document.getElementById(&#x27;graph&#x27;)
@@ -73,19 +72,18 @@
         });
 
         setTimeout( () =&gt; {
-        const { nodes, links } = Graph.graphData()
-        const node = nodes.filter( n =&gt; n.id === thisfile)[0]
-        Graph.centerAt(node.x, node.y, 1000);
-        Graph.zoom(2, 1000);
-        // Graph.zoomToFit(1000, 2, (node) =&gt; node.id === thisfile)
+            const { nodes, links } = Graph.graphData()
+            const node = nodes.filter( n =&gt; n.id === thisfile)[0]
+            Graph.centerAt(node.x, node.y, 1000);
+            Graph.zoom(2, 1000);
+
         }, 2000)
 
-    //});
   &lt;/script&gt;
 &lt;/body&gt;`})
    return el
 }
-</code></pre></codecell></cell><cell startpos="111:1-2365" endpos="120:4-2478" class="code"><codecell class="local"><span class="meta"><span class="lang">graph</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="graph">{
+</code></pre></codecell></cell><cell startpos="109:1-2235" endpos="118:4-2348" class="code"><codecell class="local"><span class="meta"><span class="lang">graph</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="graph">{
 &quot;nodes&quot;:[
 {&quot;id&quot;: &quot;foo&quot;},
 {&quot;id&quot;: &quot;bar&quot;}
@@ -93,17 +91,17 @@
 &quot;links&quot;: [
 {&quot;source&quot;: &quot;foo&quot;, &quot;target&quot;: &quot;bar&quot;}
 ]}
-</code></pre></codecell></cell><cell startpos="122:1-2480" endpos="123:4-2519" class="code"><codecell class="local"><span class="meta"><span class="lang">graph</span><span class="source">&lt; ../manifest.json</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="graph"></code></pre></codecell></cell><cell startpos="125:1-2521" endpos="125:92-2612"><p>The above automatically transcludes the <code>.lit</code> manifest and focuses on the current document</p></cell></section>
-<section depth="2" class="" startpos="127:1-2614" endpos="136:140-2891"><cell startpos="127:1-2614" endpos="127:10-2623"><h2 id="errors">Errors</h2></cell><section depth="3" class="" startpos="129:1-2625" endpos="136:140-2891"><cell startpos="129:1-2625" endpos="129:12-2636"><h3 id="runtime">Runtime</h3></cell><cell startpos="131:1-2638" endpos="135:4-2751" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node) =&gt; {
+</code></pre></codecell></cell><cell startpos="120:1-2350" endpos="121:4-2389" class="code"><codecell class="local"><span class="meta"><span class="lang">graph</span><span class="source">&lt; ../manifest.json</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="graph"></code></pre></codecell></cell><cell startpos="123:1-2391" endpos="123:92-2482"><p>The above automatically transcludes the <code>.lit</code> manifest and focuses on the current document</p></cell></section>
+<section depth="2" class="" startpos="125:1-2484" endpos="134:140-2761"><cell startpos="125:1-2484" endpos="125:10-2493"><h2 id="errors">Errors</h2></cell><section depth="3" class="" startpos="127:1-2495" endpos="134:140-2761"><cell startpos="127:1-2495" endpos="127:12-2506"><h3 id="runtime">Runtime</h3></cell><cell startpos="129:1-2508" endpos="133:4-2621" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node) =&gt; {
   throw new Error(&quot;Test Error: Broken Viewer&quot;)
 }
-</code></pre></codecell></cell><cell startpos="136:1-2752" endpos="136:140-2891"><p>The above viewer breaks the document render, destroying the page, but therefore use of it is not persisted. Consider adding <code>ErrorBoundry</code>.</p></cell></section></section>
-<section depth="3" class="" startpos="138:1-2893" endpos="145:4-3034"><cell startpos="138:1-2893" endpos="138:11-2903"><h3 id="import">Import</h3></cell><cell startpos="140:1-2905" endpos="145:4-3034" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">throw new Error(&quot;Test Error: Broken Viewer&quot;)
+</code></pre></codecell></cell><cell startpos="134:1-2622" endpos="134:140-2761"><p>The above viewer breaks the document render, destroying the page, but therefore use of it is not persisted. Consider adding <code>ErrorBoundry</code>.</p></cell></section></section>
+<section depth="3" class="" startpos="136:1-2763" endpos="143:4-2904"><cell startpos="136:1-2763" endpos="136:11-2773"><h3 id="import">Import</h3></cell><cell startpos="138:1-2775" endpos="143:4-2904" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">throw new Error(&quot;Test Error: Broken Viewer&quot;)
 export const viewer = (node) =&gt; {
   return &quot;never&quot;
 }
 </code></pre></codecell></cell></section>
-<section depth="2" class="" startpos="147:1-3036" endpos="170:4-3472"><cell startpos="147:1-3036" endpos="147:21-3056"><h2 id="initial-prototype">Initial prototype</h2></cell><cell startpos="149:1-3058" endpos="170:4-3472" class="code"><codecell class="local"><span class="meta"><span class="lang">html</span></span><pre><code class="html">&lt;!DOCTYPE html&gt;
+<section depth="2" class="" startpos="145:1-2906" endpos="168:4-3342"><cell startpos="145:1-2906" endpos="145:21-2926"><h2 id="initial-prototype">Initial prototype</h2></cell><cell startpos="147:1-2928" endpos="168:4-3342" class="code"><codecell class="local"><span class="meta"><span class="lang">html</span></span><pre><code class="html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
   &lt;head&gt;
     &lt;title&gt;Test page&lt;/title&gt;
