@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import * as clipboard from "clipboard-polyfill"
-
+import source from 'unist-util-source'
 import SelectionContext from './SelectionContext'
 import { Identity } from '../utils/functions'
 import { getConsoleForNamespace } from '../utils/console'
@@ -110,6 +110,12 @@ export const Header = (props) => {
     localStorage.getItem('ghToken', prompt("GitHub personal access token"))
   }
   
+  const copyCell = ctx => ev => {
+    const src = source(ctx.selectedCell,ctx.src)
+    clipboard.writeText(src)
+    console.log("Copied cell src to clipboard")
+    alert("Copied: " + src)
+  }
   
 
 
@@ -136,13 +142,13 @@ export const Header = (props) => {
       <span disabled>Edit</span>
       <span disabled>Execute</span>
       <span disabled>Reset</span>
-      <Menu title="Move">
+      <Menu title="Move" disabled={!cellSelected}>
         <span disabled>Up</span>
         <span disabled>Down</span>
       </Menu>
       <Menu title="Copy">
         <span disabled>Source</span>
-        <span disabled>Cell</span>
+        <span disabled={!cellSelected} onClick={copyCell(ctx)}>Cell</span>
       </Menu>
     </Menu>
     <Menu title="Section" disabled={!cellSelected}>
