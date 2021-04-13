@@ -57,14 +57,8 @@ show meta content instead
 
 ### Example: `graph` viewer
 
-✅ This viewer has been folded into `.lit` as one of the default viewers.
-
-```js !viewer of=graph
-export const viewer = (node, {React}) => {
-   const c = React.createElement
-   const data = node.value
-
-   const el = c('iframe', {srcDoc: `<head>
+```>html viewer=iframe
+<head>
   <style> body { margin: 0; } </style>
   <script src="https://unpkg.com/force-graph"></script>
   <!-- from: https://github.com/vasturiano/force-graph -->
@@ -72,14 +66,14 @@ export const viewer = (node, {React}) => {
 <body>
   <div id="graph"></div>
   <script>
-    const data = ${data};
+    fetch('/manifest.json').then(res => res.json()).then(data => {
       const thisfile = window.parent.lit.location.src
       // alert(thisfile)
       const elem = document.getElementById('graph')
       const Graph = ForceGraph()(elem)
         .graphData(data)
         .nodeId('id')
-        .nodeVal((n) => n.backlinks ? n.backlinks.length : 1)
+        .nodeVal((n) => n.backlinks.length)
         .nodeLabel('id')
         .nodeAutoColorBy('type')
         
@@ -93,35 +87,17 @@ export const viewer = (node, {React}) => {
         });
 
         setTimeout( () => {
-            const { nodes, links } = Graph.graphData()
-            const node = nodes.filter( n => n.id === thisfile)[0]
-            Graph.centerAt(node.x, node.y, 1000);
-            Graph.zoom(2, 1000);
-
+        const { nodes, links } = Graph.graphData()
+        const node = nodes.filter( n => n.id === thisfile)[0]
+        Graph.centerAt(node.x, node.y, 1000);
+        Graph.zoom(2, 1000);
+        // Graph.zoomToFit(1000, 2, (node) => node.id === thisfile)
         }, 2000)
 
+    });
   </script>
-</body>`})
-   return el
-}
+</body>
 ```
-
-```graph !inline
-{
-  "nodes":[
-    {"id": "foo"},
-    {"id": "bar"}
-  ],
-  "links": [
-    {"source": "foo", "target": "bar"}
-  ]
-}
-```
-
-```graph !inline < ../manifest.json
-```
-
-The above automatically transcludes the `.lit` manifest and focuses on the current document
 
 ## Errors
 
