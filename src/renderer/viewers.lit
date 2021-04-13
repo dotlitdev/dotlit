@@ -62,6 +62,8 @@ ToDo: convert to a generalised viewer.
 ```js !viewer of=graph
 export const viewer = (node, {React}) => {
    const c = React.createElement
+   const data = node.value
+
    const el = c('iframe', {srcDoc: `<head>
   <style> body { margin: 0; } </style>
   <script src="https://unpkg.com/force-graph"></script>
@@ -70,7 +72,8 @@ export const viewer = (node, {React}) => {
 <body>
   <div id="graph"></div>
   <script>
-    fetch('/manifest.json').then(res => res.json()).then(data => {
+    const data = ${data};
+    //fetch('/manifest.json').then(res => res.json()).then(data => {
       const thisfile = window.parent.lit.location.src
       // alert(thisfile)
       const elem = document.getElementById('graph')
@@ -98,7 +101,7 @@ export const viewer = (node, {React}) => {
         // Graph.zoomToFit(1000, 2, (node) => node.id === thisfile)
         }, 2000)
 
-    });
+    //});
   </script>
 </body>`})
    return el
