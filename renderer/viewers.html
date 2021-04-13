@@ -39,12 +39,50 @@
 }
 </code></pre></codecell></cell><cell startpos="54:1-684" endpos="56:4-776" class="code"><codecell class="local"><span class="meta"><span class="lang">txt</span><span class="filename">file.txt</span><ul class="tags"><li><span class="tag">example</span></li></ul><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="txt">show meta content instead
 </code></pre></codecell></cell></section>
-<section depth="3" class="" startpos="58:1-778" endpos="113:4-2361"><cell startpos="58:1-778" endpos="60:39-845"><h3 id="example-graph-viewer">Example: <code>graph</code> viewer</h3><p>ToDo: convert to a generalised viewer.</p></cell><cell startpos="62:1-847" endpos="68:4-1010" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node, {React}) =&gt; {
+<section depth="3" class="" startpos="58:1-778" endpos="151:4-3638"><cell startpos="58:1-778" endpos="60:39-845"><h3 id="example-graph-viewer">Example: <code>graph</code> viewer</h3><p>ToDo: convert to a generalised viewer.</p></cell><cell startpos="62:1-847" endpos="106:4-2287" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node, {React}) =&gt; {
    const c = React.createElement
-   const el = c(&#x27;iframe&#x27;, {srcDoc: &#x27;TODO!&#x27; })
+   const el = c(&#x27;iframe&#x27;, {srcDoc: `&lt;head&gt;
+  &lt;style&gt; body { margin: 0; } &lt;/style&gt;
+  &lt;script src=&quot;https://unpkg.com/force-graph&quot;&gt;&lt;/script&gt;
+  &lt;!-- from: https://github.com/vasturiano/force-graph --&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id=&quot;graph&quot;&gt;&lt;/div&gt;
+  &lt;script&gt;
+    fetch(&#x27;/manifest.json&#x27;).then(res =&gt; res.json()).then(data =&gt; {
+      const thisfile = window.parent.lit.location.src
+      // alert(thisfile)
+      const elem = document.getElementById(&#x27;graph&#x27;)
+      const Graph = ForceGraph()(elem)
+        .graphData(data)
+        .nodeId(&#x27;id&#x27;)
+        .nodeVal((n) =&gt; n.backlinks.length)
+        .nodeLabel(&#x27;id&#x27;)
+        .nodeAutoColorBy(&#x27;type&#x27;)
+        
+        // .linkColor(d =&gt; data.nodes[d.source].exists ? &#x27;red&#x27; : &#x27;lightblue&#x27;)
+        .linkDirectionalArrowLength(6)
+        .onNodeHover(node =&gt; elem.style.cursor = node ? &#x27;pointer&#x27; : null)
+        .onNodeClick(node =&gt; {
+          // Center/zoom on node
+          Graph.centerAt(node.x, node.y, 1000);
+          Graph.zoom(2, 2000);
+        });
+
+        setTimeout( () =&gt; {
+        const { nodes, links } = Graph.graphData()
+        const node = nodes.filter( n =&gt; n.id === thisfile)[0]
+        Graph.centerAt(node.x, node.y, 1000);
+        Graph.zoom(2, 1000);
+        // Graph.zoomToFit(1000, 2, (node) =&gt; node.id === thisfile)
+        }, 2000)
+
+    });
+  &lt;/script&gt;
+&lt;/body&gt;`})
    return el
 }
-</code></pre></codecell></cell><cell startpos="70:1-1012" endpos="71:4-1049" class="code"><codecell class="local"><span class="meta"><span class="lang">graph</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="graph"></code></pre></codecell></cell><cell startpos="73:1-1051" endpos="113:4-2361" class="code"><codecell class="local"><span class="meta"><span class="lang">html</span></span><iframe srcDoc="&lt;head&gt;
+</code></pre></codecell></cell><cell startpos="108:1-2289" endpos="109:4-2326" class="code"><codecell class="local"><span class="meta"><span class="lang">graph</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="graph"></code></pre></codecell></cell><cell startpos="111:1-2328" endpos="151:4-3638" class="code"><codecell class="local"><span class="meta"><span class="lang">html</span></span><iframe srcDoc="&lt;head&gt;
   &lt;style&gt; body { margin: 0; } &lt;/style&gt;
   &lt;script src=&quot;https://unpkg.com/force-graph&quot;&gt;&lt;/script&gt;
   &lt;!-- from: https://github.com/vasturiano/force-graph --&gt;
@@ -84,16 +122,16 @@
   &lt;/script&gt;
 &lt;/body&gt;
 " style="aspect-ratio:1.6"></iframe></codecell></cell></section>
-<section depth="2" class="" startpos="115:1-2363" endpos="124:140-2640"><cell startpos="115:1-2363" endpos="115:10-2372"><h2 id="errors">Errors</h2></cell><section depth="3" class="" startpos="117:1-2374" endpos="124:140-2640"><cell startpos="117:1-2374" endpos="117:12-2385"><h3 id="runtime">Runtime</h3></cell><cell startpos="119:1-2387" endpos="123:4-2500" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node) =&gt; {
+<section depth="2" class="" startpos="153:1-3640" endpos="162:140-3917"><cell startpos="153:1-3640" endpos="153:10-3649"><h2 id="errors">Errors</h2></cell><section depth="3" class="" startpos="155:1-3651" endpos="162:140-3917"><cell startpos="155:1-3651" endpos="155:12-3662"><h3 id="runtime">Runtime</h3></cell><cell startpos="157:1-3664" endpos="161:4-3777" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node) =&gt; {
   throw new Error(&quot;Test Error: Broken Viewer&quot;)
 }
-</code></pre></codecell></cell><cell startpos="124:1-2501" endpos="124:140-2640"><p>The above viewer breaks the document render, destroying the page, but therefore use of it is not persisted. Consider adding <code>ErrorBoundry</code>.</p></cell></section></section>
-<section depth="3" class="" startpos="126:1-2642" endpos="133:4-2783"><cell startpos="126:1-2642" endpos="126:11-2652"><h3 id="import">Import</h3></cell><cell startpos="128:1-2654" endpos="133:4-2783" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">throw new Error(&quot;Test Error: Broken Viewer&quot;)
+</code></pre></codecell></cell><cell startpos="162:1-3778" endpos="162:140-3917"><p>The above viewer breaks the document render, destroying the page, but therefore use of it is not persisted. Consider adding <code>ErrorBoundry</code>.</p></cell></section></section>
+<section depth="3" class="" startpos="164:1-3919" endpos="171:4-4060"><cell startpos="164:1-3919" endpos="164:11-3929"><h3 id="import">Import</h3></cell><cell startpos="166:1-3931" endpos="171:4-4060" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">throw new Error(&quot;Test Error: Broken Viewer&quot;)
 export const viewer = (node) =&gt; {
   return &quot;never&quot;
 }
 </code></pre></codecell></cell></section>
-<section depth="2" class="" startpos="135:1-2785" endpos="158:4-3221"><cell startpos="135:1-2785" endpos="135:21-2805"><h2 id="initial-prototype">Initial prototype</h2></cell><cell startpos="137:1-2807" endpos="158:4-3221" class="code"><codecell class="local"><span class="meta"><span class="lang">html</span></span><pre><code class="html">&lt;!DOCTYPE html&gt;
+<section depth="2" class="" startpos="173:1-4062" endpos="196:4-4498"><cell startpos="173:1-4062" endpos="173:21-4082"><h2 id="initial-prototype">Initial prototype</h2></cell><cell startpos="175:1-4084" endpos="196:4-4498" class="code"><codecell class="local"><span class="meta"><span class="lang">html</span></span><pre><code class="html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
   &lt;head&gt;
     &lt;title&gt;Test page&lt;/title&gt;
