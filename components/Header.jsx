@@ -114,7 +114,6 @@ export const Header = (props) => {
     const src = source(ctx.selectedCell,ctx.src)
     clipboard.writeText(src)
     console.log("Copied cell src to clipboard")
-    alert("Copied: " + src)
   }
   
 
