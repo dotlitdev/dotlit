@@ -39,7 +39,11 @@
 }
 </code></pre></codecell></cell><cell startpos="54:1-684" endpos="56:4-776" class="code"><codecell class="local"><span class="meta"><span class="lang">txt</span><span class="filename">file.txt</span><ul class="tags"><li><span class="tag">example</span></li></ul><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="txt">show meta content instead
 </code></pre></codecell></cell></section>
-<section depth="3" class="" startpos="58:1-778" endpos="100:4-2117"><cell startpos="58:1-778" endpos="58:28-805"><h3 id="example-graph-viewer">Example: <code>graph</code> viewer</h3></cell><cell startpos="60:1-807" endpos="100:4-2117" class="code"><codecell class="local"><span class="meta"><span class="lang">html</span></span><iframe srcDoc="&lt;head&gt;
+<section depth="3" class="" startpos="58:1-778" endpos="124:92-2537"><cell startpos="58:1-778" endpos="60:73-879"><h3 id="example-graph-viewer">Example: <code>graph</code> viewer</h3><p>✅ This viewer has been folded into <code>.lit</code> as one of the default viewers.</p></cell><cell startpos="62:1-881" endpos="107:4-2267" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node, {React}) =&gt; {
+   const c = React.createElement
+   const data = node.value
+
+   const el = c(&#x27;iframe&#x27;, {srcDoc: `&lt;head&gt;
   &lt;style&gt; body { margin: 0; } &lt;/style&gt;
   &lt;script src=&quot;https://unpkg.com/force-graph&quot;&gt;&lt;/script&gt;
   &lt;!-- from: https://github.com/vasturiano/force-graph --&gt;
@@ -47,14 +51,14 @@
 &lt;body&gt;
   &lt;div id=&quot;graph&quot;&gt;&lt;/div&gt;
   &lt;script&gt;
-    fetch(&#x27;/manifest.json&#x27;).then(res =&gt; res.json()).then(data =&gt; {
+    const data = ${data};
       const thisfile = window.parent.lit.location.src
       // alert(thisfile)
       const elem = document.getElementById(&#x27;graph&#x27;)
       const Graph = ForceGraph()(elem)
         .graphData(data)
         .nodeId(&#x27;id&#x27;)
-        .nodeVal((n) =&gt; n.backlinks.length)
+        .nodeVal((n) =&gt; n.backlinks ? n.backlinks.length : 1)
         .nodeLabel(&#x27;id&#x27;)
         .nodeAutoColorBy(&#x27;type&#x27;)
         
@@ -68,27 +72,105 @@
         });
 
         setTimeout( () =&gt; {
-        const { nodes, links } = Graph.graphData()
-        const node = nodes.filter( n =&gt; n.id === thisfile)[0]
-        Graph.centerAt(node.x, node.y, 1000);
-        Graph.zoom(2, 1000);
-        // Graph.zoomToFit(1000, 2, (node) =&gt; node.id === thisfile)
+            const { nodes, links } = Graph.graphData()
+            const node = nodes.filter( n =&gt; n.id === thisfile)[0]
+            Graph.centerAt(node.x, node.y, 1000);
+            Graph.zoom(2, 1000);
+
         }, 2000)
 
-    });
   &lt;/script&gt;
-&lt;/body&gt;
-" style="aspect-ratio:1.6"></iframe></codecell></cell></section>
-<section depth="2" class="" startpos="102:1-2119" endpos="111:140-2396"><cell startpos="102:1-2119" endpos="102:10-2128"><h2 id="errors">Errors</h2></cell><section depth="3" class="" startpos="104:1-2130" endpos="111:140-2396"><cell startpos="104:1-2130" endpos="104:12-2141"><h3 id="runtime">Runtime</h3></cell><cell startpos="106:1-2143" endpos="110:4-2256" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node) =&gt; {
+&lt;/body&gt;`})
+   return el
+}
+</code></pre></codecell></cell><cell startpos="109:1-2269" endpos="119:4-2403" class="code"><codecell class="local"><span class="meta"><span class="lang">graph</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><iframe srcDoc="&lt;head&gt;
+  &lt;style&gt; body { margin: 0; } &lt;/style&gt;
+  &lt;script src=&quot;https://unpkg.com/force-graph&quot;&gt;&lt;/script&gt;
+  &lt;!-- from: https://github.com/vasturiano/force-graph --&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id=&quot;graph&quot;&gt;&lt;/div&gt;
+  &lt;script&gt;
+    const data = {
+  &quot;nodes&quot;:[
+    {&quot;id&quot;: &quot;foo&quot;},
+    {&quot;id&quot;: &quot;bar&quot;}
+  ],
+  &quot;links&quot;: [
+    {&quot;source&quot;: &quot;foo&quot;, &quot;target&quot;: &quot;bar&quot;}
+  ]
+}
+;
+      const thisfile = window.parent.lit.location.src
+      const elem = document.getElementById(&#x27;graph&#x27;)
+      const Graph = ForceGraph()(elem)
+        .graphData(data)
+        .nodeId(&#x27;id&#x27;)
+        .nodeVal((n) =&gt; n.backlinks ? n.backlinks.length : 1)
+        .nodeLabel(&#x27;id&#x27;)
+        .nodeAutoColorBy(&#x27;type&#x27;)
+        // .linkColor(d =&gt; data.nodes[d.source].exists ? &#x27;red&#x27; : &#x27;lightblue&#x27;)
+        .linkDirectionalArrowLength(6)
+        .onNodeHover(node =&gt; elem.style.cursor = node ? &#x27;pointer&#x27; : null)
+        .onNodeClick(node =&gt; {
+          // Center/zoom on node
+          Graph.centerAt(node.x, node.y, 1000);
+          Graph.zoom(2, 2000);
+        });
+
+        setTimeout( () =&gt; {
+            const { nodes, links } = Graph.graphData()
+            const node = nodes.filter( n =&gt; n.id === thisfile)[0]
+            Graph.centerAt(node.x, node.y, 1000);
+            Graph.zoom(2, 1000);
+        }, 2000)
+
+  &lt;/script&gt;
+&lt;/body&gt;"></iframe></codecell></cell><cell startpos="121:1-2405" endpos="122:4-2444" class="code"><codecell class="local"><span class="meta"><span class="lang">graph</span><span class="source">&lt; ../manifest.json</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><iframe srcDoc="&lt;head&gt;
+  &lt;style&gt; body { margin: 0; } &lt;/style&gt;
+  &lt;script src=&quot;https://unpkg.com/force-graph&quot;&gt;&lt;/script&gt;
+  &lt;!-- from: https://github.com/vasturiano/force-graph --&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id=&quot;graph&quot;&gt;&lt;/div&gt;
+  &lt;script&gt;
+    const data = ;
+      const thisfile = window.parent.lit.location.src
+      const elem = document.getElementById(&#x27;graph&#x27;)
+      const Graph = ForceGraph()(elem)
+        .graphData(data)
+        .nodeId(&#x27;id&#x27;)
+        .nodeVal((n) =&gt; n.backlinks ? n.backlinks.length : 1)
+        .nodeLabel(&#x27;id&#x27;)
+        .nodeAutoColorBy(&#x27;type&#x27;)
+        // .linkColor(d =&gt; data.nodes[d.source].exists ? &#x27;red&#x27; : &#x27;lightblue&#x27;)
+        .linkDirectionalArrowLength(6)
+        .onNodeHover(node =&gt; elem.style.cursor = node ? &#x27;pointer&#x27; : null)
+        .onNodeClick(node =&gt; {
+          // Center/zoom on node
+          Graph.centerAt(node.x, node.y, 1000);
+          Graph.zoom(2, 2000);
+        });
+
+        setTimeout( () =&gt; {
+            const { nodes, links } = Graph.graphData()
+            const node = nodes.filter( n =&gt; n.id === thisfile)[0]
+            Graph.centerAt(node.x, node.y, 1000);
+            Graph.zoom(2, 1000);
+        }, 2000)
+
+  &lt;/script&gt;
+&lt;/body&gt;"></iframe></codecell></cell><cell startpos="124:1-2446" endpos="124:92-2537"><p>The above automatically transcludes the <code>.lit</code> manifest and focuses on the current document</p></cell></section>
+<section depth="2" class="" startpos="126:1-2539" endpos="135:140-2816"><cell startpos="126:1-2539" endpos="126:10-2548"><h2 id="errors">Errors</h2></cell><section depth="3" class="" startpos="128:1-2550" endpos="135:140-2816"><cell startpos="128:1-2550" endpos="128:12-2561"><h3 id="runtime">Runtime</h3></cell><cell startpos="130:1-2563" endpos="134:4-2676" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node) =&gt; {
   throw new Error(&quot;Test Error: Broken Viewer&quot;)
 }
-</code></pre></codecell></cell><cell startpos="111:1-2257" endpos="111:140-2396"><p>The above viewer breaks the document render, destroying the page, but therefore use of it is not persisted. Consider adding <code>ErrorBoundry</code>.</p></cell></section></section>
-<section depth="3" class="" startpos="113:1-2398" endpos="120:4-2539"><cell startpos="113:1-2398" endpos="113:11-2408"><h3 id="import">Import</h3></cell><cell startpos="115:1-2410" endpos="120:4-2539" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">throw new Error(&quot;Test Error: Broken Viewer&quot;)
+</code></pre></codecell></cell><cell startpos="135:1-2677" endpos="135:140-2816"><p>The above viewer breaks the document render, destroying the page, but therefore use of it is not persisted. Consider adding <code>ErrorBoundry</code>.</p></cell></section></section>
+<section depth="3" class="" startpos="137:1-2818" endpos="144:4-2959"><cell startpos="137:1-2818" endpos="137:11-2828"><h3 id="import">Import</h3></cell><cell startpos="139:1-2830" endpos="144:4-2959" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">throw new Error(&quot;Test Error: Broken Viewer&quot;)
 export const viewer = (node) =&gt; {
   return &quot;never&quot;
 }
 </code></pre></codecell></cell></section>
-<section depth="2" class="" startpos="122:1-2541" endpos="145:4-2977"><cell startpos="122:1-2541" endpos="122:21-2561"><h2 id="initial-prototype">Initial prototype</h2></cell><cell startpos="124:1-2563" endpos="145:4-2977" class="code"><codecell class="local"><span class="meta"><span class="lang">html</span></span><pre><code class="html">&lt;!DOCTYPE html&gt;
+<section depth="2" class="" startpos="146:1-2961" endpos="169:4-3397"><cell startpos="146:1-2961" endpos="146:21-2981"><h2 id="initial-prototype">Initial prototype</h2></cell><cell startpos="148:1-2983" endpos="169:4-3397" class="code"><codecell class="local"><span class="meta"><span class="lang">html</span></span><pre><code class="html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
   &lt;head&gt;
     &lt;title&gt;Test page&lt;/title&gt;
