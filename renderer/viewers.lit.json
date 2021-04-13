@@ -1921,9 +1921,9 @@
                             "offset": 847
                         },
                         "end": {
-                            "line": 106,
+                            "line": 109,
                             "column": 4,
-                            "offset": 2287
+                            "offset": 2345
                         }
                     },
                     "data": {
@@ -1937,7 +1937,7 @@
                             "type": "code",
                             "lang": "js",
                             "meta": "!viewer of=graph",
-                            "value": "export const viewer = (node, {React}) => {\n   const c = React.createElement\n   const el = c('iframe', {srcDoc: `<head>\n  <style> body { margin: 0; } </style>\n  <script src=\"https://unpkg.com/force-graph\"></script>\n  <!-- from: https://github.com/vasturiano/force-graph -->\n</head>\n<body>\n  <div id=\"graph\"></div>\n  <script>\n    fetch('/manifest.json').then(res => res.json()).then(data => {\n      const thisfile = window.parent.lit.location.src\n      // alert(thisfile)\n      const elem = document.getElementById('graph')\n      const Graph = ForceGraph()(elem)\n        .graphData(data)\n        .nodeId('id')\n        .nodeVal((n) => n.backlinks.length)\n        .nodeLabel('id')\n        .nodeAutoColorBy('type')\n        \n        // .linkColor(d => data.nodes[d.source].exists ? 'red' : 'lightblue')\n        .linkDirectionalArrowLength(6)\n        .onNodeHover(node => elem.style.cursor = node ? 'pointer' : null)\n        .onNodeClick(node => {\n          // Center/zoom on node\n          Graph.centerAt(node.x, node.y, 1000);\n          Graph.zoom(2, 2000);\n        });\n\n        setTimeout( () => {\n        const { nodes, links } = Graph.graphData()\n        const node = nodes.filter( n => n.id === thisfile)[0]\n        Graph.centerAt(node.x, node.y, 1000);\n        Graph.zoom(2, 1000);\n        // Graph.zoomToFit(1000, 2, (node) => node.id === thisfile)\n        }, 2000)\n\n    });\n  </script>\n</body>`})\n   return el\n}",
+                            "value": "export const viewer = (node, {React}) => {\n   const c = React.createElement\n   const data = node.value\n\n   const el = c('iframe', {srcDoc: `<head>\n  <style> body { margin: 0; } </style>\n  <script src=\"https://unpkg.com/force-graph\"></script>\n  <!-- from: https://github.com/vasturiano/force-graph -->\n</head>\n<body>\n  <div id=\"graph\"></div>\n  <script>\n    const data = ${data};\n    //fetch('/manifest.json').then(res => res.json()).then(data => {\n      const thisfile = window.parent.lit.location.src\n      // alert(thisfile)\n      const elem = document.getElementById('graph')\n      const Graph = ForceGraph()(elem)\n        .graphData(data)\n        .nodeId('id')\n        .nodeVal((n) => n.backlinks.length)\n        .nodeLabel('id')\n        .nodeAutoColorBy('type')\n        \n        // .linkColor(d => data.nodes[d.source].exists ? 'red' : 'lightblue')\n        .linkDirectionalArrowLength(6)\n        .onNodeHover(node => elem.style.cursor = node ? 'pointer' : null)\n        .onNodeClick(node => {\n          // Center/zoom on node\n          Graph.centerAt(node.x, node.y, 1000);\n          Graph.zoom(2, 2000);\n        });\n\n        setTimeout( () => {\n        const { nodes, links } = Graph.graphData()\n        const node = nodes.filter( n => n.id === thisfile)[0]\n        Graph.centerAt(node.x, node.y, 1000);\n        Graph.zoom(2, 1000);\n        // Graph.zoomToFit(1000, 2, (node) => node.id === thisfile)\n        }, 2000)\n\n    //});\n  </script>\n</body>`})\n   return el\n}",
                             "position": {
                                 "start": {
                                     "line": 62,
@@ -1945,9 +1945,9 @@
                                     "offset": 847
                                 },
                                 "end": {
-                                    "line": 106,
+                                    "line": 109,
                                     "column": 4,
-                                    "offset": 2287
+                                    "offset": 2345
                                 }
                             },
                             "data": {
@@ -1984,14 +1984,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 108,
+                            "line": 111,
                             "column": 1,
-                            "offset": 2289
+                            "offset": 2347
                         },
                         "end": {
-                            "line": 109,
+                            "line": 112,
                             "column": 4,
-                            "offset": 2326
+                            "offset": 2384
                         }
                     },
                     "data": {
@@ -2008,14 +2008,14 @@
                             "value": "",
                             "position": {
                                 "start": {
-                                    "line": 108,
+                                    "line": 111,
                                     "column": 1,
-                                    "offset": 2289
+                                    "offset": 2347
                                 },
                                 "end": {
-                                    "line": 109,
+                                    "line": 112,
                                     "column": 4,
-                                    "offset": 2326
+                                    "offset": 2384
                                 }
                             },
                             "data": {
@@ -2056,14 +2056,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 111,
+                            "line": 114,
                             "column": 1,
-                            "offset": 2328
+                            "offset": 2386
                         },
                         "end": {
-                            "line": 111,
+                            "line": 114,
                             "column": 77,
-                            "offset": 2404
+                            "offset": 2462
                         }
                     },
                     "data": {
@@ -2081,28 +2081,28 @@
                                     "value": "The above automatically fetches manifest and focuses on the current document",
                                     "position": {
                                         "start": {
-                                            "line": 111,
+                                            "line": 114,
                                             "column": 1,
-                                            "offset": 2328
+                                            "offset": 2386
                                         },
                                         "end": {
-                                            "line": 111,
+                                            "line": 114,
                                             "column": 77,
-                                            "offset": 2404
+                                            "offset": 2462
                                         }
                                     }
                                 }
                             ],
                             "position": {
                                 "start": {
-                                    "line": 111,
+                                    "line": 114,
                                     "column": 1,
-                                    "offset": 2328
+                                    "offset": 2386
                                 },
                                 "end": {
-                                    "line": 111,
+                                    "line": 114,
                                     "column": 77,
-                                    "offset": 2404
+                                    "offset": 2462
                                 }
                             }
                         }
@@ -2116,9 +2116,9 @@
                     "offset": 778
                 },
                 "end": {
-                    "line": 111,
+                    "line": 114,
                     "column": 77,
-                    "offset": 2404
+                    "offset": 2462
                 }
             }
         },
@@ -2137,14 +2137,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 113,
+                            "line": 116,
                             "column": 1,
-                            "offset": 2406
+                            "offset": 2464
                         },
                         "end": {
-                            "line": 113,
+                            "line": 116,
                             "column": 10,
-                            "offset": 2415
+                            "offset": 2473
                         }
                     },
                     "data": {
@@ -2163,28 +2163,28 @@
                                     "value": "Errors",
                                     "position": {
                                         "start": {
-                                            "line": 113,
+                                            "line": 116,
                                             "column": 4,
-                                            "offset": 2409
+                                            "offset": 2467
                                         },
                                         "end": {
-                                            "line": 113,
+                                            "line": 116,
                                             "column": 10,
-                                            "offset": 2415
+                                            "offset": 2473
                                         }
                                     }
                                 }
                             ],
                             "position": {
                                 "start": {
-                                    "line": 113,
+                                    "line": 116,
                                     "column": 1,
-                                    "offset": 2406
+                                    "offset": 2464
                                 },
                                 "end": {
-                                    "line": 113,
+                                    "line": 116,
                                     "column": 10,
-                                    "offset": 2415
+                                    "offset": 2473
                                 }
                             },
                             "data": {
@@ -2212,14 +2212,14 @@
                             "type": "cell",
                             "position": {
                                 "start": {
-                                    "line": 115,
+                                    "line": 118,
                                     "column": 1,
-                                    "offset": 2417
+                                    "offset": 2475
                                 },
                                 "end": {
-                                    "line": 115,
+                                    "line": 118,
                                     "column": 12,
-                                    "offset": 2428
+                                    "offset": 2486
                                 }
                             },
                             "data": {
@@ -2238,28 +2238,28 @@
                                             "value": "Runtime",
                                             "position": {
                                                 "start": {
-                                                    "line": 115,
+                                                    "line": 118,
                                                     "column": 5,
-                                                    "offset": 2421
+                                                    "offset": 2479
                                                 },
                                                 "end": {
-                                                    "line": 115,
+                                                    "line": 118,
                                                     "column": 12,
-                                                    "offset": 2428
+                                                    "offset": 2486
                                                 }
                                             }
                                         }
                                     ],
                                     "position": {
                                         "start": {
-                                            "line": 115,
+                                            "line": 118,
                                             "column": 1,
-                                            "offset": 2417
+                                            "offset": 2475
                                         },
                                         "end": {
-                                            "line": 115,
+                                            "line": 118,
                                             "column": 12,
-                                            "offset": 2428
+                                            "offset": 2486
                                         }
                                     },
                                     "data": {
@@ -2276,14 +2276,14 @@
                             "type": "cell",
                             "position": {
                                 "start": {
-                                    "line": 117,
+                                    "line": 120,
                                     "column": 1,
-                                    "offset": 2430
+                                    "offset": 2488
                                 },
                                 "end": {
-                                    "line": 121,
+                                    "line": 124,
                                     "column": 4,
-                                    "offset": 2543
+                                    "offset": 2601
                                 }
                             },
                             "data": {
@@ -2300,14 +2300,14 @@
                                     "value": "export const viewer = (node) => {\n  throw new Error(\"Test Error: Broken Viewer\")\n}",
                                     "position": {
                                         "start": {
-                                            "line": 117,
+                                            "line": 120,
                                             "column": 1,
-                                            "offset": 2430
+                                            "offset": 2488
                                         },
                                         "end": {
-                                            "line": 121,
+                                            "line": 124,
                                             "column": 4,
-                                            "offset": 2543
+                                            "offset": 2601
                                         }
                                     },
                                     "data": {
@@ -2344,14 +2344,14 @@
                             "type": "cell",
                             "position": {
                                 "start": {
-                                    "line": 122,
+                                    "line": 125,
                                     "column": 1,
-                                    "offset": 2544
+                                    "offset": 2602
                                 },
                                 "end": {
-                                    "line": 122,
+                                    "line": 125,
                                     "column": 140,
-                                    "offset": 2683
+                                    "offset": 2741
                                 }
                             },
                             "data": {
@@ -2369,14 +2369,14 @@
                                             "value": "The above viewer breaks the document render, destroying the page, but therefore use of it is not persisted. Consider adding ",
                                             "position": {
                                                 "start": {
-                                                    "line": 122,
+                                                    "line": 125,
                                                     "column": 1,
-                                                    "offset": 2544
+                                                    "offset": 2602
                                                 },
                                                 "end": {
-                                                    "line": 122,
+                                                    "line": 125,
                                                     "column": 125,
-                                                    "offset": 2668
+                                                    "offset": 2726
                                                 }
                                             }
                                         },
@@ -2385,14 +2385,14 @@
                                             "value": "ErrorBoundry",
                                             "position": {
                                                 "start": {
-                                                    "line": 122,
+                                                    "line": 125,
                                                     "column": 125,
-                                                    "offset": 2668
+                                                    "offset": 2726
                                                 },
                                                 "end": {
-                                                    "line": 122,
+                                                    "line": 125,
                                                     "column": 139,
-                                                    "offset": 2682
+                                                    "offset": 2740
                                                 }
                                             }
                                         },
@@ -2401,28 +2401,28 @@
                                             "value": ".",
                                             "position": {
                                                 "start": {
-                                                    "line": 122,
+                                                    "line": 125,
                                                     "column": 139,
-                                                    "offset": 2682
+                                                    "offset": 2740
                                                 },
                                                 "end": {
-                                                    "line": 122,
+                                                    "line": 125,
                                                     "column": 140,
-                                                    "offset": 2683
+                                                    "offset": 2741
                                                 }
                                             }
                                         }
                                     ],
                                     "position": {
                                         "start": {
-                                            "line": 122,
+                                            "line": 125,
                                             "column": 1,
-                                            "offset": 2544
+                                            "offset": 2602
                                         },
                                         "end": {
-                                            "line": 122,
+                                            "line": 125,
                                             "column": 140,
-                                            "offset": 2683
+                                            "offset": 2741
                                         }
                                     }
                                 }
@@ -2431,28 +2431,28 @@
                     ],
                     "position": {
                         "start": {
-                            "line": 115,
+                            "line": 118,
                             "column": 1,
-                            "offset": 2417
+                            "offset": 2475
                         },
                         "end": {
-                            "line": 122,
+                            "line": 125,
                             "column": 140,
-                            "offset": 2683
+                            "offset": 2741
                         }
                     }
                 }
             ],
             "position": {
                 "start": {
-                    "line": 113,
+                    "line": 116,
                     "column": 1,
-                    "offset": 2406
+                    "offset": 2464
                 },
                 "end": {
-                    "line": 122,
+                    "line": 125,
                     "column": 140,
-                    "offset": 2683
+                    "offset": 2741
                 }
             }
         },
@@ -2471,14 +2471,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 124,
+                            "line": 127,
                             "column": 1,
-                            "offset": 2685
+                            "offset": 2743
                         },
                         "end": {
-                            "line": 124,
+                            "line": 127,
                             "column": 11,
-                            "offset": 2695
+                            "offset": 2753
                         }
                     },
                     "data": {
@@ -2497,28 +2497,28 @@
                                     "value": "Import",
                                     "position": {
                                         "start": {
-                                            "line": 124,
+                                            "line": 127,
                                             "column": 5,
-                                            "offset": 2689
+                                            "offset": 2747
                                         },
                                         "end": {
-                                            "line": 124,
+                                            "line": 127,
                                             "column": 11,
-                                            "offset": 2695
+                                            "offset": 2753
                                         }
                                     }
                                 }
                             ],
                             "position": {
                                 "start": {
-                                    "line": 124,
+                                    "line": 127,
                                     "column": 1,
-                                    "offset": 2685
+                                    "offset": 2743
                                 },
                                 "end": {
-                                    "line": 124,
+                                    "line": 127,
                                     "column": 11,
-                                    "offset": 2695
+                                    "offset": 2753
                                 }
                             },
                             "data": {
@@ -2535,14 +2535,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 126,
+                            "line": 129,
                             "column": 1,
-                            "offset": 2697
+                            "offset": 2755
                         },
                         "end": {
-                            "line": 131,
+                            "line": 134,
                             "column": 4,
-                            "offset": 2826
+                            "offset": 2884
                         }
                     },
                     "data": {
@@ -2559,14 +2559,14 @@
                             "value": "throw new Error(\"Test Error: Broken Viewer\")\nexport const viewer = (node) => {\n  return \"never\"\n}",
                             "position": {
                                 "start": {
-                                    "line": 126,
+                                    "line": 129,
                                     "column": 1,
-                                    "offset": 2697
+                                    "offset": 2755
                                 },
                                 "end": {
-                                    "line": 131,
+                                    "line": 134,
                                     "column": 4,
-                                    "offset": 2826
+                                    "offset": 2884
                                 }
                             },
                             "data": {
@@ -2602,14 +2602,14 @@
             ],
             "position": {
                 "start": {
-                    "line": 124,
+                    "line": 127,
                     "column": 1,
-                    "offset": 2685
+                    "offset": 2743
                 },
                 "end": {
-                    "line": 131,
+                    "line": 134,
                     "column": 4,
-                    "offset": 2826
+                    "offset": 2884
                 }
             }
         },
@@ -2628,14 +2628,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 133,
+                            "line": 136,
                             "column": 1,
-                            "offset": 2828
+                            "offset": 2886
                         },
                         "end": {
-                            "line": 133,
+                            "line": 136,
                             "column": 21,
-                            "offset": 2848
+                            "offset": 2906
                         }
                     },
                     "data": {
@@ -2654,28 +2654,28 @@
                                     "value": "Initial prototype",
                                     "position": {
                                         "start": {
-                                            "line": 133,
+                                            "line": 136,
                                             "column": 4,
-                                            "offset": 2831
+                                            "offset": 2889
                                         },
                                         "end": {
-                                            "line": 133,
+                                            "line": 136,
                                             "column": 21,
-                                            "offset": 2848
+                                            "offset": 2906
                                         }
                                     }
                                 }
                             ],
                             "position": {
                                 "start": {
-                                    "line": 133,
+                                    "line": 136,
                                     "column": 1,
-                                    "offset": 2828
+                                    "offset": 2886
                                 },
                                 "end": {
-                                    "line": 133,
+                                    "line": 136,
                                     "column": 21,
-                                    "offset": 2848
+                                    "offset": 2906
                                 }
                             },
                             "data": {
@@ -2692,14 +2692,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 135,
+                            "line": 138,
                             "column": 1,
-                            "offset": 2850
+                            "offset": 2908
                         },
                         "end": {
-                            "line": 156,
+                            "line": 159,
                             "column": 4,
-                            "offset": 3264
+                            "offset": 3322
                         }
                     },
                     "data": {
@@ -2716,14 +2716,14 @@
                             "value": "<!DOCTYPE html>\n<html>\n  <head>\n    <title>Test page</title>\n  </head>\n  <body>\n  <script type=\"module\">\n\n    async function getViewer(src) {\n      const module = await import(`data:text/javascript;base64,${ btoa(src)}`);\n      return module.viewer;\n    }\n\n    getViewer(`export const viewer = () => \"foo!\"`).then(viewer => {\n       alert(\"Got viewer \" + !!viewer)\n    })\n\n  </script>\n  </body>\n</html>",
                             "position": {
                                 "start": {
-                                    "line": 135,
+                                    "line": 138,
                                     "column": 1,
-                                    "offset": 2850
+                                    "offset": 2908
                                 },
                                 "end": {
-                                    "line": 156,
+                                    "line": 159,
                                     "column": 4,
-                                    "offset": 3264
+                                    "offset": 3322
                                 }
                             },
                             "data": {
@@ -2751,14 +2751,14 @@
             ],
             "position": {
                 "start": {
-                    "line": 133,
+                    "line": 136,
                     "column": 1,
-                    "offset": 2828
+                    "offset": 2886
                 },
                 "end": {
-                    "line": 156,
+                    "line": 159,
                     "column": 4,
-                    "offset": 3264
+                    "offset": 3322
                 }
             }
         }
@@ -2770,9 +2770,9 @@
             "offset": 0
         },
         "end": {
-            "line": 157,
+            "line": 160,
             "column": 1,
-            "offset": 3265
+            "offset": 3323
         }
     }
 }

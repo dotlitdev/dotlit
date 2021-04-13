@@ -39,8 +39,10 @@
 }
 </code></pre></codecell></cell><cell startpos="54:1-684" endpos="56:4-776" class="code"><codecell class="local"><span class="meta"><span class="lang">txt</span><span class="filename">file.txt</span><ul class="tags"><li><span class="tag">example</span></li></ul><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="txt">show meta content instead
 </code></pre></codecell></cell></section>
-<section depth="3" class="" startpos="58:1-778" endpos="111:77-2404"><cell startpos="58:1-778" endpos="60:39-845"><h3 id="example-graph-viewer">Example: <code>graph</code> viewer</h3><p>ToDo: convert to a generalised viewer.</p></cell><cell startpos="62:1-847" endpos="106:4-2287" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node, {React}) =&gt; {
+<section depth="3" class="" startpos="58:1-778" endpos="114:77-2462"><cell startpos="58:1-778" endpos="60:39-845"><h3 id="example-graph-viewer">Example: <code>graph</code> viewer</h3><p>ToDo: convert to a generalised viewer.</p></cell><cell startpos="62:1-847" endpos="109:4-2345" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node, {React}) =&gt; {
    const c = React.createElement
+   const data = node.value
+
    const el = c(&#x27;iframe&#x27;, {srcDoc: `&lt;head&gt;
   &lt;style&gt; body { margin: 0; } &lt;/style&gt;
   &lt;script src=&quot;https://unpkg.com/force-graph&quot;&gt;&lt;/script&gt;
@@ -49,7 +51,8 @@
 &lt;body&gt;
   &lt;div id=&quot;graph&quot;&gt;&lt;/div&gt;
   &lt;script&gt;
-    fetch(&#x27;/manifest.json&#x27;).then(res =&gt; res.json()).then(data =&gt; {
+    const data = ${data};
+    //fetch(&#x27;/manifest.json&#x27;).then(res =&gt; res.json()).then(data =&gt; {
       const thisfile = window.parent.lit.location.src
       // alert(thisfile)
       const elem = document.getElementById(&#x27;graph&#x27;)
@@ -77,22 +80,22 @@
         // Graph.zoomToFit(1000, 2, (node) =&gt; node.id === thisfile)
         }, 2000)
 
-    });
+    //});
   &lt;/script&gt;
 &lt;/body&gt;`})
    return el
 }
-</code></pre></codecell></cell><cell startpos="108:1-2289" endpos="109:4-2326" class="code"><codecell class="local"><span class="meta"><span class="lang">graph</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="graph"></code></pre></codecell></cell><cell startpos="111:1-2328" endpos="111:77-2404"><p>The above automatically fetches manifest and focuses on the current document</p></cell></section>
-<section depth="2" class="" startpos="113:1-2406" endpos="122:140-2683"><cell startpos="113:1-2406" endpos="113:10-2415"><h2 id="errors">Errors</h2></cell><section depth="3" class="" startpos="115:1-2417" endpos="122:140-2683"><cell startpos="115:1-2417" endpos="115:12-2428"><h3 id="runtime">Runtime</h3></cell><cell startpos="117:1-2430" endpos="121:4-2543" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node) =&gt; {
+</code></pre></codecell></cell><cell startpos="111:1-2347" endpos="112:4-2384" class="code"><codecell class="local"><span class="meta"><span class="lang">graph</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="graph"></code></pre></codecell></cell><cell startpos="114:1-2386" endpos="114:77-2462"><p>The above automatically fetches manifest and focuses on the current document</p></cell></section>
+<section depth="2" class="" startpos="116:1-2464" endpos="125:140-2741"><cell startpos="116:1-2464" endpos="116:10-2473"><h2 id="errors">Errors</h2></cell><section depth="3" class="" startpos="118:1-2475" endpos="125:140-2741"><cell startpos="118:1-2475" endpos="118:12-2486"><h3 id="runtime">Runtime</h3></cell><cell startpos="120:1-2488" endpos="124:4-2601" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node) =&gt; {
   throw new Error(&quot;Test Error: Broken Viewer&quot;)
 }
-</code></pre></codecell></cell><cell startpos="122:1-2544" endpos="122:140-2683"><p>The above viewer breaks the document render, destroying the page, but therefore use of it is not persisted. Consider adding <code>ErrorBoundry</code>.</p></cell></section></section>
-<section depth="3" class="" startpos="124:1-2685" endpos="131:4-2826"><cell startpos="124:1-2685" endpos="124:11-2695"><h3 id="import">Import</h3></cell><cell startpos="126:1-2697" endpos="131:4-2826" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">throw new Error(&quot;Test Error: Broken Viewer&quot;)
+</code></pre></codecell></cell><cell startpos="125:1-2602" endpos="125:140-2741"><p>The above viewer breaks the document render, destroying the page, but therefore use of it is not persisted. Consider adding <code>ErrorBoundry</code>.</p></cell></section></section>
+<section depth="3" class="" startpos="127:1-2743" endpos="134:4-2884"><cell startpos="127:1-2743" endpos="127:11-2753"><h3 id="import">Import</h3></cell><cell startpos="129:1-2755" endpos="134:4-2884" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">throw new Error(&quot;Test Error: Broken Viewer&quot;)
 export const viewer = (node) =&gt; {
   return &quot;never&quot;
 }
 </code></pre></codecell></cell></section>
-<section depth="2" class="" startpos="133:1-2828" endpos="156:4-3264"><cell startpos="133:1-2828" endpos="133:21-2848"><h2 id="initial-prototype">Initial prototype</h2></cell><cell startpos="135:1-2850" endpos="156:4-3264" class="code"><codecell class="local"><span class="meta"><span class="lang">html</span></span><pre><code class="html">&lt;!DOCTYPE html&gt;
+<section depth="2" class="" startpos="136:1-2886" endpos="159:4-3322"><cell startpos="136:1-2886" endpos="136:21-2906"><h2 id="initial-prototype">Initial prototype</h2></cell><cell startpos="138:1-2908" endpos="159:4-3322" class="code"><codecell class="local"><span class="meta"><span class="lang">html</span></span><pre><code class="html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
   &lt;head&gt;
     &lt;title&gt;Test page&lt;/title&gt;
