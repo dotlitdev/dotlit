@@ -1,5 +1,47 @@
 # Files & Links
 
+```>html viewer=iframe
+<head>
+  <style> body { margin: 0; } </style>
+  <script src="https://unpkg.com/force-graph"></script>
+  <!-- from: https://github.com/vasturiano/force-graph -->
+</head>
+<body>
+  <div id="graph"></div>
+  <script>
+    fetch('/manifest.json').then(res => res.json()).then(data => {
+      const thisfile = window.parent.lit.location.src
+      // alert(thisfile)
+      const elem = document.getElementById('graph')
+      const Graph = ForceGraph()(elem)
+        .graphData(data)
+        .nodeId('id')
+        .nodeVal((n) => n.backlinks.length)
+        .nodeLabel('id')
+        .nodeAutoColorBy('type')
+        
+        // .linkColor(d => data.nodes[d.source].exists ? 'red' : 'lightblue')
+        .linkDirectionalArrowLength(6)
+        .onNodeHover(node => elem.style.cursor = node ? 'pointer' : null)
+        .onNodeClick(node => {
+          // Center/zoom on node
+          Graph.centerAt(node.x, node.y, 1000);
+          Graph.zoom(2, 2000);
+        });
+
+        setTimeout( () => {
+        const { nodes, links } = Graph.graphData()
+        const node = nodes.filter( n => n.id === thisfile)[0]
+        Graph.centerAt(node.x, node.y, 1000);
+        Graph.zoom(2, 1000);
+        // Graph.zoomToFit(1000, 2, (node) => node.id === thisfile)
+        }, 2000)
+
+    });
+  </script>
+</body>
+```
+
 ## Filesystem
 
 ## Manifest
