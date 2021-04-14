@@ -39,6 +39,15 @@ export const processor = (options={files: []}) => {
     console.log('[Parser]', options)
     return baseProcessor(options)
     // remark-litmd (rehype compatable)
+
+    // Async reparse `md` codeblocks as children
+    .use(function (...args) {
+        return async (tree, file) => {
+            file.data = file.data || {}
+            file.data.__mdcodeblocks = "wip"
+            return null
+        }
+    }, {})
     .use(resolveLinks())
     .use(sections, {})
     .use(litcodeblocks)
