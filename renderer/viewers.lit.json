@@ -3197,7 +3197,7 @@
                         "end": {
                             "line": 299,
                             "column": 4,
-                            "offset": 7195
+                            "offset": 7211
                         }
                     },
                     "data": {
@@ -3211,7 +3211,7 @@
                             "type": "code",
                             "lang": "js",
                             "meta": "!viewer of=uml",
-                            "value": "export const viewer = ({node, React}) => {\n   const c = React.createElement\n   const ref = React.createRef();\n   const [height, setHeight] = React.useState(null)\n   const id = Math.round(Math.random() * 10000000).toString()\n\n  React.useEffect(() => {\n    const handler = event => {\n      if (ref && ref.current && event && event.data && typeof event.data === 'string') {\n          const data = JSON.parse(event.data)\n          if (id === data.source) {\n             console.log(\"Message: \", data)\n             setHeight(data.height)\n          }\n\n      }\n    }\n\n    window.addEventListener(\"message\", handler)\n\n    // clean up\n    return () => window.removeEventListener(\"message\", handler)\n  }, []) // empty array => run only once\n\n   const el = c('iframe', {ref: ref, style: {height: ( height ? (height + 'px') : 'auto') },srcDoc: `<!DOCTYPE html>\n    <html>\n      <head>\n        <title>PlantUML Viewer</title>\n        <style>html, body {margin: 0; padding: 0; } #plantuml { display: block; max-width: 100%; }</style>\n      </head>\n      <body>\n        <img id=\"plantuml\" />\n        <script type=\"module\">\n\n        function resize() {\n          const msg = JSON.stringify({\n            source: \"${id}\",\n            height: document.body.clientHeight\n          })\n          console.log(\"Resize Message\", msg)\n          window.parent.postMessage(msg, '*');\n        }\n        async function encodePlantUML(src) {\n          console.log(\"encoding\", src)\n          const module = await import(\"https://cdn.skypack.dev/plantuml-encoder\");\n          const encoded = module.encode(src)\n          console.log(encoded)\n          return encoded\n        }\n\n        encodePlantUML(\"${node.value.replace(/\\n/g, '\\\\n')}\")\n        .then(encoded => {\n            const url = \"https://plantuml.com/plantuml/svg/\" + encoded\n            const img = document.getElementById('plantuml')\n            img.setAttribute('src', url)\n            img.onload = resize\n        })\n\n        console.log(\"PlantUML Viewer.\")\n      </script>\n      </body>\n    </html>`})\n   console.log(\"PlantViewer iframe ref:\", el.ref.current)\n   return el\n}",
+                            "value": "export const viewer = ({node, React}) => {\n   const c = React.createElement\n   const ref = React.createRef();\n   const [height, setHeight] = React.useState(null)\n   let [id] = React.useState(Math.round(Math.random() * 10000000).toString())\n\n  React.useEffect(() => {\n    const handler = event => {\n      if (ref && ref.current && event && event.data && typeof event.data === 'string') {\n          const data = JSON.parse(event.data)\n          if (id === data.source) {\n             console.log(\"Message: \", data)\n             setHeight(data.height)\n          }\n\n      }\n    }\n\n    window.addEventListener(\"message\", handler)\n\n    // clean up\n    return () => window.removeEventListener(\"message\", handler)\n  }, []) // empty array => run only once\n\n   const el = c('iframe', {ref: ref, style: {height: ( height ? (height + 'px') : 'auto') },srcDoc: `<!DOCTYPE html>\n    <html>\n      <head>\n        <title>PlantUML Viewer</title>\n        <style>html, body {margin: 0; padding: 0; } #plantuml { display: block; max-width: 100%; }</style>\n      </head>\n      <body>\n        <img id=\"plantuml\" />\n        <script type=\"module\">\n\n        function resize() {\n          const msg = JSON.stringify({\n            source: \"${id}\",\n            height: document.body.clientHeight\n          })\n          console.log(\"Resize Message\", msg)\n          window.parent.postMessage(msg, '*');\n        }\n        async function encodePlantUML(src) {\n          console.log(\"encoding\", src)\n          const module = await import(\"https://cdn.skypack.dev/plantuml-encoder\");\n          const encoded = module.encode(src)\n          console.log(encoded)\n          return encoded\n        }\n\n        encodePlantUML(\"${node.value.replace(/\\n/g, '\\\\n')}\")\n        .then(encoded => {\n            const url = \"https://plantuml.com/plantuml/svg/\" + encoded\n            const img = document.getElementById('plantuml')\n            img.setAttribute('src', url)\n            img.onload = resize\n        })\n\n        console.log(\"PlantUML Viewer.\")\n      </script>\n      </body>\n    </html>`})\n   console.log(\"PlantViewer iframe ref:\", el.ref.current)\n   return el\n}",
                             "position": {
                                 "start": {
                                     "line": 233,
@@ -3221,7 +3221,7 @@
                                 "end": {
                                     "line": 299,
                                     "column": 4,
-                                    "offset": 7195
+                                    "offset": 7211
                                 }
                             },
                             "data": {
@@ -3260,12 +3260,12 @@
                         "start": {
                             "line": 301,
                             "column": 1,
-                            "offset": 7197
+                            "offset": 7213
                         },
                         "end": {
                             "line": 303,
                             "column": 4,
-                            "offset": 7219
+                            "offset": 7235
                         }
                     },
                     "data": {
@@ -3284,12 +3284,12 @@
                                 "start": {
                                     "line": 301,
                                     "column": 1,
-                                    "offset": 7197
+                                    "offset": 7213
                                 },
                                 "end": {
                                     "line": 303,
                                     "column": 4,
-                                    "offset": 7219
+                                    "offset": 7235
                                 }
                             },
                             "data": {
@@ -3320,12 +3320,12 @@
                         "start": {
                             "line": 305,
                             "column": 1,
-                            "offset": 7221
+                            "offset": 7237
                         },
                         "end": {
                             "line": 323,
                             "column": 4,
-                            "offset": 7681
+                            "offset": 7697
                         }
                     },
                     "data": {
@@ -3344,12 +3344,12 @@
                                 "start": {
                                     "line": 305,
                                     "column": 1,
-                                    "offset": 7221
+                                    "offset": 7237
                                 },
                                 "end": {
                                     "line": 323,
                                     "column": 4,
-                                    "offset": 7681
+                                    "offset": 7697
                                 }
                             },
                             "data": {
@@ -3384,7 +3384,7 @@
                 "end": {
                     "line": 323,
                     "column": 4,
-                    "offset": 7681
+                    "offset": 7697
                 }
             }
         },
@@ -3405,12 +3405,12 @@
                         "start": {
                             "line": 325,
                             "column": 1,
-                            "offset": 7683
+                            "offset": 7699
                         },
                         "end": {
                             "line": 325,
                             "column": 10,
-                            "offset": 7692
+                            "offset": 7708
                         }
                     },
                     "data": {
@@ -3431,12 +3431,12 @@
                                         "start": {
                                             "line": 325,
                                             "column": 4,
-                                            "offset": 7686
+                                            "offset": 7702
                                         },
                                         "end": {
                                             "line": 325,
                                             "column": 10,
-                                            "offset": 7692
+                                            "offset": 7708
                                         }
                                     }
                                 }
@@ -3445,12 +3445,12 @@
                                 "start": {
                                     "line": 325,
                                     "column": 1,
-                                    "offset": 7683
+                                    "offset": 7699
                                 },
                                 "end": {
                                     "line": 325,
                                     "column": 10,
-                                    "offset": 7692
+                                    "offset": 7708
                                 }
                             },
                             "data": {
@@ -3480,12 +3480,12 @@
                                 "start": {
                                     "line": 327,
                                     "column": 1,
-                                    "offset": 7694
+                                    "offset": 7710
                                 },
                                 "end": {
                                     "line": 327,
                                     "column": 12,
-                                    "offset": 7705
+                                    "offset": 7721
                                 }
                             },
                             "data": {
@@ -3506,12 +3506,12 @@
                                                 "start": {
                                                     "line": 327,
                                                     "column": 5,
-                                                    "offset": 7698
+                                                    "offset": 7714
                                                 },
                                                 "end": {
                                                     "line": 327,
                                                     "column": 12,
-                                                    "offset": 7705
+                                                    "offset": 7721
                                                 }
                                             }
                                         }
@@ -3520,12 +3520,12 @@
                                         "start": {
                                             "line": 327,
                                             "column": 1,
-                                            "offset": 7694
+                                            "offset": 7710
                                         },
                                         "end": {
                                             "line": 327,
                                             "column": 12,
-                                            "offset": 7705
+                                            "offset": 7721
                                         }
                                     },
                                     "data": {
@@ -3544,12 +3544,12 @@
                                 "start": {
                                     "line": 329,
                                     "column": 1,
-                                    "offset": 7707
+                                    "offset": 7723
                                 },
                                 "end": {
                                     "line": 333,
                                     "column": 4,
-                                    "offset": 7822
+                                    "offset": 7838
                                 }
                             },
                             "data": {
@@ -3568,12 +3568,12 @@
                                         "start": {
                                             "line": 329,
                                             "column": 1,
-                                            "offset": 7707
+                                            "offset": 7723
                                         },
                                         "end": {
                                             "line": 333,
                                             "column": 4,
-                                            "offset": 7822
+                                            "offset": 7838
                                         }
                                     },
                                     "data": {
@@ -3612,12 +3612,12 @@
                                 "start": {
                                     "line": 334,
                                     "column": 1,
-                                    "offset": 7823
+                                    "offset": 7839
                                 },
                                 "end": {
                                     "line": 335,
                                     "column": 4,
-                                    "offset": 7840
+                                    "offset": 7856
                                 }
                             },
                             "data": {
@@ -3636,12 +3636,12 @@
                                         "start": {
                                             "line": 334,
                                             "column": 1,
-                                            "offset": 7823
+                                            "offset": 7839
                                         },
                                         "end": {
                                             "line": 335,
                                             "column": 4,
-                                            "offset": 7840
+                                            "offset": 7856
                                         }
                                     },
                                     "data": {
@@ -3671,12 +3671,12 @@
                         "start": {
                             "line": 327,
                             "column": 1,
-                            "offset": 7694
+                            "offset": 7710
                         },
                         "end": {
                             "line": 335,
                             "column": 4,
-                            "offset": 7840
+                            "offset": 7856
                         }
                     }
                 }
@@ -3685,12 +3685,12 @@
                 "start": {
                     "line": 325,
                     "column": 1,
-                    "offset": 7683
+                    "offset": 7699
                 },
                 "end": {
                     "line": 335,
                     "column": 4,
-                    "offset": 7840
+                    "offset": 7856
                 }
             }
         },
@@ -3711,12 +3711,12 @@
                         "start": {
                             "line": 337,
                             "column": 1,
-                            "offset": 7842
+                            "offset": 7858
                         },
                         "end": {
                             "line": 337,
                             "column": 11,
-                            "offset": 7852
+                            "offset": 7868
                         }
                     },
                     "data": {
@@ -3737,12 +3737,12 @@
                                         "start": {
                                             "line": 337,
                                             "column": 5,
-                                            "offset": 7846
+                                            "offset": 7862
                                         },
                                         "end": {
                                             "line": 337,
                                             "column": 11,
-                                            "offset": 7852
+                                            "offset": 7868
                                         }
                                     }
                                 }
@@ -3751,12 +3751,12 @@
                                 "start": {
                                     "line": 337,
                                     "column": 1,
-                                    "offset": 7842
+                                    "offset": 7858
                                 },
                                 "end": {
                                     "line": 337,
                                     "column": 11,
-                                    "offset": 7852
+                                    "offset": 7868
                                 }
                             },
                             "data": {
@@ -3775,12 +3775,12 @@
                         "start": {
                             "line": 339,
                             "column": 1,
-                            "offset": 7854
+                            "offset": 7870
                         },
                         "end": {
                             "line": 344,
                             "column": 4,
-                            "offset": 7985
+                            "offset": 8001
                         }
                     },
                     "data": {
@@ -3799,12 +3799,12 @@
                                 "start": {
                                     "line": 339,
                                     "column": 1,
-                                    "offset": 7854
+                                    "offset": 7870
                                 },
                                 "end": {
                                     "line": 344,
                                     "column": 4,
-                                    "offset": 7985
+                                    "offset": 8001
                                 }
                             },
                             "data": {
@@ -3842,12 +3842,12 @@
                 "start": {
                     "line": 337,
                     "column": 1,
-                    "offset": 7842
+                    "offset": 7858
                 },
                 "end": {
                     "line": 344,
                     "column": 4,
-                    "offset": 7985
+                    "offset": 8001
                 }
             }
         },
@@ -3868,12 +3868,12 @@
                         "start": {
                             "line": 346,
                             "column": 1,
-                            "offset": 7987
+                            "offset": 8003
                         },
                         "end": {
                             "line": 346,
                             "column": 21,
-                            "offset": 8007
+                            "offset": 8023
                         }
                     },
                     "data": {
@@ -3894,12 +3894,12 @@
                                         "start": {
                                             "line": 346,
                                             "column": 4,
-                                            "offset": 7990
+                                            "offset": 8006
                                         },
                                         "end": {
                                             "line": 346,
                                             "column": 21,
-                                            "offset": 8007
+                                            "offset": 8023
                                         }
                                     }
                                 }
@@ -3908,12 +3908,12 @@
                                 "start": {
                                     "line": 346,
                                     "column": 1,
-                                    "offset": 7987
+                                    "offset": 8003
                                 },
                                 "end": {
                                     "line": 346,
                                     "column": 21,
-                                    "offset": 8007
+                                    "offset": 8023
                                 }
                             },
                             "data": {
@@ -3932,12 +3932,12 @@
                         "start": {
                             "line": 348,
                             "column": 1,
-                            "offset": 8009
+                            "offset": 8025
                         },
                         "end": {
                             "line": 369,
                             "column": 4,
-                            "offset": 8423
+                            "offset": 8439
                         }
                     },
                     "data": {
@@ -3956,12 +3956,12 @@
                                 "start": {
                                     "line": 348,
                                     "column": 1,
-                                    "offset": 8009
+                                    "offset": 8025
                                 },
                                 "end": {
                                     "line": 369,
                                     "column": 4,
-                                    "offset": 8423
+                                    "offset": 8439
                                 }
                             },
                             "data": {
@@ -3991,12 +3991,12 @@
                 "start": {
                     "line": 346,
                     "column": 1,
-                    "offset": 7987
+                    "offset": 8003
                 },
                 "end": {
                     "line": 369,
                     "column": 4,
-                    "offset": 8423
+                    "offset": 8439
                 }
             }
         }
@@ -4010,7 +4010,7 @@
         "end": {
             "line": 370,
             "column": 1,
-            "offset": 8424
+            "offset": 8440
         }
     }
 }
