@@ -62,7 +62,7 @@ export const processor = (options={files: []}) => {
                      const ast = await p.run(parsed)
                      console.log("[mdcode] AST", ast)
                      node.children = ast.children
-                     node.value = undefined
+                     node.type = 'mdcode'
                      resolve()
                 });
                
