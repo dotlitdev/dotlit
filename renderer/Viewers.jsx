@@ -5,18 +5,18 @@ import {btoa} from '../utils/safe-encoders'
 const console = getConsoleForNamespace('Viewers')
 
 const viewers = {
-  csv: ({value}) => {
-    const rows = value.split("\n").map( (row,i) => {
+  csv: ({node}) => {
+    const rows = node.value.split("\n").map( (row,i) => {
        const cols = row.split(",").map( (col,j) => <td key={j}>{col}</td>)
        return <tr key={i}>{cols}</tr>
     })
     return <table>{rows}</table>
   },
-  html: ({value}) => <div dangerouslySetInnerHTML={{__html: value}}></div>,
-  svg: ({value}) => <div dangerouslySetInnerHTML={{__html: value}}></div>,
-  uri: ({value}) => <iframe src={value}></iframe>,
-  iframe0: (node) => <iframe src={"data:text/html;base64," + btoa(node.value)}></iframe>,
-  iframe: (node) => {
+  html: ({node}) => <div dangerouslySetInnerHTML={{__html: node.value}}></div>,
+  svg: ({node}) => <div dangerouslySetInnerHTML={{__html: node.value}}></div>,
+  uri: ({node}) => <iframe src={node.value}></iframe>,
+  iframe0: ({node}) => <iframe src={"data:text/html;base64," + btoa(node.value)}></iframe>,
+  iframe: ({node}) => {
     if (node.meta
         && node.meta.lang === 'uri')
         return <iframe src={node.value} />
@@ -25,10 +25,11 @@ const viewers = {
     }}></iframe> 
   },
 
-  graph: (node, {React}) => {
+  graph: ({node, React}) => {
    const c = React.createElement
    const data = node.value
-   const el = c('iframe', {srcDoc: `<head>
+   const el = c('iframe', {srcDoc: `<!DOCTYPE html>
+<head>
   <style> body { margin: 0; } </style>
   <script src="https://unpkg.com/force-graph"></script>
   <!-- from: https://github.com/vasturiano/force-graph -->
@@ -37,9 +38,9 @@ const viewers = {
   <div id="graph"></div>
   <script>
     const data = ${data};
-      const thisfile = window.parent.lit.location.src
-      const elem = document.getElementById('graph')
-      const Graph = ForceGraph()(elem)
+    const thisfile = window.parent.lit.location.src
+    const elem = document.getElementById('graph')
+    const Graph = ForceGraph()(elem)
         .graphData(data)
         .nodeId('id')
         .nodeVal((n) => n.backlinks ? n.backlinks.length : 1)
@@ -54,13 +55,12 @@ const viewers = {
           Graph.zoom(2, 2000);
         });
 
-        setTimeout( () => {
-            const { nodes, links } = Graph.graphData()
-            const node = nodes.filter( n => n.id === thisfile)[0]
-            Graph.centerAt(node.x, node.y, 1000);
-            Graph.zoom(2, 1000);
-        }, 2000)
-
+    setTimeout( () => {
+        const { nodes, links } = Graph.graphData()
+        const node = nodes.filter( n => n.id === thisfile)[0]
+        Graph.centerAt(node.x, node.y, 1000);
+        Graph.zoom(2, 1000);
+    }, 2000)
   </script>
 </body>`})
    return el

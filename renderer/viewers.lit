@@ -12,8 +12,8 @@
 ### Example: Basic `foo` viewer
 
 ```js !viewer of=foo
-export const viewer = ({value}, {React}) => {
-  return `${value} Foooooo! React: ${!!React}`
+export const viewer = ({node, React}) => {
+  return `${node.value} Foooooo! React: ${!!React}`
 }
 ```
 
@@ -45,7 +45,7 @@ Qux
 ### Example: `meta` viewer
 
 ```js !viewer of=meta
-export const viewer = (node,{React}) => {
+export const viewer = ({node,React}) => {
   const view = React.createElement('pre', null, JSON.stringify(node,null,2))
   return view
 }
@@ -60,7 +60,7 @@ show meta content instead
 ✅ This viewer has been folded into `.lit` as one of the default viewers.
 
 ```js !viewer of=custom-graph
-export const viewer = (node, {React}) => {
+export const viewer = ({node, React}) => {
    const c = React.createElement
    const data = node.value
 
@@ -174,7 +174,7 @@ Docs: [vega-lite](https://vega.github.io/vega-lite/usage/compile.html)
 Docs: https://github.com/magjac/d3-graphviz#examples
 
 ```js !viewer of=dot
-export const viewer = (node, {React}) => {
+export const viewer = ({node, React}) => {
    const c = React.createElement
    const el = c('iframe', {srcDoc: `<!DOCTYPE html>
 <meta charset="utf-8">
@@ -231,31 +231,95 @@ The above mildly more complex example doesn't render, likely due to not being ac
 ### Example: Plant`UML` viewer
 
 ```js !viewer of=uml
-export const viewer = (node, {React}) => {
+export const viewer = ({node, React}) => {
    const c = React.createElement
-   const el = c('iframe', {srcDoc: `<!DOCTYPE html>
-<html>
-  <head>
-    <title>Test page</title>
-  </head>
-  <body>
-  <script type="module">
+   const ref = React.createRef();
+   const [height, setHeight] = React.useState(null)
+   const id = Math.round(Math.random() * 10000000).toString()
 
-    async function encode(src) {
-      const module = await import("https://cdn.skypack.dev/plantuml-encoder");
-      return module.encode(src)
+  React.useEffect(() => {
+    const handler = event => {
+      if (ref && ref.current && event && event.data && typeof event.data === 'string') {
+          const data = JSON.parse(event.data)
+          if (id === data.source) {
+             console.log("Message: ", data)
+             setHeight(data.height)
+          }
+
+      }
     }
 
-    encode("${node.value}").then(encoded => {
-       alert("Got encoded " + encoded)
-    })
+    window.addEventListener("message", handler)
 
-  </script>
-  </body>
-</html>
-````})
+    // clean up
+    return () => window.removeEventListener("message", handler)
+  }, []) // empty array => run only once
+
+   const el = c('iframe', {ref: ref, style: {height: ( height ? (height + 'px') : 'auto') },srcDoc: `<!DOCTYPE html>
+    <html>
+      <head>
+        <title>PlantUML Viewer</title>
+        <style>html, body {margin: 0; padding: 0; } #plantuml { display: block; max-width: 100%; }</style>
+      </head>
+      <body>
+        <img id="plantuml" />
+        <script type="module">
+
+        function resize() {
+          const msg = JSON.stringify({
+            source: "${id}",
+            height: document.body.clientHeight
+          })
+          console.log("Resize Message", msg)
+          window.parent.postMessage(msg, '*');
+        }
+        async function encodePlantUML(src) {
+          console.log("encoding", src)
+          const module = await import("https://cdn.skypack.dev/plantuml-encoder");
+          const encoded = module.encode(src)
+          console.log(encoded)
+          return encoded
+        }
+
+        encodePlantUML("${node.value.replace(/\n/g, '\\n')}")
+        .then(encoded => {
+            const url = "https://plantuml.com/plantuml/svg/" + encoded
+            const img = document.getElementById('plantuml')
+            img.setAttribute('src', url)
+            img.onload = resize
+        })
+
+        console.log("PlantUML Viewer.")
+      </script>
+      </body>
+    </html>`})
+   console.log("PlantViewer iframe ref:", el.ref.current)
    return el
 }
+```
+
+```>uml
+[A] -> [B]
+```
+
+```>uml
+@startuml
+participant participant as Foo
+actor       actor       as Foo1
+boundary    boundary    as Foo2
+control     control     as Foo3
+entity      entity      as Foo4
+database    database    as Foo5
+collections collections as Foo6
+queue       queue       as Foo7
+Foo -> Foo1 : To actor 
+Foo -> Foo2 : To boundary
+Foo -> Foo3 : To control
+Foo -> Foo4 : To entity
+Foo -> Foo5 : To database
+Foo -> Foo6 : To collections
+Foo -> Foo7: To queue
+@enduml
 ```
 
 ## Errors
@@ -263,7 +327,7 @@ export const viewer = (node, {React}) => {
 ### Runtime
 
 ```js !viewer of=testerror
-export const viewer = (node) => {
+export const viewer = ({node}) => {
   throw new Error("Test Error: Broken Viewer")
 }
 ```
@@ -273,7 +337,7 @@ The above viewer breaks the document render, destroying the page, but therefore 
 
 ```js !viewer of=testerror2
 throw new Error("Test Error: Broken Viewer")
-export const viewer = (node) => {
+export const viewer = ({node}) => {
   return "never"
 }
 ```

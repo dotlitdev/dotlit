@@ -6,6 +6,7 @@ import SelectionContext from '../SelectionContext'
 import {getViewer} from '../../renderer/Viewers'
 import {CodeMeta} from '../CodeMeta'
 import { Identity } from '../../utils/functions'
+import { ErrorBoundary } from '../ErrorBoundry'
 
 const console = getConsoleForNamespace('codeblocks')
 
@@ -37,7 +38,7 @@ export const Codeblock = props => {
     { ctx => {
 
       const meta = codeNode ? codeNode.properties.meta : null
-      const viewer = getViewer(meta, ctx.file.data.viewers)
+      const Viewer = getViewer(meta, ctx.file.data.viewers)
 
       const classes = [
         localRemote,
@@ -49,8 +50,10 @@ export const Codeblock = props => {
           console.log("[Codeblock]", meta && meta.raw )
           return <codecell className={classes}>
               { meta && <CodeMeta meta={meta} toggleFullscreen={toggleFullscreen} toggleLocalRemote={toggleLocalRemote} /> }
-              { viewer 
-                ? viewer({value: source, data: {meta}}, {React})
+              { Viewer 
+                ? <ErrorBoundary>
+                    <Viewer node={{value: source, data: {meta}}} React={React}/>
+                  </ErrorBoundary>
                 : meta && meta.isOutput
                   ? <output><Highlight language={meta.lang}>{source}</Highlight></output>
                   : <Highlight language={meta.lang}>{source}</Highlight> }
