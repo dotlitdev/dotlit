@@ -181,22 +181,42 @@ d3.select(&quot;#graph&quot;).graphviz()
 
 }
 </code></pre></output></codecell></cell><cell startpos="229:1-4933" endpos="229:95-5027"><p>The above mildly more complex example doesn&#x27;t render, likely due to not being actual graphviz.</p></cell></section>
-<section depth="3" class="" startpos="231:1-5029" endpos="239:4-5219"><cell startpos="231:1-5029" endpos="231:31-5059"><h3 id="example-plantuml-viewer">Example: Plant<code>UML</code> viewer</h3></cell><cell startpos="233:1-5061" endpos="239:4-5219" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node, {React}) =&gt; {
+<section depth="3" class="" startpos="231:1-5029" endpos="259:4-5599"><cell startpos="231:1-5029" endpos="231:31-5059"><h3 id="example-plantuml-viewer">Example: Plant<code>UML</code> viewer</h3></cell><cell startpos="233:1-5061" endpos="259:4-5599" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node, {React}) =&gt; {
    const c = React.createElement
-   const el = c(&#x27;iframe&#x27;, {srcDoc: `uml`})
+   const el = c(&#x27;iframe&#x27;, {srcDoc: `&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Test page&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;script type=&quot;module&quot;&gt;
+
+    async function encode(src) {
+      const module = await import(&quot;https://cdn.skypack.dev/plantuml-encoder&quot;);
+      return module.encode(src)
+    }
+
+    encode(&quot;${node.value}&quot;).then(encoded =&gt; {
+       alert(&quot;Got encoded &quot; + encoded)
+    })
+
+  &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+````})
    return el
 }
 </code></pre></codecell></cell></section>
-<section depth="2" class="" startpos="241:1-5221" endpos="250:140-5498"><cell startpos="241:1-5221" endpos="241:10-5230"><h2 id="errors">Errors</h2></cell><section depth="3" class="" startpos="243:1-5232" endpos="250:140-5498"><cell startpos="243:1-5232" endpos="243:12-5243"><h3 id="runtime">Runtime</h3></cell><cell startpos="245:1-5245" endpos="249:4-5358" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node) =&gt; {
+<section depth="2" class="" startpos="261:1-5601" endpos="270:140-5878"><cell startpos="261:1-5601" endpos="261:10-5610"><h2 id="errors">Errors</h2></cell><section depth="3" class="" startpos="263:1-5612" endpos="270:140-5878"><cell startpos="263:1-5612" endpos="263:12-5623"><h3 id="runtime">Runtime</h3></cell><cell startpos="265:1-5625" endpos="269:4-5738" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = (node) =&gt; {
   throw new Error(&quot;Test Error: Broken Viewer&quot;)
 }
-</code></pre></codecell></cell><cell startpos="250:1-5359" endpos="250:140-5498"><p>The above viewer breaks the document render, destroying the page, but therefore use of it is not persisted. Consider adding <code>ErrorBoundry</code>.</p></cell></section></section>
-<section depth="3" class="" startpos="252:1-5500" endpos="259:4-5641"><cell startpos="252:1-5500" endpos="252:11-5510"><h3 id="import">Import</h3></cell><cell startpos="254:1-5512" endpos="259:4-5641" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">throw new Error(&quot;Test Error: Broken Viewer&quot;)
+</code></pre></codecell></cell><cell startpos="270:1-5739" endpos="270:140-5878"><p>The above viewer breaks the document render, destroying the page, but therefore use of it is not persisted. Consider adding <code>ErrorBoundry</code>.</p></cell></section></section>
+<section depth="3" class="" startpos="272:1-5880" endpos="279:4-6021"><cell startpos="272:1-5880" endpos="272:11-5890"><h3 id="import">Import</h3></cell><cell startpos="274:1-5892" endpos="279:4-6021" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">throw new Error(&quot;Test Error: Broken Viewer&quot;)
 export const viewer = (node) =&gt; {
   return &quot;never&quot;
 }
 </code></pre></codecell></cell></section>
-<section depth="2" class="" startpos="261:1-5643" endpos="284:4-6079"><cell startpos="261:1-5643" endpos="261:21-5663"><h2 id="initial-prototype">Initial prototype</h2></cell><cell startpos="263:1-5665" endpos="284:4-6079" class="code"><codecell class="local"><span class="meta"><span class="lang">html</span></span><pre><code class="html">&lt;!DOCTYPE html&gt;
+<section depth="2" class="" startpos="281:1-6023" endpos="304:4-6459"><cell startpos="281:1-6023" endpos="281:21-6043"><h2 id="initial-prototype">Initial prototype</h2></cell><cell startpos="283:1-6045" endpos="304:4-6459" class="code"><codecell class="local"><span class="meta"><span class="lang">html</span></span><pre><code class="html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
   &lt;head&gt;
     &lt;title&gt;Test page&lt;/title&gt;

@@ -233,7 +233,27 @@ The above mildly more complex example doesn't render, likely due to not being ac
 ```js !viewer of=uml
 export const viewer = (node, {React}) => {
    const c = React.createElement
-   const el = c('iframe', {srcDoc: `uml`})
+   const el = c('iframe', {srcDoc: `<!DOCTYPE html>
+<html>
+  <head>
+    <title>Test page</title>
+  </head>
+  <body>
+  <script type="module">
+
+    async function encode(src) {
+      const module = await import("https://cdn.skypack.dev/plantuml-encoder");
+      return module.encode(src)
+    }
+
+    encode("${node.value}").then(encoded => {
+       alert("Got encoded " + encoded)
+    })
+
+  </script>
+  </body>
+</html>
+````})
    return el
 }
 ```
