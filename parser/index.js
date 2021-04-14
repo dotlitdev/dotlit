@@ -46,23 +46,30 @@ export const processor = (options={files: []}) => {
     // remark-litmd (rehype compatable)
 
     // Async reparse `md` codeblocks as children
-    .use(function (...args) {
+    .use(function ({baseProcessor}) {
         return async (tree, file) => {
             file.data = file.data || {}
             file.data.__mdcodeblocks = 0
             const promises = [];
             visit(tree, 'code', (node,index,parent) => {
-                // instead of:
-                // await wait(100)
-                const p = wait(100).then( () => {
-                     file.data.__mdcodeblocks++
-                })
+                if (node.lang !== 'md') return;
+
+                // instead of await
+                const p = new Promise(async resolve => {
+                     console.log("[mdcode] - " + file.data.__mdcodeblocks++)
+                     const p = baseProcessor()
+                     const parsed = await p.parse( node.value )
+                     const ast = await p.run(parsed)
+                     console.log("[mdcode] AST", ast)
+                     resolve()
+                });
+               
                 promises.push(p)
             });
             await Promise.all(promises);
             return null
         }
-    }, {})
+    }, {baseProcessor})
     .use(resolveLinks())
     .use(sections, {})
     .use(litcodeblocks)
