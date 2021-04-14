@@ -1,26 +1,31 @@
 import unified from 'unified'
+import select from 'unist-util-select'
+import visit from 'unist-util-visit'
+
 import markdown from 'remark-parse'
 import tostring from 'remark-stringify'
 import slug from 'remark-slug'
 import headingIds from 'remark-heading-id'
 import toc from 'remark-toc'
 import footnotes from 'remark-footnotes'
-
 import gfm from 'remark-gfm'
-
 import { wikiLinkPlugin } from 'remark-wiki-link'
 
 import {sections, groupIntoSections, ungroupSections} from './sections'
 import litcodeblocks from './codeblocks'
 import frontmatter from './frontmatter'
-
-import select from 'unist-util-select'
-
 import {resolveLinks, wikiLinkOptions} from './links'
-
 import { getConsoleForNamespace} from '../utils/console'
 
 const console = getConsoleForNamespace('parser')
+
+
+// used for testing add to functions util if useful
+const wait = async (ms) => {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms);
+  });
+}
 
 const baseProcessor = (options = {}) => {
     return unified()
@@ -44,7 +49,17 @@ export const processor = (options={files: []}) => {
     .use(function (...args) {
         return async (tree, file) => {
             file.data = file.data || {}
-            file.data.__mdcodeblocks = "wip"
+            file.data.__mdcodeblocks = 0
+            const promises = [];
+            visit(tree, 'code', (node,index,parent) => {
+                // instead of:
+                // await wait(100)
+                const p = wait(100).then( () => {
+                     file.data.__mdcodeblocks++
+                })
+                promises.push(p)
+            });
+            await Promise.all(promises);
             return null
         }
     }, {})
