@@ -163,12 +163,13 @@ C
 17494,Alice,9001
 245,Bob,2000
 </code></pre></codecell></cell><cell startpos="164:1-3922" endpos="168:4-3994" class="code"><codecell class="local"><span class="meta"><span class="lang">csv</span><span class="filename">dummy/data.csv</span></span><table><tr><td>id</td><td>name</td><td>amount</td></tr><tr><td>17494</td><td>Alice</td><td>9001</td></tr><tr><td>245</td><td>Bob</td><td>2000</td></tr><tr><td></td></tr></table></codecell></cell></section>
-<section depth="4" class="" startpos="170:1-3996" endpos="270:10-6455"><cell startpos="170:1-3996" endpos="174:50-4301"><h4 id="viewers">Viewers</h4><p>When a cell is an Output or has the directive <code>!inline</code> and a lang, file-extension, or the explicit <code>viewer=xxx</code> attribute, for which a Viewer exists then the source will be shown using the viewer and plain text source only visible on edit.</p><p>See <a href="meta/styling_and_themes.html#viewers">styles</a></p></cell><cell startpos="176:1-4303" endpos="178:4-4338" class="code"><codecell class="local"><span class="meta"><span class="lang">json</span></span><output><pre><code class="json">{&quot;json&quot;: &quot;viewer tbd&quot;}
+<section depth="4" class="" startpos="170:1-3996" endpos="232:10-5187"><cell startpos="170:1-3996" endpos="174:50-4301"><h4 id="viewers">Viewers</h4><p>When a cell is an Output or has the directive <code>!inline</code> and a lang, file-extension, or the explicit <code>viewer=xxx</code> attribute, for which a Viewer exists then the source will be shown using the viewer and plain text source only visible on edit.</p><p>See <a href="meta/styling_and_themes.html#viewers">styles</a></p></cell><cell startpos="176:1-4303" endpos="178:4-4338" class="code"><codecell class="local"><span class="meta"><span class="lang">json</span></span><output><pre><code class="json">{&quot;json&quot;: &quot;viewer tbd&quot;}
 </code></pre></output></codecell></cell><cell startpos="180:1-4340" endpos="184:4-4471" class="code"><codecell class="local"><span class="meta"><span class="lang">svg</span></span><div><svg width="100" height="100">
   <circle cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow" />
 </svg>
 </div></codecell></cell><cell startpos="186:1-4473" endpos="188:4-4504" class="code"><codecell class="local"><span class="meta"><span class="lang">uri</span></span><iframe src="https://example.com
-"></iframe></codecell></cell><cell startpos="190:1-4506" endpos="230:4-5816" class="code"><codecell class="local"><span class="meta"><span class="lang">html</span></span><iframe srcDoc="&lt;head&gt;
+"></iframe></codecell></cell><cell startpos="190:1-4506" endpos="192:4-4548" class="code"><codecell class="local"><span class="meta"><span class="lang">json</span></span><iframe srcDoc="&lt;!DOCTYPE html&gt;
+&lt;head&gt;
   &lt;style&gt; body { margin: 0; } &lt;/style&gt;
   &lt;script src=&quot;https://unpkg.com/force-graph&quot;&gt;&lt;/script&gt;
   &lt;!-- from: https://github.com/vasturiano/force-graph --&gt;
@@ -176,17 +177,15 @@ C
 &lt;body&gt;
   &lt;div id=&quot;graph&quot;&gt;&lt;/div&gt;
   &lt;script&gt;
-    fetch(&#x27;/manifest.json&#x27;).then(res =&gt; res.json()).then(data =&gt; {
-      const thisfile = window.parent.lit.location.src
-      // alert(thisfile)
-      const elem = document.getElementById(&#x27;graph&#x27;)
-      const Graph = ForceGraph()(elem)
+    const data = ;
+    const thisfile = window.parent.lit.location.src
+    const elem = document.getElementById(&#x27;graph&#x27;)
+    const Graph = ForceGraph()(elem)
         .graphData(data)
         .nodeId(&#x27;id&#x27;)
-        .nodeVal((n) =&gt; n.backlinks.length)
+        .nodeVal((n) =&gt; n.backlinks ? n.backlinks.length : 1)
         .nodeLabel(&#x27;id&#x27;)
         .nodeAutoColorBy(&#x27;type&#x27;)
-        
         // .linkColor(d =&gt; data.nodes[d.source].exists ? &#x27;red&#x27; : &#x27;lightblue&#x27;)
         .linkDirectionalArrowLength(6)
         .onNodeHover(node =&gt; elem.style.cursor = node ? &#x27;pointer&#x27; : null)
@@ -196,28 +195,24 @@ C
           Graph.zoom(2, 2000);
         });
 
-        setTimeout( () =&gt; {
+    setTimeout( () =&gt; {
         const { nodes, links } = Graph.graphData()
         const node = nodes.filter( n =&gt; n.id === thisfile)[0]
         Graph.centerAt(node.x, node.y, 1000);
         Graph.zoom(2, 1000);
-        // Graph.zoomToFit(1000, 2, (node) =&gt; node.id === thisfile)
-        }, 2000)
-
-    });
+    }, 2000)
   &lt;/script&gt;
-&lt;/body&gt;
-" style="aspect-ratio:1.6"></iframe></codecell></cell><cell startpos="232:1-5818" endpos="234:4-5878" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="js">confirm(&quot;It lives 🌱 from &quot;)
-</code></pre></codecell></cell><cell startpos="236:1-5880" endpos="236:135-6014"><p>The above has a strange behaviour, in that it only executes the <code>static</code> value, and hydration with a diffent (local) value is ignored.</p></cell><cell startpos="238:1-6016" endpos="244:4-6124" class="code"><codecell class="local"><span class="meta"><span class="lang">css</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="css">#header { color: green; }
+&lt;/body&gt;"></iframe></codecell></cell><cell startpos="194:1-4550" endpos="196:4-4610" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="js">confirm(&quot;It lives 🌱 from &quot;)
+</code></pre></codecell></cell><cell startpos="198:1-4612" endpos="198:135-4746"><p>The above has a strange behaviour, in that it only executes the <code>static</code> value, and hydration with a diffent (local) value is ignored.</p></cell><cell startpos="200:1-4748" endpos="206:4-4856" class="code"><codecell class="local"><span class="meta"><span class="lang">css</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="css">#header { color: green; }
 h1,h2,h3,h4,h5,h6 {
   position: sticky;
   top:0;
 }
-</code></pre></codecell></cell><section depth="5" class="" startpos="246:1-6126" endpos="270:10-6455"><cell startpos="246:1-6126" endpos="248:25-6172"><h5 id="custom-viewers">Custom Viewers</h5><p>See <a href="renderer/viewers.html?file=renderer/viewers.lit" title="renderer/viewers" wikilink="true">renderer/viewers</a></p></cell><cell startpos="250:1-6174" endpos="254:4-6254" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = () =&gt; {
+</code></pre></codecell></cell><section depth="5" class="" startpos="208:1-4858" endpos="232:10-5187"><cell startpos="208:1-4858" endpos="210:25-4904"><h5 id="custom-viewers">Custom Viewers</h5><p>See <a href="renderer/viewers.html?file=renderer/viewers.lit" title="renderer/viewers" wikilink="true">renderer/viewers</a></p></cell><cell startpos="212:1-4906" endpos="216:4-4986" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = () =&gt; {
   return &quot;Foooooooooo!&quot;
 }
-</code></pre></codecell></cell><cell startpos="256:1-6256" endpos="258:4-6279" class="code"><codecell class="local"><span class="meta"><span class="lang">foo</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="foo">Bar 
-</code></pre></codecell></cell><cell startpos="261:1-6282" endpos="270:10-6455"><p>Suggested or planned viewers</p><ul class="contains-task-list">
+</code></pre></codecell></cell><cell startpos="218:1-4988" endpos="220:4-5011" class="code"><codecell class="local"><span class="meta"><span class="lang">foo</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="foo">Bar 
+</code></pre></codecell></cell><cell startpos="223:1-5014" endpos="232:10-5187"><p>Suggested or planned viewers</p><ul class="contains-task-list">
 <li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->JSON</li>
 <li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <!-- -->HTML (inclined)</li>
 <li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <!-- -->SVG (basically the above)</li>
@@ -227,7 +222,7 @@ h1,h2,h3,h4,h5,h6 {
 <li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <!-- -->JS: Script</li>
 <li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->UML</li>
 </ul></cell></section></section>
-<section depth="4" class="" startpos="272:1-6457" endpos="274:206-6681"><cell startpos="272:1-6457" endpos="274:206-6681"><h4 id="transformers">Transformers</h4><p>As opposed to viewers which change how a source file is viewed, a <code>transformer</code> looks at an input and output pair and sees if it knows how to convert between the two <code>lang</code> ie <code>styl &gt; css</code> or <code>ts &gt; js</code> etc</p></cell></section>
+<section depth="4" class="" startpos="234:1-5189" endpos="236:206-5413"><cell startpos="234:1-5189" endpos="236:206-5413"><h4 id="transformers">Transformers</h4><p>As opposed to viewers which change how a source file is viewed, a <code>transformer</code> looks at an input and output pair and sees if it knows how to convert between the two <code>lang</code> ie <code>styl &gt; css</code> or <code>ts &gt; js</code> etc</p></cell></section>
 <div class="footnotes">
 <hr/>
 <ol>
