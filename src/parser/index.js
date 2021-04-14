@@ -61,6 +61,7 @@ export const processor = (options={files: []}) => {
                      const parsed = await p.parse( node.value )
                      const ast = await p.run(parsed)
                      console.log("[mdcode] AST", ast)
+                     node.children = ast.children
                      resolve()
                 });
                
