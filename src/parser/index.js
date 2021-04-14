@@ -1,4 +1,7 @@
 import unified from 'unified'
+import select from 'unist-util-select'
+import visit from 'unist-util-visit'
+
 import markdown from 'remark-parse'
 import tostring from 'remark-stringify'
 import slug from 'remark-slug'
@@ -7,10 +10,10 @@ import toc from 'remark-toc'
 import footnotes from 'remark-footnotes'
 import gfm from 'remark-gfm'
 import { wikiLinkPlugin } from 'remark-wiki-link'
+
 import {sections, groupIntoSections, ungroupSections} from './sections'
 import litcodeblocks from './codeblocks'
 import frontmatter from './frontmatter'
-import select from 'unist-util-select'
 import {resolveLinks, wikiLinkOptions} from './links'
 import { getConsoleForNamespace} from '../utils/console'
 
