@@ -46,13 +46,13 @@ export const Codeblock = props => {
       ].filter(Identity).join(' ')
       
       if (codeNode) {
-          const source = codeNode.children[0].value
+          const source = codeNode.value || codeNode.children[0].value
           console.log("[Codeblock]", meta && meta.raw )
           return <codecell className={classes}>
               { meta && <CodeMeta meta={meta} toggleFullscreen={toggleFullscreen} toggleLocalRemote={toggleLocalRemote} /> }
               { Viewer 
                 ? <ErrorBoundary>
-                    <Viewer node={{value: source, data: {meta}}} React={React}/>
+                    <Viewer node={{children: codeNode.children, value: source, data: {meta}}} React={React}/>
                   </ErrorBoundary>
                 : meta && meta.isOutput
                   ? <output><Highlight language={meta.lang}>{source}</Highlight></output>
