@@ -18,8 +18,7 @@ function code(h, node) {
     props.className = ['language-' + lang]
   }
 
-  const divcode = node
-  divcode.type = 'blockquote'
+  const divcode = u('blockquote', node.children)
 
   code = h(node, 'code', props, toHast(divcode).children)
 
