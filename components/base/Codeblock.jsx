@@ -53,7 +53,7 @@ export const Codeblock = props => {
           source = codeNode.children[0]
         } else {
           console.log('unknown source')
-          source = 'unknown'
+          source = codeNode.value
         }
         console.log("[Codeblock]", meta && meta.raw )
         return <codecell className={classes}>
