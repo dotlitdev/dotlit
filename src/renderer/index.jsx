@@ -3,6 +3,8 @@ import remark2rehype from 'remark-rehype'
 import rehype2react from 'rehype-react'
 import {selectAll} from 'unist-util-select'
 
+import hastCodeHandler from './utils/hast-util-code-handler'
+
 import ReactDOMServer from 'react-dom/server'
 import React from 'react'
 
@@ -70,6 +72,9 @@ export function processor(fs) {
         Fragment: React.Fragment,
         allowDangerousHtml: true,
         createElement: React.createElement,
+        handlers: {
+            code: hastCodeHandler,
+        },
         passNode: true,
         components: {
             p: Paragraph,
