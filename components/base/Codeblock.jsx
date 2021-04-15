@@ -49,7 +49,7 @@ export const Codeblock = props => {
         let source;
         if (codeNode.data && codeNode.data.value) {
           source = codeNode.data.value;
-        } else if (codeNode.children && codeNode.children[0]) {
+        } else if (false && codeNode.children && codeNode.children[0]) {
           source = codeNode.children[0].value
         } else {
           console.log('unknown source')
