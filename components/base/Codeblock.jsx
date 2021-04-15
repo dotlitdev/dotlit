@@ -52,7 +52,7 @@ export const Codeblock = props => {
               { meta && <CodeMeta meta={meta} toggleFullscreen={toggleFullscreen} toggleLocalRemote={toggleLocalRemote} /> }
               { Viewer 
                 ? <ErrorBoundary>
-                    <Viewer node={{children: codeNode.children, value: source, data: {meta}}} React={React}/>
+                    <Viewer node={{node: props.node, children: codeNode.children, value: source, data: {meta}}} React={React}/>
                   </ErrorBoundary>
                 : meta && meta.isOutput
                   ? <output><Highlight language={meta.lang}>{source}</Highlight></output>
