@@ -53,7 +53,7 @@ export const processor = (options={files: []}) => {
             file.data.__mdcodeblocks = 0
             const promises = [];
             visit(tree, 'code', (node,index,parent) => {
-                if (node.lang !== 'md') return;
+                if (!node.data || !node.data.meta || node.data.meta.lang !== 'md') return;
 
                 const idx = file.data.__mdcodeblocks++
                 // instead of await
