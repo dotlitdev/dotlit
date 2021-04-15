@@ -67,14 +67,14 @@ export function processor(fs) {
     .use(remark2rehype, {
         allowDangerousHtml: true,
         // passThrough: ['mdcode'],
+        handlers: {
+            code: hastCodeHandler,
+        },
      })
     .use(rehype2react, {
         Fragment: React.Fragment,
         allowDangerousHtml: true,
         createElement: React.createElement,
-        handlers: {
-            code: hastCodeHandler,
-        },
         passNode: true,
         components: {
             p: Paragraph,

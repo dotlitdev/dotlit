@@ -46,18 +46,26 @@ export const Codeblock = props => {
       ].filter(Identity).join(' ')
       
       if (codeNode) {
-          const source = codeNode.value || codeNode.children[0].value
-          console.log("[Codeblock]", meta && meta.raw )
-          return <codecell className={classes}>
-              { meta && <CodeMeta meta={meta} toggleFullscreen={toggleFullscreen} toggleLocalRemote={toggleLocalRemote} /> }
-              { Viewer 
-                ? <ErrorBoundary>
-                    <Viewer node={{node: props.node, children: codeNode.children, value: source, data: {meta}}} React={React}/>
-                  </ErrorBoundary>
-                : meta && meta.isOutput
-                  ? <output><Highlight language={meta.lang}>{source}</Highlight></output>
-                  : <Highlight language={meta.lang}>{source}</Highlight> }
-          </codecell>
+        let source;
+        if (codeNode.data && codeNode.data.value) {
+          source = codeNode.data.value;
+        } else if (codeNode.children && codeNode.children[0]) {
+          source = codeNode.children[0]
+        } else {
+          console.log('unknown source')
+          source = 'unknown'
+        }
+        console.log("[Codeblock]", meta && meta.raw )
+        return <codecell className={classes}>
+            { meta && <CodeMeta meta={meta} toggleFullscreen={toggleFullscreen} toggleLocalRemote={toggleLocalRemote} /> }
+            { Viewer 
+              ? <ErrorBoundary>
+                  <Viewer node={{children: codeNode.children, value: source, data: {meta}}} React={React}/>
+                </ErrorBoundary>
+              : meta && meta.isOutput
+                ? <output><Highlight language={meta.lang}>{source}</Highlight></output>
+                : <Highlight language={meta.lang}>{source}</Highlight> }
+        </codecell>
       } else {
           console.log("Default codeblock", this.props.node.children[0])
           return <codecell><pre>{props.children}</pre></codecell>

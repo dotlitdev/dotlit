@@ -43,7 +43,7 @@ const Cell = props => {
     const isCodeCell = childIs(props.node, 'pre')
     const codeNode = childIs(isCodeCell, 'code');
     const meta = codeNode ? codeNode.properties.meta : null
-    const codeSource = codeNode && codeNode.children[0].value
+    const codeSource = codeNode && codeNode.data && codeNode.data.value
     const rawSource = codeSource && ("```" + (meta.raw || '') + "\n" + codeSource + "\n```")
     const originalSource = codeSource 
              && codeNode.properties
