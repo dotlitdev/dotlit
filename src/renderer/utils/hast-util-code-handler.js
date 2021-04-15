@@ -19,7 +19,7 @@ function code(h, node) {
   code = h(node, 'code', props, [u('text', value)])
 
   if (node.meta) {
-    code.data = {meta: node.meta}
+    code.data = {meta: node.meta, __customHastCodeHandler: true}
   }
 
   return h(node.position, 'pre', [code])
