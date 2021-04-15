@@ -18,7 +18,7 @@ function code(h, node) {
     props.className = ['language-' + lang]
   }
 
-  code = h(node, 'code', props, node.children)
+  code = h(node, 'code', props, toHast(node.children))
 
   if (node.meta) {
     code.data = {
