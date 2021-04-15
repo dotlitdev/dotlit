@@ -64,6 +64,7 @@ export const processor = (options={files: []}) => {
                      console.log("[mdcode] - " + idx + " AST: ", ast)
                      node.children = ast.children
                      // node.type = 'mdcode'
+                     // delete node.value
                      resolve()
                 });
                
