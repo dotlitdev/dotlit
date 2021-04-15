@@ -687,7 +687,7 @@
                     },
                     "children": [
                         {
-                            "type": "blockquote",
+                            "type": "code",
                             "lang": "js",
                             "meta": "./utils/unist-util-select-position.js",
                             "value": "import filter from 'unist-util-filter'\nimport {selectAll as select} from 'unist-util-select'\nimport { getConsoleForNamespace } from './console'\n\nconst console = getConsoleForNamespace('util')\n\n// written from client\nexport const atPos = pos => (node) => {\n  const pos2 = node.position\n  const startInside = (pos2.start.line >= pos.start.line\n    && pos2.start.line <= pos.end.line)\n  const endInside = (pos2.end.line >= pos.start.line\n    && pos2.end.line <= pos.end.line)\n  const wraps = pos2.start.line <= pos.start.line \n    && pos2.end.line >= pos.end.line\n\n  const any = wraps || startInside || endInside \n  console.log(\"atPos: \" + node.type, any ,pos2.start.line, pos2.end.line, wraps, startInside, endInside, pos.start.line, pos.end.line)\n  return any\n}\n\nexport const selectAll = (type, pos, tree) => {\n  const filteredTree = filter(tree, atPos(pos))\n  const nodes = select(type, filteredTree)\n  return nodes\n}",
@@ -857,7 +857,7 @@
                             },
                             "children": [
                                 {
-                                    "type": "blockquote",
+                                    "type": "code",
                                     "lang": "js",
                                     "meta": "./utils/unist-util-position-to-node.js",
                                     "value": "export const positionToNode = (pos,tree) => {\n\n  const start = pos.start\n    ? pos.start\n    : pos.line && pos.column\n      ? pos\n      : undefined\n\n  const end = pos.end\n    ? pos.end\n    : pos.line && pos.column\n      ? pos\n      : undefined\n\n  if (tree.position.start.line >= end.line) {\n    return undefined\n  }\n\n  if (tree.children) {\n\n  }\n}",
