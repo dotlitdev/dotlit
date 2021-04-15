@@ -55,12 +55,14 @@ export const Codeblock = props => {
           console.log('unknown source')
           source = codeNode.value
         }
+        codeNode.value = source
+
         console.log("[Codeblock]", meta && meta.raw, props )
         return <codecell className={classes}>
             { meta && <CodeMeta meta={meta} toggleFullscreen={toggleFullscreen} toggleLocalRemote={toggleLocalRemote} /> }
             { Viewer 
               ? <ErrorBoundary>
-                  <Viewer node={{children: props.children, value: source, data: {meta}}} React={React}/>
+                  <Viewer children={props.children} node={codeNode} React={React}/>
                 </ErrorBoundary>
               : meta && meta.isOutput
                 ? <output><Highlight language={meta.lang}>{source}</Highlight></output>
