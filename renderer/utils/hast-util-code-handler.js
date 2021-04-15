@@ -22,13 +22,13 @@ function code(h, node) {
 
   code = h(node, 'code', props, toHast(divcode).children)
 
-  if (node.meta) {
+  //if (node.meta) {
     code.data = {
       value: value,
       meta: node.meta, 
       __customHastCodeHandler: true,
     }
-  }
+  // }
     console.log("[HastCodeHander] end", code)
   return h(node.position, 'pre', [code])
 }
