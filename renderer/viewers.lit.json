@@ -1029,7 +1029,7 @@
                             },
                             "children": [
                                 {
-                                    "type": "code",
+                                    "type": "blockquote",
                                     "lang": "js",
                                     "meta": "!viewer of=foo",
                                     "value": "export const viewer = ({node, React}) => {\n  return `${node.value} Foooooo! React: ${!!React}`\n}",
@@ -1153,7 +1153,7 @@
                             },
                             "children": [
                                 {
-                                    "type": "code",
+                                    "type": "blockquote",
                                     "lang": "foo",
                                     "meta": "xviewer=meta",
                                     "value": "Bar",
@@ -1303,7 +1303,7 @@
                             },
                             "children": [
                                 {
-                                    "type": "code",
+                                    "type": "blockquote",
                                     "lang": "foo",
                                     "meta": "!inline",
                                     "value": "Baz",
@@ -1457,7 +1457,7 @@
                             },
                             "children": [
                                 {
-                                    "type": "code",
+                                    "type": "blockquote",
                                     "lang": "foo",
                                     "meta": "viewer=foo",
                                     "value": "Quz",
@@ -1575,7 +1575,7 @@
                             },
                             "children": [
                                 {
-                                    "type": "code",
+                                    "type": "blockquote",
                                     "lang": ">foo",
                                     "meta": null,
                                     "value": "Qux",
@@ -1770,7 +1770,7 @@
                     },
                     "children": [
                         {
-                            "type": "code",
+                            "type": "blockquote",
                             "lang": "md",
                             "meta": "viewer=meta !inline",
                             "value": "*Markdown* Viewer **TODO**",
@@ -2060,7 +2060,7 @@
                     },
                     "children": [
                         {
-                            "type": "code",
+                            "type": "blockquote",
                             "lang": "js",
                             "meta": "!viewer of=meta",
                             "value": "export const viewer = ({node,React}) => {\n  const view = React.createElement('pre', null, JSON.stringify(node,null,2))\n  return view\n}",
@@ -2128,7 +2128,7 @@
                     },
                     "children": [
                         {
-                            "type": "code",
+                            "type": "blockquote",
                             "lang": "txt",
                             "meta": "file.txt !inline #example custom=xxxx viewer=meta > out",
                             "value": "show meta content instead",
@@ -2394,7 +2394,7 @@
                     },
                     "children": [
                         {
-                            "type": "code",
+                            "type": "blockquote",
                             "lang": "js",
                             "meta": "!viewer of=custom-graph",
                             "value": "export const viewer = ({node, React}) => {\n   const c = React.createElement\n   const data = node.value\n\n   const el = c('iframe', {srcDoc: `<head>\n  <style> body { margin: 0; } </style>\n  <script src=\"https://unpkg.com/force-graph\"></script>\n  <!-- from: https://github.com/vasturiano/force-graph -->\n</head>\n<body>\n  <div id=\"graph\"></div>\n  <script>\n    const data = ${data};\n      const thisfile = window.parent.lit.location.src\n      // alert(thisfile)\n      const elem = document.getElementById('graph')\n      const Graph = ForceGraph()(elem)\n        .graphData(data)\n        .nodeId('id')\n        .nodeVal((n) => 2 * (n.backlinks && n.backlinks.length ? n.backlinks.length : 1))\n        .nodeLabel('id')\n        .nodeAutoColorBy('type')\n        \n        // .linkColor(d => data.nodes[d.source].exists ? 'red' : 'lightblue')\n        .linkDirectionalArrowLength(6)\n        .onNodeHover(node => elem.style.cursor = node ? 'pointer' : null)\n        .onNodeClick(node => {\n          // Center/zoom on node\n          Graph.centerAt(node.x, node.y, 1000);\n          Graph.zoom(2, 2000);\n        });\n\n        setTimeout( () => {\n            const { nodes, links } = Graph.graphData()\n            const node = nodes.filter( n => n.id === thisfile)[0]\n            Graph.centerAt(node.x, node.y, 1000);\n            Graph.zoom(2, 2000);\n\n        }, 2000)\n\n  </script>\n</body>`})\n   return el\n}",
@@ -2462,7 +2462,7 @@
                     },
                     "children": [
                         {
-                            "type": "code",
+                            "type": "blockquote",
                             "lang": "custom-graph",
                             "meta": "!inline",
                             "value": "{\n  \"nodes\":[\n    {\"id\": \"foo\"},\n    {\"id\": \"bar\"}\n  ],\n  \"links\": [\n    {\"source\": \"foo\", \"target\": \"bar\"}\n  ]\n}",
@@ -2528,7 +2528,7 @@
                     },
                     "children": [
                         {
-                            "type": "code",
+                            "type": "blockquote",
                             "lang": "custom-graph",
                             "meta": "!inline < ../manifest.json",
                             "value": "",
@@ -2916,7 +2916,7 @@
                     },
                     "children": [
                         {
-                            "type": "code",
+                            "type": "blockquote",
                             "lang": ">iframe",
                             "meta": null,
                             "value": "<!DOCTYPE html>\n<html>\n  <head>\n    <title>Embedding Vega-Lite</title>\n    <script src=\"https://cdn.jsdelivr.net/npm/vega@5.19.1\"></script>\n    <script src=\"https://cdn.jsdelivr.net/npm/vega-lite@5.0.0\"></script>\n    <script src=\"https://cdn.jsdelivr.net/npm/vega-embed@6.15.1\"></script>\n  </head>\n  <body>\n    <div id=\"vis\"></div>\n\n    <script type=\"text/javascript\">\n      var yourVlSpec = {\n        $schema: 'https://vega.github.io/schema/vega-lite/v5.json',\n        description: 'A simple bar chart with embedded data.',\n        data: {\n          values: [\n            {a: 'A', b: 28},\n            {a: 'B', b: 55},\n            {a: 'C', b: 43},\n            {a: 'D', b: 91},\n            {a: 'E', b: 81},\n            {a: 'F', b: 53},\n            {a: 'G', b: 19},\n            {a: 'H', b: 87},\n            {a: 'I', b: 52}\n          ]\n        },\n        mark: 'bar',\n        encoding: {\n          x: {field: 'a', type: 'ordinal'},\n          y: {field: 'b', type: 'quantitative'}\n        }\n      };\n      vegaEmbed('#vis', yourVlSpec);\n    </script>\n  </body>\n</html>",
@@ -3171,7 +3171,7 @@
                     },
                     "children": [
                         {
-                            "type": "code",
+                            "type": "blockquote",
                             "lang": "js",
                             "meta": "!viewer of=dot",
                             "value": "export const viewer = ({node, React}) => {\n   const c = React.createElement\n   const el = c('iframe', {srcDoc: `<!DOCTYPE html>\n<meta charset=\"utf-8\">\n<body>\n<script src=\"//d3js.org/d3.v5.min.js\"></script>\n<script src=\"https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js\"></script>\n<script src=\"https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js\"></script>\n<div id=\"graph\" style=\"text-align: center;\"></div>\n<script>\n\nd3.select(\"#graph\").graphviz()\n    .renderDot('${node.value.trim()}');\n\n</script>`})\n   return el\n}",
@@ -3239,7 +3239,7 @@
                     },
                     "children": [
                         {
-                            "type": "code",
+                            "type": "blockquote",
                             "lang": ">dot",
                             "meta": null,
                             "value": "digraph  { a -> b }",
@@ -3299,7 +3299,7 @@
                     },
                     "children": [
                         {
-                            "type": "code",
+                            "type": "blockquote",
                             "lang": ">dot",
                             "meta": null,
                             "value": "digraph Q {\n\n  node [shape=record];\n\n\n  nd_1   [label = \"Node 1\"];\n  nd_2   [label = \"Node 2\"];\n  nd_3_a [label = \"Above Right Node 3\"];\n  nd_3_l [label = \"Left of Node 3\"];\n  nd_3   [label = \"Node 3\"];\n  nd_3_r [label = \"Right of Node 3\"];\n  nd_4   [label = \"Node 4\"];\n\n\n  nd_3_a -> nd_3_r;\n  nd_1 -> nd_2 -> nd_3 -> nd_4;\n\n  subgraph cluster_R {\n\n    {rank=same nd_3_l nd_3 nd_3_r}\n\n    nd_3_l -> nd_3 -> nd_3_r [color=grey arrowhead=none];\n\n  }\n\n}",
@@ -3536,7 +3536,7 @@
                     },
                     "children": [
                         {
-                            "type": "code",
+                            "type": "blockquote",
                             "lang": "js",
                             "meta": "!viewer of=uml",
                             "value": "export const viewer = ({node, React}) => {\n   const c = React.createElement\n   const ref = React.createRef();\n   const [height, setHeight] = React.useState(null)\n   let [id] = React.useState(Math.round(Math.random() * 10000000).toString())\n\n  React.useEffect(() => {\n    const handler = event => {\n      if (ref && ref.current && event && event.data && typeof event.data === 'string') {\n          const data = JSON.parse(event.data)\n          if (id === data.source) {\n             console.log(\"Message: \", data)\n             setHeight(data.height)\n          }\n\n      }\n    }\n\n    window.addEventListener(\"message\", handler)\n\n    // clean up\n    return () => window.removeEventListener(\"message\", handler)\n  }, []) // empty array => run only once\n\n   const el = c('iframe', {ref: ref, style: {height: ( height ? (height + 'px') : 'auto') },srcDoc: `<!DOCTYPE html>\n    <html>\n      <head>\n        <title>PlantUML Viewer</title>\n        <style>html, body {margin: 0; padding: 0; } #plantuml { display: block; max-width: 100%; }</style>\n      </head>\n      <body>\n        <img id=\"plantuml\" />\n        <script type=\"module\">\n\n        function resize() {\n          const msg = JSON.stringify({\n            source: \"${id}\",\n            height: document.body.clientHeight\n          })\n          console.log(\"Resize Message\", msg)\n          window.parent.postMessage(msg, '*');\n        }\n        async function encodePlantUML(src) {\n          console.log(\"encoding\", src)\n          const module = await import(\"https://cdn.skypack.dev/plantuml-encoder\");\n          const encoded = module.encode(src)\n          console.log(encoded)\n          return encoded\n        }\n\n        encodePlantUML(\"${node.value.replace(/\\n/g, '\\\\n')}\")\n        .then(encoded => {\n            const url = \"https://plantuml.com/plantuml/svg/\" + encoded\n            const img = document.getElementById('plantuml')\n            img.setAttribute('src', url)\n            img.onload = resize\n        })\n\n        console.log(\"PlantUML Viewer.\")\n      </script>\n      </body>\n    </html>`})\n   console.log(\"PlantViewer iframe ref:\", el.ref.current)\n   return el\n}",
@@ -3604,7 +3604,7 @@
                     },
                     "children": [
                         {
-                            "type": "code",
+                            "type": "blockquote",
                             "lang": ">uml",
                             "meta": null,
                             "value": "[A] -> [B]",
@@ -3664,7 +3664,7 @@
                     },
                     "children": [
                         {
-                            "type": "code",
+                            "type": "blockquote",
                             "lang": ">uml",
                             "meta": null,
                             "value": "@startuml\nparticipant participant as Foo\nactor       actor       as Foo1\nboundary    boundary    as Foo2\ncontrol     control     as Foo3\nentity      entity      as Foo4\ndatabase    database    as Foo5\ncollections collections as Foo6\nqueue       queue       as Foo7\nFoo -> Foo1 : To actor \nFoo -> Foo2 : To boundary\nFoo -> Foo3 : To control\nFoo -> Foo4 : To entity\nFoo -> Foo5 : To database\nFoo -> Foo6 : To collections\nFoo -> Foo7 : To queue\n@enduml",
@@ -3888,7 +3888,7 @@
                             },
                             "children": [
                                 {
-                                    "type": "code",
+                                    "type": "blockquote",
                                     "lang": "js",
                                     "meta": "!viewer of=testerror",
                                     "value": "export const viewer = ({node}) => {\n  throw new Error(\"Test Error: Broken Viewer\")\n}",
@@ -3956,7 +3956,7 @@
                             },
                             "children": [
                                 {
-                                    "type": "code",
+                                    "type": "blockquote",
                                     "lang": ">testerror",
                                     "meta": null,
                                     "value": "",
@@ -4119,7 +4119,7 @@
                     },
                     "children": [
                         {
-                            "type": "code",
+                            "type": "blockquote",
                             "lang": "js",
                             "meta": "!viewer of=testerror2",
                             "value": "throw new Error(\"Test Error: Broken Viewer\")\nexport const viewer = ({node}) => {\n  return \"never\"\n}",
@@ -4276,7 +4276,7 @@
                     },
                     "children": [
                         {
-                            "type": "code",
+                            "type": "blockquote",
                             "lang": "html",
                             "meta": null,
                             "value": "<!DOCTYPE html>\n<html>\n  <head>\n    <title>Test page</title>\n  </head>\n  <body>\n  <script type=\"module\">\n\n    async function getViewer(src) {\n      const module = await import(`data:text/javascript;base64,${ btoa(src)}`);\n      return module.viewer;\n    }\n\n    getViewer(`export const viewer = () => \"foo!\"`).then(viewer => {\n       alert(\"Got viewer \" + !!viewer)\n    })\n\n  </script>\n  </body>\n</html>",
