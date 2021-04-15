@@ -45,6 +45,7 @@ export const processor = (options={files: []}) => {
     return baseProcessor(options)
     // remark-litmd (rehype compatable)
 
+    .use(litcodeblocks)
     // Async reparse `md` codeblocks as children
     .use(function ({baseProcessor}) {
         return async (tree, file) => {
@@ -75,8 +76,9 @@ export const processor = (options={files: []}) => {
         }
     }, {baseProcessor})
     .use(resolveLinks())
+
     .use(sections, {})
-    .use(litcodeblocks)
+
 }   
 
 export async function parse(vfile, options) {
