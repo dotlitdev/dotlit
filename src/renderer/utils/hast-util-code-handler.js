@@ -3,6 +3,7 @@
 module.exports = code
 
 var u = require('unist-builder')
+var toHast = require('mdast-util-to-hast')
 
 function code(h, node) {
   var value = node.value ? node.value + '\n' : ''
@@ -16,10 +17,14 @@ function code(h, node) {
     props.className = ['language-' + lang]
   }
 
-  code = h(node, 'code', props, [u('text', value)])
+  code = h(node, 'code', props, toHast(node.children))
 
   if (node.meta) {
-    code.data = {meta: node.meta, __customHastCodeHandler: true}
+    code.data = {
+      value: value,
+      meta: node.meta, 
+      __customHastCodeHandler: true,
+    }
   }
 
   return h(node.position, 'pre', [code])
