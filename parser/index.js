@@ -54,13 +54,14 @@ export const processor = (options={files: []}) => {
             visit(tree, 'code', (node,index,parent) => {
                 if (node.lang !== 'md') return;
 
+                const idx = file.data.__mdcodeblocks++
                 // instead of await
                 const p = new Promise(async resolve => {
-                     console.log("[mdcode] - " + file.data.__mdcodeblocks++)
+                     console.log("[mdcode] - " + idx + "Node: ", node)
                      const p = baseProcessor()
                      const parsed = await p.parse( node.value )
                      const ast = await p.run(parsed)
-                     console.log("[mdcode] AST", ast)
+                     console.log("[mdcode] - " + idx + " AST: ", ast)
                      node.children = ast.children
                      // node.type = 'mdcode'
                      resolve()
