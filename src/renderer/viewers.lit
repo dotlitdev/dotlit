@@ -49,14 +49,13 @@ Less of an example but rather a work in progress before moving it into `.lit` as
 ```js !viewer of=md
 export const viewer = ({children, node, React}) => {
 
-  const dir = () => node.properties
-                   && node.properties.meta 
-                   && node.properties.meta.directives
-                   && node.properties.meta.directives
-.map( d => 'dir-' + d)
+  const np = node.properties
+  const meta = np && np.meta
+  const dirs = meta && meta.directives
+  const dc = dirs && dirs.map(d=>'dir-'+d)
 
   const classes = [
-     ...dir(),
+     dc && ...dc,
      'md-block'
   ]
   .filter(x=>x)
