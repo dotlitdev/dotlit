@@ -13,7 +13,7 @@ export const CodeMeta = ({meta, toggleFullscreen, toggleLocalRemote, toggleColla
             {meta.directives && <ul className="directives">{
                 meta.directives.map( (dir, i) => {
                     const onClick = dir === 'inline' ? toggleFullscreen : null
-                    return <li key={dir+1} onClick={onClick}><span className="directive">{dir}</span></li>
+                    return <li key={dir+1} onClick={onClick}><span className={`directive dir-${dir}`}>{dir}</span></li>
                 })
             }</ul>}
         </span>
