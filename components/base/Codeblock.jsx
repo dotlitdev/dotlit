@@ -32,16 +32,31 @@ export const Codeblock = props => {
     setFullScreen(!fullScreen)
     return false
   }
+  const [collapsed, setCollapsed] = useState(false)
+  const toggleCollapsed = (ev) => {
+    ev.stopPropagation()
+    ev.preventDefault()
+    setFullScreen(!collapsed)
+    return false
+  }
 
 
   return <SelectionContext.Consumer>
     { ctx => {
 
       const meta = codeNode ? codeNode.properties.meta : null
+      const dirs = meta && meta.directives
+      const tags = meta && meta.tags
+      const dirClasses = dirs ? dirs.map(d=>'dir-'+d) : []
+      const tagClasses = tags ? tags.map(t=>'tag-'+t) : []
+
       const Viewer = getViewer(meta, ctx.file.data.viewers)
 
       const classes = [
+        ...dirClasses,
+        ...tagClasses,
         localRemote,
+        collapsed,
         fullScreen && 'fullscreen',
       ].filter(Identity).join(' ')
       
@@ -59,7 +74,7 @@ export const Codeblock = props => {
 
         console.log("[Codeblock]", meta && meta.raw, props )
         return <codecell className={classes}>
-            { meta && <CodeMeta meta={meta} toggleFullscreen={toggleFullscreen} toggleLocalRemote={toggleLocalRemote} /> }
+            { meta && <CodeMeta meta={meta} toggleCollapsed={toggleCollapsed} toggleFullscreen={toggleFullscreen} toggleLocalRemote={toggleLocalRemote} /> }
             { Viewer 
               ? <ErrorBoundary>
                   <Viewer children={props.children} node={codeNode} React={React}/>
