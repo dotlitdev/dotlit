@@ -1,9 +1,9 @@
 import React from 'react'
 
-export const CodeMeta = ({meta, toggleFullscreen, toggleLocalRemote}) => {
+export const CodeMeta = ({meta, toggleFullscreen, toggleLocalRemote, toggleCollapsed}) => {
 
         return <span className="meta">
-            <span className="lang">{meta.lang}</span>
+            <span className="lang" onClick={toggleCollapsed}>{meta.lang}</span>
             {meta.repl && <span className="repl">{meta.repl}</span> }
             {meta.filename && <span className="filename">{meta.filename}</span>}
             {meta.fromSource && <span onClick={toggleLocalRemote} className="source">{'< ' + meta.fromSource}</span> }
