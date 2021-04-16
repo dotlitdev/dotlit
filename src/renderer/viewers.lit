@@ -52,10 +52,14 @@ export const viewer = ({children, node, React}) => {
   const np = node.properties
   const meta = np && np.meta
   const dirs = meta && meta.directives
+  const tags = meta && meta.tags
+  
   const dc = dirs && dirs.map(d=>'dir-'+d)
-  const classes = ['md-block']
+  const tc = tags && tags.map(t=>'tag-'+t)
 
+  const classes = ['md-block']
   if (dc) dc.forEach(c=>classes.push(c))
+  if (tc) tc.forEach(c=>classes.push(c))
 
   const className = classes
                     .filter(x=>x)
