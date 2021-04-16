@@ -49,6 +49,7 @@ Less of an example but rather a work in progress before moving it into `.lit` as
 ```js !viewer of=md
 export const viewer = ({children, node, React}) => {
 
+  const ch = children[0].children
   const np = node.properties
   const meta = np && np.meta
   const dirs = meta && meta.directives
@@ -66,8 +67,8 @@ export const viewer = ({children, node, React}) => {
                     .join(' ')
                     .trim()
 
-  const view = React.createElement('div', {className}, children[0].props.children)
-  return view
+  return React
+    .createElement('div', {className}, ch)
 }
 ```
 
