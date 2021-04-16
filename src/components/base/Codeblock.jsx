@@ -36,7 +36,7 @@ export const Codeblock = props => {
   const toggleCollapsed = (ev) => {
     ev.stopPropagation()
     ev.preventDefault()
-    setFullScreen(!collapsed)
+    setCollapsed(!collapsed)
     return false
   }
 
@@ -56,7 +56,7 @@ export const Codeblock = props => {
         ...dirClasses,
         ...tagClasses,
         localRemote,
-        collapsed,
+        collapsed && 'collapsed',
         fullScreen && 'fullscreen',
       ].filter(Identity).join(' ')
       
