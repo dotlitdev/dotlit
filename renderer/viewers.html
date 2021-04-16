@@ -37,7 +37,7 @@
 </code></pre></codecell></cell><cell startpos="33:1-400" endpos="33:38-437"><p>or <code>viewer=xxx</code> attribute is present:</p></cell><cell startpos="35:1-439" endpos="37:4-464" class="code"><codecell class="local"><span class="meta"><span class="lang">foo</span></span><pre><code class="foo">Quz
 </code></pre></codecell></cell><cell startpos="39:1-466" endpos="39:25-490"><p>or it is an output cell:</p></cell><cell startpos="41:1-492" endpos="43:4-507" class="code"><codecell class="local"><span class="meta"><span class="lang">foo</span></span><output><pre><code class="foo">Qux
 </code></pre></output></codecell></cell></section></section>
-<section depth="3" class="" startpos="45:1-509" endpos="154:4-2485"><cell startpos="45:1-509" endpos="47:92-626"><h3 id="example-md-viewer">Example: <code>md</code> viewer</h3><p>Less of an example but rather a work in progress before moving it into <code>.lit</code> as a default.</p></cell><cell startpos="49:1-628" endpos="68:4-1052" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = ({children, node, React}) =&gt; {
+<section depth="3" class="" startpos="45:1-509" endpos="154:4-2487"><cell startpos="45:1-509" endpos="47:92-626"><h3 id="example-md-viewer">Example: <code>md</code> viewer</h3><p>Less of an example but rather a work in progress before moving it into <code>.lit</code> as a default.</p></cell><cell startpos="49:1-628" endpos="68:4-1054" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = ({children, node, React}) =&gt; {
 
   const np = node.properties
   const meta = np &amp;&amp; np.meta
@@ -45,7 +45,7 @@
   const dc = dirs &amp;&amp; dirs.map(d=&gt;&#x27;dir-&#x27;+d)
 
   const classes = [
-     dc &amp;&amp; ...dc,
+     dc &amp;&amp; (...dc),
      &#x27;md-block&#x27;
   ]
   .filter(x=&gt;x)
@@ -55,7 +55,7 @@
   const view = React.createElement(&#x27;div&#x27;, {className: classes}, children[0].props.children)
   return view
 }
-</code></pre></codecell></cell><cell startpos="70:1-1054" endpos="70:51-1104"><p>Styles for md viewer, really just for admonitions:</p></cell><cell startpos="72:1-1106" endpos="108:4-1842" class="code"><codecell class="local"><span class="meta"><span class="lang">html</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><div><style>
+</code></pre></codecell></cell><cell startpos="70:1-1056" endpos="70:51-1106"><p>Styles for md viewer, really just for admonitions:</p></cell><cell startpos="72:1-1108" endpos="108:4-1844" class="code"><codecell class="local"><span class="meta"><span class="lang">html</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><div><style>
 .md-block.dir-note, 
 .md-block.dir-info,
 .md-block.dir-warn,
@@ -90,36 +90,36 @@
   background-color: rgba(0,255,0,0.05);
 }
 </style>
-</div></codecell></cell><cell startpos="110:1-1844" endpos="112:4-1901" class="code"><codecell class="local"><span class="meta"><span class="lang">md</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="md">*Markdown* Viewer **DONE**
-</code></pre></codecell></cell><cell startpos="114:1-1903" endpos="116:4-1941" class="code"><codecell class="local"><span class="meta"><span class="lang">md</span></span><output><pre><code class="md">*Markdown* Viewer **FIXED**
-</code></pre></output></codecell></cell><cell startpos="118:1-1943" endpos="124:4-2080" class="code"><codecell class="local"><span class="meta"><span class="lang">md</span><ul class="directives"><li><span class="directive">note</span></li></ul></span><pre><code class="md">*Markdown* Viewer **FIXED** 🔥
+</div></codecell></cell><cell startpos="110:1-1846" endpos="112:4-1903" class="code"><codecell class="local"><span class="meta"><span class="lang">md</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="md">*Markdown* Viewer **DONE**
+</code></pre></codecell></cell><cell startpos="114:1-1905" endpos="116:4-1943" class="code"><codecell class="local"><span class="meta"><span class="lang">md</span></span><output><pre><code class="md">*Markdown* Viewer **FIXED**
+</code></pre></output></codecell></cell><cell startpos="118:1-1945" endpos="124:4-2082" class="code"><codecell class="local"><span class="meta"><span class="lang">md</span><ul class="directives"><li><span class="directive">note</span></li></ul></span><pre><code class="md">*Markdown* Viewer **FIXED** 🔥
 
 The question is do [[wiki links work?]]
 
 Nested *plain* codeblock (didn&#x27;t work)
-</code></pre></codecell></cell><cell startpos="126:1-2082" endpos="130:4-2164" class="code"><codecell class="local"><span class="meta"><span class="lang">md</span><ul class="directives"><li><span class="directive">error</span></li></ul></span><pre><code class="md">**🚨 Error:**
+</code></pre></codecell></cell><cell startpos="126:1-2084" endpos="130:4-2166" class="code"><codecell class="local"><span class="meta"><span class="lang">md</span><ul class="directives"><li><span class="directive">error</span></li></ul></span><pre><code class="md">**🚨 Error:**
 
 *Markdown* Viewer **Outputs are broken**
-</code></pre></codecell></cell><cell startpos="132:1-2166" endpos="136:4-2245" class="code"><codecell class="local"><span class="meta"><span class="lang">md</span><ul class="directives"><li><span class="directive">warn</span></li></ul></span><pre><code class="md">**⚠️ Warning:**
+</code></pre></codecell></cell><cell startpos="132:1-2168" endpos="136:4-2247" class="code"><codecell class="local"><span class="meta"><span class="lang">md</span><ul class="directives"><li><span class="directive">warn</span></li></ul></span><pre><code class="md">**⚠️ Warning:**
 
 *Markdown* Viewer **Still has bugs**
-</code></pre></codecell></cell><cell startpos="138:1-2247" endpos="142:4-2352" class="code"><codecell class="local"><span class="meta"><span class="lang">md</span><ul class="directives"><li><span class="directive">info</span></li></ul></span><pre><code class="md">**ℹ️ For Your Information:**
+</code></pre></codecell></cell><cell startpos="138:1-2249" endpos="142:4-2354" class="code"><codecell class="local"><span class="meta"><span class="lang">md</span><ul class="directives"><li><span class="directive">info</span></li></ul></span><pre><code class="md">**ℹ️ For Your Information:**
 
 *Markdown* Viewer **is not just for admonitions**
-</code></pre></codecell></cell><cell startpos="144:1-2354" endpos="148:4-2428" class="code"><codecell class="local"><span class="meta"><span class="lang">md</span><ul class="directives"><li><span class="directive">success</span></li></ul></span><pre><code class="md">**✅ Great:**
+</code></pre></codecell></cell><cell startpos="144:1-2356" endpos="148:4-2430" class="code"><codecell class="local"><span class="meta"><span class="lang">md</span><ul class="directives"><li><span class="directive">success</span></li></ul></span><pre><code class="md">**✅ Great:**
 
 *Markdown* Viewer **is useful**
-</code></pre></codecell></cell><cell startpos="150:1-2430" endpos="154:4-2485" class="code"><codecell class="local"><span class="meta"><span class="lang">md</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="md">    ```js
+</code></pre></codecell></cell><cell startpos="150:1-2432" endpos="154:4-2487" class="code"><codecell class="local"><span class="meta"><span class="lang">md</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="md">    ```js
     Does this work?
     ```
 </code></pre></codecell></cell></section>
-<section depth="3" class="" startpos="156:1-2487" endpos="167:4-2769"><cell startpos="156:1-2487" endpos="156:27-2513"><h3 id="example-meta-viewer">Example: <code>meta</code> viewer</h3></cell><cell startpos="158:1-2515" endpos="163:4-2675" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = ({node,React}) =&gt; {
+<section depth="3" class="" startpos="156:1-2489" endpos="167:4-2771"><cell startpos="156:1-2489" endpos="156:27-2515"><h3 id="example-meta-viewer">Example: <code>meta</code> viewer</h3></cell><cell startpos="158:1-2517" endpos="163:4-2677" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = ({node,React}) =&gt; {
   const view = React.createElement(&#x27;pre&#x27;, null, JSON.stringify(node,null,2))
   return view
 }
-</code></pre></codecell></cell><cell startpos="165:1-2677" endpos="167:4-2769" class="code"><codecell class="local"><span class="meta"><span class="lang">txt</span><span class="filename">file.txt</span><ul class="tags"><li><span class="tag">example</span></li></ul><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="txt">show meta content instead
+</code></pre></codecell></cell><cell startpos="165:1-2679" endpos="167:4-2771" class="code"><codecell class="local"><span class="meta"><span class="lang">txt</span><span class="filename">file.txt</span><ul class="tags"><li><span class="tag">example</span></li></ul><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="txt">show meta content instead
 </code></pre></codecell></cell></section>
-<section depth="3" class="" startpos="169:1-2771" endpos="235:92-4579"><cell startpos="169:1-2771" endpos="171:73-2872"><h3 id="example-graph-viewer">Example: <code>graph</code> viewer</h3><p>✅ This viewer has been folded into <code>.lit</code> as one of the default viewers.</p></cell><cell startpos="173:1-2874" endpos="218:4-4295" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
+<section depth="3" class="" startpos="169:1-2773" endpos="235:92-4581"><cell startpos="169:1-2773" endpos="171:73-2874"><h3 id="example-graph-viewer">Example: <code>graph</code> viewer</h3><p>✅ This viewer has been folded into <code>.lit</code> as one of the default viewers.</p></cell><cell startpos="173:1-2876" endpos="218:4-4297" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
    const c = React.createElement
    const data = node.value
 
@@ -163,7 +163,7 @@ Nested *plain* codeblock (didn&#x27;t work)
 &lt;/body&gt;`})
    return el
 }
-</code></pre></codecell></cell><cell startpos="220:1-4297" endpos="230:4-4438" class="code"><codecell class="local"><span class="meta"><span class="lang">custom-graph</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="custom-graph">{
+</code></pre></codecell></cell><cell startpos="220:1-4299" endpos="230:4-4440" class="code"><codecell class="local"><span class="meta"><span class="lang">custom-graph</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="custom-graph">{
   &quot;nodes&quot;:[
     {&quot;id&quot;: &quot;foo&quot;},
     {&quot;id&quot;: &quot;bar&quot;}
@@ -172,9 +172,9 @@ Nested *plain* codeblock (didn&#x27;t work)
     {&quot;source&quot;: &quot;foo&quot;, &quot;target&quot;: &quot;bar&quot;}
   ]
 }
-</code></pre></codecell></cell><cell startpos="232:1-4440" endpos="233:4-4486" class="code"><codecell class="local"><span class="meta"><span class="lang">custom-graph</span><span class="source">&lt; ../manifest.json</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="custom-graph"></code></pre></codecell></cell><cell startpos="235:1-4488" endpos="235:92-4579"><p>The above automatically transcludes the <code>.lit</code> manifest and focuses on the current document</p></cell></section>
-<section depth="3" class="" startpos="237:1-4581" endpos="281:4-5792"><cell startpos="237:1-4581" endpos="240:71-4698"><h3 id="example-vega">Example: Vega</h3><p>Still a <em>Work in progress</em>
-Docs: <a href="https://vega.github.io/vega-lite/usage/compile.html">vega-lite</a></p></cell><cell startpos="242:1-4700" endpos="281:4-5792" class="code"><codecell class="local"><span class="meta"><span class="lang">iframe</span></span><iframe srcDoc="&lt;!DOCTYPE html&gt;
+</code></pre></codecell></cell><cell startpos="232:1-4442" endpos="233:4-4488" class="code"><codecell class="local"><span class="meta"><span class="lang">custom-graph</span><span class="source">&lt; ../manifest.json</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="custom-graph"></code></pre></codecell></cell><cell startpos="235:1-4490" endpos="235:92-4581"><p>The above automatically transcludes the <code>.lit</code> manifest and focuses on the current document</p></cell></section>
+<section depth="3" class="" startpos="237:1-4583" endpos="281:4-5794"><cell startpos="237:1-4583" endpos="240:71-4700"><h3 id="example-vega">Example: Vega</h3><p>Still a <em>Work in progress</em>
+Docs: <a href="https://vega.github.io/vega-lite/usage/compile.html">vega-lite</a></p></cell><cell startpos="242:1-4702" endpos="281:4-5794" class="code"><codecell class="local"><span class="meta"><span class="lang">iframe</span></span><iframe srcDoc="&lt;!DOCTYPE html&gt;
 &lt;html&gt;
   &lt;head&gt;
     &lt;title&gt;Embedding Vega-Lite&lt;/title&gt;
@@ -213,7 +213,7 @@ Docs: <a href="https://vega.github.io/vega-lite/usage/compile.html">vega-lite</a
   &lt;/body&gt;
 &lt;/html&gt;
 " style="aspect-ratio:1.6"></iframe></codecell></cell></section>
-<section depth="3" class="" startpos="283:1-5794" endpos="340:95-7046"><cell startpos="283:1-5794" endpos="285:53-5885"><h3 id="example-d3-graphviz-dot-viewer">Example: D3 Graphviz <code>dot</code> viewer</h3><p>Docs: <a href="https://github.com/magjac/d3-graphviz#examples">https://github.com/magjac/d3-graphviz#examples</a></p></cell><cell startpos="287:1-5887" endpos="305:4-6440" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
+<section depth="3" class="" startpos="283:1-5796" endpos="340:95-7048"><cell startpos="283:1-5796" endpos="285:53-5887"><h3 id="example-d3-graphviz-dot-viewer">Example: D3 Graphviz <code>dot</code> viewer</h3><p>Docs: <a href="https://github.com/magjac/d3-graphviz#examples">https://github.com/magjac/d3-graphviz#examples</a></p></cell><cell startpos="287:1-5889" endpos="305:4-6442" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
    const c = React.createElement
    const el = c(&#x27;iframe&#x27;, {srcDoc: `&lt;!DOCTYPE html&gt;
 &lt;meta charset=&quot;utf-8&quot;&gt;
@@ -230,8 +230,8 @@ d3.select(&quot;#graph&quot;).graphviz()
 &lt;/script&gt;`})
    return el
 }
-</code></pre></codecell></cell><cell startpos="307:1-6442" endpos="309:4-6486" class="code"><codecell class="local"><span class="meta"><span class="lang">dot</span></span><output><pre><code class="dot">digraph  { a -&gt; b }
-</code></pre></output></codecell></cell><cell startpos="311:1-6488" endpos="338:4-6950" class="code"><codecell class="local"><span class="meta"><span class="lang">dot</span></span><output><pre><code class="dot">digraph Q {
+</code></pre></codecell></cell><cell startpos="307:1-6444" endpos="309:4-6488" class="code"><codecell class="local"><span class="meta"><span class="lang">dot</span></span><output><pre><code class="dot">digraph  { a -&gt; b }
+</code></pre></output></codecell></cell><cell startpos="311:1-6490" endpos="338:4-6952" class="code"><codecell class="local"><span class="meta"><span class="lang">dot</span></span><output><pre><code class="dot">digraph Q {
 
   node [shape=record];
 
@@ -257,8 +257,8 @@ d3.select(&quot;#graph&quot;).graphviz()
   }
 
 }
-</code></pre></output></codecell></cell><cell startpos="340:1-6952" endpos="340:95-7046"><p>The above mildly more complex example doesn&#x27;t render, likely due to not being actual graphviz.</p></cell></section>
-<section depth="3" class="" startpos="342:1-7048" endpos="434:4-9722"><cell startpos="342:1-7048" endpos="342:31-7078"><h3 id="example-plantuml-viewer">Example: Plant<code>UML</code> viewer</h3></cell><cell startpos="344:1-7080" endpos="410:4-9228" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
+</code></pre></output></codecell></cell><cell startpos="340:1-6954" endpos="340:95-7048"><p>The above mildly more complex example doesn&#x27;t render, likely due to not being actual graphviz.</p></cell></section>
+<section depth="3" class="" startpos="342:1-7050" endpos="434:4-9724"><cell startpos="342:1-7050" endpos="342:31-7080"><h3 id="example-plantuml-viewer">Example: Plant<code>UML</code> viewer</h3></cell><cell startpos="344:1-7082" endpos="410:4-9230" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
    const c = React.createElement
    const ref = React.createRef();
    const [height, setHeight] = React.useState(null)
@@ -323,8 +323,8 @@ d3.select(&quot;#graph&quot;).graphviz()
    console.log(&quot;PlantViewer iframe ref:&quot;, el.ref.current)
    return el
 }
-</code></pre></codecell></cell><cell startpos="412:1-9230" endpos="414:4-9259" class="code"><codecell class="local"><span class="meta"><span class="lang">uml</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="uml">[A] -&gt; [B]
-</code></pre></codecell></cell><cell startpos="416:1-9261" endpos="434:4-9722" class="code"><codecell class="local"><span class="meta"><span class="lang">uml</span></span><output><pre><code class="uml">@startuml
+</code></pre></codecell></cell><cell startpos="412:1-9232" endpos="414:4-9261" class="code"><codecell class="local"><span class="meta"><span class="lang">uml</span><ul class="directives"><li><span class="directive">inline</span></li></ul></span><pre><code class="uml">[A] -&gt; [B]
+</code></pre></codecell></cell><cell startpos="416:1-9263" endpos="434:4-9724" class="code"><codecell class="local"><span class="meta"><span class="lang">uml</span></span><output><pre><code class="uml">@startuml
 participant participant as Foo
 actor       actor       as Foo1
 boundary    boundary    as Foo2
@@ -342,16 +342,16 @@ Foo -&gt; Foo6 : To collections
 Foo -&gt; Foo7 : To queue
 @enduml
 </code></pre></output></codecell></cell></section>
-<section depth="2" class="" startpos="436:1-9724" endpos="446:4-9881"><cell startpos="436:1-9724" endpos="436:10-9733"><h2 id="errors">Errors</h2></cell><section depth="3" class="" startpos="438:1-9735" endpos="446:4-9881"><cell startpos="438:1-9735" endpos="438:12-9746"><h3 id="runtime">Runtime</h3></cell><cell startpos="440:1-9748" endpos="444:4-9863" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = ({node}) =&gt; {
+<section depth="2" class="" startpos="436:1-9726" endpos="446:4-9883"><cell startpos="436:1-9726" endpos="436:10-9735"><h2 id="errors">Errors</h2></cell><section depth="3" class="" startpos="438:1-9737" endpos="446:4-9883"><cell startpos="438:1-9737" endpos="438:12-9748"><h3 id="runtime">Runtime</h3></cell><cell startpos="440:1-9750" endpos="444:4-9865" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">export const viewer = ({node}) =&gt; {
   throw new Error(&quot;Test Error: Broken Viewer&quot;)
 }
-</code></pre></codecell></cell><cell startpos="445:1-9864" endpos="446:4-9881" class="code"><codecell class="local"><span class="meta"><span class="lang">testerror</span></span><output><pre><code class="testerror"></code></pre></output></codecell></cell></section></section>
-<section depth="3" class="" startpos="448:1-9883" endpos="455:4-10026"><cell startpos="448:1-9883" endpos="448:11-9893"><h3 id="import">Import</h3></cell><cell startpos="450:1-9895" endpos="455:4-10026" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">throw new Error(&quot;Test Error: Broken Viewer&quot;)
+</code></pre></codecell></cell><cell startpos="445:1-9866" endpos="446:4-9883" class="code"><codecell class="local"><span class="meta"><span class="lang">testerror</span></span><output><pre><code class="testerror"></code></pre></output></codecell></cell></section></section>
+<section depth="3" class="" startpos="448:1-9885" endpos="455:4-10028"><cell startpos="448:1-9885" endpos="448:11-9895"><h3 id="import">Import</h3></cell><cell startpos="450:1-9897" endpos="455:4-10028" class="code"><codecell class="local"><span class="meta"><span class="lang">js</span><ul class="directives"><li><span class="directive">viewer</span></li></ul></span><pre><code class="js">throw new Error(&quot;Test Error: Broken Viewer&quot;)
 export const viewer = ({node}) =&gt; {
   return &quot;never&quot;
 }
 </code></pre></codecell></cell></section>
-<section depth="2" class="" startpos="457:1-10028" endpos="480:4-10464"><cell startpos="457:1-10028" endpos="457:21-10048"><h2 id="initial-prototype">Initial prototype</h2></cell><cell startpos="459:1-10050" endpos="480:4-10464" class="code"><codecell class="local"><span class="meta"><span class="lang">html</span></span><pre><code class="html">&lt;!DOCTYPE html&gt;
+<section depth="2" class="" startpos="457:1-10030" endpos="480:4-10466"><cell startpos="457:1-10030" endpos="457:21-10050"><h2 id="initial-prototype">Initial prototype</h2></cell><cell startpos="459:1-10052" endpos="480:4-10466" class="code"><codecell class="local"><span class="meta"><span class="lang">html</span></span><pre><code class="html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
   &lt;head&gt;
     &lt;title&gt;Test page&lt;/title&gt;
