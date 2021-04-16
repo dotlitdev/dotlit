@@ -50,7 +50,7 @@ export const viewer = ({children, node, React}) => {
   const dir = d => node.properties
                    && node.properties.meta 
                    && node.properties.meta.directives
-                   && (node.properties.meta.directives.indexOf(d) == -1)
+                   && (node.properties.meta.directives.join('-')
                    //&& d
   const info = dir('info') || dir('information')
   const warn = dir('warn') || dir('warning')
@@ -69,7 +69,7 @@ export const viewer = ({children, node, React}) => {
   .trim()
 
   const view = React.createElement('div', {className: "none"}, children)
-  return classes || "still nothing"
+  return dir()
 }
 ```
 
@@ -91,7 +91,7 @@ export const viewer = ({children, node, React}) => {
 *Markdown* Viewer **FIXED**
 ```
 
-```md !note viewer=md
+```md !note viewer=meta
 *Markdown* Viewer **FIXED**
 ```
 
