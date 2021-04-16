@@ -47,21 +47,14 @@ Qux
 ```js !viewer of=md
 export const viewer = ({children, node, React}) => {
 
-  const dir = d => node.properties
+  const dir = () => node.properties
                    && node.properties.meta 
                    && node.properties.meta.directives
-                   && node.properties.meta.directives.join('-')
-                   //&& d
-  const info = dir('info') || dir('information')
-  const warn = dir('warn') || dir('warning')
-  const error = dir('err') || dir('error')
-  const note = dir('box') || dir('note')
+                   && node.properties.meta.directives
+.map( d => 'dir-' + d)
 
   const classes = [
-     info && 'info',
-     warn && 'warn',
-     error && 'error',
-     note && 'note',
+     ...dir(),
      ''
   ]
   .filter(x=>x)
