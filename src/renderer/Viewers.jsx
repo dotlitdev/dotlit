@@ -30,11 +30,18 @@ const viewers = {
   md: mdViewer,
 }
 
+const hasViewDirective = meta => {
+  const has = d => meta.directives && meta.directives.indexOf(d) >= 0
+  return has('inline') 
+         || has('above') 
+         || has('below')
+}
+
 export const getViewer = (meta, customViewers = {}) => {
   const view = meta && (meta.viewer || meta.lang)
   const CustomViewer = customViewers[view] && customViewers[view].viewer
   const useViewer = view && (meta.viewer || meta.isOutput 
-       || (meta.directives && meta.directives.indexOf('inline') >= 0))
+       || hasViewDirective(meta))
   const viewer = CustomViewer || viewers[view]
   console.log(`[Viewer] view: ${view} custom: ${!!CustomViewer} use: ${!!useViewer} viewer:`, viewer)
   return view && useViewer && viewer
