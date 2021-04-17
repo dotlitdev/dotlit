@@ -1,0 +1,210 @@
+import util from 'util'
+import { Base64 } from 'js-base64';
+import {transformSync} from '@babel/core'
+
+import presetReact from "@babel/preset-react"
+import presetTypescript from "@babel/preset-typescript"
+import pluginClassProps from "@babel/plugin-proposal-class-properties"
+
+
+// import {version} from '../../package.json'
+
+function wrapConsole(console, stdoutUpdate) {
+    const originalConsole = console
+    let buffer = []
+    const wrapConsoleMethod = (method) => {
+        return (...args) => {
+            const pretty = args.map( a => typeof a === 'string' ? a : util.inspect(a,{depth: 2} ) )
+            // pretty.unshift(`[${method}] `)
+            buffer.push(pretty);
+            stdoutUpdate(buffer.join('\n'))
+            originalConsole.log('vvv Wrapped console vvv', method, pretty)
+            return originalConsole[method](...args)
+        }
+    }
+
+    const fakeConsole = {};
+
+    ['log', 'debug', 'error', 'warn', 'info'].forEach( m => {
+        fakeConsole[m] = wrapConsoleMethod(m)
+    })
+    return { console: fakeConsole, buffer }
+}
+
+
+function isPromise(obj) {
+    return obj && typeof obj.then === 'function'
+}
+
+export class Repl {
+    constructor(){
+        this.executions = {}
+
+        window.onerror = (msg, url, lineNo, columnNo, err) => {
+            // const [, filename, line, column ] = err.stack.match(/\/([\/\w-_\.]+\.js):(\d*):(\d*)/)
+            
+            if (this.executions[url] ) {
+                console.error('Uncaught Global error', {err, stack: msg + `\n    ${this.executions[url].filename}[${lineNo}:${columnNo}]` })
+                this.executions[url].err = err
+                console.log('stopping propagation of repl execution', this.executions[url])
+                this.executions[url].cb(err)
+                return true
+            } else {
+                console.error('Uncaught Global error', {err, stack: msg + `\n    ${url}[${lineNo}:${columnNo}]` })
+            }
+        }
+
+        window.addEventListener("unhandledrejection", event => {
+            console.warn(`UNHANDLED PROMISE REJECTION: ${event.reason}`);
+        });
+    }
+
+    formatStack(err, src) {
+        if (!err.stack) return err.toString()
+
+        const filename = this.executions[src].filename
+        const source = this.executions[src].source
+        const sourceLen = source.length
+    
+        const srcRegex = new RegExp(src, 'g')
+        let stack = err.stack
+            .replace(srcRegex, filename)
+            .split('\n')
+        
+        if (stack[0] !== err.toString()) {
+            // Add missing error message to stack (safari)
+            stack.unshift(err.toString)
+        }
+        
+        return stack.map( line => {
+            const lineNoRegex = new RegExp(`(.*${filename}:)(\d+)(.*)`)
+            const match = line.match(lineNoRegex)
+            if (match) {
+                const num = parseInt(match[2])
+                // skip first and last lines (wrapper code)
+                if (num === 1 || num >= sourceLen) return '' 
+                else return `${match[1], num - 1, match[3]}`
+            } else {
+                return `${line}`
+            }
+        }).filter(x => x).join('\n')
+    }
+
+    injectScript(source, {filename, ast, stdoutUpdate}) {
+        const self = this
+        return new Promise((resolve, reject) => {
+    
+            const script = document.createElement('script');
+            const execId = `litExec_${Date.now()}`
+
+            const esm = ({raw}, ...vals) => URL.createObjectURL(new Blob([String.raw({raw}, ...vals)], {type: 'text/javascript'}));
+            const wrappedConsole = wrapConsole(window.console, stdoutUpdate)
+
+            let babelified;
+            
+            try {
+                babelified = transformSync(source, { 
+                    filename: filename,
+                    sourceMaps: false,
+                    parserOpts: { allowReturnOutsideFunction: true },
+                    presets: [
+                        presetReact,
+                        presetTypescript
+                    ],
+                    plugins: [
+                        pluginClassProps
+                    ]
+                })
+            } catch (err) {
+                reject({
+                    err: err, 
+                    resp:  null, 
+                    stdout: err.toString()
+                })
+            }
+
+            
+
+            if (babelified) {
+
+                console.log("babelified", babelified)
+
+                const wrappedSrc = `(function(ast,console){/*${execId}*/let error; const cb = window['${execId}'].cb; const resp = (function(){ try {
+                    ${babelified.code}
+                    } catch(err) { error = true; cb(err) } }).call(window['${execId}'].context.ast); if (!error) cb(null, resp);})(window['${execId}'].context.ast, window['${execId}'].context.console)`
+                const src = esm`${wrappedSrc}`
+
+                this.executions[src] = window[execId] = {
+                    execId, 
+                    source, 
+                    filename, 
+                    stdout: wrappedConsole.buffer, 
+                    err: undefined, 
+                    resp: undefined, 
+                    cb: (err, resp) => {
+                        console.log("pJaxCallback: ", err, resp)
+
+                        let error = err || (this.executions[src] && this.executions[src].err)
+                        if (error) {
+                            const formattedError = this.formatStack(err, src)
+                            this.executions[src].stdout.push(formattedError)
+                            console.error('REPL ERR: ', this.executions[src])
+                            reject({
+                                err: error, 
+                                resp:  resp, 
+                                stdout: this.executions[src].stdout.join('\n')
+                            })
+                        } else {
+
+                            if (isPromise(resp)) {
+                                resp.then( (result) => {
+                                    this.executions[src].result = result
+                                    const pretty = (typeof result === 'string' ? result : util.inspect(result, {depth: 2}))
+                                    this.executions[src].stdout.push(pretty)
+                                    console.log('REPL DONE: ', filename, this.executions[src])
+                                    resolve({
+                                        err: error, 
+                                        resp:  result, 
+                                        stdout: this.executions[src].stdout.join('\n')
+                                    })
+                                })
+                            } else {
+                                this.executions[src].resp = resp
+                                const pretty = (typeof resp === 'string' ? resp : util.inspect(resp, {depth: 2}))
+                                this.executions[src].stdout.push(pretty)
+                                console.log('REPL DONE: ', filename, this.executions[src])
+                                resolve({
+                                    err: error, 
+                                    resp:  resp, 
+                                    stdout: this.executions[src].stdout.join('\n')
+                                })
+                            }
+                        }
+                    },
+                    context: { console: wrappedConsole.console, ast }
+                }            
+        
+                script.type = 'module'
+                script.async = true;
+                script.src = src
+                
+                // script.addEventListener('load', resolve);
+                script.addEventListener('error', (...args) => { console.log('script err', ...args); reject('Error loading script.') } );
+                script.addEventListener('abort', (...args) => { console.log('script abort', ...args); reject('Script loading aborted.') } );
+                document.head.appendChild(script);
+            } else {
+                console.error("Could not babelify" )
+            }
+            
+        });
+    }
+
+
+
+    exec(source, config, ast, stdoutUpdate) {
+        console.log('REPL: ', config.repl)
+
+        const filename = (config.name || 'untitled') + '.' + config.lang
+        return this.injectScript(source, {filename, ast, stdoutUpdate})
+    }
+}
