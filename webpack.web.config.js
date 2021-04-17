@@ -24,6 +24,9 @@ module.exports = {
   },
   target: 'web',
   // externals: [nodeExternals],
+  externals:{
+    fs: "commonjs fs",
+  },
   module: {
     rules: [
       {
