@@ -16,7 +16,9 @@ import litcodeblocks from './codeblocks'
 import frontmatter from './frontmatter'
 import {resolveLinks, wikiLinkOptions} from './links'
 import { getConsoleForNamespace} from '../utils/console'
-import { transform as jsTransform } from './transformers/js'
+//import { transform as jsTransform } from './transformers/js'
+
+const jsTransform = null
 const console = getConsoleForNamespace('parser')
 
 
