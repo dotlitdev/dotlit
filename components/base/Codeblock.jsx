@@ -36,7 +36,7 @@ export const Codeblock = props => {
   const toggleCollapsed = (ev) => {
     ev.stopPropagation()
     ev.preventDefault()
-    setCollapsed(!collapsed)
+    setCollapsed(collapsed ? 'uncollapsed' : 'collapsed')
     return false
   }
 
