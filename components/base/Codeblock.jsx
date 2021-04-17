@@ -77,17 +77,18 @@ export const Codeblock = props => {
 
         console.log("[Codeblock]", meta && meta.raw, props )
         const highlighted = <Highlight language={meta.lang}>{source}</Highlight>
+        const metaView = meta && <CodeMeta meta={meta} toggleCollapsed={toggleCollapsed} toggleFullscreen={toggleFullscreen} toggleLocalRemote={toggleLocalRemote} />
         return <codecell className={classes}>
-            { meta && <CodeMeta meta={meta} toggleCollapsed={toggleCollapsed} toggleFullscreen={toggleFullscreen} toggleLocalRemote={toggleLocalRemote} /> }
+            { meta && !above && metaView}
             { Viewer 
               ? <ErrorBoundary>
                   { below && !above && highlighted }
                   <Viewer children={props.children} node={codeNode} React={React}/>
-                  { above && !below && highlighted }
                 </ErrorBoundary>
               : meta && meta.isOutput
                 ? <output>{highlighted}</output>
                 : highlighted }
+            { meta && above && metaView }
         </codecell>
       } else {
           console.log("Default codeblock", this.props.node.children[0])
