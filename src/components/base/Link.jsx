@@ -9,9 +9,9 @@ const Link = props => {
     const data = props.data
     const wikilink = props.wikilink ? 'true' : undefined
     const icon = (data && data.isAbsolute) 
-                 ? <ExternalLinkIcon/>
+                 ? '↗'
                  : (data && data.isFragment)
-                   ? <AnchorIcon/>
+                   ? '§'
                    : null
 
     console.log("<Link/>", title, props)
