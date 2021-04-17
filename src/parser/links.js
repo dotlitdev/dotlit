@@ -50,6 +50,8 @@ export const decorateLinkNode = (link, root = '', filepath = '') => {
 
     let canonical = url
     let href = url
+    let [base,frag] = url.split(/(\?|#)/)
+
     if (isRelative) {
         const abs = path.resolve(root, path.dirname(filepath), url)
         canonical = path.relative(path.resolve(root), abs)
@@ -68,11 +70,21 @@ export const decorateLinkNode = (link, root = '', filepath = '') => {
     }
 
     if (wikilink) {
-        const [base,frag] = link.url.split("#")
+        [base,frag] = link.url.split("#")
         link.url = base + '?file=' + canonical + (frag ? `#${frag}` : '')
         link.children = [{type: 'text', value: link.value }]
-        link.data.hProperties = {
-            wikilink
+    }
+
+    link.data.hProperties = {
+        wikilink,
+        data: {
+             base, 
+             frag,
+             isAbsolute,
+             isFragment,
+             isRelative,
+             canonical,
+             wikilink,
         }
     }
     
