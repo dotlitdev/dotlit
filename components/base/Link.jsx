@@ -1,5 +1,5 @@
 import React from 'react'
-import { ExternalLinkIcon } from '../Icons'
+import { ExternalLinkIcon, AnchorIcon } from '../Icons'
 import { getConsoleForNamespace } from '../../utils/console'
 
 const console = getConsoleForNamespace('Link')
