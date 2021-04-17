@@ -1,13 +1,13 @@
 import util from 'util'
-import { Base64 } from 'js-base64';
+// import { Base64 } from 'js-base64';
 import {transformSync} from '@babel/core'
 
 import presetReact from "@babel/preset-react"
 import presetTypescript from "@babel/preset-typescript"
 import pluginClassProps from "@babel/plugin-proposal-class-properties"
-
-
 // import {version} from '../../package.json'
+
+const NoOp = () => {}
 
 function wrapConsole(console, stdoutUpdate) {
     const originalConsole = console
@@ -201,10 +201,10 @@ export class Repl {
 
 
 
-    exec(source, config, ast, stdoutUpdate) {
+    exec(source, config, ast, stdoutUpdate = NoOp) {
         console.log('REPL: ', config.repl)
 
-        const filename = (config.name || 'untitled') + '.' + config.lang
+        const filename = (config.filename || 'untitled') + '.' + config.lang
         return this.injectScript(source, {filename, ast, stdoutUpdate})
     }
 }

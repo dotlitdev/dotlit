@@ -8,6 +8,8 @@ const select = require('unist-util-select')
 
 const parser = require('../parser')
 const renderer = require('../renderer')
+const { Repl } = require('../repl')
+
 const App = require('../components/App').default
 const { Header } = require('../components/Header')
 const { extendFs } = require('../utils/fs-promises-utils')
@@ -38,6 +40,7 @@ const lit = {
     },
     parser,
     renderer,
+    Repl,
     fs,
     utils: {
         select,
