@@ -16,7 +16,7 @@ import litcodeblocks from './codeblocks'
 import frontmatter from './frontmatter'
 import {resolveLinks, wikiLinkOptions} from './links'
 import { getConsoleForNamespace} from '../utils/console'
-
+import { transform as jsTransform } from './transformers/js'
 const console = getConsoleForNamespace('parser')
 
 
@@ -89,6 +89,10 @@ export async function parse(vfile, options) {
     parsed.data.ast = ast
     // parsed.data.frontmatter = select.selectAll('html',ast).reduce( (memo,el) => Object.assign(memo,el.data || {}),{})
     return parsed
+}
+
+export const transformers = {
+    jsx: jsTransform,
 }
 
 
