@@ -1,13 +1,15 @@
 import React from 'react'
-import { Icon } from '../Icons'
+import { ExternalLinkIcon } from '../Icons'
 import { getConsoleForNamespace } from '../../utils/console'
 
 const console = getConsoleForNamespace('Link')
 
 const Link = props => {
     const title = props.node.properties.title
-    const icon = 'external-link-alt'
     const wikilink = props.wikilink ? 'true' : undefined
+    const icon = wikilink 
+                 ? null
+                 : <ExternalLinkIcon/>
 
     console.log("<Link/>", title, props)
 
@@ -15,7 +17,7 @@ const Link = props => {
         href={props.href}
         title={title}
         wikilink={wikilink}>
-            { icon && <Icon name={icon}/> }
+            {icon}
             {props.children}
         </a>
 }
