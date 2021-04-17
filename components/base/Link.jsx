@@ -1,15 +1,21 @@
 import React from 'react'
+import { Icon } from '../Icons'
 import { getConsoleForNamespace } from '../../utils/console'
 
 const console = getConsoleForNamespace('Link')
 
 const Link = props => {
     const title = props.node.properties.title
-    // console.log("<Link/>", props)
+    const icon = 'external-link-alt'
+    const wikilink = props.wikilink ? 'true' : undefined
+
+    console.log("<Link/>", title, props)
+
     return <a className={props.className}
         href={props.href}
         title={title}
-        wikilink={props.wikilink ? 'true' : undefined}>
+        wikilink={wikilink}>
+            { icon && <Icon name={icon}/> }
             {props.children}
         </a>
 }
