@@ -18,8 +18,8 @@ const Link = props => {
         href={props.href}
         title={title}
         wikilink={wikilink}>
-            {icon && <span className="linkIcon">{icon}</span> }
             {props.children}
+            {icon && <span className="linkIcon">{icon}</span> }
         </a>
 }
 
