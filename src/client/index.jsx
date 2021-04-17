@@ -8,7 +8,7 @@ const select = require('unist-util-select')
 
 const parser = require('../parser')
 const renderer = require('../renderer')
-const { Repl } = require('../repl')
+// const { Repl } = require('../repl')
 
 const App = require('../components/App').default
 const { Header } = require('../components/Header')
@@ -40,7 +40,7 @@ const lit = {
     },
     parser,
     renderer,
-    Repl,
+    // Repl,
     fs,
     utils: {
         select,
