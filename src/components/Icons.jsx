@@ -1,9 +1,13 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faPlay, faEdit, faTimes, faSave } from '@fortawesome/free-solid-svg-icons'
+import Icons from '@fortawesome/free-solid-svg-icons'
+
+const { faBars, faPlay, faEdit, faTimes, faSave } = Icons
 
 export const Icon = (props) => {
-  return <FontAwesomeIcon icon={props.name} />
+  if (props.name && Icons[props.name])
+    return <FontAwesomeIcon icon={Icons[props.name]} />
+  else return null
 }
 
 export const MenuIcon = props => (<FontAwesomeIcon icon={faBars} {...props} />)
