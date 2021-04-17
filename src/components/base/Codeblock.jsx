@@ -82,14 +82,16 @@ export const Codeblock = props => {
             { meta && !above && metaView}
             { Viewer 
               ? <ErrorBoundary>
-                  { below && !above && highlighted }
+                  { below && highlighted }
                   <Viewer children={props.children} node={codeNode} React={React}/>
-                  { above && !below && highlighted }
                 </ErrorBoundary>
               : meta && meta.isOutput
                 ? <output>{highlighted}</output>
-                : highlighted }
+                : (!above && !below)
+                   ? highlighted 
+                   : null }
             { meta && above && metaView }
+            { above && highlighted }
         </codecell>
       } else {
           console.log("Default codeblock", this.props.node.children[0])
