@@ -84,6 +84,7 @@ export const Codeblock = props => {
               ? <ErrorBoundary>
                   { below && !above && highlighted }
                   <Viewer children={props.children} node={codeNode} React={React}/>
+                  { above && !below && highlighted }
                 </ErrorBoundary>
               : meta && meta.isOutput
                 ? <output>{highlighted}</output>
