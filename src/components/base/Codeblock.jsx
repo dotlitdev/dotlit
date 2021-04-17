@@ -56,7 +56,7 @@ export const Codeblock = props => {
         ...dirClasses,
         ...tagClasses,
         localRemote,
-        collapsed && 'collapsed',
+        collapsed,
         fullScreen && 'fullscreen',
       ].filter(Identity).join(' ')
       
