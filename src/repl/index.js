@@ -173,7 +173,7 @@ export class Repl {
     exec(source, config, ast, stdoutUpdate = NoOp) {
         console.log('REPL: ', config.repl)
 
-        const filename = (config.filename || 'untitled') + '.' + config.lang
+        const filename = config.filename || ('untitled.' + config.lang)
         return this.injectScript(source, {filename, ast, stdoutUpdate})
     }
 }
