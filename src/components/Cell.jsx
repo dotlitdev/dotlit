@@ -1,9 +1,14 @@
 import React, {useState} from "react"
 import source from 'unist-util-source'
 
+import filter from 'unist-util-filter'
+import { atPos } from '../utils/unist-util-select-position'
+import { selectAll } from 'unist-util-select'
+
 import CellMenu from './CellMenu'
 import SelectionContext from './SelectionContext'
 import Editor from './Editor'
+import {Repl} from '../repl'
 
 import { getConsoleForNamespace } from '../utils/console'
 
@@ -58,6 +63,15 @@ const Cell = props => {
         setEditing(false)
     }
 
+    const exec = ctx => async args => {
+        console.log('Executing cell', pos, src)
+        const repl = new Repl()
+        const innerSrc = src.split('\n').slice(1,-1).join('\n')
+        
+        const result = await repl.exec(innerSrc, meta, ctx.file.data.ast)
+        console.log('Execution result', result)
+    }
+
     const getClasses = ctx => [
         isSelected(ctx) ? 'selected' : '',
         editing ? 'editing' : '',
@@ -75,7 +89,7 @@ const Cell = props => {
                 endpos={posstr(pos.end)}
                 className={getClasses(ctx)}>
                     { editing ? <Editor src={src} update={setSrc}/> : content }
-                    { isSelected(ctx) && <CellMenu meta={meta} editing={editing} toggleEditing={toggleEditing} save={save(ctx)}/>}
+                    { isSelected(ctx) && <CellMenu meta={meta} editing={editing} toggleEditing={toggleEditing} save={save(ctx)} exec={exec(ctx)}/>}
             </cell>
         }}
     </SelectionContext.Consumer>
