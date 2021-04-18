@@ -116,7 +116,11 @@ export const Header = (props) => {
     console.log("Copied cell src to clipboard")
   }
   
-
+  const deleteCell = ctx => ev => {
+    console.log('Deleting cell at pos:', ctx.selectedCell)
+    ctx.setSrc(ctx.selectedCell, '')
+    ctx.selectCell(null)
+  }
 
   return <SelectionContext.Consumer>{(ctx) => {
 
@@ -137,7 +141,7 @@ export const Header = (props) => {
         {cellSelected && `Lines ${ctx.selectedCell.start.line}-${ctx.selectedCell.end.line}`}
       </span>
       <span disabled>Add</span>
-      <span disabled>Remove</span>
+      <span disabled={!cellSelected} onClick={deleteCell(ctx)}>Remove</span>
       <span disabled>Edit</span>
       <span disabled>Execute</span>
       <span disabled>Reset</span>
