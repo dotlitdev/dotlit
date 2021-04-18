@@ -66,7 +66,8 @@ const Cell = props => {
     const exec = ctx => async args => {
         console.log('Executing cell', pos, src)
         const repl = new Repl()
-        const innerSrc = src.split('\n').slice(1,-1).join('\n')
+        
+        const innerSrc = source(pos, ctx.src).split('\n').slice(1,-1).join('\n')
         
         const result = await repl.exec(innerSrc, meta, ctx.file.data.ast)
         console.log('Execution result', result)
