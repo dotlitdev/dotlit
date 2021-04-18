@@ -26,7 +26,7 @@ const isExecutable = (meta) => {
     return meta && (meta.repl || meta.lang === 'js')
 }
 
-const CellMenu = ({meta, editing, toggleEditing, save, execute} = {}) => {
+const CellMenu = ({meta, editing, toggleEditing, save, exec} = {}) => {
 
     const [open, setOpen] = useState(false)
     const toggleOpen = wrapHandler(ev => {
@@ -36,7 +36,7 @@ const CellMenu = ({meta, editing, toggleEditing, save, execute} = {}) => {
 
     return <menu>
         <ul className="menu__items">
-            { open && isExecutable(meta) && <CellMenuItem title="Execute" icon={ExecIcon} handler={execute}/>}
+            { open && isExecutable(meta) && <CellMenuItem title="Execute" icon={ExecIcon} handler={exec}/>}
             { open && !editing && <CellMenuItem title="Edit" icon={EditIcon} handler={toggleEditing}/>}
             { open && editing && <CellMenuItem title="Cancel" icon={CloseIcon} handler={toggleEditing}/>}
             { open && editing && <CellMenuItem title="Save" icon={SaveIcon} handler={save}/>}
