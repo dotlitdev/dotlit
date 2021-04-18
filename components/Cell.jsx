@@ -70,6 +70,8 @@ const Cell = props => {
         
         const result = await repl.exec(innerSrc, meta, ctx.file.data.ast)
         console.log('Execution result', result)
+        const output = "\n```>txt\n" + result.stdout.join('\n') + "\n```\n"
+        ctx.setSrc(pos, src + output)
     }
 
     const getClasses = ctx => [
