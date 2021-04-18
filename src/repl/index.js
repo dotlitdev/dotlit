@@ -100,10 +100,6 @@ export class Repl {
             const esm = ({raw}, ...vals) => URL.createObjectURL(new Blob([String.raw({raw}, ...vals)], {type: 'text/javascript'}));
             const wrappedConsole = wrapConsole(window.console, stdoutUpdate)
 
-         
-
-                console.log("babelified", babelified)
-
                 const wrappedSrc = `(function(ast,console){/*${execId}*/let error; const cb = window['${execId}'].cb; const resp = (function(){ try {
                     ${source}
                     } catch(err) { error = true; cb(err) } }).call(window['${execId}'].context.ast); if (!error) cb(null, resp);})(window['${execId}'].context.ast, window['${execId}'].context.console)`
