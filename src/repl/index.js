@@ -1,10 +1,10 @@
 import util from 'util'
 // import { Base64 } from 'js-base64';
-import {transformSync} from '@babel/core'
+// import {transformSync} from '@babel/core'
 
-import presetReact from "@babel/preset-react"
-import presetTypescript from "@babel/preset-typescript"
-import pluginClassProps from "@babel/plugin-proposal-class-properties"
+// import presetReact from "@babel/preset-react"
+// import presetTypescript from "@babel/preset-typescript"
+// import pluginClassProps from "@babel/plugin-proposal-class-properties"
 // import {version} from '../../package.json'
 
 const NoOp = () => {}
@@ -100,37 +100,12 @@ export class Repl {
             const esm = ({raw}, ...vals) => URL.createObjectURL(new Blob([String.raw({raw}, ...vals)], {type: 'text/javascript'}));
             const wrappedConsole = wrapConsole(window.console, stdoutUpdate)
 
-            let babelified;
-            
-            try {
-                babelified = transformSync(source, { 
-                    filename: filename,
-                    sourceMaps: false,
-                    parserOpts: { allowReturnOutsideFunction: true },
-                    presets: [
-                        presetReact,
-                        presetTypescript
-                    ],
-                    plugins: [
-                        pluginClassProps
-                    ]
-                })
-            } catch (err) {
-                reject({
-                    err: err, 
-                    resp:  null, 
-                    stdout: err.toString()
-                })
-            }
-
-            
-
-            if (babelified) {
+         
 
                 console.log("babelified", babelified)
 
                 const wrappedSrc = `(function(ast,console){/*${execId}*/let error; const cb = window['${execId}'].cb; const resp = (function(){ try {
-                    ${babelified.code}
+                    ${source}
                     } catch(err) { error = true; cb(err) } }).call(window['${execId}'].context.ast); if (!error) cb(null, resp);})(window['${execId}'].context.ast, window['${execId}'].context.console)`
                 const src = esm`${wrappedSrc}`
 
@@ -192,9 +167,7 @@ export class Repl {
                 script.addEventListener('error', (...args) => { console.log('script err', ...args); reject('Error loading script.') } );
                 script.addEventListener('abort', (...args) => { console.log('script abort', ...args); reject('Script loading aborted.') } );
                 document.head.appendChild(script);
-            } else {
-                console.error("Could not babelify" )
-            }
+           
             
         });
     }
