@@ -56,7 +56,16 @@ Qux
 ```js !viewer of=css
 export const viewer = ({node, React}) => {
   const rc = React.createElement
-  
+  const meta = node.properties 
+               && node.properties.meta
+
+  const link = meta && meta.uri
+
+  if (link) return rc('link', {
+    rel: 'stylesheet',
+    href: link
+  })
+
   return rc('style', {
     dangerouslySetInnerHTML: {
       __html: node.value
