@@ -1,5 +1,5 @@
 import path from "path";
-import { ghWriteFile } from "../utils/fs-promises-gh-utils";
+import { ghWriteFile, ghReadFile } from "../utils/fs-promises-gh-utils";
 import { getConsoleForNamespace } from './console'
 
 const console = getConsoleForNamespace('fs')
@@ -20,7 +20,7 @@ const passThroughRead = (origReadFile, litroot) => {
   };
 }
 
-const passThroughReadWithStat = (origReadFile, origStat, litroot) => {
+const passThroughReadWithStat = (origReadFile, origStat, litroot, ghOpts) => {
 
   return async (...args) => {
     console.log('fs.passThroughRead')
@@ -38,8 +38,16 @@ const passThroughReadWithStat = (origReadFile, origStat, litroot) => {
     }
 
     const filePath = path.join(litroot, args[0])
-    console.log('fs.passThroughRead passing through to fetch', filePath)
-    const remoteResp = await fetch(filePath)
+
+    let remoteResp
+    if (ghOpts) {
+        console.log("fs.passThroughtRead passing through to GitHub", filePath)
+        const ghrf = ghReadFile(filePath, ghOpts)
+        remoteResp = await ghrf(filePath)
+    } else {
+        console.log('fs.passThroughRead passing through to fetch', filePath)
+        remoteResp = await fetch(filePath)
+    }
 
     if (remoteResp.status < 200 || remoteResp.status >= 400) {
       if (!resp.local.stat) {
@@ -48,7 +56,13 @@ const passThroughReadWithStat = (origReadFile, origStat, litroot) => {
       }
     } else {
       console.log("fs.passThroughRead found remote file")
-      const value = await remoteResp.text()
+      let value;
+      if (ghOpts) {
+          const json = await remoteResp.json()
+          value = json.content
+      } else {
+          value = await remoteResp.text()
+      }
       const lastModified = remoteResp.headers && remoteResp.headers.get('last-modified')
       const contentLength = remoteResp.headers && remoteResp.headers.get('content-length')
       const stat = {
