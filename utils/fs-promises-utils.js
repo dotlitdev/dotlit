@@ -56,13 +56,7 @@ const passThroughReadWithStat = (origReadFile, origStat, litroot, ghOpts) => {
       }
     } else {
       console.log("fs.passThroughRead found remote file")
-      let value;
-      if (ghOpts) {
-          const json = await remoteResp.json()
-          value = json.content
-      } else {
-          value = await remoteResp.text()
-      }
+      const value = await remoteResp.text()
       const lastModified = remoteResp.headers && remoteResp.headers.get('last-modified')
       const contentLength = remoteResp.headers && remoteResp.headers.get('content-length')
       const stat = {
