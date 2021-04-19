@@ -28,7 +28,12 @@ const litbase = getMeta('base', '/')
 const baseUrl =`${location.protocol}//${location.host}${litroot ? path.join(path.dirname(location.pathname), litroot) : litbase}`
 
 const lfs = (new FS(baseUrl)).promises 
-const fs = extendFs(lfs, litroot)
+const fs = extendFs(lfs, litroot, localStorage.getItem("ghToken") && {
+      username: "dotlitdev",
+      repository: "dotlit",
+      prefix: "src",
+      token: localStorage.getItem("ghToken"),
+    })
 
 
 const lit = {
