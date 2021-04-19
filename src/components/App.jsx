@@ -42,10 +42,10 @@ const App = ({root, file, fs, result}) => {
         for (const codeCell of nodes) {
             const filename = codeCell.data && codeCell.data.meta && codeCell.data.meta.filename
             const fromSource = codeCell.data && codeCell.data.meta && codeCell.data.meta.fromSource
-            
+            const content = source(codeCell.position, patchedSrc)
             if (filename && fromSource && fromSource === filename) {
                 const filepath = path.join( path.dirname(file.path), filename)
-                await fs.writeFile(filepath, codeCell.value)
+                await fs.writeFile(filepath, content)
                 console.log(`Wrote codefile ${filename} to "${filepath}" on disk`)
             }
        }
