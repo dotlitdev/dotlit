@@ -3,11 +3,20 @@ import { getConsoleForNamespace } from './console'
 
 const console = getConsoleForNamespace('fs')
 
+const getEndpoint = (opts,file) => `https://api.github.com/repos/${opts.username}/${opts.repository}/contents/${file}`
+
+export const ghReadFile = opts => async (...args) => {
+    const file = (opts.prefix || '') + args[0]
+    const resp = await fetch(getEndpoint(opts,file))
+    console.log("ghReadFile", file, resp)
+    return resp && resp.status
+}
+
 export const ghWriteFile = (opts) => async (...args) => {
     console.log(args)
     const file = (opts.prefix || '') + args[0]
     const content = args[1].toString()
-    const endpoint = `https://api.github.com/repos/${opts.username}/${opts.repository}/contents/${file}`
+    const endpoint = getEndpoint(opts, file)
     const resp1 = await fetch(endpoint)
     const json1 = await resp1.json()
     console.log(endpoint, json1.sha ? "Exists, updating...":"Dosn't exist, creating...")
