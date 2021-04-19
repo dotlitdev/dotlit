@@ -42,7 +42,7 @@ const passThroughReadWithStat = (origReadFile, origStat, litroot, ghOpts) => {
     let remoteResp
     if (ghOpts) {
         console.log("fs.passThroughtRead passing through to GitHub", filePath)
-        const ghrf = ghReadFile(filePath, ghOpts)
+        const ghrf = ghReadFile(ghOpts)
         remoteResp = await ghrf(filePath)
     } else {
         console.log('fs.passThroughRead passing through to fetch', filePath)
@@ -102,17 +102,12 @@ const writeFileP = (fs) => {
   };
 }
 
-const passThroughWrite = (fs,litroot) => {
+const passThroughWrite = (fs,litroot, ghOpts) => {
   const wf = fs.writeFile
   return async (...args) => {
     console.log('fs.passThroughWrite')
     await wf(...args);
-    const ghwf = ghWriteFile({
-      username: "dotlitdev",
-      repository: "dotlit",
-      prefix: "src",
-      token: localStorage.getItem("ghToken"),
-    });
+    const ghwf = ghWriteFile(ghOpts);
     try {
       const ghResp = await ghwf(...args);
       console.log("GitHub write resp", ghResp);
@@ -122,13 +117,13 @@ const passThroughWrite = (fs,litroot) => {
   };
 }
 
-export const extendFs = (fs, litroot) => {
+export const extendFs = (fs, litroot, ghOpts) => {
   const origReadFile = fs.readFile
   const origStat = fs.stat
   fs.readFile = passThroughRead(origReadFile,litroot);
   fs.writeFile = writeFileP(fs);
-  fs.readStat = passThroughReadWithStat(origReadFile, origStat, litroot)
+  fs.readStat = passThroughReadWithStat(origReadFile, origStat, litroot, ghOpts)
 
-  if (localStorage.getItem("ghToken")) fs.writeFile = passThroughWrite(fs);
+  if(ghOpts) fs.writeFile = passThroughWrite(fs, litroot, ghOpts);
   return fs
 };
