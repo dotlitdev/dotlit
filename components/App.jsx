@@ -27,11 +27,7 @@ const App = ({root, file, fs, result}) => {
         file.contents = patchedSrc
         const processedFile = await processor(fs).process(file)
         console.log("Processed client", processedFile)
-        setSrcAndRes({
-            src: patchedSrc,
-            res: processedFile.result
-        })
-
+      
         try {
             await fs.writeFile(file.path, patchedSrc, {encoding: 'utf8'})
         } catch (err) {
@@ -53,6 +49,11 @@ const App = ({root, file, fs, result}) => {
                 console.log(`Wrote codefile ${filename} to "${filepath}" on disk`)
             }
        }
+
+       setSrcAndRes({
+            src: patchedSrc,
+            res: processedFile.result
+       })
     }
 
     const state = {
