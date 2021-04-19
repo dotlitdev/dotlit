@@ -183,6 +183,9 @@ cell:not(.code) code {
   background-color: rgba(0,0,0,0.02);
   border-radius: 2px;
 }
+cell.output {
+  padding-top: 0;
+}
 codecell.collapsed > *:not(.meta),
 codecell.dir-collapse:not(.uncollapsed) > *:not(.meta) {
   display: none !important;
@@ -213,6 +216,11 @@ codecell.fullscreen > iframe {
 codecell.fullscreen .meta .directives .directive.dir-inline {
   color: #fff;
   background-color: #008000;
+}
+codecell.dir-hidemeta:not(.dir-showmeta) > .meta,
+codecell.lang-md:not(.dir-showmeta) > .meta,
+codecell.lang-lit:not(.dir-showmeta) > .meta {
+  display: none;
 }
 codecell > .meta {
   font-family: monospace;
@@ -254,10 +262,16 @@ codecell > .meta .directive:before {
 }
 codecell pre {
   margin: 0;
-  padding: 0.4em;
+  padding: 0;
   min-height: 1em;
-  color: #fff;
   white-space: pre-wrap;
+  color: #fff;
+  background-color: #000;
+  padding: 0.4em;
+}
+codecell pre code,
+codecell pre code.hljs {
+  padding: 0;
 }
 codecell > output > pre {
   background-color: #fff;
@@ -361,4 +375,17 @@ codecell > table td {
 #backlinks,
 .footnotes {
   padding: 0 1em;
+}
+h1:before,
+h2:before,
+h3:before,
+h4:before,
+h5:before,
+h6:before {
+  display: block;
+  content: "";
+  height: 2em;
+  margin: -2em 0 0;
+  pointer-events: visiblefill;
+  z-index: -9999999;
 }

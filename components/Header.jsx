@@ -122,6 +122,14 @@ export const Header = (props) => {
     ctx.selectCell(null)
   }
 
+  const clearCodeCell = ctx => ev => {
+    console.log('Clearing code cell at pos:', ctx.selectedCell)
+    const meta = source(ctx.selectedCell, ctx.src).split('\n')[0]
+    const end = '```'
+
+    ctx.setSrc(ctx.selectedCell, `${meta}\n${end}`)
+  }
+
   return <SelectionContext.Consumer>{(ctx) => {
 
     const cellSelected = (ctx.selectedCell && ctx.selectedCell.start) || false
@@ -142,6 +150,7 @@ export const Header = (props) => {
       </span>
       <span disabled>Add</span>
       <span disabled={!cellSelected} onClick={deleteCell(ctx)}>Remove</span>
+      <span disabled={!cellSelected} onClick={clearCodeCell(ctx)}>Empty Code</span>
       <span disabled>Edit</span>
       <span disabled>Execute</span>
       <span disabled>Reset</span>

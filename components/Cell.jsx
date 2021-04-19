@@ -53,7 +53,9 @@ const Cell = props => {
     const originalSource = codeSource 
              && codeNode.properties
              && codeNode.properties.data
-             && codeNode.properties.data.originalSource 
+             && codeNode.properties.data.originalSource
+    
+    const output = meta && meta.isOutput
 
     const content = props.children
 
@@ -81,6 +83,7 @@ const Cell = props => {
         isSelected(ctx) ? 'selected' : '',
         editing ? 'editing' : '',
         isCodeCell ? 'code' : '',
+        output ? 'output' : '',
     ].join(' ').trim() || undefined
 
     return <SelectionContext.Consumer>
