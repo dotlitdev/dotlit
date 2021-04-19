@@ -64,6 +64,7 @@ const Cell = props => {
     }
 
     const exec = ctx => async args => {
+        const src = source(pos, ctx.src);
         console.log('Executing cell', pos, src)
         const repl = new Repl()
         
@@ -71,7 +72,8 @@ const Cell = props => {
         
         const result = await repl.exec(innerSrc, meta, ctx.file.data.ast)
         console.log('Execution result', result)
-        const output = "\n```"+(meta.hasOutput ? meta.output : 'txt') + (" updated=" + Date.now()) +"\n" + result.stdout + "\n```\n"
+        const outputMeta = (meta.hasOutput ? meta.output : 'txt').trim() + (" updated=" + Date.now())
+        const output = "\n```"+ outputMeta +"\n" + result.stdout + "\n```\n"
         ctx.setSrc(pos, src + output)
     }
 
