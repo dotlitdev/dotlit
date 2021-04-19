@@ -1,4 +1,4 @@
-import { b64EncodeUnicode } from './safe-encoders'
+import { b64EncodeUnicode, b64DecodeUnicode } from './safe-encoders'
 import { getConsoleForNamespace } from './console'
 
 const console = getConsoleForNamespace('fs')
@@ -7,9 +7,25 @@ const getEndpoint = (opts,file) => `https://api.github.com/repos/${opts.username
 
 export const ghReadFile = opts => async (...args) => {
     const file = (opts.prefix || '') + args[0]
-    const resp = await fetch(getEndpoint(opts,file))
+    const params = {
+        method: "GET",
+        headers: {
+            "Authorization": `token ${opts.token}`,
+            'Content-Type': 'application/json'
+        },
+    }
+    const resp = await fetch(getEndpoint(opts,file), params)
+    // resp.origJson = resp.json
+    resp.text = async () => {
+        console.log("ghReadFile text()...")
+        const data = await resp.json()
+        console.log("ghReadFile data", data)
+        const content = b64DecodeUnicode(data.content)
+        console.log("ghReadFile decoded", content)
+        return content
+    }
     console.log("ghReadFile", file, resp)
-    return resp && resp.status
+    return resp
 }
 
 export const ghWriteFile = (opts) => async (...args) => {
