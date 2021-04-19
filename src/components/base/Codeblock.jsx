@@ -10,6 +10,11 @@ import { ErrorBoundary } from '../ErrorBoundry'
 
 const console = getConsoleForNamespace('codeblocks')
 
+const hasDirective = (meta, d) => {
+  return meta && meta.directives && meta.directives.length && meta.directives.indexOf(d) >= 0
+}
+
+
 export const Codeblock = props => {
         
   const codeNode = props.node.children
@@ -17,6 +22,16 @@ export const Codeblock = props => {
     && props.node.children[0].tagName === 'code'
     ? props.node.children[0] 
     : null;
+
+  const meta = codeNode ? codeNode.properties.meta : null
+  const dirs = meta && meta.directives
+  const tags = meta && meta.tags
+  const dirClasses = dirs ? dirs.map(d=>'dir-'+d) : []
+  const tagClasses = tags ? tags.map(t=>'tag-'+t) : []
+
+  const hasDirective = (d) => {
+    return meta && meta.directives && meta.directives.length && meta.directives.indexOf(d) >= 0
+  }
 
   const [localRemote, setLocalRemote] = useState('local')
   const toggleLocalRemote = (ev) => {
@@ -32,29 +47,26 @@ export const Codeblock = props => {
     setFullScreen(!fullScreen)
     return false
   }
-  const [collapsed, setCollapsed] = useState(false)
+
+  const [collapsed, setCollapsed] = useState(hasDirective('collapse') ? 'collapsed' :  '')
   const toggleCollapsed = (ev) => {
     ev.stopPropagation()
     ev.preventDefault()
-    setCollapsed(collapsed ? 'uncollapsed' : 'collapsed')
+    setCollapsed(collapsed === 'collapsed' ? 'uncollapsed' : 'collapsed')
     return false
   }
+  
 
 
   return <SelectionContext.Consumer>
     { ctx => {
-
-      const meta = codeNode ? codeNode.properties.meta : null
-      const dirs = meta && meta.directives
-      const tags = meta && meta.tags
-      const dirClasses = dirs ? dirs.map(d=>'dir-'+d) : []
-      const tagClasses = tags ? tags.map(t=>'tag-'+t) : []
 
       const Viewer = getViewer(meta, ctx.file.data.viewers)
 
       const classes = [
         ...dirClasses,
         ...tagClasses,
+        `lang-${meta.lang}`,
         localRemote,
         collapsed,
         fullScreen && 'fullscreen',
@@ -86,7 +98,7 @@ export const Codeblock = props => {
                   <Viewer children={props.children} node={codeNode} React={React}/>
                 </ErrorBoundary>
               : meta && meta.isOutput
-                ? <output>{highlighted}</output>
+                ? <output><pre className="nohighlight">{source}</pre></output>
                 : (!above && !below)
                    ? highlighted 
                    : null }
