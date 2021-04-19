@@ -7,7 +7,15 @@ const getEndpoint = (opts,file) => `https://api.github.com/repos/${opts.username
 
 export const ghReadFile = opts => async (...args) => {
     const file = (opts.prefix || '') + args[0]
-    const resp = await fetch(getEndpoint(opts,file))
+    const params = {
+        method: "GET",
+        headers: {
+            "Authorization": `token ${opts.token}`,
+            'Content-Type': 'application/json'
+        },
+      }
+    }
+    const resp = await fetch(getEndpoint(opts,file), params)
     console.log("ghReadFile", file, resp)
     return resp && resp.status
 }
