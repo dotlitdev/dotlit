@@ -29,9 +29,10 @@ export const ghReadFile = opts => async (...args) => {
 }
 
 export const ghWriteFile = (opts) => async (...args) => {
-    console.log(args)
+   
     const file = (opts.prefix || '') + args[0]
     const content = args[1].toString()
+    console.log("ghWriteFile",file, content, args)
     const endpoint = getEndpoint(opts, file)
     const resp1 = await fetch(endpoint)
     const json1 = await resp1.json()
@@ -48,12 +49,12 @@ export const ghWriteFile = (opts) => async (...args) => {
             content: b64EncodeUnicode(content)
         })
     }
-    console.log("params", params)
+    console.log("ghWriteFile params", params)
     let resp2;
     try {
       resp2 = await fetch(endpoint, params)
     } catch(err) {
-      console.log("PUT failed", err)
+      console.log("ghWriteFile PUT failed", err)
     }
     return resp2 && resp2.status
 }
