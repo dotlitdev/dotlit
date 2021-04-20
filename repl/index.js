@@ -92,7 +92,7 @@ export class Repl {
         }).filter(x => x).join('\n')
     }
 
-    injectScript(source, {filename, ast, stdoutUpdate}) {
+    injectScript(source, {config, filename, ast, stdoutUpdate}) {
         const self = this
         return new Promise((resolve, reject) => {
     
@@ -103,6 +103,7 @@ export class Repl {
             const wrappedConsole = wrapConsole(window.console, stdoutUpdate)
 
             try {
+                if(config && config.babel) {
                 source = transformSync(source, { 
                     filename: filename,
                     sourceMaps: false,
@@ -115,6 +116,7 @@ export class Repl {
                         // pluginClassProps
                     ]
                 })
+                }
             } catch (err) {
                 console.error("[babel] Transpile failed", err)
                 reject({
@@ -198,6 +200,6 @@ export class Repl {
         console.log('REPL: ', config.repl)
 
         const filename = config.filename || ('untitled.' + config.lang)
-        return this.injectScript(source, {filename, ast, stdoutUpdate})
+        return this.injectScript(source, {config, filename, ast, stdoutUpdate})
     }
 }
