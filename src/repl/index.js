@@ -80,13 +80,14 @@ export class Repl {
         
         return stack.map( line => {
             const lineNoRegex = new RegExp(`(.*${filename}:)(\d+)(.*)`)
-            const match = line.match(lineNoRegex)
+            const match = line && line.match && line.match(lineNoRegex)
             if (match) {
                 const num = parseInt(match[2])
                 // skip first and last lines (wrapper code)
                 if (num === 1 || num >= sourceLen) return '' 
                 else return `${match[1], num - 1, match[3]}`
             } else {
+                console.log("formatStack line match fallback", typeof line, line)
                 return `${line}`
             }
         }).filter(x => x).join('\n')
