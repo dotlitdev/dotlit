@@ -1,11 +1,13 @@
 import util from 'util'
 // import { Base64 } from 'js-base64';
-// import {transformSync} from '@babel/core'
+import {transformSync} from '@babel/core'
 
-// import presetReact from "@babel/preset-react"
-// import presetTypescript from "@babel/preset-typescript"
+import presetReact from "@babel/preset-react"
+import presetTypescript from "@babel/preset-typescript"
 // import pluginClassProps from "@babel/plugin-proposal-class-properties"
 // import {version} from '../../package.json'
+
+if (typeof window !== 'undefined') window.transformSync = transformSync
 
 const NoOp = () => {}
 
@@ -100,69 +102,91 @@ export class Repl {
             const esm = ({raw}, ...vals) => URL.createObjectURL(new Blob([String.raw({raw}, ...vals)], {type: 'text/javascript'}));
             const wrappedConsole = wrapConsole(window.console, stdoutUpdate)
 
-                const wrappedSrc = `(function(ast,console){/*${execId}*/let error; const cb = window['${execId}'].cb; const resp = (function(){ try {
-                    ${source}
-                    } catch(err) { error = true; cb(err) } }).call(window['${execId}'].context.ast); if (!error) cb(null, resp);})(window['${execId}'].context.ast, window['${execId}'].context.console)`
-                const src = esm`${wrappedSrc}`
+            try {
+                source = transformSync(source, { 
+                    filename: filename,
+                    sourceMaps: false,
+                    parserOpts: { allowReturnOutsideFunction: true },
+                    presets: [
+                        presetReact,
+                        presetTypescript
+                    ],
+                    plugins: [
+                        // pluginClassProps
+                    ]
+                })
+            } catch (err) {
+                console.error("[babel] Transpile failed", err)
+                reject({
+                    err: err, 
+                    resp:  null, 
+                    stdout: err.toString()
+                })
+            }
 
-                this.executions[src] = window[execId] = {
-                    execId, 
-                    source, 
-                    filename, 
-                    stdout: wrappedConsole.buffer, 
-                    err: undefined, 
-                    resp: undefined, 
-                    cb: (err, resp) => {
-                        console.log("pJaxCallback: ", err, resp)
+            const wrappedSrc = `(function(ast,console){/*${execId}*/let error; const cb = window['${execId}'].cb; const resp = (function(){ try {
+                ${source}
+                } catch(err) { error = true; cb(err) } }).call(window['${execId}'].context.ast); if (!error) cb(null, resp);})(window['${execId}'].context.ast, window['${execId}'].context.console)`
+            const src = esm`${wrappedSrc}`
 
-                        let error = err || (this.executions[src] && this.executions[src].err)
-                        if (error) {
-                            const formattedError = this.formatStack(err, src)
-                            this.executions[src].stdout.push(formattedError)
-                            console.error('REPL ERR: ', this.executions[src])
-                            reject({
-                                err: error, 
-                                resp:  resp, 
-                                stdout: this.executions[src].stdout.join('\n')
-                            })
-                        } else {
+            this.executions[src] = window[execId] = {
+                execId, 
+                source, 
+                filename, 
+                stdout: wrappedConsole.buffer, 
+                err: undefined, 
+                resp: undefined, 
+                cb: (err, resp) => {
+                    console.log("pJaxCallback: ", err, resp)
 
-                            if (isPromise(resp)) {
-                                resp.then( (result) => {
-                                    this.executions[src].result = result
-                                    const pretty = (typeof result === 'string' ? result : util.inspect(result, {depth: 2}))
-                                    this.executions[src].stdout.push(pretty)
-                                    console.log('REPL DONE: ', filename, this.executions[src])
-                                    resolve({
-                                        err: error, 
-                                        resp:  result, 
-                                        stdout: this.executions[src].stdout.join('\n')
-                                    })
-                                })
-                            } else {
-                                this.executions[src].resp = resp
-                                const pretty = (typeof resp === 'string' ? resp : util.inspect(resp, {depth: 2}))
+                    let error = err || (this.executions[src] && this.executions[src].err)
+                    if (error) {
+                        const formattedError = this.formatStack(err, src)
+                        this.executions[src].stdout.push(formattedError)
+                        console.error('REPL ERR: ', this.executions[src])
+                        reject({
+                            err: error, 
+                            resp:  resp, 
+                            stdout: this.executions[src].stdout.join('\n')
+                        })
+                    } else {
+
+                        if (isPromise(resp)) {
+                            resp.then( (result) => {
+                                this.executions[src].result = result
+                                const pretty = (typeof result === 'string' ? result : util.inspect(result, {depth: 2}))
                                 this.executions[src].stdout.push(pretty)
                                 console.log('REPL DONE: ', filename, this.executions[src])
                                 resolve({
                                     err: error, 
-                                    resp:  resp, 
+                                    resp:  result, 
                                     stdout: this.executions[src].stdout.join('\n')
                                 })
-                            }
+                            })
+                        } else {
+                            this.executions[src].resp = resp
+                            const pretty = (typeof resp === 'string' ? resp : util.inspect(resp, {depth: 2}))
+                            this.executions[src].stdout.push(pretty)
+                            console.log('REPL DONE: ', filename, this.executions[src])
+                            resolve({
+                                err: error, 
+                                resp:  resp, 
+                                stdout: this.executions[src].stdout.join('\n')
+                            })
                         }
-                    },
-                    context: { console: wrappedConsole.console, ast }
-                }            
-        
-                script.type = 'module'
-                script.async = true;
-                script.src = src
-                
-                // script.addEventListener('load', resolve);
-                script.addEventListener('error', (...args) => { console.log('script err', ...args); reject('Error loading script.') } );
-                script.addEventListener('abort', (...args) => { console.log('script abort', ...args); reject('Script loading aborted.') } );
-                document.head.appendChild(script);
+                    }
+                },
+                context: { console: wrappedConsole.console, ast }
+            }            
+    
+            script.type = 'module'
+            script.async = true;
+            script.src = src
+            
+            // script.addEventListener('load', resolve);
+            script.addEventListener('error', (...args) => { console.log('script err', ...args); reject('Error loading script.') } );
+            script.addEventListener('abort', (...args) => { console.log('script abort', ...args); reject('Script loading aborted.') } );
+            document.head.appendChild(script);
            
             
         });

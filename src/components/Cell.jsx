@@ -71,10 +71,17 @@ const Cell = props => {
         const repl = new Repl()
         
         const innerSrc = source(pos, ctx.src).split('\n').slice(1,-1).join('\n')
-        
-        const result = await repl.exec(innerSrc, meta, ctx.file.data.ast)
+        let result
+        let error
+        try {
+            result = await repl.exec(innerSrc, meta, ctx.file.data.ast)
+        } catch(res) {
+            error = true
+            console.log('[Cell] REPL promise rejected', res)
+            result = res
+        }
         console.log('Execution result', result)
-        const outputMeta = (meta.hasOutput ? meta.output : 'txt').trim() + (" updated=" + Date.now())
+        const outputMeta = (meta.hasOutput ? meta.output : 'txt').trim() + (" updated=" + Date.now()) + (error ? ' !error' : '')
         const output = "\n```>"+ outputMeta +"\n" + result.stdout + "\n```\n"
         ctx.setSrc(pos, src + output)
     }

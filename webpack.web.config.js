@@ -18,15 +18,17 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
     fallback: { 
         path: require.resolve("path-browserify"),
+        buffer: require.resolve("buffer/"),
         // console: require.resolve("console-browserify"),
+        fs: false,
         assert: require.resolve("assert/"),
     }
   },
   target: 'web',
   // externals: [nodeExternals],
-  externals:{
-    fs: "commonjs fs",
-  },
+  // externals:{
+  //   fs: "commonjs fs",
+  // },
   module: {
     rules: [
       {
@@ -79,6 +81,9 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       process: 'process/browser',
+    }),
+    new webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer'],
     }),
   ],
   devtool: 'cheap-source-map',
