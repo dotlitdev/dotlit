@@ -104,7 +104,7 @@ export class Repl {
 
             try {
                 if(config && config.babel) {
-                source = transformSync(source, { 
+                const babel = transformSync(source, { 
                     filename: filename,
                     sourceMaps: false,
                     parserOpts: { allowReturnOutsideFunction: true },
@@ -116,6 +116,8 @@ export class Repl {
                         // pluginClassProps
                     ]
                 })
+                console.log("[babel] transformed", babel)
+                source = babel.code
                 }
             } catch (err) {
                 console.error("[babel] Transpile failed", err)
