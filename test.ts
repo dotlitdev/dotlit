@@ -4,4 +4,4 @@ const fn = (opts : Options) => {
   return str
 }
 
-return fb()
+return fn()
