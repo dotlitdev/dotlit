@@ -72,6 +72,7 @@ export const Codeblock = props => {
         localRemote,
         collapsed,
         fullScreen && 'fullscreen',
+        meta && meta.isOutput && 'output'
       ].filter(Identity).join(' ')
       
       if (codeNode) {
