@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import {log, level} from '../../utils/console'
 import { getConsoleForNamespace } from '../../utils/console'
+import { DatesToRelativeDelta } from '../../utils/momento'
 import Highlight from 'react-highlight.js'
 import SelectionContext from '../SelectionContext'
 import {getViewer} from '../../renderer/Viewers'
 import {CodeMeta} from '../CodeMeta'
+
 import { Identity } from '../../utils/functions'
 import { ErrorBoundary } from '../ErrorBoundry'
 
@@ -98,7 +100,9 @@ export const Codeblock = props => {
                   <Viewer children={props.children} node={codeNode} React={React}/>
                 </ErrorBoundary>
               : meta && meta.isOutput
-                ? <output><pre className="nohighlight">{source}</pre></output>
+                ? <output>
+                    {highlighted}
+                  </output>
                 : (!above && !below)
                    ? highlighted 
                    : null }
@@ -107,7 +111,7 @@ export const Codeblock = props => {
         </codecell>
       } else {
           console.log("Default codeblock", this.props.node.children[0])
-          return <codecell><pre>{props.children}</pre></codecell>
+          return <codecell><pre className="default">{props.children}</pre></codecell>
       }
     }
   }</SelectionContext.Consumer>

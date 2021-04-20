@@ -1,4 +1,5 @@
 import React from 'react'
+import {Time} from './Time'
 
 export const CodeMeta = ({meta, toggleFullscreen, toggleLocalRemote, toggleCollapsed}) => {
 
@@ -16,5 +17,6 @@ export const CodeMeta = ({meta, toggleFullscreen, toggleLocalRemote, toggleColla
                     return <li key={dir+1} onClick={onClick}><span className={`directive dir-${dir}`}>{dir}</span></li>
                 })
             }</ul>}
+            { meta.updated && <span className="updatedAt">Updated <Time ms={parseInt(meta.updated)} /></span> }
         </span>
 }
