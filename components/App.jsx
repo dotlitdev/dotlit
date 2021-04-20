@@ -43,7 +43,7 @@ const App = ({root, file, fs, result}) => {
         for (const codeCell of nodes) {
             const filename = codeCell.data && codeCell.data.meta && codeCell.data.meta.filename
             const fromSource = codeCell.data && codeCell.data.meta && codeCell.data.meta.fromSource
-            const content = source(codeCell.position, patchedSrc)
+            const content = source(codeCell.position, patchedSrc).split('\n').slice(1,-1).join('\n')
             if (filename && fromSource && fromSource === filename) {
                 const filepath = path.join( path.dirname(file.path), filename)
                 await fs.writeFile(filepath, content)
