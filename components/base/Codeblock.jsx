@@ -98,7 +98,7 @@ export const Codeblock = props => {
             { Viewer 
               ? <ErrorBoundary>
                   { below && highlighted }
-                  <Viewer children={props.children} node={codeNode} React={React}/>
+                  <Viewer children={props.children} node={codeNode} React={React} fullscreen={fullScreen}/>
                 </ErrorBoundary>
               : meta && meta.isOutput
                 ? <output>
