@@ -44,9 +44,9 @@ const cellsFromNodes = nodes => {
   const cells = [];
   let newCell = null;
 
-  nodes.map((current) => {
+  nodes.map((current, index) => {
     const node = current;
-    console.log("[Sections] child: ", node.type);
+    console.log("[Sections] child: ", index, node.type);
 
     if (node.type === "section") {
       newCell = null;
@@ -72,9 +72,28 @@ const cellsFromNodes = nodes => {
       cells.push(listItem);
 
     } else if (node.type === "code") {
-      newCell = null;
+      const next = nodes[index+1]
+      const nextIsAttached = next
+                             && next.type === 'code'
+                             && next.data
+                             && next.data.meta
+                             && next.data.meta.attached
       let singleCell = createCell(node)
-      cells.push(singleCell);
+      if (nextIsAttached) {
+          newCell = singleCell
+         
+      } if (attached) {
+          newCell.children.push(node)
+          if (node.position) newCell.position.end = node.position.end;
+          cells.push(newCell)
+          newCell = null
+
+      } else {
+          newCell = null
+          cells.push(singleCell);
+      }
+     
+     
       
     } else if (newCell) {
       newCell.children.push(node);
