@@ -73,16 +73,14 @@ const cellsFromNodes = nodes => {
 
     } else if (node.type === "code") {
       const next = nodes[index+1]
-      const nextIsAttached = next
-                             && next.type === 'code'
-                             && next.data
-                             && next.data.meta
-                             && next.data.meta.attached
+      const attached = node => node && node.data && node.data.meta && node.data.meta.attached
+      const nextIsAttached = attached(next)
+                            
       let singleCell = createCell(node)
       if (nextIsAttached) {
           newCell = singleCell
          
-      } if (attached) {
+      } if (attached(node)) {
           newCell.children.push(node)
           if (node.position) newCell.position.end = node.position.end;
           cells.push(newCell)
