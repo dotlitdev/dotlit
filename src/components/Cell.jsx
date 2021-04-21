@@ -66,24 +66,22 @@ const Cell = props => {
     }
 
     const exec = ctx => async args => {
-        const src = codeSource;
-        console.log('Executing cell', {pos, src, codeSource, rawSource, originalSource})
+        console.log('Executing cell', {pos, codeSource, rawSource, originalSource})
         const repl = new Repl()
         
-        const innerSrc = source(pos, ctx.src).split('\n').slice(1,-1).join('\n')
         let result
         let error
         try {
-            result = await repl.exec(innerSrc, meta, ctx.file.data.ast)
+            result = await repl.exec(codeSource, meta, ctx.file.data.ast)
         } catch(res) {
             error = true
             console.log('[Cell] REPL promise rejected', res)
             result = res
         }
         console.log('Execution result', result)
-        const outputMeta = (meta.hasOutput ? meta.output : 'txt').trim() + (" updated=" + Date.now()) + (error ? ' !error' : '')
+        const outputMeta = (meta.hasOutput ? meta.output : 'txt').trim() + (" attached=true updated=" + Date.now()) + (error ? ' !error' : '')
         const output = "\n```>"+ outputMeta +"\n" + result.stdout + "\n```\n"
-        ctx.setSrc(pos, src + output)
+        ctx.setSrc(pos, rawSource + output)
     }
 
     const getClasses = ctx => [
