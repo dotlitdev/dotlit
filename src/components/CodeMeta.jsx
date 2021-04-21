@@ -1,5 +1,15 @@
 import React from 'react'
 import {Time} from './Time'
+import { stringToHex, pickTextColorBasedOnBgColor } from '../utils/colors'
+
+const colorStyle = (val) => {
+    const bgColor = stringToHex(val)
+    const textColor = pickTextColorBasedOnBgColor(bgColor, 'white', 'black')
+    return {
+        color: textColor,
+        backgroundColor: bgColor
+    }
+}
 
 export const CodeMeta = ({meta, toggleFullscreen, toggleLocalRemote, toggleCollapsed}) => {
 

@@ -1,8 +1,14 @@
-export const viewer = ({node, React}) => {
+export const viewer = ({node, React, fullscreen}) => {
    const c = React.createElement
    const data = node.value
-   const el = c('iframe', {srcDoc: `<!DOCTYPE html>
+   const dirs = node 
+                && node.properties 
+                && node.properties.meta 
+                && node.properties.meta.directives 
+                && node.properties.meta.directives.join(' ')
+   const el = c('iframe', { className: dirs, srcDoc: `<!DOCTYPE html>
 <head>
+  <!-- ${fullscreen} -->
   <style> body { margin: 0; } </style>
   <script src="https://unpkg.com/force-graph"></script>
   <!-- from: https://github.com/vasturiano/force-graph -->
