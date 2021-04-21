@@ -1,1 +1,0 @@
-dotlit --help
