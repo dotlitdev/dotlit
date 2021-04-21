@@ -80,7 +80,7 @@ const cellsFromNodes = nodes => {
       if (nextIsAttached) {
           newCell = singleCell
          
-      } if (attached(node)) {
+      } else if (newCell && attached(node)) {
           newCell.children.push(node)
           if (node.position) newCell.position.end = node.position.end;
           cells.push(newCell)
