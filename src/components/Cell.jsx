@@ -66,8 +66,8 @@ const Cell = props => {
     }
 
     const exec = ctx => async args => {
-        const src = source(pos, ctx.src);
-        console.log('Executing cell', pos, src)
+        const src = codeSource;
+        console.log('Executing cell', {pos, src, codeSource, rawSource, originalSource})
         const repl = new Repl()
         
         const innerSrc = source(pos, ctx.src).split('\n').slice(1,-1).join('\n')
