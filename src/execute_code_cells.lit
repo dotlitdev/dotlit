@@ -102,19 +102,23 @@ return (async args => {
 ```jsx test.jsx babel=true repl=js
 return (async args => {
 
-  const confetti = (await import("https://cdn.jsdelivr.net/npm/canvas-confetti@0.2.0-beta0/dist/confetti.module.mjs")
-  // import('https://cdn.skypack.dev/canvas-confetti')).default
+  const confetti = (await import("https://cdn.jsdelivr.net/npm/canvas-confetti@0.2.0-beta0/dist/confetti.module.mjs")).default
+  // import('https://cdn.skypack.dev/canvas-confetti')
 
   return confetti()
   return "yay"
 })()
 ```
-```>txt attached=true updated=1619127805727
-{ create: [Function: confettiCannon],
-  default: 
-   { [Function: fire]
-     create: [Function: confettiCannon],
-     Promise: [Function: Promise] } }
+```>txt attached=true updated=1619127837184 !error
+SyntaxError: /test.jsx: Unexpected token, expected "," (6:2)
+
+  4 |   // import('https://cdn.skypack.dev/canvas-confetti')).default
+  5 |
+> 6 |   return confetti()
+    |   ^
+  7 |   return "yay"
+  8 | })()
+  9 |
 ```
 
 
