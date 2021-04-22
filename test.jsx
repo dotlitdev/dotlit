@@ -18,7 +18,7 @@ var end = Date.now() + duration;
   // launch a few confetti from the left edge
   confetti({
     particleCount: 7,
-    angle: 180,
+    angle: 90,
     spread: 55,
     origin: { y: 0 }
   });
