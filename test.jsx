@@ -1,8 +1,10 @@
 return (async args => {
 
-  const confetti = (await import("https://cdn.jsdelivr.net/npm/canvas-confetti@0.2.0-beta0/dist/confetti.module.mjs")).default
-  // import('https://cdn.skypack.dev/canvas-confetti')
+  const React = await import('https://cdn.skypack.dev/react')
 
-  confetti()
-  return "yay " + Math.random()
+  const Component = props => {
+    return <div {...props}>React component</div>
+  }
+
+  return <Component id="foo"/>
 })()
