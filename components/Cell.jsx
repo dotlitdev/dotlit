@@ -81,7 +81,7 @@ const Cell = props => {
             result = res
         }
         console.log('Execution result', result)
-        if (meta.react && result.resp && result.respReact.isValidElement(result.resp))
+        if (meta.react && result.resp && React.isValidElement(result.resp))
             setContent(result.resp)
         else {
             const outputMeta = (meta.hasOutput ? meta.output : 'txt').trim() + (" attached=true updated=" + Date.now()) + (error ? ' !error' : '')
