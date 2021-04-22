@@ -4,5 +4,5 @@ return (async args => {
   // import('https://cdn.skypack.dev/canvas-confetti')
 
   confetti()
-  return "yay"
+  return "yay " + Math.random()
 })()
