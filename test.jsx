@@ -18,16 +18,16 @@ var end = Date.now() + duration;
   // launch a few confetti from the left edge
   confetti({
     particleCount: 7,
-    angle: 60,
+    angle: 180,
     spread: 55,
-    origin: { x: 0 }
+    origin: { y: 0 }
   });
   // and launch a few from the right edge
   confetti({
     particleCount: 7,
-    angle: 120,
+    angle: 0,
     spread: 55,
-    origin: { x: 1 }
+    origin: { y: 1 }
   });
 
   // keep going until we are out of time
