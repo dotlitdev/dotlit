@@ -20,7 +20,7 @@ var end = Date.now() + duration;
     particleCount: 7,
     angle: 90,
     spread: 55,
-    origin: { y: 0 }
+    origin: { y: 0.1}
   });
   // and launch a few from the right edge
   false && confetti({
