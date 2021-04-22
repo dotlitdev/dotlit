@@ -29,6 +29,7 @@ const Cell = props => {
     const symbol = posstr(pos.start)
 
     const [src, setSrc] = useState('')
+    const [content, setContent] = useState(props.children)
     const [editing, setEditing] = useState(false)
     const toggleEditing = () => setEditing(!editing)
     
@@ -57,7 +58,7 @@ const Cell = props => {
     
     const output = meta && meta.isOutput
 
-    const content = props.children
+   
 
     const save = ctx => args => {
         console.log("Saving cell", pos, src)
