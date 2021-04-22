@@ -80,9 +80,13 @@ const Cell = props => {
             result = res
         }
         console.log('Execution result', result)
-        const outputMeta = (meta.hasOutput ? meta.output : 'txt').trim() + (" attached=true updated=" + Date.now()) + (error ? ' !error' : '')
-        const output = "\n```>"+ outputMeta +"\n" + result.stdout + "\n```\n"
-        ctx.setSrc(pos, rawSource + output)
+        if (result.resp &&React.isValidElement(result.resp))
+            setContent(result.resp)
+        else {
+            const outputMeta = (meta.hasOutput ? meta.output : 'txt').trim() + (" attached=true updated=" + Date.now()) + (error ? ' !error' : '')
+            const output = "\n```>"+ outputMeta +"\n" + result.stdout + "\n```\n"
+            ctx.setSrc(pos, rawSource + output)
+        }
     }
 
     const getClasses = ctx => [
