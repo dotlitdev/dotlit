@@ -1,6 +1,6 @@
 import React from 'https://cdn.skypack.dev/react'
 
-export const Component = props => {
+const Component = props => {
   return <div></div>
 }
 
