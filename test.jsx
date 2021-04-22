@@ -5,8 +5,8 @@ return (async args => {
   const [c,setC] = u(0)
   const click = e => setC(c+1)
   const Component = props => {
-    return <div {...props} onClick={click}>{ "Click count: " + c}</div>
+    return <div onClick={click}>{ "Click count: " + c}</div>
   }
 
-  return <Component id="foo" />
+  return <Component/>
 })()
