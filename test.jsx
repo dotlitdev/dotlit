@@ -6,5 +6,7 @@ return (async args => {
     return <div {...props}>React component</div>
   }
 
-  return <Component id="foo"/>
+  return <Component 
+           id="foo" 
+           onClick={ e => alert("React 🔥")}/>
 })()
