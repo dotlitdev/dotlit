@@ -8,5 +8,5 @@ return (async args => {
 
   return <Component 
            id="foo" 
-           onClick={ e => alert("React 🔥")}/>
+           onClick={ e => alert("React")}/>
 })()
