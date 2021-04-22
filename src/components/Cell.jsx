@@ -29,7 +29,8 @@ const Cell = props => {
     const symbol = posstr(pos.start)
 
     const [src, setSrc] = useState('')
-    const [content, setContent] = useState(props.children)
+    const [content, setContent] = useState(null)
+    // const content = props.children
     const [editing, setEditing] = useState(false)
     const toggleEditing = () => setEditing(!editing)
     
@@ -106,7 +107,7 @@ const Cell = props => {
                 startpos={posstr(pos.start)}
                 endpos={posstr(pos.end)}
                 className={getClasses(ctx)}>
-                    { editing ? <Editor src={src} update={setSrc}/> : content }
+                    { editing ? <Editor src={src} update={setSrc}/> : (content || props.children) }
                     { isSelected(ctx) && <CellMenu meta={meta} editing={editing} toggleEditing={toggleEditing} save={save(ctx)} exec={exec(ctx)}/>}
             </cell>
         }}
