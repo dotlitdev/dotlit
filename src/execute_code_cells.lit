@@ -386,7 +386,7 @@ return {
 **REPLs** were just custom viewers [[renderer/viewers]]?
 
 ```js !viewer of=esm
-export const viewer = ({node, React}) => {
+export const viewer = ({node, React, execution}) => {
   const rce = React.createElement
   const {useState, useEffect} = React
 
@@ -403,7 +403,7 @@ export const viewer = ({node, React}) => {
      } catch (err) {
         alert(err.message || err.toString())
      }
-  }, [])
+  }, execution ? [execution] : [])
 
   const t = rce('textarea', null, node.data.value)
   return resp || t
