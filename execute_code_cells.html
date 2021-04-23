@@ -47,7 +47,7 @@ return fn()
   })
 }
 return wait(1000)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.9 days ago</span></span></span><output><pre><code class="txt">Thu Apr 22 2021 00:44:01 GMT+0100 (BST)
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.0 days ago</span></span></span><output><pre><code class="txt">Thu Apr 22 2021 00:44:01 GMT+0100 (BST)
 </code></pre></output></codecell></cell></section>
 <section depth="3" class="" startpos="78:1-955" endpos="168:4-3067"><cell startpos="78:1-955" endpos="78:16-970"><h3 id="react-jsx">React <code>jsx</code></h3></cell><cell startpos="80:1-972" endpos="91:4-1199" class="code"><codecell class="lang-jsx local"><span class="meta"><span class="lang">jsx</span><span class="repl">js</span><span class="filename">test.jsx</span></span><pre><code class="jsx">import React from &#x27;https://cdn.skypack.dev/react&#x27;
 
@@ -85,7 +85,7 @@ return &lt;Component/&gt;
   })
   return &quot;yay 🥳&quot;
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">11 hours ago</span></span></span><output><pre><code class="txt">yay 🥳
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">11.2 hours ago</span></span></span><output><pre><code class="txt">yay 🥳
 </code></pre></output></codecell></cell><cell startpos="132:1-1930" endpos="168:4-3067" class="code"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span class="filename">current_viewport</span><span class="output">&gt; svg</span><ul class="directives"><li style="color:black;background-color:#da5323"><span class="directive dir-collapse">collapse</span></li></ul></span><pre><code class="js">const b = document.body
 const ch = b.clientHeight
 const cw = b.clientWidth
@@ -115,7 +115,7 @@ return svg
 return {
    ch,cw,sh,st,c,cp,a 
 }
-</code></pre></codecell><codecell class="lang-svg local output"><span class="meta"><span class="lang">svg</span><span class="updatedAt">Updated <span class="Time relative">22.7 hours ago</span></span></span><div><svg style="max-width: 100%;" width="390" height="390">
+</code></pre></codecell><codecell class="lang-svg local output"><span class="meta"><span class="lang">svg</span><span class="updatedAt">Updated <span class="Time relative">22.8 hours ago</span></span></span><div><svg style="max-width: 100%;" width="390" height="390">
   <rect x="151.05316382548398" width="43.94683617451604" height="390" style="fill:rgb(255,255,255);stroke-width:1;stroke:rgb(0,0,0)" />
   <rect x="151.05316382548398" y="159.67350476740828" width="43.94683617451604" height="74.82230569199653" style="fill:rgb(255,255,255);stroke-width:3;stroke:rgb(255,0,0)" />
 </svg>
@@ -236,9 +236,9 @@ const cp = c / sh
 return {
    ch,sh,st,c,cp
 }
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">23.9 hours ago</span></span></span><output><pre><code class="txt">{ ch: 664, sh: 3475, st: 2811, c: 3143, cp: 0.9044604316546763 }
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">24.0 hours ago</span></span></span><output><pre><code class="txt">{ ch: 664, sh: 3475, st: 2811, c: 3143, cp: 0.9044604316546763 }
 </code></pre></output></codecell></cell></section>
-<section depth="2" class="" startpos="384:1-6549" endpos="406:4-7018"><cell startpos="384:1-6549" endpos="386:57-6620"><h2 id="what-if">What if...</h2><p><strong>REPLs</strong> were just custom viewers <a href="renderer/viewers.html?file=renderer/viewers.lit" title="renderer/viewers" wikilink="true">renderer/viewers</a>?</p></cell><cell startpos="388:1-6622" endpos="406:4-7018" class="code"><codecell class="dir-viewer lang-js local"><span class="meta"><span class="lang">js</span><ul class="directives"><li style="color:black;background-color:#cf5332"><span class="directive dir-viewer">viewer</span></li></ul></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
+<section depth="2" class="" startpos="384:1-6549" endpos="411:4-7089"><cell startpos="384:1-6549" endpos="386:57-6620"><h2 id="what-if">What if...</h2><p><strong>REPLs</strong> were just custom viewers <a href="renderer/viewers.html?file=renderer/viewers.lit" title="renderer/viewers" wikilink="true">renderer/viewers</a>?</p></cell><cell startpos="388:1-6622" endpos="407:4-7051" class="code"><codecell class="dir-viewer lang-js local"><span class="meta"><span class="lang">js</span><ul class="directives"><li style="color:black;background-color:#cf5332"><span class="directive dir-viewer">viewer</span></li></ul></span><pre><code class="js">export const viewer = async ({node, React}) =&gt; {
   const rce = React.createElement
   
   async function load(src) {
@@ -247,7 +247,8 @@ return {
   }
 
   try {
-    load(node.data.value)
+    await load(node.data.value)
+    return &quot;awaited&quot;
   } catch (err) {
     return err.message || err.toString
   }
@@ -255,4 +256,5 @@ return {
   const t = rce(&#x27;textarea&#x27;, null, node.data.value)
   return t
 }
+</code></pre></codecell></cell><cell startpos="409:1-7053" endpos="411:4-7089" class="code"><codecell class="dir-below lang-esm local"><span class="meta"><span class="lang">esm</span><ul class="directives"><li style="color:white;background-color:#5948c3"><span class="directive dir-below">below</span></li></ul></span><pre><code class="esm">console.log(&quot;foo&quot;)
 </code></pre></codecell></cell></section></div></div><div id="backlinks"><h4>Backlinks (3)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li><li><a title="Title TBD (repl/index.lit)" href="/repl/index.html">Title TBD (repl/index.lit)</a></li><li><a title="Statch Pad" href="/scratch_pad.html">Statch Pad</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
