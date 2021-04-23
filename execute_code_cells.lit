@@ -397,7 +397,7 @@ export const viewer = ({node, React, execution}) => {
           const val = `//run: ${run}\n${src}`
           const module = await import(`data:text/javascript;base64,${ btoa(src)}`);
          if (typeof module.returns === 'function') setResp(await module.returns())
-         else setResp(module.returns)
+         else if (module.returns) setResp(module.returns)
       }
 
      try {
