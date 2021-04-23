@@ -388,21 +388,23 @@ return {
 ```js !viewer of=esm
 export const viewer = async ({node, React}) => {
   const rce = React.createElement
+  const state = React.useState
   
+  const[resp, setResp] = state(null)
+
   async function load(src) {
       const module = await import(`data:text/javascript;base64,${ btoa(src)}`);
-    return module
+      setResp(module.returns)
   }
 
   try {
-    await load(node.data.value)
-    return "awaited"
+    load(node.data.value)
   } catch (err) {
     return err.message || err.toString()
   }
 
   const t = rce('textarea', null, node.data.value)
-  return t
+  return resp || t
 }
 ```
 
