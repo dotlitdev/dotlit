@@ -3389,9 +3389,9 @@
                             "offset": 6622
                         },
                         "end": {
-                            "line": 409,
+                            "line": 413,
                             "column": 4,
-                            "offset": 7115
+                            "offset": 7193
                         }
                     },
                     "data": {
@@ -3405,7 +3405,7 @@
                             "type": "code",
                             "lang": "js",
                             "meta": "!viewer of=esm",
-                            "value": "export const viewer = async ({node, React}) => {\n  const rce = React.createElement\n  const state = React.useState\n  \n  const[resp, setResp] = state(null)\n\n  async function load(src) {\n      const module = await import(`data:text/javascript;base64,${ btoa(src)}`);\n      setResp(module.returns)\n  }\n\n  try {\n    load(node.data.value)\n  } catch (err) {\n    return err.message || err.toString()\n  }\n\n  const t = rce('textarea', null, node.data.value)\n  return resp || t\n}",
+                            "value": "export const viewer = ({node, React}) => {\n  const rce = React.createElement\n  const {useState, useEffect} = React\n\n  \n  const[resp, setResp] = useState(null)\n  useEffect(() => {\n       async function load(src) {\n          const module = await import(`data:text/javascript;base64,${ btoa(src)}`);\n         setResp(module.returns)\n      }\n\n     load(node.data.value);\n  }, [])\n\n  try {\n    load(node.data.value)\n  } catch (err) {\n    return err.message || err.toString()\n  }\n\n  const t = rce('textarea', null, node.data.value)\n  return resp || t\n}",
                             "position": {
                                 "start": {
                                     "line": 388,
@@ -3413,9 +3413,9 @@
                                     "offset": 6622
                                 },
                                 "end": {
-                                    "line": 409,
+                                    "line": 413,
                                     "column": 4,
-                                    "offset": 7115
+                                    "offset": 7193
                                 }
                             },
                             "data": {
@@ -3452,14 +3452,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 411,
+                            "line": 415,
                             "column": 1,
-                            "offset": 7117
+                            "offset": 7195
                         },
                         "end": {
-                            "line": 413,
+                            "line": 417,
                             "column": 4,
-                            "offset": 7153
+                            "offset": 7231
                         }
                     },
                     "data": {
@@ -3476,14 +3476,14 @@
                             "value": "console.log(\"foo\")",
                             "position": {
                                 "start": {
-                                    "line": 411,
+                                    "line": 415,
                                     "column": 1,
-                                    "offset": 7117
+                                    "offset": 7195
                                 },
                                 "end": {
-                                    "line": 413,
+                                    "line": 417,
                                     "column": 4,
-                                    "offset": 7153
+                                    "offset": 7231
                                 }
                             },
                             "data": {
@@ -3522,9 +3522,9 @@
                     "offset": 6549
                 },
                 "end": {
-                    "line": 413,
+                    "line": 417,
                     "column": 4,
-                    "offset": 7153
+                    "offset": 7231
                 }
             }
         }
@@ -3536,9 +3536,9 @@
             "offset": 0
         },
         "end": {
-            "line": 431,
+            "line": 435,
             "column": 1,
-            "offset": 7171
+            "offset": 7249
         }
     }
 }

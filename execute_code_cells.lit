@@ -386,16 +386,20 @@ return {
 **REPLs** were just custom viewers [[renderer/viewers]]?
 
 ```js !viewer of=esm
-export const viewer = async ({node, React}) => {
+export const viewer = ({node, React}) => {
   const rce = React.createElement
-  const state = React.useState
-  
-  const[resp, setResp] = state(null)
+  const {useState, useEffect} = React
 
-  async function load(src) {
-      const module = await import(`data:text/javascript;base64,${ btoa(src)}`);
-      setResp(module.returns)
-  }
+  
+  const[resp, setResp] = useState(null)
+  useEffect(() => {
+       async function load(src) {
+          const module = await import(`data:text/javascript;base64,${ btoa(src)}`);
+         setResp(module.returns)
+      }
+
+     load(node.data.value);
+  }, [])
 
   try {
     load(node.data.value)
