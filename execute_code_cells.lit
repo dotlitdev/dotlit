@@ -395,7 +395,8 @@ export const viewer = ({node, React, execution}) => {
   useEffect(async () => {
        async function load(src) {
           const module = await import(`data:text/javascript;base64,${ btoa(src)}`);
-         setResp(module.returns)
+         if (typeof module.returns === 'function') setResp(await module.returns())
+         else setResp(module.returns)
       }
 
      try {
