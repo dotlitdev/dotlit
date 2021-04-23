@@ -386,7 +386,7 @@ return {
 **REPLs** were just custom viewers [[renderer/viewers]]?
 
 ```js !viewer of=esm
-export const viewer = ({node, React}) => {
+export const viewer = async ({node, React}) => {
   const rce = React.createElement
   
   async function load(src) {
@@ -395,7 +395,8 @@ export const viewer = ({node, React}) => {
   }
 
   try {
-    load(node.data.value)
+    await load(node.data.value)
+    return "awaited"
   } catch (err) {
     return err.message || err.toString
   }
@@ -403,6 +404,10 @@ export const viewer = ({node, React}) => {
   const t = rce('textarea', null, node.data.value)
   return t
 }
+```
+
+```esm !below
+console.log("foo")
 ```
 
 
