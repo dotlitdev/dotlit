@@ -392,20 +392,18 @@ export const viewer = ({node, React}) => {
 
   
   const[resp, setResp] = useState(null)
-  useEffect(() => {
+  useEffect(async () => {
        async function load(src) {
           const module = await import(`data:text/javascript;base64,${ btoa(src)}`);
          setResp(module.returns)
       }
 
-     load(node.data.value);
+     try {
+        await load(node.data.value)
+     } catch (err) {
+        alert(err.message || err.toString())
+     }
   }, [])
-
-  try {
-    load(node.data.value)
-  } catch (err) {
-    return err.message || err.toString()
-  }
 
   const t = rce('textarea', null, node.data.value)
   return resp || t

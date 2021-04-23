@@ -3389,7 +3389,7 @@
                             "offset": 6622
                         },
                         "end": {
-                            "line": 413,
+                            "line": 411,
                             "column": 4,
                             "offset": 7193
                         }
@@ -3405,7 +3405,7 @@
                             "type": "code",
                             "lang": "js",
                             "meta": "!viewer of=esm",
-                            "value": "export const viewer = ({node, React}) => {\n  const rce = React.createElement\n  const {useState, useEffect} = React\n\n  \n  const[resp, setResp] = useState(null)\n  useEffect(() => {\n       async function load(src) {\n          const module = await import(`data:text/javascript;base64,${ btoa(src)}`);\n         setResp(module.returns)\n      }\n\n     load(node.data.value);\n  }, [])\n\n  try {\n    load(node.data.value)\n  } catch (err) {\n    return err.message || err.toString()\n  }\n\n  const t = rce('textarea', null, node.data.value)\n  return resp || t\n}",
+                            "value": "export const viewer = ({node, React}) => {\n  const rce = React.createElement\n  const {useState, useEffect} = React\n\n  \n  const[resp, setResp] = useState(null)\n  useEffect(async () => {\n       async function load(src) {\n          const module = await import(`data:text/javascript;base64,${ btoa(src)}`);\n         setResp(module.returns)\n      }\n\n     try {\n        await load(node.data.value)\n     } catch (err) {\n        alert(err.message || err.toString())\n     }\n  }, [])\n\n  const t = rce('textarea', null, node.data.value)\n  return resp || t\n}",
                             "position": {
                                 "start": {
                                     "line": 388,
@@ -3413,7 +3413,7 @@
                                     "offset": 6622
                                 },
                                 "end": {
-                                    "line": 413,
+                                    "line": 411,
                                     "column": 4,
                                     "offset": 7193
                                 }
@@ -3452,12 +3452,12 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 415,
+                            "line": 413,
                             "column": 1,
                             "offset": 7195
                         },
                         "end": {
-                            "line": 417,
+                            "line": 415,
                             "column": 4,
                             "offset": 7243
                         }
@@ -3476,12 +3476,12 @@
                             "value": "export const returns = \"basic\"",
                             "position": {
                                 "start": {
-                                    "line": 415,
+                                    "line": 413,
                                     "column": 1,
                                     "offset": 7195
                                 },
                                 "end": {
-                                    "line": 417,
+                                    "line": 415,
                                     "column": 4,
                                     "offset": 7243
                                 }
@@ -3522,7 +3522,7 @@
                     "offset": 6549
                 },
                 "end": {
-                    "line": 417,
+                    "line": 415,
                     "column": 4,
                     "offset": 7243
                 }
@@ -3536,7 +3536,7 @@
             "offset": 0
         },
         "end": {
-            "line": 435,
+            "line": 433,
             "column": 1,
             "offset": 7261
         }
