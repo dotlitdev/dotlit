@@ -393,11 +393,11 @@ export const viewer = ({node, React, execution}) => {
   const [run, setRun] = useState(0)
   const exec = () => setRun(run+1)
   const exec2 = () => load(node.data.value)
-  useEffect(async () => {
+  useEffect(async (run) => {
        async function load(src) {
           const val = `//run: ${run}\n${src}`
           const module = await import(`data:text/javascript;base64,${ btoa(src)}`);
-         if (typeof module.returns === 'function') setResp(await module.returns())
+         if (typeof module.returns === 'function') setResp(await module.returns(run))
          else if (module.returns) setResp(module.returns)
       }
 
