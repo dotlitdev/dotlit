@@ -1,6 +1,5 @@
 import React from 'react'
 import { ExternalLinkIcon, AnchorIcon } from '../Icons'
-import { stringToHex, pickTextColorBasedOnBgColor } from '../../utils/colors'
 import { getConsoleForNamespace } from '../../utils/console'
 
 const console = getConsoleForNamespace('Link')
