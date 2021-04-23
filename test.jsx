@@ -8,7 +8,7 @@ return (async args => {
     //console.log(React, useState, c)
     const click = e => alert("Clicked 🥳") // setC(c+1)
 
-    return <span onClick={click}>{ "Click count: "}</span>
+    return <button onClick={click}>{ "Click count: "}</button>
   }
 
   return <Clicker/>
