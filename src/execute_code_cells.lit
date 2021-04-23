@@ -394,6 +394,12 @@ export const viewer = ({node, React}) => {
     return module
   }
 
+  try {
+    load(node.data.value)
+  } catch (err) {
+    return err.message || err.toString
+  }
+
   const t = rce('textarea', null, node.data.value)
   return t
 }
