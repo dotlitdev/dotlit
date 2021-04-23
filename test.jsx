@@ -1,6 +1,6 @@
 return (async args => {
 
-  const React = await import('https://cdn.skypack.dev/react')
+  const React = (await import('https://cdn.skypack.dev/react')).default
   const { useState } = React
   
   const Component = props => {
