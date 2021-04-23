@@ -392,7 +392,8 @@ export const viewer = ({node, React, execution}) => {
   const [resp, setResp] = useState(null)
   const [run, setRun] = useState(0)
   const exec = () => setRun(run+1)
-  useEffect(async (run) => {
+  const exec2 = () => load(node.data.value)
+  // useEffect(async (run) => {
        async function load(src) {
           const val = `//run: ${run}\n${src}`
           const module = await import(`data:text/javascript;base64,${ btoa(src)}`);
@@ -401,13 +402,13 @@ export const viewer = ({node, React, execution}) => {
       }
 
      try {
-        await load(node.data.value)
+        load(node.data.value)
      } catch (err) {
         alert(err.message || err.toString())
      }
-  }, [run])
+  //}, [run])
 
-  const btn = rce('button', {onClick: exec}, "Run " + run)
+  const btn = rce('button', {onClick: exec2}, "Run " + run)
   const t = rce('div', null, [btn, resp])
   return t
 }
