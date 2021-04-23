@@ -389,9 +389,9 @@ return {
 export const viewer = ({node, React, execution}) => {
   const rce = React.createElement
   const {useState, useEffect} = React
-
-  
-  const[resp, setResp] = useState(null)
+  const [resp, setResp] = useState(null)
+  const [run, setRun] = useState(0)
+  const exec = () => setRun(run+1)
   useEffect(async () => {
        async function load(src) {
           const module = await import(`data:text/javascript;base64,${ btoa(src)}`);
@@ -403,10 +403,11 @@ export const viewer = ({node, React, execution}) => {
      } catch (err) {
         alert(err.message || err.toString())
      }
-  }, execution ? [execution] : [])
+  }, [run])
 
-  const t = rce('textarea', null, node.data.value)
-  return resp || t
+  const btn = rce('button', {onClick: exec}, "Run")
+  const t = rce('div', null, [btn, resp])
+  return t
 }
 ```
 
