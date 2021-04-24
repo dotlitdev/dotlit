@@ -47,7 +47,7 @@ const lit = {
     parser,
     renderer,
     Repl,
-    fs, lfs, git
+    fs, lfs, git,
     utils: {
         select,
         path,
