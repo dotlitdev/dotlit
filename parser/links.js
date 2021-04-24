@@ -72,7 +72,7 @@ export const decorateLinkNode = (link, root = '', filepath = '') => {
     if (wikilink) {
         [base,frag] = link.url.split("#")
         link.url = base + '?file=' + canonical + (frag ? `#${frag}` : '')
-        link.children = [{type: 'text', value: link.value }]
+        link.children = [{position: link.position, type: 'text', value: link.value }]
     }
 
     link.data.hProperties = {
