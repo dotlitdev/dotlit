@@ -35,7 +35,7 @@ export const CodeMeta = ({meta, toggleFullscreen, toggleLocalRemote, toggleColla
             { meta.attrs && <ul className="attributes">{
                 Object.keys(meta.attrs).map(attr => {
                     return <li key={attr} style={colorStyle(attr)}>
-                         <span className={`attribute attr-${attr}`}>{meta.attrs[attr]}</span>
+                         <span className={`attribute attr-${attr}`}>{`${attr}=${meta.attrs[attr]}`}</span>
                     </li>
                  })
             }</ul>}
