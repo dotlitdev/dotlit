@@ -130,10 +130,10 @@ export const Header = (props) => {
     ctx.selectCell(null)
   }
 
-  const pasteAfterCell = ctx => ev => {
+  const pasteAfterCell = ctx => async ev => {
     console.log('Pasting after cell at pos:', ctx.selectedCell)
     const src = source(ctx.selectedCell,ctx.src)
-    const add = clipboard.readText()
+    const add = await clipboard.readText()
     ctx.setSrc(ctx.selectedCell, `${src}\n${add}`)
     ctx.selectCell(null)
   }
