@@ -116,7 +116,10 @@ function ident (x, i) {
   }
   
   function reduceParts(memo,item, i) {
+    memo.attrs = memo.attrs || {}
+
     if (item.type === ATTR){
+        memo.attrs[item.value.type] = item.value.value
         item = item.value
     }
 
@@ -127,6 +130,9 @@ function ident (x, i) {
              .push(item.value)
         } else {
             memo[collective] = [item.value]
+        }
+        if (item.type === DIREC) {
+            memo.attrs[item.value] = true
         }
     } else {
         memo[item.type] = item.value
