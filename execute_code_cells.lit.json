@@ -3581,6 +3581,74 @@
                             }
                         }
                     ]
+                },
+                {
+                    "type": "cell",
+                    "position": {
+                        "start": {
+                            "line": 436,
+                            "column": 1,
+                            "offset": 7814
+                        },
+                        "end": {
+                            "line": 458,
+                            "column": 4,
+                            "offset": 8488
+                        }
+                    },
+                    "data": {
+                        "hName": "cell",
+                        "hProperties": {
+                            "class": "cell"
+                        }
+                    },
+                    "children": [
+                        {
+                            "type": "code",
+                            "lang": "js",
+                            "meta": "!viewer of=esm2",
+                            "value": "export const viewer = ({node, React}) => {\n  const rce = React.createElement\n  const {useState, useEffect} = React\n  const [resp, setResp] = useState(null)\n  const [run, setRun] = useState(0)\n  \n  const exec = () => {\n    load(node.data.value)\n  }\n\n  async function load(src) {\n    const val = `//run: ${run}\\n${src}`\n    const module = await import(`data:text/javascript;base64,${ btoa(src)}`);\n    if (typeof module.returns === 'function') setResp(await module.returns(run))\n    else if (module.returns) setResp(module.returns)\n  }\n\n  const btn = rce('button', {onClick: exec}, \"Run \" + run)\n  const t = rce('div', null, [btn, resp])\n  return t\n}",
+                            "position": {
+                                "start": {
+                                    "line": 436,
+                                    "column": 1,
+                                    "offset": 7814
+                                },
+                                "end": {
+                                    "line": 458,
+                                    "column": 4,
+                                    "offset": 8488
+                                }
+                            },
+                            "data": {
+                                "meta": {
+                                    "lang": "js",
+                                    "directives": [
+                                        "viewer"
+                                    ],
+                                    "of": "esm2",
+                                    "isOutput": false,
+                                    "hasOutput": false,
+                                    "hasSource": false,
+                                    "raw": "js !viewer of=esm2"
+                                },
+                                "hProperties": {
+                                    "className": "",
+                                    "meta": {
+                                        "lang": "js",
+                                        "directives": [
+                                            "viewer"
+                                        ],
+                                        "of": "esm2",
+                                        "isOutput": false,
+                                        "hasOutput": false,
+                                        "hasSource": false,
+                                        "raw": "js !viewer of=esm2"
+                                    }
+                                }
+                            }
+                        }
+                    ]
                 }
             ],
             "position": {
@@ -3590,9 +3658,9 @@
                     "offset": 6549
                 },
                 "end": {
-                    "line": 434,
+                    "line": 458,
                     "column": 4,
-                    "offset": 7812
+                    "offset": 8488
                 }
             }
         }
@@ -3604,9 +3672,9 @@
             "offset": 0
         },
         "end": {
-            "line": 452,
+            "line": 476,
             "column": 1,
-            "offset": 7830
+            "offset": 8506
         }
     }
 }
