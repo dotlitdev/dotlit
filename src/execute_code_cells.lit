@@ -441,14 +441,15 @@ export const viewer = ({node, React}) => {
   const [run, setRun] = useState(0)
   
   const exec = ev => {
-    ev.stopPropagation()
+    ev && ev.stopPropagation()
     setRun(run+1)
     load(node.data.value)
     return false
   }
 
   useEffect( args => {
-    if(run===0) alert()
+    if(run===0 && node.properties.meta.exec==="on load")
+       exec()
   },[])
 
   async function load(src) {
