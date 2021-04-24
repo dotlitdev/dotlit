@@ -122,6 +122,14 @@ export const Header = (props) => {
     ctx.selectCell(null)
   }
 
+  const cutCell = ctx => ev => {
+    console.log('Cutting cell at pos:', ctx.selectedCell)
+    const src = source(ctx.selectedCell,ctx.src)
+    clipboard.writeText(src)
+    ctx.setSrc(ctx.selectedCell, '')
+    ctx.selectCell(null)
+  }
+
   const clearCodeCell = ctx => ev => {
     console.log('Clearing code cell at pos:', ctx.selectedCell)
     const meta = source(ctx.selectedCell, ctx.src).split('\n')[0]
@@ -162,6 +170,7 @@ export const Header = (props) => {
         <span disabled>Source</span>
         <span disabled={!cellSelected} onClick={copyCell(ctx)}>Cell</span>
       </Menu>
+      <span disabled={!cellSelected} onClick={cutCell(ctx)}>Cut</span>
     </Menu>
     <Menu title="Section" disabled={!cellSelected}>
       <span disabled>Collapse</span>
