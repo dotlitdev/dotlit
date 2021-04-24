@@ -132,7 +132,7 @@ function ident (x, i) {
             memo[collective] = [item.value]
         }
         if (item.type === DIREC) {
-            memo.attrs[item.value] = true
+            // memo.attrs[item.value] = true
         }
     } else {
         memo[item.type] = item.value
