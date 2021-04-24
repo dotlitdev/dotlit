@@ -39,7 +39,7 @@ const createSection = (node,nodes) => {
       }
 }
 
-const cellsFromNodes = nodes => {
+const cellsFromNodes = (nodes, {addSectionDataToFirstCell}={}) => {
 
   const cells = [];
   let newCell = null;
@@ -99,6 +99,7 @@ const cellsFromNodes = nodes => {
 
     } else {
       newCell = createCell(node)
+      if(addSectionDataToFirstCell) newCell.data.section = addSectionDataToFirstCell
       cells.push(newCell);
     }
   });
@@ -210,7 +211,7 @@ export const sections = (...args) => (tree) => {
       }
       headings++
       node = section 
-      node.children = cellsFromNodes(node.children)
+      node.children = cellsFromNodes(node.children, {addSectionDataToFirstCell: { id: section.data.id, position: section.position}})
     } else {
       console.log('[Sections II] WARN: Header parent not root', node.data.id)
     }
