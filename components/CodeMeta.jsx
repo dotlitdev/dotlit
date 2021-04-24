@@ -27,10 +27,17 @@ export const CodeMeta = ({meta, toggleFullscreen, toggleLocalRemote, toggleColla
             {meta.directives && <ul className="directives">{
                 meta.directives.map( (dir, i) => {
                     const onClick = dir === 'inline' ? toggleFullscreen : null
-                    return <li key={dir+1} onClick={onClick} style={colorStyle(dir)}>
+                    return <li key={dir} onClick={onClick} style={colorStyle(dir)}>
                        <span className={`directive dir-${dir}`}>{dir}</span>
                     </li>
                 })
+            }</ul>}
+            { meta.attrs && <ul className="attributes">{
+                Object.keys(meta.attrs).map(attr => {
+                    return <li key={attr} style={colorStyle(attr)}>
+                         <span className={`attribute attr-${attr}`}>{meta.attrs[attr]}</span>
+                    </li>
+                 })
             }</ul>}
             { meta.updated && <span className="updatedAt">Updated <Time ms={parseInt(meta.updated)} /></span> }
         </span>
