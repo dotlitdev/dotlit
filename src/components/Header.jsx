@@ -130,6 +130,14 @@ export const Header = (props) => {
     ctx.selectCell(null)
   }
 
+  const pasteAfterCell = ctx => ev => {
+    console.log('Pasting after cell at pos:', ctx.selectedCell)
+    const src = source(ctx.selectedCell,ctx.src)
+    const add = clipboard.readText()
+    ctx.setSrc(ctx.selectedCell, `${src}\n${add}`)
+    ctx.selectCell(null)
+  }
+
   const clearCodeCell = ctx => ev => {
     console.log('Clearing code cell at pos:', ctx.selectedCell)
     const meta = source(ctx.selectedCell, ctx.src).split('\n')[0]
@@ -171,6 +179,7 @@ export const Header = (props) => {
         <span disabled={!cellSelected} onClick={copyCell(ctx)}>Cell</span>
       </Menu>
       <span disabled={!cellSelected} onClick={cutCell(ctx)}>Cut</span>
+      <span disabled={!cellSelected} onClick={pasteAfterCell(ctx)}>Paste After</span>
     </Menu>
     <Menu title="Section" disabled={!cellSelected}>
       <span disabled>Collapse</span>
