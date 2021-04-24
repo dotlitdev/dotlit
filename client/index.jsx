@@ -4,6 +4,7 @@ const vfile = require('vfile')
 const path = require('path')
 const qs = require('querystring-es3')
 const FS = require('@isomorphic-git/lightning-fs')
+const git = require('isomorphic-git')
 const select = require('unist-util-select')
 
 const parser = require('../parser')
@@ -27,8 +28,8 @@ const litroot = getMeta('root', '')
 const litbase = getMeta('base', '/')
 const baseUrl =`${location.protocol}//${location.host}${litroot ? path.join(path.dirname(location.pathname), litroot) : litbase}`
 
-const lfs = (new FS(baseUrl)).promises 
-const fs = extendFs(lfs, litroot, localStorage.getItem("ghToken") && {
+const lfs = new FS(baseUrl)
+const fs = extendFs(lfs.promises, litroot, localStorage.getItem("ghToken") && {
     username: "dotlitdev",
     repository: "dotlit",
     prefix: "src",
@@ -46,7 +47,7 @@ const lit = {
     parser,
     renderer,
     Repl,
-    fs,
+    fs, lfs, git,
     utils: {
         select,
         path,
