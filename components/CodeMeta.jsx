@@ -34,8 +34,11 @@ export const CodeMeta = ({meta, toggleFullscreen, toggleLocalRemote, toggleColla
             }</ul>}
             { meta.attrs && <ul className="attributes">{
                 Object.keys(meta.attrs).map(attr => {
+                    const val = meta.attrs[attr]
+                    // ignored attributes for display
+                    if(val===true || val==="true" || attr==="updated") return null
                     return <li key={attr} style={colorStyle(attr)}>
-                         <span className={`attribute attr-${attr}`}>{`${attr}=${meta.attrs[attr]}`}</span>
+                         <span className={`attribute attr-${attr}`}>{`${attr}=${val}`}</span>
                     </li>
                  })
             }</ul>}
