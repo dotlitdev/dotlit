@@ -19,6 +19,10 @@ const dir = lit.location.root
 const git = lit.git
 const FILE = 0, WORKDIR = 2, STAGE = 3
 
+const unstaged = row => {
+  return row[WORKDIR] !== row[STAGE]
+}
+
 // initially, because it's on every change 
 // a commit will mostly be for a single
 // file at a time the immediate exception 
@@ -29,7 +33,7 @@ const onSave = async (filename) => {
   // get/list unstaged files
   const status = await git.statusMatrix({ fs,dir})
   const files = status
-                .filter(row => row[WORKDIR] !== row[STAGE])
+                .filter( unstaged )
                 .map(row => row[FILE])
 
   // stage everything
