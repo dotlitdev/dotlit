@@ -33,6 +33,7 @@ const baseUrl =`${location.protocol}//${location.host}${litbase}`
 
 const lfs = new FS(baseUrl, {
     wipe: query.__lfs_wipe==="true" ? confirm("Are you sure you want to wipe the local file system: " + baseUrl) : undefined,
+    url: baseUrl,
 })
 const fs = extendFs(lfs.promises, litroot, localStorage.getItem("ghToken") && {
     username: "dotlitdev",
