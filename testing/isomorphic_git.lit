@@ -17,20 +17,22 @@ const dir = lit.location.root
 const git = lit.git
 
 const onSave = async () => {
-  
   // stage everything
   await git.add({fs, dir, filepath: '.'})
 
   // commit
   const now = (new Date()).toISOString()
-  await git.commit({fs, dir,
+  const sha = await git.commit({fs, dir,
     message: `Auto commit (${now})`,
     author: {
       name: 'dotlit',
       email: 'bit@dotlit.org'
     }
   })
+  return "Committed " + sha.slice(0,6)
 }
+
+return onSave()
 ```
 
 ## Investigating API
