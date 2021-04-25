@@ -17,6 +17,7 @@ Thereafter that may remain the default but ideally an ergonomic version of the r
 const fs = lit.lfs 
 const dir = lit.location.root
 const git = lit.git
+const FILE = 0, WORKDIR = 2, STAGE = 3
 
 // initially, because it's on every change 
 // a commit will mostly be for a single
@@ -24,6 +25,12 @@ const git = lit.git
 // being when a file with output files 
 // is edited (Still TBD)
 const onSave = async (filename) => {
+
+  // get/list unstaged files
+  const files = (await git.statusMatrix({ fs,dir}))
+  .filter(row => row[WORKDIR] !== row[STAGE])
+  .map(row => row[FILE])
+
   // stage everything
   await git.add({fs, dir, filepath: '.'})
 
@@ -32,7 +39,8 @@ const onSave = async (filename) => {
   const sha = await git.commit({fs, dir,
     message: `Auto commit ${filename}
 at: (${now})
-includes the following tk files...`,
+includes the following ${files.length} files:
+${files.map(f=> "- " + f)}`,
     author: {
       name: 'dotlit',
       email: 'bit@dotlit.org'
