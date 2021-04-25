@@ -115,7 +115,7 @@ console.log(`lit:`, lit)
     const file = await vfile({path: filepath, contents})
     file.data.times = times
     
-    const processedFile = await renderer.processor(fs).process(file)
+    const processedFile = await renderer.processor({fs,litroot}).process(file)
     console.log("Processed client", processedFile)
     window.lit.ast = processedFile.data.ast
     window.lit.file = processedFile
