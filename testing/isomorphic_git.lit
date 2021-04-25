@@ -27,9 +27,10 @@ const FILE = 0, WORKDIR = 2, STAGE = 3
 const onSave = async (filename) => {
 
   // get/list unstaged files
-  const files = (await git.statusMatrix({ fs,dir}))
-  .filter(row => row[WORKDIR] !== row[STAGE])
-  .map(row => row[FILE])
+  const status = await git.statusMatrix({ fs,dir})
+  const files = status
+                .filter(row => row[WORKDIR] !== row[STAGE])
+                .map(row => row[FILE])
 
   // stage everything
   await git.add({fs, dir, filepath: '.'})

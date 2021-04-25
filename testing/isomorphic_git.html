@@ -16,7 +16,7 @@
 </ul>
 </li>
 </ul></cell></section></section>
-<section depth="2" class="" startpos="8:1-205" endpos="56:4-1450"><cell startpos="8:1-205" endpos="12:131-435"><h2 id="initial-plan">Initial plan</h2><p>The initial plan is to just auto commit on all actions, enabling &quot;infinite&quot; undo.</p><p>Thereafter that may remain the default but ideally an ergonomic version of the raw git api can be exposed for more advanced users.</p></cell><section depth="3" class="" startpos="14:1-437" endpos="56:4-1450"><cell startpos="14:1-437" endpos="14:9-445"><h3 id="mock">Mock</h3></cell><cell startpos="16:1-447" endpos="56:4-1450" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">const fs = lit.lfs 
+<section depth="2" class="" startpos="8:1-205" endpos="57:4-1500"><cell startpos="8:1-205" endpos="12:131-435"><h2 id="initial-plan">Initial plan</h2><p>The initial plan is to just auto commit on all actions, enabling &quot;infinite&quot; undo.</p><p>Thereafter that may remain the default but ideally an ergonomic version of the raw git api can be exposed for more advanced users.</p></cell><section depth="3" class="" startpos="14:1-437" endpos="57:4-1500"><cell startpos="14:1-437" endpos="14:9-445"><h3 id="mock">Mock</h3></cell><cell startpos="16:1-447" endpos="57:4-1500" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">const fs = lit.lfs 
 const dir = lit.location.root
 const git = lit.git
 const FILE = 0, WORKDIR = 2, STAGE = 3
@@ -29,9 +29,10 @@ const FILE = 0, WORKDIR = 2, STAGE = 3
 const onSave = async (filename) =&gt; {
 
   // get/list unstaged files
-  const files = (await git.statusMatrix({ fs,dir}))
-  .filter(row =&gt; row[WORKDIR] !== row[STAGE])
-  .map(row =&gt; row[FILE])
+  const status = await git.statusMatrix({ fs,dir})
+  const files = status
+                .filter(row =&gt; row[WORKDIR] !== row[STAGE])
+                .map(row =&gt; row[FILE])
 
   // stage everything
   await git.add({fs, dir, filepath: &#x27;.&#x27;})
@@ -52,22 +53,22 @@ ${files.map(f=&gt; &quot;- &quot; + f)}`,
 }
 
 return onSave(lit.location.src)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">37 minutes ago</span></span></span><output><pre><code class="txt">Committed ccc6f8
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">39 minutes ago</span></span></span><output><pre><code class="txt">Committed ccc6f8
 </code></pre></output></codecell></cell></section></section>
-<section depth="2" class="" startpos="58:1-1452" endpos="145:4-3457"><cell startpos="58:1-1452" endpos="58:21-1472"><h2 id="investigating-api">Investigating API</h2></cell><cell startpos="61:1-1475" endpos="70:4-1641" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return lit.fs
+<section depth="2" class="" startpos="59:1-1502" endpos="146:4-3507"><cell startpos="59:1-1502" endpos="59:21-1522"><h2 id="investigating-api">Investigating API</h2></cell><cell startpos="62:1-1525" endpos="71:4-1691" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return lit.fs
        .readFile(&#x27;/.git/HEAD&#x27;, {
           encoding: &#x27;utf8&#x27;
         })
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">51 minutes ago</span></span></span><output><pre><code class="txt">ref: refs/heads/master
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">53 minutes ago</span></span></span><output><pre><code class="txt">ref: refs/heads/master
 
-</code></pre></output></codecell></cell><cell startpos="71:1-1642" endpos="81:4-1816" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return (async () =&gt; {
+</code></pre></output></codecell></cell><cell startpos="72:1-1692" endpos="82:4-1866" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return (async () =&gt; {
   return await lit.git.init({
     fs: lit.lfs, 
     dir: lit.location.root
   })
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">9.7 hours ago</span></span></span><output><pre><code class="txt">undefined
-</code></pre></output></codecell></cell><section depth="3" class="" startpos="82:1-1817" endpos="145:4-3457"><cell startpos="82:1-1817" endpos="82:11-1827"><h3 id="status">Status</h3></cell><cell startpos="84:1-1829" endpos="95:4-2092" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return (async () =&gt; {
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">9.8 hours ago</span></span></span><output><pre><code class="txt">undefined
+</code></pre></output></codecell></cell><section depth="3" class="" startpos="83:1-1867" endpos="146:4-3507"><cell startpos="83:1-1867" endpos="83:11-1877"><h3 id="status">Status</h3></cell><cell startpos="85:1-1879" endpos="96:4-2142" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return (async () =&gt; {
   return lit.location.src + &quot; : &quot; + await lit.git.status({
     fs: lit.lfs, 
     dir: lit.location.root, 
@@ -75,7 +76,7 @@ return onSave(lit.location.src)
   })
 })()
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">11 hours ago</span></span></span><output><pre><code class="txt">testing/isomorphic_git.lit : *added
-</code></pre></output></codecell></cell><cell startpos="96:1-2093" endpos="111:4-2504" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return (async () =&gt; {
+</code></pre></output></codecell></cell><cell startpos="97:1-2143" endpos="112:4-2554" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return (async () =&gt; {
   return await lit.git.statusMatrix({
     fs: lit.lfs, 
     dir: lit.location.root, 
@@ -87,19 +88,19 @@ return onSave(lit.location.src)
   [ &#x27;testing/lightningfs.lit&#x27;, 1, 1, 1 ],
   [ &#x27;testing/local_remote_files.lit&#x27;, 1, 1, 1 ],
   [ &#x27;wiki-links.lit&#x27;, 1, 1, 1 ] ]
-</code></pre></output></codecell></cell><cell startpos="112:1-2505" endpos="119:4-2775" class="code output"><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">1.8 hours ago</span></span></span><output><pre><code class="txt">[ [ &#x27;index.lit&#x27;, 1, 2, 2 ],
+</code></pre></output></codecell></cell><cell startpos="113:1-2555" endpos="120:4-2825" class="code output"><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">1.8 hours ago</span></span></span><output><pre><code class="txt">[ [ &#x27;index.lit&#x27;, 1, 2, 2 ],
   [ &#x27;renderer/viewers.lit&#x27;, 1, 1, 1 ],
   [ &#x27;testing/isomorphic_git.lit&#x27;, 1, 2, 3 ],
   [ &#x27;testing/lightningfs.lit&#x27;, 1, 2, 2 ],
   [ &#x27;testing/local_remote_files.lit&#x27;, 0, 2, 2 ],
   [ &#x27;wiki-links.lit&#x27;, 0, 2, 2 ] ]
-</code></pre></output></codecell></cell><cell startpos="120:1-2776" endpos="127:4-3046" class="code output"><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">1.9 hours ago</span></span></span><output><pre><code class="txt">[ [ &#x27;index.lit&#x27;, 1, 2, 1 ],
+</code></pre></output></codecell></cell><cell startpos="121:1-2826" endpos="128:4-3096" class="code output"><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">1.9 hours ago</span></span></span><output><pre><code class="txt">[ [ &#x27;index.lit&#x27;, 1, 2, 1 ],
   [ &#x27;renderer/viewers.lit&#x27;, 1, 1, 1 ],
   [ &#x27;testing/isomorphic_git.lit&#x27;, 1, 2, 1 ],
   [ &#x27;testing/lightningfs.lit&#x27;, 1, 2, 1 ],
   [ &#x27;testing/local_remote_files.lit&#x27;, 0, 2, 0 ],
   [ &#x27;wiki-links.lit&#x27;, 0, 2, 0 ] ]
-</code></pre></output></codecell></cell><cell startpos="129:1-3048" endpos="145:4-3457" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">const fs = lit.lfs 
+</code></pre></output></codecell></cell><cell startpos="130:1-3098" endpos="146:4-3507" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">const fs = lit.lfs 
 const dir = lit.location.root
 const git = lit.git
 const FILE = 0, WORKDIR = 2, STAGE = 3
@@ -111,9 +112,9 @@ return (async () =&gt; {
   .map(row =&gt; row[FILE])
   return filenames
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">24 minutes ago</span></span></span><output><pre><code class="txt">[ &#x27;testing/isomorphic_git.lit&#x27; ]
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">26 minutes ago</span></span></span><output><pre><code class="txt">[ &#x27;testing/isomorphic_git.lit&#x27; ]
 </code></pre></output></codecell></cell></section></section>
-<section depth="3" class="" startpos="146:1-3458" endpos="163:4-3680"><cell startpos="146:1-3458" endpos="146:8-3465"><h3 id="add">Add</h3></cell><cell startpos="148:1-3467" endpos="163:4-3680" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">
+<section depth="3" class="" startpos="147:1-3508" endpos="164:4-3730"><cell startpos="147:1-3508" endpos="147:8-3515"><h3 id="add">Add</h3></cell><cell startpos="149:1-3517" endpos="164:4-3730" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">
 const fs = lit.lfs
 const dir = lit.location.root
 
@@ -126,7 +127,7 @@ return (async ()=&gt; {
 })()
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">1.8 hours ago</span></span></span><output><pre><code class="txt">undefined
 </code></pre></output></codecell></cell></section>
-<section depth="3" class="" startpos="167:1-3684" endpos="193:4-4087"><cell startpos="167:1-3684" endpos="167:11-3694"><h3 id="commit">Commit</h3></cell><cell startpos="169:1-3696" endpos="193:4-4087" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">
+<section depth="3" class="" startpos="168:1-3734" endpos="194:4-4137"><cell startpos="168:1-3734" endpos="168:11-3744"><h3 id="commit">Commit</h3></cell><cell startpos="170:1-3746" endpos="194:4-4137" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">
 const fs = lit.lfs
 const dir = lit.location.root
 
@@ -148,7 +149,7 @@ console.log(sha)
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">1 hour ago</span></span></span><output><pre><code class="txt">2c1dcf840173cd7c36aa1e5b96bc0922006de579
 undefined
 </code></pre></output></codecell></cell></section>
-<section depth="3" class="" startpos="195:1-4089" endpos="236:4-4870"><cell startpos="195:1-4089" endpos="195:8-4096"><h3 id="log">Log</h3></cell><cell startpos="197:1-4098" endpos="236:4-4870" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; md !inline</span><ul class="attributes"></ul></span><pre><code class="js">return (async ()=&gt; {
+<section depth="3" class="" startpos="196:1-4139" endpos="237:4-4920"><cell startpos="196:1-4139" endpos="196:8-4146"><h3 id="log">Log</h3></cell><cell startpos="198:1-4148" endpos="237:4-4920" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; md !inline</span><ul class="attributes"></ul></span><pre><code class="js">return (async ()=&gt; {
   let commits = await lit.git.log({
      fs: lit.lfs, 
      dir: lit.location.root, 
@@ -157,7 +158,7 @@ undefined
   return &quot;**Log**\n&quot; + commits.map( x =&gt; `1. **\`${x.oid.slice(0,6)}\`**
       ${x.commit.message}`).join(&#x27;\n&#x27;)
 })()
-</code></pre></codecell><codecell class="dir-inline lang-md local output"><span class="meta"><span class="lang">md</span><ul class="directives"><li style="color:black;background-color:#b96da2"><span class="directive dir-inline">inline</span></li></ul><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">30 minutes ago</span></span></span><div class="md-block dir-inline">
+</code></pre></codecell><codecell class="dir-inline lang-md local output"><span class="meta"><span class="lang">md</span><ul class="directives"><li style="color:black;background-color:#b96da2"><span class="directive dir-inline">inline</span></li></ul><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">32 minutes ago</span></span></span><div class="md-block dir-inline">
 <p><strong>Log</strong></p>
 <ol>
 <li><strong><code>ccc6f8</code></strong>
@@ -196,7 +197,7 @@ Commit All!!!</p>
 </li>
 </ol>
 </div></codecell></cell></section>
-<section depth="3" class="" startpos="238:1-4872" endpos="291:4-6138"><cell startpos="238:1-4872" endpos="238:9-4880"><h3 id="diff">Diff</h3></cell><cell startpos="240:1-4882" endpos="291:4-6138" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return (async function getFileStateChanges() {
+<section depth="3" class="" startpos="239:1-4922" endpos="292:4-6188"><cell startpos="239:1-4922" endpos="239:9-4930"><h3 id="diff">Diff</h3></cell><cell startpos="241:1-4932" endpos="292:4-6188" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return (async function getFileStateChanges() {
   const commitHash1 = &#x27;0c40ed746ebe53cf744d78191d0bbc2941537280&#x27;
   const commitHash2 = &#x27;b081f51cd27f54cf58915512006838d4eb67716b&#x27;
   return lit.git.walk({
@@ -243,5 +244,5 @@ Commit All!!!</p>
     },
   })
 })()
-</code></pre></codecell><codecell class="dir-error lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="directives"><li style="color:white;background-color:#5c4d28"><span class="directive dir-error">error</span></li></ul><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">1.3 hours ago</span></span></span><output><pre><code class="txt">undefined
+</code></pre></codecell><codecell class="dir-error lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="directives"><li style="color:white;background-color:#5c4d28"><span class="directive dir-error">error</span></li></ul><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">1.4 hours ago</span></span></span><output><pre><code class="txt">undefined
 </code></pre></output></codecell></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
