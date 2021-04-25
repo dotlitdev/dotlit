@@ -24,8 +24,8 @@ import { getConsoleForNamespace } from '../utils/console'
 
 const console = getConsoleForNamespace('codeblocks')
 
-export function processor(fs) {
-    return parserProcessor()
+export function processor({fs,litroot} = {}) {
+    return parserProcessor({fs,litroot})
    
     // hoist ast to data
     .use( (...args) => {
