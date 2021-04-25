@@ -29,10 +29,10 @@ export const wikiLinkOptions = files => ({
 //     hrefTemplate: (permalink) => `${permalink}?file=${permalink}`
 // })
 
-const linkToUrl = (link) => {
+const linkToUrl = (link, root) => {
     if (link.type === 'wikiLink') {
         const [base,frag] = link.data.permalink.split("#")
-        return `${base}.lit${frag ? ('#' + frag) : ''}`
+        return `${root}${base}.lit${frag ? ('#' + frag) : ''}`
     } else {
         return link.url
     }
@@ -41,7 +41,7 @@ const linkToUrl = (link) => {
 export const decorateLinkNode = (link, root = '', filepath = '') => {
     // console.log(link)
     const wikilink = link.type === 'wikiLink'
-    const url = linkToUrl(link)
+    const url = linkToUrl(link, root)
 
     // console.log(`[Links] resolving (${link.type}) [${url}] '${root}', "${filepath}"`)
     const isAbsolute = /(https?\:)?\/\//.test(url)
