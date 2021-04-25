@@ -43,7 +43,7 @@ const baseProcessor = ({litroot, files} = {}) => {
 }
 
 export const processor = ({files, fs, litroot} = {files: []}) => {
-    console.log('[Parser]', options)
+    console.log('[Parser]', {files, fs,litroot})
     return baseProcessor({files, litroot})
     // remark-litmd (rehype compatable)
 
