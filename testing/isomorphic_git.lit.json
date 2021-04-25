@@ -41,7 +41,7 @@
                                 "end": {
                                     "line": 171,
                                     "column": 4,
-                                    "offset": 3764
+                                    "offset": 3809
                                 }
                             }
                         }
@@ -872,7 +872,7 @@
                             "type": "code",
                             "lang": "js",
                             "meta": null,
-                            "value": "\nconst fs = lit.lfs\nconat dir = lit.location.root\nreturn (async ()=> {\nawait lit.git.add({fs,dir, filepath: '.'})\nlet sha = await lit.git.commit({\n  fs,\n  dir,\n  message: 'Commit All!!!',\n  author: {\n    name: 'Mr. Test',\n    email: 'mrtest@example.com'\n  }\n})\n\nconsole.log(sha)\n\n})()",
+                            "value": "\nconst fs = lit.lfs\nconst dir = lit.location.root\nreturn (async ()=> {\nawait lit.git.add({fs,dir, filepath: '.'})\nlet sha = await lit.git.commit({\n  fs,\n  dir,\n  message: 'Commit All!!!',\n  author: {\n    name: 'Mr. Test',\n    email: 'mrtest@example.com'\n  }\n})\n\nconsole.log(sha)\n\n})()",
                             "position": {
                                 "start": {
                                     "line": 69,
@@ -1109,7 +1109,7 @@
                                         "end": {
                                             "line": 171,
                                             "column": 4,
-                                            "offset": 3764
+                                            "offset": 3809
                                         }
                                     }
                                 }
@@ -1169,7 +1169,7 @@
                                 "end": {
                                     "line": 171,
                                     "column": 4,
-                                    "offset": 3764
+                                    "offset": 3809
                                 }
                             },
                             "data": {
@@ -1183,7 +1183,7 @@
                                     "type": "code",
                                     "lang": "js",
                                     "meta": null,
-                                    "value": "return (async function getFileStateChanges() {\n  const commitHash1\n  const commitHash2\n  return lit.git.walk({\n    lit.lfs,\n    lit.location.root,\n    trees: [git.TREE({ ref: commitHash1 }), git.TREE({ ref: commitHash2 })],\n    map: async function(filepath, [A, B]) {\n      // ignore directories\n      if (filepath === '.') {\n        return\n      }\n      if ((await A.type()) === 'tree' || (await B.type()) === 'tree') {\n        return\n      }\n\n      // generate ids\n      const Aoid = await A.oid()\n      const Boid = await B.oid()\n\n      // determine modification type\n      let type = 'equal'\n      if (Aoid !== Boid) {\n        type = 'modify'\n      }\n      if (Aoid === undefined) {\n        type = 'add'\n      }\n      if (Boid === undefined) {\n        type = 'remove'\n      }\n      if (Aoid === undefined && Boid === undefined) {\n        console.log('Something weird happened:')\n        console.log(A)\n        console.log(B)\n      }\n\n      return {\n        path: `/${filepath}`,\n        type: type,\n      }\n    },\n  })\n})()",
+                                    "value": "return (async function getFileStateChanges() {\n  const commitHash1 = '26a1551feb2af962bde2beac1d7a6d86fe10f138'\n  const commitHash2\n  return lit.git.walk({\n    lit.lfs,\n    lit.location.root,\n    trees: [git.TREE({ ref: commitHash1 }), git.TREE({ ref: commitHash2 })],\n    map: async function(filepath, [A, B]) {\n      // ignore directories\n      if (filepath === '.') {\n        return\n      }\n      if ((await A.type()) === 'tree' || (await B.type()) === 'tree') {\n        return\n      }\n\n      // generate ids\n      const Aoid = await A.oid()\n      const Boid = await B.oid()\n\n      // determine modification type\n      let type = 'equal'\n      if (Aoid !== Boid) {\n        type = 'modify'\n      }\n      if (Aoid === undefined) {\n        type = 'add'\n      }\n      if (Boid === undefined) {\n        type = 'remove'\n      }\n      if (Aoid === undefined && Boid === undefined) {\n        console.log('Something weird happened:')\n        console.log(A)\n        console.log(B)\n      }\n\n      return {\n        path: `/${filepath}`,\n        type: type,\n      }\n    },\n  })\n})()",
                                     "position": {
                                         "start": {
                                             "line": 126,
@@ -1193,7 +1193,7 @@
                                         "end": {
                                             "line": 171,
                                             "column": 4,
-                                            "offset": 3764
+                                            "offset": 3809
                                         }
                                     },
                                     "data": {
@@ -1230,7 +1230,7 @@
                         "end": {
                             "line": 171,
                             "column": 4,
-                            "offset": 3764
+                            "offset": 3809
                         }
                     }
                 }
@@ -1244,7 +1244,7 @@
                 "end": {
                     "line": 171,
                     "column": 4,
-                    "offset": 3764
+                    "offset": 3809
                 }
             }
         }
@@ -1258,7 +1258,7 @@
         "end": {
             "line": 171,
             "column": 4,
-            "offset": 3764
+            "offset": 3809
         }
     }
 }
