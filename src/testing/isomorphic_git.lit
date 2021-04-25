@@ -39,13 +39,15 @@ const onSave = async (filename) => {
   // stage everything
   await git.add({fs, dir, filepath: '.'})
 
+  const message = `Auto commit ${filename}
+at: (${now})
+includes the following ${files.length} files:
+${files.map(f=> "- " + f)}`
+
   // commit
   const now = (new Date()).toISOString()
   const sha = await git.commit({fs, dir,
-    message: `Auto commit ${filename}
-at: (${now})
-includes the following ${files.length} files:
-${files.map(f=> "- " + f)}`,
+    message,
     author: {
       name: 'dotlit',
       email: 'bit@dotlit.org'
