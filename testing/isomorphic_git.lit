@@ -23,7 +23,7 @@ return (async () => {
   })
 })()
 ```
-```>txt attached=true updated=1619352764059
+```>txt attached=true updated=1619357634909
 undefined
 ```
 ```js
@@ -46,7 +46,7 @@ return (async () => {
   })
 })()
 ```
-```>txt attached=true updated=1619357556381
+```>txt attached=true updated=1619357639792
 [ [ 'index.lit', 0, 2, 0 ],
   [ 'renderer/viewers.lit', 0, 2, 0 ],
   [ 'testing/isomorphic_git.lit', 0, 2, 0 ],
@@ -115,4 +115,53 @@ return (async ()=> {
         timezoneOffset: -60 } },
   payload: 'tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904\nauthor Mr. Test <mrtest@example.com> 1619304232 +0100\ncommitter Mr. Test <mrtest@example.com> 1619304232 +0100\n\nCommit!!!\n' }
 undefined
+```
+
+## Diff
+
+```js
+return (async function getFileStateChanges() {
+  const commitHash1
+  const commitHash2
+  return lit.git.walk({
+    lit.lfs,
+    lit.location.root,
+    trees: [git.TREE({ ref: commitHash1 }), git.TREE({ ref: commitHash2 })],
+    map: async function(filepath, [A, B]) {
+      // ignore directories
+      if (filepath === '.') {
+        return
+      }
+      if ((await A.type()) === 'tree' || (await B.type()) === 'tree') {
+        return
+      }
+
+      // generate ids
+      const Aoid = await A.oid()
+      const Boid = await B.oid()
+
+      // determine modification type
+      let type = 'equal'
+      if (Aoid !== Boid) {
+        type = 'modify'
+      }
+      if (Aoid === undefined) {
+        type = 'add'
+      }
+      if (Boid === undefined) {
+        type = 'remove'
+      }
+      if (Aoid === undefined && Boid === undefined) {
+        console.log('Something weird happened:')
+        console.log(A)
+        console.log(B)
+      }
+
+      return {
+        path: `/${filepath}`,
+        type: type,
+      }
+    },
+  })
+})()
 ```
