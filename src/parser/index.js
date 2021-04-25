@@ -29,13 +29,13 @@ const wait = async (ms) => {
   });
 }
 
-const baseProcessor = ({litroot} = {}) => {
+const baseProcessor = ({litroot, files} = {}) => {
     return unified()
     // remark
     .use(markdown, {})
     .use(gfm)
     .use(frontmatter, {})
-    .use(wikiLinkPlugin, wikiLinkOptions(options.files))
+    .use(wikiLinkPlugin, wikiLinkOptions(files))
     .use(slug)
     .use(toc, {})
     .use(headingIds)
