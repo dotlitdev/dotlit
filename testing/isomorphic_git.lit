@@ -29,6 +29,7 @@ const unstaged = row => {
 // being when a file with output files 
 // is edited (Still TBD)
 const onSave = async (filename) => {
+  const now = (new Date()).toISOString()
 
   // get/list unstaged files
   const status = await git.statusMatrix({ fs,dir})
@@ -39,6 +40,7 @@ const onSave = async (filename) => {
   // stage everything
   await git.add({fs, dir, filepath: '.'})
 
+  // message 
   const message = `Auto commit ${filename}
 
 at: (${now})
@@ -46,7 +48,6 @@ includes the following ${files.length} files:
 ${files.map(f=> "- " + f)}`
 
   // commit
-  const now = (new Date()).toISOString()
   const sha = await git.commit({fs, dir,
     message,
     author: {
