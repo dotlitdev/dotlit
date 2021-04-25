@@ -4,7 +4,7 @@ import { getConsoleForNamespace } from '../utils/console'
 
 const console = getConsoleForNamespace('links')
 
-export const resolveLinks = (options = { root: '', filepath: ''}) => (...args) => tree => {
+export const resolveLinks = (options = { litroot: '', filepath: ''}) => (...args) => tree => {
     console.log('[Links] Init', options)
     return visit(tree, isLink, transform(options))
 }
@@ -12,7 +12,7 @@ export const resolveLinks = (options = { root: '', filepath: ''}) => (...args) =
 const isLink = (node) => ['link', 'wikiLink'].indexOf(node.type) >= 0
 
 const transform = options => (node, index, parent) => {
-    return decorateLinkNode(node, options.root, options.filepath)
+    return decorateLinkNode(node, options.litroot, options.filepath)
 }
 
 export const wikiLinkOptions = files => ({

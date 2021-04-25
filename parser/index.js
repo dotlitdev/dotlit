@@ -29,22 +29,22 @@ const wait = async (ms) => {
   });
 }
 
-const baseProcessor = (options = {}) => {
+const baseProcessor = ({litroot, files} = {}) => {
     return unified()
     // remark
     .use(markdown, {})
     .use(gfm)
     .use(frontmatter, {})
-    .use(wikiLinkPlugin, wikiLinkOptions(options.files))
+    .use(wikiLinkPlugin, wikiLinkOptions(files))
     .use(slug)
     .use(toc, {})
     .use(headingIds)
     .use(footnotes, {inlineNotes: true})
 }
 
-export const processor = (options={files: []}) => {
-    console.log('[Parser]', options)
-    return baseProcessor(options)
+export const processor = ({files, fs, litroot} = {files: []}) => {
+    console.log('[Parser]', {files, fs,litroot})
+    return baseProcessor({files, litroot})
     // remark-litmd (rehype compatable)
 
     .use(litcodeblocks)
@@ -77,7 +77,7 @@ export const processor = (options={files: []}) => {
             return null
         }
     }, {baseProcessor})
-    .use(resolveLinks())
+    .use(resolveLinks({litroot}))
 
     .use(sections, {})
 
