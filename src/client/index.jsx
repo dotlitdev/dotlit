@@ -55,6 +55,7 @@ const lit = {
     Repl,
     fs, lfs, git,
     utils: {
+        React,
         select,
         path,
         vfile,
