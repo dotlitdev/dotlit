@@ -28,7 +28,9 @@ const onSave = async (filename) => {
   // commit
   const now = (new Date()).toISOString()
   const sha = await git.commit({fs, dir,
-    message: `Auto commit (${now})`,
+    message: `Auto commit ${filename}
+at: (${now})
+includes the following tk files...`,
     author: {
       name: 'dotlit',
       email: 'bit@dotlit.org'
@@ -37,7 +39,7 @@ const onSave = async (filename) => {
   return "Committed " + sha.slice(0,6)
 }
 
-return onSave()
+return onSave(lit.location.src)
 ```
 ```>txt attached=true updated=1619390129981
 Committed d6a406
