@@ -29,7 +29,7 @@ const wait = async (ms) => {
   });
 }
 
-const baseProcessor = (options = {}) => {
+const baseProcessor = ({litroot} = {}) => {
     return unified()
     // remark
     .use(markdown, {})
@@ -42,9 +42,9 @@ const baseProcessor = (options = {}) => {
     .use(footnotes, {inlineNotes: true})
 }
 
-export const processor = (options={files: []}) => {
+export const processor = ({files, fs, litroot} = {files: []}) => {
     console.log('[Parser]', options)
-    return baseProcessor(options)
+    return baseProcessor({files, litroot})
     // remark-litmd (rehype compatable)
 
     .use(litcodeblocks)
@@ -77,7 +77,7 @@ export const processor = (options={files: []}) => {
             return null
         }
     }, {baseProcessor})
-    .use(resolveLinks())
+    .use(resolveLinks({litroot}))
 
     .use(sections, {})
 
