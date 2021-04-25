@@ -31,7 +31,9 @@ const litbase = litroot === '/'
                  : path.join(path.dirname(location.pathname), litroot)
 const baseUrl =`${location.protocol}//${location.host}${litbase}`
 
-const lfs = new FS(baseUrl)
+const lfs = new FS(baseUrl, {
+    wipe: query.__lfs_wipe==="true" ? confirm("Are you sure you want to wipe the local file system: " + baseUrl) : undefined,
+})
 const fs = extendFs(lfs.promises, litroot, localStorage.getItem("ghToken") && {
     username: "dotlitdev",
     repository: "dotlit",
