@@ -33,9 +33,9 @@ export const viewer = ({node, React}) => {
     const list = l.map(async x=>{
        const stat = await lit.fs.stat(src + x)
        // console.log("STAT", stat)
-       return rc("div", null, `${stat.type}: ${x})
+       return rc("div", {className: stat.type}, `${x}`)
     })
-    const res = (await Promise.all(list)).sort()
+    const res = (await Promise.all(list))
     setContent(res)
   },[src])
 
