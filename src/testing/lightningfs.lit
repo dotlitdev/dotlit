@@ -27,8 +27,10 @@ export const viewer = ({node, React}) => {
                && node.properties.meta
   const [content, setContent] = useState('Loading...')
   const src = node.data.value
-  useEffect(()=>{
-    setContent("Loaded. " + node.data.value)
+  useEffect(async () => {
+    const l = await lit.fs.readdir('/')
+    const list = l.map(x=>x).join('\n')
+    setContent(list)
   },[src])
 
   return rc('div', {
