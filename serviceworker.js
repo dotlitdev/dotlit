@@ -1,10 +1,3 @@
-# testing/serviceworker
-
-https://ponyfoo.com/articles/serviceworker-revolution
-
-Initial source, from: https://googlechrome.github.io/samples/service-worker/basic/
-
-```>js ../serviceworker.js
 /*
  Copyright 2016 Google Inc. All Rights Reserved.
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -80,4 +73,3 @@ self.addEventListener('fetch', event => {
     );
   }
 });
-```
