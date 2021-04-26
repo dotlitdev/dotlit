@@ -1,2 +1,76 @@
-<html data-reactroot=""><head><title>serviceworker</title><meta name="litsrc" value="testing/serviceworker.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="7:4-97"><cell startpos="1:1-0" endpos="3:54-78"><h1 id="testingserviceworker">testing/serviceworker</h1><p><a href="https://ponyfoo.com/articles/serviceworker-revolution">https://ponyfoo.com/articles/serviceworker-revolution<span class="linkIcon">↗</span></a></p></cell><cell startpos="5:1-80" endpos="7:4-97" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">// TODO
+<html data-reactroot=""><head><title>serviceworker</title><meta name="litsrc" value="testing/serviceworker.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="81:4-2742"><cell startpos="1:1-0" endpos="3:54-78"><h1 id="testingserviceworker">testing/serviceworker</h1><p><a href="https://ponyfoo.com/articles/serviceworker-revolution">https://ponyfoo.com/articles/serviceworker-revolution<span class="linkIcon">↗</span></a></p></cell><cell startpos="5:1-80" endpos="81:4-2742" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">/*
+ Copyright 2016 Google Inc. All Rights Reserved.
+ Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
+// Names of the two caches used in this version of the service worker.
+// Change to v2, etc. when you update any of the local resources, which will
+// in turn trigger the install event again.
+const PRECACHE = &#x27;precache-v1&#x27;;
+const RUNTIME = &#x27;runtime&#x27;;
+
+// A list of local resources we always want to be cached.
+const PRECACHE_URLS = [
+  &#x27;index.html&#x27;,
+  &#x27;./&#x27;, // Alias for index.html
+  &#x27;styles.css&#x27;,
+  &#x27;../../styles/main.css&#x27;,
+  &#x27;demo.js&#x27;
+];
+
+// The install handler takes care of precaching the resources we always need.
+self.addEventListener(&#x27;install&#x27;, event =&gt; {
+  event.waitUntil(
+    caches.open(PRECACHE)
+      .then(cache =&gt; cache.addAll(PRECACHE_URLS))
+      .then(self.skipWaiting())
+  );
+});
+
+// The activate handler takes care of cleaning up old caches.
+self.addEventListener(&#x27;activate&#x27;, event =&gt; {
+  const currentCaches = [PRECACHE, RUNTIME];
+  event.waitUntil(
+    caches.keys().then(cacheNames =&gt; {
+      return cacheNames.filter(cacheName =&gt; !currentCaches.includes(cacheName));
+    }).then(cachesToDelete =&gt; {
+      return Promise.all(cachesToDelete.map(cacheToDelete =&gt; {
+        return caches.delete(cacheToDelete);
+      }));
+    }).then(() =&gt; self.clients.claim())
+  );
+});
+
+// The fetch handler serves responses for same-origin resources from a cache.
+// If no response is found, it populates the runtime cache with the response
+// from the network before returning it to the page.
+self.addEventListener(&#x27;fetch&#x27;, event =&gt; {
+  // Skip cross-origin requests, like those for Google Analytics.
+  if (event.request.url.startsWith(self.location.origin)) {
+    event.respondWith(
+      caches.match(event.request).then(cachedResponse =&gt; {
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+
+        return caches.open(RUNTIME).then(cache =&gt; {
+          return fetch(event.request).then(response =&gt; {
+            // Put a copy of the response in the runtime cache.
+            return cache.put(event.request, response.clone()).then(() =&gt; {
+              return response;
+            });
+          });
+        });
+      })
+    );
+  }
+});
 </code></pre></codecell></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
