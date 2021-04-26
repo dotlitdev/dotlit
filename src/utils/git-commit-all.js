@@ -11,7 +11,9 @@ const unstaged = row => {
 // a commit will mostly be for a single
 // file at a time the immediate exception 
 // being when a file with output files 
-// is edited (Still TBD)
+// is edited, in which case the commit 
+// includes those files.
+
 const onSave = async (filename) => {
   const now = (new Date()).toISOString()
 
