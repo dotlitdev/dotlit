@@ -1,0 +1,436 @@
+<html data-reactroot=""><head><title>viewers</title><meta name="litsrc" value="renderer/viewers.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="3:21-38"><cell startpos="1:1-0" endpos="1:17-16"><h1 id="custom-viewers">Custom Viewers</h1></cell><section depth="2" class="" startpos="3:1-18" endpos="3:21-38"><cell startpos="3:1-18" endpos="3:21-38"><h2 id="table-of-contents">Table of Contents</h2><ul>
+<li>
+<p><a href="#to-do">To Do<span class="linkIcon">§</span></a></p>
+</li>
+<li>
+<p><a href="#examples">Examples<span class="linkIcon">§</span></a></p>
+<ul>
+<li><a href="#example-basic-foo-viewer">Example: Basic <code>foo</code> viewer<span class="linkIcon">§</span></a></li>
+<li><a href="#example-css-viewer">Example: <code>css</code> viewer<span class="linkIcon">§</span></a></li>
+<li><a href="#example-md-viewer">Example: <code>md</code> viewer<span class="linkIcon">§</span></a></li>
+<li><a href="#example-katex-viewer">Example: <code>KaTeX</code> viewer<span class="linkIcon">§</span></a></li>
+<li><a href="#example-meta-viewer">Example: <code>meta</code> viewer<span class="linkIcon">§</span></a></li>
+<li><a href="#example-graph-viewer">Example: <code>graph</code> viewer<span class="linkIcon">§</span></a></li>
+<li><a href="#example-vega">Example: Vega<span class="linkIcon">§</span></a></li>
+<li><a href="#example-d3-graphviz-dot-viewer">Example: D3 Graphviz <code>dot</code> viewer<span class="linkIcon">§</span></a></li>
+<li><a href="#example-plantuml-viewer">Example: Plant<code>UML</code> viewer<span class="linkIcon">§</span></a></li>
+</ul>
+</li>
+<li>
+<p><a href="#errors">Errors<span class="linkIcon">§</span></a></p>
+<ul>
+<li><a href="#runtime">Runtime<span class="linkIcon">§</span></a></li>
+<li><a href="#import">Import<span class="linkIcon">§</span></a></li>
+</ul>
+</li>
+<li>
+<p><a href="#initial-prototype">Initial prototype<span class="linkIcon">§</span></a></p>
+</li>
+</ul></cell></section></section>
+<section depth="2" class="" startpos="5:1-40" endpos="9:31-126"><cell startpos="5:1-40" endpos="9:31-126"><h2 id="to-do">To Do</h2><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->Doppelgänger page?</li>
+<li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->Error handling</li>
+<li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->Sharing across documents</li>
+</ul></cell></section>
+<section depth="2" class="" startpos="11:1-128" endpos="52:4-583"><cell startpos="11:1-128" endpos="11:12-139"><h2 id="examples">Examples</h2></cell><section depth="3" class="" startpos="13:1-141" endpos="52:4-583"><cell startpos="13:1-141" endpos="13:32-172"><h3 id="example-basic-foo-viewer">Example: Basic <code>foo</code> viewer</h3></cell><cell startpos="15:1-174" endpos="19:4-295" class="code"><codecell class="dir-viewer lang-js local"><span class="meta"><span class="lang">js</span><ul class="directives"><li style="color:black;background-color:#cf5332"><span class="directive dir-viewer">viewer</span></li></ul><ul class="attributes"><li style="color:black;background-color:#00dd70"><span class="attribute attr-of">of=foo</span></li></ul></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
+  return `${node.value} Foooooo! React: ${!!React}`
+}
+</code></pre></codecell></cell><cell startpos="22:1-298" endpos="22:30-327"><p>Not used in the default case:</p></cell><cell startpos="24:1-329" endpos="26:4-356" class="code"><codecell class="lang-foo local"><span class="meta"><span class="lang">foo</span><ul class="attributes"><li style="color:white;background-color:#9b3ef8"><span class="attribute attr-xviewer">xviewer=meta</span></li></ul></span><pre><code class="foo">Bar
+</code></pre></codecell></cell><cell startpos="28:1-358" endpos="28:41-398"><p>Only when using the <code>!inline</code> directive:</p></cell><cell startpos="30:1-400" endpos="32:4-424" class="code"><codecell class="dir-inline lang-foo local"><span class="meta"><span class="lang">foo</span><ul class="directives"><li style="color:black;background-color:#b96da2"><span class="directive dir-inline">inline</span></li></ul><ul class="attributes"></ul></span>Viewer Error: Cannot find module &#x27;data:text/javascript;base64,ZXhwb3J0IGNvbnN0IHZpZXdlciA9ICh7bm9kZSwgUmVhY3R9KSA9PiB7CiAgcmV0dXJuIGAke25vZGUudmFsdWV9IEZvb29vb28hIFJlYWN0OiAkeyEhUmVhY3R9YAp9&#x27;
+Require stack:
+- /home/runner/work/dotlit/dotlit/src/renderer/extractViewers.js
+- /home/runner/work/dotlit/dotlit/src/renderer/index.jsx
+- /home/runner/work/dotlit/dotlit/src/cli/generate.js
+- /home/runner/work/dotlit/dotlit/src/cli/index.js
+- /home/runner/work/dotlit/dotlit/src/index.js</codecell></cell><cell startpos="34:1-426" endpos="36:4-449" class="code"><codecell class="dir-above lang-foo local">Viewer Error: Cannot find module &#x27;data:text/javascript;base64,ZXhwb3J0IGNvbnN0IHZpZXdlciA9ICh7bm9kZSwgUmVhY3R9KSA9PiB7CiAgcmV0dXJuIGAke25vZGUudmFsdWV9IEZvb29vb28hIFJlYWN0OiAkeyEhUmVhY3R9YAp9&#x27;
+Require stack:
+- /home/runner/work/dotlit/dotlit/src/renderer/extractViewers.js
+- /home/runner/work/dotlit/dotlit/src/renderer/index.jsx
+- /home/runner/work/dotlit/dotlit/src/cli/generate.js
+- /home/runner/work/dotlit/dotlit/src/cli/index.js
+- /home/runner/work/dotlit/dotlit/src/index.js<span class="meta"><span class="lang">foo</span><ul class="directives"><li style="color:white;background-color:#585239"><span class="directive dir-above">above</span></li></ul><ul class="attributes"></ul></span><pre><code class="foo">Baz 2
+</code></pre></codecell></cell><cell startpos="38:1-451" endpos="40:4-474" class="code"><codecell class="dir-below lang-foo local"><span class="meta"><span class="lang">foo</span><ul class="directives"><li style="color:white;background-color:#5948c3"><span class="directive dir-below">below</span></li></ul><ul class="attributes"></ul></span><pre><code class="foo">Baz 3
+</code></pre>Viewer Error: Cannot find module &#x27;data:text/javascript;base64,ZXhwb3J0IGNvbnN0IHZpZXdlciA9ICh7bm9kZSwgUmVhY3R9KSA9PiB7CiAgcmV0dXJuIGAke25vZGUudmFsdWV9IEZvb29vb28hIFJlYWN0OiAkeyEhUmVhY3R9YAp9&#x27;
+Require stack:
+- /home/runner/work/dotlit/dotlit/src/renderer/extractViewers.js
+- /home/runner/work/dotlit/dotlit/src/renderer/index.jsx
+- /home/runner/work/dotlit/dotlit/src/cli/generate.js
+- /home/runner/work/dotlit/dotlit/src/cli/index.js
+- /home/runner/work/dotlit/dotlit/src/index.js</codecell></cell><cell startpos="42:1-476" endpos="42:38-513"><p>or <code>viewer=xxx</code> attribute is present:</p></cell><cell startpos="44:1-515" endpos="46:4-540" class="code"><codecell class="lang-bar local"><span class="meta"><span class="lang">bar</span><ul class="attributes"><li style="color:black;background-color:#cf5332"><span class="attribute attr-viewer">viewer=foo</span></li></ul></span>Viewer Error: Cannot find module &#x27;data:text/javascript;base64,ZXhwb3J0IGNvbnN0IHZpZXdlciA9ICh7bm9kZSwgUmVhY3R9KSA9PiB7CiAgcmV0dXJuIGAke25vZGUudmFsdWV9IEZvb29vb28hIFJlYWN0OiAkeyEhUmVhY3R9YAp9&#x27;
+Require stack:
+- /home/runner/work/dotlit/dotlit/src/renderer/extractViewers.js
+- /home/runner/work/dotlit/dotlit/src/renderer/index.jsx
+- /home/runner/work/dotlit/dotlit/src/cli/generate.js
+- /home/runner/work/dotlit/dotlit/src/cli/index.js
+- /home/runner/work/dotlit/dotlit/src/index.js</codecell></cell><cell startpos="48:1-542" endpos="48:25-566"><p>or it is an output cell:</p></cell><cell startpos="50:1-568" endpos="52:4-583" class="code output"><codecell class="lang-foo local output"><span class="meta"><span class="lang">foo</span><ul class="attributes"></ul></span>Viewer Error: Cannot find module &#x27;data:text/javascript;base64,ZXhwb3J0IGNvbnN0IHZpZXdlciA9ICh7bm9kZSwgUmVhY3R9KSA9PiB7CiAgcmV0dXJuIGAke25vZGUudmFsdWV9IEZvb29vb28hIFJlYWN0OiAkeyEhUmVhY3R9YAp9&#x27;
+Require stack:
+- /home/runner/work/dotlit/dotlit/src/renderer/extractViewers.js
+- /home/runner/work/dotlit/dotlit/src/renderer/index.jsx
+- /home/runner/work/dotlit/dotlit/src/cli/generate.js
+- /home/runner/work/dotlit/dotlit/src/cli/index.js
+- /home/runner/work/dotlit/dotlit/src/index.js</codecell></cell></section></section>
+<section depth="3" class="" startpos="55:1-586" endpos="89:4-1360"><cell startpos="55:1-586" endpos="55:26-611"><h3 id="example-css-viewer">Example: <code>css</code> viewer</h3></cell><cell startpos="57:1-613" endpos="76:4-986" class="code"><codecell class="dir-viewer lang-js local"><span class="meta"><span class="lang">js</span><ul class="directives"><li style="color:black;background-color:#cf5332"><span class="directive dir-viewer">viewer</span></li></ul><ul class="attributes"><li style="color:black;background-color:#00dd70"><span class="attribute attr-of">of=css</span></li></ul></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
+  const rc = React.createElement
+  const meta = node.properties 
+               &amp;&amp; node.properties.meta
+
+  const link = meta &amp;&amp; meta.uri
+
+  if (link) return rc(&#x27;link&#x27;, {
+    rel: &#x27;stylesheet&#x27;,
+    href: link
+  })
+
+  return rc(&#x27;style&#x27;, {
+    dangerouslySetInnerHTML: {
+      __html: node.value
+    }
+  })
+}
+</code></pre></codecell></cell><cell startpos="78:1-988" endpos="83:4-1060" class="code"><codecell class="dir-below lang-css local"><span class="meta"><span class="lang">css</span><ul class="directives"><li style="color:white;background-color:#5948c3"><span class="directive dir-below">below</span></li></ul><ul class="attributes"></ul></span><pre><code class="css">#header {
+  color: purple;
+  font-family: monospace;
+}
+</code></pre>Viewer Error: Cannot find module &#x27;data:text/javascript;base64,ZXhwb3J0IGNvbnN0IHZpZXdlciA9ICh7bm9kZSwgUmVhY3R9KSA9PiB7CiAgY29uc3QgcmMgPSBSZWFjdC5jcmVhdGVFbGVtZW50CiAgY29uc3QgbWV0YSA9IG5vZGUucHJvcGVydGllcyAKICAgICAgICAgICAgICAgJiYgbm9kZS5wcm9wZXJ0aWVzLm1ldGEKCiAgY29uc3QgbGluayA9IG1ldGEgJiYgbWV0YS51cmkKCiAgaWYgKGxpbmspIHJldHVybiByYygnbGluaycsIHsKICAgIHJlbDogJ3N0eWxlc2hlZXQnLAogICAgaHJlZjogbGluawogIH0pCgogIHJldHVybiByYygnc3R5bGUnLCB7CiAgICBkYW5nZXJvdXNseVNldElubmVySFRNTDogewogICAgICBfX2h0bWw6IG5vZGUudmFsdWUKICAgIH0KICB9KQp9&#x27;
+Require stack:
+- /home/runner/work/dotlit/dotlit/src/renderer/extractViewers.js
+- /home/runner/work/dotlit/dotlit/src/renderer/index.jsx
+- /home/runner/work/dotlit/dotlit/src/cli/generate.js
+- /home/runner/work/dotlit/dotlit/src/cli/index.js
+- /home/runner/work/dotlit/dotlit/src/index.js</codecell></cell><cell startpos="85:1-1062" endpos="86:4-1180" class="code"><codecell class="dir-inline dir-hidemeta lang-css local"><span class="meta"><span class="lang">css</span><ul class="directives"><li style="color:black;background-color:#b96da2"><span class="directive dir-inline">inline</span></li><li style="color:white;background-color:#964f82"><span class="directive dir-hidemeta">hidemeta</span></li></ul><ul class="attributes"></ul></span>Viewer Error: Cannot find module &#x27;data:text/javascript;base64,ZXhwb3J0IGNvbnN0IHZpZXdlciA9ICh7bm9kZSwgUmVhY3R9KSA9PiB7CiAgY29uc3QgcmMgPSBSZWFjdC5jcmVhdGVFbGVtZW50CiAgY29uc3QgbWV0YSA9IG5vZGUucHJvcGVydGllcyAKICAgICAgICAgICAgICAgJiYgbm9kZS5wcm9wZXJ0aWVzLm1ldGEKCiAgY29uc3QgbGluayA9IG1ldGEgJiYgbWV0YS51cmkKCiAgaWYgKGxpbmspIHJldHVybiByYygnbGluaycsIHsKICAgIHJlbDogJ3N0eWxlc2hlZXQnLAogICAgaHJlZjogbGluawogIH0pCgogIHJldHVybiByYygnc3R5bGUnLCB7CiAgICBkYW5nZXJvdXNseVNldElubmVySFRNTDogewogICAgICBfX2h0bWw6IG5vZGUudmFsdWUKICAgIH0KICB9KQp9&#x27;
+Require stack:
+- /home/runner/work/dotlit/dotlit/src/renderer/extractViewers.js
+- /home/runner/work/dotlit/dotlit/src/renderer/index.jsx
+- /home/runner/work/dotlit/dotlit/src/cli/generate.js
+- /home/runner/work/dotlit/dotlit/src/cli/index.js
+- /home/runner/work/dotlit/dotlit/src/index.js</codecell></cell><cell startpos="87:1-1181" endpos="89:4-1360" class="code output"><codecell class="dir-inline dir-info lang-md local output"><span class="meta"><span class="lang">md</span><ul class="directives"><li style="color:black;background-color:#b96da2"><span class="directive dir-inline">inline</span></li><li style="color:white;background-color:#03164a"><span class="directive dir-info">info</span></li></ul><ul class="attributes"></ul></span>Viewer Error: Cannot find module &#x27;data:text/javascript;base64,&#x27;
+Require stack:
+- /home/runner/work/dotlit/dotlit/src/renderer/extractViewers.js
+- /home/runner/work/dotlit/dotlit/src/renderer/index.jsx
+- /home/runner/work/dotlit/dotlit/src/cli/generate.js
+- /home/runner/work/dotlit/dotlit/src/cli/index.js
+- /home/runner/work/dotlit/dotlit/src/index.js</codecell></cell></section>
+<section depth="3" class="" startpos="91:1-1362" endpos="131:4-1818"><cell startpos="91:1-1362" endpos="93:92-1479"><h3 id="example-md-viewer">Example: <code>md</code> viewer</h3><p>Less of an example but rather a work in progress before moving it into <code>.lit</code> as a default.</p></cell><cell startpos="95:1-1481" endpos="97:4-1529" class="code"><codecell class="dir-viewer lang-js local"><span class="meta"><span class="lang">js</span><span class="source">&lt; viewers/md/index.jsx</span><ul class="directives"><li style="color:black;background-color:#cf5332"><span class="directive dir-viewer">viewer</span></li></ul><ul class="attributes"><li style="color:black;background-color:#00dd70"><span class="attribute attr-of">of=md</span></li></ul></span><pre><code class="js"></code></pre></codecell></cell><cell startpos="103:1-1535" endpos="105:4-1592" class="code"><codecell class="dir-inline lang-md local"><span class="meta"><span class="lang">md</span><ul class="directives"><li style="color:black;background-color:#b96da2"><span class="directive dir-inline">inline</span></li></ul><ul class="attributes"><li style="color:white;background-color:#9b3ef8"><span class="attribute attr-xviewer">xviewer=meta</span></li></ul></span>Viewer Error: Cannot find module &#x27;data:text/javascript;base64,&#x27;
+Require stack:
+- /home/runner/work/dotlit/dotlit/src/renderer/extractViewers.js
+- /home/runner/work/dotlit/dotlit/src/renderer/index.jsx
+- /home/runner/work/dotlit/dotlit/src/cli/generate.js
+- /home/runner/work/dotlit/dotlit/src/cli/index.js
+- /home/runner/work/dotlit/dotlit/src/index.js</codecell></cell><cell startpos="107:1-1594" endpos="109:4-1632" class="code output"><codecell class="lang-md local output"><span class="meta"><span class="lang">md</span><ul class="attributes"></ul></span>Viewer Error: Cannot find module &#x27;data:text/javascript;base64,&#x27;
+Require stack:
+- /home/runner/work/dotlit/dotlit/src/renderer/extractViewers.js
+- /home/runner/work/dotlit/dotlit/src/renderer/index.jsx
+- /home/runner/work/dotlit/dotlit/src/cli/generate.js
+- /home/runner/work/dotlit/dotlit/src/cli/index.js
+- /home/runner/work/dotlit/dotlit/src/index.js</codecell></cell><cell startpos="121:1-1644" endpos="125:4-1761" class="code"><codecell class="dir-success lang-md local"><span class="meta"><span class="lang">md</span><ul class="directives"><li style="color:black;background-color:#90b540"><span class="directive dir-success">success</span></li></ul><ul class="attributes"><li style="color:black;background-color:#cf5332"><span class="attribute attr-viewer">viewer=md</span></li></ul></span>Viewer Error: Cannot find module &#x27;data:text/javascript;base64,&#x27;
+Require stack:
+- /home/runner/work/dotlit/dotlit/src/renderer/extractViewers.js
+- /home/runner/work/dotlit/dotlit/src/renderer/index.jsx
+- /home/runner/work/dotlit/dotlit/src/cli/generate.js
+- /home/runner/work/dotlit/dotlit/src/cli/index.js
+- /home/runner/work/dotlit/dotlit/src/index.js</codecell></cell><cell startpos="127:1-1763" endpos="131:4-1818" class="code"><codecell class="dir-inline lang-md local"><span class="meta"><span class="lang">md</span><ul class="directives"><li style="color:black;background-color:#b96da2"><span class="directive dir-inline">inline</span></li></ul><ul class="attributes"></ul></span>Viewer Error: Cannot find module &#x27;data:text/javascript;base64,&#x27;
+Require stack:
+- /home/runner/work/dotlit/dotlit/src/renderer/extractViewers.js
+- /home/runner/work/dotlit/dotlit/src/renderer/index.jsx
+- /home/runner/work/dotlit/dotlit/src/cli/generate.js
+- /home/runner/work/dotlit/dotlit/src/cli/index.js
+- /home/runner/work/dotlit/dotlit/src/index.js</codecell></cell></section>
+<section depth="3" class="" startpos="133:1-1820" endpos="154:4-3050"><cell startpos="133:1-1820" endpos="133:28-1847"><h3 id="example-katex-viewer">Example: <code>KaTeX</code> viewer</h3></cell><cell startpos="135:1-1849" endpos="154:4-3050" class="code"><codecell class="dir-below lang-html local"><span class="meta"><span class="lang">html</span><ul class="directives"><li style="color:white;background-color:#5948c3"><span class="directive dir-below">below</span></li></ul><ul class="attributes"><li style="color:black;background-color:#cf5332"><span class="attribute attr-viewer">viewer=iframe</span></li></ul></span><pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;!-- KaTeX requires the use of the HTML5 doctype. Without it, KaTeX may not render properly --&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/katex@0.13.2/dist/katex.min.css&quot; integrity=&quot;sha384-Cqd8ihRLum0CCg8rz0hYKPoLZ3uw+gES2rXQXycqnL5pgVQIflxAUDS7ZSjITLb5&quot; crossorigin=&quot;anonymous&quot;&gt;
+
+    &lt;!-- The loading of KaTeX is deferred to speed up page rendering --&gt;
+    &lt;script defer src=&quot;https://cdn.jsdelivr.net/npm/katex@0.13.2/dist/katex.min.js&quot; integrity=&quot;sha384-1Or6BdeNQb0ezrmtGeqQHFpppNd7a/gw29xeiSikBbsb44xu3uAo8c7FwbF5jhbd&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;
+
+    &lt;!-- To automatically render math in text elements, include the auto-render extension: --&gt;
+    &lt;script defer src=&quot;https://cdn.jsdelivr.net/npm/katex@0.13.2/dist/contrib/auto-render.min.js&quot; integrity=&quot;sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl&quot; crossorigin=&quot;anonymous&quot;
+        onload=&quot;katex.render(document.body.innerHTML, document.body,{throwOnError: false});&quot;&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;% \f is defined as #1f(#2) using the macro
+\f\relax{x} = \int_{-\infty}^\infty
+    \f\hat\xi\,e^{2 \pi i \xi x}
+    \,d\xi&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><iframe srcDoc="&lt;!DOCTYPE html&gt;
+&lt;!-- KaTeX requires the use of the HTML5 doctype. Without it, KaTeX may not render properly --&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/katex@0.13.2/dist/katex.min.css&quot; integrity=&quot;sha384-Cqd8ihRLum0CCg8rz0hYKPoLZ3uw+gES2rXQXycqnL5pgVQIflxAUDS7ZSjITLb5&quot; crossorigin=&quot;anonymous&quot;&gt;
+
+    &lt;!-- The loading of KaTeX is deferred to speed up page rendering --&gt;
+    &lt;script defer src=&quot;https://cdn.jsdelivr.net/npm/katex@0.13.2/dist/katex.min.js&quot; integrity=&quot;sha384-1Or6BdeNQb0ezrmtGeqQHFpppNd7a/gw29xeiSikBbsb44xu3uAo8c7FwbF5jhbd&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;
+
+    &lt;!-- To automatically render math in text elements, include the auto-render extension: --&gt;
+    &lt;script defer src=&quot;https://cdn.jsdelivr.net/npm/katex@0.13.2/dist/contrib/auto-render.min.js&quot; integrity=&quot;sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl&quot; crossorigin=&quot;anonymous&quot;
+        onload=&quot;katex.render(document.body.innerHTML, document.body,{throwOnError: false});&quot;&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;% \f is defined as #1f(#2) using the macro
+\f\relax{x} = \int_{-\infty}^\infty
+    \f\hat\xi\,e^{2 \pi i \xi x}
+    \,d\xi&lt;/body&gt;
+&lt;/html&gt;
+" style="aspect-ratio:1.6"></iframe></codecell></cell></section>
+<section depth="3" class="" startpos="157:1-3053" endpos="168:4-3353"><cell startpos="157:1-3053" endpos="157:27-3079"><h3 id="example-meta-viewer">Example: <code>meta</code> viewer</h3></cell><cell startpos="159:1-3081" endpos="164:4-3262" class="code"><codecell class="dir-viewer lang-js local"><span class="meta"><span class="lang">js</span><ul class="directives"><li style="color:black;background-color:#cf5332"><span class="directive dir-viewer">viewer</span></li></ul><ul class="attributes"><li style="color:black;background-color:#00dd70"><span class="attribute attr-of">of=meta</span></li></ul></span><pre><code class="js">export const viewer = ({node,React}) =&gt; {
+  const view = React.createElement(&#x27;pre&#x27;, {style: {color: &#x27;black&#x27;}}, JSON.stringify(node,null,2))
+  return view
+}
+</code></pre></codecell></cell><cell startpos="166:1-3264" endpos="168:4-3353" class="code"><codecell class="dir-below lang-txt local"><span class="meta"><span class="lang">txt</span><span class="filename">file.txt</span><span class="output">&gt; json filename.json !foo</span><ul class="directives"><li style="color:white;background-color:#5948c3"><span class="directive dir-below">below</span></li></ul><ul class="attributes"><li style="color:black;background-color:#cf5332"><span class="attribute attr-viewer">viewer=meta</span></li></ul></span><pre><code class="txt">show meta content below:
+</code></pre>Viewer Error: Cannot find module &#x27;data:text/javascript;base64,ZXhwb3J0IGNvbnN0IHZpZXdlciA9ICh7bm9kZSxSZWFjdH0pID0+IHsKICBjb25zdCB2aWV3ID0gUmVhY3QuY3JlYXRlRWxlbWVudCgncHJlJywge3N0eWxlOiB7Y29sb3I6ICdibGFjayd9fSwgSlNPTi5zdHJpbmdpZnkobm9kZSxudWxsLDIpKQogIHJldHVybiB2aWV3Cn0=&#x27;
+Require stack:
+- /home/runner/work/dotlit/dotlit/src/renderer/extractViewers.js
+- /home/runner/work/dotlit/dotlit/src/renderer/index.jsx
+- /home/runner/work/dotlit/dotlit/src/cli/generate.js
+- /home/runner/work/dotlit/dotlit/src/cli/index.js
+- /home/runner/work/dotlit/dotlit/src/index.js</codecell></cell></section>
+<section depth="3" class="" startpos="170:1-3355" endpos="236:92-5163"><cell startpos="170:1-3355" endpos="172:73-3456"><h3 id="example-graph-viewer">Example: <code>graph</code> viewer</h3><p>✅ This viewer has been folded into <code>.lit</code> as one of the default viewers.</p></cell><cell startpos="174:1-3458" endpos="219:4-4879" class="code"><codecell class="dir-viewer lang-js local"><span class="meta"><span class="lang">js</span><ul class="directives"><li style="color:black;background-color:#cf5332"><span class="directive dir-viewer">viewer</span></li></ul><ul class="attributes"><li style="color:black;background-color:#00dd70"><span class="attribute attr-of">of=custom-graph</span></li></ul></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
+   const c = React.createElement
+   const data = node.value
+
+   const el = c(&#x27;iframe&#x27;, {srcDoc: `&lt;head&gt;
+  &lt;style&gt; body { margin: 0; } &lt;/style&gt;
+  &lt;script src=&quot;https://unpkg.com/force-graph&quot;&gt;&lt;/script&gt;
+  &lt;!-- from: https://github.com/vasturiano/force-graph --&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id=&quot;graph&quot;&gt;&lt;/div&gt;
+  &lt;script&gt;
+    const data = ${data};
+      const thisfile = window.parent.lit.location.src
+      // alert(thisfile)
+      const elem = document.getElementById(&#x27;graph&#x27;)
+      const Graph = ForceGraph()(elem)
+        .graphData(data)
+        .nodeId(&#x27;id&#x27;)
+        .nodeVal((n) =&gt; 2 * (n.backlinks &amp;&amp; n.backlinks.length ? n.backlinks.length : 1))
+        .nodeLabel(&#x27;id&#x27;)
+        .nodeAutoColorBy(&#x27;type&#x27;)
+        
+        // .linkColor(d =&gt; data.nodes[d.source].exists ? &#x27;red&#x27; : &#x27;lightblue&#x27;)
+        .linkDirectionalArrowLength(6)
+        .onNodeHover(node =&gt; elem.style.cursor = node ? &#x27;pointer&#x27; : null)
+        .onNodeClick(node =&gt; {
+          // Center/zoom on node
+          Graph.centerAt(node.x, node.y, 1000);
+          Graph.zoom(2, 2000);
+        });
+
+        setTimeout( () =&gt; {
+            const { nodes, links } = Graph.graphData()
+            const node = nodes.filter( n =&gt; n.id === thisfile)[0]
+            Graph.centerAt(node.x, node.y, 1000);
+            Graph.zoom(2, 2000);
+
+        }, 2000)
+
+  &lt;/script&gt;
+&lt;/body&gt;`})
+   return el
+}
+</code></pre></codecell></cell><cell startpos="221:1-4881" endpos="231:4-5022" class="code"><codecell class="dir-inline lang-custom-graph local"><span class="meta"><span class="lang">custom-graph</span><ul class="directives"><li style="color:black;background-color:#b96da2"><span class="directive dir-inline">inline</span></li></ul><ul class="attributes"></ul></span>Viewer Error: Cannot find module &#x27;data:text/javascript;base64,ZXhwb3J0IGNvbnN0IHZpZXdlciA9ICh7bm9kZSwgUmVhY3R9KSA9PiB7CiAgIGNvbnN0IGMgPSBSZWFjdC5jcmVhdGVFbGVtZW50CiAgIGNvbnN0IGRhdGEgPSBub2RlLnZhbHVlCgogICBjb25zdCBlbCA9IGMoJ2lmcmFtZScsIHtzcmNEb2M6IGA8aGVhZD4KICA8c3R5bGU+IGJvZHkgeyBtYXJnaW46IDA7IH0gPC9zdHlsZT4KICA8c2NyaXB0IHNyYz0iaHR0cHM6Ly91bnBrZy5jb20vZm9yY2UtZ3JhcGgiPjwvc2NyaXB0PgogIDwhLS0gZnJvbTogaHR0cHM6Ly9naXRodWIuY29tL3Zhc3R1cmlhbm8vZm9yY2UtZ3JhcGggLS0+CjwvaGVhZD4KPGJvZHk+CiAgPGRpdiBpZD0iZ3JhcGgiPjwvZGl2PgogIDxzY3JpcHQ+CiAgICBjb25zdCBkYXRhID0gJHtkYXRhfTsKICAgICAgY29uc3QgdGhpc2ZpbGUgPSB3aW5kb3cucGFyZW50LmxpdC5sb2NhdGlvbi5zcmMKICAgICAgLy8gYWxlcnQodGhpc2ZpbGUpCiAgICAgIGNvbnN0IGVsZW0gPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnZ3JhcGgnKQogICAgICBjb25zdCBHcmFwaCA9IEZvcmNlR3JhcGgoKShlbGVtKQogICAgICAgIC5ncmFwaERhdGEoZGF0YSkKICAgICAgICAubm9kZUlkKCdpZCcpCiAgICAgICAgLm5vZGVWYWwoKG4pID0+IDIgKiAobi5iYWNrbGlua3MgJiYgbi5iYWNrbGlua3MubGVuZ3RoID8gbi5iYWNrbGlua3MubGVuZ3RoIDogMSkpCiAgICAgICAgLm5vZGVMYWJlbCgnaWQnKQogICAgICAgIC5ub2RlQXV0b0NvbG9yQnkoJ3R5cGUnKQogICAgICAgIAogICAgICAgIC8vIC5saW5rQ29sb3IoZCA9PiBkYXRhLm5vZGVzW2Quc291cmNlXS5leGlzdHMgPyAncmVkJyA6ICdsaWdodGJsdWUnKQogICAgICAgIC5saW5rRGlyZWN0aW9uYWxBcnJvd0xlbmd0aCg2KQogICAgICAgIC5vbk5vZGVIb3Zlcihub2RlID0+IGVsZW0uc3R5bGUuY3Vyc29yID0gbm9kZSA/ICdwb2ludGVyJyA6IG51bGwpCiAgICAgICAgLm9uTm9kZUNsaWNrKG5vZGUgPT4gewogICAgICAgICAgLy8gQ2VudGVyL3pvb20gb24gbm9kZQogICAgICAgICAgR3JhcGguY2VudGVyQXQobm9kZS54LCBub2RlLnksIDEwMDApOwogICAgICAgICAgR3JhcGguem9vbSgyLCAyMDAwKTsKICAgICAgICB9KTsKCiAgICAgICAgc2V0VGltZW91dCggKCkgPT4gewogICAgICAgICAgICBjb25zdCB7IG5vZGVzLCBsaW5rcyB9ID0gR3JhcGguZ3JhcGhEYXRhKCkKICAgICAgICAgICAgY29uc3Qgbm9kZSA9IG5vZGVzLmZpbHRlciggbiA9PiBuLmlkID09PSB0aGlzZmlsZSlbMF0KICAgICAgICAgICAgR3JhcGguY2VudGVyQXQobm9kZS54LCBub2RlLnksIDEwMDApOwogICAgICAgICAgICBHcmFwaC56b29tKDIsIDIwMDApOwoKICAgICAgICB9LCAyMDAwKQoKICA8L3NjcmlwdD4KPC9ib2R5PmB9KQogICByZXR1cm4gZWwKfQ==&#x27;
+Require stack:
+- /home/runner/work/dotlit/dotlit/src/renderer/extractViewers.js
+- /home/runner/work/dotlit/dotlit/src/renderer/index.jsx
+- /home/runner/work/dotlit/dotlit/src/cli/generate.js
+- /home/runner/work/dotlit/dotlit/src/cli/index.js
+- /home/runner/work/dotlit/dotlit/src/index.js</codecell></cell><cell startpos="233:1-5024" endpos="234:4-5070" class="code"><codecell class="dir-inline lang-custom-graph local"><span class="meta"><span class="lang">custom-graph</span><span class="source">&lt; ../manifest.json</span><ul class="directives"><li style="color:black;background-color:#b96da2"><span class="directive dir-inline">inline</span></li></ul><ul class="attributes"></ul></span>Viewer Error: Cannot find module &#x27;data:text/javascript;base64,ZXhwb3J0IGNvbnN0IHZpZXdlciA9ICh7bm9kZSwgUmVhY3R9KSA9PiB7CiAgIGNvbnN0IGMgPSBSZWFjdC5jcmVhdGVFbGVtZW50CiAgIGNvbnN0IGRhdGEgPSBub2RlLnZhbHVlCgogICBjb25zdCBlbCA9IGMoJ2lmcmFtZScsIHtzcmNEb2M6IGA8aGVhZD4KICA8c3R5bGU+IGJvZHkgeyBtYXJnaW46IDA7IH0gPC9zdHlsZT4KICA8c2NyaXB0IHNyYz0iaHR0cHM6Ly91bnBrZy5jb20vZm9yY2UtZ3JhcGgiPjwvc2NyaXB0PgogIDwhLS0gZnJvbTogaHR0cHM6Ly9naXRodWIuY29tL3Zhc3R1cmlhbm8vZm9yY2UtZ3JhcGggLS0+CjwvaGVhZD4KPGJvZHk+CiAgPGRpdiBpZD0iZ3JhcGgiPjwvZGl2PgogIDxzY3JpcHQ+CiAgICBjb25zdCBkYXRhID0gJHtkYXRhfTsKICAgICAgY29uc3QgdGhpc2ZpbGUgPSB3aW5kb3cucGFyZW50LmxpdC5sb2NhdGlvbi5zcmMKICAgICAgLy8gYWxlcnQodGhpc2ZpbGUpCiAgICAgIGNvbnN0IGVsZW0gPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnZ3JhcGgnKQogICAgICBjb25zdCBHcmFwaCA9IEZvcmNlR3JhcGgoKShlbGVtKQogICAgICAgIC5ncmFwaERhdGEoZGF0YSkKICAgICAgICAubm9kZUlkKCdpZCcpCiAgICAgICAgLm5vZGVWYWwoKG4pID0+IDIgKiAobi5iYWNrbGlua3MgJiYgbi5iYWNrbGlua3MubGVuZ3RoID8gbi5iYWNrbGlua3MubGVuZ3RoIDogMSkpCiAgICAgICAgLm5vZGVMYWJlbCgnaWQnKQogICAgICAgIC5ub2RlQXV0b0NvbG9yQnkoJ3R5cGUnKQogICAgICAgIAogICAgICAgIC8vIC5saW5rQ29sb3IoZCA9PiBkYXRhLm5vZGVzW2Quc291cmNlXS5leGlzdHMgPyAncmVkJyA6ICdsaWdodGJsdWUnKQogICAgICAgIC5saW5rRGlyZWN0aW9uYWxBcnJvd0xlbmd0aCg2KQogICAgICAgIC5vbk5vZGVIb3Zlcihub2RlID0+IGVsZW0uc3R5bGUuY3Vyc29yID0gbm9kZSA/ICdwb2ludGVyJyA6IG51bGwpCiAgICAgICAgLm9uTm9kZUNsaWNrKG5vZGUgPT4gewogICAgICAgICAgLy8gQ2VudGVyL3pvb20gb24gbm9kZQogICAgICAgICAgR3JhcGguY2VudGVyQXQobm9kZS54LCBub2RlLnksIDEwMDApOwogICAgICAgICAgR3JhcGguem9vbSgyLCAyMDAwKTsKICAgICAgICB9KTsKCiAgICAgICAgc2V0VGltZW91dCggKCkgPT4gewogICAgICAgICAgICBjb25zdCB7IG5vZGVzLCBsaW5rcyB9ID0gR3JhcGguZ3JhcGhEYXRhKCkKICAgICAgICAgICAgY29uc3Qgbm9kZSA9IG5vZGVzLmZpbHRlciggbiA9PiBuLmlkID09PSB0aGlzZmlsZSlbMF0KICAgICAgICAgICAgR3JhcGguY2VudGVyQXQobm9kZS54LCBub2RlLnksIDEwMDApOwogICAgICAgICAgICBHcmFwaC56b29tKDIsIDIwMDApOwoKICAgICAgICB9LCAyMDAwKQoKICA8L3NjcmlwdD4KPC9ib2R5PmB9KQogICByZXR1cm4gZWwKfQ==&#x27;
+Require stack:
+- /home/runner/work/dotlit/dotlit/src/renderer/extractViewers.js
+- /home/runner/work/dotlit/dotlit/src/renderer/index.jsx
+- /home/runner/work/dotlit/dotlit/src/cli/generate.js
+- /home/runner/work/dotlit/dotlit/src/cli/index.js
+- /home/runner/work/dotlit/dotlit/src/index.js</codecell></cell><cell startpos="236:1-5072" endpos="236:92-5163"><p>The above automatically transcludes the <code>.lit</code> manifest and focuses on the current document</p></cell></section>
+<section depth="3" class="" startpos="238:1-5165" endpos="282:4-6376"><cell startpos="238:1-5165" endpos="241:71-5282"><h3 id="example-vega">Example: Vega</h3><p>Still a <em>Work in progress</em>
+Docs: <a href="https://vega.github.io/vega-lite/usage/compile.html">vega-lite<span class="linkIcon">↗</span></a></p></cell><cell startpos="243:1-5284" endpos="282:4-6376" class="code output"><codecell class="lang-iframe local output"><span class="meta"><span class="lang">iframe</span><ul class="attributes"><li style="color:white;background-color:#9b3ef8"><span class="attribute attr-xviewer">xviewer=meta</span></li></ul></span><iframe srcDoc="&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Embedding Vega-Lite&lt;/title&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vega@5.19.1&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vega-lite@5.0.0&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vega-embed@6.15.1&quot;&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id=&quot;vis&quot;&gt;&lt;/div&gt;
+
+    &lt;script type=&quot;text/javascript&quot;&gt;
+      var yourVlSpec = {
+        $schema: &#x27;https://vega.github.io/schema/vega-lite/v5.json&#x27;,
+        description: &#x27;A simple bar chart with embedded data.&#x27;,
+        data: {
+          values: [
+            {a: &#x27;A&#x27;, b: 28},
+            {a: &#x27;B&#x27;, b: 55},
+            {a: &#x27;C&#x27;, b: 43},
+            {a: &#x27;D&#x27;, b: 91},
+            {a: &#x27;E&#x27;, b: 81},
+            {a: &#x27;F&#x27;, b: 53},
+            {a: &#x27;G&#x27;, b: 19},
+            {a: &#x27;H&#x27;, b: 87},
+            {a: &#x27;I&#x27;, b: 52}
+          ]
+        },
+        mark: &#x27;bar&#x27;,
+        encoding: {
+          x: {field: &#x27;a&#x27;, type: &#x27;ordinal&#x27;},
+          y: {field: &#x27;b&#x27;, type: &#x27;quantitative&#x27;}
+        }
+      };
+      vegaEmbed(&#x27;#vis&#x27;, yourVlSpec);
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+" style="aspect-ratio:1.6"></iframe></codecell></cell></section>
+<section depth="3" class="" startpos="284:1-6378" endpos="341:95-7630"><cell startpos="284:1-6378" endpos="286:53-6469"><h3 id="example-d3-graphviz-dot-viewer">Example: D3 Graphviz <code>dot</code> viewer</h3><p>Docs: <a href="https://github.com/magjac/d3-graphviz#examples">https://github.com/magjac/d3-graphviz#examples<span class="linkIcon">↗</span></a></p></cell><cell startpos="288:1-6471" endpos="306:4-7024" class="code"><codecell class="dir-viewer lang-js local"><span class="meta"><span class="lang">js</span><ul class="directives"><li style="color:black;background-color:#cf5332"><span class="directive dir-viewer">viewer</span></li></ul><ul class="attributes"><li style="color:black;background-color:#00dd70"><span class="attribute attr-of">of=dot</span></li></ul></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
+   const c = React.createElement
+   const el = c(&#x27;iframe&#x27;, {srcDoc: `&lt;!DOCTYPE html&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;body&gt;
+&lt;script src=&quot;//d3js.org/d3.v5.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js&quot;&gt;&lt;/script&gt;
+&lt;div id=&quot;graph&quot; style=&quot;text-align: center;&quot;&gt;&lt;/div&gt;
+&lt;script&gt;
+
+d3.select(&quot;#graph&quot;).graphviz()
+    .renderDot(&#x27;${node.value.trim()}&#x27;);
+
+&lt;/script&gt;`})
+   return el
+}
+</code></pre></codecell></cell><cell startpos="308:1-7026" endpos="310:4-7070" class="code output"><codecell class="lang-dot local output"><span class="meta"><span class="lang">dot</span><ul class="attributes"><li style="color:white;background-color:#9b3ef8"><span class="attribute attr-xviewer">xviewer=meta</span></li></ul></span>Viewer Error: Cannot find module &#x27;data:text/javascript;base64,ZXhwb3J0IGNvbnN0IHZpZXdlciA9ICh7bm9kZSwgUmVhY3R9KSA9PiB7CiAgIGNvbnN0IGMgPSBSZWFjdC5jcmVhdGVFbGVtZW50CiAgIGNvbnN0IGVsID0gYygnaWZyYW1lJywge3NyY0RvYzogYDwhRE9DVFlQRSBodG1sPgo8bWV0YSBjaGFyc2V0PSJ1dGYtOCI+Cjxib2R5Pgo8c2NyaXB0IHNyYz0iLy9kM2pzLm9yZy9kMy52NS5taW4uanMiPjwvc2NyaXB0Pgo8c2NyaXB0IHNyYz0iaHR0cHM6Ly91bnBrZy5jb20vQGhwY2MtanMvd2FzbUAwLjMuMTEvZGlzdC9pbmRleC5taW4uanMiPjwvc2NyaXB0Pgo8c2NyaXB0IHNyYz0iaHR0cHM6Ly91bnBrZy5jb20vZDMtZ3JhcGh2aXpAMy4wLjUvYnVpbGQvZDMtZ3JhcGh2aXouanMiPjwvc2NyaXB0Pgo8ZGl2IGlkPSJncmFwaCIgc3R5bGU9InRleHQtYWxpZ246IGNlbnRlcjsiPjwvZGl2Pgo8c2NyaXB0PgoKZDMuc2VsZWN0KCIjZ3JhcGgiKS5ncmFwaHZpeigpCiAgICAucmVuZGVyRG90KCcke25vZGUudmFsdWUudHJpbSgpfScpOwoKPC9zY3JpcHQ+YH0pCiAgIHJldHVybiBlbAp9&#x27;
+Require stack:
+- /home/runner/work/dotlit/dotlit/src/renderer/extractViewers.js
+- /home/runner/work/dotlit/dotlit/src/renderer/index.jsx
+- /home/runner/work/dotlit/dotlit/src/cli/generate.js
+- /home/runner/work/dotlit/dotlit/src/cli/index.js
+- /home/runner/work/dotlit/dotlit/src/index.js</codecell></cell><cell startpos="312:1-7072" endpos="339:4-7534" class="code output"><codecell class="lang-dot local output"><span class="meta"><span class="lang">dot</span><ul class="attributes"></ul></span>Viewer Error: Cannot find module &#x27;data:text/javascript;base64,ZXhwb3J0IGNvbnN0IHZpZXdlciA9ICh7bm9kZSwgUmVhY3R9KSA9PiB7CiAgIGNvbnN0IGMgPSBSZWFjdC5jcmVhdGVFbGVtZW50CiAgIGNvbnN0IGVsID0gYygnaWZyYW1lJywge3NyY0RvYzogYDwhRE9DVFlQRSBodG1sPgo8bWV0YSBjaGFyc2V0PSJ1dGYtOCI+Cjxib2R5Pgo8c2NyaXB0IHNyYz0iLy9kM2pzLm9yZy9kMy52NS5taW4uanMiPjwvc2NyaXB0Pgo8c2NyaXB0IHNyYz0iaHR0cHM6Ly91bnBrZy5jb20vQGhwY2MtanMvd2FzbUAwLjMuMTEvZGlzdC9pbmRleC5taW4uanMiPjwvc2NyaXB0Pgo8c2NyaXB0IHNyYz0iaHR0cHM6Ly91bnBrZy5jb20vZDMtZ3JhcGh2aXpAMy4wLjUvYnVpbGQvZDMtZ3JhcGh2aXouanMiPjwvc2NyaXB0Pgo8ZGl2IGlkPSJncmFwaCIgc3R5bGU9InRleHQtYWxpZ246IGNlbnRlcjsiPjwvZGl2Pgo8c2NyaXB0PgoKZDMuc2VsZWN0KCIjZ3JhcGgiKS5ncmFwaHZpeigpCiAgICAucmVuZGVyRG90KCcke25vZGUudmFsdWUudHJpbSgpfScpOwoKPC9zY3JpcHQ+YH0pCiAgIHJldHVybiBlbAp9&#x27;
+Require stack:
+- /home/runner/work/dotlit/dotlit/src/renderer/extractViewers.js
+- /home/runner/work/dotlit/dotlit/src/renderer/index.jsx
+- /home/runner/work/dotlit/dotlit/src/cli/generate.js
+- /home/runner/work/dotlit/dotlit/src/cli/index.js
+- /home/runner/work/dotlit/dotlit/src/index.js</codecell></cell><cell startpos="341:1-7536" endpos="341:95-7630"><p>The above mildly more complex example doesn&#x27;t render, likely due to not being actual graphviz.</p></cell></section>
+<section depth="3" class="" startpos="343:1-7632" endpos="435:4-10306"><cell startpos="343:1-7632" endpos="343:31-7662"><h3 id="example-plantuml-viewer">Example: Plant<code>UML</code> viewer</h3></cell><cell startpos="345:1-7664" endpos="411:4-9812" class="code"><codecell class="dir-viewer lang-js local"><span class="meta"><span class="lang">js</span><ul class="directives"><li style="color:black;background-color:#cf5332"><span class="directive dir-viewer">viewer</span></li></ul><ul class="attributes"><li style="color:black;background-color:#00dd70"><span class="attribute attr-of">of=uml</span></li></ul></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
+   const c = React.createElement
+   const ref = React.createRef();
+   const [height, setHeight] = React.useState(null)
+   let [id] = React.useState(Math.round(Math.random() * 10000000).toString())
+
+  React.useEffect(() =&gt; {
+    const handler = event =&gt; {
+      if (ref &amp;&amp; ref.current &amp;&amp; event &amp;&amp; event.data &amp;&amp; typeof event.data === &#x27;string&#x27;) {
+          const data = JSON.parse(event.data)
+          if (id === data.source) {
+             console.log(&quot;Message: &quot;, data)
+             setHeight(data.height)
+          }
+
+      }
+    }
+
+    window.addEventListener(&quot;message&quot;, handler)
+
+    // clean up
+    return () =&gt; window.removeEventListener(&quot;message&quot;, handler)
+  }, []) // empty array =&gt; run only once
+
+   const el = c(&#x27;iframe&#x27;, {ref: ref, style: {height: ( height ? (height + &#x27;px&#x27;) : &#x27;auto&#x27;) },srcDoc: `&lt;!DOCTYPE html&gt;
+    &lt;html&gt;
+      &lt;head&gt;
+        &lt;title&gt;PlantUML Viewer&lt;/title&gt;
+        &lt;style&gt;html, body {margin: 0; padding: 0; } #plantuml { display: block; max-width: 100%; }&lt;/style&gt;
+      &lt;/head&gt;
+      &lt;body&gt;
+        &lt;img id=&quot;plantuml&quot; /&gt;
+        &lt;script type=&quot;module&quot;&gt;
+
+        function resize() {
+          const msg = JSON.stringify({
+            source: &quot;${id}&quot;,
+            height: document.body.clientHeight
+          })
+          console.log(&quot;Resize Message&quot;, msg)
+          window.parent.postMessage(msg, &#x27;*&#x27;);
+        }
+        async function encodePlantUML(src) {
+          console.log(&quot;encoding&quot;, src)
+          const module = await import(&quot;https://cdn.skypack.dev/plantuml-encoder&quot;);
+          const encoded = module.encode(src)
+          console.log(encoded)
+          return encoded
+        }
+
+        encodePlantUML(&quot;${node.value.replace(/\n/g, &#x27;\\n&#x27;)}&quot;)
+        .then(encoded =&gt; {
+            const url = &quot;https://plantuml.com/plantuml/svg/&quot; + encoded
+            const img = document.getElementById(&#x27;plantuml&#x27;)
+            img.setAttribute(&#x27;src&#x27;, url)
+            img.onload = resize
+        })
+
+        console.log(&quot;PlantUML Viewer.&quot;)
+      &lt;/script&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;`})
+   console.log(&quot;PlantViewer iframe ref:&quot;, el.ref.current)
+   return el
+}
+</code></pre></codecell></cell><cell startpos="413:1-9814" endpos="415:4-9843" class="code"><codecell class="dir-inline lang-uml local"><span class="meta"><span class="lang">uml</span><ul class="directives"><li style="color:black;background-color:#b96da2"><span class="directive dir-inline">inline</span></li></ul><ul class="attributes"></ul></span>Viewer Error: Cannot find module &#x27;data:text/javascript;base64,ZXhwb3J0IGNvbnN0IHZpZXdlciA9ICh7bm9kZSwgUmVhY3R9KSA9PiB7CiAgIGNvbnN0IGMgPSBSZWFjdC5jcmVhdGVFbGVtZW50CiAgIGNvbnN0IHJlZiA9IFJlYWN0LmNyZWF0ZVJlZigpOwogICBjb25zdCBbaGVpZ2h0LCBzZXRIZWlnaHRdID0gUmVhY3QudXNlU3RhdGUobnVsbCkKICAgbGV0IFtpZF0gPSBSZWFjdC51c2VTdGF0ZShNYXRoLnJvdW5kKE1hdGgucmFuZG9tKCkgKiAxMDAwMDAwMCkudG9TdHJpbmcoKSkKCiAgUmVhY3QudXNlRWZmZWN0KCgpID0+IHsKICAgIGNvbnN0IGhhbmRsZXIgPSBldmVudCA9PiB7CiAgICAgIGlmIChyZWYgJiYgcmVmLmN1cnJlbnQgJiYgZXZlbnQgJiYgZXZlbnQuZGF0YSAmJiB0eXBlb2YgZXZlbnQuZGF0YSA9PT0gJ3N0cmluZycpIHsKICAgICAgICAgIGNvbnN0IGRhdGEgPSBKU09OLnBhcnNlKGV2ZW50LmRhdGEpCiAgICAgICAgICBpZiAoaWQgPT09IGRhdGEuc291cmNlKSB7CiAgICAgICAgICAgICBjb25zb2xlLmxvZygiTWVzc2FnZTogIiwgZGF0YSkKICAgICAgICAgICAgIHNldEhlaWdodChkYXRhLmhlaWdodCkKICAgICAgICAgIH0KCiAgICAgIH0KICAgIH0KCiAgICB3aW5kb3cuYWRkRXZlbnRMaXN0ZW5lcigibWVzc2FnZSIsIGhhbmRsZXIpCgogICAgLy8gY2xlYW4gdXAKICAgIHJldHVybiAoKSA9PiB3aW5kb3cucmVtb3ZlRXZlbnRMaXN0ZW5lcigibWVzc2FnZSIsIGhhbmRsZXIpCiAgfSwgW10pIC8vIGVtcHR5IGFycmF5ID0+IHJ1biBvbmx5IG9uY2UKCiAgIGNvbnN0IGVsID0gYygnaWZyYW1lJywge3JlZjogcmVmLCBzdHlsZToge2hlaWdodDogKCBoZWlnaHQgPyAoaGVpZ2h0ICsgJ3B4JykgOiAnYXV0bycpIH0sc3JjRG9jOiBgPCFET0NUWVBFIGh0bWw+CiAgICA8aHRtbD4KICAgICAgPGhlYWQ+CiAgICAgICAgPHRpdGxlPlBsYW50VU1MIFZpZXdlcjwvdGl0bGU+CiAgICAgICAgPHN0eWxlPmh0bWwsIGJvZHkge21hcmdpbjogMDsgcGFkZGluZzogMDsgfSAjcGxhbnR1bWwgeyBkaXNwbGF5OiBibG9jazsgbWF4LXdpZHRoOiAxMDAlOyB9PC9zdHlsZT4KICAgICAgPC9oZWFkPgogICAgICA8Ym9keT4KICAgICAgICA8aW1nIGlkPSJwbGFudHVtbCIgLz4KICAgICAgICA8c2NyaXB0IHR5cGU9Im1vZHVsZSI+CgogICAgICAgIGZ1bmN0aW9uIHJlc2l6ZSgpIHsKICAgICAgICAgIGNvbnN0IG1zZyA9IEpTT04uc3RyaW5naWZ5KHsKICAgICAgICAgICAgc291cmNlOiAiJHtpZH0iLAogICAgICAgICAgICBoZWlnaHQ6IGRvY3VtZW50LmJvZHkuY2xpZW50SGVpZ2h0CiAgICAgICAgICB9KQogICAgICAgICAgY29uc29sZS5sb2coIlJlc2l6ZSBNZXNzYWdlIiwgbXNnKQogICAgICAgICAgd2luZG93LnBhcmVudC5wb3N0TWVzc2FnZShtc2csICcqJyk7CiAgICAgICAgfQogICAgICAgIGFzeW5jIGZ1bmN0aW9uIGVuY29kZVBsYW50VU1MKHNyYykgewogICAgICAgICAgY29uc29sZS5sb2coImVuY29kaW5nIiwgc3JjKQogICAgICAgICAgY29uc3QgbW9kdWxlID0gYXdhaXQgaW1wb3J0KCJodHRwczovL2Nkbi5za3lwYWNrLmRldi9wbGFudHVtbC1lbmNvZGVyIik7CiAgICAgICAgICBjb25zdCBlbmNvZGVkID0gbW9kdWxlLmVuY29kZShzcmMpCiAgICAgICAgICBjb25zb2xlLmxvZyhlbmNvZGVkKQogICAgICAgICAgcmV0dXJuIGVuY29kZWQKICAgICAgICB9CgogICAgICAgIGVuY29kZVBsYW50VU1MKCIke25vZGUudmFsdWUucmVwbGFjZSgvXG4vZywgJ1xcbicpfSIpCiAgICAgICAgLnRoZW4oZW5jb2RlZCA9PiB7CiAgICAgICAgICAgIGNvbnN0IHVybCA9ICJodHRwczovL3BsYW50dW1sLmNvbS9wbGFudHVtbC9zdmcvIiArIGVuY29kZWQKICAgICAgICAgICAgY29uc3QgaW1nID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3BsYW50dW1sJykKICAgICAgICAgICAgaW1nLnNldEF0dHJpYnV0ZSgnc3JjJywgdXJsKQogICAgICAgICAgICBpbWcub25sb2FkID0gcmVzaXplCiAgICAgICAgfSkKCiAgICAgICAgY29uc29sZS5sb2coIlBsYW50VU1MIFZpZXdlci4iKQogICAgICA8L3NjcmlwdD4KICAgICAgPC9ib2R5PgogICAgPC9odG1sPmB9KQogICBjb25zb2xlLmxvZygiUGxhbnRWaWV3ZXIgaWZyYW1lIHJlZjoiLCBlbC5yZWYuY3VycmVudCkKICAgcmV0dXJuIGVsCn0=&#x27;
+Require stack:
+- /home/runner/work/dotlit/dotlit/src/renderer/extractViewers.js
+- /home/runner/work/dotlit/dotlit/src/renderer/index.jsx
+- /home/runner/work/dotlit/dotlit/src/cli/generate.js
+- /home/runner/work/dotlit/dotlit/src/cli/index.js
+- /home/runner/work/dotlit/dotlit/src/index.js</codecell></cell><cell startpos="417:1-9845" endpos="435:4-10306" class="code output"><codecell class="lang-uml local output"><span class="meta"><span class="lang">uml</span><ul class="attributes"></ul></span>Viewer Error: Cannot find module &#x27;data:text/javascript;base64,ZXhwb3J0IGNvbnN0IHZpZXdlciA9ICh7bm9kZSwgUmVhY3R9KSA9PiB7CiAgIGNvbnN0IGMgPSBSZWFjdC5jcmVhdGVFbGVtZW50CiAgIGNvbnN0IHJlZiA9IFJlYWN0LmNyZWF0ZVJlZigpOwogICBjb25zdCBbaGVpZ2h0LCBzZXRIZWlnaHRdID0gUmVhY3QudXNlU3RhdGUobnVsbCkKICAgbGV0IFtpZF0gPSBSZWFjdC51c2VTdGF0ZShNYXRoLnJvdW5kKE1hdGgucmFuZG9tKCkgKiAxMDAwMDAwMCkudG9TdHJpbmcoKSkKCiAgUmVhY3QudXNlRWZmZWN0KCgpID0+IHsKICAgIGNvbnN0IGhhbmRsZXIgPSBldmVudCA9PiB7CiAgICAgIGlmIChyZWYgJiYgcmVmLmN1cnJlbnQgJiYgZXZlbnQgJiYgZXZlbnQuZGF0YSAmJiB0eXBlb2YgZXZlbnQuZGF0YSA9PT0gJ3N0cmluZycpIHsKICAgICAgICAgIGNvbnN0IGRhdGEgPSBKU09OLnBhcnNlKGV2ZW50LmRhdGEpCiAgICAgICAgICBpZiAoaWQgPT09IGRhdGEuc291cmNlKSB7CiAgICAgICAgICAgICBjb25zb2xlLmxvZygiTWVzc2FnZTogIiwgZGF0YSkKICAgICAgICAgICAgIHNldEhlaWdodChkYXRhLmhlaWdodCkKICAgICAgICAgIH0KCiAgICAgIH0KICAgIH0KCiAgICB3aW5kb3cuYWRkRXZlbnRMaXN0ZW5lcigibWVzc2FnZSIsIGhhbmRsZXIpCgogICAgLy8gY2xlYW4gdXAKICAgIHJldHVybiAoKSA9PiB3aW5kb3cucmVtb3ZlRXZlbnRMaXN0ZW5lcigibWVzc2FnZSIsIGhhbmRsZXIpCiAgfSwgW10pIC8vIGVtcHR5IGFycmF5ID0+IHJ1biBvbmx5IG9uY2UKCiAgIGNvbnN0IGVsID0gYygnaWZyYW1lJywge3JlZjogcmVmLCBzdHlsZToge2hlaWdodDogKCBoZWlnaHQgPyAoaGVpZ2h0ICsgJ3B4JykgOiAnYXV0bycpIH0sc3JjRG9jOiBgPCFET0NUWVBFIGh0bWw+CiAgICA8aHRtbD4KICAgICAgPGhlYWQ+CiAgICAgICAgPHRpdGxlPlBsYW50VU1MIFZpZXdlcjwvdGl0bGU+CiAgICAgICAgPHN0eWxlPmh0bWwsIGJvZHkge21hcmdpbjogMDsgcGFkZGluZzogMDsgfSAjcGxhbnR1bWwgeyBkaXNwbGF5OiBibG9jazsgbWF4LXdpZHRoOiAxMDAlOyB9PC9zdHlsZT4KICAgICAgPC9oZWFkPgogICAgICA8Ym9keT4KICAgICAgICA8aW1nIGlkPSJwbGFudHVtbCIgLz4KICAgICAgICA8c2NyaXB0IHR5cGU9Im1vZHVsZSI+CgogICAgICAgIGZ1bmN0aW9uIHJlc2l6ZSgpIHsKICAgICAgICAgIGNvbnN0IG1zZyA9IEpTT04uc3RyaW5naWZ5KHsKICAgICAgICAgICAgc291cmNlOiAiJHtpZH0iLAogICAgICAgICAgICBoZWlnaHQ6IGRvY3VtZW50LmJvZHkuY2xpZW50SGVpZ2h0CiAgICAgICAgICB9KQogICAgICAgICAgY29uc29sZS5sb2coIlJlc2l6ZSBNZXNzYWdlIiwgbXNnKQogICAgICAgICAgd2luZG93LnBhcmVudC5wb3N0TWVzc2FnZShtc2csICcqJyk7CiAgICAgICAgfQogICAgICAgIGFzeW5jIGZ1bmN0aW9uIGVuY29kZVBsYW50VU1MKHNyYykgewogICAgICAgICAgY29uc29sZS5sb2coImVuY29kaW5nIiwgc3JjKQogICAgICAgICAgY29uc3QgbW9kdWxlID0gYXdhaXQgaW1wb3J0KCJodHRwczovL2Nkbi5za3lwYWNrLmRldi9wbGFudHVtbC1lbmNvZGVyIik7CiAgICAgICAgICBjb25zdCBlbmNvZGVkID0gbW9kdWxlLmVuY29kZShzcmMpCiAgICAgICAgICBjb25zb2xlLmxvZyhlbmNvZGVkKQogICAgICAgICAgcmV0dXJuIGVuY29kZWQKICAgICAgICB9CgogICAgICAgIGVuY29kZVBsYW50VU1MKCIke25vZGUudmFsdWUucmVwbGFjZSgvXG4vZywgJ1xcbicpfSIpCiAgICAgICAgLnRoZW4oZW5jb2RlZCA9PiB7CiAgICAgICAgICAgIGNvbnN0IHVybCA9ICJodHRwczovL3BsYW50dW1sLmNvbS9wbGFudHVtbC9zdmcvIiArIGVuY29kZWQKICAgICAgICAgICAgY29uc3QgaW1nID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3BsYW50dW1sJykKICAgICAgICAgICAgaW1nLnNldEF0dHJpYnV0ZSgnc3JjJywgdXJsKQogICAgICAgICAgICBpbWcub25sb2FkID0gcmVzaXplCiAgICAgICAgfSkKCiAgICAgICAgY29uc29sZS5sb2coIlBsYW50VU1MIFZpZXdlci4iKQogICAgICA8L3NjcmlwdD4KICAgICAgPC9ib2R5PgogICAgPC9odG1sPmB9KQogICBjb25zb2xlLmxvZygiUGxhbnRWaWV3ZXIgaWZyYW1lIHJlZjoiLCBlbC5yZWYuY3VycmVudCkKICAgcmV0dXJuIGVsCn0=&#x27;
+Require stack:
+- /home/runner/work/dotlit/dotlit/src/renderer/extractViewers.js
+- /home/runner/work/dotlit/dotlit/src/renderer/index.jsx
+- /home/runner/work/dotlit/dotlit/src/cli/generate.js
+- /home/runner/work/dotlit/dotlit/src/cli/index.js
+- /home/runner/work/dotlit/dotlit/src/index.js</codecell></cell></section>
+<section depth="2" class="" startpos="437:1-10308" endpos="458:4-10661"><cell startpos="437:1-10308" endpos="437:10-10317"><h2 id="errors">Errors</h2></cell><section depth="3" class="" startpos="439:1-10319" endpos="458:4-10661"><cell startpos="439:1-10319" endpos="439:12-10330"><h3 id="runtime">Runtime</h3></cell><cell startpos="441:1-10332" endpos="445:4-10447" class="code"><codecell class="dir-viewer lang-js local"><span class="meta"><span class="lang">js</span><ul class="directives"><li style="color:black;background-color:#cf5332"><span class="directive dir-viewer">viewer</span></li></ul><ul class="attributes"><li style="color:black;background-color:#00dd70"><span class="attribute attr-of">of=testerror</span></li></ul></span><pre><code class="js">export const viewer = ({node}) =&gt; {
+  throw new Error(&quot;Test Error: Broken Viewer&quot;)
+}
+</code></pre></codecell></cell><cell startpos="447:1-10449" endpos="451:4-10567" class="code"><codecell class="dir-viewer lang-js local"><span class="meta"><span class="lang">js</span><ul class="directives"><li style="color:black;background-color:#cf5332"><span class="directive dir-viewer">viewer</span></li></ul><ul class="attributes"><li style="color:black;background-color:#00dd70"><span class="attribute attr-of">of=syntaxerror</span></li></ul></span><pre><code class="js">export const viewer = ({node}) =&gt; {
+  throw new Error(&quot;Syntax Error: Broken Viewer&quot;
+}
+</code></pre></codecell></cell><cell startpos="452:1-10568" endpos="454:4-10608" class="code output"><codecell class="lang-testerror local output"><span class="meta"><span class="lang">testerror</span><ul class="attributes"></ul></span>Viewer Error: Cannot find module &#x27;data:text/javascript;base64,ZXhwb3J0IGNvbnN0IHZpZXdlciA9ICh7bm9kZX0pID0+IHsKICB0aHJvdyBuZXcgRXJyb3IoIlRlc3QgRXJyb3I6IEJyb2tlbiBWaWV3ZXIiKQp9&#x27;
+Require stack:
+- /home/runner/work/dotlit/dotlit/src/renderer/extractViewers.js
+- /home/runner/work/dotlit/dotlit/src/renderer/index.jsx
+- /home/runner/work/dotlit/dotlit/src/cli/generate.js
+- /home/runner/work/dotlit/dotlit/src/cli/index.js
+- /home/runner/work/dotlit/dotlit/src/index.js</codecell></cell><cell startpos="456:1-10610" endpos="458:4-10661" class="code output"><codecell class="lang-syntaxerror local output"><span class="meta"><span class="lang">syntaxerror</span><ul class="attributes"></ul></span>Viewer Error: Cannot find module &#x27;data:text/javascript;base64,ZXhwb3J0IGNvbnN0IHZpZXdlciA9ICh7bm9kZX0pID0+IHsKICB0aHJvdyBuZXcgRXJyb3IoIlN5bnRheCBFcnJvcjogQnJva2VuIFZpZXdlciIKfQ==&#x27;
+Require stack:
+- /home/runner/work/dotlit/dotlit/src/renderer/extractViewers.js
+- /home/runner/work/dotlit/dotlit/src/renderer/index.jsx
+- /home/runner/work/dotlit/dotlit/src/cli/generate.js
+- /home/runner/work/dotlit/dotlit/src/cli/index.js
+- /home/runner/work/dotlit/dotlit/src/index.js</codecell></cell></section></section>
+<section depth="3" class="" startpos="460:1-10663" endpos="467:4-10806"><cell startpos="460:1-10663" endpos="460:11-10673"><h3 id="import">Import</h3></cell><cell startpos="462:1-10675" endpos="467:4-10806" class="code"><codecell class="dir-viewer lang-js local"><span class="meta"><span class="lang">js</span><ul class="directives"><li style="color:black;background-color:#cf5332"><span class="directive dir-viewer">viewer</span></li></ul><ul class="attributes"><li style="color:black;background-color:#00dd70"><span class="attribute attr-of">of=testerror2</span></li></ul></span><pre><code class="js">throw new Error(&quot;Test Error: Broken Viewer&quot;)
+export const viewer = ({node}) =&gt; {
+  return &quot;never&quot;
+}
+</code></pre></codecell></cell></section>
+<section depth="2" class="" startpos="469:1-10808" endpos="492:4-11244"><cell startpos="469:1-10808" endpos="469:21-10828"><h2 id="initial-prototype">Initial prototype</h2></cell><cell startpos="471:1-10830" endpos="492:4-11244" class="code"><codecell class="lang-html local"><span class="meta"><span class="lang">html</span><ul class="attributes"></ul></span><pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Test page&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;script type=&quot;module&quot;&gt;
+
+    async function getViewer(src) {
+      const module = await import(`data:text/javascript;base64,${ btoa(src)}`);
+      return module.viewer;
+    }
+
+    getViewer(`export const viewer = () =&gt; &quot;foo!&quot;`).then(viewer =&gt; {
+       alert(&quot;Got viewer &quot; + !!viewer)
+    })
+
+  &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></codecell></cell></section></div></div><div id="backlinks"><h4>Backlinks (4)</h4><ol><li><a title="Title TBD (execute_code_cells.lit)" href="/execute_code_cells.html">Title TBD (execute_code_cells.lit)</a></li><li><a title="Theme Example" href="/meta/styling_and_themes.html">Theme Example</a></li><li><a title="Title TBD (renderer/renderer.lit)" href="/renderer/renderer.html">Title TBD (renderer/renderer.lit)</a></li><li><a title="Statch Pad" href="/scratch_pad.html">Statch Pad</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
