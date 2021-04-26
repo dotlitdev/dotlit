@@ -14,7 +14,15 @@ true
 ```
 
 ```js
-navigator.serviceWorker.register('/serviceworker.js')
+(async () => {
+  await navigator
+          .serviceWorker
+          .register('/serviceworker.js')
+  if(navigator.serviceWorker.controller)
+    return "Service worker active."
+  else return "please refresh to activate service worker."
+  
+})()
 ```
 
 ```>js ../serviceworker.js
