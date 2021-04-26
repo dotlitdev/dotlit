@@ -37,12 +37,18 @@ const hasViewDirective = meta => {
          || has('below')
 }
 
-export const getViewer = (meta, customViewers = {}) => {
+export const getViewer = async (meta, customViewers = {}) => {
   const view = meta && (meta.viewer || meta.lang)
-  const CustomViewer = customViewers[view] && customViewers[view].viewer
+  const CustomViewer = customViewers[view] 
+                       && customViewers[view] 
+
   const useViewer = view && (meta.viewer || meta.isOutput 
        || hasViewDirective(meta))
-  const viewer = CustomViewer || viewers[view]
+  const viewer = CustomViewer
+                 ? CustomViewer.asyncViewer
+                   ? (await CustomViewer.asyncViewer())
+                   : CustomViewer.viewer
+                 : || viewers[view]
   console.log(`[Viewer] view: ${view} custom: ${!!CustomViewer} use: ${!!useViewer} viewer:`, viewer)
   return view && useViewer && viewer
 }
