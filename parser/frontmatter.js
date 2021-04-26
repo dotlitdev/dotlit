@@ -16,16 +16,15 @@ export default function (...args) {
     return (tree,file) => {
         const matters = []
         visit( tree, 'html', (node, index, parent) => {  
-            console.log( '[FrontMatter]')
             if (node.value.indexOf(FRONTMATTER_OPEN) === 0 && node.value.indexOf(FRONTMATTER_CLOSE) === (node.value.length - FRONTMATTER_CLOSE.length)) {
-                console.log( '[FrontMatter] Raw', node.value)
+                console.log( 'Raw', node.value)
                 const yamlString = node.value.slice(FRONTMATTER_OPEN.length, node.value.length - FRONTMATTER_CLOSE.length).trim()
                 try {
                     node.data = yaml.load(yamlString, 'utf8')
                 } catch(err) {
                     node.data = {error: err.toString()}
                 }
-               console.log( '[FrontMatter] Parsed', yamlString)
+               console.log( 'Parsed', yamlString)
                matters.push(node.data)
             }
         })

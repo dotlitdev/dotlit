@@ -90,7 +90,7 @@ export const Codeblock = props => {
         const above = Viewer && meta.directives && (meta.directives.indexOf('above') >= 0)
         const below = Viewer && meta.directives && (meta.directives.indexOf('below') >= 0)
 
-        console.log("[Codeblock]", meta && meta.raw, props )
+        console.log(meta && meta.raw, props )
         const highlighted = <Highlight language={meta.lang}>{source}</Highlight>
         const metaView = meta && <CodeMeta meta={meta} toggleCollapsed={toggleCollapsed} toggleFullscreen={toggleFullscreen} toggleLocalRemote={toggleLocalRemote} />
         return <codecell className={classes}>

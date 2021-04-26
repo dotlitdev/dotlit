@@ -9,12 +9,13 @@ export const extractViewers = ({fs} = {}) => {
     return async (tree,file) => {
         console.log("[ExtractViewersAndTransformers] Checking for custom viewers and transformers")
         for (const block of selectAll("code", tree)) {
+            // viewer
             if (block.data 
                 && block.data.meta 
                 && block.data.meta.directives
                 && block.data.meta.directives.indexOf('viewer') >= 0) {
                 
-                console.log('Found Viewer', block)
+                console.log('Found Viewer', block.meta)
                 file.data = file.data || {}
                 file.data.viewers = file.data.viewers || {}
                 try {
@@ -30,13 +31,13 @@ export const extractViewers = ({fs} = {}) => {
                     file.message(msg)
                 }
             }
-            // transformers 
+            // transformer
             if (block.data 
                 && block.data.meta 
                 && block.data.meta.directives
                 && block.data.meta.directives.indexOf('transformer') >= 0) {
                 
-                console.log('Found Transformer', block)
+                console.log('Found Transformer', block.meta)
                 file.data = file.data || {}
                 file.data.transformers = file.data.transformers || {}
                 try {

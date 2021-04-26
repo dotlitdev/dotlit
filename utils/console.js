@@ -1,28 +1,7 @@
+import { NoOp } from './functions'
 
-// const {Console} = require('console')
-
-const { NoOp } = require("./functions");
-
-
-const debug_level = () => typeof process !== 'undefined' ? parseInt(process.env.DEBUG || 0, 10) : 99;
-
-// const level = function(level, fn) {
-//   const lvlIndent = Array(level).fill('  ').join('')
-//   return function(...args) {
-//     if (level <= debug_level()) fn(`[lit]{${level}}${lvlIndent}`, ...args)
-//   }
-// }
-
-// // Custom console, which always outputs to stderr,
-// // leaving stdout for program output.
-
-// const custom_console = new Console(typeof process !== 'undefined' ? {
-//   stdout: process.stderr,
-//   stderr: process.stderr
-// } : undefined)
-
-// custom_console.level = level
-// module.exports = custom_console
+const ROOT_NS = '.lit'
+const ROOT_PREFIX = `[${ROOT_NS}] `
 
 const debugKeys = (...args) => {
   let debugStr = ''
@@ -42,6 +21,7 @@ console.log("DEBUG:", debugKeys() )
 
 const shouldLog = ns => {
   const keys = debugKeys()
+  if (keys.indexOf(`-${ns}`) >= 0) return false;
   return keys.indexOf('*') >= 0 || keys.indexOf('All') >= 0 || keys.indexOf(ns) >= 0
 }
 
@@ -52,21 +32,34 @@ const level = function(level, fn) {
   }
 }
 
-const Console = {
-  level: level,
-  log: console.log,
-  dir: console.dir,
-  info: console.info,
-  error: console.error,
-  time: console.time,
-  timeEnd: console.timeEnd,
-  getConsoleForNamespace,
+const prefixArgs = (prefix, fn, self) => {
+  return (...args) => {
+    const newArgs = [prefix, ...args]
+    fn.apply( self, newArgs)
+  }
 }
 
-function getConsoleForNamespace(ns, {disabled} = {}) {
-  if (!disabled && shouldLog(ns)) {
-    return Console
+const getConsole = (ns) => {
+  const prefix = `[${ns}] `
+  return {
+    level: level,
+    log: prefixArgs(prefix, console.log, console),
+    dir: console.dir,
+    info: console.info,
+    error: console.error,
+    time: console.time,
+    timeEnd: console.timeEnd,
+    getConsoleForNamespace,
+  }
+}
+
+export const Console = getConsole(ROOT_NS);
+export function getConsoleForNamespace(ns) {
+  console.log(ROOT_PREFIX + "Getting console for NS:", ns)
+  if (shouldLog(ns)) {
+    return getConsole(ns)
   } else {
+    console.log(ROOT_PREFIX + "Hiding console for NS", ns)
     return {
       level: NoOp,
       log: NoOp,
@@ -78,9 +71,6 @@ function getConsoleForNamespace(ns, {disabled} = {}) {
     }
   }
 }
-
-module.exports = Console
-
 
 
 

@@ -1,7 +1,4 @@
 import unified from 'unified'
-import select from 'unist-util-select'
-import visit from 'unist-util-visit'
-
 import markdown from 'remark-parse'
 import tostring from 'remark-stringify'
 import slug from 'remark-slug'
@@ -14,6 +11,7 @@ import { wikiLinkPlugin } from 'remark-wiki-link'
 import {sections, groupIntoSections, ungroupSections} from './sections'
 import litcodeblocks from './codeblocks'
 import frontmatter from './frontmatter'
+import {mdblocks} from './mdblocks'
 import {resolveLinks, wikiLinkOptions} from './links'
 import { getConsoleForNamespace} from '../utils/console'
 //import { transform as jsTransform } from './transformers/js'
@@ -43,40 +41,13 @@ const baseProcessor = ({litroot, files} = {}) => {
 }
 
 export const processor = ({files, fs, litroot} = {files: []}) => {
-    console.log('[Parser]', {files, fs,litroot})
+    console.log(litroot, {files: !!files, fs: !!fs})
     return baseProcessor({files, litroot})
     // remark-litmd (rehype compatable)
 
     .use(litcodeblocks)
     // Async reparse `md` codeblocks as children
-    .use(function ({baseProcessor}) {
-        return async (tree, file) => {
-            file.data = file.data || {}
-            file.data.__mdcodeblocks = 0
-            const promises = [];
-            visit(tree, 'code', (node,index,parent) => {
-                if (!node.data || !node.data.meta || node.data.meta.lang !== 'md') return;
-
-                const idx = file.data.__mdcodeblocks++
-                // instead of await
-                const p = new Promise(async resolve => {
-                     console.log("[mdcode] - " + idx + "Node: ", node)
-                     const p = baseProcessor()
-                     const parsed = await p.parse( node.value )
-                     const ast = await p.run(parsed)
-                     console.log("[mdcode] - " + idx + " AST: ", ast)
-                     node.children = ast.children
-                     // node.type = 'mdcode'
-                     // delete node.value
-                     resolve()
-                });
-               
-                promises.push(p)
-            });
-            await Promise.all(promises);
-            return null
-        }
-    }, {baseProcessor})
+    .use(mdblocks, {baseProcessor})
     .use(resolveLinks({litroot}))
 
     .use(sections, {})
