@@ -1,7 +1,7 @@
 import { b64EncodeUnicode, b64DecodeUnicode } from './safe-encoders'
 import { getConsoleForNamespace } from './console'
 
-const console = getConsoleForNamespace('fs')
+const console = getConsoleForNamespace('fs/gh')
 
 const getEndpoint = (opts,file) => `https://api.github.com/repos/${opts.username}/${opts.repository}/contents/${file}`
 
