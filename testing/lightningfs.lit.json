@@ -497,9 +497,9 @@
                                     "offset": 341
                                 },
                                 "end": {
-                                    "line": 47,
+                                    "line": 49,
                                     "column": 4,
-                                    "offset": 931
+                                    "offset": 1036
                                 }
                             }
                         }
@@ -589,9 +589,9 @@
                             "offset": 369
                         },
                         "end": {
-                            "line": 43,
+                            "line": 45,
                             "column": 4,
-                            "offset": 917
+                            "offset": 1022
                         }
                     },
                     "data": {
@@ -605,7 +605,7 @@
                             "type": "code",
                             "lang": "js",
                             "meta": "!viewer of=fs",
-                            "value": "\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const [content, setContent] = useState('Loading...')\n  const src = node.data.value.trim()\n  useEffect(async () => {\n    const l = await lit.fs.readdir(src)\n    const list = l.sort().map(x=>{\n       return rc(\"div\", null, x)\n    })\n    setContent(list)\n  },[src])\n\n  return rc('div', {\n    className: 'custom-react-view',\n  }, content)\n}",
+                            "value": "\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const [content, setContent] = useState('Loading...')\n  const src = node.data.value.trim()\n  useEffect(async () => {\n    const l = await lit.fs.readdir(src)\n    const list = l.sort().map(async x=>{\n       const stat = await lit.fs.stat(src + x)\n       console.log(\"STAT\", stat)\n       return rc(\"div\", null, x)\n    })\n    setContent(await Promise.all(list))\n  },[src])\n\n  return rc('div', {\n    className: 'custom-react-view',\n  }, content)\n}",
                             "position": {
                                 "start": {
                                     "line": 22,
@@ -613,9 +613,9 @@
                                     "offset": 369
                                 },
                                 "end": {
-                                    "line": 43,
+                                    "line": 45,
                                     "column": 4,
-                                    "offset": 917
+                                    "offset": 1022
                                 }
                             },
                             "data": {
@@ -658,14 +658,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 45,
+                            "line": 47,
                             "column": 1,
-                            "offset": 919
+                            "offset": 1024
                         },
                         "end": {
-                            "line": 47,
+                            "line": 49,
                             "column": 4,
-                            "offset": 931
+                            "offset": 1036
                         }
                     },
                     "data": {
@@ -682,14 +682,14 @@
                             "value": "/",
                             "position": {
                                 "start": {
-                                    "line": 45,
+                                    "line": 47,
                                     "column": 1,
-                                    "offset": 919
+                                    "offset": 1024
                                 },
                                 "end": {
-                                    "line": 47,
+                                    "line": 49,
                                     "column": 4,
-                                    "offset": 931
+                                    "offset": 1036
                                 }
                             },
                             "data": {
@@ -724,9 +724,9 @@
                     "offset": 341
                 },
                 "end": {
-                    "line": 47,
+                    "line": 49,
                     "column": 4,
-                    "offset": 931
+                    "offset": 1036
                 }
             }
         }
@@ -738,9 +738,9 @@
             "offset": 0
         },
         "end": {
-            "line": 47,
+            "line": 49,
             "column": 4,
-            "offset": 931
+            "offset": 1036
         }
     }
 }
