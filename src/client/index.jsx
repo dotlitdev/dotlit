@@ -112,7 +112,6 @@ console.log(`lit:`, lit)
         contents = `# ${lit.location.src}\n\nFile not *yet* found, edit this to change that.`
     }
   
-    console.log(contents)
     const file = await vfile({path: filepath, contents})
     file.data.times = times
     

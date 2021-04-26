@@ -1,7 +1,7 @@
 import visit from 'unist-util-visit'
 import { getConsoleForNamespace } from '../utils/console'
 
-const console = getConsoleForNamespace('codeblocks')
+const console = getConsoleForNamespace('codeblocks', {disabled: true})
 
 const LSP = '__.litsp__'
 const NONESCAPEDSPACES_REGEX = /([^\\])\s/g

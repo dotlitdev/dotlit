@@ -62,7 +62,7 @@ const Cell = props => {
    
 
     const save = ctx => args => {
-        console.log("Saving cell", pos, src)
+        console.log("Saving cell", pos)
         ctx.setSrc(pos, src)
         setEditing(false)
     }
@@ -99,7 +99,7 @@ const Cell = props => {
 
     return <SelectionContext.Consumer>
         { ctx => {
-            console.log("[Cell] code: ", !!isCodeCell, meta && meta.raw )//, codeNode, {src: codeSource, orig: originalSource}, ctx ) // meta, codeSource)
+            // console.log("[Cell] code: ", !!isCodeCell, meta && meta.raw )//, codeNode, {src: codeSource, orig: originalSource}, ctx ) // meta, codeSource)
             const src = (meta && meta.remote && rawSource)
                         || source(pos, ctx.src)
             return <cell

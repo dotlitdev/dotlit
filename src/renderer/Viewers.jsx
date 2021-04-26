@@ -43,6 +43,6 @@ export const getViewer = (meta, customViewers = {}) => {
   const useViewer = view && (meta.viewer || meta.isOutput 
        || hasViewDirective(meta))
   const viewer = CustomViewer || viewers[view]
-  console.log(`[Viewer] view: ${view} custom: ${!!CustomViewer} use: ${!!useViewer} viewer:`, viewer)
+  console.log(`[Viewer] view: ${view} custom: ${!!CustomViewer} use: ${!!useViewer}`)
   return view && useViewer && viewer
 }

@@ -4,7 +4,7 @@ import flatMap from "unist-util-flatmap";
 import { getConsoleForNamespace } from '../utils/console'
 import { Identity } from "../utils/functions";
 
-const console = getConsoleForNamespace('sections')
+const console = getConsoleForNamespace('sections', {disabled: true})
 
 const firstChild = (node,type) => node.children 
             && node.children[0]

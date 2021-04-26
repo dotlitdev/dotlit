@@ -10,7 +10,7 @@ import {CodeMeta} from '../CodeMeta'
 import { Identity } from '../../utils/functions'
 import { ErrorBoundary } from '../ErrorBoundry'
 
-const console = getConsoleForNamespace('codeblocks')
+const console = getConsoleForNamespace('codeblocks', {disabled: true})
 
 const hasDirective = (meta, d) => {
   return meta && meta.directives && meta.directives.length && meta.directives.indexOf(d) >= 0
