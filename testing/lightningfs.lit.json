@@ -497,9 +497,9 @@
                                     "offset": 341
                                 },
                                 "end": {
-                                    "line": 69,
+                                    "line": 71,
                                     "column": 4,
-                                    "offset": 1358
+                                    "offset": 1389
                                 }
                             }
                         }
@@ -589,9 +589,9 @@
                             "offset": 369
                         },
                         "end": {
-                            "line": 49,
+                            "line": 51,
                             "column": 4,
-                            "offset": 1136
+                            "offset": 1167
                         }
                     },
                     "data": {
@@ -605,7 +605,7 @@
                             "type": "code",
                             "lang": "js",
                             "meta": "!viewer of=fs",
-                            "value": "\nconst sortBy = key = (a, b) => (a[key] > b[key]) ? 1 : -1\n\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const src = meta.ls || node.data.value.trim()\n  const [content, setContent] = useState('Loading...')\n  \n  useEffect(async () => {\n    const l = await lit.fs.readdir(src)\n    const list = l.map(async x=>{\n       const stat = await lit.fs.stat(src + x)\n       // console.log(\"STAT\", stat)\n       return rc(\"div\", {className: stat.type}, `${x}`)\n    })\n    const res = (await Promise.all(list))\n    setContent(res)\n  },[src])\n\n  return rc('div', {\n    className: 'custom-react-view',\n  }, content)\n}",
+                            "value": "\nconst sortBy = key => (a, b) => (a[key] > b[key]) ? 1 : -1\n\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const src = meta.ls || node.data.value.trim()\n  const [content, setContent] = useState('Loading...')\n  \n  useEffect(async () => {\n    const l = await lit.fs.readdir(src)\n    const list = l.map(async x=>{\n       const stat = await lit.fs.stat(src + x)\n       return {f:x,t:stat.type}\n       \n    })\n    const res = (await Promise.all(list)).sortBy('t').map(r => {\n       return rc(\"div\", {className: t.t}, `${r.f}`)\n    })\n    setContent(res)\n  },[src])\n\n  return rc('div', {\n    className: 'custom-react-view',\n  }, content)\n}",
                             "position": {
                                 "start": {
                                     "line": 22,
@@ -613,9 +613,9 @@
                                     "offset": 369
                                 },
                                 "end": {
-                                    "line": 49,
+                                    "line": 51,
                                     "column": 4,
-                                    "offset": 1136
+                                    "offset": 1167
                                 }
                             },
                             "data": {
@@ -658,14 +658,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 53,
+                            "line": 55,
                             "column": 1,
-                            "offset": 1140
+                            "offset": 1171
                         },
                         "end": {
-                            "line": 66,
+                            "line": 68,
                             "column": 4,
-                            "offset": 1341
+                            "offset": 1372
                         }
                     },
                     "data": {
@@ -682,14 +682,14 @@
                             "value": "<style>\n.custom-react-view {\n  font-family: monospace;\n}\n.custom-react-view .dir {\n  font-weight: bold;\n}\n.custom-react-view .dir:after {\n  display:inline;\n  content: \"/\";\n}\n</style>",
                             "position": {
                                 "start": {
-                                    "line": 53,
+                                    "line": 55,
                                     "column": 1,
-                                    "offset": 1140
+                                    "offset": 1171
                                 },
                                 "end": {
-                                    "line": 66,
+                                    "line": 68,
                                     "column": 4,
-                                    "offset": 1341
+                                    "offset": 1372
                                 }
                             },
                             "data": {
@@ -726,14 +726,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 67,
+                            "line": 69,
                             "column": 1,
-                            "offset": 1342
+                            "offset": 1373
                         },
                         "end": {
-                            "line": 69,
+                            "line": 71,
                             "column": 4,
-                            "offset": 1358
+                            "offset": 1389
                         }
                     },
                     "data": {
@@ -750,14 +750,14 @@
                             "value": "",
                             "position": {
                                 "start": {
-                                    "line": 67,
+                                    "line": 69,
                                     "column": 1,
-                                    "offset": 1342
+                                    "offset": 1373
                                 },
                                 "end": {
-                                    "line": 69,
+                                    "line": 71,
                                     "column": 4,
-                                    "offset": 1358
+                                    "offset": 1389
                                 }
                             },
                             "data": {
@@ -798,9 +798,9 @@
                     "offset": 341
                 },
                 "end": {
-                    "line": 69,
+                    "line": 71,
                     "column": 4,
-                    "offset": 1358
+                    "offset": 1389
                 }
             }
         }
@@ -812,9 +812,9 @@
             "offset": 0
         },
         "end": {
-            "line": 69,
+            "line": 71,
             "column": 4,
-            "offset": 1358
+            "offset": 1389
         }
     }
 }
