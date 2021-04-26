@@ -30,12 +30,13 @@ export const viewer = ({node, React}) => {
   const src = node.data.value.trim()
   useEffect(async () => {
     const l = await lit.fs.readdir(src)
-    const list = l.sort().map(async x=>{
+    const list = l.map(async x=>{
        const stat = await lit.fs.stat(src + x)
-       console.log("STAT", stat)
-       return rc("div", null, x)
+       // console.log("STAT", stat)
+       return rc("div", null, `${stat.type}: ${x})
     })
-    setContent(await Promise.all(list))
+    const res = (await Promise.all(list)).sort()
+    setContent(res)
   },[src])
 
   return rc('div', {
