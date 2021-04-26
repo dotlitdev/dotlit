@@ -278,65 +278,14 @@ export const transformer = (node) => {
 ```
 
 ```js
-return lit.file.data.transformers.jsx
+return lit.file.data.transformers.jsx({
+  data: {
+    value: "TBD"
+  }
+})
 ```
-```>txt attached=true updated=1619474708229
-{ data: 
-   { times: 
-      { local: '7 seconds ago',
-        remote: '7 seconds ago',
-        ageMessage: 'now' },
-     frontmatter: { title: 'Statch Pad' },
-     __mdcodeblocks: 3,
-     ast: { type: 'root', children: [Object], position: [Object] },
-     viewers: { foo: [Object] },
-     transformers: { jsx: [Object] },
-     files: 
-      [ [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object] ] },
-  messages: 
-   [ [/scratch_pad.lit:1:1: [Transclude] Failed to load manifest.json as /manifest.json],
-     [/scratch_pad.lit:1:1: Transformer Error: Can't find variable: module],
-     [/scratch_pad.lit:1:1: Transformer Error: Can't find variable: module],
-     [/scratch_pad.lit:1:1: Transformer Error: Can't find variable: module],
-     [/scratch_pad.lit:1:1: Transformer Error: Can't find variable: module] ],
-  history: [ '/scratch_pad.lit' ],
-  cwd: '/',
-  contents: '# 🔥 Scratch ⚠️ Pad 🔬\n\n> Scratch pad to view **Markdown** output and *emergent* behaviour...\n\n<!-- data\ntitle: Statch Pad\n-->\n\n## [Table of Contents](#tableofcontents)\n\n## ✍️ Inline Markdown\n\n### Basics\n\n`.lit` is a plain text document format. Really it\'s just **Markdown**. But with *Sections*, *Cells*, <p>interactive</p> `code` blocks and _meta_ programming over its own `AST`.\n\n### 🔗 Links\n\n[Standard](index) and [Anchored/Section](#basics), [[wiki-links]], inline [references] and [undefined refs], footnotes[^1] and [external](https://exqmple.com) links\n\n\n#### WikiLinks\n\n- [x] with slashes: [[utils/fs]] \n- [ ] with fragments: [[utils/uri#fragments]]\n  - [ ] only fragments like [[#Wikilinks]]\n  - [ ] Hoist fragment \n\n[references]: https://example.com "Example"\n[^1]: footnote \n    With multi line `content`\n\n## 🧭 Headings (h2)\n### Sub headings (h3)\n#### little (h4) {#custom-id}\n##### tiny (h5)\n###### smallest (h6)\n####### tooooo small (h6+)\n\n## ☑️ Lists\n\n### Basics\n\n* List\n  - styles\n  - [ ] not done\n    - [x] done\n  1. Foo\n     1. Bar\n     1. Qux\n\n### Lists with nested blocks\n\n- # List Item heading\n  \n  With additional \n\n  > block elements\n\n      Content...\n\n\n## ✳️ Code\n\n### Basic code blocks\n\nLines indented with 4 spaces, are plain code blocks without ~any syntax highlighting~ or additional behaviour.\n\n    A plain code block\n\n### Fenced code blocks\n\nBlocks preceded and suffixed with 3 backticks ie "```" with additional metadata being placed after the backticks on the opening line.\n\n    ```lang filename.ext #tag !directive attr=val\n\n\n    \n    ```\n\nPerhaps we need indentation inside fenced blocks to allow nesting fenced blocks (for the reader) without excessive escaping, see below:\n\n```md\n    ```js\n    Does this work?\n    ```\n```\n\n\n\n```js dummy/example.js #example #test !exec !above repl=node\n// A named and configured fenced code block which is to be executed in a yet to be implemented nodejs repl.\n```\n```>text attached=true\n# has an attached output which will be replaced on execution\n```\n\n```uri !inline\nhttps://example.com\n```\n\n#### Tags and directives\n\nReserved directives include: `!inline` `!above` or for example `!onload` ...\n\n- [x] inline\n- [x] above\n- [x] below\n- [x] collapse\n- [x] viewer\n\n```html !below\n<details>\n<summary>\n  inline <em>HTML</em>\n</summary>\n<p>An example details and summary tag</p>\n</details>\n```\n\n#### Attributes\n\nFor now the only reserved attributes are `viewer` see [Viewers](#viewers) and `repl` used to define what remote REPL to execute code against.\n\n```txt repl=echo\npipe to echo binary\n```\n\n~Potentially to include `updatedAt` and or a reference to source cell for outputs in order to maintain a connection with code that produced the output.~\n\nCurrently implemented as `attached=true` and `updated=unixtimestamp`.\n\n#### Outputs and Transcludes\n\nMetadata which references a source `lang < ./file.ext` will be transcluded into the view.\n\n```lit < dummy/🔥.lit\nwill be replaced by above source\n```\n\nMetadata which defines a filename `lang file.ext` will be mirrored to the filesystem.\n\n```svg dummy/example.svg !inline\n<?xml version="1.0" standalone="no"?>\n\n<svg width="120" height="120" version="1.1"\n  xmlns="http://www.w3.org/2000/svg">\n  <defs>\n      <radialGradient id="Gradient"\n            cx="0.5" cy="0.5" r="0.5" fx="0.25" fy="0.25">\n        <stop offset="0%" stop-color="red"/>\n        <stop offset="100%" stop-color="blue"/>\n      </radialGradient>\n  </defs>\n\n  <rect x="10" y="10" rx="15" ry="15" width="100" height="100"\n        fill="url(#Gradient)" stroke="black" stroke-width="2"/>\n\n  <circle cx="60" cy="60" r="50" fill="transparent" stroke="white" stroke-width="2"/>\n  <circle cx="35" cy="35" r="2" fill="white" stroke="white"/>\n  <circle cx="60" cy="60" r="2" fill="white" stroke="white"/>\n  <text x="38" y="40" fill="white" font-family="sans-serif" font-size="10pt">(fx,fy)</text>\n  <text x="63" y="63" fill="white" font-family="sans-serif" font-size="10pt">(cx,cy)</text>\n\n</svg>\n```\n\nUsing filename and transclude presents problems as to which one you\'re viewing and which one you edit, see also caching (both at the remote and local fs) See [[testing/Local & Remote files]]\n\n```txt dummy/plain.txt < dummy/plain.txt\nB\nC\n```\n\nMetadata which defines an output `lang > file.ext` will output to the filesystem and the document when executed[^2].\n\n[^2]: `REPL` still to be reimplemented. See [[REPL/index]]\n\n```csv > dummy/data.csv\nid,name,amount\n17494,Alice,9001\n245,Bob,2000\n```\n```>csv dummy/data.csv\nid,name,amount\n17494,Alice,9001\n245,Bob,2000\n```\n\n#### Viewers\n\nWhen a cell is an Output or has the directive `!inline` and a lang, ~file-extension~, or the explicit `viewer=xxx` attribute, for which a Viewer exists then the source will be shown using the viewer and plain text source only visible on edit.\n\nSee [styles](meta/styling_and_themes.lit#viewers)\n\n```>json\n{"json": "viewer tbd"}\n```\n\n```>svg\n<svg width="100" height="100">\n  <circle cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow" />\n</svg>\n```\n\n```>uri\nhttps://example.com\n```\n\n```json !inline viewer=graph < manifest.json\n\n```\n\n```md !inline\n*Markdown* Viewer **TBD**\n```\n\n```>md !info\n👀 ***Markdown*** Viewer.\n```\n\n```js viewer=script !inline\nconfirm("It lives 🌱 from ")\n```\n```>txt updated=1618957537075\nundefined\n```\n\nThe above has a strange behaviour, in that it only executes the `static` value, and hydration with a different (local) value is ignored.\n\n```css !inline viewer=style\n#header { color: green; }\nh1,h2,h3,h4,h5,h6 {\n  position: sticky;\n  top:0;\n}\n```\n\n##### Custom Viewers\n\nSee [[renderer/viewers]]\n\n```js !viewer of=foo\nexport const viewer = () => {\n  return "Foooooooooo!"\n}\n```\n\n```foo !inline\nBar \n```\n\n\nSuggested or planned viewers\n\n- [ ] JSON\n- [x] HTML (inclined)\n- [x] SVG (basically the above)\n- [ ] CSV: Table\n- [x] URI: Iframe\n- [x] CSS: Style\n- [x] JS: Script\n- [ ] UML\n\n#### Transformers\n\nAs opposed to viewers which change how a source file is viewed, a `transformer` looks at an input and output pair and sees if it knows how to convert between the two `lang` ie `styl > css` or `ts > js` etc\n\nSee [[execute `code` cells]] for existing `ts` and `jsx` transpilation to `js` via Babel.\n\nMock:\n\n```js !transformer of=jsx\nexport const transformer = (node) => {\n  const src = node && node.data && node.data.value  \n  return `// TODO: babelify. \\n${src}`\n}\n```\n\n```js\nreturn lit.file\n```\n\n## Misc\n\n[[throwaway/codevaluebug]]',
-  result: 
-   { '$$typeof': {},
-     type: {},
-     key: null,
-     ref: null,
-     props: { children: [Object] },
-     _owner: null,
-     _store: {} } }
+```>txt attached=true updated=1619474747540
+{ transformer: [Function: transformer] }
 ```
 
 ## Misc
