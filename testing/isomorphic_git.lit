@@ -201,6 +201,8 @@ undefined
 ### Log
 
 ```js > md !inline
+const indentLines = str => str.split('\n').map( line => `      ${line}`).join('\n')
+
 return (async ()=> {
   let commits = await lit.git.log({
      fs: lit.lfs, 
@@ -209,10 +211,10 @@ return (async ()=> {
   })
   return "**Log**\n" + commits.map( x => `1. **\`${x.oid.slice(0,6)}\`**
 
-      ${x.commit.message}`).join('\n')
+${indentLines(x.commit.message)}`).join('\n')
 })()
 ```
-```>md !inline attached=true updated=1619425902457
+```>md !inline attached=true updated=1619425943261
 **Log**
 1. **`d738da`**
       Auto commit testing/isomorphic_git.lit
