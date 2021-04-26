@@ -18,12 +18,27 @@ return lit.fs.readdir('/')
 ```
 ## Useful? an `fs` viewer
 
+
 ```js !viewer of=fs
-export const viewer = ({node}) => {
- return (async args => {
-  const ls = await lit.fs.readdir('/')
-  return ls.join(', ')
- })()
+
+export const viewer = ({node, React}) => {
+  const rc = React.createElement
+  const {useState, useEffect} = React
+  const meta = node.properties 
+               && node.properties.meta
+  const [content, setContent] = useState('Loading...')
+  const src = node.data.value
+  useEffect(async () => {
+    const l = await lit.fs.readdir('/')
+    const list = l.map(x=>{
+       return rc("div", null, x)
+    })
+    setContent(list)
+  },[src])
+
+  return rc('div', {
+    className: 'custom-react-view',
+  }, content)
 }
 ```
 

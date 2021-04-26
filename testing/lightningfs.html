@@ -1,18 +1,32 @@
 <html data-reactroot=""><head><title>lightningfs</title><meta name="litsrc" value="testing/lightningfs.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="18:4-340"><cell startpos="1:1-0" endpos="3:47-62"><h1 id="lightning-fs">Lightning FS</h1><p><a href="https://github.com/isomorphic-git/lightning-fs">https://github.com/isomorphic-git/lightning-fs<span class="linkIcon">↗</span></a></p></cell><section depth="2" class="" startpos="5:1-64" endpos="18:4-340"><cell startpos="5:1-64" endpos="7:94-169"><h2 id="bugs-">Bugs 🐜</h2><ul class="contains-task-list">
 <li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <!-- -->wikiLinks and 404 behaviour results in incorrect/dangling lfs due to incorrect baseUrl.</li>
 </ul></cell><cell startpos="8:1-170" endpos="18:4-340" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return lit.fs.readdir(&#x27;/&#x27;)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">13.6 hours ago</span></span></span><output><pre><code class="txt">[ &#x27;renderer&#x27;,
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">13.7 hours ago</span></span></span><output><pre><code class="txt">[ &#x27;renderer&#x27;,
   &#x27;testing&#x27;,
   &#x27;index.lit&#x27;,
   &#x27;.git&#x27;,
   &#x27;wiki-links.lit&#x27;,
   &#x27;404.lit&#x27; ]
 </code></pre></output></codecell></cell></section></section>
-<section depth="2" class="" startpos="19:1-341" endpos="32:4-539"><cell startpos="19:1-341" endpos="19:26-366"><h2 id="useful-an-fs-viewer">Useful? an <code>fs</code> viewer</h2></cell><cell startpos="21:1-368" endpos="28:4-522" class="code"><codecell class="dir-viewer lang-js local"><span class="meta"><span class="lang">js</span><ul class="directives"><li style="color:black;background-color:#cf5332"><span class="directive dir-viewer">viewer</span></li></ul><ul class="attributes"><li style="color:black;background-color:#00dd70"><span class="attribute attr-of">of=fs</span></li></ul></span><pre><code class="js">export const viewer = ({node}) =&gt; {
- return (async args =&gt; {
-  const ls = await lit.fs.readdir(&#x27;/&#x27;)
-  return ls.join(&#x27;, &#x27;)
- })()
+<section depth="2" class="" startpos="19:1-341" endpos="47:4-920"><cell startpos="19:1-341" endpos="19:26-366"><h2 id="useful-an-fs-viewer">Useful? an <code>fs</code> viewer</h2></cell><cell startpos="22:1-369" endpos="43:4-903" class="code"><codecell class="dir-viewer lang-js local"><span class="meta"><span class="lang">js</span><ul class="directives"><li style="color:black;background-color:#cf5332"><span class="directive dir-viewer">viewer</span></li></ul><ul class="attributes"><li style="color:black;background-color:#00dd70"><span class="attribute attr-of">of=fs</span></li></ul></span><pre><code class="js">
+export const viewer = ({node, React}) =&gt; {
+  const rc = React.createElement
+  const {useState, useEffect} = React
+  const meta = node.properties 
+               &amp;&amp; node.properties.meta
+  const [content, setContent] = useState(&#x27;Loading...&#x27;)
+  const src = node.data.value
+  useEffect(async () =&gt; {
+    const l = await lit.fs.readdir(&#x27;/&#x27;)
+    const list = l.map(x=&gt;{
+       return rc(&quot;div&quot;, null, x)
+    })
+    setContent(list)
+  },[src])
+
+  return rc(&#x27;div&#x27;, {
+    className: &#x27;custom-react-view&#x27;,
+  }, content)
 }
-</code></pre></codecell></cell><cell startpos="30:1-524" endpos="32:4-539" class="code output"><codecell class="lang-fs local output"><span class="meta"><span class="lang">fs</span><ul class="attributes"></ul></span><output><pre><code class="fs">ls .
+</code></pre></codecell></cell><cell startpos="45:1-905" endpos="47:4-920" class="code output"><codecell class="lang-fs local output"><span class="meta"><span class="lang">fs</span><ul class="attributes"></ul></span><output><pre><code class="fs">ls .
 </code></pre></output></codecell></cell></section></div></div><div id="backlinks"><h4>Backlinks (3)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li><li><a title="Title TBD (testing/isomorphic_git.lit)" href="/testing/isomorphic_git.html">Title TBD (testing/isomorphic_git.lit)</a></li><li><a title="Title TBD (testing/local_remote_files.lit)" href="/testing/local_remote_files.html">Title TBD (testing/local_remote_files.lit)</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
