@@ -1,6 +1,6 @@
 return (async args => {
 
-  const React = (await import('https://cdn.skypack.dev/react')).default
+  const React = lit.utils.React
   const { useState } = React
   
   const Clicker = props => {
