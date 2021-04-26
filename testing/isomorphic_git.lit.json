@@ -788,9 +788,9 @@
                                     "offset": 205
                                 },
                                 "end": {
-                                    "line": 78,
+                                    "line": 75,
                                     "column": 4,
-                                    "offset": 1889
+                                    "offset": 1809
                                 }
                             }
                         }
@@ -943,9 +943,9 @@
                                             "offset": 437
                                         },
                                         "end": {
-                                            "line": 78,
+                                            "line": 75,
                                             "column": 4,
-                                            "offset": 1889
+                                            "offset": 1809
                                         }
                                     }
                                 }
@@ -998,14 +998,14 @@
                             "type": "cell",
                             "position": {
                                 "start": {
-                                    "line": 67,
+                                    "line": 18,
                                     "column": 1,
-                                    "offset": 1603
+                                    "offset": 449
                                 },
                                 "end": {
-                                    "line": 78,
+                                    "line": 66,
                                     "column": 4,
-                                    "offset": 1889
+                                    "offset": 1602
                                 }
                             },
                             "data": {
@@ -1017,8 +1017,90 @@
                             "children": [
                                 {
                                     "type": "code",
-                                    "lang": ">txt",
-                                    "meta": "attached=true updated=1619425559711",
+                                    "lang": "js",
+                                    "meta": "< ../utils/git-commit-all.js",
+                                    "value": "const fs = lit.lfs \nconst dir = lit.location.root\nconst git = lit.git\nconst FILE = 0, WORKDIR = 2, STAGE = 3\n\nconst unstaged = row => {\n  return row[WORKDIR] !== row[STAGE]\n}\n\n// initially, because it's on every change \n// a commit will mostly be for a single\n// file at a time the immediate exception \n// being when a file with output files \n// is edited, in which case the commit \n// includes those files.\n\nconst onSave = async (filename) => {\n  const now = (new Date()).toISOString()\n\n  // get/list unstaged files\n  const status = await git.statusMatrix({ fs,dir})\n  const files = status\n                .filter( unstaged )\n                .map(row => row[FILE])\n\n  // stage everything\n  await git.add({fs, dir, filepath: '.'})\n\n  // message \n  const message = `Auto commit ${filename}\n\nat ${now} includes the following ${files.length} files:\n${files.map(f=> \"- \" + f).join('\\n')}`\n\n  // commit\n  const sha = await git.commit({fs, dir,\n    message,\n    author: {\n      name: 'dotlit',\n      email: 'bit@dotlit.org'\n    }\n  })\n  return `Committed ${sha.slice(0,6)} \n${message}`\n}\n\nreturn onSave(lit.location.src)",
+                                    "position": {
+                                        "start": {
+                                            "line": 18,
+                                            "column": 1,
+                                            "offset": 449
+                                        },
+                                        "end": {
+                                            "line": 66,
+                                            "column": 4,
+                                            "offset": 1602
+                                        }
+                                    },
+                                    "data": {
+                                        "meta": {
+                                            "attrs": {},
+                                            "lang": "js",
+                                            "isOutput": false,
+                                            "hasOutput": false,
+                                            "hasSource": true,
+                                            "source": {
+                                                "attrs": {},
+                                                "lang": "txt",
+                                                "filename": "../utils/git-commit-all.js",
+                                                "isOutput": false,
+                                                "hasOutput": false,
+                                                "hasSource": false,
+                                                "raw": "txt ../utils/git-commit-all.js"
+                                            },
+                                            "raw": "js < ../utils/git-commit-all.js",
+                                            "fromSource": "../utils/git-commit-all.js"
+                                        },
+                                        "hProperties": {
+                                            "className": "",
+                                            "meta": {
+                                                "attrs": {},
+                                                "lang": "js",
+                                                "isOutput": false,
+                                                "hasOutput": false,
+                                                "hasSource": true,
+                                                "source": {
+                                                    "attrs": {},
+                                                    "lang": "txt",
+                                                    "filename": "../utils/git-commit-all.js",
+                                                    "isOutput": false,
+                                                    "hasOutput": false,
+                                                    "hasSource": false,
+                                                    "raw": "txt ../utils/git-commit-all.js"
+                                                },
+                                                "raw": "js < ../utils/git-commit-all.js",
+                                                "fromSource": "../utils/git-commit-all.js"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "cell",
+                            "position": {
+                                "start": {
+                                    "line": 67,
+                                    "column": 1,
+                                    "offset": 1603
+                                },
+                                "end": {
+                                    "line": 75,
+                                    "column": 4,
+                                    "offset": 1809
+                                }
+                            },
+                            "data": {
+                                "hName": "cell",
+                                "hProperties": {
+                                    "class": "cell"
+                                }
+                            },
+                            "children": [
+                                {
+                                    "type": "code",
+                                    "lang": "txt",
+                                    "meta": "updated=1619425559711",
                                     "value": "Committed d738da \nAuto commit testing/isomorphic_git.lit\n\nat: 2021-04-26T08:25:54.893Z\nincludes the following 2 files:\n- testing/isomorphic_git.lit\n- utils/git-commit-all.js",
                                     "position": {
                                         "start": {
@@ -1027,94 +1109,35 @@
                                             "offset": 1603
                                         },
                                         "end": {
-                                            "line": 78,
+                                            "line": 75,
                                             "column": 4,
-                                            "offset": 1889
+                                            "offset": 1809
                                         }
                                     },
                                     "data": {
                                         "meta": {
                                             "attrs": {
-                                                "attached": "true",
                                                 "updated": "1619425559711"
                                             },
                                             "lang": "txt",
-                                            "attached": "true",
                                             "updated": "1619425559711",
-                                            "isOutput": true,
+                                            "isOutput": false,
                                             "hasOutput": false,
                                             "hasSource": false,
-                                            "raw": ">txt attached=true updated=1619425559711"
+                                            "raw": "txt updated=1619425559711"
                                         },
                                         "hProperties": {
                                             "className": "",
                                             "meta": {
                                                 "attrs": {
-                                                    "attached": "true",
                                                     "updated": "1619425559711"
                                                 },
                                                 "lang": "txt",
-                                                "attached": "true",
                                                 "updated": "1619425559711",
-                                                "isOutput": true,
+                                                "isOutput": false,
                                                 "hasOutput": false,
                                                 "hasSource": false,
-                                                "raw": ">txt attached=true updated=1619425559711"
-                                            }
-                                        }
-                                    }
-                                },
-                                {
-                                    "type": "code",
-                                    "lang": ">txt",
-                                    "meta": "attached=true updated=1619439253165 !error",
-                                    "value": "undefined",
-                                    "position": {
-                                        "start": {
-                                            "line": 76,
-                                            "column": 1,
-                                            "offset": 1825
-                                        },
-                                        "end": {
-                                            "line": 78,
-                                            "column": 4,
-                                            "offset": 1889
-                                        }
-                                    },
-                                    "data": {
-                                        "meta": {
-                                            "attrs": {
-                                                "attached": "true",
-                                                "updated": "1619439253165"
-                                            },
-                                            "lang": "txt",
-                                            "attached": "true",
-                                            "updated": "1619439253165",
-                                            "directives": [
-                                                "error"
-                                            ],
-                                            "isOutput": true,
-                                            "hasOutput": false,
-                                            "hasSource": false,
-                                            "raw": ">txt attached=true updated=1619439253165 !error"
-                                        },
-                                        "hProperties": {
-                                            "className": "",
-                                            "meta": {
-                                                "attrs": {
-                                                    "attached": "true",
-                                                    "updated": "1619439253165"
-                                                },
-                                                "lang": "txt",
-                                                "attached": "true",
-                                                "updated": "1619439253165",
-                                                "directives": [
-                                                    "error"
-                                                ],
-                                                "isOutput": true,
-                                                "hasOutput": false,
-                                                "hasSource": false,
-                                                "raw": ">txt attached=true updated=1619439253165 !error"
+                                                "raw": "txt updated=1619425559711"
                                             }
                                         }
                                     }
@@ -1129,9 +1152,9 @@
                             "offset": 437
                         },
                         "end": {
-                            "line": 78,
+                            "line": 75,
                             "column": 4,
-                            "offset": 1889
+                            "offset": 1809
                         }
                     }
                 }
@@ -1143,9 +1166,9 @@
                     "offset": 205
                 },
                 "end": {
-                    "line": 78,
+                    "line": 75,
                     "column": 4,
-                    "offset": 1889
+                    "offset": 1809
                 }
             }
         },
@@ -1164,14 +1187,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 79,
+                            "line": 76,
                             "column": 1,
-                            "offset": 1890
+                            "offset": 1810
                         },
                         "end": {
-                            "line": 79,
+                            "line": 76,
                             "column": 21,
-                            "offset": 1910
+                            "offset": 1830
                         }
                     },
                     "data": {
@@ -1182,14 +1205,14 @@
                         "section": {
                             "position": {
                                 "start": {
-                                    "line": 79,
+                                    "line": 76,
                                     "column": 1,
-                                    "offset": 1890
+                                    "offset": 1810
                                 },
                                 "end": {
-                                    "line": 152,
+                                    "line": 149,
                                     "column": 4,
-                                    "offset": 3382
+                                    "offset": 3302
                                 }
                             }
                         }
@@ -1204,28 +1227,28 @@
                                     "value": "Investigating API",
                                     "position": {
                                         "start": {
-                                            "line": 79,
+                                            "line": 76,
                                             "column": 4,
-                                            "offset": 1893
+                                            "offset": 1813
                                         },
                                         "end": {
-                                            "line": 79,
+                                            "line": 76,
                                             "column": 21,
-                                            "offset": 1910
+                                            "offset": 1830
                                         }
                                     }
                                 }
                             ],
                             "position": {
                                 "start": {
-                                    "line": 79,
+                                    "line": 76,
                                     "column": 1,
-                                    "offset": 1890
+                                    "offset": 1810
                                 },
                                 "end": {
-                                    "line": 79,
+                                    "line": 76,
                                     "column": 21,
-                                    "offset": 1910
+                                    "offset": 1830
                                 }
                             },
                             "data": {
@@ -1242,14 +1265,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 82,
+                            "line": 79,
                             "column": 1,
-                            "offset": 1913
+                            "offset": 1833
                         },
                         "end": {
-                            "line": 91,
+                            "line": 88,
                             "column": 4,
-                            "offset": 2079
+                            "offset": 1999
                         }
                     },
                     "data": {
@@ -1266,14 +1289,14 @@
                             "value": "return lit.fs\n       .readFile('/.git/HEAD', {\n          encoding: 'utf8'\n        })",
                             "position": {
                                 "start": {
-                                    "line": 82,
+                                    "line": 79,
                                     "column": 1,
-                                    "offset": 1913
+                                    "offset": 1833
                                 },
                                 "end": {
-                                    "line": 91,
+                                    "line": 88,
                                     "column": 4,
-                                    "offset": 2079
+                                    "offset": 1999
                                 }
                             },
                             "data": {
@@ -1305,14 +1328,14 @@
                             "value": "ref: refs/heads/master\n",
                             "position": {
                                 "start": {
-                                    "line": 88,
+                                    "line": 85,
                                     "column": 1,
-                                    "offset": 2008
+                                    "offset": 1928
                                 },
                                 "end": {
-                                    "line": 91,
+                                    "line": 88,
                                     "column": 4,
-                                    "offset": 2079
+                                    "offset": 1999
                                 }
                             },
                             "data": {
@@ -1353,14 +1376,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 92,
+                            "line": 89,
                             "column": 1,
-                            "offset": 2080
+                            "offset": 2000
                         },
                         "end": {
-                            "line": 102,
+                            "line": 99,
                             "column": 4,
-                            "offset": 2254
+                            "offset": 2174
                         }
                     },
                     "data": {
@@ -1377,14 +1400,14 @@
                             "value": "return (async () => {\n  return await lit.git.init({\n    fs: lit.lfs, \n    dir: lit.location.root\n  })\n})()",
                             "position": {
                                 "start": {
-                                    "line": 92,
+                                    "line": 89,
                                     "column": 1,
-                                    "offset": 2080
+                                    "offset": 2000
                                 },
                                 "end": {
-                                    "line": 102,
+                                    "line": 99,
                                     "column": 4,
-                                    "offset": 2254
+                                    "offset": 2174
                                 }
                             },
                             "data": {
@@ -1416,14 +1439,14 @@
                             "value": "undefined",
                             "position": {
                                 "start": {
-                                    "line": 100,
+                                    "line": 97,
                                     "column": 1,
-                                    "offset": 2197
+                                    "offset": 2117
                                 },
                                 "end": {
-                                    "line": 102,
+                                    "line": 99,
                                     "column": 4,
-                                    "offset": 2254
+                                    "offset": 2174
                                 }
                             },
                             "data": {
@@ -1475,14 +1498,14 @@
                             "type": "cell",
                             "position": {
                                 "start": {
-                                    "line": 103,
+                                    "line": 100,
                                     "column": 1,
-                                    "offset": 2255
+                                    "offset": 2175
                                 },
                                 "end": {
-                                    "line": 103,
+                                    "line": 100,
                                     "column": 11,
-                                    "offset": 2265
+                                    "offset": 2185
                                 }
                             },
                             "data": {
@@ -1493,14 +1516,14 @@
                                 "section": {
                                     "position": {
                                         "start": {
-                                            "line": 103,
+                                            "line": 100,
                                             "column": 1,
-                                            "offset": 2255
+                                            "offset": 2175
                                         },
                                         "end": {
-                                            "line": 152,
+                                            "line": 149,
                                             "column": 4,
-                                            "offset": 3382
+                                            "offset": 3302
                                         }
                                     }
                                 }
@@ -1515,28 +1538,28 @@
                                             "value": "Status",
                                             "position": {
                                                 "start": {
-                                                    "line": 103,
+                                                    "line": 100,
                                                     "column": 5,
-                                                    "offset": 2259
+                                                    "offset": 2179
                                                 },
                                                 "end": {
-                                                    "line": 103,
+                                                    "line": 100,
                                                     "column": 11,
-                                                    "offset": 2265
+                                                    "offset": 2185
                                                 }
                                             }
                                         }
                                     ],
                                     "position": {
                                         "start": {
-                                            "line": 103,
+                                            "line": 100,
                                             "column": 1,
-                                            "offset": 2255
+                                            "offset": 2175
                                         },
                                         "end": {
-                                            "line": 103,
+                                            "line": 100,
                                             "column": 11,
-                                            "offset": 2265
+                                            "offset": 2185
                                         }
                                     },
                                     "data": {
@@ -1553,14 +1576,14 @@
                             "type": "cell",
                             "position": {
                                 "start": {
-                                    "line": 105,
+                                    "line": 102,
                                     "column": 1,
-                                    "offset": 2267
+                                    "offset": 2187
                                 },
                                 "end": {
-                                    "line": 116,
+                                    "line": 113,
                                     "column": 4,
-                                    "offset": 2530
+                                    "offset": 2450
                                 }
                             },
                             "data": {
@@ -1577,14 +1600,14 @@
                                     "value": "return (async () => {\n  return lit.location.src + \" : \" + await lit.git.status({\n    fs: lit.lfs, \n    dir: lit.location.root, \n    filepath: lit.location.src \n  })\n})()",
                                     "position": {
                                         "start": {
-                                            "line": 105,
+                                            "line": 102,
                                             "column": 1,
-                                            "offset": 2267
+                                            "offset": 2187
                                         },
                                         "end": {
-                                            "line": 116,
+                                            "line": 113,
                                             "column": 4,
-                                            "offset": 2530
+                                            "offset": 2450
                                         }
                                     },
                                     "data": {
@@ -1616,14 +1639,14 @@
                                     "value": "testing/isomorphic_git.lit : *added",
                                     "position": {
                                         "start": {
-                                            "line": 114,
+                                            "line": 111,
                                             "column": 1,
-                                            "offset": 2447
+                                            "offset": 2367
                                         },
                                         "end": {
-                                            "line": 116,
+                                            "line": 113,
                                             "column": 4,
-                                            "offset": 2530
+                                            "offset": 2450
                                         }
                                     },
                                     "data": {
@@ -1664,14 +1687,14 @@
                             "type": "cell",
                             "position": {
                                 "start": {
-                                    "line": 117,
+                                    "line": 114,
                                     "column": 1,
-                                    "offset": 2531
+                                    "offset": 2451
                                 },
                                 "end": {
-                                    "line": 132,
+                                    "line": 129,
                                     "column": 4,
-                                    "offset": 2942
+                                    "offset": 2862
                                 }
                             },
                             "data": {
@@ -1688,14 +1711,14 @@
                                     "value": "return (async () => {\n  return await lit.git.statusMatrix({\n    fs: lit.lfs, \n    dir: lit.location.root, \n  })\n})()",
                                     "position": {
                                         "start": {
-                                            "line": 117,
+                                            "line": 114,
                                             "column": 1,
-                                            "offset": 2531
+                                            "offset": 2451
                                         },
                                         "end": {
-                                            "line": 132,
+                                            "line": 129,
                                             "column": 4,
-                                            "offset": 2942
+                                            "offset": 2862
                                         }
                                     },
                                     "data": {
@@ -1727,14 +1750,14 @@
                                     "value": "[ [ 'index.lit', 1, 1, 1 ],\n  [ 'renderer/viewers.lit', 1, 1, 1 ],\n  [ 'testing/isomorphic_git.lit', 1, 2, 1 ],\n  [ 'testing/lightningfs.lit', 1, 1, 1 ],\n  [ 'testing/local_remote_files.lit', 1, 1, 1 ],\n  [ 'wiki-links.lit', 1, 1, 1 ] ]",
                                     "position": {
                                         "start": {
-                                            "line": 125,
+                                            "line": 122,
                                             "column": 1,
-                                            "offset": 2658
+                                            "offset": 2578
                                         },
                                         "end": {
-                                            "line": 132,
+                                            "line": 129,
                                             "column": 4,
-                                            "offset": 2942
+                                            "offset": 2862
                                         }
                                     },
                                     "data": {
@@ -1775,14 +1798,14 @@
                             "type": "cell",
                             "position": {
                                 "start": {
-                                    "line": 136,
+                                    "line": 133,
                                     "column": 1,
-                                    "offset": 2946
+                                    "offset": 2866
                                 },
                                 "end": {
-                                    "line": 152,
+                                    "line": 149,
                                     "column": 4,
-                                    "offset": 3382
+                                    "offset": 3302
                                 }
                             },
                             "data": {
@@ -1799,14 +1822,14 @@
                                     "value": "const fs = lit.lfs \nconst dir = lit.location.root\nconst git = lit.git\nconst FILE = 0, WORKDIR = 2, STAGE = 3\n\n// list files with unstaged changes\nreturn (async () => {\n  const filenames = (await git.statusMatrix({ fs,dir}))\n  .filter(row => row[WORKDIR] !== row[STAGE])\n  .map(row => row[FILE])\n  return filenames\n})()",
                                     "position": {
                                         "start": {
-                                            "line": 136,
+                                            "line": 133,
                                             "column": 1,
-                                            "offset": 2946
+                                            "offset": 2866
                                         },
                                         "end": {
-                                            "line": 152,
+                                            "line": 149,
                                             "column": 4,
-                                            "offset": 3382
+                                            "offset": 3302
                                         }
                                     },
                                     "data": {
@@ -1838,14 +1861,14 @@
                                     "value": "[ 'testing/isomorphic_git.lit', 'utils/git-commit-all.js' ]",
                                     "position": {
                                         "start": {
-                                            "line": 150,
+                                            "line": 147,
                                             "column": 1,
-                                            "offset": 3275
+                                            "offset": 3195
                                         },
                                         "end": {
-                                            "line": 152,
+                                            "line": 149,
                                             "column": 4,
-                                            "offset": 3382
+                                            "offset": 3302
                                         }
                                     },
                                     "data": {
@@ -1885,28 +1908,28 @@
                     ],
                     "position": {
                         "start": {
-                            "line": 103,
+                            "line": 100,
                             "column": 1,
-                            "offset": 2255
+                            "offset": 2175
                         },
                         "end": {
-                            "line": 152,
+                            "line": 149,
                             "column": 4,
-                            "offset": 3382
+                            "offset": 3302
                         }
                     }
                 }
             ],
             "position": {
                 "start": {
-                    "line": 79,
+                    "line": 76,
                     "column": 1,
-                    "offset": 1890
+                    "offset": 1810
                 },
                 "end": {
-                    "line": 152,
+                    "line": 149,
                     "column": 4,
-                    "offset": 3382
+                    "offset": 3302
                 }
             }
         },
@@ -1925,14 +1948,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 153,
+                            "line": 150,
                             "column": 1,
-                            "offset": 3383
+                            "offset": 3303
                         },
                         "end": {
-                            "line": 153,
+                            "line": 150,
                             "column": 8,
-                            "offset": 3390
+                            "offset": 3310
                         }
                     },
                     "data": {
@@ -1943,14 +1966,14 @@
                         "section": {
                             "position": {
                                 "start": {
-                                    "line": 153,
+                                    "line": 150,
                                     "column": 1,
-                                    "offset": 3383
+                                    "offset": 3303
                                 },
                                 "end": {
-                                    "line": 170,
+                                    "line": 167,
                                     "column": 4,
-                                    "offset": 3605
+                                    "offset": 3525
                                 }
                             }
                         }
@@ -1965,28 +1988,28 @@
                                     "value": "Add",
                                     "position": {
                                         "start": {
-                                            "line": 153,
+                                            "line": 150,
                                             "column": 5,
-                                            "offset": 3387
+                                            "offset": 3307
                                         },
                                         "end": {
-                                            "line": 153,
+                                            "line": 150,
                                             "column": 8,
-                                            "offset": 3390
+                                            "offset": 3310
                                         }
                                     }
                                 }
                             ],
                             "position": {
                                 "start": {
-                                    "line": 153,
+                                    "line": 150,
                                     "column": 1,
-                                    "offset": 3383
+                                    "offset": 3303
                                 },
                                 "end": {
-                                    "line": 153,
+                                    "line": 150,
                                     "column": 8,
-                                    "offset": 3390
+                                    "offset": 3310
                                 }
                             },
                             "data": {
@@ -2003,14 +2026,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 155,
+                            "line": 152,
                             "column": 1,
-                            "offset": 3392
+                            "offset": 3312
                         },
                         "end": {
-                            "line": 170,
+                            "line": 167,
                             "column": 4,
-                            "offset": 3605
+                            "offset": 3525
                         }
                     },
                     "data": {
@@ -2027,14 +2050,14 @@
                             "value": "\nconst fs = lit.lfs\nconst dir = lit.location.root\n\nreturn (async ()=> {\n  return await lit.git.add({\n    fs,\n    dir,\n    filepath: '.'\n  })\n})()",
                             "position": {
                                 "start": {
-                                    "line": 155,
+                                    "line": 152,
                                     "column": 1,
-                                    "offset": 3392
+                                    "offset": 3312
                                 },
                                 "end": {
-                                    "line": 170,
+                                    "line": 167,
                                     "column": 4,
-                                    "offset": 3605
+                                    "offset": 3525
                                 }
                             },
                             "data": {
@@ -2066,14 +2089,14 @@
                             "value": "undefined",
                             "position": {
                                 "start": {
-                                    "line": 168,
+                                    "line": 165,
                                     "column": 1,
-                                    "offset": 3548
+                                    "offset": 3468
                                 },
                                 "end": {
-                                    "line": 170,
+                                    "line": 167,
                                     "column": 4,
-                                    "offset": 3605
+                                    "offset": 3525
                                 }
                             },
                             "data": {
@@ -2113,14 +2136,14 @@
             ],
             "position": {
                 "start": {
-                    "line": 153,
+                    "line": 150,
                     "column": 1,
-                    "offset": 3383
+                    "offset": 3303
                 },
                 "end": {
-                    "line": 170,
+                    "line": 167,
                     "column": 4,
-                    "offset": 3605
+                    "offset": 3525
                 }
             }
         },
@@ -2139,14 +2162,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 174,
+                            "line": 171,
                             "column": 1,
-                            "offset": 3609
+                            "offset": 3529
                         },
                         "end": {
-                            "line": 174,
+                            "line": 171,
                             "column": 11,
-                            "offset": 3619
+                            "offset": 3539
                         }
                     },
                     "data": {
@@ -2157,14 +2180,14 @@
                         "section": {
                             "position": {
                                 "start": {
-                                    "line": 174,
+                                    "line": 171,
                                     "column": 1,
-                                    "offset": 3609
+                                    "offset": 3529
                                 },
                                 "end": {
-                                    "line": 200,
+                                    "line": 197,
                                     "column": 4,
-                                    "offset": 4012
+                                    "offset": 3932
                                 }
                             }
                         }
@@ -2179,28 +2202,28 @@
                                     "value": "Commit",
                                     "position": {
                                         "start": {
-                                            "line": 174,
+                                            "line": 171,
                                             "column": 5,
-                                            "offset": 3613
+                                            "offset": 3533
                                         },
                                         "end": {
-                                            "line": 174,
+                                            "line": 171,
                                             "column": 11,
-                                            "offset": 3619
+                                            "offset": 3539
                                         }
                                     }
                                 }
                             ],
                             "position": {
                                 "start": {
-                                    "line": 174,
+                                    "line": 171,
                                     "column": 1,
-                                    "offset": 3609
+                                    "offset": 3529
                                 },
                                 "end": {
-                                    "line": 174,
+                                    "line": 171,
                                     "column": 11,
-                                    "offset": 3619
+                                    "offset": 3539
                                 }
                             },
                             "data": {
@@ -2217,14 +2240,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 176,
+                            "line": 173,
                             "column": 1,
-                            "offset": 3621
+                            "offset": 3541
                         },
                         "end": {
-                            "line": 200,
+                            "line": 197,
                             "column": 4,
-                            "offset": 4012
+                            "offset": 3932
                         }
                     },
                     "data": {
@@ -2241,14 +2264,14 @@
                             "value": "\nconst fs = lit.lfs\nconst dir = lit.location.root\n\nreturn (async ()=> {\nconst now = (new Date()).toISOString()\nlet sha = await lit.git.commit({\n  fs,\n  dir,\n  message: `Auto commit (${now})`,\n  author: {\n    name: 'dotlit',\n    email: 'bit@dotlit.org'\n  }\n})\n\nconsole.log(sha)\n\n})()",
                             "position": {
                                 "start": {
-                                    "line": 176,
+                                    "line": 173,
                                     "column": 1,
-                                    "offset": 3621
+                                    "offset": 3541
                                 },
                                 "end": {
-                                    "line": 200,
+                                    "line": 197,
                                     "column": 4,
-                                    "offset": 4012
+                                    "offset": 3932
                                 }
                             },
                             "data": {
@@ -2280,14 +2303,14 @@
                             "value": "2c1dcf840173cd7c36aa1e5b96bc0922006de579\nundefined",
                             "position": {
                                 "start": {
-                                    "line": 197,
+                                    "line": 194,
                                     "column": 1,
-                                    "offset": 3914
+                                    "offset": 3834
                                 },
                                 "end": {
-                                    "line": 200,
+                                    "line": 197,
                                     "column": 4,
-                                    "offset": 4012
+                                    "offset": 3932
                                 }
                             },
                             "data": {
@@ -2327,14 +2350,14 @@
             ],
             "position": {
                 "start": {
-                    "line": 174,
+                    "line": 171,
                     "column": 1,
-                    "offset": 3609
+                    "offset": 3529
                 },
                 "end": {
-                    "line": 200,
+                    "line": 197,
                     "column": 4,
-                    "offset": 4012
+                    "offset": 3932
                 }
             }
         },
@@ -2353,14 +2376,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 202,
+                            "line": 199,
                             "column": 1,
-                            "offset": 4014
+                            "offset": 3934
                         },
                         "end": {
-                            "line": 202,
+                            "line": 199,
                             "column": 8,
-                            "offset": 4021
+                            "offset": 3941
                         }
                     },
                     "data": {
@@ -2371,14 +2394,14 @@
                         "section": {
                             "position": {
                                 "start": {
-                                    "line": 202,
+                                    "line": 199,
                                     "column": 1,
-                                    "offset": 4014
+                                    "offset": 3934
                                 },
                                 "end": {
-                                    "line": 279,
+                                    "line": 276,
                                     "column": 4,
-                                    "offset": 5720
+                                    "offset": 5640
                                 }
                             }
                         }
@@ -2393,28 +2416,28 @@
                                     "value": "Log",
                                     "position": {
                                         "start": {
-                                            "line": 202,
+                                            "line": 199,
                                             "column": 5,
-                                            "offset": 4018
+                                            "offset": 3938
                                         },
                                         "end": {
-                                            "line": 202,
+                                            "line": 199,
                                             "column": 8,
-                                            "offset": 4021
+                                            "offset": 3941
                                         }
                                     }
                                 }
                             ],
                             "position": {
                                 "start": {
-                                    "line": 202,
+                                    "line": 199,
                                     "column": 1,
-                                    "offset": 4014
+                                    "offset": 3934
                                 },
                                 "end": {
-                                    "line": 202,
+                                    "line": 199,
                                     "column": 8,
-                                    "offset": 4021
+                                    "offset": 3941
                                 }
                             },
                             "data": {
@@ -2431,14 +2454,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 204,
+                            "line": 201,
                             "column": 1,
-                            "offset": 4023
+                            "offset": 3943
                         },
                         "end": {
-                            "line": 279,
+                            "line": 276,
                             "column": 4,
-                            "offset": 5720
+                            "offset": 5640
                         }
                     },
                     "data": {
@@ -2455,14 +2478,14 @@
                             "value": "const indentLines = str => str.split('\\n').map( line => `      ${line}`).join('\\n')\n\nreturn (async ()=> {\n  let commits = await lit.git.log({\n     fs: lit.lfs, \n     dir: lit.location.root, \n     depth: 10\n  })\n  return \"**Log**\\n\" + commits.map( x => `1. **\\`${x.oid.slice(0,6)}\\`**\n\n${indentLines(x.commit.message)}`).join('\\n')\n})()",
                             "position": {
                                 "start": {
-                                    "line": 204,
+                                    "line": 201,
                                     "column": 1,
-                                    "offset": 4023
+                                    "offset": 3943
                                 },
                                 "end": {
-                                    "line": 279,
+                                    "line": 276,
                                     "column": 4,
-                                    "offset": 5720
+                                    "offset": 5640
                                 }
                             },
                             "data": {
@@ -2496,14 +2519,14 @@
                             "value": "**Log**\n1. **`d738da`**\n\n      Auto commit testing/isomorphic_git.lit\n      \n      at: 2021-04-26T08:25:54.893Z\n      includes the following 2 files:\n      - testing/isomorphic_git.lit\n      - utils/git-commit-all.js\n      \n1. **`498191`**\n\n      Auto commit testing/isomorphic_git.lit\n      \n      at: 2021-04-26T08:16:04.689Z\n      includes the following 5 files:\n      - 404.lit,- execute_code_cells.lit,- testing/.gitignore,- testing/isomorphic_git.lit,- testing/lightningfs.lit\n      \n1. **`ef8bee`**\n\n      Auto commit testing/isomorphic_git.lit\n      \n      at: 2021-04-25T23:25:46.517Z\n      includes the following 1 files:\n      - testing/isomorphic_git.lit\n      \n1. **`e146ec`**\n\n      Auto commit testing/isomorphic_git.lit\n      \n      at: (2021-04-25T23:25:04.262Z)\n      includes the following 1 files:\n      - testing/isomorphic_git.lit\n      \n1. **`ccc6f8`**\n\n      Auto commit testing/isomorphic_git.lit\n      at: (2021-04-25T22:41:55.195Z)\n      includes the following tk files...\n      \n1. **`d6a406`**\n\n      Auto commit (2021-04-25T22:35:27.239Z)\n      \n1. **`2c1dcf`**\n\n      Auto commit (2021-04-25T22:11:46.433Z)\n      \n1. **`769349`**\n\n      Auto commit (${now})\n      \n1. **`74737c`**\n\n      Commit All!!!\n      \n1. **`a90dc6`**\n\n      Commit All!!!\n      ",
                             "position": {
                                 "start": {
-                                    "line": 218,
+                                    "line": 215,
                                     "column": 1,
-                                    "offset": 4382
+                                    "offset": 4302
                                 },
                                 "end": {
-                                    "line": 279,
+                                    "line": 276,
                                     "column": 4,
-                                    "offset": 5720
+                                    "offset": 5640
                                 }
                             },
                             "data": {
@@ -4113,14 +4136,14 @@
             ],
             "position": {
                 "start": {
-                    "line": 202,
+                    "line": 199,
                     "column": 1,
-                    "offset": 4014
+                    "offset": 3934
                 },
                 "end": {
-                    "line": 279,
+                    "line": 276,
                     "column": 4,
-                    "offset": 5720
+                    "offset": 5640
                 }
             }
         },
@@ -4139,14 +4162,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 281,
+                            "line": 278,
                             "column": 1,
-                            "offset": 5722
+                            "offset": 5642
                         },
                         "end": {
-                            "line": 281,
+                            "line": 278,
                             "column": 9,
-                            "offset": 5730
+                            "offset": 5650
                         }
                     },
                     "data": {
@@ -4157,14 +4180,14 @@
                         "section": {
                             "position": {
                                 "start": {
-                                    "line": 281,
+                                    "line": 278,
                                     "column": 1,
-                                    "offset": 5722
+                                    "offset": 5642
                                 },
                                 "end": {
-                                    "line": 334,
+                                    "line": 331,
                                     "column": 4,
-                                    "offset": 6988
+                                    "offset": 6908
                                 }
                             }
                         }
@@ -4179,28 +4202,28 @@
                                     "value": "Diff",
                                     "position": {
                                         "start": {
-                                            "line": 281,
+                                            "line": 278,
                                             "column": 5,
-                                            "offset": 5726
+                                            "offset": 5646
                                         },
                                         "end": {
-                                            "line": 281,
+                                            "line": 278,
                                             "column": 9,
-                                            "offset": 5730
+                                            "offset": 5650
                                         }
                                     }
                                 }
                             ],
                             "position": {
                                 "start": {
-                                    "line": 281,
+                                    "line": 278,
                                     "column": 1,
-                                    "offset": 5722
+                                    "offset": 5642
                                 },
                                 "end": {
-                                    "line": 281,
+                                    "line": 278,
                                     "column": 9,
-                                    "offset": 5730
+                                    "offset": 5650
                                 }
                             },
                             "data": {
@@ -4217,14 +4240,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 283,
+                            "line": 280,
                             "column": 1,
-                            "offset": 5732
+                            "offset": 5652
                         },
                         "end": {
-                            "line": 334,
+                            "line": 331,
                             "column": 4,
-                            "offset": 6988
+                            "offset": 6908
                         }
                     },
                     "data": {
@@ -4241,14 +4264,14 @@
                             "value": "return (async function getFileStateChanges() {\n  const commitHash1 = '0c40ed746ebe53cf744d78191d0bbc2941537280'\n  const commitHash2 = 'b081f51cd27f54cf58915512006838d4eb67716b'\n  return lit.git.walk({\n    lit.lfs,\n    lit.location.root,\n    trees: [git.TREE({ ref: commitHash1 }), git.TREE({ ref: commitHash2 })],\n    map: async function(filepath, [A, B]) {\n      \n      console.log(\"Git walk for diff file: \", filepath)\n\n      // ignore directories\n      if (filepath === '.') {\n        return\n      }\n      if ((await A.type()) === 'tree' || (await B.type()) === 'tree') {\n        return\n      }\n\n      // generate ids\n      const Aoid = await A.oid()\n      const Boid = await B.oid()\n\n      // determine modification type\n      let type = 'equal'\n      if (Aoid !== Boid) {\n        type = 'modify'\n      }\n      if (Aoid === undefined) {\n        type = 'add'\n      }\n      if (Boid === undefined) {\n        type = 'remove'\n      }\n      if (Aoid === undefined && Boid === undefined) {\n        console.log('Something weird happened:')\n        console.log(A)\n        console.log(B)\n      }\n\n      return {\n        path: `/${filepath}`,\n        type: type,\n      }\n    },\n  })\n})()",
                             "position": {
                                 "start": {
-                                    "line": 283,
+                                    "line": 280,
                                     "column": 1,
-                                    "offset": 5732
+                                    "offset": 5652
                                 },
                                 "end": {
-                                    "line": 334,
+                                    "line": 331,
                                     "column": 4,
-                                    "offset": 6988
+                                    "offset": 6908
                                 }
                             },
                             "data": {
@@ -4280,14 +4303,14 @@
                             "value": "undefined",
                             "position": {
                                 "start": {
-                                    "line": 332,
+                                    "line": 329,
                                     "column": 1,
-                                    "offset": 6924
+                                    "offset": 6844
                                 },
                                 "end": {
-                                    "line": 334,
+                                    "line": 331,
                                     "column": 4,
-                                    "offset": 6988
+                                    "offset": 6908
                                 }
                             },
                             "data": {
@@ -4333,14 +4356,14 @@
             ],
             "position": {
                 "start": {
-                    "line": 281,
+                    "line": 278,
                     "column": 1,
-                    "offset": 5722
+                    "offset": 5642
                 },
                 "end": {
-                    "line": 334,
+                    "line": 331,
                     "column": 4,
-                    "offset": 6988
+                    "offset": 6908
                 }
             }
         }
@@ -4352,9 +4375,9 @@
             "offset": 0
         },
         "end": {
-            "line": 334,
+            "line": 331,
             "column": 4,
-            "offset": 6988
+            "offset": 6908
         }
     }
 }
