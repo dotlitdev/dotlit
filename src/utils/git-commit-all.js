@@ -45,10 +45,11 @@ ${message}`
 
 return onSave(lit.location.src)
 ```
-```>txt attached=true updated=1619424969789
-Committed 498191 
+```>txt attached=true updated=1619425559711
+Committed d738da 
 Auto commit testing/isomorphic_git.lit
 
-at: 2021-04-26T08:16:04.689Z
-includes the following 5 files:
-- 404.lit,- execute_code_cells.lit,- testing/.gitignore,- testing/isomorphic_git.lit,- testing/lightningfs.lit
+at: 2021-04-26T08:25:54.893Z
+includes the following 2 files:
+- testing/isomorphic_git.lit
+- utils/git-commit-all.js
