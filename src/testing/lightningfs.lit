@@ -24,10 +24,11 @@ return lit.fs.readdir('/')
 export const viewer = ({node, React}) => {
   const rc = React.createElement
   const {useState, useEffect} = React
+  const src = node.data.value.trim()
   const meta = node.properties 
                && node.properties.meta
   const [content, setContent] = useState('Loading...')
-  const src = node.data.value.trim()
+  
   useEffect(async () => {
     const l = await lit.fs.readdir(src)
     const list = l.map(async x=>{
