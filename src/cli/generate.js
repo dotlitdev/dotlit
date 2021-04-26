@@ -7,7 +7,6 @@ import {promises as fs} from 'fs'
 import  {selectAll} from 'unist-util-select'
 
 import {NoOp} from '../utils/functions'
-import {log, time, timeEnd, info, warn, dir, level, error} from '../utils/console'
 
 import {parse, stringify} from '../parser/index'
 import {renderedVFileToDoc, processor as renderProcessor} from '../renderer/index'
@@ -126,7 +125,7 @@ export function generate(cmd) {
     console.log(`Output path: ${cmd.output} cwd: ${cmd.cwd}`)
     
     function processFilesystem(done) {
-        time('generate')
+        console.time('generate')
 
         glob(globAll, {cwd: `${cmd.path}/`, ignore}, async (err, matches) => {
             if (err) error(err)
@@ -202,10 +201,10 @@ export function generate(cmd) {
                     await fs.copyFile( path.join(__dirname,'../../dist/web.bundle.js.map'), path.join(cmd.output, 'web.bundle.js.map'))
                     await fs.copyFile( path.join(__dirname,'../../dist/style.css'), path.join(cmd.output, 'style.css'))
                 }
-                timeEnd('generate')
+                console.timeEnd('generate')
 
                } catch(err) {
-                  error(err)
+                  console.error(err)
                   process.exit(1)
                }
             }
