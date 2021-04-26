@@ -274,7 +274,22 @@ Mock:
 ```js !transformer of=jsx
 export const transformer = (node) => {
   const babel = import('https://cdn.skypack.dev/@babel/core')
-  const src = node && node.data && node.data.value  
+  const presetReact = import('https://cdn.skypack.dev/@babel/preset-react')
+const src = node && node.data && node.data.value
+  const res = transformSync(source, { 
+                    filename: filename,
+                    sourceMaps: false,
+                    parserOpts: { allowReturnOutsideFunction: true },
+                    presets: [
+                        presetReact,
+                        // presetTypescript
+                    ],
+                    plugins: [
+                        // pluginClassProps
+                    ]
+                })
+  console.log("[babel] transformed", babel)
+  source = babel.code
   return `// TODO: babelify. \n${src}`
 }
 ```
@@ -289,15 +304,9 @@ return lit.file
   }
 })
 ```
-```>txt attached=true updated=1619475835609 !error
-function toString() {
-    [native code]
-}
-untitled.js:5:15
-untitled.js:11:63
-module code@untitled.js:11:139
-evaluate@[native code]
-moduleEvaluation@[native code]
+```>txt attached=true updated=1619476210849
+// TODO: babelify. 
+TBD
 ```
 
 ## Misc
