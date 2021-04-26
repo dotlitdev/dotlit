@@ -272,9 +272,12 @@ See [[execute `code` cells]] for existing `ts` and `jsx` transpilation to `js` v
 Mock:
 
 ```js !transformer of=jsx
+
+const skyPack = module => import(`https://cdn.skypack.dev/${module}`)
+
 export const transformer = (node) => {
-  const babel = import('https://cdn.skypack.dev/@babel/core')
-  const presetReact = import('https://cdn.skypack.dev/@babel/preset-react')
+  const babel = skyPack('@babel/core')
+  const presetReact = skyPack('@babel/preset-react')
   const src = node 
               && node.data 
               && node.data.value
