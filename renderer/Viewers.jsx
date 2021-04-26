@@ -39,7 +39,7 @@ const hasViewDirective = meta => {
 
 export const getViewer = (meta, customViewers = {}) => {
   const view = meta && (meta.viewer || meta.lang)
-  const CustomViewer = customViewers[view] 
+  const CustomViewer = customViewers[view] && customViewers[view].viewer
   const useViewer = view && (meta.viewer || meta.isOutput 
        || hasViewDirective(meta))
   const viewer = CustomViewer || viewers[view]
