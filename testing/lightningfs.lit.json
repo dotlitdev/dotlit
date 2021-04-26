@@ -605,7 +605,7 @@
                             "type": "code",
                             "lang": "js",
                             "meta": "!viewer of=fs",
-                            "value": "\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const [content, setContent] = useState('Loading...')\n  const src = node.data.value\n  useEffect(async () => {\n    const l = await lit.fs.readdir('/')\n    const list = l.map(x=>{\n       return rc(\"div\", null, x)\n    })\n    setContent(list)\n  },[src])\n\n  return rc('div', {\n    className: 'custom-react-view',\n  }, content)\n}",
+                            "value": "\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const [content, setContent] = useState('Loading...')\n  const src = node.data.value\n  useEffect(async () => {\n    const l = await lit.fs.readdir(src)\n    const list = l.map(x=>{\n       return rc(\"div\", null, x)\n    })\n    setContent(list)\n  },[src])\n\n  return rc('div', {\n    className: 'custom-react-view',\n  }, content)\n}",
                             "position": {
                                 "start": {
                                     "line": 22,
