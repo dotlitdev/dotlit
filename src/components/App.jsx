@@ -41,10 +41,11 @@ const App = ({root, file, fs, result}) => {
         const nodes = selectAll('code', tree)
         console.log("[CodeCells in Change (pos)]", tmpPos, file.path, tree, nodes)
         for (const codeCell of nodes) {
-            const filename = codeCell.data && codeCell.data.meta && codeCell.data.meta.filename
-            const fromSource = codeCell.data && codeCell.data.meta && codeCell.data.meta.fromSource
+            const meta = codeCell.data && codeCell.data.meta && codeCell.data.meta
+            const filename = meta && meta.filename
+            const extract = filename && meta.isOutput && meta.extract !== 'false'
             const content = source(codeCell.position, patchedSrc).split('\n').slice(1,-1).join('\n')
-            if (filename && fromSource && fromSource === filename) {
+            if (extract) {
                 const filepath = path.join( path.dirname(file.path), filename)
                 await fs.writeFile(filepath, content)
                 console.log(`Wrote codefile ${filename} to "${filepath}" on disk`)
