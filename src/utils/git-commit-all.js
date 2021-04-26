@@ -1,11 +1,3 @@
-const fs = lit.lfs 
-const dir = lit.location.root
-const git = lit.git
-const FILE = 0, WORKDIR = 2, STAGE = 3
-
-const unstaged = row => {
-  return row[WORKDIR] !== row[STAGE]
-}
 
 // initially, because it's on every change 
 // a commit will mostly be for a single
@@ -14,8 +6,17 @@ const unstaged = row => {
 // is edited, in which case the commit 
 // includes those files.
 
-const onSave = async (filename) => {
+export const onSave = async (filename) => {
   const now = (new Date()).toISOString()
+
+  const fs = lit.lfs 
+  const dir = lit.location.root
+  const git = lit.git
+  const FILE = 0, WORKDIR = 2, STAGE = 3
+
+  const unstaged = row => {
+    return row[WORKDIR] !== row[STAGE]
+  }
 
   // get/list unstaged files
   const status = await git.statusMatrix({ fs,dir})
@@ -44,13 +45,4 @@ ${files.map(f=> "- " + f).join('\n')}`
 ${message}`
 }
 
-return onSave(lit.location.src)
-```
-```>txt attached=true updated=1619425559711
-Committed d738da 
-Auto commit testing/isomorphic_git.lit
-
-at: 2021-04-26T08:25:54.893Z
-includes the following 2 files:
-- testing/isomorphic_git.lit
-- utils/git-commit-all.js
+// return onSave(lit.location.src)
