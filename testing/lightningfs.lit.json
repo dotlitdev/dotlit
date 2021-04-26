@@ -499,7 +499,7 @@
                                 "end": {
                                     "line": 50,
                                     "column": 4,
-                                    "offset": 1079
+                                    "offset": 1077
                                 }
                             }
                         }
@@ -591,7 +591,7 @@
                         "end": {
                             "line": 46,
                             "column": 4,
-                            "offset": 1065
+                            "offset": 1063
                         }
                     },
                     "data": {
@@ -605,7 +605,7 @@
                             "type": "code",
                             "lang": "js",
                             "meta": "!viewer of=fs",
-                            "value": "\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const [content, setContent] = useState('Loading...')\n  const src = node.data.value.trim()\n  useEffect(async () => {\n    const l = await lit.fs.readdir(src)\n    const list = l.map(async x=>{\n       const stat = await lit.fs.stat(src + x)\n       // console.log(\"STAT\", stat)\n       return rc(\"div\", null, `${stat.type}: ${x})\n    })\n    const res = (await Promise.all(list)).sort()\n    setContent(res)\n  },[src])\n\n  return rc('div', {\n    className: 'custom-react-view',\n  }, content)\n}",
+                            "value": "\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const [content, setContent] = useState('Loading...')\n  const src = node.data.value.trim()\n  useEffect(async () => {\n    const l = await lit.fs.readdir(src)\n    const list = l.map(async x=>{\n       const stat = await lit.fs.stat(src + x)\n       // console.log(\"STAT\", stat)\n       return rc(\"div\", {className: stat.type}, `${x}`)\n    })\n    const res = (await Promise.all(list))\n    setContent(res)\n  },[src])\n\n  return rc('div', {\n    className: 'custom-react-view',\n  }, content)\n}",
                             "position": {
                                 "start": {
                                     "line": 22,
@@ -615,7 +615,7 @@
                                 "end": {
                                     "line": 46,
                                     "column": 4,
-                                    "offset": 1065
+                                    "offset": 1063
                                 }
                             },
                             "data": {
@@ -660,12 +660,12 @@
                         "start": {
                             "line": 48,
                             "column": 1,
-                            "offset": 1067
+                            "offset": 1065
                         },
                         "end": {
                             "line": 50,
                             "column": 4,
-                            "offset": 1079
+                            "offset": 1077
                         }
                     },
                     "data": {
@@ -684,12 +684,12 @@
                                 "start": {
                                     "line": 48,
                                     "column": 1,
-                                    "offset": 1067
+                                    "offset": 1065
                                 },
                                 "end": {
                                     "line": 50,
                                     "column": 4,
-                                    "offset": 1079
+                                    "offset": 1077
                                 }
                             },
                             "data": {
@@ -726,7 +726,7 @@
                 "end": {
                     "line": 50,
                     "column": 4,
-                    "offset": 1079
+                    "offset": 1077
                 }
             }
         }
@@ -740,7 +740,7 @@
         "end": {
             "line": 50,
             "column": 4,
-            "offset": 1079
+            "offset": 1077
         }
     }
 }
