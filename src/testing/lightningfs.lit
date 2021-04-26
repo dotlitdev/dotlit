@@ -20,6 +20,7 @@ return lit.fs.readdir('/')
 
 
 ```js !viewer of=fs
+
 export const viewer = ({node, React}) => {
   const rc = React.createElement
   const {useState, useEffect} = React
@@ -29,7 +30,9 @@ export const viewer = ({node, React}) => {
   const src = node.data.value
   useEffect(async () => {
     const l = await lit.fs.readdir('/')
-    const list = l.map(x=>x).join('\n')
+    const list = l.map(x=>{
+       return rc("div", null, x)
+    })
     setContent(list)
   },[src])
 
