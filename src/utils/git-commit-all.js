@@ -29,8 +29,7 @@ const onSave = async (filename) => {
   // message 
   const message = `Auto commit ${filename}
 
-at: ${now}
-includes the following ${files.length} files:
+at ${now} includes the following ${files.length} files:
 ${files.map(f=> "- " + f).join('\n')}`
 
   // commit
