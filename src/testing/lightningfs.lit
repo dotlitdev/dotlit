@@ -21,7 +21,7 @@ return lit.fs.readdir('/')
 
 ```js !viewer of=fs
 
-const sortBy = key = (a, b) => (a[key] > b[key]) ? 1 : -1
+const sortBy = key => (a, b) => (a[key] > b[key]) ? 1 : -1
 
 export const viewer = ({node, React}) => {
   const rc = React.createElement
@@ -35,10 +35,12 @@ export const viewer = ({node, React}) => {
     const l = await lit.fs.readdir(src)
     const list = l.map(async x=>{
        const stat = await lit.fs.stat(src + x)
-       // console.log("STAT", stat)
-       return rc("div", {className: stat.type}, `${x}`)
+       return {f:x,t:stat.type}
+       
     })
-    const res = (await Promise.all(list))
+    const res = (await Promise.all(list)).sortBy('t').map(r => {
+       return rc("div", {className: t.t}, `${r.f}`)
+    })
     setContent(res)
   },[src])
 
