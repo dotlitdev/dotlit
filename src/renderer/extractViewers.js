@@ -7,7 +7,7 @@ const console = getConsoleForNamespace('extractViewers')
 
 export const extractViewers = ({fs} = {}) => {
     return async (tree,file) => {
-        console.log("[ExtractViewers] Checking for custom viewers")
+        console.log("[ExtractViewersAndTransformers] Checking for custom viewers and transformers")
         for (const block of selectAll("code", tree)) {
             if (block.data 
                 && block.data.meta 
@@ -26,6 +26,28 @@ export const extractViewers = ({fs} = {}) => {
                     console.log("Failed to init viewer", err)
                     const msg = "Viewer Error: " + (err.message || err.toString())
                     file.data.viewers[block.data.meta.of] 
+                     = () => msg
+                    file.message(msg)
+                }
+            }
+            // transformers 
+            if (block.data 
+                && block.data.meta 
+                && block.data.meta.directives
+                && block.data.meta.directives.indexOf('transformer') >= 0) {
+                
+                console.log('Found Transformer', block)
+                file.data = file.data || {}
+                file.data.transformers = file.data.transformers || {}
+                try {
+                    let transformer = await import(/* webpackIgnore: true */ `data:text/javascript;base64,${ btoa(block.value)}`)
+                    if (transformer.asyncTransformer) transformer = await transformer. asyncTransformer()
+                    file.data.transformers[block.data.meta.of] = transformer
+                   
+                } catch(err) {
+                    console.log("Failed to init transformer", err)
+                    const msg = "Transformer Error: " + (err.message || err.toString())
+                    file.data.transformers[block.data.meta.of] 
                      = () => msg
                     file.message(msg)
                 }
