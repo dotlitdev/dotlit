@@ -497,9 +497,9 @@
                                     "offset": 341
                                 },
                                 "end": {
-                                    "line": 62,
+                                    "line": 64,
                                     "column": 4,
-                                    "offset": 1231
+                                    "offset": 1235
                                 }
                             }
                         }
@@ -589,9 +589,9 @@
                             "offset": 369
                         },
                         "end": {
-                            "line": 46,
+                            "line": 47,
                             "column": 4,
-                            "offset": 1063
+                            "offset": 1066
                         }
                     },
                     "data": {
@@ -605,7 +605,7 @@
                             "type": "code",
                             "lang": "js",
                             "meta": "!viewer of=fs",
-                            "value": "\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const [content, setContent] = useState('Loading...')\n  const src = node.data.value.trim()\n  useEffect(async () => {\n    const l = await lit.fs.readdir(src)\n    const list = l.map(async x=>{\n       const stat = await lit.fs.stat(src + x)\n       // console.log(\"STAT\", stat)\n       return rc(\"div\", {className: stat.type}, `${x}`)\n    })\n    const res = (await Promise.all(list))\n    setContent(res)\n  },[src])\n\n  return rc('div', {\n    className: 'custom-react-view',\n  }, content)\n}",
+                            "value": "\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const src = node.data.value.trim()\n  const meta = node.properties \n               && node.properties.meta\n  const [content, setContent] = useState('Loading...')\n  \n  useEffect(async () => {\n    const l = await lit.fs.readdir(src)\n    const list = l.map(async x=>{\n       const stat = await lit.fs.stat(src + x)\n       // console.log(\"STAT\", stat)\n       return rc(\"div\", {className: stat.type}, `${x}`)\n    })\n    const res = (await Promise.all(list))\n    setContent(res)\n  },[src])\n\n  return rc('div', {\n    className: 'custom-react-view',\n  }, content)\n}",
                             "position": {
                                 "start": {
                                     "line": 22,
@@ -613,9 +613,9 @@
                                     "offset": 369
                                 },
                                 "end": {
-                                    "line": 46,
+                                    "line": 47,
                                     "column": 4,
-                                    "offset": 1063
+                                    "offset": 1066
                                 }
                             },
                             "data": {
@@ -658,76 +658,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 48,
+                            "line": 51,
                             "column": 1,
-                            "offset": 1065
+                            "offset": 1070
                         },
                         "end": {
-                            "line": 50,
+                            "line": 61,
                             "column": 4,
-                            "offset": 1077
-                        }
-                    },
-                    "data": {
-                        "hName": "cell",
-                        "hProperties": {
-                            "class": "cell"
-                        }
-                    },
-                    "children": [
-                        {
-                            "type": "code",
-                            "lang": ">fs",
-                            "meta": null,
-                            "value": "/",
-                            "position": {
-                                "start": {
-                                    "line": 48,
-                                    "column": 1,
-                                    "offset": 1065
-                                },
-                                "end": {
-                                    "line": 50,
-                                    "column": 4,
-                                    "offset": 1077
-                                }
-                            },
-                            "data": {
-                                "meta": {
-                                    "attrs": {},
-                                    "lang": "fs",
-                                    "isOutput": true,
-                                    "hasOutput": false,
-                                    "hasSource": false,
-                                    "raw": ">fs"
-                                },
-                                "hProperties": {
-                                    "className": "",
-                                    "meta": {
-                                        "attrs": {},
-                                        "lang": "fs",
-                                        "isOutput": true,
-                                        "hasOutput": false,
-                                        "hasSource": false,
-                                        "raw": ">fs"
-                                    }
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "type": "cell",
-                    "position": {
-                        "start": {
-                            "line": 52,
-                            "column": 1,
-                            "offset": 1079
-                        },
-                        "end": {
-                            "line": 62,
-                            "column": 4,
-                            "offset": 1231
+                            "offset": 1222
                         }
                     },
                     "data": {
@@ -744,14 +682,14 @@
                             "value": "<style>\n.custom-react-view .dir {\n  font-weight: bold;\n}\n.custom-react-view .dir:after {\n  display:inline;\n  content: \"/\";\n}\n</style>",
                             "position": {
                                 "start": {
-                                    "line": 52,
+                                    "line": 51,
                                     "column": 1,
-                                    "offset": 1079
+                                    "offset": 1070
                                 },
                                 "end": {
-                                    "line": 62,
+                                    "line": 61,
                                     "column": 4,
-                                    "offset": 1231
+                                    "offset": 1222
                                 }
                             },
                             "data": {
@@ -783,6 +721,68 @@
                             }
                         }
                     ]
+                },
+                {
+                    "type": "cell",
+                    "position": {
+                        "start": {
+                            "line": 62,
+                            "column": 1,
+                            "offset": 1223
+                        },
+                        "end": {
+                            "line": 64,
+                            "column": 4,
+                            "offset": 1235
+                        }
+                    },
+                    "data": {
+                        "hName": "cell",
+                        "hProperties": {
+                            "class": "cell"
+                        }
+                    },
+                    "children": [
+                        {
+                            "type": "code",
+                            "lang": ">fs",
+                            "meta": null,
+                            "value": "/",
+                            "position": {
+                                "start": {
+                                    "line": 62,
+                                    "column": 1,
+                                    "offset": 1223
+                                },
+                                "end": {
+                                    "line": 64,
+                                    "column": 4,
+                                    "offset": 1235
+                                }
+                            },
+                            "data": {
+                                "meta": {
+                                    "attrs": {},
+                                    "lang": "fs",
+                                    "isOutput": true,
+                                    "hasOutput": false,
+                                    "hasSource": false,
+                                    "raw": ">fs"
+                                },
+                                "hProperties": {
+                                    "className": "",
+                                    "meta": {
+                                        "attrs": {},
+                                        "lang": "fs",
+                                        "isOutput": true,
+                                        "hasOutput": false,
+                                        "hasSource": false,
+                                        "raw": ">fs"
+                                    }
+                                }
+                            }
+                        }
+                    ]
                 }
             ],
             "position": {
@@ -792,9 +792,9 @@
                     "offset": 341
                 },
                 "end": {
-                    "line": 62,
+                    "line": 64,
                     "column": 4,
-                    "offset": 1231
+                    "offset": 1235
                 }
             }
         }
@@ -806,9 +806,9 @@
             "offset": 0
         },
         "end": {
-            "line": 62,
+            "line": 64,
             "column": 4,
-            "offset": 1231
+            "offset": 1235
         }
     }
 }
