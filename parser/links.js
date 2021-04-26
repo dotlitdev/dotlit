@@ -2,7 +2,7 @@ import path from 'path'
 import visit from 'unist-util-visit'
 import { getConsoleForNamespace } from '../utils/console'
 
-const console = getConsoleForNamespace('links')
+const console = getConsoleForNamespace('links', {disabled: true})
 
 export const resolveLinks = (options = { litroot: '', filepath: ''}) => (...args) => tree => {
     console.log('[Links] Init', options)

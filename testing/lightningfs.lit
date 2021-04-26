@@ -21,7 +21,12 @@ return lit.fs.readdir('/')
 
 ```js !viewer of=fs
 
-const sortBy = key => (a, b) => (a[key] > b[key]) ? 1 : -1
+const sortBy = keys => (a, b) => {
+  for (const key of keys) {
+     if (a[key] !== b[key]) break;
+     else return (a[key] > b[key]) ? 1 : -1
+  }
+}
 
 export const viewer = ({node, React}) => {
   const rc = React.createElement
@@ -38,7 +43,7 @@ export const viewer = ({node, React}) => {
        return {f:x,t:stat.type}
        
     })
-    const res = (await Promise.all(list)).sort(sortBy('t')).map(r => {
+    const res = (await Promise.all(list)).sort(sortBy(['t','f'])).map(r => {
        return rc("div", {className: r.t}, `${r.f}`)
     })
     setContent(res)
@@ -49,8 +54,6 @@ export const viewer = ({node, React}) => {
   }, content)
 }
 ```
-
-
 
 ```html !below
 <style>
@@ -66,6 +69,7 @@ export const viewer = ({node, React}) => {
 }
 </style>
 ```
+
 ```>fs ls=/
 
 ```

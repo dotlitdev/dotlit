@@ -497,9 +497,9 @@
                                     "offset": 341
                                 },
                                 "end": {
-                                    "line": 71,
+                                    "line": 75,
                                     "column": 4,
-                                    "offset": 1395
+                                    "offset": 1489
                                 }
                             }
                         }
@@ -589,9 +589,9 @@
                             "offset": 369
                         },
                         "end": {
-                            "line": 51,
+                            "line": 56,
                             "column": 4,
-                            "offset": 1173
+                            "offset": 1268
                         }
                     },
                     "data": {
@@ -605,7 +605,7 @@
                             "type": "code",
                             "lang": "js",
                             "meta": "!viewer of=fs",
-                            "value": "\nconst sortBy = key => (a, b) => (a[key] > b[key]) ? 1 : -1\n\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const src = meta.ls || node.data.value.trim()\n  const [content, setContent] = useState('Loading...')\n  \n  useEffect(async () => {\n    const l = await lit.fs.readdir(src)\n    const list = l.map(async x=>{\n       const stat = await lit.fs.stat(src + x)\n       return {f:x,t:stat.type}\n       \n    })\n    const res = (await Promise.all(list)).sort(sortBy('t')).map(r => {\n       return rc(\"div\", {className: r.t}, `${r.f}`)\n    })\n    setContent(res)\n  },[src])\n\n  return rc('div', {\n    className: 'custom-react-view',\n  }, content)\n}",
+                            "value": "\nconst sortBy = keys => (a, b) => {\n  for (const key of keys) {\n     if (a[key] !== b[key]) break;\n     else return (a[key] > b[key]) ? 1 : -1\n  }\n}\n\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const src = meta.ls || node.data.value.trim()\n  const [content, setContent] = useState('Loading...')\n  \n  useEffect(async () => {\n    const l = await lit.fs.readdir(src)\n    const list = l.map(async x=>{\n       const stat = await lit.fs.stat(src + x)\n       return {f:x,t:stat.type}\n       \n    })\n    const res = (await Promise.all(list)).sort(sortBy(['t','f'])).map(r => {\n       return rc(\"div\", {className: r.t}, `${r.f}`)\n    })\n    setContent(res)\n  },[src])\n\n  return rc('div', {\n    className: 'custom-react-view',\n  }, content)\n}",
                             "position": {
                                 "start": {
                                     "line": 22,
@@ -613,9 +613,9 @@
                                     "offset": 369
                                 },
                                 "end": {
-                                    "line": 51,
+                                    "line": 56,
                                     "column": 4,
-                                    "offset": 1173
+                                    "offset": 1268
                                 }
                             },
                             "data": {
@@ -658,14 +658,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 55,
+                            "line": 58,
                             "column": 1,
-                            "offset": 1177
+                            "offset": 1270
                         },
                         "end": {
-                            "line": 68,
+                            "line": 71,
                             "column": 4,
-                            "offset": 1378
+                            "offset": 1471
                         }
                     },
                     "data": {
@@ -682,14 +682,14 @@
                             "value": "<style>\n.custom-react-view {\n  font-family: monospace;\n}\n.custom-react-view .dir {\n  font-weight: bold;\n}\n.custom-react-view .dir:after {\n  display:inline;\n  content: \"/\";\n}\n</style>",
                             "position": {
                                 "start": {
-                                    "line": 55,
+                                    "line": 58,
                                     "column": 1,
-                                    "offset": 1177
+                                    "offset": 1270
                                 },
                                 "end": {
-                                    "line": 68,
+                                    "line": 71,
                                     "column": 4,
-                                    "offset": 1378
+                                    "offset": 1471
                                 }
                             },
                             "data": {
@@ -726,14 +726,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 69,
+                            "line": 73,
                             "column": 1,
-                            "offset": 1379
+                            "offset": 1473
                         },
                         "end": {
-                            "line": 71,
+                            "line": 75,
                             "column": 4,
-                            "offset": 1395
+                            "offset": 1489
                         }
                     },
                     "data": {
@@ -750,14 +750,14 @@
                             "value": "",
                             "position": {
                                 "start": {
-                                    "line": 69,
+                                    "line": 73,
                                     "column": 1,
-                                    "offset": 1379
+                                    "offset": 1473
                                 },
                                 "end": {
-                                    "line": 71,
+                                    "line": 75,
                                     "column": 4,
-                                    "offset": 1395
+                                    "offset": 1489
                                 }
                             },
                             "data": {
@@ -798,9 +798,9 @@
                     "offset": 341
                 },
                 "end": {
-                    "line": 71,
+                    "line": 75,
                     "column": 4,
-                    "offset": 1395
+                    "offset": 1489
                 }
             }
         }
@@ -812,9 +812,9 @@
             "offset": 0
         },
         "end": {
-            "line": 71,
+            "line": 75,
             "column": 4,
-            "offset": 1395
+            "offset": 1489
         }
     }
 }

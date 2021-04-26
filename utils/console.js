@@ -63,8 +63,8 @@ const Console = {
   getConsoleForNamespace,
 }
 
-function getConsoleForNamespace(ns) {
-  if (shouldLog(ns)) {
+function getConsoleForNamespace(ns, {disabled} = {}) {
+  if (!disabled && shouldLog(ns)) {
     return Console
   } else {
     return {

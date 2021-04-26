@@ -81,7 +81,7 @@ const writeFileP = (fs) => {
     const filepath = (args[0] = "/" + args[0]);
     const p = path.parse(filepath);
     const parts = p.dir.split(path.sep);
-    console.log(`"Parts for "${filepath}"`, parts);
+    // console.log(`"Parts for "${filepath}"`, parts);
     for (var i = 0; i < parts.length; i++) {
       console.log(`[${i}] <--- "${parts[i]}"`);
       if (i === 0) {
@@ -97,7 +97,7 @@ const writeFileP = (fs) => {
         }
       }
     }
-    console.log("Writing file", ...args);
+    // console.log("Writing file", ...args);
     return wf(...args);
   };
 }
