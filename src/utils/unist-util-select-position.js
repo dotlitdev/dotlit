@@ -15,7 +15,7 @@ export const atPos = pos => (node) => {
     && pos2.end.line >= pos.end.line
 
   const any = wraps || startInside || endInside 
-  console.log("atPos: " + node.type, any ,pos2.start.line, pos2.end.line, wraps, startInside, endInside, pos.start.line, pos.end.line)
+  // console.log("atPos: " + node.type, any ,pos2.start.line, pos2.end.line, wraps, startInside, endInside, pos.start.line, pos.end.line)
   return any
 }
 
