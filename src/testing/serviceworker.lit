@@ -13,13 +13,13 @@ if ('serviceWorker' in navigator) {
   return true
 }
 ```
-```>txt attached=true updated=1619524117633
-true
+```>txt attached=true
+Execute above to check support
 ```
 ```js
 return (new Response('hello')).text()
 ```
-```>txt attached=true updated=1619524123503
+```>txt attached=true updated=1619515150788
 hello
 ```
 
@@ -35,7 +35,7 @@ return (async () => {
   
 })()
 ```
-```>txt attached=true updated=1619524282026
+```>txt attached=true updated=1619515949757
 Refresh to activate worker.
 ```
 ```js
@@ -44,7 +44,7 @@ return (async fn => {
   return resp.status
 })()
 ```
-```>txt attached=true updated=1619524261160
+```>txt attached=true updated=1619516688677
 404
 ```
 ```js
@@ -53,10 +53,10 @@ return (async fn => {
   return resp.status + " : " + (await resp.text())
 })()
 ```
-```>txt attached=true updated=1619524291384
+```>txt attached=true updated=1619526867215
 200 : hello
 ```
-```>js ../serviceworker.js !collapse
+```>js ../serviceworker.js
 /*
  Copyright 2016 Google Inc. All Rights Reserved.
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -85,7 +85,7 @@ const PRECACHE_URLS = [
   //'demo.js'
 ];
 
-const getMockResponse = args => new Response('hello')
+const MockResponse = new Response('hello')
 
 // The install handler takes care of precaching the resources we always need.
 self.addEventListener('install', event => {
@@ -117,7 +117,7 @@ self.addEventListener('fetch', event => {
   // Skip cross-origin requests, like those for Google Analytics. And add mock response
   if (event.request.url.startsWith(self.location.origin)) {
     if (event.request.url.endsWith('/mockresponse')) {
-       event.respondWith(getMockResponse())
+       event.respondWith(MockResponse)
     }
     else event.respondWith(
       caches.match(event.request).then(cachedResponse => {
