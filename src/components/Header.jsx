@@ -138,7 +138,7 @@ export const Header = (props) => {
     ctx.selectCell(null)
   }
 
-  const addCodeCell => ctx => ev => {
+  const addCodeCell = ctx => ev => {
     console.log('Adding code cell after cell at pos:', ctx.selectedCell)
     const src = source(ctx.selectedCell, ctx.src)
     const add = "```lang\n\n```"
