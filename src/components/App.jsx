@@ -18,8 +18,11 @@ const App = ({root, file, fs, result}) => {
         src: file.contents.toString(),
         res: result
     })
+
     const [res, setResult] = useState(result)
     const [selectedCell, setSelectedCell] = useState(null)
+    const [viewSource, setViewSource] = useState(false)
+    const toggleViewSource = () => setViewSource(!viewSource)
     
     const setSrcWrapper = async (pos, cellSource) => {
         console.log("<App/> Set src wrapper", pos, cellSource)
@@ -74,8 +77,12 @@ const App = ({root, file, fs, result}) => {
     console.log(`<App/> render "${file.path}" (selected: ${selectedCell} `)
 
     return <SelectionContext.Provider value={state}>
-        <div id="header"><Header root={root} file={file.path} {...times} /></div>
-        <div id="content">{srcAndRes.res}</div>
+        <div id="header"><Header root={root} file={file.path} {...times} toggleViewSource={toggleViewSource}/></div>
+        <div id="content">
+          { viewSource 
+            ? srcAndRes.res
+            : "View source TBD" }
+        </div>
     </SelectionContext.Provider>
 }
 
