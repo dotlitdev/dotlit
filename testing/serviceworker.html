@@ -1,1 +1,129 @@
-<html data-reactroot=""><head><title>serviceworker</title><meta name="litsrc" value="testing/serviceworker.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu></div><div id="content">View source TBD</div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
+<html data-reactroot=""><head><title>serviceworker</title><meta name="litsrc" value="testing/serviceworker.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="11:57-420"><cell startpos="1:1-0" endpos="1:24-23"><h1 id="testingserviceworker">testing/serviceworker</h1></cell><section depth="2" class="" startpos="3:1-25" endpos="11:57-420"><cell startpos="3:1-25" endpos="11:57-420"><h2 id="references">References</h2><ul>
+<li>
+<p><a href="https://ponyfoo.com/articles/serviceworker-revolution">https://ponyfoo.com/articles/serviceworker-revolution<span class="linkIcon">↗</span></a></p>
+</li>
+<li>
+<p><a href="https://github.com/homam/service-workers-example">https://github.com/homam/service-workers-example<span class="linkIcon">↗</span></a></p>
+</li>
+<li>
+<p>Communication</p>
+<ul>
+<li><del><a href="https://stackoverflow.com/a/66784901/371040">broadcast channels<span class="linkIcon">↗</span></a></del> not available in safari, desktop or iOS</li>
+</ul>
+</li>
+<li>
+<p>Initial source, from: <a href="https://googlechrome.github.io/samples/service-worker/basic/">https://googlechrome.github.io/samples/service-worker/basic/<span class="linkIcon">↗</span></a></p>
+</li>
+<li>
+<p>See <a href="testing/web_workers.html?file=testing/web_workers.lit" title="testing/Web Workers" wikilink="true">testing/Web Workers</a> for related investigation.</p>
+</li>
+</ul></cell></section></section>
+<section depth="2" class="" startpos="13:1-422" endpos="62:4-1310"><cell startpos="13:1-422" endpos="13:15-436"><h2 id="exploration">Exploration</h2></cell><cell startpos="15:1-438" endpos="22:4-552" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">if (&#x27;serviceWorker&#x27; in navigator) {
+  return true
+}
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">10.4 hours ago</span></span></span><output><pre><code class="txt">true
+</code></pre></output></codecell></cell><cell startpos="23:1-553" endpos="28:4-654" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return (new Response(&#x27;hello&#x27;)).text()
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">10.4 hours ago</span></span></span><output><pre><code class="txt">hello
+</code></pre></output></codecell></cell><cell startpos="30:1-656" endpos="44:4-972" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return (async () =&gt; {
+  await navigator
+          .serviceWorker
+          .register(&#x27;/serviceworker.js&#x27;)
+
+  return navigator.serviceWorker.controller
+         ? &quot;Service worker active.&quot;
+         : &quot;Refresh to activate worker.&quot;
+  
+})()
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">9.5 hours ago</span></span></span><output><pre><code class="txt">Service worker active.
+</code></pre></output></codecell></cell><cell startpos="45:1-973" endpos="53:4-1118" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return (async fn =&gt; {
+  const resp = await fetch(&#x27;/none&#x27;)
+  return resp.status
+})()
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">10.3 hours ago</span></span></span><output><pre><code class="txt">404
+</code></pre></output></codecell></cell><cell startpos="54:1-1119" endpos="62:4-1310" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return (async fn =&gt; {
+  const resp = await fetch(&#x27;/mockresponse&#x27;)
+  return resp.status + &quot; : &quot; + (await resp.text())
+})()
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">9.6 hours ago</span></span></span><output><pre><code class="txt">200 : hello
+</code></pre></output></codecell></cell></section>
+<section depth="2" class="" startpos="64:1-1312" endpos="146:4-4259"><cell startpos="64:1-1312" endpos="64:18-1329"><h2 id="implementation">Implementation</h2></cell><cell startpos="65:1-1330" endpos="146:4-4259" class="code output"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><ul class="tags"><li style="color:white;background-color:#6455ab"><span class="tag">implementation</span></li></ul><ul class="directives"><li style="color:black;background-color:#da5323"><span class="directive dir-collapse">collapse</span></li></ul><ul class="attributes"></ul></span><output><pre><code class="js">/*
+ Copyright 2016 Google Inc. All Rights Reserved.
+ Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
+// Names of the two caches used in this version of the service worker.
+// Change to v2, etc. when you update any of the local resources, which will
+// in turn trigger the install event again.
+const PRECACHE = Date.now() // no-cache &#x27;precache-v1&#x27;;
+const RUNTIME = &#x27;runtime&#x27;;
+
+// A list of local resources we always want to be cached.
+const PRECACHE_URLS = [
+  //&#x27;index.html&#x27;,
+  //&#x27;./&#x27;, // Alias for index.html
+  //&#x27;styles.css&#x27;,
+  //&#x27;../../styles/main.css&#x27;,
+  //&#x27;demo.js&#x27;
+];
+
+const getMockResponse = args =&gt; new Response(&#x27;hello&#x27;)
+
+// The install handler takes care of precaching the resources we always need.
+self.addEventListener(&#x27;install&#x27;, event =&gt; {
+  event.waitUntil(
+    caches.open(PRECACHE)
+      .then(cache =&gt; cache.addAll(PRECACHE_URLS))
+      .then(self.skipWaiting())
+  );
+});
+
+// The activate handler takes care of cleaning up old caches.
+self.addEventListener(&#x27;activate&#x27;, event =&gt; {
+  const currentCaches = [PRECACHE, RUNTIME];
+  event.waitUntil(
+    caches.keys().then(cacheNames =&gt; {
+      return cacheNames.filter(cacheName =&gt; !currentCaches.includes(cacheName));
+    }).then(cachesToDelete =&gt; {
+      return Promise.all(cachesToDelete.map(cacheToDelete =&gt; {
+        return caches.delete(cacheToDelete);
+      }));
+    }).then(() =&gt; self.clients.claim())
+  );
+});
+
+// The fetch handler serves responses for same-origin resources from a cache.
+// If no response is found, it populates the runtime cache with the response
+// from the network before returning it to the page.
+self.addEventListener(&#x27;fetch&#x27;, event =&gt; {
+  // Skip cross-origin requests, like those for Google Analytics. And add mock response
+  if (event.request.url.startsWith(self.location.origin)) {
+    if (event.request.url.endsWith(&#x27;/mockresponse&#x27;)) {
+       event.respondWith(getMockResponse())
+    }
+    else event.respondWith(
+      caches.match(event.request).then(cachedResponse =&gt; {
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+
+        return caches.open(RUNTIME).then(cache =&gt; {
+          return fetch(event.request).then(response =&gt; {
+            // Put a copy of the response in the runtime cache.
+            return cache.put(event.request, response.clone()).then(() =&gt; {
+              return response;
+            });
+          });
+        });
+      })
+    );
+  }
+});
+</code></pre></output></codecell></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
