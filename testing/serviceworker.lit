@@ -13,13 +13,13 @@ if ('serviceWorker' in navigator) {
   return true
 }
 ```
-```>txt attached=true
-Execute above to check support
+```>txt attached=true updated=1619524117633
+true
 ```
 ```js
 return (new Response('hello')).text()
 ```
-```>txt attached=true updated=1619515150788
+```>txt attached=true updated=1619524123503
 hello
 ```
 
@@ -85,7 +85,7 @@ const PRECACHE_URLS = [
   //'demo.js'
 ];
 
-const MockResponse = new Response('hello')
+const getMockResponse = args => new Response('hello')
 
 // The install handler takes care of precaching the resources we always need.
 self.addEventListener('install', event => {
@@ -117,7 +117,7 @@ self.addEventListener('fetch', event => {
   // Skip cross-origin requests, like those for Google Analytics. And add mock response
   if (event.request.url.startsWith(self.location.origin)) {
     if (event.request.url.endsWith('/mockresponse')) {
-       event.respondWith(MockResponse)
+       event.respondWith(getMockResponse())
     }
     else event.respondWith(
       caches.match(event.request).then(cachedResponse => {
