@@ -158,7 +158,7 @@ export const Header = (props) => {
 
     const cellSelected = (ctx.selectedCell && ctx.selectedCell.start) || false
 
-    return <Menu title="Home" horizontal href={root}>
+    return <div><Menu title="Home" horizontal href={root}>
     <Menu title="File">
       <span disabled className="meta">{ageMessage}</span>
       <span disabled>New</span>
@@ -217,6 +217,10 @@ export const Header = (props) => {
 
     </Menu>
   </Menu>
+  <div className="messages">
+  { ctx.file.messages.map( m => <div key={m.message} className="message">{m.message}</div> ) }
+  </div>
+  </div>
   }}
 </SelectionContext.Consumer>
 }
