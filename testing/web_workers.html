@@ -15,17 +15,18 @@
 <section depth="2" class="" startpos="5:1-38" endpos="6:111-163"><cell startpos="5:1-38" endpos="6:111-163"><h2 id="references">References</h2><p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers">Using Web Workers on MDN<span class="linkIcon">↗</span></a></p></cell></section>
 <section depth="2" class="" startpos="8:1-165" endpos="19:4-323"><cell startpos="8:1-165" endpos="8:11-175"><h2 id="support">Support</h2></cell><cell startpos="9:1-176" endpos="11:4-194" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">copy me.
 </code></pre></codecell></cell><cell startpos="14:1-197" endpos="19:4-323" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return `Worker supported: ${!!window.Worker}`
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">55 minutes ago</span></span></span><output><pre><code class="txt">Worker supported: true
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">7.0 hours ago</span></span></span><output><pre><code class="txt">Worker supported: true
 </code></pre></output></codecell></cell></section>
-<section depth="2" class="" startpos="21:1-325" endpos="77:4-1529"><cell startpos="21:1-325" endpos="21:18-342"><h2 id="implementation">Implementation</h2></cell><cell startpos="22:1-343" endpos="25:4-428" class="code output"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker.js</span><ul class="tags"><li style="color:white;background-color:#6455ab"><span class="tag">implementation</span></li></ul><ul class="attributes"></ul></span><output><pre><code class="js">// postMessage(&quot;hi&quot;)
+<section depth="2" class="" startpos="21:1-325" endpos="78:4-1560"><cell startpos="21:1-325" endpos="21:18-342"><h2 id="implementation">Implementation</h2></cell><cell startpos="22:1-343" endpos="25:4-428" class="code output"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker.js</span><ul class="tags"><li style="color:white;background-color:#6455ab"><span class="tag">implementation</span></li></ul><ul class="attributes"></ul></span><output><pre><code class="js">// postMessage(&quot;hi&quot;)
 console.log(&quot;anyone here?&quot;)
-</code></pre></output></codecell></cell><cell startpos="26:1-429" endpos="26:48-476"><p>Check if web server has up to date content yet?</p></cell><cell startpos="28:1-478" endpos="37:4-676" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return (async fn =&gt; {
+</code></pre></output></codecell></cell><cell startpos="26:1-429" endpos="26:48-476"><p>Check if web server has up to date content yet?</p></cell><cell startpos="28:1-478" endpos="38:4-707" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return (async fn =&gt; {
   const resp = await fetch(&#x27;./worker.js&#x27;)
   return resp.status + &quot;\n&quot; + (await resp.text())
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">2 minutes ago</span></span></span><output><pre><code class="txt">200
-postMessage(&quot;hi&quot;)
-</code></pre></output></codecell></cell><section depth="3" class="" startpos="38:1-677" endpos="77:4-1529"><cell startpos="38:1-677" endpos="40:76-765"><h3 id="testing">Testing</h3><p>Current REPL results in script execution from cross-origin? Due to data:uri</p></cell><cell startpos="42:1-767" endpos="59:4-1134" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">55 seconds ago</span></span></span><output><pre><code class="txt">200
+// postMessage(&quot;hi&quot;)
+console.log(&quot;anyone here?&quot;)
+</code></pre></output></codecell></cell><section depth="3" class="" startpos="39:1-708" endpos="78:4-1560"><cell startpos="39:1-708" endpos="41:76-796"><h3 id="testing">Testing</h3><p>Current REPL results in script execution from cross-origin? Due to data:uri</p></cell><cell startpos="43:1-798" endpos="60:4-1165" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
   let myWorker;
   try {
     myWorker = new Worker(&#x27;worker.js&#x27;)
@@ -38,8 +39,8 @@ postMessage(&quot;hi&quot;)
   }
   
 })
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">26 minutes ago</span></span></span><output><pre><code class="txt">{ isTrusted: [Getter] }
-</code></pre></output></codecell></cell><cell startpos="60:1-1135" endpos="77:4-1529" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">6.5 hours ago</span></span></span><output><pre><code class="txt">{ isTrusted: [Getter] }
+</code></pre></output></codecell></cell><cell startpos="61:1-1166" endpos="78:4-1560" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
   let myWorker;
   try {
     myWorker = new Worker(&#x27;https://dotlit.org/testing/worker.js&#x27;)
@@ -52,5 +53,5 @@ postMessage(&quot;hi&quot;)
   }
   
 })
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">10 minutes ago</span></span></span><output><pre><code class="txt">{ isTrusted: [Getter] }
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">6.2 hours ago</span></span></span><output><pre><code class="txt">{ isTrusted: [Getter] }
 </code></pre></output></codecell></cell></section></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="Title TBD (testing/serviceworker.lit)" href="/testing/serviceworker.html">Title TBD (testing/serviceworker.lit)</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
