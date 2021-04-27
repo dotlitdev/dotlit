@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import path from 'path'
 import SelectionContext from './SelectionContext'
 import { Header } from './Header'
-import { Editor } from './Editor'
+import Editor from './Editor'
 import source from 'unist-util-source'
 import patchSource from '../utils/unist-util-patch-source'
 import { processor } from '../renderer'
@@ -81,8 +81,8 @@ const App = ({root, file, fs, result}) => {
         <div id="header"><Header root={root} file={file.path} {...times} toggleViewSource={toggleViewSource}/></div>
         <div id="content">
           { viewSource 
-            ? srcAndRes.res
-            : "View source TBD" }
+            ? <Editor src={srcAndResult.src} update={()=>{}} />
+            : srcAndRes.res }
         </div>
     </SelectionContext.Provider>
 }
