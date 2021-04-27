@@ -18,7 +18,9 @@ postMessage("hi")
 return new Promise((resolve,reject) => {
   const myWorker = new Worker('worker.js')
   myWorker.onmessage = resolve
-  myWorker.onerror = reject
+  myWorker.onerror = (err) => {
+    resolve(err)
+  }
 })
 ```
 ```>txt attached=true updated=1619529543043
