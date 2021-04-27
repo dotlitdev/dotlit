@@ -107,7 +107,7 @@ export const Header = (props) => {
 
   const ghToken = typeof localStorage !== 'undefined' && localStorage.getItem('ghToken')
   const setGhToken = (ev) => {
-    localStorage.getItem('ghToken', prompt("GitHub personal access token"))
+    localStorage.setItem('ghToken', prompt("GitHub personal access token"))
   }
   
   const copyCell = ctx => ev => {
