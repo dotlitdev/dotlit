@@ -81,7 +81,7 @@ const App = ({root, file, fs, result}) => {
         <div id="header"><Header root={root} file={file.path} {...times} toggleViewSource={toggleViewSource}/></div>
         <div id="content">
           { viewSource 
-            ? <Editor src={srcAndResult.src} update={()=>{}} />
+            ? <Editor src={srcAndRes.src} update={()=>{}} />
             : srcAndRes.res }
         </div>
     </SelectionContext.Provider>
