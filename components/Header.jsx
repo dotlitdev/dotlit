@@ -132,9 +132,17 @@ export const Header = (props) => {
 
   const pasteAfterCell = ctx => async ev => {
     console.log('Pasting after cell at pos:', ctx.selectedCell)
-    const src = source(ctx.selectedCell,ctx.src)
+    const src = source(ctx.selectedCell, ctx.src)
     const add = await clipboard.readText()
     ctx.setSrc(ctx.selectedCell, `${src}\n${add}`)
+    ctx.selectCell(null)
+  }
+
+  const addCodeCell = ctx => ev => {
+    console.log('Adding code cell after cell at pos:', ctx.selectedCell)
+    const src = source(ctx.selectedCell, ctx.src)
+    const add = "```lang\n\n```"
+    ctx.setSrc(ctx.selectedCell, `${src}\n\n${add}`)
     ctx.selectCell(null)
   }
 
@@ -165,20 +173,16 @@ export const Header = (props) => {
       <span disabled className="meta">
         {cellSelected && `Lines ${ctx.selectedCell.start.line}-${ctx.selectedCell.end.line}`}
       </span>
-      <span disabled>Add</span>
+      <span disabled={!cellSelected} onClick={addCodeCell(ctx)}>Add Code</span>
       <span disabled={!cellSelected} onClick={deleteCell(ctx)}>Remove</span>
       <span disabled={!cellSelected} onClick={clearCodeCell(ctx)}>Empty Code</span>
       <span disabled>Edit</span>
       <span disabled>Execute</span>
-      <span disabled>Reset</span>
       <Menu title="Move" disabled={!cellSelected}>
         <span disabled>Up</span>
         <span disabled>Down</span>
       </Menu>
-      <Menu title="Copy">
-        <span disabled>Source</span>
-        <span disabled={!cellSelected} onClick={copyCell(ctx)}>Cell</span>
-      </Menu>
+      <span disabled={!cellSelected} onClick={copyCell(ctx)}>Copy</span>
       <span disabled={!cellSelected} onClick={cutCell(ctx)}>Cut</span>
       <span disabled={!cellSelected} onClick={pasteAfterCell(ctx)}>Paste After</span>
     </Menu>
