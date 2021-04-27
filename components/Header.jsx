@@ -89,7 +89,7 @@ const Menu = props => {
 
 export const Header = (props) => {
   console.log('<Header/>', props)
-  const { root, local, remote, ageMessage } = props
+  const { root, local, remote, ageMessage, toggleViewSource } = props
 
   const resetFile = ctx => async ev => {
     console.log("Reset File:", ctx.file.path)
@@ -156,6 +156,7 @@ export const Header = (props) => {
       <span disabled>New</span>
       <span disabled>Open</span>
       <span disabled>Save</span>
+      <span onClick={toggleViewSource}>View Source</span>
       <span onClick={copyToClipboard(ctx)}>Copy</span>
       <span onClick={resetFile(ctx)}>Reset</span>
       <span disabled>Delete</span>
