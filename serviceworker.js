@@ -26,7 +26,7 @@ const PRECACHE_URLS = [
   //'demo.js'
 ];
 
-const getMockResponse = args => new Response('hello')
+const MockResponse = new Response('hello')
 
 // The install handler takes care of precaching the resources we always need.
 self.addEventListener('install', event => {
@@ -58,7 +58,7 @@ self.addEventListener('fetch', event => {
   // Skip cross-origin requests, like those for Google Analytics. And add mock response
   if (event.request.url.startsWith(self.location.origin)) {
     if (event.request.url.endsWith('/mockresponse')) {
-       event.respondWith(getMockResponse())
+       event.respondWith(MockResponse)
     }
     else event.respondWith(
       caches.match(event.request).then(cachedResponse => {
