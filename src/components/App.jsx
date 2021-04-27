@@ -3,6 +3,7 @@ import path from 'path'
 import SelectionContext from './SelectionContext'
 import { Header } from './Header'
 import Editor from './Editor'
+import Highlight from 'react-highlight.js'
 import source from 'unist-util-source'
 import patchSource from '../utils/unist-util-patch-source'
 import { processor } from '../renderer'
@@ -81,7 +82,8 @@ const App = ({root, file, fs, result}) => {
         <div id="header"><Header root={root} file={file.path} {...times} toggleViewSource={toggleViewSource}/></div>
         <div id="content">
           { viewSource 
-            ? <Editor src={srcAndRes.src} update={()=>{}} />
+            // ? <Editor src={srcAndRes.src} update={()=>{}} />
+            ? <Highlight language="md">{srcAndRes.src}</Highlight>
             : srcAndRes.res }
         </div>
     </SelectionContext.Provider>
