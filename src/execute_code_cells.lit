@@ -522,6 +522,17 @@ export const returns = git
 
 Instead of importing datauri for viewers and transformers use module constructor
 
+```js
+function requireFromString(src, filename) {
+  var Module = module.constructor;
+  var m = new Module();
+  m._compile(src, filename);
+  return m.exports;
+}
+
+console.log(requireFromString('module.exports = { test: 1}', ''));
+```
+
 
 
 
