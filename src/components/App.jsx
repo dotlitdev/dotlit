@@ -11,6 +11,7 @@ import { getConsoleForNamespace } from '../utils/console'
 import filter from 'unist-util-filter'
 import { atPos } from '../utils/unist-util-select-position'
 import { selectAll } from 'unist-util-select'
+import { posstr } from '../utils/functions'
 
 const console = getConsoleForNamespace('App')
 
@@ -63,12 +64,20 @@ const App = ({root, file, fs, result}) => {
        })
     }
 
+    const setSelectedCellWrapper = (pos) => {
+        console.log("Selected Cell:", pos)
+        if (pos) {
+            setSelectedCell(pos)
+            document.querySelector(`[startpos="${posstr(pos.start)}"]`).scrollIntoViewIfNeeded()
+        }
+    }
+
     const state = {
         fs: fs,
         file: file,  
         src: srcAndRes.src, 
         selectedCell, 
-        setSelectedCell, 
+        setSelectedCell: setSelectedCellWrapper, 
         setSrc: setSrcWrapper
     }
 
@@ -79,7 +88,7 @@ const App = ({root, file, fs, result}) => {
     console.log(`<App/> render "${file.path}" (selected: ${selectedCell} `)
 
     return <SelectionContext.Provider value={state}>
-        <div id="header"><Header root={root} file={file.path} {...times} toggleViewSource={toggleViewSource}/></div>
+        <Header root={root} file={file.path} {...times} toggleViewSource={toggleViewSource}/>
         <div id="content">
           { viewSource 
             // ? <Editor src={srcAndRes.src} update={()=>{}} />

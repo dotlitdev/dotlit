@@ -85,7 +85,32 @@ const Menu = props => {
   </menu>
 }
 
+const Message = ({message, setSelectedCell}) => {
+  
+  const scroll = ev => {
+    console.log('[Message] ', message)
+    setSelectedCell(message.location) 
+    return false
+  }
 
+  const [showAll, setShowAll] = useState(false)
+  const toggleShowAll = ev => {
+    setShowAll(!showAll)
+    return false
+  }
+
+  const classes = [
+    'lit-message',
+    showAll && 'showall',
+  ].filter(Identity).join(' ')
+
+  return <div className={classes}>
+    <span className="message" onClick={toggleShowAll}>{message.message}</span>
+    <span className="name" onClick={scroll}>
+      {message.name.split(':').slice(1).join(':')}
+    </span>
+  </div>
+}
 
 export const Header = (props) => {
   console.log('<Header/>', props)
@@ -158,71 +183,71 @@ export const Header = (props) => {
 
     const cellSelected = (ctx.selectedCell && ctx.selectedCell.start) || false
 
-    return <div><Menu title="Home" horizontal href={root}>
-    <Menu title="File">
-      <span disabled className="meta">{ageMessage}</span>
-      <span disabled>New</span>
-      <span disabled>Open</span>
-      <span disabled>Save</span>
-      <span onClick={toggleViewSource}>View Source</span>
-      <span onClick={copyToClipboard(ctx)}>Copy</span>
-      <span onClick={resetFile(ctx)}>Reset</span>
-      <span disabled>Delete</span>
-    </Menu>
-    <Menu title="Cell" disabled={!cellSelected}>
-      <span disabled className="meta">
-        {cellSelected && `Lines ${ctx.selectedCell.start.line}-${ctx.selectedCell.end.line}`}
-      </span>
-      <span disabled={!cellSelected} onClick={addCodeCell(ctx)}>Add Code</span>
-      <span disabled={!cellSelected} onClick={deleteCell(ctx)}>Remove</span>
-      <span disabled={!cellSelected} onClick={clearCodeCell(ctx)}>Empty Code</span>
-      <span disabled>Edit</span>
-      <span disabled>Execute</span>
-      <Menu title="Move" disabled={!cellSelected}>
-        <span disabled>Up</span>
-        <span disabled>Down</span>
+    return <div id="lit-header">
+      <Menu title="Home" horizontal href={root}>
+      <Menu title="File">
+        <span disabled className="meta">{ageMessage}</span>
+        <span disabled>New</span>
+        <span disabled>Open</span>
+        <span disabled>Save</span>
+        <span onClick={toggleViewSource}>View Source</span>
+        <span onClick={copyToClipboard(ctx)}>Copy</span>
+        <span onClick={resetFile(ctx)}>Reset</span>
+        <span disabled>Delete</span>
       </Menu>
-      <span disabled={!cellSelected} onClick={copyCell(ctx)}>Copy</span>
-      <span disabled={!cellSelected} onClick={cutCell(ctx)}>Cut</span>
-      <span disabled={!cellSelected} onClick={pasteAfterCell(ctx)}>Paste After</span>
-    </Menu>
-    <Menu title="Section" disabled={!cellSelected}>
-      <span disabled>Collapse</span>
-      <span disabled>Remove</span>
-      <Menu title="Move">
-        <span disabled>Up</span>
-        <span disabled>Down</span>
+      <Menu title="Cell" disabled={!cellSelected}>
+        <span disabled className="meta">
+          {cellSelected && `Lines ${ctx.selectedCell.start.line}-${ctx.selectedCell.end.line}`}
+        </span>
+        <span disabled={!cellSelected} onClick={addCodeCell(ctx)}>Add Code</span>
+        <span disabled={!cellSelected} onClick={deleteCell(ctx)}>Remove</span>
+        <span disabled={!cellSelected} onClick={clearCodeCell(ctx)}>Empty Code</span>
+        <span disabled>Edit</span>
+        <span disabled>Execute</span>
+        <Menu title="Move" disabled={!cellSelected}>
+          <span disabled>Up</span>
+          <span disabled>Down</span>
+        </Menu>
+        <span disabled={!cellSelected} onClick={copyCell(ctx)}>Copy</span>
+        <span disabled={!cellSelected} onClick={cutCell(ctx)}>Cut</span>
+        <span disabled={!cellSelected} onClick={pasteAfterCell(ctx)}>Paste After</span>
       </Menu>
-    </Menu>
-    <Menu title="Help">
-      <span disabled>About</span>
-      <span disabled>Documentation</span>
-      <span disabled={!ghToken} onClick={setGhToken}>GitHub Token</span>
-      <Menu title="Debug">
-          <span onClick={setDebug}>Set Mask</span>
-          <span onClick={showInspector}>Show Inspector</span>
+      <Menu title="Section" disabled={!cellSelected}>
+        <span disabled>Collapse</span>
+        <span disabled>Remove</span>
+        <Menu title="Move">
+          <span disabled>Up</span>
+          <span disabled>Down</span>
+        </Menu>
       </Menu>
-    </Menu>
-    <Menu right title={<Status local={local} remote={remote} />}>
-      {ctx.file && 
-        <span disabled>{`File: ${ctx.file.path}`}</span>}
-    {local && 
-        <span disabled>{`Local last updated ${local}`}</span> }
-    {remote && 
-        <span disabled>{`Remote last updated ${remote}`}</span> }
-      {ageMessage && 
-        <span disabled>{`Local is ${ageMessage} than remote.`}</span> }
-      { cellSelected && 
-        <span disabled>{`Lines ${ctx.selectedCell.start.line}-${ctx.selectedCell.end.line}`}</span> }
+      <Menu title="Help">
+        <span disabled>About</span>
+        <span disabled>Documentation</span>
+        <span disabled={!ghToken} onClick={setGhToken}>GitHub Token</span>
+        <Menu title="Debug">
+            <span onClick={setDebug}>Set Mask</span>
+            <span onClick={showInspector}>Show Inspector</span>
+        </Menu>
+      </Menu>
+      <Menu right title={<Status local={local} remote={remote} />}>
+        {ctx.file && 
+          <span disabled>{`File: ${ctx.file.path}`}</span>}
+      {local && 
+          <span disabled>{`Local last updated ${local}`}</span> }
+      {remote && 
+          <span disabled>{`Remote last updated ${remote}`}</span> }
+        {ageMessage && 
+          <span disabled>{`Local is ${ageMessage} than remote.`}</span> }
+        { cellSelected && 
+          <span disabled>{`Lines ${ctx.selectedCell.start.line}-${ctx.selectedCell.end.line}`}</span> }
 
+      </Menu>
     </Menu>
-  </Menu>
-  <div className="messages">
-  { ctx.file.messages.map( m => {
-      const scroll = ev => ctx.setSelectedCell(m.position)
-      return <div key={m.message} className="message" onClick={scroll}>{m.message}</div>
-   } ) }
-  </div>
+    <div className="lit-messages">
+    { ctx.file.messages.map( m => {
+        return <Message key={m.name} message={m} setSelectedCell={ctx.setSelectedCell} />
+    } ) }
+    </div>
   </div>
   }}
 </SelectionContext.Consumer>

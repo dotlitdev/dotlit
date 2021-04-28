@@ -68,7 +68,7 @@ export const Codeblock = props => {
       const classes = [
         ...dirClasses,
         ...tagClasses,
-        `lang-${meta.lang}`,
+        meta && `lang-${meta.lang}`,
         localRemote,
         collapsed,
         fullScreen && 'fullscreen',

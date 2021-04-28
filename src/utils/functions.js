@@ -8,3 +8,7 @@ export const getMeta = (key,def) => {
     const val = el ? el.getAttribute('value') : def
     return val
 }
+
+export const posstr = pos => {
+    return pos ? `${pos.line}:${pos.column}-${pos.offset}` : undefined
+}
