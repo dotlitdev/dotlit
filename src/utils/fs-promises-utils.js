@@ -30,10 +30,9 @@ const passThroughReadWithStat = (origReadFile, origStat, litroot, ghOpts) => {
       remote: { stat: undefined, value: undefined },
     }
     try {
-      let stat;
-      try { stat = await origStat(...args) } catch(err){}
+      try { resp.local.stat = await origStat(...args) } catch(err){}
       const value = await origReadFile(...args)
-      resp.local = {stat, value}
+      resp.local.value = value
     } catch (err) { 
       console.log('fs.passThoughRead no local file', err)
     }
