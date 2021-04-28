@@ -64,10 +64,10 @@ const App = ({root, file, fs, result}) => {
        })
     }
 
-    const setSelectedCellWrapper = (pos) => {
+    const setSelectedCellWrapper = (pos, scroll) => {
         console.log("Selected Cell:", pos)
         setSelectedCell(pos)
-        if (pos) {
+        if (pos && scroll) {
             document.querySelector(`[startpos="${posstr(pos.start)}"]`).scrollIntoViewIfNeeded()
         }
     }
