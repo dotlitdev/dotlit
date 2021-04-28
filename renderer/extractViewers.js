@@ -13,9 +13,11 @@ const extractModule = async (src, filename) => {
 
         if (typeof m._compile === 'function') {
             m._compile(src, filename);
+            console.log("Compiled as commonjs module", m, m.exports)
             if (m.exports && Object.keys(m.exports).length) return m.exports
         }
     }
+    console.log("Importing as es6 module via data:uri import.")
     return await import(/* webpackIgnore: true */ `data:text/javascript;base64,${ btoa(src)}`)
 }
 
