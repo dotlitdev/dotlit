@@ -25,7 +25,7 @@ export const extractViewers = ({fs} = {}) => {
                    
                 } catch(err) {
                     console.log("Failed to init viewer", err)
-                    const msg = "Viewer Error: " + (err.message || err.toString())
+                    const msg = "Viewer Error: module?" + typeof module + " " + (err.message || err.toString())
                     file.data.viewers[block.data.meta.of] 
                      = () => msg
                     file.message(msg, block)
