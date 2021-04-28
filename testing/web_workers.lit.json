@@ -805,9 +805,9 @@
                                     "offset": 307
                                 },
                                 "end": {
-                                    "line": 58,
+                                    "line": 98,
                                     "column": 4,
-                                    "offset": 1147
+                                    "offset": 2122
                                 }
                             }
                         }
@@ -953,9 +953,9 @@
                                     "offset": 307
                                 },
                                 "end": {
-                                    "line": 58,
+                                    "line": 98,
                                     "column": 4,
-                                    "offset": 1147
+                                    "offset": 2122
                                 }
                             }
                         }
@@ -1145,9 +1145,9 @@
                                             "offset": 690
                                         },
                                         "end": {
-                                            "line": 58,
+                                            "line": 98,
                                             "column": 4,
-                                            "offset": 1147
+                                            "offset": 2122
                                         }
                                     }
                                 }
@@ -1339,6 +1339,80 @@
                                     }
                                 }
                             ]
+                        },
+                        {
+                            "type": "cell",
+                            "position": {
+                                "start": {
+                                    "line": 59,
+                                    "column": 1,
+                                    "offset": 1148
+                                },
+                                "end": {
+                                    "line": 98,
+                                    "column": 4,
+                                    "offset": 2122
+                                }
+                            },
+                            "data": {
+                                "hName": "cell",
+                                "hProperties": {
+                                    "class": "cell"
+                                }
+                            },
+                            "children": [
+                                {
+                                    "type": "code",
+                                    "lang": "js",
+                                    "meta": "!viewer of=esm2",
+                                    "value": "export const viewer = ({node, React}) => {\n  const rce = React.createElement\n  const {useState, useEffect} = React\n  const [resp, setResp] = useState(null)\n  const [run, setRun] = useState(0)\n  \n  const exec = ev => {\n    ev && ev.stopPropagation()\n    setRun(run+1)\n    load(node.data.value)\n    return false\n  }\n\n  useEffect( args => {\n    if(run===0 && node.properties.meta.exec===\"onload\")\n       exec()\n  },[])\n\n  async function load(src) {\n     const p = new Promise((resolve,reject) => {\n  let myWorker;\n  try {\n    myWorker = new Worker('worker.js')\n    myWorker.onmessage = resolve\n    myWorker.onerror = (err) => {\n      resolve({msg: \"worker.onerror\", err})\n    }\n  } catch(err) {\n    resolve({msg: \"Caught err\", err})\n  }\n  p.then( res => setResp(res))\n  }\n\n  const btn = rce('button', {onClick: exec}, \"Run \" + run)\n  const t = rce('div', null, [btn, resp])\n  return t\n}\nif(typeof module !== \"undefined\") module.exports.viewer = viewer",
+                                    "position": {
+                                        "start": {
+                                            "line": 59,
+                                            "column": 1,
+                                            "offset": 1148
+                                        },
+                                        "end": {
+                                            "line": 98,
+                                            "column": 4,
+                                            "offset": 2122
+                                        }
+                                    },
+                                    "data": {
+                                        "meta": {
+                                            "attrs": {
+                                                "of": "esm2"
+                                            },
+                                            "lang": "js",
+                                            "directives": [
+                                                "viewer"
+                                            ],
+                                            "of": "esm2",
+                                            "isOutput": false,
+                                            "hasOutput": false,
+                                            "hasSource": false,
+                                            "raw": "js !viewer of=esm2"
+                                        },
+                                        "hProperties": {
+                                            "className": "",
+                                            "meta": {
+                                                "attrs": {
+                                                    "of": "esm2"
+                                                },
+                                                "lang": "js",
+                                                "directives": [
+                                                    "viewer"
+                                                ],
+                                                "of": "esm2",
+                                                "isOutput": false,
+                                                "hasOutput": false,
+                                                "hasSource": false,
+                                                "raw": "js !viewer of=esm2"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     ],
                     "position": {
@@ -1348,9 +1422,9 @@
                             "offset": 690
                         },
                         "end": {
-                            "line": 58,
+                            "line": 98,
                             "column": 4,
-                            "offset": 1147
+                            "offset": 2122
                         }
                     }
                 }
@@ -1362,9 +1436,9 @@
                     "offset": 307
                 },
                 "end": {
-                    "line": 58,
+                    "line": 98,
                     "column": 4,
-                    "offset": 1147
+                    "offset": 2122
                 }
             }
         }
@@ -1376,9 +1450,9 @@
             "offset": 0
         },
         "end": {
-            "line": 59,
+            "line": 99,
             "column": 1,
-            "offset": 1148
+            "offset": 2123
         }
     }
 }
