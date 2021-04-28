@@ -3,8 +3,15 @@ import {Time} from './Time'
 import { stringToHex, pickTextColorBasedOnBgColor } from '../utils/colors'
 
 const colorStyle = (val) => {
-    const bgColor = stringToHex(val)
-    const textColor = pickTextColorBasedOnBgColor(bgColor, 'white', 'black')
+    let bgColor = stringToHex(val)
+    let textColor = pickTextColorBasedOnBgColor(bgColor, 'white', 'black')
+
+    // Custom exceptions
+    if (val === 'error')  {
+        bgColor = 'red',
+        textColor = 'white'
+    }
+
     return {
         color: textColor,
         backgroundColor: bgColor
@@ -19,29 +26,17 @@ export const CodeMeta = ({meta, toggleFullscreen, toggleLocalRemote, toggleColla
             {meta.filename && <span className="filename">{meta.filename}</span>}
             {meta.fromSource && <span onClick={toggleLocalRemote} className="source">{'< ' + meta.fromSource}</span> }
             {meta.hasOutput && <span className="output">{'> ' + meta.output}</span> }
-            {meta.tags && <ul className="tags">{
-               meta.tags.map( (tag, i) => <li key={tag+i} style={colorStyle(tag)}>
-                   <span className="tag">{tag}</span>
-               </li>)
-            }</ul>}
-            {meta.directives && <ul className="directives">{
-                meta.directives.map( (dir, i) => {
-                    const onClick = dir === 'inline' ? toggleFullscreen : null
-                    return <li key={dir} onClick={onClick} style={colorStyle(dir)}>
-                       <span className={`directive dir-${dir}`}>{dir}</span>
-                    </li>
-                })
-            }</ul>}
-            { meta.attrs && <ul className="attributes">{
-                Object.keys(meta.attrs).map(attr => {
-                    const val = meta.attrs[attr]
-                    // ignored attributes for display
-                    if(val===true || val==="true" || attr==="updated" || attr==="repl") return null
-                    return <li key={attr} style={colorStyle(attr)}>
-                         <span className={`attribute attr-${attr}`}>{`${attr}=${val}`}</span>
-                    </li>
-                 })
-            }</ul>}
+            {meta.tags && meta.tags.map( (tag, i) => <span key={tag+i} style={colorStyle(tag)} className="tag">{tag}</span>)}
+            {meta.directives && meta.directives.map( (dir, i) => {
+                const onClick = dir === 'inline' ? toggleFullscreen : null
+                return <span key={dir} onClick={onClick} style={colorStyle(dir)} className={`directive dir-${dir}`}>{dir}</span>
+            })}
+            { meta.attrs && Object.keys(meta.attrs).map(attr => {
+                const val = meta.attrs[attr]
+                // ignored attributes for display
+                if(val===true || val==="true" || attr==="updated" || attr==="repl") return null
+                return <span className={`attribute attr-${attr}`} key={attr} style={colorStyle(attr)}>{`${attr}=${val}`}</span>
+                })}
             { meta.updated && <span className="updatedAt">Updated <Time ms={parseInt(meta.updated)} /></span> }
         </span>
 }
