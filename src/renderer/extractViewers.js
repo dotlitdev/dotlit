@@ -5,10 +5,26 @@ import {btoa, atob } from '../utils/safe-encoders'
 
 const console = getConsoleForNamespace('extractViewers')
 
+function requireFromString(src, filename) {
+    var Module = module.constructor;
+    var m = new Module();
+    m._compile(src, filename);
+    return m.exports;
+  }
+
+const extractModule = async (src, filename) => {
+    return requireFromString(src, filename)
+    return await import(/* webpackIgnore: true */ `data:text/javascript;base64,${ btoa(block.value)}`)
+}
+
 export const extractViewers = ({fs} = {}) => {
     return async (tree,file) => {
         console.log("[ExtractViewersAndTransformers] Checking for custom viewers and transformers")
         for (const block of selectAll("code", tree)) {
+
+            const filename = (block.data
+                             && block.data.meta
+                             && block.data.meta.filename) || ''
             // viewer
             if (block.data 
                 && block.data.meta 
@@ -19,7 +35,7 @@ export const extractViewers = ({fs} = {}) => {
                 file.data = file.data || {}
                 file.data.viewers = file.data.viewers || {}
                 try {
-                    let viewer = await import(/* webpackIgnore: true */ `data:text/javascript;base64,${ btoa(block.value)}`)
+                    let viewer = extractModule(block.value, filename)
                     if (viewer.asyncViewer) viewer = await viewer.asyncViewer()
                     file.data.viewers[block.data.meta.of] = viewer
                    
@@ -41,7 +57,7 @@ export const extractViewers = ({fs} = {}) => {
                 file.data = file.data || {}
                 file.data.transformers = file.data.transformers || {}
                 try {
-                    let transformer = await import(/* webpackIgnore: true */ `data:text/javascript;base64,${ btoa(block.value)}`)
+                    let transformer = extractModule(block.value, filename )
                     if (transformer.asyncTransformer) transformer = await transformer. asyncTransformer()
                     file.data.transformers[block.data.meta.of] = transformer
                    
