@@ -66,8 +66,8 @@ const App = ({root, file, fs, result}) => {
 
     const setSelectedCellWrapper = (pos) => {
         console.log("Selected Cell:", pos)
+        setSelectedCell(pos)
         if (pos) {
-            setSelectedCell(pos)
             document.querySelector(`[startpos="${posstr(pos.start)}"]`).scrollIntoViewIfNeeded()
         }
     }
