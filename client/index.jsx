@@ -83,11 +83,13 @@ const lit = {
 lit.u = lit.utils
 
 if (typeof window !== 'undefined') window.lit = lit
-console.log('.lit Notebook client initializing...')
 console.log(`lit:`, lit)
 
 ;(async () => {
-    
+    if(query.__lit_no_client==="true") return;
+
+    console.log('.lit Notebook client initializing...')
+
     const filepath = `/${lit.location.src}`
     console.log(`Checking local (${baseUrl}) filesystem for: ${filepath}`)
     let contents, times = {local: null, remote: null}
