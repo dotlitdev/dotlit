@@ -91,7 +91,7 @@ export const Codeblock = props => {
         const below = Viewer && meta.directives && (meta.directives.indexOf('below') >= 0)
 
         console.log(meta && meta.raw, props )
-        const highlighted = <Highlight language={meta.lang}>{source}</Highlight>
+        const highlighted = <Highlight language={(meta && meta.lang) || "plaintext"}>{source}</Highlight>
         const metaView = meta && <CodeMeta meta={meta} toggleCollapsed={toggleCollapsed} toggleFullscreen={toggleFullscreen} toggleLocalRemote={toggleLocalRemote} />
         return <codecell className={classes}>
             { meta && !above && metaView}
