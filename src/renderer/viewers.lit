@@ -523,7 +523,7 @@ export const viewer = ({node, React}) => {
   const {useState, useEffect} = React
   const meta = node.properties 
                && node.properties.meta
-  const [content, setContent] = useState('Loading...')
+  const [url, setUrl] = useState(null)
 
   async function encodePlantUML(src) {
       console.log("encoding", src)
@@ -537,13 +537,14 @@ export const viewer = ({node, React}) => {
   useEffect(async ()=>{
     const encoded = await encodePlantUML(node.data.value)
     const url = "https://plantuml.com/plantuml/svg/" + encoded
-    setContent("Encoded: " + url)
+    setUrl(url)
   },[src])
 
-  return rc('img', {
-    src: content,
+  return rc('div', {
     className: 'lit-viewer-plantuml2',
-  })
+  }, url ? rc('img', {
+    src: content,
+  }: "Loading...")
 }
 ```
 
