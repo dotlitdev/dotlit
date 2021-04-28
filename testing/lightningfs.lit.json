@@ -39,9 +39,9 @@
                                     "offset": 0
                                 },
                                 "end": {
-                                    "line": 1551,
+                                    "line": 1607,
                                     "column": 4,
-                                    "offset": 45177
+                                    "offset": 46352
                                 }
                             }
                         }
@@ -197,9 +197,9 @@
                                             "offset": 64
                                         },
                                         "end": {
-                                            "line": 1551,
+                                            "line": 1607,
                                             "column": 4,
-                                            "offset": 45177
+                                            "offset": 46352
                                         }
                                     }
                                 }
@@ -613,6 +613,232 @@
                                     }
                                 }
                             ]
+                        },
+                        {
+                            "type": "cell",
+                            "position": {
+                                "start": {
+                                    "line": 1553,
+                                    "column": 1,
+                                    "offset": 45179
+                                },
+                                "end": {
+                                    "line": 1555,
+                                    "column": 4,
+                                    "offset": 45195
+                                }
+                            },
+                            "data": {
+                                "hName": "cell",
+                                "hProperties": {
+                                    "class": "cell"
+                                }
+                            },
+                            "children": [
+                                {
+                                    "type": "code",
+                                    "lang": ">fs",
+                                    "meta": "ls=/",
+                                    "value": "",
+                                    "position": {
+                                        "start": {
+                                            "line": 1553,
+                                            "column": 1,
+                                            "offset": 45179
+                                        },
+                                        "end": {
+                                            "line": 1555,
+                                            "column": 4,
+                                            "offset": 45195
+                                        }
+                                    },
+                                    "data": {
+                                        "meta": {
+                                            "attrs": {
+                                                "ls": "/"
+                                            },
+                                            "lang": "fs",
+                                            "ls": "/",
+                                            "isOutput": true,
+                                            "hasOutput": false,
+                                            "hasSource": false,
+                                            "raw": ">fs ls=/"
+                                        },
+                                        "hProperties": {
+                                            "className": "",
+                                            "meta": {
+                                                "attrs": {
+                                                    "ls": "/"
+                                                },
+                                                "lang": "fs",
+                                                "ls": "/",
+                                                "isOutput": true,
+                                                "hasOutput": false,
+                                                "hasSource": false,
+                                                "raw": ">fs ls=/"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "cell",
+                            "position": {
+                                "start": {
+                                    "line": 1558,
+                                    "column": 1,
+                                    "offset": 45198
+                                },
+                                "end": {
+                                    "line": 1592,
+                                    "column": 4,
+                                    "offset": 46123
+                                }
+                            },
+                            "data": {
+                                "hName": "cell",
+                                "hProperties": {
+                                    "class": "cell"
+                                }
+                            },
+                            "children": [
+                                {
+                                    "type": "code",
+                                    "lang": "js",
+                                    "meta": "!viewer !collapse of=fs #implementation",
+                                    "value": "\nconst sortBy = keys => (a, b) => {\n  for (const key of keys) {\n     if (a[key] !== b[key]) break;\n     else return (a[key] > b[key]) ? 1 : -1\n  }\n}\n\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const src = meta.ls || node.data.value.trim()\n  const [content, setContent] = useState('Loading...')\n  \n  useEffect(async () => {\n    const l = await lit.fs.readdir(src)\n    const list = l.map(async x=>{\n       const stat = await lit.fs.stat(src + x)\n       return {f:x,t:stat.type}\n       \n    })\n    const res = (await Promise.all(list)).sort(sortBy(['t','f'])).map(r => {\n       return rc(\"div\", {className: r.t}, `${r.f}`)\n    })\n    setContent(res)\n  },[src])\n\n  return rc('div', {\n    className: 'custom-react-view',\n  }, content)\n}",
+                                    "position": {
+                                        "start": {
+                                            "line": 1558,
+                                            "column": 1,
+                                            "offset": 45198
+                                        },
+                                        "end": {
+                                            "line": 1592,
+                                            "column": 4,
+                                            "offset": 46123
+                                        }
+                                    },
+                                    "data": {
+                                        "meta": {
+                                            "attrs": {
+                                                "of": "fs"
+                                            },
+                                            "lang": "js",
+                                            "directives": [
+                                                "viewer",
+                                                "collapse"
+                                            ],
+                                            "of": "fs",
+                                            "tags": [
+                                                "implementation"
+                                            ],
+                                            "isOutput": false,
+                                            "hasOutput": false,
+                                            "hasSource": false,
+                                            "raw": "js !viewer !collapse of=fs #implementation"
+                                        },
+                                        "hProperties": {
+                                            "className": "tag-implementation",
+                                            "meta": {
+                                                "attrs": {
+                                                    "of": "fs"
+                                                },
+                                                "lang": "js",
+                                                "directives": [
+                                                    "viewer",
+                                                    "collapse"
+                                                ],
+                                                "of": "fs",
+                                                "tags": [
+                                                    "implementation"
+                                                ],
+                                                "isOutput": false,
+                                                "hasOutput": false,
+                                                "hasSource": false,
+                                                "raw": "js !viewer !collapse of=fs #implementation"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "cell",
+                            "position": {
+                                "start": {
+                                    "line": 1594,
+                                    "column": 1,
+                                    "offset": 46125
+                                },
+                                "end": {
+                                    "line": 1607,
+                                    "column": 4,
+                                    "offset": 46352
+                                }
+                            },
+                            "data": {
+                                "hName": "cell",
+                                "hProperties": {
+                                    "class": "cell"
+                                }
+                            },
+                            "children": [
+                                {
+                                    "type": "code",
+                                    "lang": "html",
+                                    "meta": "!below !collapse #implementation",
+                                    "value": "<style>\n.custom-react-view {\n  font-family: monospace;\n}\n.custom-react-view .dir {\n  font-weight: bold;\n}\n.custom-react-view .dir:after {\n  display:inline;\n  content: \"/\";\n}\n</style>",
+                                    "position": {
+                                        "start": {
+                                            "line": 1594,
+                                            "column": 1,
+                                            "offset": 46125
+                                        },
+                                        "end": {
+                                            "line": 1607,
+                                            "column": 4,
+                                            "offset": 46352
+                                        }
+                                    },
+                                    "data": {
+                                        "meta": {
+                                            "attrs": {},
+                                            "lang": "html",
+                                            "directives": [
+                                                "below",
+                                                "collapse"
+                                            ],
+                                            "tags": [
+                                                "implementation"
+                                            ],
+                                            "isOutput": false,
+                                            "hasOutput": false,
+                                            "hasSource": false,
+                                            "raw": "html !below !collapse #implementation"
+                                        },
+                                        "hProperties": {
+                                            "className": "tag-implementation",
+                                            "meta": {
+                                                "attrs": {},
+                                                "lang": "html",
+                                                "directives": [
+                                                    "below",
+                                                    "collapse"
+                                                ],
+                                                "tags": [
+                                                    "implementation"
+                                                ],
+                                                "isOutput": false,
+                                                "hasOutput": false,
+                                                "hasSource": false,
+                                                "raw": "html !below !collapse #implementation"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     ],
                     "position": {
@@ -622,9 +848,9 @@
                             "offset": 64
                         },
                         "end": {
-                            "line": 1551,
+                            "line": 1607,
                             "column": 4,
-                            "offset": 45177
+                            "offset": 46352
                         }
                     }
                 }
@@ -636,370 +862,9 @@
                     "offset": 0
                 },
                 "end": {
-                    "line": 1551,
-                    "column": 4,
-                    "offset": 45177
-                }
-            }
-        },
-        {
-            "type": "section",
-            "data": {
-                "name": "useful-an-fs-viewer",
-                "hName": "section",
-                "hProperties": {
-                    "depth": 2
-                }
-            },
-            "depth": 2,
-            "children": [
-                {
-                    "type": "cell",
-                    "position": {
-                        "start": {
-                            "line": 1552,
-                            "column": 1,
-                            "offset": 45178
-                        },
-                        "end": {
-                            "line": 1552,
-                            "column": 26,
-                            "offset": 45203
-                        }
-                    },
-                    "data": {
-                        "hName": "cell",
-                        "hProperties": {
-                            "class": "cell"
-                        },
-                        "section": {
-                            "position": {
-                                "start": {
-                                    "line": 1552,
-                                    "column": 1,
-                                    "offset": 45178
-                                },
-                                "end": {
-                                    "line": 1607,
-                                    "column": 4,
-                                    "offset": 46377
-                                }
-                            }
-                        }
-                    },
-                    "children": [
-                        {
-                            "type": "heading",
-                            "depth": 2,
-                            "children": [
-                                {
-                                    "type": "text",
-                                    "value": "Useful? an ",
-                                    "position": {
-                                        "start": {
-                                            "line": 1552,
-                                            "column": 4,
-                                            "offset": 45181
-                                        },
-                                        "end": {
-                                            "line": 1552,
-                                            "column": 15,
-                                            "offset": 45192
-                                        }
-                                    }
-                                },
-                                {
-                                    "type": "inlineCode",
-                                    "value": "fs",
-                                    "position": {
-                                        "start": {
-                                            "line": 1552,
-                                            "column": 15,
-                                            "offset": 45192
-                                        },
-                                        "end": {
-                                            "line": 1552,
-                                            "column": 19,
-                                            "offset": 45196
-                                        }
-                                    }
-                                },
-                                {
-                                    "type": "text",
-                                    "value": " viewer",
-                                    "position": {
-                                        "start": {
-                                            "line": 1552,
-                                            "column": 19,
-                                            "offset": 45196
-                                        },
-                                        "end": {
-                                            "line": 1552,
-                                            "column": 26,
-                                            "offset": 45203
-                                        }
-                                    }
-                                }
-                            ],
-                            "position": {
-                                "start": {
-                                    "line": 1552,
-                                    "column": 1,
-                                    "offset": 45178
-                                },
-                                "end": {
-                                    "line": 1552,
-                                    "column": 26,
-                                    "offset": 45203
-                                }
-                            },
-                            "data": {
-                                "hProperties": {
-                                    "id": "useful-an-fs-viewer"
-                                },
-                                "id": "useful-an-fs-viewer"
-                            },
-                            "processed": true
-                        }
-                    ]
-                },
-                {
-                    "type": "cell",
-                    "position": {
-                        "start": {
-                            "line": 1553,
-                            "column": 1,
-                            "offset": 45204
-                        },
-                        "end": {
-                            "line": 1555,
-                            "column": 4,
-                            "offset": 45220
-                        }
-                    },
-                    "data": {
-                        "hName": "cell",
-                        "hProperties": {
-                            "class": "cell"
-                        }
-                    },
-                    "children": [
-                        {
-                            "type": "code",
-                            "lang": ">fs",
-                            "meta": "ls=/",
-                            "value": "",
-                            "position": {
-                                "start": {
-                                    "line": 1553,
-                                    "column": 1,
-                                    "offset": 45204
-                                },
-                                "end": {
-                                    "line": 1555,
-                                    "column": 4,
-                                    "offset": 45220
-                                }
-                            },
-                            "data": {
-                                "meta": {
-                                    "attrs": {
-                                        "ls": "/"
-                                    },
-                                    "lang": "fs",
-                                    "ls": "/",
-                                    "isOutput": true,
-                                    "hasOutput": false,
-                                    "hasSource": false,
-                                    "raw": ">fs ls=/"
-                                },
-                                "hProperties": {
-                                    "className": "",
-                                    "meta": {
-                                        "attrs": {
-                                            "ls": "/"
-                                        },
-                                        "lang": "fs",
-                                        "ls": "/",
-                                        "isOutput": true,
-                                        "hasOutput": false,
-                                        "hasSource": false,
-                                        "raw": ">fs ls=/"
-                                    }
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "type": "cell",
-                    "position": {
-                        "start": {
-                            "line": 1558,
-                            "column": 1,
-                            "offset": 45223
-                        },
-                        "end": {
-                            "line": 1592,
-                            "column": 4,
-                            "offset": 46148
-                        }
-                    },
-                    "data": {
-                        "hName": "cell",
-                        "hProperties": {
-                            "class": "cell"
-                        }
-                    },
-                    "children": [
-                        {
-                            "type": "code",
-                            "lang": "js",
-                            "meta": "!viewer !collapse of=fs #implementation",
-                            "value": "\nconst sortBy = keys => (a, b) => {\n  for (const key of keys) {\n     if (a[key] !== b[key]) break;\n     else return (a[key] > b[key]) ? 1 : -1\n  }\n}\n\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const src = meta.ls || node.data.value.trim()\n  const [content, setContent] = useState('Loading...')\n  \n  useEffect(async () => {\n    const l = await lit.fs.readdir(src)\n    const list = l.map(async x=>{\n       const stat = await lit.fs.stat(src + x)\n       return {f:x,t:stat.type}\n       \n    })\n    const res = (await Promise.all(list)).sort(sortBy(['t','f'])).map(r => {\n       return rc(\"div\", {className: r.t}, `${r.f}`)\n    })\n    setContent(res)\n  },[src])\n\n  return rc('div', {\n    className: 'custom-react-view',\n  }, content)\n}",
-                            "position": {
-                                "start": {
-                                    "line": 1558,
-                                    "column": 1,
-                                    "offset": 45223
-                                },
-                                "end": {
-                                    "line": 1592,
-                                    "column": 4,
-                                    "offset": 46148
-                                }
-                            },
-                            "data": {
-                                "meta": {
-                                    "attrs": {
-                                        "of": "fs"
-                                    },
-                                    "lang": "js",
-                                    "directives": [
-                                        "viewer",
-                                        "collapse"
-                                    ],
-                                    "of": "fs",
-                                    "tags": [
-                                        "implementation"
-                                    ],
-                                    "isOutput": false,
-                                    "hasOutput": false,
-                                    "hasSource": false,
-                                    "raw": "js !viewer !collapse of=fs #implementation"
-                                },
-                                "hProperties": {
-                                    "className": "tag-implementation",
-                                    "meta": {
-                                        "attrs": {
-                                            "of": "fs"
-                                        },
-                                        "lang": "js",
-                                        "directives": [
-                                            "viewer",
-                                            "collapse"
-                                        ],
-                                        "of": "fs",
-                                        "tags": [
-                                            "implementation"
-                                        ],
-                                        "isOutput": false,
-                                        "hasOutput": false,
-                                        "hasSource": false,
-                                        "raw": "js !viewer !collapse of=fs #implementation"
-                                    }
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "type": "cell",
-                    "position": {
-                        "start": {
-                            "line": 1594,
-                            "column": 1,
-                            "offset": 46150
-                        },
-                        "end": {
-                            "line": 1607,
-                            "column": 4,
-                            "offset": 46377
-                        }
-                    },
-                    "data": {
-                        "hName": "cell",
-                        "hProperties": {
-                            "class": "cell"
-                        }
-                    },
-                    "children": [
-                        {
-                            "type": "code",
-                            "lang": "html",
-                            "meta": "!below !collapse #implementation",
-                            "value": "<style>\n.custom-react-view {\n  font-family: monospace;\n}\n.custom-react-view .dir {\n  font-weight: bold;\n}\n.custom-react-view .dir:after {\n  display:inline;\n  content: \"/\";\n}\n</style>",
-                            "position": {
-                                "start": {
-                                    "line": 1594,
-                                    "column": 1,
-                                    "offset": 46150
-                                },
-                                "end": {
-                                    "line": 1607,
-                                    "column": 4,
-                                    "offset": 46377
-                                }
-                            },
-                            "data": {
-                                "meta": {
-                                    "attrs": {},
-                                    "lang": "html",
-                                    "directives": [
-                                        "below",
-                                        "collapse"
-                                    ],
-                                    "tags": [
-                                        "implementation"
-                                    ],
-                                    "isOutput": false,
-                                    "hasOutput": false,
-                                    "hasSource": false,
-                                    "raw": "html !below !collapse #implementation"
-                                },
-                                "hProperties": {
-                                    "className": "tag-implementation",
-                                    "meta": {
-                                        "attrs": {},
-                                        "lang": "html",
-                                        "directives": [
-                                            "below",
-                                            "collapse"
-                                        ],
-                                        "tags": [
-                                            "implementation"
-                                        ],
-                                        "isOutput": false,
-                                        "hasOutput": false,
-                                        "hasSource": false,
-                                        "raw": "html !below !collapse #implementation"
-                                    }
-                                }
-                            }
-                        }
-                    ]
-                }
-            ],
-            "position": {
-                "start": {
-                    "line": 1552,
-                    "column": 1,
-                    "offset": 45178
-                },
-                "end": {
                     "line": 1607,
                     "column": 4,
-                    "offset": 46377
+                    "offset": 46352
                 }
             }
         }
@@ -1013,7 +878,7 @@
         "end": {
             "line": 1609,
             "column": 1,
-            "offset": 46379
+            "offset": 46354
         }
     }
 }
