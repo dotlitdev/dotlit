@@ -73,7 +73,7 @@ export const viewer = ({node, React}) => {
 ```
 
 ```bar !below
-Custom Content 2
+Custom Content 3
 ```
 
 ### Example: `css` viewer
@@ -513,4 +513,24 @@ export const viewer = ({node}) => {
   </script>
   </body>
 </html>
+```
+
+## Experiments
+
+```js !viewer of=plantuml2
+export const viewer = ({node, React}) => {
+  const rc = React.createElement
+  const {useState, useEffect} = React
+  const meta = node.properties 
+               && node.properties.meta
+  const [content, setContent] = useState('Loading...')
+  const src = node.data.value
+  useEffect(()=>{
+    setContent("Loaded. " + node.data.value)
+  },[src])
+
+  return rc('div', {
+    className: 'custom-react-view',
+  }, content)
+}
 ```
