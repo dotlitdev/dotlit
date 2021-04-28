@@ -25,13 +25,6 @@ export const transcludeCode = ({fs}) => {
                       file.message("[Transclude] Failed to load uri " + block.data.meta.fromSource + " status: " + resp.status, block)
                    }
                }
-            }
-        }
-    }
-}
-
-                   }
-               }
                else if (source.filename) {
                    const filePath = path.join(path.dirname(file.path), source.filename)
                    console.log("[Transclude] to filePath", filePath)
