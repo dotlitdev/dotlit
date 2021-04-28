@@ -56,3 +56,43 @@ return new Promise((resolve,reject) => {
 ```>txt attached=true updated=1619531217657
 { isTrusted: [Getter] }
 ```
+```js !viewer of=esm2
+export const viewer = ({node, React}) => {
+  const rce = React.createElement
+  const {useState, useEffect} = React
+  const [resp, setResp] = useState(null)
+  const [run, setRun] = useState(0)
+  
+  const exec = ev => {
+    ev && ev.stopPropagation()
+    setRun(run+1)
+    load(node.data.value)
+    return false
+  }
+
+  useEffect( args => {
+    if(run===0 && node.properties.meta.exec==="onload")
+       exec()
+  },[])
+
+  async function load(src) {
+     const p = new Promise((resolve,reject) => {
+  let myWorker;
+  try {
+    myWorker = new Worker('worker.js')
+    myWorker.onmessage = resolve
+    myWorker.onerror = (err) => {
+      resolve({msg: "worker.onerror", err})
+    }
+  } catch(err) {
+    resolve({msg: "Caught err", err})
+  }
+  p.then( res => setResp(res))
+  }
+
+  const btn = rce('button', {onClick: exec}, "Run " + run)
+  const t = rce('div', null, [btn, resp])
+  return t
+}
+if(typeof module !== "undefined") module.exports.viewer = viewer
+```
