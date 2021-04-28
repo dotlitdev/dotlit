@@ -21,6 +21,15 @@ export const transcludeCode = ({fs}) => {
                        const value = await resp.text()
                        console.log("[Transclude] has value", value)
                        block.value = value
+                   } else {
+                      file.message("[Transclude] Failed to load uri " + block.data.meta.fromSource + " status: " + resp.status, block)
+                   }
+               }
+            }
+        }
+    }
+}
+
                    }
                }
                else if (source.filename) {
@@ -32,7 +41,7 @@ export const transcludeCode = ({fs}) => {
                        console.log("[Transclude]  has value", resp)
                        block.value = resp.local.value || resp.remote.value
                    } catch(err) {
-                       file.message("[Transclude] Failed to load " + block.data.meta.fromSource + " as " + filePath)
+                       file.message("[Transclude] Failed to load " + block.data.meta.fromSource + " as " + filePath, block)
                    }
                }
             }
