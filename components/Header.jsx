@@ -218,7 +218,10 @@ export const Header = (props) => {
     </Menu>
   </Menu>
   <div className="messages">
-  { ctx.file.messages.map( m => <div key={m.message} className="message">{m.message}</div> ) }
+  { ctx.file.messages.map( m => {
+      const scroll = ev => ctx.setSelectedCell(m.position)
+      return <div key={m.message} className="message" onClick={scroll}>{m.message}</div>
+   } ) }
   </div>
   </div>
   }}

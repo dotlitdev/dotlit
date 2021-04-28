@@ -28,7 +28,7 @@ export const extractViewers = ({fs} = {}) => {
                     const msg = "Viewer Error: " + (err.message || err.toString())
                     file.data.viewers[block.data.meta.of] 
                      = () => msg
-                    file.message(msg)
+                    file.message(msg, block)
                 }
             }
             // transformer
@@ -50,7 +50,7 @@ export const extractViewers = ({fs} = {}) => {
                     const msg = "Transformer Error: " + (err.message || err.toString())
                     file.data.transformers[block.data.meta.of] 
                      = () => msg
-                    file.message(msg)
+                    file.message(msg, block)
                 }
             }
         }
