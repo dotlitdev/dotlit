@@ -7,14 +7,15 @@ const console = getConsoleForNamespace('extractViewers')
    
 
 const extractModule = async (src, filename) => {
-    if (false && typeof global !== 'undefined'){
+    if (typeof global !== 'undefined'){
         var Module = module.constructor;
         var m = new Module();
 
         if (typeof m._compile === 'function') {
             m._compile(src, filename);
             console.log("Compiled as commonjs module", m, m.exports)
-            if (m.exports && Object.keys(m.exports).length) return m.exports
+            if (m.exports && Object.keys(m.exports).length) return m.exports;
+            else throw new Error("No module.exports when loaded as commonjs")
         }
     }
     console.log("Importing as es6 module via data:uri import.")
