@@ -89,7 +89,7 @@ const Message = ({message, setSelectedCell}) => {
   
   const scroll = ev => {
     console.log('[Message] ', message)
-    setSelectedCell(message.location) 
+    setSelectedCell(message.location, true) 
     return false
   }
 
