@@ -40,12 +40,18 @@ export const extractViewers = ({fs} = {}) => {
                 file.data.viewers = file.data.viewers || {}
                 try {
                     let viewer = extractModule(block.value, filename)
-                    if (viewer.asyncViewer) viewer = await viewer.asyncViewer()
+                    if (viewer.asyncViewer) {
+                        viewer = await viewer.asyncViewer()
+                    } else if (viewer.viewer) {
+                    } else {
+                        console.log(viewer)
+                        throw new Error("No viewer exported from module")
+                    }
                     file.data.viewers[block.data.meta.of] = viewer
                    
                 } catch(err) {
                     console.log("Failed to init viewer", err)
-                    const msg = "Viewer Error: module?" + typeof module + " " + (err.message || err.toString())
+                    const msg = "Viewer Error: " + (err.message || err.toString())
                     file.data.viewers[block.data.meta.of] 
                      = () => msg
                     file.message(msg, block)
@@ -62,7 +68,12 @@ export const extractViewers = ({fs} = {}) => {
                 file.data.transformers = file.data.transformers || {}
                 try {
                     let transformer = extractModule(block.value, filename )
-                    if (transformer.asyncTransformer) transformer = await transformer. asyncTransformer()
+                    if (transformer.asyncTransformer) transformer = await transformer.asyncTransformer()
+                    else if (transformer. transformer) {
+                    } else {
+                        console.log(transformer)
+                        throw new Error("No transformer exported from module")
+                    }
                     file.data.transformers[block.data.meta.of] = transformer
                    
                 } catch(err) {
