@@ -32,6 +32,7 @@ const App = ({root, file, fs, result}) => {
         const patchedSrc = patchSource(srcAndRes.src, pos, cellSource.trimEnd())
         
         file.contents = patchedSrc
+        file.messages = []
         const processedFile = await processor(fs).process(file)
         console.log("Processed client", processedFile)
       
