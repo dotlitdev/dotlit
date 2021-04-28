@@ -7,13 +7,14 @@ const console = getConsoleForNamespace('extractViewers')
    
 
 const extractModule = async (src, filename) => {
-    var Module = module.constructor;
-    var m = new Module();
+    if (typeof global !== 'undefined'){
+        var Module = module.constructor;
+        var m = new Module();
 
-    if (typeof m._compile === 'function') {
-        m._compile(src, filename);
-
-        if (m.exports && Object.keys(m.exports).length) return m.exports
+        if (typeof m._compile === 'function') {
+            m._compile(src, filename);
+            if (m.exports && Object.keys(m.exports).length) return m.exports
+        }
     }
     return await import(/* webpackIgnore: true */ `data:text/javascript;base64,${ btoa(src)}`)
 }
