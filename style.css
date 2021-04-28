@@ -25,24 +25,40 @@ body {
 li > p:first-child {
   margin: 0;
 }
-#header {
+#lit-header {
   top: 0;
   position: sticky;
   background-color: #fff;
   z-index: 99999;
-  border-bottom: 1px solid #efefef;
 }
-#header *[disabled] {
+#lit-header *[disabled] {
   opacity: 0.5;
   font-style: italic;
   cursor: default;
 }
-#header .message {
-  background-color: #f00;
+#lit-header .lit-message {
+  background-color: rgba(255,0,0,0.702);
+  border-bottom: 1px solid #c32d2d;
   color: #fff;
   padding: 0.4em;
 }
-#header menu {
+#lit-header .lit-message .message {
+  overflow: hidden;
+  flex: 1;
+}
+#lit-header .lit-message:not(.showall) {
+  display: flex;
+}
+#lit-header .lit-message:not(.showall) .message {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#lit-header .lit-message .name {
+  cursor: pointer;
+  margin-left: 0.4em;
+  text-decoration: underline;
+}
+#lit-header menu {
   margin: 0;
   padding: 0;
   display: flex;
@@ -50,56 +66,56 @@ li > p:first-child {
   position: relative;
   white-space: nowrap;
 }
-#header menu.right {
+#lit-header menu.right {
   margin-left: auto;
 }
-#header menu.right > .MenuItems {
+#lit-header menu.right > .MenuItems {
   right: 0;
   left: auto;
 }
-#header menu .MenuTitle {
+#lit-header menu .MenuTitle {
   list-style: none;
   cursor: pointer;
   display: flex;
   padding-right: 0.6em;
 }
-#header menu .MenuItems {
+#lit-header menu .MenuItems {
   list-style: none;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
-#header menu .MenuItems .meta {
+#lit-header menu .MenuItems .meta {
   font-size: 0.6em;
   font-style: normal;
 }
-#header menu:not(.horizontal) > .MenuItems > * {
+#lit-header menu:not(.horizontal) > .MenuItems > * {
   padding-top: 0.4em;
 }
-#header menu:not(.horizontal) > .MenuItems > *:first-child {
+#lit-header menu:not(.horizontal) > .MenuItems > *:first-child {
   padding-top: 0;
 }
-#header menu:not(.horizontal) > .MenuItems > menu {
+#lit-header menu:not(.horizontal) > .MenuItems > menu {
   display: flex;
   flex-direction: column;
 }
-#header menu:not(.horizontal) > .MenuItems > menu > .MenuTitle:after {
+#lit-header menu:not(.horizontal) > .MenuItems > menu > .MenuTitle:after {
   padding: 0 0.4em;
   content: '\203A';
 }
-#header menu:not(.horizontal) > .MenuItems > menu.open > .MenuTitle:after {
+#lit-header menu:not(.horizontal) > .MenuItems > menu.open > .MenuTitle:after {
   transform: rotate(90deg);
 }
-#header menu:not(.horizontal) > .MenuItems > menu > .MenuItems {
+#lit-header menu:not(.horizontal) > .MenuItems > menu > .MenuItems {
   position: static;
   padding-top: 0.4em;
 }
-#header menu:not(.horizontal) > .MenuItems > menu > .MenuItems > * {
+#lit-header menu:not(.horizontal) > .MenuItems > menu > .MenuItems > * {
   padding-left: 0.4em;
   border-left: 2px solid #9999f7;
 }
-#header menu.open:not(.horizontal) > .MenuItems {
+#lit-header menu.open:not(.horizontal) > .MenuItems {
   position: absolute;
   top: 1.6em;
   background-color: #fff;
@@ -109,12 +125,13 @@ li > p:first-child {
   min-width: 100%;
   padding-top: 0;
 }
-#header menu.horizontal {
+#lit-header menu.horizontal {
   display: flex;
   flex-direction: row;
   padding: 0.6em;
+  border-bottom: 1px solid #efefef;
 }
-#header menu.horizontal > li {
+#lit-header menu.horizontal > li {
   flex-direction: row;
 }
 section,
@@ -134,6 +151,15 @@ section section {
 }
 section cell {
   margin-left: -3px;
+}
+section:before,
+section:after {
+  display: block;
+  width: 4px;
+  border-bottom: 1px solid transparent;
+  content: ".";
+  color: transparent;
+  height: 0;
 }
 section.selected {
   border-color: #9999f7;
@@ -176,8 +202,11 @@ cell {
   border-style: solid;
   border-width: 1px 3px;
 }
-cell > *:first-child {
+cell .cell-content > *:first-child {
   margin-top: 0;
+}
+cell .cell-content > *:last-child {
+  margin-bottom: 0;
 }
 cell.selected {
   border-color: #9999f7;
@@ -371,6 +400,9 @@ codecell > menu .menu__items li {
 codecell > iframe {
   display: block;
   width: 100%;
+}
+cell:not(.selected) codecell iframe {
+  pointer-events: none;
 }
 codecell > table {
   border-collapse: collapse;

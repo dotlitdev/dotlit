@@ -16,12 +16,16 @@ const Link = props => {
 
     console.log("<Link/>", title, props)
 
+    const imgOnlyLink = props.node.children
+                        && props.node.children.length === 1
+                        && props.node.children[0].tagName === 'img'
+
     return <a className={props.className}
         href={props.href}
         title={title}
         wikilink={wikilink}>
             {props.children}
-            {icon && <span className="linkIcon">{icon}</span> }
+            {icon && !imgOnlyLink && <span className="linkIcon">{icon}</span> }
         </a>
 }
 

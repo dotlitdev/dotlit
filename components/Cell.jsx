@@ -11,6 +11,7 @@ import Editor from './Editor'
 import {Repl} from '../repl'
 
 import { getConsoleForNamespace } from '../utils/console'
+import { posstr } from '../utils/functions'
 
 const console = getConsoleForNamespace('Cell')
 
@@ -19,14 +20,13 @@ const childIs = (node, nodeType) => (node && node.children
     && node.children[0] 
     && node.children[0].tagName === nodeType) ? node.children[0] : null
 
-    const posstr = pos => pos ? `${pos.line}:${pos.column}-${pos.offset}` : undefined;
+
 
 const Cell = props => {
 
     const node = props.node
     node.position = node.position || {}
     const pos = node.position
-    const symbol = posstr(pos.start)
 
     const [src, setSrc] = useState('')
     const [content, setContent] = useState(null)
@@ -107,7 +107,7 @@ const Cell = props => {
                 startpos={posstr(pos.start)}
                 endpos={posstr(pos.end)}
                 className={getClasses(ctx)}>
-                    { editing ? <Editor src={src} update={setSrc}/> : (content || props.children) }
+                    { editing ? <Editor src={src} update={setSrc}/> : <div className="cell-content">{content || props.children}</div> }
                     { isSelected(ctx) && <CellMenu meta={meta} editing={editing} toggleEditing={toggleEditing} save={save(ctx)} exec={exec(ctx)}/>}
             </cell>
         }}

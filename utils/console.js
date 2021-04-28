@@ -55,7 +55,6 @@ const getConsole = (ns) => {
 
 export const Console = getConsole(ROOT_NS);
 export function getConsoleForNamespace(ns) {
-  console.log(ROOT_PREFIX + "Getting console for NS:", ns)
   if (shouldLog(ns)) {
     return getConsole(ns)
   } else {
