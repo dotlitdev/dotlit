@@ -7,7 +7,7 @@ const console = getConsoleForNamespace('extractViewers')
    
 
 const extractModule = async (src, filename) => {
-    if (typeof global !== 'undefined'){
+    if (false && typeof global !== 'undefined'){
         var Module = module.constructor;
         var m = new Module();
 
