@@ -86,7 +86,10 @@ export const viewer = ({node, React}) => {
   try {
     alert("in promise")
     myWorker = new Worker('worker2.js')
-    myWorker.onmessage = resolve
+    myWorker.onmessage = (msg) => {
+       console.log("WORKER MSG", msg)
+       resolve("received msg")
+    }
     myWorker.onerror = (err) => {
       alert("onerror")
       resolve({msg: "worker.onerror", err})
