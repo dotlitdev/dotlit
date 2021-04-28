@@ -30,7 +30,8 @@ const passThroughReadWithStat = (origReadFile, origStat, litroot, ghOpts) => {
       remote: { stat: undefined, value: undefined },
     }
     try {
-      const stat = await origStat(...args)
+      let stat;
+      try { stat = await origStat(...args) } catch(err){}
       const value = await origReadFile(...args)
       resp.local = {stat, value}
     } catch (err) { 
