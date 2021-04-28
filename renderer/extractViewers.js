@@ -12,7 +12,8 @@ const extractModule = async (src, filename) => {
 
     if (typeof m._compile === 'function') {
         m._compile(src, filename);
-        return m.exports
+
+        if (m.exports && Object.keys(m.exports).length) return m.exports
     }
     return await import(/* webpackIgnore: true */ `data:text/javascript;base64,${ btoa(src)}`)
 }
