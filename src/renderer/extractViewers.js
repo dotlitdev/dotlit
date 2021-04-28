@@ -14,7 +14,7 @@ const extractModule = async (src, filename) => {
         m._compile(src, filename);
         return m.exports
     }
-    return await import(/* webpackIgnore: true */ `data:text/javascript;base64,${ btoa(block.value)}`)
+    return await import(/* webpackIgnore: true */ `data:text/javascript;base64,${ btoa(src)}`)
 }
 
 export const extractViewers = ({fs} = {}) => {
