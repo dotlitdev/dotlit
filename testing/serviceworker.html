@@ -8,12 +8,12 @@
 </li>
 <li>Initial source, from: <a href="https://googlechrome.github.io/samples/service-worker/basic/">https://googlechrome.github.io/samples/service-worker/basic/<span class="linkIcon">↗</span></a></li>
 </ul><p>See <a href="testing/web_workers.html?file=testing/web_workers.lit" title="testing/Web Workers" wikilink="true">testing/Web Workers</a> for related investigation.</p></cell></section></section>
-<section depth="2" class="" startpos="13:1-420" endpos="62:4-1308"><cell startpos="13:1-420" endpos="13:15-434"><h2 id="exploration">Exploration</h2></cell><cell startpos="15:1-436" endpos="22:4-550" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">if (&#x27;serviceWorker&#x27; in navigator) {
+<section depth="2" class="" startpos="13:1-420" endpos="69:4-1468"><cell startpos="13:1-420" endpos="13:15-434"><h2 id="exploration">Exploration</h2></cell><cell startpos="15:1-436" endpos="22:4-550" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">if (&#x27;serviceWorker&#x27; in navigator) {
   return true
 }
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">20.3 hours ago</span></span></span><output><pre><code class="txt">true
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">20.4 hours ago</span></span></span><output><pre><code class="txt">true
 </code></pre></output></codecell></cell><cell startpos="23:1-551" endpos="28:4-652" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return (new Response(&#x27;hello&#x27;)).text()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">20.3 hours ago</span></span></span><output><pre><code class="txt">hello
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">20.4 hours ago</span></span></span><output><pre><code class="txt">hello
 </code></pre></output></codecell></cell><cell startpos="30:1-654" endpos="44:4-970" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return (async () =&gt; {
   await navigator
           .serviceWorker
@@ -24,19 +24,23 @@
          : &quot;Refresh to activate worker.&quot;
   
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">19.5 hours ago</span></span></span><output><pre><code class="txt">Service worker active.
-</code></pre></output></codecell></cell><cell startpos="45:1-971" endpos="53:4-1116" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return (async fn =&gt; {
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">19.6 hours ago</span></span></span><output><pre><code class="txt">Service worker active.
+</code></pre></output></codecell></cell><cell startpos="46:1-972" endpos="51:4-1130" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">navigator.serviceWorker.getRegistrations().then(function(registrations) {
+ for(let registration of registrations) {
+  registration.unregister()
+} })
+</code></pre></codecell></cell><cell startpos="52:1-1131" endpos="60:4-1276" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return (async fn =&gt; {
   const resp = await fetch(&#x27;/none&#x27;)
   return resp.status
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">20.3 hours ago</span></span></span><output><pre><code class="txt">404
-</code></pre></output></codecell></cell><cell startpos="54:1-1117" endpos="62:4-1308" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return (async fn =&gt; {
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">20.4 hours ago</span></span></span><output><pre><code class="txt">404
+</code></pre></output></codecell></cell><cell startpos="61:1-1277" endpos="69:4-1468" class="code"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><ul class="attributes"></ul></span><pre><code class="js">return (async fn =&gt; {
   const resp = await fetch(&#x27;/mockresponse&#x27;)
   return resp.status + &quot; : &quot; + (await resp.text())
 })()
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><ul class="attributes"></ul><span class="updatedAt">Updated <span class="Time relative">19.6 hours ago</span></span></span><output><pre><code class="txt">200 : hello
 </code></pre></output></codecell></cell></section>
-<section depth="2" class="" startpos="64:1-1310" endpos="146:4-4266"><cell startpos="64:1-1310" endpos="64:18-1327"><h2 id="implementation">Implementation</h2></cell><cell startpos="65:1-1328" endpos="146:4-4266" class="code output"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><ul class="tags"><li style="color:white;background-color:#6455ab"><span class="tag">implementation</span></li></ul><ul class="directives"><li style="color:black;background-color:#da5323"><span class="directive dir-collapse">collapse</span></li></ul><ul class="attributes"></ul></span><output><pre><code class="js">/*
+<section depth="2" class="" startpos="71:1-1470" endpos="153:4-4426"><cell startpos="71:1-1470" endpos="71:18-1487"><h2 id="implementation">Implementation</h2></cell><cell startpos="72:1-1488" endpos="153:4-4426" class="code output"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><ul class="tags"><li style="color:white;background-color:#6455ab"><span class="tag">implementation</span></li></ul><ul class="directives"><li style="color:black;background-color:#da5323"><span class="directive dir-collapse">collapse</span></li></ul><ul class="attributes"></ul></span><output><pre><code class="js">/*
  Copyright 2016 Google Inc. All Rights Reserved.
  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  you may not use this file except in compliance with the License.
