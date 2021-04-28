@@ -7079,7 +7079,7 @@
                                 "end": {
                                     "line": 569,
                                     "column": 4,
-                                    "offset": 13070
+                                    "offset": 13092
                                 }
                             }
                         }
@@ -7139,7 +7139,7 @@
                         "end": {
                             "line": 549,
                             "column": 4,
-                            "offset": 12594
+                            "offset": 12616
                         }
                     },
                     "data": {
@@ -7153,7 +7153,7 @@
                             "type": "code",
                             "lang": "js",
                             "meta": "!viewer of=plantuml2",
-                            "value": "export const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const [url, setUrl] = useState(null)\n\n  async function encodePlantUML(src) {\n      console.log(\"encoding\", src)\n      const module = await import(\"https://cdn.skypack.dev/plantuml-encoder\");\n      const encoded = module.encode(src)\n      console.log(encoded)\n      return encoded\n  }\n\n  const src = node.value\n  useEffect(async ()=> {\n    const encoded = await encodePlantUML(node.data.value)\n    const url = \"https://plantuml.com/plantuml/svg/\" + encoded\n    setUrl(url)\n  },[src])\n\n  return rc('div', {\n    className: 'lit-viewer-plantuml2',\n  }, url ? rc('img', {\n    src: content,\n  }) : \"Loading...\")\n}",
+                            "value": "export const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const [url, setUrl] = useState(null)\n\n  async function encodePlantUML(src) {\n      console.log(\"encoding\", src)\n      const module = await import(\"https://cdn.skypack.dev/plantuml-encoder\");\n      const encoded = module.encode(src.replace(/\\n/g, '\\\\n'))\n      console.log(encoded)\n      return encoded\n  }\n\n  const src = node.value\n  useEffect(async ()=> {\n    const encoded = await encodePlantUML(node.data.value)\n    const url = \"https://plantuml.com/plantuml/svg/\" + encoded\n    setUrl(url)\n  },[src])\n\n  return rc('div', {\n    className: 'lit-viewer-plantuml2',\n  }, url ? rc('img', {\n    src: content,\n  }) : \"Loading...\")\n}",
                             "position": {
                                 "start": {
                                     "line": 520,
@@ -7163,7 +7163,7 @@
                                 "end": {
                                     "line": 549,
                                     "column": 4,
-                                    "offset": 12594
+                                    "offset": 12616
                                 }
                             },
                             "data": {
@@ -7208,12 +7208,12 @@
                         "start": {
                             "line": 551,
                             "column": 1,
-                            "offset": 12596
+                            "offset": 12618
                         },
                         "end": {
                             "line": 569,
                             "column": 4,
-                            "offset": 13070
+                            "offset": 13092
                         }
                     },
                     "data": {
@@ -7232,12 +7232,12 @@
                                 "start": {
                                     "line": 551,
                                     "column": 1,
-                                    "offset": 12596
+                                    "offset": 12618
                                 },
                                 "end": {
                                     "line": 569,
                                     "column": 4,
-                                    "offset": 13070
+                                    "offset": 13092
                                 }
                             },
                             "data": {
@@ -7280,7 +7280,7 @@
                 "end": {
                     "line": 569,
                     "column": 4,
-                    "offset": 13070
+                    "offset": 13092
                 }
             }
         }
@@ -7294,7 +7294,7 @@
         "end": {
             "line": 570,
             "column": 1,
-            "offset": 13071
+            "offset": 13093
         }
     }
 }
