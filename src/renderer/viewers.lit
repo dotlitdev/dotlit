@@ -533,9 +533,9 @@ export const viewer = ({node, React}) => {
       return encoded
   }
 
-  const src = node.data.value
-  useEffect(async ()=>{
-    const encoded = await encodePlantUML(node.data.value)
+  const src = node.data.value.replace(/\n/g, '\\n')
+  useEffect(async ()=> {
+    const encoded = await encodePlantUML(src)
     const url = "https://plantuml.com/plantuml/svg/" + encoded
     setUrl(url)
   },[src])
