@@ -7077,9 +7077,9 @@
                                     "offset": 11753
                                 },
                                 "end": {
-                                    "line": 568,
+                                    "line": 569,
                                     "column": 4,
-                                    "offset": 13069
+                                    "offset": 13072
                                 }
                             }
                         }
@@ -7137,9 +7137,9 @@
                             "offset": 11769
                         },
                         "end": {
-                            "line": 548,
+                            "line": 549,
                             "column": 4,
-                            "offset": 12593
+                            "offset": 12596
                         }
                     },
                     "data": {
@@ -7153,7 +7153,7 @@
                             "type": "code",
                             "lang": "js",
                             "meta": "!viewer of=plantuml2",
-                            "value": "export const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const [content, setContent] = useState('Loading...')\n\n  async function encodePlantUML(src) {\n      console.log(\"encoding\", src)\n      const module = await import(\"https://cdn.skypack.dev/plantuml-encoder\");\n      const encoded = module.encode(src)\n      console.log(encoded)\n      return encoded\n  }\n\n  const src = node.data.value\n  useEffect(async ()=>{\n    const encoded = await encodePlantUML(node.data.value)\n    const url = \"https://plantuml.com/plantuml/svg/\" + encoded\n    setContent(\"Encoded: \" + url)\n  },[src])\n\n  return rc('img', {\n    src: content,\n    className: 'lit-viewer-plantuml2',\n  })\n}",
+                            "value": "export const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const [url, setUrl] = useState(null)\n\n  async function encodePlantUML(src) {\n      console.log(\"encoding\", src)\n      const module = await import(\"https://cdn.skypack.dev/plantuml-encoder\");\n      const encoded = module.encode(src)\n      console.log(encoded)\n      return encoded\n  }\n\n  const src = node.data.value\n  useEffect(async ()=>{\n    const encoded = await encodePlantUML(node.data.value)\n    const url = \"https://plantuml.com/plantuml/svg/\" + encoded\n    setUrl(url)\n  },[src])\n\n  return rc('div', {\n    className: 'lit-viewer-plantuml2',\n  }, url ? rc('img', {\n    src: content,\n  }: \"Loading...\")\n}",
                             "position": {
                                 "start": {
                                     "line": 520,
@@ -7161,9 +7161,9 @@
                                     "offset": 11769
                                 },
                                 "end": {
-                                    "line": 548,
+                                    "line": 549,
                                     "column": 4,
-                                    "offset": 12593
+                                    "offset": 12596
                                 }
                             },
                             "data": {
@@ -7206,14 +7206,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 550,
+                            "line": 551,
                             "column": 1,
-                            "offset": 12595
+                            "offset": 12598
                         },
                         "end": {
-                            "line": 568,
+                            "line": 569,
                             "column": 4,
-                            "offset": 13069
+                            "offset": 13072
                         }
                     },
                     "data": {
@@ -7230,14 +7230,14 @@
                             "value": "@startuml\nparticipant participant as Foo\nactor       actor       as Foo1\nboundary    boundary    as Foo2\ncontrol     control     as Foo3\nentity      entity      as Foo4\ndatabase    database    as Foo5\ncollections collections as Foo6\nqueue       queue       as Foo7\nFoo -> Foo1 : To actor \nFoo -> Foo2 : To boundary\nFoo -> Foo3 : To control\nFoo -> Foo4 : To entity\nFoo -> Foo5 : To database\nFoo -> Foo6 : To collections\nFoo -> Foo7 : To queue\n@enduml",
                             "position": {
                                 "start": {
-                                    "line": 550,
+                                    "line": 551,
                                     "column": 1,
-                                    "offset": 12595
+                                    "offset": 12598
                                 },
                                 "end": {
-                                    "line": 568,
+                                    "line": 569,
                                     "column": 4,
-                                    "offset": 13069
+                                    "offset": 13072
                                 }
                             },
                             "data": {
@@ -7278,9 +7278,9 @@
                     "offset": 11753
                 },
                 "end": {
-                    "line": 568,
+                    "line": 569,
                     "column": 4,
-                    "offset": 13069
+                    "offset": 13072
                 }
             }
         }
@@ -7292,9 +7292,9 @@
             "offset": 0
         },
         "end": {
-            "line": 569,
+            "line": 570,
             "column": 1,
-            "offset": 13070
+            "offset": 13073
         }
     }
 }
