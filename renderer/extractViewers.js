@@ -39,7 +39,7 @@ export const extractViewers = ({fs} = {}) => {
                 file.data = file.data || {}
                 file.data.viewers = file.data.viewers || {}
                 try {
-                    let viewer = await extractModule(block.data.value, filename)
+                    let viewer = await extractModule(block.value, filename)
                     if (viewer.asyncViewer) {
                         viewer = await viewer.asyncViewer()
                     } else if (viewer.viewer) {
@@ -67,7 +67,7 @@ export const extractViewers = ({fs} = {}) => {
                 file.data = file.data || {}
                 file.data.transformers = file.data.transformers || {}
                 try {
-                    let transformer = await extractModule(block.data.value, filename )
+                    let transformer = await extractModule(block.value, filename )
                     if (transformer.asyncTransformer) transformer = await transformer.asyncTransformer()
                     else if (transformer. transformer) {
                     } else {
