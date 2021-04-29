@@ -172,7 +172,19 @@ export function generate(cmd) {
                 const [ast_files, manifest] = generateBacklinks(ast_files_prelinks, cmd.output)
                 const html_files = await Promise.all(ast_files.map( async file => {
                     try {
-                        if(file && file.data && file.data.frontmatter && file.data.frontmatter.private) return;
+                        if(file && file.data && file.data.frontmatter && file.data.frontmatter.private) {
+                            file.contents = `# 🔐 Private File
+
+<!-- data
+private: true
+-->
+
+The contents of this file are private. Only visible by the author.
+
+`
+                           file = await renderProcessor(fs).process(file)
+
+                        }
 
                         await fs.writeFile(path.join(cmd.output, file.path), file.contents)
                         await fs.writeFile(path.join(cmd.output, file.path + '.json'), JSON.stringify(file.data.ast, null, 4))
