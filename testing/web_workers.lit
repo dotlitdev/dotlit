@@ -34,9 +34,10 @@ return (async fn => {
   return resp.status + "\n" + (await resp.text())
 })()
 ```
-```>txt attached=true updated=1619651499352
+```>txt attached=true updated=1619735935623
 200
-postMessage("hi")
+importScripts('../web.bundle.js')
+postMessage("dotlit: " + typeof dotlit)
 console.log("anyone here?")
 ```
 ### Testing
@@ -47,7 +48,7 @@ console.log("anyone here?")
 return new Promise((resolve,reject) => {
   let myWorker;
   try {
-    myWorker = new Worker('worker2.js')
+    myWorker = new Worker('worker.js')
     myWorker.onmessage = (ev) => resolve(ev.data)
     myWorker.onerror = (err) => {
       resolve({msg: "worker.onerror", err})
@@ -58,7 +59,7 @@ return new Promise((resolve,reject) => {
   
 })
 ```
-```>txt attached=true updated=1619651153720
+```>txt attached=true updated=1619735946076
 hi
 ```
 
