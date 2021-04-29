@@ -35,15 +35,15 @@ const lfs = new FS(baseUrl, {
     wipe: query.__lfs_wipe==="true" ? confirm("Are you sure you want to wipe the local file system: " + baseUrl) : undefined,
     url: baseUrl,
 })
-const fs = extendFs(lfs.promises, litroot, localStorage.getItem("ghToken") && {
+const fs = extendFs(lfs.promises, litroot, typeof localStorage !== "undefined" && localStorage.getItem("ghToken") && {
     username: "dotlitdev",
-    repository: "dotlit",
+    repository: "dotlit", 
     prefix: "src",
     token: localStorage.getItem("ghToken"),
 })
 
 
-const lit = {
+export const lit = {
     location: {
         src: litsrc,
         root: litroot,
@@ -83,11 +83,10 @@ const lit = {
 lit.u = lit.utils
 
 if (typeof window !== 'undefined') window.lit = lit
-module.exports = lit
 
 console.log(`lit:`, lit)
 
-const init = async () => {
+export const init = async () => {
     if(query.__lit_no_client==="true") return;
 
     console.log('.lit Notebook client initializing...')
