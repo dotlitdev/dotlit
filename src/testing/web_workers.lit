@@ -68,18 +68,18 @@ return new Promise((resolve,reject) => {
 return (async fn =>{
    const url = "https://dotlit.org/web.bundle.js"
    const lineno = 68421
-   const spread = 5
+   const spread = 20
    const resp = await fetch(url)
    console.log(resp.status)
    const val = await resp.text()
    const lines = val.split("\n")
    console.log(lines.length, "lines")
-   lines[lineno] = ">>> " + lines[lineno]
+   lines[lineno -1] = ">>> " + lines[lineno-1]
    return lines.slice(lineno - spread, lineno + spread).join("\n")
 })()
 
 ```
-```>txt attached=true updated=1619739420549
+```>txt attached=true updated=1619739547114
 200
 227914,lines
 
@@ -87,7 +87,7 @@ return (async fn =>{
 
 let [nav, doc] = typeof navigator != "undefined"
     ? [navigator, document]
-    : [{ userAgent: "", vendor: "", platform: "" }, { documentElement: { style: {} } }];
+>>>     : [{ userAgent: "", vendor: "", platform: "" }, { documentElement: { style: {} } }];
 const ie_edge = /Edge\/(\d+)/.exec(nav.userAgent);
 const ie_upto10 = /MSIE \d/.test(nav.userAgent);
 const ie_11up = /Trident\/(?:[7-9]|\d{2,})\..*rv:(\d+)/.exec(nav.userAgent);
