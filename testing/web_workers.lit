@@ -74,8 +74,12 @@ return (async fn =>{
    const val = await resp.text()
    const lines = val.split("\n")
    console.log(lines.length, "lines")
-   lines[lineno -1] = ">>> " + lines[lineno-1]
-   return lines.slice(lineno - spread, lineno + spread).join("\n")
+
+   
+   return lines.map((l,i) => {
+           if (i ===lineno-1) return ">>>" + l
+           else return "" + i + " " + l
+           }).slice(lineno - spread, lineno + spread).join("\n")
 })()
 
 ```
