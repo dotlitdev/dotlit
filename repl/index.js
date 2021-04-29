@@ -190,8 +190,8 @@ export class Repl {
             script.src = src
             
             // script.addEventListener('load', resolve);
-            script.addEventListener('error', (...args) => { console.log('script err', ...args); reject('Error loading script.') } );
-            script.addEventListener('abort', (...args) => { console.log('script abort', ...args); reject('Script loading aborted.') } );
+            script.addEventListener('error', (ev) => { console.error('script.onerror: ' + ev.message + " (" + ev.filename + ":" + ev.lineno + ")", ev); reject('Error loading script.') } );
+            script.addEventListener('abort', (ev) => { console.log('script.onabort: ' + ev.message + " (" + ev.filename + ":" + ev.lineno + ")", ev); reject('Script loading aborted.') } );
             document.head.appendChild(script);
            
             
