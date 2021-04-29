@@ -164,6 +164,8 @@ export function generate(cmd) {
                 const [ast_files, manifest] = generateBacklinks(ast_files_prelinks, cmd.output)
                 const html_files = await Promise.all(ast_files.map( async file => {
                     try {
+                        if(file && file.data && file.data.frontmatter && file.data.frontmatter.private) return;
+
                         await fs.writeFile(path.join(cmd.output, file.path + '.json'), JSON.stringify(file.data.ast, null, 4))
                         const html_file = await renderedVFileToDoc(await file, cmd)
                         await fs.writeFile(path.join(cmd.output, file.path), file.contents)
