@@ -186,6 +186,7 @@ export class Repl {
     
             script.type = 'module'
             script.async = true;
+            script.crossorigin = "use-credentials"
             script.src = src
             
             // script.addEventListener('load', resolve);
