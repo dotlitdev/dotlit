@@ -1,0 +1,95 @@
+<html data-reactroot=""><head><title>web_workers</title><meta name="litsrc" value="testing/web_workers.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"><div class="lit-message"><span class="message">Viewer Error: Unexpected token &#x27;export&#x27;</span><span class="name">63:1-114:4</span></div></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="3:22-36"><cell startpos="1:1-0" endpos="1:14-13"><div class="cell-content"><h1 id="web-workers">Web Workers</h1></div></cell><section depth="2" class="" startpos="3:1-15" endpos="3:22-36"><cell startpos="3:1-15" endpos="3:22-36"><div class="cell-content"><h2 id="table-of-contents">Table of Contents</h2><ul>
+<li>
+<p><a href="#references">References<span class="linkIcon">§</span></a></p>
+</li>
+<li>
+<p><a href="#support">Support<span class="linkIcon">§</span></a></p>
+</li>
+<li>
+<p><a href="#implementation">Implementation<span class="linkIcon">§</span></a></p>
+<ul>
+<li><a href="#testing">Testing<span class="linkIcon">§</span></a></li>
+</ul>
+</li>
+</ul></div></cell></section></section>
+<section depth="2" class="" startpos="5:1-38" endpos="6:111-163"><cell startpos="5:1-38" endpos="6:111-163"><div class="cell-content"><h2 id="references">References</h2><p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers">Using Web Workers on MDN<span class="linkIcon">↗</span></a></p></div></cell></section>
+<section depth="2" class="" startpos="8:1-165" endpos="17:4-305"><cell startpos="8:1-165" endpos="8:11-175"><div class="cell-content"><h2 id="support">Support</h2></div></cell><cell startpos="12:1-179" endpos="17:4-305" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return `Worker supported: ${!!window.Worker}`
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">13.7 hours ago</span></span></span><output><pre><code class="txt">Worker supported: true
+</code></pre></output></codecell></div></cell></section>
+<section depth="2" class="" startpos="19:1-307" endpos="118:5-2590"><cell startpos="19:1-307" endpos="19:18-324"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="20:1-325" endpos="23:4-410" class="code output"><div class="cell-content"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">// postMessage(&quot;hi&quot;)
+console.log(&quot;anyone here?&quot;)
+</code></pre></output></codecell></div></cell><cell startpos="24:1-411" endpos="27:4-494" class="code output"><div class="cell-content"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker2.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">postMessage(&quot;hi&quot;)
+console.log(&quot;anyone here?&quot;)
+</code></pre></output></codecell></div></cell><cell startpos="28:1-495" endpos="28:48-542"><div class="cell-content"><p>Check if web server has up to date content yet?</p></div></cell><cell startpos="30:1-544" endpos="40:4-771" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt; {
+  const resp = await fetch(&#x27;./worker2.js&#x27;)
+  return resp.status + &quot;\n&quot; + (await resp.text())
+})()
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">13.6 hours ago</span></span></span><output><pre><code class="txt">200
+postMessage(&quot;hi&quot;)
+console.log(&quot;anyone here?&quot;)
+</code></pre></output></codecell></div></cell><section depth="3" class="" startpos="41:1-772" endpos="118:5-2590"><cell startpos="41:1-772" endpos="43:157-941"><div class="cell-content"><h3 id="testing">Testing</h3><p><del>Current REPL results in script execution from cross-origin? Due to data:uri</del> was resolving the raw event from postMessage not <code>ev.data</code> which is necessary.</p></div></cell><cell startpos="45:1-943" endpos="62:4-1307" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
+  let myWorker;
+  try {
+    myWorker = new Worker(&#x27;worker2.js&#x27;)
+    myWorker.onmessage = (ev) =&gt; resolve(ev.data)
+    myWorker.onerror = (err) =&gt; {
+      resolve({msg: &quot;worker.onerror&quot;, err})
+    }
+  } catch(err) {
+    resolve({msg: &quot;Caught err&quot;, err})
+  }
+  
+})
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">13.7 hours ago</span></span></span><output><pre><code class="txt">hi
+</code></pre></output></codecell></div></cell><cell startpos="63:1-1308" endpos="114:4-2562" class="code"><div class="cell-content"><codecell class="dir-viewer dir-collapse tag-deadend lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#5bce81" class="tag">deadend</span><span style="color:black;background-color:#cf5332" class="directive dir-viewer">viewer</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=esm2</span></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
+  const rce = React.createElement
+  const {useState, useEffect} = React
+  const [resp, setResp] = useState(null)
+  const [run, setRun] = useState(0)
+  
+  const exec = ev =&gt; {
+    ev &amp;&amp; ev.stopPropagation()
+    setRun(run+1)
+    load(node.data.value)
+    return false
+  }
+
+  useEffect( args =&gt; {
+    if(run===0 &amp;&amp; node.properties.meta.exec===&quot;onload&quot;)
+       exec()
+  },[])
+
+  async function load(src) {
+     alert(&quot;running Web worker &quot;)
+     const p = new Promise((resolve,reject) =&gt; {
+  let myWorker;
+  try {
+    alert(&quot;in promise&quot;)
+    myWorker = new Worker(&#x27;worker2.js&#x27;)
+    myWorker.onmessage = (msg) =&gt; {
+       console.log(&quot;WORKER MSG&quot;, msg)
+       resolve(&quot;received msg&quot;)
+    }
+    myWorker.onerror = (err) =&gt; {
+      alert(&quot;onerror&quot;)
+      resolve({msg: &quot;worker.onerror&quot;, err})
+    }
+  } catch(err) {
+    alert(&quot;catch&quot;)
+    resolve({msg: &quot;Caught err&quot;, err})
+  }
+   alert(&quot;end&quot;)
+  })
+  p.then( res =&gt; {
+    alert(&quot;reslved&quot;)
+    setResp(res.msg)
+  }).catch( err =&gt; alert(err))
+  }
+
+  const btn = rce(&#x27;button&#x27;, {onClick: exec}, &quot;Run &quot; + run)
+  const t = rce(&#x27;div&#x27;, null, [btn, resp])
+  return t
+}
+if(typeof module !== &quot;undefined&quot;) module.exports.viewer = viewer
+</code></pre></codecell></div></cell><cell startpos="116:1-2564" endpos="118:5-2590" class="code"><div class="cell-content"><codecell class="dir-below lang-esm2 local"><span class="meta"><span class="lang">esm2</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="esm2">A hack
+</code></pre></codecell></div></cell></section></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="Title TBD (testing/serviceworker.lit)" href="/testing/serviceworker.html">Title TBD (testing/serviceworker.lit)</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>

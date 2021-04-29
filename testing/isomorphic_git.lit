@@ -1,0 +1,333 @@
+# Isomorphic Git
+
+
+Since `.lit` already uses [[testing/LightningFS]] for the local filesystem we can easily use https://isomorphic-git.org/docs/en/quickstart to manage versioning...
+
+## Table of Contents
+
+## Initial plan
+
+The initial plan is to just auto commit on all actions, enabling "infinite" undo.
+
+Thereafter that may remain the default but ideally an ergonomic version of the raw git api can be exposed for more advanced users.
+
+### Mock
+
+
+
+
+
+```js < ../utils/git-commit-all.js
+const fs = lit.lfs 
+const dir = lit.location.root
+const git = lit.git
+const FILE = 0, WORKDIR = 2, STAGE = 3
+
+const unstaged = row => {
+  return row[WORKDIR] !== row[STAGE]
+}
+
+// initially, because it's on every change 
+// a commit will mostly be for a single
+// file at a time the immediate exception 
+// being when a file with output files 
+// is edited, in which case the commit 
+// includes those files.
+
+const onSave = async (filename) => {
+  const now = (new Date()).toISOString()
+
+  // get/list unstaged files
+  const status = await git.statusMatrix({ fs,dir})
+  const files = status
+                .filter( unstaged )
+                .map(row => row[FILE])
+
+  // stage everything
+  await git.add({fs, dir, filepath: '.'})
+
+  // message 
+  const message = `Auto commit ${filename}
+
+at ${now} includes the following ${files.length} files:
+${files.map(f=> "- " + f).join('\n')}`
+
+  // commit
+  const sha = await git.commit({fs, dir,
+    message,
+    author: {
+      name: 'dotlit',
+      email: 'bit@dotlit.org'
+    }
+  })
+  return `Committed ${sha.slice(0,6)} 
+${message}`
+}
+
+return onSave(lit.location.src)
+```
+```txt updated=1619425559711
+Committed d738da 
+Auto commit testing/isomorphic_git.lit
+
+at: 2021-04-26T08:25:54.893Z
+includes the following 2 files:
+- testing/isomorphic_git.lit
+- utils/git-commit-all.js
+```
+## Investigating API
+
+
+```js
+return lit.fs
+       .readFile('/.git/HEAD', {
+          encoding: 'utf8'
+        })
+```
+```>txt attached=true updated=1619389645412
+ref: refs/heads/master
+
+```
+```js
+return (async () => {
+  return await lit.git.init({
+    fs: lit.lfs, 
+    dir: lit.location.root
+  })
+})()
+```
+```>txt attached=true updated=1619357634909
+undefined
+```
+### Status
+
+```js
+return (async () => {
+  return lit.location.src + " : " + await lit.git.status({
+    fs: lit.lfs, 
+    dir: lit.location.root, 
+    filepath: lit.location.src 
+  })
+})()
+```
+```>txt attached=true updated=1619352769657
+testing/isomorphic_git.lit : *added
+```
+```js
+return (async () => {
+  return await lit.git.statusMatrix({
+    fs: lit.lfs, 
+    dir: lit.location.root, 
+  })
+})()
+```
+```>txt attached=true updated=1619386354831
+[ [ 'index.lit', 1, 1, 1 ],
+  [ 'renderer/viewers.lit', 1, 1, 1 ],
+  [ 'testing/isomorphic_git.lit', 1, 2, 1 ],
+  [ 'testing/lightningfs.lit', 1, 1, 1 ],
+  [ 'testing/local_remote_files.lit', 1, 1, 1 ],
+  [ 'wiki-links.lit', 1, 1, 1 ] ]
+```
+
+
+
+```js
+const fs = lit.lfs 
+const dir = lit.location.root
+const git = lit.git
+const FILE = 0, WORKDIR = 2, STAGE = 3
+
+// list files with unstaged changes
+return (async () => {
+  const filenames = (await git.statusMatrix({ fs,dir}))
+  .filter(row => row[WORKDIR] !== row[STAGE])
+  .map(row => row[FILE])
+  return filenames
+})()
+```
+```>txt attached=true updated=1619425540783
+[ 'testing/isomorphic_git.lit', 'utils/git-commit-all.js' ]
+```
+### Add
+
+```js
+
+const fs = lit.lfs
+const dir = lit.location.root
+
+return (async ()=> {
+  return await lit.git.add({
+    fs,
+    dir,
+    filepath: '.'
+  })
+})()
+```
+```>txt attached=true updated=1619386257605
+undefined
+```
+
+
+
+### Commit
+
+```js
+
+const fs = lit.lfs
+const dir = lit.location.root
+
+return (async ()=> {
+const now = (new Date()).toISOString()
+let sha = await lit.git.commit({
+  fs,
+  dir,
+  message: `Auto commit (${now})`,
+  author: {
+    name: 'dotlit',
+    email: 'bit@dotlit.org'
+  }
+})
+
+console.log(sha)
+
+})()
+```
+```>txt attached=true updated=1619388707640
+2c1dcf840173cd7c36aa1e5b96bc0922006de579
+undefined
+```
+
+### Log
+
+```js > md !inline
+const indentLines = str => str.split('\n').map( line => `      ${line}`).join('\n')
+
+return (async ()=> {
+  let commits = await lit.git.log({
+     fs: lit.lfs, 
+     dir: lit.location.root, 
+     depth: 10
+  })
+  return "**Log**\n" + commits.map( x => `1. **\`${x.oid.slice(0,6)}\`**
+
+${indentLines(x.commit.message)}`).join('\n')
+})()
+```
+```>md !inline attached=true updated=1619426217599
+**Log**
+1. **`d738da`**
+
+      Auto commit testing/isomorphic_git.lit
+      
+      at: 2021-04-26T08:25:54.893Z
+      includes the following 2 files:
+      - testing/isomorphic_git.lit
+      - utils/git-commit-all.js
+      
+1. **`498191`**
+
+      Auto commit testing/isomorphic_git.lit
+      
+      at: 2021-04-26T08:16:04.689Z
+      includes the following 5 files:
+      - 404.lit,- execute_code_cells.lit,- testing/.gitignore,- testing/isomorphic_git.lit,- testing/lightningfs.lit
+      
+1. **`ef8bee`**
+
+      Auto commit testing/isomorphic_git.lit
+      
+      at: 2021-04-25T23:25:46.517Z
+      includes the following 1 files:
+      - testing/isomorphic_git.lit
+      
+1. **`e146ec`**
+
+      Auto commit testing/isomorphic_git.lit
+      
+      at: (2021-04-25T23:25:04.262Z)
+      includes the following 1 files:
+      - testing/isomorphic_git.lit
+      
+1. **`ccc6f8`**
+
+      Auto commit testing/isomorphic_git.lit
+      at: (2021-04-25T22:41:55.195Z)
+      includes the following tk files...
+      
+1. **`d6a406`**
+
+      Auto commit (2021-04-25T22:35:27.239Z)
+      
+1. **`2c1dcf`**
+
+      Auto commit (2021-04-25T22:11:46.433Z)
+      
+1. **`769349`**
+
+      Auto commit (${now})
+      
+1. **`74737c`**
+
+      Commit All!!!
+      
+1. **`a90dc6`**
+
+      Commit All!!!
+      
+```
+
+### Diff
+
+```js
+return (async function getFileStateChanges() {
+  const commitHash1 = '0c40ed746ebe53cf744d78191d0bbc2941537280'
+  const commitHash2 = 'b081f51cd27f54cf58915512006838d4eb67716b'
+  return lit.git.walk({
+    lit.lfs,
+    lit.location.root,
+    trees: [git.TREE({ ref: commitHash1 }), git.TREE({ ref: commitHash2 })],
+    map: async function(filepath, [A, B]) {
+      
+      console.log("Git walk for diff file: ", filepath)
+
+      // ignore directories
+      if (filepath === '.') {
+        return
+      }
+      if ((await A.type()) === 'tree' || (await B.type()) === 'tree') {
+        return
+      }
+
+      // generate ids
+      const Aoid = await A.oid()
+      const Boid = await B.oid()
+
+      // determine modification type
+      let type = 'equal'
+      if (Aoid !== Boid) {
+        type = 'modify'
+      }
+      if (Aoid === undefined) {
+        type = 'add'
+      }
+      if (Boid === undefined) {
+        type = 'remove'
+      }
+      if (Aoid === undefined && Boid === undefined) {
+        console.log('Something weird happened:')
+        console.log(A)
+        console.log(B)
+      }
+
+      return {
+        path: `/${filepath}`,
+        type: type,
+      }
+    },
+  })
+})()
+```
+```>txt attached=true updated=1619387916750 !error
+undefined
+```

@@ -1,0 +1,346 @@
+# 🔥 Scratch ⚠️ Pad 🔬
+
+> Scratch pad to view **Markdown** output and *emergent* behaviour...
+
+<!-- data
+title: Statch Pad
+-->
+
+## [Table of Contents](#tableofcontents)
+
+## ✍️ Inline Markdown
+
+### Basics
+
+`.lit` is a plain text document format. Really it's just **Markdown**. But with *Sections*, *Cells*, <p>interactive</p> `code` blocks and _meta_ programming over its own `AST`.
+
+### 🔗 Links
+
+[Standard](index) and [Anchored/Section](#basics), [[wiki-links]], inline [references] and [undefined refs], footnotes[^1] and [external](https://exqmple.com) links
+
+
+#### WikiLinks
+
+- [x] with slashes: [[utils/fs]] 
+- [ ] with fragments: [[utils/uri#fragments]]
+  - [ ] only fragments like [[#Wikilinks]]
+  - [ ] Hoist fragment 
+
+[references]: https://example.com "Example"
+[^1]: footnote 
+    With multi line `content`
+
+## 🧭 Headings (h2)
+### Sub headings (h3)
+#### little (h4) {#custom-id}
+##### tiny (h5)
+###### smallest (h6)
+####### tooooo small (h6+)
+
+## ☑️ Lists
+
+### Basics
+
+* List
+  - styles
+  - [ ] not done
+    - [x] done
+  1. Foo
+     1. Bar
+     1. Qux
+
+### Lists with nested blocks
+
+- # List Item heading
+  
+  With additional 
+
+  > block elements
+
+      Content...
+
+
+## ✳️ Code
+
+### Basic code blocks
+
+Lines indented with 4 spaces, are plain code blocks without ~any syntax highlighting~ or additional behaviour.
+
+    A plain code block
+
+### Fenced code blocks
+
+Blocks preceded and suffixed with 3 backticks ie "```" with additional metadata being placed after the backticks on the opening line.
+
+    ```lang filename.ext #tag !directive attr=val
+
+
+    
+    ```
+
+Perhaps we need indentation inside fenced blocks to allow nesting fenced blocks (for the reader) without excessive escaping, see below:
+
+```md
+    ```js
+    Does this work?
+    ```
+```
+
+
+
+```js dummy/example.js #example #test !exec !above repl=node
+// A named and configured fenced code block which is to be executed in a yet to be implemented nodejs repl.
+```
+```>text attached=true
+# has an attached output which will be replaced on execution
+```
+
+```uri !inline
+https://example.com
+```
+
+#### Tags and directives
+
+Reserved directives include: `!inline` `!above` or for example `!onload` ...
+
+- [x] inline
+- [x] above
+- [x] below
+- [x] collapse
+- [x] viewer
+- [x] transformer
+
+```html !below
+<details>
+<summary>
+  inline <em>HTML</em>
+</summary>
+<p>An example details and summary tag</p>
+</details>
+```
+
+#### Attributes
+
+For now the only reserved attributes are `viewer` see [Viewers](#viewers) and `repl` used to define what remote REPL to execute code against.
+
+- [x] viewer 
+- [ ] transformer 
+- [ ] exec
+- [x] repl
+- [x] attached
+- [x] updated
+- [x] remote *deprecated*
+- [x] babel *tmp*
+- [x] react *tmp*
+
+```txt repl=echo
+pipe to echo binary
+```
+
+~Potentially to include `updatedAt` and or a reference to source cell for outputs in order to maintain a connection with code that produced the output.~
+
+Currently implemented as `attached=true` and `updated=unixtimestamp`.
+
+#### Outputs and Transcludes
+
+Metadata which references a source `lang < ./file.ext` will be transcluded into the view.
+
+```lit < dummy/🔥.lit
+will be replaced by above source
+```
+
+Metadata which defines a filename `lang file.ext` will be mirrored to the filesystem.
+
+```svg dummy/example.svg !inline
+<?xml version="1.0" standalone="no"?>
+
+<svg width="120" height="120" version="1.1"
+  xmlns="http://www.w3.org/2000/svg">
+  <defs>
+      <radialGradient id="Gradient"
+            cx="0.5" cy="0.5" r="0.5" fx="0.25" fy="0.25">
+        <stop offset="0%" stop-color="red"/>
+        <stop offset="100%" stop-color="blue"/>
+      </radialGradient>
+  </defs>
+
+  <rect x="10" y="10" rx="15" ry="15" width="100" height="100"
+        fill="url(#Gradient)" stroke="black" stroke-width="2"/>
+
+  <circle cx="60" cy="60" r="50" fill="transparent" stroke="white" stroke-width="2"/>
+  <circle cx="35" cy="35" r="2" fill="white" stroke="white"/>
+  <circle cx="60" cy="60" r="2" fill="white" stroke="white"/>
+  <text x="38" y="40" fill="white" font-family="sans-serif" font-size="10pt">(fx,fy)</text>
+  <text x="63" y="63" fill="white" font-family="sans-serif" font-size="10pt">(cx,cy)</text>
+
+</svg>
+```
+
+Using filename and transclude presents problems as to which one you're viewing and which one you edit, see also caching (both at the remote and local fs) See [[testing/Local & Remote files]]
+
+```txt dummy/plain.txt < dummy/plain.txt
+B
+C
+```
+
+Metadata which defines an output `lang > file.ext` will output to the filesystem and the document when executed[^2].
+
+[^2]: `REPL` still to be reimplemented. See [[REPL/index]]
+
+```csv > dummy/data.csv
+id,name,amount
+17494,Alice,9001
+245,Bob,2000
+```
+```>csv dummy/data.csv
+id,name,amount
+17494,Alice,9001
+245,Bob,2000
+```
+
+#### Viewers
+
+When a cell is an Output or has the directive `!inline` and a lang, ~file-extension~, or the explicit `viewer=xxx` attribute, for which a Viewer exists then the source will be shown using the viewer and plain text source only visible on edit.
+
+See [styles](meta/styling_and_themes.lit#viewers)
+
+```>json
+{"json": "viewer tbd"}
+```
+
+```>svg
+<svg width="100" height="100">
+  <circle cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow" />
+</svg>
+```
+
+```>uri
+https://example.com
+```
+
+```json !inline viewer=graph < /manifest.json
+
+```
+
+```md !inline
+*Markdown* Viewer **TBD**
+```
+
+```>md !info
+👀 ***Markdown*** Viewer.
+```
+
+```js viewer=script !inline
+confirm("It lives 🌱 from ")
+```
+```>txt attached=true updated=1619475466099
+undefined
+```
+
+
+The above has a strange behaviour, in that it only executes ~the `static` value, and hydration with a different (local) value is ignored.~ on explicit exec.
+
+```css !inline viewer=style
+#header { color: green; }
+h1,h2,h3,h4,h5,h6 {
+  position: sticky;
+  top:0;
+}
+```
+
+##### Custom Viewers
+
+See [[renderer/viewers]]
+
+```js !viewer of=foo
+export const viewer = () => {
+  return "Foooooooooo!"
+}
+```
+
+```foo !inline
+Bar 
+```
+
+
+Suggested or planned viewers
+
+- [ ] JSON
+- [x] HTML (inclined)
+- [x] SVG (basically the above)
+- [ ] CSV: Table
+- [x] URI: Iframe
+- [x] CSS: Style
+- [x] JS: Script
+- [ ] UML
+
+#### Transformers
+
+As opposed to viewers which change how a source file is viewed, a `transformer` looks at an input and output pair and sees if it knows how to convert between the two `lang` ie `styl > css` or `ts > js` etc
+
+See [[execute `code` cells]] for existing `ts` and `jsx` transpilation to `js` via Babel.
+
+Mock:
+
+```js !transformer of=jsx
+
+const skyPack = async name => await import(`https://cdn.skypack.dev/${name}`)
+
+export const transformer = async (node) => {
+  const babel = await skyPack('@babel/core')
+  const presetReact = await skyPack('@babel/preset-react')
+  const src = node 
+              && node.data 
+              && node.data.value
+  const filename = node
+                   && node.meta
+                   && node.meta.filename
+
+  const res = babel.transformSync(src, { 
+                    filename: filename,
+                    sourceMaps: false,
+                    parserOpts: { allowReturnOutsideFunction: true },
+                    presets: [
+                        presetReact,
+                        // presetTypescript
+                    ],
+                    plugins: [
+                        // pluginClassProps
+                    ]
+                })
+  console.log("[babel] transformed", res)
+  return `// TODO: babelify. \n${res.code}`
+}
+```
+```>txt attached=true updated=1619477018926 !error
+undefined
+```
+
+```js
+return lit.file
+          .data
+          .transformers
+          .jsx.transformer({
+  meta: {
+    filename: "test.jsx",
+  },
+  data: {
+    value: "TBD",
+  }
+})
+```
+```>txt attached=true updated=1619476980832 !error
+function toString() {
+    [native code]
+}
+transformer@data:text/javascript;base64,CmNvbnN0IHNreVBhY2sgPSBtb2R1bGUgPT4gaW1wb3J0KGBodHRwczovL2Nkbi5za3lwYWNrLmRldi8ke21vZHVsZX1gKQoKZXhwb3J0IGNvbnN0IHRyYW5zZm9ybWVyID0gKG5vZGUpID0+IHsKICBjb25zdCBiYWJlbCA9IHNreVBhY2soJ0BiYWJlbC9jb3JlJykKICBjb25zdCBwcmVzZXRSZWFjdCA9IHNreVBhY2soJ0BiYWJlbC9wcmVzZXQtcmVhY3QnKQogIGNvbnN0IHNyYyA9IG5vZGUgCiAgICAgICAgICAgICAgJiYgbm9kZS5kYXRhIAogICAgICAgICAgICAgICYmIG5vZGUuZGF0YS52YWx1ZQogIGNvbnN0IGZpbGVuYW1lID0gbm9kZQogICAgICAgICAgICAgICAgICAgJiYgbm9kZS5tZXRhCiAgICAgICAgICAgICAgICAgICAmJiBub2RlLm1ldGEuZmlsZW5hbWUKCiAgY29uc3QgcmVzID0gYmFiZWwudHJhbnNmb3JtU3luYyhzcmMsIHsgCiAgICAgICAgICAgICAgICAgICAgZmlsZW5hbWU6IGZpbGVuYW1lLAogICAgICAgICAgICAgICAgICAgIHNvdXJjZU1hcHM6IGZhbHNlLAogICAgICAgICAgICAgICAgICAgIHBhcnNlck9wdHM6IHsgYWxsb3dSZXR1cm5PdXRzaWRlRnVuY3Rpb246IHRydWUgfSwKICAgICAgICAgICAgICAgICAgICBwcmVzZXRzOiBbCiAgICAgICAgICAgICAgICAgICAgICAgIHByZXNldFJlYWN0LAogICAgICAgICAgICAgICAgICAgICAgICAvLyBwcmVzZXRUeXBlc2NyaXB0CiAgICAgICAgICAgICAgICAgICAgXSwKICAgICAgICAgICAgICAgICAgICBwbHVnaW5zOiBbCiAgICAgICAgICAgICAgICAgICAgICAgIC8vIHBsdWdpbkNsYXNzUHJvcHMKICAgICAgICAgICAgICAgICAgICBdCiAgICAgICAgICAgICAgICB9KQogIGNvbnNvbGUubG9nKCJbYmFiZWxdIHRyYW5zZm9ybWVkIiwgcmVzKQogIHJldHVybiBgLy8gVE9ETzogYmFiZWxpZnkuIFxuJHtyZXMuY29kZX1gCn0=:14:34
+untitled.js:5:27
+untitled.js:11:63
+module code@untitled.js:11:139
+evaluate@[native code]
+moduleEvaluation@[native code]
+```
+
+## Misc
+
+[[throwaway/codevaluebug]]

@@ -1,0 +1,23 @@
+# Local and Remote files
+
+On load `.lit` determines the `src` and `root` and checks both local file system ([[testing/LightningFS]]) and the remote host (ie GitHub pages, or local/remote server) and compares `last-updated` (or Stat `mtimeMs` in the case of local filesystem)
+
+The problem is, that deployment to GitHub pages results in a remote file that *seems* newer than the local file that created it.
+
+## Potential solutions
+
+- Disable (appropriately) GitHub Pages cache
+
+  https://stackoverflow.com/questions/12556593/determining-a-page-is-outdated-on-github-pages
+- Read from api instead of pages static file server when Authenticated
+  - Potentially read and write to `gh-pages` directly, eschewing Actions deployment entirely.
+  - [x] Currently reading and writing to GitHub api when token is available. **Breaks reading generated files like : manifest.json**
+- Compare hashes of the content [stackoverflow crypto](https://stackoverflow.com/questions/18338890/are-there-any-sha-256-javascript-implementations-that-are-generally-considered-t/48161723#48161723)
+
+```txt test.txt remote=true < test.txt
+Q
+```
+```js
+return lit.fs.readFile('/manifest.json')
+```
+

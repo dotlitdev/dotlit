@@ -1,3 +1,78 @@
+# testing/serviceworker
+
+## References 
+
+- https://ponyfoo.com/articles/serviceworker-revolution
+- https://github.com/homam/service-workers-example
+- Communication 
+  - ~[broadcast channels](https://stackoverflow.com/a/66784901/371040)~ not available in safari, desktop or iOS 
+- Initial source, from: https://googlechrome.github.io/samples/service-worker/basic/
+
+See [[testing/Web Workers]] for related investigation.
+
+## Exploration
+
+```js
+if ('serviceWorker' in navigator) {
+  return true
+}
+```
+```>txt attached=true updated=1619524117633
+true
+```
+```js
+return (new Response('hello')).text()
+```
+```>txt attached=true updated=1619524123503
+hello
+```
+
+```js #register
+return (async () => {
+  await navigator
+          .serviceWorker
+          .register('/serviceworker.js')
+
+  return navigator.serviceWorker.controller
+         ? "Service worker active."
+         : "Refresh to activate worker."
+  
+})()
+```
+```>txt attached=true updated=1619527124464
+Service worker active.
+```
+
+```js
+navigator.serviceWorker.getRegistrations().then(function(registrations) {
+ for(let registration of registrations) {
+  registration.unregister()
+} })
+```
+```>txt attached=true updated=1619597506256
+undefined
+```
+```js
+return (async fn => {
+  const resp = await fetch('/none')
+  return resp.status
+})()
+```
+```>txt attached=true updated=1619524261160
+404
+```
+```js
+return (async fn => {
+  const resp = await fetch('/mockresponse')
+  return resp.status + " : " + (await resp.text())
+})()
+```
+```>txt attached=true updated=1619526906036
+200 : hello
+```
+
+## Implementation
+```>js ../serviceworker.js !collapse #implementation
 /*
  Copyright 2016 Google Inc. All Rights Reserved.
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -80,3 +155,4 @@ self.addEventListener('fetch', event => {
     );
   }
 });
+```

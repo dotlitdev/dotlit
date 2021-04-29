@@ -1,3 +1,17 @@
+# unist-util-position-to-node
+
+aka `unist-util-select-pos` Given a *Position* and an AST tree return the nodes that match the *Position*.
+
+## To Do
+
+- [ ] Line level precision
+- [ ] Column level precision 
+- [x] Try implement as filter test function
+  - had to combine filter and select
+
+## Source
+
+```js ./utils/unist-util-select-position.js
 import filter from 'unist-util-filter'
 import {selectAll as select} from 'unist-util-select'
 import { getConsoleForNamespace } from './console'
@@ -24,3 +38,34 @@ export const selectAll = (type, pos, tree) => {
   const nodes = select(type, filteredTree)
   return nodes
 }
+```
+
+
+### Misc
+
+Initial pass saved for reflection:
+
+```js ./utils/unist-util-position-to-node.js
+export const positionToNode = (pos,tree) => {
+
+  const start = pos.start
+    ? pos.start
+    : pos.line && pos.column
+      ? pos
+      : undefined
+
+  const end = pos.end
+    ? pos.end
+    : pos.line && pos.column
+      ? pos
+      : undefined
+
+  if (tree.position.start.line >= end.line) {
+    return undefined
+  }
+
+  if (tree.children) {
+
+  }
+}
+```

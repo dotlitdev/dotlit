@@ -1,0 +1,574 @@
+# Custom Viewers
+
+## Table of Contents
+
+## To Do
+
+- [ ] Doppelgänger page?
+- [ ] Error handling
+- [ ] Sharing across documents
+
+## Examples
+
+### Example: Basic `foo` viewer
+
+```js !viewer of=foo
+export const viewer = ({node, React}) => {
+  return `${node.value} Foooooo! React: ${!!React}`
+}
+```
+
+
+Not used in the default case:
+
+```foo xviewer=meta
+Bar
+```
+
+Only when using the `!inline` directive:
+
+```foo !inline
+Baz 1
+```
+
+```foo !above
+Baz 2
+```
+
+```foo !below
+Baz 3
+```
+
+or `viewer=xxx` attribute is present:
+
+```bar viewer=foo
+Quz
+```
+
+or it is an output cell:
+
+```>foo
+Qux
+```
+
+
+### Example: React viewer
+
+```js !viewer of=bar
+export const viewer = ({node, React}) => {
+  const rc = React.createElement
+  const {useState, useEffect} = React
+  const meta = node.properties 
+               && node.properties.meta
+  const [content, setContent] = useState('Loading...')
+  const src = node.data.value
+  useEffect(()=>{
+    setContent("Loaded. " + node.data.value)
+  },[src])
+
+  return rc('div', {
+    className: 'custom-react-view',
+  }, content)
+}
+```
+
+```bar !below
+Custom Content 3
+```
+
+### Example: `css` viewer
+
+```js !viewer of=css
+export const viewer = ({node, React}) => {
+  const rc = React.createElement
+  const meta = node.properties 
+               && node.properties.meta
+
+  const link = meta && meta.uri
+
+  if (link) return rc('link', {
+    rel: 'stylesheet',
+    href: link
+  })
+
+  return rc('style', {
+    dangerouslySetInnerHTML: {
+      __html: node.value
+    }
+  })
+}
+```
+
+```css !below
+#header {
+  color: purple;
+  font-family: monospace;
+}
+```
+
+```css https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/solarized-light.min.css !inline !hidemeta
+```
+```>md !inline !info
+👀 There is an invisible `css` cell (using `!inline` and `!hidemeta` directives) above which pulls a new solarised light highlight.js theme into the page.
+```
+
+### Example: `md` viewer
+
+Less of an example but rather a work in progress before moving it into `.lit` as a default.
+
+```js !viewer of=md <  viewers/md/index.jsx
+
+```
+
+
+
+
+
+```md xviewer=meta !inline
+*Markdown* Viewer **DONE**
+```
+
+```>md
+*Markdown* Viewer **FIXED**
+```
+
+
+
+
+
+
+
+
+
+
+
+```md !success viewer=md
+**✅ Admonitions**
+
+See [[renderer/viewers/md/admonitions]] for more examples and usages.
+```
+
+```md !inline
+    ```js
+    Does this work?
+    ```
+```
+
+### Example: `KaTeX` viewer
+
+```html viewer=iframe !below
+<!DOCTYPE html>
+<!-- KaTeX requires the use of the HTML5 doctype. Without it, KaTeX may not render properly -->
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.2/dist/katex.min.css" integrity="sha384-Cqd8ihRLum0CCg8rz0hYKPoLZ3uw+gES2rXQXycqnL5pgVQIflxAUDS7ZSjITLb5" crossorigin="anonymous">
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.2/dist/katex.min.js" integrity="sha384-1Or6BdeNQb0ezrmtGeqQHFpppNd7a/gw29xeiSikBbsb44xu3uAo8c7FwbF5jhbd" crossorigin="anonymous"></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.2/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous"
+        onload="katex.render(document.body.innerHTML, document.body,{throwOnError: false});"></script>
+  </head>
+  <body>% \f is defined as #1f(#2) using the macro
+\f\relax{x} = \int_{-\infty}^\infty
+    \f\hat\xi\,e^{2 \pi i \xi x}
+    \,d\xi</body>
+</html>
+```
+
+
+### Example: `meta` viewer
+
+```js !viewer of=meta
+export const viewer = ({node,React}) => {
+  const view = React.createElement('pre', {style: {color: 'black'}}, JSON.stringify(node,null,2))
+  return view
+}
+```
+
+```txt file.txt !below viewer=meta > json filename.json !foo
+show meta content below:
+```
+
+### Example: `graph` viewer
+
+✅ This viewer has been folded into `.lit` as one of the default viewers.
+
+```js !viewer of=custom-graph
+export const viewer = ({node, React}) => {
+   const c = React.createElement
+   const data = node.value
+
+   const el = c('iframe', {srcDoc: `<head>
+  <style> body { margin: 0; } </style>
+  <script src="https://unpkg.com/force-graph"></script>
+  <!-- from: https://github.com/vasturiano/force-graph -->
+</head>
+<body>
+  <div id="graph"></div>
+  <script>
+    const data = ${data};
+      const thisfile = window.parent.lit.location.src
+      // alert(thisfile)
+      const elem = document.getElementById('graph')
+      const Graph = ForceGraph()(elem)
+        .graphData(data)
+        .nodeId('id')
+        .nodeVal((n) => 2 * (n.backlinks && n.backlinks.length ? n.backlinks.length : 1))
+        .nodeLabel('id')
+        .nodeAutoColorBy('type')
+        
+        // .linkColor(d => data.nodes[d.source].exists ? 'red' : 'lightblue')
+        .linkDirectionalArrowLength(6)
+        .onNodeHover(node => elem.style.cursor = node ? 'pointer' : null)
+        .onNodeClick(node => {
+          // Center/zoom on node
+          Graph.centerAt(node.x, node.y, 1000);
+          Graph.zoom(2, 2000);
+        });
+
+        setTimeout( () => {
+            const { nodes, links } = Graph.graphData()
+            const node = nodes.filter( n => n.id === thisfile)[0]
+            Graph.centerAt(node.x, node.y, 1000);
+            Graph.zoom(2, 2000);
+
+        }, 2000)
+
+  </script>
+</body>`})
+   return el
+}
+```
+
+```custom-graph !inline
+{
+  "nodes":[
+    {"id": "foo"},
+    {"id": "bar"}
+  ],
+  "links": [
+    {"source": "foo", "target": "bar"}
+  ]
+}
+```
+
+```custom-graph !inline < ../manifest.json
+```
+
+The above automatically transcludes the `.lit` manifest and focuses on the current document
+
+### Example: Vega 
+
+Still a *Work in progress*
+Docs: [vega-lite](https://vega.github.io/vega-lite/usage/compile.html)
+
+```>iframe xviewer=meta
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Embedding Vega-Lite</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.19.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.0.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.15.1"></script>
+  </head>
+  <body>
+    <div id="vis"></div>
+
+    <script type="text/javascript">
+      var yourVlSpec = {
+        $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+        description: 'A simple bar chart with embedded data.',
+        data: {
+          values: [
+            {a: 'A', b: 28},
+            {a: 'B', b: 55},
+            {a: 'C', b: 43},
+            {a: 'D', b: 91},
+            {a: 'E', b: 81},
+            {a: 'F', b: 53},
+            {a: 'G', b: 19},
+            {a: 'H', b: 87},
+            {a: 'I', b: 52}
+          ]
+        },
+        mark: 'bar',
+        encoding: {
+          x: {field: 'a', type: 'ordinal'},
+          y: {field: 'b', type: 'quantitative'}
+        }
+      };
+      vegaEmbed('#vis', yourVlSpec);
+    </script>
+  </body>
+</html>
+```
+
+### Example: D3 Graphviz `dot` viewer
+
+Docs: https://github.com/magjac/d3-graphviz#examples
+
+```js !viewer of=dot
+export const viewer = ({node, React}) => {
+   const c = React.createElement
+   const el = c('iframe', {srcDoc: `<!DOCTYPE html>
+<meta charset="utf-8">
+<body>
+<script src="//d3js.org/d3.v5.min.js"></script>
+<script src="https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js"></script>
+<script src="https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js"></script>
+<div id="graph" style="text-align: center;"></div>
+<script>
+
+d3.select("#graph").graphviz()
+    .renderDot('${node.value.trim()}');
+
+</script>`})
+   return el
+}
+```
+
+```>dot xviewer=meta
+digraph  { a -> b }
+```
+
+```>dot
+digraph Q {
+
+  node [shape=record];
+
+
+  nd_1   [label = "Node 1"];
+  nd_2   [label = "Node 2"];
+  nd_3_a [label = "Above Right Node 3"];
+  nd_3_l [label = "Left of Node 3"];
+  nd_3   [label = "Node 3"];
+  nd_3_r [label = "Right of Node 3"];
+  nd_4   [label = "Node 4"];
+
+
+  nd_3_a -> nd_3_r;
+  nd_1 -> nd_2 -> nd_3 -> nd_4;
+
+  subgraph cluster_R {
+
+    {rank=same nd_3_l nd_3 nd_3_r}
+
+    nd_3_l -> nd_3 -> nd_3_r [color=grey arrowhead=none];
+
+  }
+
+}
+```
+
+The above mildly more complex example doesn't render, likely due to not being actual graphviz.
+
+### Example: Plant`UML` viewer
+
+```js !viewer of=uml
+export const viewer = ({node, React}) => {
+   const c = React.createElement
+   const ref = React.createRef();
+   const [height, setHeight] = React.useState(null)
+   let [id] = React.useState(Math.round(Math.random() * 10000000).toString())
+
+  React.useEffect(() => {
+    const handler = event => {
+      if (ref && ref.current && event && event.data && typeof event.data === 'string') {
+          const data = JSON.parse(event.data)
+          if (id === data.source) {
+             console.log("Message: ", data)
+             setHeight(data.height)
+          }
+
+      }
+    }
+
+    window.addEventListener("message", handler)
+
+    // clean up
+    return () => window.removeEventListener("message", handler)
+  }, []) // empty array => run only once
+
+   const el = c('iframe', {ref: ref, style: {height: ( height ? (height + 'px') : 'auto') },srcDoc: `<!DOCTYPE html>
+    <html>
+      <head>
+        <title>PlantUML Viewer</title>
+        <style>html, body {margin: 0; padding: 0; } #plantuml { display: block; max-width: 100%; }</style>
+      </head>
+      <body>
+        <img id="plantuml" />
+        <script type="module">
+
+        function resize() {
+          const msg = JSON.stringify({
+            source: "${id}",
+            height: document.body.clientHeight
+          })
+          console.log("Resize Message", msg)
+          window.parent.postMessage(msg, '*');
+        }
+        async function encodePlantUML(src) {
+          console.log("encoding", src)
+          const module = await import("https://cdn.skypack.dev/plantuml-encoder");
+          const encoded = module.encode(src)
+          console.log(encoded)
+          return encoded
+        }
+
+        encodePlantUML("${node.value.replace(/\n/g, '\\n')}")
+        .then(encoded => {
+            const url = "https://plantuml.com/plantuml/svg/" + encoded
+            const img = document.getElementById('plantuml')
+            img.setAttribute('src', url)
+            img.onload = resize
+        })
+
+        console.log("PlantUML Viewer.")
+      </script>
+      </body>
+    </html>`})
+   console.log("PlantViewer iframe ref:", el.ref.current)
+   return el
+}
+```
+
+```uml !inline
+[A] -> [B]
+```
+
+```>uml
+@startuml
+participant participant as Foo
+actor       actor       as Foo1
+boundary    boundary    as Foo2
+control     control     as Foo3
+entity      entity      as Foo4
+database    database    as Foo5
+collections collections as Foo6
+queue       queue       as Foo7
+Foo -> Foo1 : To actor 
+Foo -> Foo2 : To boundary
+Foo -> Foo3 : To control
+Foo -> Foo4 : To entity
+Foo -> Foo5 : To database
+Foo -> Foo6 : To collections
+Foo -> Foo7 : To queue
+@enduml
+```
+
+## Errors
+
+### Runtime
+
+```js !viewer of=testerror
+export const viewer = ({node}) => {
+  throw new Error("Test Error: Broken Viewer")
+}
+```
+
+```js !viewer of=syntaxerror
+export const viewer = ({node}) => {
+  throw new Error("Syntax Error: Broken Viewer"
+}
+```
+```>testerror
+Viewer throws an Error
+```
+
+```>syntaxerror
+TODO: Viewer has a syntax error
+```
+
+### Import
+
+```js !viewer of=testerror2
+throw new Error("Test Error: Broken Viewer")
+export const viewer = ({node}) => {
+  return "never"
+}
+```
+
+## Initial prototype
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Test page</title>
+  </head>
+  <body>
+  <script type="module">
+
+    async function getViewer(src) {
+      const module = await import(`data:text/javascript;base64,${ btoa(src)}`);
+      return module.viewer;
+    }
+
+    getViewer(`export const viewer = () => "foo!"`).then(viewer => {
+       alert("Got viewer " + !!viewer)
+    })
+
+  </script>
+  </body>
+</html>
+```
+
+## Experiments
+
+```js !viewer of=plantuml2
+export const viewer = ({node, React}) => {
+  const rc = React.createElement
+  const {useState, useEffect} = React
+  const meta = node.properties 
+               && node.properties.meta
+  const [url, setUrl] = useState(null)
+
+  async function encodePlantUML(src) {
+      console.log("encoding", src)
+      const module = await import("https://cdn.skypack.dev/plantuml-encoder");
+      const encoded = module.encode(src) //.replace(/\n/g, '\\n'))
+      console.log(encoded)
+      return encoded
+  }
+
+  const src = node.value
+  useEffect(async ()=> {
+    const encoded = await encodePlantUML(node.data.value)
+    const url = "https://plantuml.com/plantuml/svg/" + encoded
+    setUrl(url)
+  },[src])
+
+  return rc('div', {
+    className: 'lit-viewer-plantuml2',
+  }, url ? rc('img', {
+    src: url,
+  }) : "Loading...")
+}
+```
+
+```plantuml2 !inline
+@startuml
+class Example
+@enduml
+```
+```>uml
+@startuml
+participant participant as Foo
+actor       actor       as Foo1
+boundary    boundary    as Foo2
+control     control     as Foo3
+entity      entity      as Foo4
+database    database    as Foo5
+collections collections as Foo6
+queue       queue       as Foo7
+Foo -> Foo1 : To actor 
+Foo -> Foo2 : To boundary
+Foo -> Foo3 : To control
+Foo -> Foo4 : To entity
+Foo -> Foo5 : To database
+Foo -> Foo6 : To collections
+Foo -> Foo7 : To queue
+@enduml
+```

@@ -1,0 +1,562 @@
+# Executing `code` cells
+
+## Table of Contents
+
+ ## Bugs 🐜 and To do ✅
+
+- [x] executed cell gets replaced with its output
+- [x] more robust outputs
+  - [x] replace "connected" output on exec
+- [ ] Extract transpilation as [[Transfomers]]
+
+## Examples
+
+
+
+
+
+```js
+console.log(document.referrer)
+```
+```>txt attached=true updated=1619273509485
+https://dotlit.org/
+undefined
+```
+
+
+
+
+
+
+### TypeScript
+
+```ts test.ts babel=true repl=js
+type Options = {[key: number]: string}
+const fn = (opts : Options) => {
+  const str:string = 12 
+  // need linting to make this useful
+  return str
+}
+
+return fn()
+```
+```>txt attached=true updated=1619093312586
+12
+```
+
+
+
+
+
+
+
+### Async and Promises
+
+```js test.js babel=true
+const wait = (ms) => {
+  return new Promise(resolve => {
+    setTimeout( () => {
+      resolve(new Date())
+    }, ms)
+     
+  })
+}
+return wait(1000)
+```
+```>txt attached=true updated=1619649877870
+Wed Apr 28 2021 23:44:37 GMT+0100 (BST)
+```
+
+
+
+
+
+
+
+
+
+### React `jsx`
+
+```jsx test.jsx babel=true repl=js
+import React from 'https://cdn.skypack.dev/react'
+
+const Component = props => {
+  return <div></div>
+}
+
+return <Component/>
+```
+```>txt attached=true updated=1619649834591 !error
+undefined
+```
+
+```jsx test.jsx babel=true repl=js react=true
+return (async args => {
+
+  const React = lit.utils.React
+  const { useState } = React
+  
+  const Clicker = props => {
+    const [c,setC] = useState(0)
+    //console.log(React, useState, c)
+    const click = e => setC(c+1)
+
+    return <button onClick={click}>{ "Click me: " + c}</button>
+  }
+
+  return <Clicker/>
+})()
+```
+
+
+
+```js
+return (async args => {
+
+  const confetti = await 
+  import('https://cdn.skypack.dev/canvas-confetti')
+
+  confetti.default({
+     origin: {y: 0},
+     spread: 55,
+     particleCount: 100,
+     ticks: 1000,
+  })
+  return "yay 🥳"
+})()
+```
+```>txt attached=true updated=1619176887580
+yay 🥳
+```
+
+```js current_viewport !collapse > svg
+const b = document.body
+const ch = b.clientHeight
+const cw = b.clientWidth
+const sh = b.scrollHeight
+const st = b.scrollTop
+
+const a = cw / ch 
+const sa = cw / sh
+const c = (ch/2)+st
+const cp = c / sh
+
+const h = cw
+const w = h * sa
+const vt = h * (st/sh)
+const vw = w
+const vh = h * (ch/sh)
+const x = (h/2) - w
+
+
+const svg = `<svg style="max-width: 100%;" width="${h}" height="${h}">
+  <rect x="${x}" width="${w}" height="${h}" style="fill:rgb(255,255,255);stroke-width:1;stroke:rgb(0,0,0)" />
+  <rect x="${x}" y="${vt}" width="${vw}" height="${vh}" style="fill:rgb(255,255,255);stroke-width:3;stroke:rgb(255,0,0)" />
+</svg>`
+
+return svg
+
+return {
+   ch,cw,sh,st,c,cp,a 
+}
+```
+```>svg attached=true updated=1619135325236
+<svg style="max-width: 100%;" width="390" height="390">
+  <rect x="151.05316382548398" width="43.94683617451604" height="390" style="fill:rgb(255,255,255);stroke-width:1;stroke:rgb(0,0,0)" />
+  <rect x="151.05316382548398" y="159.67350476740828" width="43.94683617451604" height="74.82230569199653" style="fill:rgb(255,255,255);stroke-width:3;stroke:rgb(255,0,0)" />
+</svg>
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Output Markdown
+
+```js > md
+console.log("A __*result*__: **`" +  42/13 + "`**")
+return 42
+```
+```>md attached=true updated=1619049088835
+A __*result*__: **`3.230769230769231`**
+42
+```
+
+
+
+
+
+
+
+```js > json
+return { foo: 'bar'}
+```
+```>json attached=true updated=1619020417262
+{ foo: 'bar' }
+```
+
+
+
+
+
+
+
+
+### Meta: `lit` global and AST
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```js > ast_info !collapse
+return this
+```
+```>ast_info !collapse attached=true updated=1619125613785
+{ type: 'root',
+  children: 
+   [ { type: 'section',
+       data: [Object],
+       depth: 1,
+       children: [Object],
+       position: [Object] },
+     { type: 'section',
+       data: [Object],
+       depth: 2,
+       children: [Object],
+       position: [Object] },
+     { type: 'section',
+       data: [Object],
+       depth: 2,
+       children: [Object],
+       position: [Object] },
+     { type: 'section',
+       data: [Object],
+       depth: 3,
+       children: [Object],
+       position: [Object] },
+     { type: 'section',
+       data: [Object],
+       depth: 3,
+       children: [Object],
+       position: [Object] },
+     { type: 'section',
+       data: [Object],
+       depth: 3,
+       children: [Object],
+       position: [Object] },
+     { type: 'section',
+       data: [Object],
+       depth: 3,
+       children: [Object],
+       position: [Object] } ],
+  position: 
+   { start: { line: 1, column: 1, offset: 0 },
+     end: { line: 315, column: 1, offset: 4807 } } }
+```
+
+
+
+
+
+
+```js > litlocation !collapse
+return lit.location
+```
+```>litlocation !collapse attached=true updated=1619049206900
+{ src: 'execute_code_cells.lit',
+  root: '/',
+  base: 'https://dotlit.org/',
+  query: { file: 'execute_code_cells.lit' } }
+```
+
+
+```js > lit_utils !collapse
+return lit.utils
+```
+```>lit_utils !collapse attached=true updated=1619049230464
+{ select: 
+   { matches: [Function: matches],
+     selectAll: [Function: selectAll],
+     select: [Function: select] },
+  path: 
+   { resolve: [Function: resolve],
+     normalize: [Function: normalize],
+     isAbsolute: [Function: isAbsolute],
+     join: [Function: join],
+     relative: [Function: relative],
+     _makeLong: [Function: _makeLong],
+     dirname: [Function: dirname],
+     basename: [Function: basename],
+     extname: [Function: extname],
+     format: [Function: format],
+     parse: [Function: parse],
+     sep: '/',
+     delimiter: ':',
+     win32: null,
+     posix: [Circular] },
+  vfile: [Function: VFile],
+  delete: [Function: _delete],
+  read: [Function: read] }
+```
+
+
+```js > headings !collapse
+return lit.utils
+          .select
+          .selectAll('heading', ast)
+          .map( h => `${h.depth} ${h.data.id }`)
+```
+```>headings !collapse attached=true updated=1619049327833
+[ '1 executing-code-cells',
+  '2 table-of-contents',
+  '2 bugs--and-to-do-',
+  '2 examples',
+  '3 typescript',
+  '3 async-and-promises',
+  '3 react-jsx',
+  '3 output-markdown',
+  '3 meta-lit-global-and-ast' ]
+```
+
+
+```html !inline
+<style>
+codecell.collapsed.dir-collapse li span.dir-collapse {
+  display: none;
+}
+codecell.dir-error pre {
+  border: 2px solid red;
+}
+
+codecell.dir-error li span.dir-error {
+  background-color: red;
+  color: white;
+}
+</style>
+```
+
+
+Trying out git 
+
+See more at [[testing/Isomorphic Git]]
+
+```js
+return (async args => {
+
+  const git = (await 
+  import('https://cdn.skypack.dev/isomorphic-git')).default
+
+  return git 
+})()
+```
+
+
+## What if...
+
+**REPLs** were just custom viewers [[renderer/viewers]]?
+
+Implementing clientside execution via custom `!viewer`.
+
+### First pass
+
+```js !viewer !collapse of=esm
+export const viewer = ({node, React}) => {
+  const rce = React.createElement
+  const {useState, useEffect} = React
+  const [resp, setResp] = useState(null)
+  const [run, setRun] = useState(0)
+  const exec = () => setRun(run+1)
+  const exec2 = () => load(node.data.value)
+  useEffect(async () => {
+       async function load(src) {
+          const val = `//run: ${run}\n${src}`
+          const module = await import(`data:text/javascript;base64,${ btoa(src)}`);
+         if (typeof module.returns === 'function') setResp(await module.returns(run))
+         else if (module.returns) setResp(module.returns)
+      }
+
+     try {
+        load(node.data.value)
+     } catch (err) {
+        alert(err.message || err.toString())
+     }
+  }, [run])
+
+  const btn = rce('button', {onClick: exec}, "Run " + run)
+  const t = rce('div', null, [btn, resp])
+  return t
+}
+```
+
+
+
+
+
+### Version 2
+
+useEffect for execution on load otherwise require button press to exec.
+
+```js !viewer of=esm2
+export const viewer = ({node, React}) => {
+  const rce = React.createElement
+  const {useState, useEffect} = React
+  const [resp, setResp] = useState(null)
+  const [run, setRun] = useState(0)
+  
+  const exec = ev => {
+    ev && ev.stopPropagation()
+    setRun(run+1)
+    load(node.data.value)
+    return false
+  }
+
+  useEffect( args => {
+    if(run===0 && node.properties.meta.exec==="onload")
+       exec()
+  },[])
+
+  async function load(src) {
+    const val = `//run: ${run}\n${src}`
+    const module = await import(`data:text/javascript;base64,${ btoa(src)}`);
+    if (typeof module.returns === 'function') setResp(await module.returns(run))
+    else if (module.returns) setResp(module.returns)
+  }
+
+  const btn = rce('button', {onClick: exec}, "Run " + run)
+  const t = rce('div', null, [btn, resp])
+  return t
+}
+if(typeof module !== "undefined") module.exports.viewer = viewer
+```
+```esm2 !below
+function foo(baz) {
+  alert("foo II")
+  return "bar:" + baz
+}
+export const returns = foo
+```
+```js !below viewer=esm2
+import confetti from 'https://cdn.skypack.dev/canvas-confetti'
+
+export const returns = run => confetti({
+  origin: {y: 0},
+  spread: 55,
+  particleCount: 100,
+  ticks: 1000,
+})
+```
+
+Setting `exec` attribute to `onload` 
+
+```esm2 !below exec=onload
+function output(num) {
+  alert("execd onload!")
+  return "done: " + new Date()
+}
+export const returns = output()
+```
+
+
+Cannot *yet* output raw DOM nodes, due to react setup of viewers.
+
+```esm2 !below
+function output(num) {
+  const dom = document.createElement("pre")
+  dom.innerHTML = `Run number ${num}`
+  return dom
+}
+export const returns = output
+```
+
+So far so good, the only issue is that output is entirely ephemeral, how would we enable document modification, ie persist the output as an attached cell.
+
+```esm2 !below
+import git from 'https://cdn.skypack.dev/isomorphic-git'
+
+export const returns = git 
+```
+
+
+### Module from string 🥲
+
+Instead of importing datauri for viewers and transformers use module constructor
+```js
+return module
+```
+```>txt attached=true updated=1619567486067 !error
+function toString() {
+    [native code]
+}
+untitled.js:2:30
+untitled.js:4:63
+module code@untitled.js:4:139
+evaluate@[native code]
+moduleEvaluation@[native code]
+```
+
+```js
+function requireFromString(src, filename) {
+  var Module = module.constructor;
+  var m = new Module();
+  m._compile(src, filename);
+  return m.exports;
+}
+
+console.log(requireFromString('module.exports = { test: 1}', ''));
+```
+```>txt attached=true updated=1619567422743 !error
+function toString() {
+    [native code]
+}
+requireFromString@untitled.js:3:22
+untitled.js:9:30
+untitled.js:11:63
+module code@untitled.js:11:139
+evaluate@[native code]
+moduleEvaluation@[native code]
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
