@@ -164,8 +164,8 @@ export function generate(cmd) {
                         const src = file.contents
                         const srcPath = file.path
                         const renderedFile = await renderProcessor(fs).process(fetchedFile)
-                        renderedFile.src = src
-                        renderedFile.srcPath = srcPath
+                        renderedFile.data.src = src
+                        renderedFile.data.srcPath = srcPath
                         return renderedFile
                     } catch (err) {
                         console.error(`Failed to process ${file.path}`, err)
@@ -176,7 +176,7 @@ export function generate(cmd) {
                     try {
                         if(file && file.data && file.data.frontmatter && file.data.frontmatter.private) return;
 
-                        await fs.writeFile(path.join(cmd.output, file.srcPath), file.src)
+                        await fs.writeFile(path.join(cmd.output, file.data.srcPath), file.data.src)
                         await fs.writeFile(path.join(cmd.output, file.path + '.json'), JSON.stringify(file.data.ast, null, 4))
                         const html_file = await renderedVFileToDoc(await file, cmd)
                         await fs.writeFile(path.join(cmd.output, file.path), file.contents)
