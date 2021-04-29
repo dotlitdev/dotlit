@@ -21,15 +21,17 @@ import { getConsoleForNamespace } from '../utils/console'
 
 const console = getConsoleForNamespace('client')
 
-const query = qs.parse(location.search.slice(1))
+const hasLocation = typeof location !== "undefined"
+
+const query = hasLocation ? qs.parse(location.search.slice(1)) : {}
 const litsrcMeta = getMeta('src', '')
 const litsrc = (litsrcMeta === '404.lit' && query.file) ? query.file : litsrcMeta
 const litroot = getMeta('root', '/')
 // const litbase = getMeta('base', '/')
-const litbase = litroot === '/' 
+const litbase = (!hasLocation || litroot === '/')
                  ? litroot 
                  : path.join(path.dirname(location.pathname), litroot)
-const baseUrl =`${location.protocol}//${location.host}${litbase}`
+const baseUrl = hasLocation && `${location.protocol}//${location.host}${litbase}`
 
 const lfs = new FS(baseUrl, {
     wipe: query.__lfs_wipe==="true" ? confirm("Are you sure you want to wipe the local file system: " + baseUrl) : undefined,
