@@ -20,6 +20,16 @@ const console = getConsoleForNamespace('generate')
 
 global.fetch = require("node-fetch")
 
+const copyFiles = async (filepaths, input, output) => await Promise.all( filepaths.map( async filepath => {
+                    const src = path.join(input, filepath)
+                    const dest = path.join(output, filepath)
+                    await mkdirp(path.dirname(dest))
+                    const stat = await fs.stat(src);
+                    await fs.copyFile(src, dest)
+                    await fs.utimes(dest, stat.atime, stat.mtime)
+                }))
+
+
 function getLinks(file, root) {
     const links = []
     if (file && file.data && file.data.ast) {
