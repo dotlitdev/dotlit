@@ -83,9 +83,11 @@ const lit = {
 lit.u = lit.utils
 
 if (typeof window !== 'undefined') window.lit = lit
+module.exports = lit
+
 console.log(`lit:`, lit)
 
-;(async () => {
+const init = async () => {
     if(query.__lit_no_client==="true") return;
 
     console.log('.lit Notebook client initializing...')
@@ -141,6 +143,6 @@ console.log(`lit:`, lit)
     } catch (err) {
         console.error("Error hydrating App", err)
     }
+}
 
-   
-})()
+init()
