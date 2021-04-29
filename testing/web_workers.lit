@@ -60,58 +60,7 @@ return new Promise((resolve,reject) => {
 ```>txt attached=true updated=1619651153720
 hi
 ```
-```js !viewer of=esm2 !collapse #deadend
-export const viewer = ({node, React}) => {
-  const rce = React.createElement
-  const {useState, useEffect} = React
-  const [resp, setResp] = useState(null)
-  const [run, setRun] = useState(0)
-  
-  const exec = ev => {
-    ev && ev.stopPropagation()
-    setRun(run+1)
-    load(node.data.value)
-    return false
-  }
 
-  useEffect( args => {
-    if(run===0 && node.properties.meta.exec==="onload")
-       exec()
-  },[])
-
-  async function load(src) {
-     alert("running Web worker ")
-     const p = new Promise((resolve,reject) => {
-  let myWorker;
-  try {
-    alert("in promise")
-    myWorker = new Worker('worker2.js')
-    myWorker.onmessage = (msg) => {
-       console.log("WORKER MSG", msg)
-       resolve("received msg")
-    }
-    myWorker.onerror = (err) => {
-      alert("onerror")
-      resolve({msg: "worker.onerror", err})
-    }
-  } catch(err) {
-    alert("catch")
-    resolve({msg: "Caught err", err})
-  }
-   alert("end")
-  })
-  p.then( res => {
-    alert("reslved")
-    setResp(res.msg)
-  }).catch( err => alert(err))
-  }
-
-  const btn = rce('button', {onClick: exec}, "Run " + run)
-  const t = rce('div', null, [btn, resp])
-  return t
-}
-if(typeof module !== "undefined") module.exports.viewer = viewer
-```
 
 ```esm2 !below
 A hack
