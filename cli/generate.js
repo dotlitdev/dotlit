@@ -140,19 +140,15 @@ export function generate(cmd) {
         glob(globAll, {cwd: `${cmd.path}/`, ignore}, async (err, matches) => {
             if (err) error(err)
             else {
-                try {
-                const copied = await Promise.all( matches.map( async filepath => {
-                    const src = path.join(cmd.path, filepath)
-                    const dest = path.join(cmd.output, filepath)
-                    await mkdirp(path.dirname(dest))
-                    const stat = await fs.stat(src);
-                    await fs.copyFile(src, dest)
-                    await fs.utimes(dest, stat.atime, stat.mtime)
-                }))
+                const litFiles = matches.filter( (f) => f.match(matchRegex))
+                const nonLitFiles = matches.filter( (f) => !f.match(matchRegex))
 
+                try {
+
+                const copied = await copyFiles(nonLitFiles, cmd.path, cmd.output)
                 console.log(`Copied ${copied.length} file(s) from source.`)
 
-                const litFiles = matches.filter( (f) => f.match(matchRegex))
+          
                 console.log(`Detected ${litFiles.length} .lit file(s) ${matches.length} total.`)
 
                 const src_files = litFiles.map( async filepath => {
@@ -165,7 +161,11 @@ export function generate(cmd) {
                 let ast_files_prelinks = await Promise.all(src_files.map( async file => {
                     try {
                         const fetchedFile = await file
+                        const src = file.contents
+                        const srcPath = file.path
                         const renderedFile = await renderProcessor(fs).process(fetchedFile)
+                        renderedFile.src = src
+                        renderedFile.srcPath = srcPath
                         return renderedFile
                     } catch (err) {
                         console.error(`Failed to process ${file.path}`, err)
@@ -176,6 +176,7 @@ export function generate(cmd) {
                     try {
                         if(file && file.data && file.data.frontmatter && file.data.frontmatter.private) return;
 
+                        await fs.writeFile(path.join(cmd.output, file.srcPath), file.src)
                         await fs.writeFile(path.join(cmd.output, file.path + '.json'), JSON.stringify(file.data.ast, null, 4))
                         const html_file = await renderedVFileToDoc(await file, cmd)
                         await fs.writeFile(path.join(cmd.output, file.path), file.contents)

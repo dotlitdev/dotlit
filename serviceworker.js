@@ -28,8 +28,6 @@ const PRECACHE_URLS = [
 
 const getMockResponse = args => new Response('hello')
 
-importScripts('fs.js')
-
 // The install handler takes care of precaching the resources we always need.
 self.addEventListener('install', event => {
   event.waitUntil(
