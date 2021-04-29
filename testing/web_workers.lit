@@ -79,19 +79,49 @@ return (async fn =>{
 })()
 
 ```
-```>txt attached=true updated=1619739547114
+```>txt attached=true updated=1619739647288
 200
 227914,lines
+/* harmony export */   "highlightSpecialChars": () => (/* binding */ highlightSpecialChars),
+/* harmony export */   "keymap": () => (/* binding */ keymap),
+/* harmony export */   "logException": () => (/* binding */ logException),
+/* harmony export */   "placeholder": () => (/* binding */ placeholder),
+/* harmony export */   "runScopeHandlers": () => (/* binding */ runScopeHandlers)
+/* harmony export */ });
+/* harmony import */ var _codemirror_state__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @codemirror/state */ "./node_modules/@codemirror/state/dist/index.js");
+/* harmony import */ var _codemirror_text__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @codemirror/text */ "./node_modules/@codemirror/text/dist/index.js");
+/* harmony import */ var style_mod__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! style-mod */ "./node_modules/style-mod/src/style-mod.js");
+/* harmony import */ var _codemirror_rangeset__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @codemirror/rangeset */ "./node_modules/@codemirror/rangeset/dist/index.js");
+/* harmony import */ var w3c_keyname__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! w3c-keyname */ "./node_modules/w3c-keyname/index.es.js");
+
+
+
+
 
 
 
 let [nav, doc] = typeof navigator != "undefined"
-    ? [navigator, document]
->>>     : [{ userAgent: "", vendor: "", platform: "" }, { documentElement: { style: {} } }];
+>>>     ? [navigator, document]
+    : [{ userAgent: "", vendor: "", platform: "" }, { documentElement: { style: {} } }];
 const ie_edge = /Edge\/(\d+)/.exec(nav.userAgent);
 const ie_upto10 = /MSIE \d/.test(nav.userAgent);
 const ie_11up = /Trident\/(?:[7-9]|\d{2,})\..*rv:(\d+)/.exec(nav.userAgent);
 const ie = !!(ie_upto10 || ie_11up || ie_edge);
+const gecko = !ie && /gecko\/(\d+)/i.test(nav.userAgent);
+const chrome = !ie && /Chrome\/(\d+)/.exec(nav.userAgent);
+const webkit = "webkitFontSmoothing" in doc.documentElement.style;
+const safari = !ie && /Apple Computer/.test(nav.vendor);
+var browser = {
+    mac: /Mac/.test(nav.platform),
+    ie,
+    ie_version: ie_upto10 ? doc.documentMode || 6 : ie_11up ? +ie_11up[1] : ie_edge ? +ie_edge[1] : 0,
+    gecko,
+    gecko_version: gecko ? +(/Firefox\/(\d+)/.exec(nav.userAgent) || [0, 0])[1] : 0,
+    chrome: !!chrome,
+    chrome_version: chrome ? +chrome[1] : 0,
+    ios: safari && (/Mobile\/\w+/.test(nav.userAgent) || nav.maxTouchPoints > 2),
+    android: /Android\b/.test(nav.userAgent),
+    webkit,
 ```
 
 
