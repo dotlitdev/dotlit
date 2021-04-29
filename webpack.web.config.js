@@ -12,7 +12,11 @@ module.exports = {
   output: {
     path: distDir,
     publicPath: '/',
-    filename: 'web.bundle.js'
+    filename: 'web.bundle.js',
+    library: {
+        name: 'dotlit',
+        type: 'umd',
+    },
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
