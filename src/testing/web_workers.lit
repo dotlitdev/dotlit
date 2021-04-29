@@ -51,7 +51,7 @@ return new Promise((resolve,reject) => {
     myWorker = new Worker('worker.js')
     myWorker.onmessage = (ev) => resolve(ev.data)
     myWorker.onerror = (err) => {
-      resolve({msg: "worker.onerror", err})
+      resolve({msg: "worker.onerror", err, err.data})
     }
   } catch(err) {
     resolve({msg: "Caught err", err})
@@ -59,8 +59,8 @@ return new Promise((resolve,reject) => {
   
 })
 ```
-```>txt attached=true updated=1619735946076
-hi
+```>txt attached=true updated=1619735963959
+{ msg: 'worker.onerror', err: { isTrusted: [Getter] } }
 ```
 
 
