@@ -11,7 +11,6 @@ const parser = require('../parser')
 const renderer = require('../renderer')
 const { Repl } = require('../repl')
 
-const App = require('../components/App').default
 const { Header } = require('../components/Header')
 const { extendFs } = require('../utils/fs-promises-utils')
 const { DatesToRelativeDelta, MsToRelative } = require('../utils/momento')
@@ -92,6 +91,8 @@ export const init = async () => {
     if(query.__lit_no_client==="true") return;
 
     console.log('.lit Notebook client initializing...')
+
+    const App = require('../components/App').default
 
     const filepath = `/${lit.location.src}`
     console.log(`Checking local (${baseUrl}) filesystem for: ${filepath}`)
