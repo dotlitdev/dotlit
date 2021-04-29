@@ -16,7 +16,7 @@
 <section depth="2" class="" startpos="8:1-165" endpos="17:4-305"><cell startpos="8:1-165" endpos="8:11-175"><div class="cell-content"><h2 id="support">Support</h2></div></cell><cell startpos="12:1-179" endpos="17:4-305" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return `Worker supported: ${!!window.Worker}`
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1 day ago</span></span></span><output><pre><code class="txt">Worker supported: true
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="19:1-307" endpos="69:4-1711"><cell startpos="19:1-307" endpos="19:18-324"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="20:1-325" endpos="24:4-463" class="code output"><div class="cell-content"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">importScripts(&#x27;../web.bundle.js&#x27;)
+<section depth="2" class="" startpos="19:1-307" endpos="78:4-1974"><cell startpos="19:1-307" endpos="19:18-324"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="20:1-325" endpos="24:4-463" class="code output"><div class="cell-content"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">importScripts(&#x27;../web.bundle.js&#x27;)
 postMessage(&quot;dotlit: &quot; + typeof dotlit)
 console.log(&quot;anyone here?&quot;)
 </code></pre></output></codecell></div></cell><cell startpos="25:1-464" endpos="28:4-547" class="code output"><div class="cell-content"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker2.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">postMessage(&quot;hi&quot;)
@@ -25,11 +25,11 @@ console.log(&quot;anyone here?&quot;)
   const resp = await fetch(&#x27;./worker.js&#x27;)
   return resp.status + &quot;\n&quot; + (await resp.text())
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">54 minutes ago</span></span></span><output><pre><code class="txt">200
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">58 minutes ago</span></span></span><output><pre><code class="txt">200
 importScripts(&#x27;../web.bundle.js&#x27;)
 postMessage(&quot;dotlit: &quot; + typeof dotlit)
 console.log(&quot;anyone here?&quot;)
-</code></pre></output></codecell></div></cell><section depth="3" class="" startpos="43:1-950" endpos="69:4-1711"><cell startpos="43:1-950" endpos="45:157-1119"><div class="cell-content"><h3 id="testing">Testing</h3><p><del>Current REPL results in script execution from cross-origin? Due to data:uri</del> was resolving the raw event from postMessage not <code>ev.data</code> which is necessary.</p></div></cell><cell startpos="47:1-1121" endpos="65:4-1697" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
+</code></pre></output></codecell></div></cell><section depth="3" class="" startpos="43:1-950" endpos="78:4-1974"><cell startpos="43:1-950" endpos="45:157-1119"><div class="cell-content"><h3 id="testing">Testing</h3><p><del>Current REPL results in script execution from cross-origin? Due to data:uri</del> was resolving the raw event from postMessage not <code>ev.data</code> which is necessary.</p></div></cell><cell startpos="47:1-1121" endpos="65:4-1697" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
   let myWorker;
   try {
     myWorker = new Worker(&#x27;worker.js&#x27;)
@@ -42,6 +42,16 @@ console.log(&quot;anyone here?&quot;)
   }
   
 })
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">3 minutes ago</span></span></span><output><pre><code class="txt">{ msg: &#x27;worker.onerror: ReferenceError: Can\&#x27;t find variable: document (https://dotlit.org/web.bundle.js:68421)&#x27;,
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">6 minutes ago</span></span></span><output><pre><code class="txt">{ msg: &#x27;worker.onerror: ReferenceError: Can\&#x27;t find variable: document (https://dotlit.org/web.bundle.js:68421)&#x27;,
   err: { isTrusted: [Getter] } }
-</code></pre></output></codecell></div></cell><cell startpos="67:1-1699" endpos="69:4-1711" class="code"><div class="cell-content"><codecell class="lang-lang local"><span class="meta"><span class="lang">lang</span></span><pre><code class="lang"></code></pre></codecell></div></cell></section></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="Title TBD (testing/serviceworker.lit)" href="/testing/serviceworker.html">Title TBD (testing/serviceworker.lit)</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
+</code></pre></output></codecell></div></cell><cell startpos="67:1-1699" endpos="78:4-1974" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt;{
+   const url = &quot;https://dotlit.org/web.bundle.js&quot;
+   const lineno = 68421
+   const resp = await fetch(url)
+   console.log(resp.status)
+   const val = await resp.text()
+   const lines = val.split(&quot;\n&quot;)
+   console.log(lines.length, &quot;lines&quot;)
+})()
+
+</code></pre></codecell></div></cell></section></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="Title TBD (testing/serviceworker.lit)" href="/testing/serviceworker.html">Title TBD (testing/serviceworker.lit)</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
