@@ -1635,15 +1635,8 @@ export const viewer = ({node, React}) => {
   const [content, setContent] = useState('Loading...')
   
   useEffect(async () => {
-    const l = await lit.fs.readdir(src)
-    const list = l.map(async x=>{
-       const stat = await lit.fs.stat(src + x)
-       return {f:x,t:stat.type}
-       
-    })
-    const res = (await Promise.all(list)).sort(sortBy(['t','f'])).map(r => {
-       return rc("div", {className: r.t}, `${r.f}`)
-    })
+    const resp = await fetch("../manifest.json")
+    const res = await resp.text()
     setContent(res)
   },[src])
 
