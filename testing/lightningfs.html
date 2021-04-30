@@ -1,7 +1,7 @@
 <html data-reactroot=""><head><title>Lightning FS</title><meta name="litsrc" value="testing/lightningfs.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"><div class="lit-message"><span class="message">Viewer Error: Unexpected token &#x27;export&#x27;</span><span class="name">1567:1-1601:4</span></div><div class="lit-message"><span class="message">Viewer Error: Unexpected token &#x27;export&#x27;</span><span class="name">1624:1-1670:4</span></div></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="1556:4-45268"><cell startpos="1:1-0" endpos="3:47-62"><div class="cell-content"><h1 id="lightning-fs">Lightning FS</h1><p><a href="https://github.com/isomorphic-git/lightning-fs">https://github.com/isomorphic-git/lightning-fs<span class="linkIcon">↗</span></a></p></div></cell><section depth="2" class="" startpos="5:1-64" endpos="1556:4-45268"><cell startpos="5:1-64" endpos="7:94-169"><div class="cell-content"><h2 id="bugs-">Bugs 🐜</h2><ul class="contains-task-list">
 <li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <!-- -->wikiLinks and 404 behaviour results in incorrect/dangling lfs due to incorrect baseUrl.</li>
 </ul></div></cell><cell startpos="8:1-170" endpos="23:4-431" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return lit.fs.readdir(&#x27;/&#x27;)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">11.0 hours ago</span></span></span><output><pre><code class="txt">[ &#x27;renderer&#x27;,
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">11 hours ago</span></span></span><output><pre><code class="txt">[ &#x27;renderer&#x27;,
   &#x27;testing&#x27;,
   &#x27;index.lit&#x27;,
   &#x27;.git&#x27;,
@@ -1598,7 +1598,7 @@ export const viewer = ({node, React}) =&gt; {
 }
 </style>
 </div></codecell></div></cell><cell startpos="1617:1-46590" endpos="1619:4-46606" class="code output"><div class="cell-content"><codecell class="lang-fs local output"><span class="meta"><span class="lang">fs</span><span class="attribute attr-ls" style="color:black;background-color:#00d870">ls=/</span></span><output><pre><code class="fs"></code></pre></output></codecell></div></cell></section></section>
-<section depth="3" class="" startpos="1621:1-46608" endpos="1673:4-48127"><cell startpos="1621:1-46608" endpos="1621:27-46634"><div class="cell-content"><h3 id="finder-from-manifest">Finder (from manifest)</h3></div></cell><cell startpos="1624:1-46637" endpos="1670:4-48110" class="code"><div class="cell-content"><codecell class="dir-viewer dir-collapse tag-implementation lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span><span style="color:black;background-color:#cf5332" class="directive dir-viewer">viewer</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=fs2</span></span><pre><code class="js">
+<section depth="3" class="" startpos="1621:1-46608" endpos="1673:4-48125"><cell startpos="1621:1-46608" endpos="1621:27-46634"><div class="cell-content"><h3 id="finder-from-manifest">Finder (from manifest)</h3></div></cell><cell startpos="1624:1-46637" endpos="1670:4-48108" class="code"><div class="cell-content"><codecell class="dir-viewer dir-collapse tag-implementation lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span><span style="color:black;background-color:#cf5332" class="directive dir-viewer">viewer</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=fs2</span></span><pre><code class="js">
 const sortBy = keys =&gt; (a, b) =&gt; {
   for (const key of keys) {
      if (a[key] !== b[key]) break;
@@ -1629,8 +1629,8 @@ export const viewer = ({node, React}) =&gt; {
         .map(x =&gt; x)
         .filter(x =&gt; {
            return x.id.indexOf(src) &gt;= 0
-              || (regex &amp;&amp; x.id.match(regex)) || (x.title &amp;&amp; (x.title.indexOf(src) &gt;= 0
-              || (regex &amp;&amp; x.title.match(regex))))
+              || (regex &amp;&amp; regex.test(x.id)) || (x.title &amp;&amp; (x.title.indexOf(src) &gt;= 0
+              || (regex &amp;&amp; reg x.test(x.title))))
 
         })
         .sort()
@@ -1643,5 +1643,5 @@ export const viewer = ({node, React}) =&gt; {
     className: &#x27;custom-react-view&#x27;,
   }, [rc(&#x27;input&#x27;,{style:{width:&#x27;100%&#x27;, fontSize: &#x27;1.2em&#x27;},value:src, onChange: e =&gt; setSrc(e.target.value)}), content])
 }
-</code></pre></codecell></div></cell><cell startpos="1671:1-48111" endpos="1673:4-48127" class="code output"><div class="cell-content"><codecell class="lang-fs2 local output"><span class="meta"><span class="lang">fs2</span></span><output><pre><code class="fs2">styl
+</code></pre></codecell></div></cell><cell startpos="1671:1-48109" endpos="1673:4-48125" class="code output"><div class="cell-content"><codecell class="lang-fs2 local output"><span class="meta"><span class="lang">fs2</span></span><output><pre><code class="fs2">styl
 </code></pre></output></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (3)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li><li><a title="Isomorphic Git" href="/testing/isomorphic_git.html">Isomorphic Git</a></li><li><a title="Local and Remote files" href="/testing/local_remote_files.html">Local and Remote files</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
