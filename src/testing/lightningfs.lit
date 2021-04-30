@@ -1632,7 +1632,7 @@ const sortBy = keys => (a, b) => {
 
 const itemBuilder = (React) => item => {
   const rc = React.createElement
-  return rc('div', {className: 'item'}, rc('a', {href: lit.location.root + item}, item))
+  return rc('div', {className: 'item'}, rc('a', {href: lit.location.root + item.id}, item.title))
 }
 
 export const viewer = ({node, React}) => {
@@ -1648,8 +1648,8 @@ export const viewer = ({node, React}) => {
     const resp = await fetch("../manifest.json")
     const json = await resp.json()
     const res = json.nodes
-        .map(x => x.id)
-        .filter(x => x.indexOf(src) >= 0)
+        .map(x => x)
+        .filter(x => x.id.indexOf(src) >= 0)
         .sort()
         .map(x => item(x))
         //.join("\n")
