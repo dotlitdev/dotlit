@@ -1193,9 +1193,9 @@
                                     "offset": 46516
                                 },
                                 "end": {
-                                    "line": 1648,
+                                    "line": 1652,
                                     "column": 4,
-                                    "offset": 47361
+                                    "offset": 47404
                                 }
                             }
                         }
@@ -1321,9 +1321,9 @@
                             "offset": 46569
                         },
                         "end": {
-                            "line": 1648,
+                            "line": 1652,
                             "column": 4,
-                            "offset": 47361
+                            "offset": 47404
                         }
                     },
                     "data": {
@@ -1337,7 +1337,7 @@
                             "type": "code",
                             "lang": "js",
                             "meta": "!viewer !collapse of=fs2 #implementation",
-                            "value": "\nconst sortBy = keys => (a, b) => {\n  for (const key of keys) {\n     if (a[key] !== b[key]) break;\n     else return (a[key] > b[key]) ? 1 : -1\n  }\n}\n\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const src = meta.search || node.data.value.trim()\n  const [content, setContent] = useState('Loading...')\n  \n  useEffect(async () => {\n    const resp = await fetch(\"../manifest.json\")\n    const json = await resp.json()\n    const res = json.nodes.map(x=>x.id).filter(x=>x.indexOf(src) >= 0).join(\"\\n\")\n    setContent(res)\n  },[src])\n\n  return rc('div', {\n    className: 'custom-react-view',\n  }, content)\n}",
+                            "value": "\nconst sortBy = keys => (a, b) => {\n  for (const key of keys) {\n     if (a[key] !== b[key]) break;\n     else return (a[key] > b[key]) ? 1 : -1\n  }\n}\n\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const src = meta.search || node.data.value.trim()\n  const [content, setContent] = useState('Loading...')\n  \n  useEffect(async () => {\n    const resp = await fetch(\"../manifest.json\")\n    const json = await resp.json()\n    const res = json.nodes\n        .map(x=>x.id)\n        .filter(x=>x.indexOf(src) >= 0)\n        .sort()\n        .join(\"\\n\")\n    setContent(res)\n  },[src])\n\n  return rc('div', {\n    className: 'custom-react-view',\n  }, content)\n}",
                             "position": {
                                 "start": {
                                     "line": 1620,
@@ -1345,9 +1345,9 @@
                                     "offset": 46569
                                 },
                                 "end": {
-                                    "line": 1648,
+                                    "line": 1652,
                                     "column": 4,
-                                    "offset": 47361
+                                    "offset": 47404
                                 }
                             },
                             "data": {
@@ -1402,9 +1402,9 @@
                     "offset": 46516
                 },
                 "end": {
-                    "line": 1648,
+                    "line": 1652,
                     "column": 4,
-                    "offset": 47361
+                    "offset": 47404
                 }
             }
         }
@@ -1416,9 +1416,9 @@
             "offset": 0
         },
         "end": {
-            "line": 1650,
+            "line": 1654,
             "column": 1,
-            "offset": 47363
+            "offset": 47406
         }
     }
 }

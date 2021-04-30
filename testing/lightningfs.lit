@@ -1637,7 +1637,11 @@ export const viewer = ({node, React}) => {
   useEffect(async () => {
     const resp = await fetch("../manifest.json")
     const json = await resp.json()
-    const res = json.nodes.map(x=>x.id).filter(x=>x.indexOf(src) >= 0).join("\n")
+    const res = json.nodes
+        .map(x=>x.id)
+        .filter(x=>x.indexOf(src) >= 0)
+        .sort()
+        .join("\n")
     setContent(res)
   },[src])
 
