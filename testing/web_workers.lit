@@ -83,9 +83,29 @@ return (async fn =>{
 })()
 
 ```
-```>txt attached=true updated=1619739889901
+```>txt attached=true updated=1619770099722
 200
-227914,lines
+227913,lines
+68381 
+68382 "use strict";
+68383 __webpack_require__.r(__webpack_exports__);
+68384 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+68385 /* harmony export */   "Range": () => (/* reexport safe */ _codemirror_rangeset__WEBPACK_IMPORTED_MODULE_1__.Range),
+68386 /* harmony export */   "BidiSpan": () => (/* binding */ BidiSpan),
+68387 /* harmony export */   "BlockInfo": () => (/* binding */ BlockInfo),
+68388 /* harmony export */   "BlockType": () => (/* binding */ BlockType),
+68389 /* harmony export */   "Decoration": () => (/* binding */ Decoration),
+68390 /* harmony export */   "Direction": () => (/* binding */ Direction),
+68391 /* harmony export */   "EditorView": () => (/* binding */ EditorView),
+68392 /* harmony export */   "MatchDecorator": () => (/* binding */ MatchDecorator),
+68393 /* harmony export */   "PluginField": () => (/* binding */ PluginField),
+68394 /* harmony export */   "PluginFieldProvider": () => (/* binding */ PluginFieldProvider),
+68395 /* harmony export */   "ViewPlugin": () => (/* binding */ ViewPlugin),
+68396 /* harmony export */   "ViewUpdate": () => (/* binding */ ViewUpdate),
+68397 /* harmony export */   "WidgetType": () => (/* binding */ WidgetType),
+68398 /* harmony export */   "__test": () => (/* binding */ __test),
+68399 /* harmony export */   "drawSelection": () => (/* binding */ drawSelection),
+68400 /* harmony export */   "highlightActiveLine": () => (/* binding */ highlightActiveLine),
 68401 /* harmony export */   "highlightSpecialChars": () => (/* binding */ highlightSpecialChars),
 68402 /* harmony export */   "keymap": () => (/* binding */ keymap),
 68403 /* harmony export */   "logException": () => (/* binding */ logException),
@@ -126,6 +146,26 @@ return (async fn =>{
 68438     ios: safari && (/Mobile\/\w+/.test(nav.userAgent) || nav.maxTouchPoints > 2),
 68439     android: /Android\b/.test(nav.userAgent),
 68440     webkit,
+68441     safari,
+68442     webkit_version: webkit ? +(/\bAppleWebKit\/(\d+)/.exec(navigator.userAgent) || [0, 0])[1] : 0,
+68443     tabSize: doc.documentElement.style.tabSize != null ? "tab-size" : "-moz-tab-size"
+68444 };
+68445 
+68446 function getSelection(root) {
+68447     return (root.getSelection ? root.getSelection() : document.getSelection());
+68448 }
+68449 // Work around Chrome issue https://bugs.chromium.org/p/chromium/issues/detail?id=447523
+68450 // (isCollapsed inappropriately returns true in shadow dom)
+68451 function selectionCollapsed(domSel) {
+68452     let collapsed = domSel.isCollapsed;
+68453     if (collapsed && browser.chrome && domSel.rangeCount && !domSel.getRangeAt(0).collapsed)
+68454         collapsed = false;
+68455     return collapsed;
+68456 }
+68457 function hasSelection(dom, selection) {
+68458     if (!selection.anchorNode)
+68459         return false;
+68460     try {
 ```
 
 
