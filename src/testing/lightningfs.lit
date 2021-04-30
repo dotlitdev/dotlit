@@ -1630,6 +1630,11 @@ const sortBy = keys => (a, b) => {
   }
 }
 
+const itemBuilder = (React) => item => {
+  const rc = React.createElement
+  return rc('div', {className: 'item'}, item)
+}
+
 export const viewer = ({node, React}) => {
   const rc = React.createElement
   const {useState, useEffect} = React
@@ -1637,15 +1642,17 @@ export const viewer = ({node, React}) => {
                && node.properties.meta
   const src = meta.search || node.data.value.trim()
   const [content, setContent] = useState('Loading...')
+  const item = itemBuilder(React)
   
   useEffect(async () => {
     const resp = await fetch("../manifest.json")
     const json = await resp.json()
     const res = json.nodes
-        .map(x=>x.id)
-        .filter(x=>x.indexOf(src) >= 0)
+        .map(x => x.id)
+        .filter(x => x.indexOf(src) >= 0)
         .sort()
-        .join("\n")
+        .map(x => item(x))
+        //.join("\n")
     setContent(res)
   },[src])
 
