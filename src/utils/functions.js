@@ -4,7 +4,7 @@ export const AsInt = x => parseInt(x)
 export const Undef = x => typeof x === 'undefined'
 
 export const getMeta = (key,def) => {
-    if (typeof document === "undefined") return;
+    if (typeof document === "undefined" || !document.querySelector) return def;
 
     const el = document.querySelector(`meta[name="lit${key}"]`)
     const val = el ? el.getAttribute('value') : def
