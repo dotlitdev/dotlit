@@ -59,7 +59,7 @@ return new Promise((resolve,reject) => {
   
 })
 ```
-```>txt attached=true updated=1619767297540
+```>txt attached=true updated=1619781435551
 { msg: 'worker.onerror: ReferenceError: Can\'t find variable: document (https://dotlit.org/web.bundle.js:68421)',
   err: { isTrusted: [Getter] } }
 ```
@@ -83,9 +83,69 @@ return (async fn =>{
 })()
 
 ```
-```>txt attached=true updated=1619770099722
+```>txt attached=true updated=1619771321825
 200
 227913,lines
+68321     range.setEnd(toDOM.node, toDOM.offset);
+68322     range.setStart(fromDOM.node, fromDOM.offset);
+68323     let rects = range.getClientRects();
+68324     range.detach();
+68325     for (let i = 0; i < rects.length; i++) {
+68326         let rect = rects[i];
+68327         let dist = Math.max(rect.top - y, y - rect.bottom, rect.left - x, x - rect.right);
+68328         if (dist <= margin)
+68329             return true;
+68330     }
+68331     return false;
+68332 }
+68333 /// Enable a hover tooltip, which shows up when the pointer hovers
+68334 /// over ranges of text. The callback is called when the mouse hovers
+68335 /// over the document text. It should, if there is a tooltip
+68336 /// associated with position `pos` return the tooltip description
+68337 /// (either directly or in a promise). The `side` argument indicates
+68338 /// on which side of the position the pointer is—it will be -1 if the
+68339 /// pointer is before the position, 1 if after the position.
+68340 function hoverTooltip(source, options = {}) {
+68341     const setHover = _codemirror_state__WEBPACK_IMPORTED_MODULE_1__.StateEffect.define();
+68342     const hoverState = _codemirror_state__WEBPACK_IMPORTED_MODULE_1__.StateField.define({
+68343         create() { return null; },
+68344         update(value, tr) {
+68345             if (value && (options.hideOnChange && (tr.docChanged || tr.selection)))
+68346                 return null;
+68347             for (let effect of tr.effects)
+68348                 if (effect.is(setHover))
+68349                     return effect.value;
+68350             if (value && tr.docChanged) {
+68351                 let newPos = tr.changes.mapPos(value.pos, -1, _codemirror_state__WEBPACK_IMPORTED_MODULE_1__.MapMode.TrackDel);
+68352                 if (newPos == null)
+68353                     return null;
+68354                 let copy = Object.assign(Object.create(null), value);
+68355                 copy.pos = newPos;
+68356                 if (value.end != null)
+68357                     copy.end = tr.changes.mapPos(value.end);
+68358                 return copy;
+68359             }
+68360             return value;
+68361         },
+68362         provide: f => showTooltip.computeN([f], s => { let val = s.field(f); return val ? [val] : []; })
+68363     });
+68364     return [
+68365         hoverState,
+68366         _codemirror_view__WEBPACK_IMPORTED_MODULE_0__.ViewPlugin.define(view => new HoverPlugin(view, source, hoverState, setHover)),
+68367         tooltips()
+68368     ];
+68369 }
+68370 
+68371 
+68372 
+68373 
+68374 /***/ }),
+68375 
+68376 /***/ "./node_modules/@codemirror/view/dist/index.js":
+68377 /*!*****************************************************!*\
+68378   !*** ./node_modules/@codemirror/view/dist/index.js ***!
+68379   \*****************************************************/
+68380 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 68381 
 68382 "use strict";
 68383 __webpack_require__.r(__webpack_exports__);
@@ -166,6 +226,66 @@ return (async fn =>{
 68458     if (!selection.anchorNode)
 68459         return false;
 68460     try {
+68461         // Firefox will raise 'permission denied' errors when accessing
+68462         // properties of `sel.anchorNode` when it's in a generated CSS
+68463         // element.
+68464         return dom.contains(selection.anchorNode.nodeType == 3 ? selection.anchorNode.parentNode : selection.anchorNode);
+68465     }
+68466     catch (_) {
+68467         return false;
+68468     }
+68469 }
+68470 function clientRectsFor(dom) {
+68471     if (dom.nodeType == 3) {
+68472         let range = tempRange();
+68473         range.setEnd(dom, dom.nodeValue.length);
+68474         range.setStart(dom, 0);
+68475         return range.getClientRects();
+68476     }
+68477     else if (dom.nodeType == 1) {
+68478         return dom.getClientRects();
+68479     }
+68480     else {
+68481         return [];
+68482     }
+68483 }
+68484 // Scans forward and backward through DOM positions equivalent to the
+68485 // given one to see if the two are in the same place (i.e. after a
+68486 // text node vs at the end of that text node)
+68487 function isEquivalentPosition(node, off, targetNode, targetOff) {
+68488     return targetNode ? (scanFor(node, off, targetNode, targetOff, -1) ||
+68489         scanFor(node, off, targetNode, targetOff, 1)) : false;
+68490 }
+68491 function domIndex(node) {
+68492     for (var index = 0;; index++) {
+68493         node = node.previousSibling;
+68494         if (!node)
+68495             return index;
+68496     }
+68497 }
+68498 function scanFor(node, off, targetNode, targetOff, dir) {
+68499     for (;;) {
+68500         if (node == targetNode && off == targetOff)
+68501             return true;
+68502         if (off == (dir < 0 ? 0 : maxOffset(node))) {
+68503             if (node.nodeName == "DIV")
+68504                 return false;
+68505             let parent = node.parentNode;
+68506             if (!parent || parent.nodeType != 1)
+68507                 return false;
+68508             off = domIndex(node) + (dir < 0 ? 0 : 1);
+68509             node = parent;
+68510         }
+68511         else if (node.nodeType == 1) {
+68512             node = node.childNodes[off + (dir < 0 ? -1 : 0)];
+68513             off = dir < 0 ? maxOffset(node) : 0;
+68514         }
+68515         else {
+68516             return false;
+68517         }
+68518     }
+68519 }
+68520 function maxOffset(node) {
 ```
 
 

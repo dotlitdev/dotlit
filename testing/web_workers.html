@@ -14,9 +14,9 @@
 </ul></div></cell></section></section>
 <section depth="2" class="" startpos="5:1-38" endpos="6:111-163"><cell startpos="5:1-38" endpos="6:111-163"><div class="cell-content"><h2 id="references">References</h2><p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers">Using Web Workers on MDN<span class="linkIcon">↗</span></a></p></div></cell></section>
 <section depth="2" class="" startpos="8:1-165" endpos="17:4-305"><cell startpos="8:1-165" endpos="8:11-175"><div class="cell-content"><h2 id="support">Support</h2></div></cell><cell startpos="12:1-179" endpos="17:4-305" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return `Worker supported: ${!!window.Worker}`
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.4 days ago</span></span></span><output><pre><code class="txt">Worker supported: true
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.5 days ago</span></span></span><output><pre><code class="txt">Worker supported: true
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="19:1-307" endpos="169:4-7184"><cell startpos="19:1-307" endpos="19:18-324"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="20:1-325" endpos="24:4-463" class="code output"><div class="cell-content"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">importScripts(&#x27;../web.bundle.js&#x27;)
+<section depth="2" class="" startpos="19:1-307" endpos="289:4-12406"><cell startpos="19:1-307" endpos="19:18-324"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="20:1-325" endpos="24:4-463" class="code output"><div class="cell-content"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">importScripts(&#x27;../web.bundle.js&#x27;)
 postMessage(&quot;dotlit: &quot; + typeof dotlit)
 console.log(&quot;anyone here?&quot;)
 </code></pre></output></codecell></div></cell><cell startpos="25:1-464" endpos="28:4-547" class="code output"><div class="cell-content"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker2.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">postMessage(&quot;hi&quot;)
@@ -25,11 +25,11 @@ console.log(&quot;anyone here?&quot;)
   const resp = await fetch(&#x27;./worker.js&#x27;)
   return resp.status + &quot;\n&quot; + (await resp.text())
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">9.8 hours ago</span></span></span><output><pre><code class="txt">200
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">12.7 hours ago</span></span></span><output><pre><code class="txt">200
 importScripts(&#x27;../web.bundle.js&#x27;)
 postMessage(&quot;dotlit: &quot; + typeof dotlit)
 console.log(&quot;anyone here?&quot;)
-</code></pre></output></codecell></div></cell><section depth="3" class="" startpos="43:1-950" endpos="169:4-7184"><cell startpos="43:1-950" endpos="45:157-1119"><div class="cell-content"><h3 id="testing">Testing</h3><p><del>Current REPL results in script execution from cross-origin? Due to data:uri</del> was resolving the raw event from postMessage not <code>ev.data</code> which is necessary.</p></div></cell><cell startpos="47:1-1121" endpos="65:4-1697" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
+</code></pre></output></codecell></div></cell><section depth="3" class="" startpos="43:1-950" endpos="289:4-12406"><cell startpos="43:1-950" endpos="45:157-1119"><div class="cell-content"><h3 id="testing">Testing</h3><p><del>Current REPL results in script execution from cross-origin? Due to data:uri</del> was resolving the raw event from postMessage not <code>ev.data</code> which is necessary.</p></div></cell><cell startpos="47:1-1121" endpos="65:4-1697" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
   let myWorker;
   try {
     myWorker = new Worker(&#x27;worker.js&#x27;)
@@ -42,9 +42,9 @@ console.log(&quot;anyone here?&quot;)
   }
   
 })
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1 hour ago</span></span></span><output><pre><code class="txt">{ msg: &#x27;worker.onerror: ReferenceError: Can\&#x27;t find variable: document (https://dotlit.org/web.bundle.js:68421)&#x27;,
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">54 seconds ago</span></span></span><output><pre><code class="txt">{ msg: &#x27;worker.onerror: ReferenceError: Can\&#x27;t find variable: document (https://dotlit.org/web.bundle.js:68421)&#x27;,
   err: { isTrusted: [Getter] } }
-</code></pre></output></codecell></div></cell><cell startpos="67:1-1699" endpos="169:4-7184" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt;{
+</code></pre></output></codecell></div></cell><cell startpos="67:1-1699" endpos="289:4-12406" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt;{
    const url = &quot;https://dotlit.org/web.bundle.js&quot;
    const lineno = 68421
    const spread = 100
@@ -61,8 +61,68 @@ console.log(&quot;anyone here?&quot;)
            }).slice(lineno - spread, lineno + spread).join(&quot;\n&quot;)
 })()
 
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">21 minutes ago</span></span></span><output><pre><code class="txt">200
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.8 hours ago</span></span></span><output><pre><code class="txt">200
 227913,lines
+68321     range.setEnd(toDOM.node, toDOM.offset);
+68322     range.setStart(fromDOM.node, fromDOM.offset);
+68323     let rects = range.getClientRects();
+68324     range.detach();
+68325     for (let i = 0; i &lt; rects.length; i++) {
+68326         let rect = rects[i];
+68327         let dist = Math.max(rect.top - y, y - rect.bottom, rect.left - x, x - rect.right);
+68328         if (dist &lt;= margin)
+68329             return true;
+68330     }
+68331     return false;
+68332 }
+68333 /// Enable a hover tooltip, which shows up when the pointer hovers
+68334 /// over ranges of text. The callback is called when the mouse hovers
+68335 /// over the document text. It should, if there is a tooltip
+68336 /// associated with position `pos` return the tooltip description
+68337 /// (either directly or in a promise). The `side` argument indicates
+68338 /// on which side of the position the pointer is—it will be -1 if the
+68339 /// pointer is before the position, 1 if after the position.
+68340 function hoverTooltip(source, options = {}) {
+68341     const setHover = _codemirror_state__WEBPACK_IMPORTED_MODULE_1__.StateEffect.define();
+68342     const hoverState = _codemirror_state__WEBPACK_IMPORTED_MODULE_1__.StateField.define({
+68343         create() { return null; },
+68344         update(value, tr) {
+68345             if (value &amp;&amp; (options.hideOnChange &amp;&amp; (tr.docChanged || tr.selection)))
+68346                 return null;
+68347             for (let effect of tr.effects)
+68348                 if (effect.is(setHover))
+68349                     return effect.value;
+68350             if (value &amp;&amp; tr.docChanged) {
+68351                 let newPos = tr.changes.mapPos(value.pos, -1, _codemirror_state__WEBPACK_IMPORTED_MODULE_1__.MapMode.TrackDel);
+68352                 if (newPos == null)
+68353                     return null;
+68354                 let copy = Object.assign(Object.create(null), value);
+68355                 copy.pos = newPos;
+68356                 if (value.end != null)
+68357                     copy.end = tr.changes.mapPos(value.end);
+68358                 return copy;
+68359             }
+68360             return value;
+68361         },
+68362         provide: f =&gt; showTooltip.computeN([f], s =&gt; { let val = s.field(f); return val ? [val] : []; })
+68363     });
+68364     return [
+68365         hoverState,
+68366         _codemirror_view__WEBPACK_IMPORTED_MODULE_0__.ViewPlugin.define(view =&gt; new HoverPlugin(view, source, hoverState, setHover)),
+68367         tooltips()
+68368     ];
+68369 }
+68370 
+68371 
+68372 
+68373 
+68374 /***/ }),
+68375 
+68376 /***/ &quot;./node_modules/@codemirror/view/dist/index.js&quot;:
+68377 /*!*****************************************************!*\
+68378   !*** ./node_modules/@codemirror/view/dist/index.js ***!
+68379   \*****************************************************/
+68380 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) =&gt; {
 68381 
 68382 &quot;use strict&quot;;
 68383 __webpack_require__.r(__webpack_exports__);
@@ -143,4 +203,64 @@ console.log(&quot;anyone here?&quot;)
 68458     if (!selection.anchorNode)
 68459         return false;
 68460     try {
+68461         // Firefox will raise &#x27;permission denied&#x27; errors when accessing
+68462         // properties of `sel.anchorNode` when it&#x27;s in a generated CSS
+68463         // element.
+68464         return dom.contains(selection.anchorNode.nodeType == 3 ? selection.anchorNode.parentNode : selection.anchorNode);
+68465     }
+68466     catch (_) {
+68467         return false;
+68468     }
+68469 }
+68470 function clientRectsFor(dom) {
+68471     if (dom.nodeType == 3) {
+68472         let range = tempRange();
+68473         range.setEnd(dom, dom.nodeValue.length);
+68474         range.setStart(dom, 0);
+68475         return range.getClientRects();
+68476     }
+68477     else if (dom.nodeType == 1) {
+68478         return dom.getClientRects();
+68479     }
+68480     else {
+68481         return [];
+68482     }
+68483 }
+68484 // Scans forward and backward through DOM positions equivalent to the
+68485 // given one to see if the two are in the same place (i.e. after a
+68486 // text node vs at the end of that text node)
+68487 function isEquivalentPosition(node, off, targetNode, targetOff) {
+68488     return targetNode ? (scanFor(node, off, targetNode, targetOff, -1) ||
+68489         scanFor(node, off, targetNode, targetOff, 1)) : false;
+68490 }
+68491 function domIndex(node) {
+68492     for (var index = 0;; index++) {
+68493         node = node.previousSibling;
+68494         if (!node)
+68495             return index;
+68496     }
+68497 }
+68498 function scanFor(node, off, targetNode, targetOff, dir) {
+68499     for (;;) {
+68500         if (node == targetNode &amp;&amp; off == targetOff)
+68501             return true;
+68502         if (off == (dir &lt; 0 ? 0 : maxOffset(node))) {
+68503             if (node.nodeName == &quot;DIV&quot;)
+68504                 return false;
+68505             let parent = node.parentNode;
+68506             if (!parent || parent.nodeType != 1)
+68507                 return false;
+68508             off = domIndex(node) + (dir &lt; 0 ? 0 : 1);
+68509             node = parent;
+68510         }
+68511         else if (node.nodeType == 1) {
+68512             node = node.childNodes[off + (dir &lt; 0 ? -1 : 0)];
+68513             off = dir &lt; 0 ? maxOffset(node) : 0;
+68514         }
+68515         else {
+68516             return false;
+68517         }
+68518     }
+68519 }
+68520 function maxOffset(node) {
 </code></pre></output></codecell></div></cell></section></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="Title TBD (testing/serviceworker.lit)" href="/testing/serviceworker.html">Title TBD (testing/serviceworker.lit)</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
