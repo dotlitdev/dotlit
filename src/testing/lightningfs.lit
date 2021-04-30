@@ -1632,7 +1632,7 @@ const sortBy = keys => (a, b) => {
 
 const itemBuilder = (React) => item => {
   const rc = React.createElement
-  return rc('div', {className: 'item'}, rc('a', {href: lit.href || (lit.location.root + item.id)}, item.title || item.id))
+  return rc('li', {className: 'item'}, rc('a', {href: lit.href || (lit.location.root + item.id)}, item.title || item.id))
 }
 
 export const viewer = ({node, React}) => {
@@ -1640,7 +1640,7 @@ export const viewer = ({node, React}) => {
   const {useState, useEffect} = React
   const meta = node.properties 
                && node.properties.meta
-  const src = meta.search || node.data.value.trim()
+  const [src,setSrc] = useState(meta.search || node.data.value.trim())
   const [content, setContent] = useState('Loading...')
   const item = itemBuilder(React)
   
