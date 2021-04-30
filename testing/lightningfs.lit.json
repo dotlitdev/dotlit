@@ -1193,9 +1193,9 @@
                                     "offset": 46608
                                 },
                                 "end": {
-                                    "line": 1659,
+                                    "line": 1666,
                                     "column": 4,
-                                    "offset": 47497
+                                    "offset": 47687
                                 }
                             }
                         }
@@ -1253,9 +1253,9 @@
                             "offset": 46637
                         },
                         "end": {
-                            "line": 1656,
+                            "line": 1663,
                             "column": 4,
-                            "offset": 47472
+                            "offset": 47662
                         }
                     },
                     "data": {
@@ -1269,7 +1269,7 @@
                             "type": "code",
                             "lang": "js",
                             "meta": "!viewer !collapse of=fs2 #implementation",
-                            "value": "\nconst sortBy = keys => (a, b) => {\n  for (const key of keys) {\n     if (a[key] !== b[key]) break;\n     else return (a[key] > b[key]) ? 1 : -1\n  }\n}\n\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const src = meta.search || node.data.value.trim()\n  const [content, setContent] = useState('Loading...')\n  \n  useEffect(async () => {\n    const resp = await fetch(\"../manifest.json\")\n    const json = await resp.json()\n    const res = json.nodes\n        .map(x=>x.id)\n        .filter(x=>x.indexOf(src) >= 0)\n        .sort()\n        .join(\"\\n\")\n    setContent(res)\n  },[src])\n\n  return rc('div', {\n    className: 'custom-react-view',\n  }, content)\n}",
+                            "value": "\nconst sortBy = keys => (a, b) => {\n  for (const key of keys) {\n     if (a[key] !== b[key]) break;\n     else return (a[key] > b[key]) ? 1 : -1\n  }\n}\n\nconst itemBuilder = (React) => item => {\n  const rc = React.createElement\n  return rc('div', {className: 'item'}, item)\n}\n\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const src = meta.search || node.data.value.trim()\n  const [content, setContent] = useState('Loading...')\n  const item = itemBuilder(React)\n  \n  useEffect(async () => {\n    const resp = await fetch(\"../manifest.json\")\n    const json = await resp.json()\n    const res = json.nodes\n        .map(x => x.id)\n        .filter(x => x.indexOf(src) >= 0)\n        .sort()\n        .map(x => item(x))\n        //.join(\"\\n\")\n    setContent(res)\n  },[src])\n\n  return rc('div', {\n    className: 'custom-react-view',\n  }, content)\n}",
                             "position": {
                                 "start": {
                                     "line": 1624,
@@ -1277,9 +1277,9 @@
                                     "offset": 46637
                                 },
                                 "end": {
-                                    "line": 1656,
+                                    "line": 1663,
                                     "column": 4,
-                                    "offset": 47472
+                                    "offset": 47662
                                 }
                             },
                             "data": {
@@ -1330,14 +1330,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 1657,
+                            "line": 1664,
                             "column": 1,
-                            "offset": 47473
+                            "offset": 47663
                         },
                         "end": {
-                            "line": 1659,
+                            "line": 1666,
                             "column": 4,
-                            "offset": 47497
+                            "offset": 47687
                         }
                     },
                     "data": {
@@ -1354,14 +1354,14 @@
                             "value": "",
                             "position": {
                                 "start": {
-                                    "line": 1657,
+                                    "line": 1664,
                                     "column": 1,
-                                    "offset": 47473
+                                    "offset": 47663
                                 },
                                 "end": {
-                                    "line": 1659,
+                                    "line": 1666,
                                     "column": 4,
-                                    "offset": 47497
+                                    "offset": 47687
                                 }
                             },
                             "data": {
@@ -1402,9 +1402,9 @@
                     "offset": 46608
                 },
                 "end": {
-                    "line": 1659,
+                    "line": 1666,
                     "column": 4,
-                    "offset": 47497
+                    "offset": 47687
                 }
             }
         }
@@ -1416,9 +1416,9 @@
             "offset": 0
         },
         "end": {
-            "line": 1661,
+            "line": 1668,
             "column": 1,
-            "offset": 47499
+            "offset": 47689
         }
     }
 }
