@@ -16,27 +16,45 @@
 <section depth="2" class="" startpos="8:1-165" endpos="17:4-305"><cell startpos="8:1-165" endpos="8:11-175"><div class="cell-content"><h2 id="support">Support</h2></div></cell><cell startpos="12:1-179" endpos="17:4-305" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return `Worker supported: ${!!window.Worker}`
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.7 days ago</span></span></span><output><pre><code class="txt">Worker supported: true
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="19:1-307" endpos="113:4-3471"><cell startpos="19:1-307" endpos="19:18-324"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="20:1-325" endpos="27:4-563" class="code output"><div class="cell-content"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">// gross hack around one of codemirror/view bugs
+<section depth="2" class="" startpos="19:1-307" endpos="131:4-4008"><cell startpos="19:1-307" endpos="19:18-324"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="20:1-325" endpos="42:4-1030" class="code output"><div class="cell-content"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">// gross hack around one of @codemirror/view bugs
 let document = { documentElement: { style: {} } }
 
+postMessage(&quot;Location: &quot; +  typeof location + JSON.stringify(location))
 importScripts(&#x27;../web.bundle.js&#x27;)
 postMessage(&quot;dotlit: &quot; + typeof dotlit)
+postMessage(&quot;lit&quot; + JSON.stringify(dotlit.lit.location))
+
+const getFsTest = async (filepath) =&gt; {
+    postMessage(`Getting ${filepath} from local fs.`)
+    try {
+        const file = await dotlit.lit.fs.readFile(filepath)
+        postMessage(&quot;length+&quot; + file.length)
+        postMessage(&#x27;done&#x27;)
+    } catch(err) {
+        postMessage(&quot;error:&quot; + err.toString())
+        postMessage(&#x27;done&#x27;)
+    }
+}
+
+getFsTest(&#x27;/index.lit&#x27;)
+</code></pre></output></codecell></div></cell><cell startpos="43:1-1031" endpos="46:4-1114" class="code output"><div class="cell-content"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker2.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">postMessage(&quot;hi&quot;)
 console.log(&quot;anyone here?&quot;)
-</code></pre></output></codecell></div></cell><cell startpos="28:1-564" endpos="31:4-647" class="code output"><div class="cell-content"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker2.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">postMessage(&quot;hi&quot;)
-console.log(&quot;anyone here?&quot;)
-</code></pre></output></codecell></div></cell><cell startpos="32:1-648" endpos="32:118-765"><div class="cell-content"><p>Check if web server has up to date content yet? This delay is really why we need a service worker in the first place.</p></div></cell><cell startpos="34:1-767" endpos="45:4-1049" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt; {
+</code></pre></output></codecell></div></cell><cell startpos="47:1-1115" endpos="47:118-1232"><div class="cell-content"><p>Check if web server has up to date content yet? This delay is really why we need a service worker in the first place.</p></div></cell><cell startpos="49:1-1234" endpos="60:4-1516" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt; {
   const resp = await fetch(&#x27;./worker.js&#x27;)
   return resp.status + &quot;\n&quot; + (await resp.text())
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">16.3 hours ago</span></span></span><output><pre><code class="txt">200
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">16.4 hours ago</span></span></span><output><pre><code class="txt">200
 importScripts(&#x27;../web.bundle.js&#x27;)
 postMessage(&quot;dotlit: &quot; + typeof dotlit)
 console.log(&quot;anyone here?&quot;)
-</code></pre></output></codecell></div></cell><section depth="3" class="" startpos="46:1-1050" endpos="113:4-3471"><cell startpos="46:1-1050" endpos="48:157-1219"><div class="cell-content"><h3 id="testing">Testing</h3><p><del>Current REPL results in script execution from cross-origin? Due to data:uri</del> was resolving the raw event from postMessage not <code>ev.data</code> which is necessary.</p></div></cell><cell startpos="50:1-1221" endpos="68:4-1816" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
+</code></pre></output></codecell></div></cell><section depth="3" class="" startpos="61:1-1517" endpos="131:4-4008"><cell startpos="61:1-1517" endpos="63:157-1686"><div class="cell-content"><h3 id="testing">Testing</h3><p><del>Current REPL results in script execution from cross-origin? Due to data:uri</del> was resolving the raw event from postMessage not <code>ev.data</code> which is necessary.</p></div></cell><cell startpos="65:1-1688" endpos="86:4-2353" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
   let myWorker;
   try {
     myWorker = new Worker(&#x27;worker.js&#x27;)
-    myWorker.onmessage = (ev) =&gt; resolve(ev.data)
+    myWorker.onmessage = (ev) =&gt; {
+      if (ev.data === &#x27;done&#x27;) resolve(ev.data)
+      else console.log(ev.data)
+    }
     myWorker.onerror = (err) =&gt; {
       resolve({msg: &quot;worker.onerror: &quot; + err.message + &quot; (&quot; + err.filename + &quot;:&quot; + err.lineno + &quot;)&quot;, err, err},)
     }
@@ -45,9 +63,9 @@ console.log(&quot;anyone here?&quot;)
   }
   
 })
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.2 hours ago</span></span></span><output><pre><code class="txt">{ msg: &#x27;worker.onerror: Uncaught TypeError: Path must be a string. Received undefined (http://localhost:8080/web.bundle.js:177281)&#x27;,
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.3 hours ago</span></span></span><output><pre><code class="txt">{ msg: &#x27;worker.onerror: Uncaught TypeError: Path must be a string. Received undefined (http://localhost:8080/web.bundle.js:177281)&#x27;,
   err: { isTrusted: [Getter] } }
-</code></pre></output></codecell></div></cell><cell startpos="70:1-1818" endpos="113:4-3471" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt;{
+</code></pre></output></codecell></div></cell><cell startpos="88:1-2355" endpos="131:4-4008" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt;{
    const url = &quot;https://dotlit.org/web.bundle.js&quot;
    const lineno = 177281
    const spread = 10
@@ -65,7 +83,7 @@ console.log(&quot;anyone here?&quot;)
            }).slice(lineno - spread, lineno + spread).join(&quot;\n&quot;)
 })()
 
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1 hour ago</span></span></span><output><pre><code class="txt">200
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.2 hours ago</span></span></span><output><pre><code class="txt">200
 227913,lines
 177271 // &quot;Software&quot;), to deal in the Software without restriction, including
 177272 // without limitation the rights to use, copy, modify, merge, publish,
