@@ -149,7 +149,7 @@ export const init = async () => {
 
 if (typeof WorkerGlobalScope !== 'undefined'
     && self instanceof WorkerGlobalScope) {
-   pushMessage("dotlit worker")
+   // inside worker as lib, don't init.
 } else {
    init()
 }
