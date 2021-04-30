@@ -36,7 +36,15 @@ const baseProcessor = ({litroot, files} = {}) => {
     .use(gfm)
     .use(frontmatter, {})
     // Extact title
-    .use((...args) => {},{})
+    .use((...args) => (tree,file) => {
+        if(!file.data.frontmatter || !file.data.frontmatter.title) {
+           file.data = file.data || {}
+           file.data.frontmatter = file.data.frontmatter || {}
+           const heading = select('heading', tree)
+           if (heading) file.data.frontmatter.title = toString(heading)
+        }
+    },{})
+
     .use(wikiLinkPlugin, wikiLinkOptions(files))
     .use(slug)
     .use(toc, {})
