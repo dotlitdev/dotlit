@@ -1195,7 +1195,7 @@
                                 "end": {
                                     "line": 1666,
                                     "column": 4,
-                                    "offset": 47764
+                                    "offset": 47780
                                 }
                             }
                         }
@@ -1255,7 +1255,7 @@
                         "end": {
                             "line": 1663,
                             "column": 4,
-                            "offset": 47739
+                            "offset": 47755
                         }
                     },
                     "data": {
@@ -1269,7 +1269,7 @@
                             "type": "code",
                             "lang": "js",
                             "meta": "!viewer !collapse of=fs2 #implementation",
-                            "value": "\nconst sortBy = keys => (a, b) => {\n  for (const key of keys) {\n     if (a[key] !== b[key]) break;\n     else return (a[key] > b[key]) ? 1 : -1\n  }\n}\n\nconst itemBuilder = (React) => item => {\n  const rc = React.createElement\n  return rc('div', {className: 'item'}, rc('a', {href: lit.href || (lit.location.root + item.id)}, item.title || item.id))\n}\n\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const src = meta.search || node.data.value.trim()\n  const [content, setContent] = useState('Loading...')\n  const item = itemBuilder(React)\n  \n  useEffect(async () => {\n    const resp = await fetch(\"../manifest.json\")\n    const json = await resp.json()\n    const res = json.nodes\n        .map(x => x)\n        .filter(x => x.id.indexOf(src) >= 0)\n        .sort()\n        .map(x => item(x))\n        //.join(\"\\n\")\n    setContent(res)\n  },[src])\n\n  return rc('div', {\n    className: 'custom-react-view',\n  }, content)\n}",
+                            "value": "\nconst sortBy = keys => (a, b) => {\n  for (const key of keys) {\n     if (a[key] !== b[key]) break;\n     else return (a[key] > b[key]) ? 1 : -1\n  }\n}\n\nconst itemBuilder = (React) => item => {\n  const rc = React.createElement\n  return rc('div', {className: 'item'}, rc('a', {href: lit.href || (lit.location.root + item.id)}, item.title || item.id))\n}\n\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const src = meta.search || node.data.value.trim()\n  const [content, setContent] = useState('Loading...')\n  const item = itemBuilder(React)\n  \n  useEffect(async () => {\n    const resp = await fetch(\"../manifest.json\")\n    const json = await resp.json()\n    const res = json.nodes\n        .map(x => x)\n        .filter(x => x.id.indexOf(src) >= 0)\n        .sort()\n        .map(x => item(x))\n        //.join(\"\\n\")\n    setContent(rc('ol', null, res))\n  },[src])\n\n  return rc('div', {\n    className: 'custom-react-view',\n  }, content)\n}",
                             "position": {
                                 "start": {
                                     "line": 1624,
@@ -1279,7 +1279,7 @@
                                 "end": {
                                     "line": 1663,
                                     "column": 4,
-                                    "offset": 47739
+                                    "offset": 47755
                                 }
                             },
                             "data": {
@@ -1332,12 +1332,12 @@
                         "start": {
                             "line": 1664,
                             "column": 1,
-                            "offset": 47740
+                            "offset": 47756
                         },
                         "end": {
                             "line": 1666,
                             "column": 4,
-                            "offset": 47764
+                            "offset": 47780
                         }
                     },
                     "data": {
@@ -1356,12 +1356,12 @@
                                 "start": {
                                     "line": 1664,
                                     "column": 1,
-                                    "offset": 47740
+                                    "offset": 47756
                                 },
                                 "end": {
                                     "line": 1666,
                                     "column": 4,
-                                    "offset": 47764
+                                    "offset": 47780
                                 }
                             },
                             "data": {
@@ -1404,7 +1404,7 @@
                 "end": {
                     "line": 1666,
                     "column": 4,
-                    "offset": 47764
+                    "offset": 47780
                 }
             }
         }
@@ -1418,7 +1418,7 @@
         "end": {
             "line": 1668,
             "column": 1,
-            "offset": 47766
+            "offset": 47782
         }
     }
 }
