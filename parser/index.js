@@ -7,8 +7,8 @@ import toc from 'remark-toc'
 import footnotes from 'remark-footnotes'
 import gfm from 'remark-gfm'
 import { wikiLinkPlugin } from 'remark-wiki-link'
-import { select, selectAll } from 'unist-util-select'
-import { toString } from 'mdast-util-to-string'
+import select from 'unist-util-select'
+import { to_string } from './utils/mdast-util-to-string'
 
 import {sections, groupIntoSections, ungroupSections} from './sections'
 import litcodeblocks from './codeblocks'
@@ -36,7 +36,21 @@ const baseProcessor = ({litroot, files} = {}) => {
     .use(gfm)
     .use(frontmatter, {})
     // Extact title
-    .use((...args) => {},{})
+    .use((...args) => (tree,file) => {
+        if(!file.data.frontmatter || !file.data.frontmatter.title) {
+           console.log("no title in frontmatter, extracting")
+           file.data = file.data || {}
+           file.data.frontmatter = file.data.frontmatter || {}
+           const heading = select.select('heading', tree)
+           console.log("Found heading:", heading)
+           if (heading) {
+               const title = to_string(heading)
+               console.log("As text: ", title)
+               file.data.frontmatter.title = title
+           }
+        }
+    },{})
+
     .use(wikiLinkPlugin, wikiLinkOptions(files))
     .use(slug)
     .use(toc, {})
