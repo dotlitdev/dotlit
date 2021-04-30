@@ -7,6 +7,8 @@ import toc from 'remark-toc'
 import footnotes from 'remark-footnotes'
 import gfm from 'remark-gfm'
 import { wikiLinkPlugin } from 'remark-wiki-link'
+import { select, selectAll } from 'unist-util-select'
+import toString from 'mdast-util-to-string'
 
 import {sections, groupIntoSections, ungroupSections} from './sections'
 import litcodeblocks from './codeblocks'
@@ -33,6 +35,8 @@ const baseProcessor = ({litroot, files} = {}) => {
     .use(markdown, {})
     .use(gfm)
     .use(frontmatter, {})
+    // Extact title
+    .use((...args) => {},{})
     .use(wikiLinkPlugin, wikiLinkOptions(files))
     .use(slug)
     .use(toc, {})
