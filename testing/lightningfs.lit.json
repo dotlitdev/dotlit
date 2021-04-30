@@ -1193,9 +1193,9 @@
                                     "offset": 46516
                                 },
                                 "end": {
-                                    "line": 1654,
+                                    "line": 1647,
                                     "column": 4,
-                                    "offset": 47483
+                                    "offset": 47262
                                 }
                             }
                         }
@@ -1315,9 +1315,9 @@
                             "offset": 46557
                         },
                         "end": {
-                            "line": 1654,
+                            "line": 1647,
                             "column": 4,
-                            "offset": 47483
+                            "offset": 47262
                         }
                     },
                     "data": {
@@ -1331,7 +1331,7 @@
                             "type": "code",
                             "lang": "js",
                             "meta": "!viewer !collapse of=fs2 #implementation",
-                            "value": "\nconst sortBy = keys => (a, b) => {\n  for (const key of keys) {\n     if (a[key] !== b[key]) break;\n     else return (a[key] > b[key]) ? 1 : -1\n  }\n}\n\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const src = meta.ls || node.data.value.trim()\n  const [content, setContent] = useState('Loading...')\n  \n  useEffect(async () => {\n    const l = await lit.fs.readdir(src)\n    const list = l.map(async x=>{\n       const stat = await lit.fs.stat(src + x)\n       return {f:x,t:stat.type}\n       \n    })\n    const res = (await Promise.all(list)).sort(sortBy(['t','f'])).map(r => {\n       return rc(\"div\", {className: r.t}, `${r.f}`)\n    })\n    setContent(res)\n  },[src])\n\n  return rc('div', {\n    className: 'custom-react-view',\n  }, content)\n}",
+                            "value": "\nconst sortBy = keys => (a, b) => {\n  for (const key of keys) {\n     if (a[key] !== b[key]) break;\n     else return (a[key] > b[key]) ? 1 : -1\n  }\n}\n\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const src = meta.ls || node.data.value.trim()\n  const [content, setContent] = useState('Loading...')\n  \n  useEffect(async () => {\n    const resp = await fetch(\"../manifest.json\")\n    const res = await resp.text()\n    setContent(res)\n  },[src])\n\n  return rc('div', {\n    className: 'custom-react-view',\n  }, content)\n}",
                             "position": {
                                 "start": {
                                     "line": 1620,
@@ -1339,9 +1339,9 @@
                                     "offset": 46557
                                 },
                                 "end": {
-                                    "line": 1654,
+                                    "line": 1647,
                                     "column": 4,
-                                    "offset": 47483
+                                    "offset": 47262
                                 }
                             },
                             "data": {
@@ -1396,9 +1396,9 @@
                     "offset": 46516
                 },
                 "end": {
-                    "line": 1654,
+                    "line": 1647,
                     "column": 4,
-                    "offset": 47483
+                    "offset": 47262
                 }
             }
         }
@@ -1410,9 +1410,9 @@
             "offset": 0
         },
         "end": {
-            "line": 1656,
+            "line": 1649,
             "column": 1,
-            "offset": 47485
+            "offset": 47264
         }
     }
 }
