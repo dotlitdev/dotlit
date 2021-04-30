@@ -1195,7 +1195,7 @@
                                 "end": {
                                     "line": 1673,
                                     "column": 4,
-                                    "offset": 48131
+                                    "offset": 48134
                                 }
                             }
                         }
@@ -1255,7 +1255,7 @@
                         "end": {
                             "line": 1670,
                             "column": 4,
-                            "offset": 48112
+                            "offset": 48115
                         }
                     },
                     "data": {
@@ -1268,7 +1268,7 @@
                         {
                             "type": "code",
                             "lang": "js",
-                            "meta": "!viewer !collapse of=fs2 #implementation",
+                            "meta": "!viewer !collapse of=finder #implementation",
                             "value": "\nconst sortBy = keys => (a, b) => {\n  for (const key of keys) {\n     if (a[key] !== b[key]) break;\n     else return (a[key] > b[key]) ? 1 : -1\n  }\n}\n\nconst itemBuilder = (React) => item => {\n  const rc = React.createElement\n  return rc('li', {className: 'item'}, rc('a', {href: lit.href || (lit.location.root + item.id)}, item.title || item.id))\n}\n\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const [src,setSrc] = useState(meta.search || node.data.value.trim())\n  const [content, setContent] = useState('Loading...')\n  const item = itemBuilder(React)\n  \n  useEffect(async () => {\n    const resp = await fetch(\"../manifest.json\")\n    const json = await resp.json()\n    let regex\n    try {regex = new RegExp(src,'i')} catch(err){}\n    const res = json.nodes\n        .map(x => x)\n        .filter(x => {\n           return x.id.indexOf(src) >= 0\n              || (regex && regex.test(x.id)) || (x.title && (x.title.indexOf(src) >= 0\n              || (regex && regex.test(x.title))))\n\n        })\n        .sort()\n        .map(x => item(x))\n        //.join(\"\\n\")\n    setContent(rc('ol', null, res))\n  },[src])\n\n  return rc('div', {\n    className: 'custom-react-view',\n  }, [rc('input',{style:{width:'100%', fontSize: '1.2em'},value:src, onChange: e => setSrc(e.target.value)}), content])\n}",
                             "position": {
                                 "start": {
@@ -1279,47 +1279,47 @@
                                 "end": {
                                     "line": 1670,
                                     "column": 4,
-                                    "offset": 48112
+                                    "offset": 48115
                                 }
                             },
                             "data": {
                                 "meta": {
                                     "attrs": {
-                                        "of": "fs2"
+                                        "of": "finder"
                                     },
                                     "lang": "js",
                                     "directives": [
                                         "viewer",
                                         "collapse"
                                     ],
-                                    "of": "fs2",
+                                    "of": "finder",
                                     "tags": [
                                         "implementation"
                                     ],
                                     "isOutput": false,
                                     "hasOutput": false,
                                     "hasSource": false,
-                                    "raw": "js !viewer !collapse of=fs2 #implementation"
+                                    "raw": "js !viewer !collapse of=finder #implementation"
                                 },
                                 "hProperties": {
                                     "className": "tag-implementation",
                                     "meta": {
                                         "attrs": {
-                                            "of": "fs2"
+                                            "of": "finder"
                                         },
                                         "lang": "js",
                                         "directives": [
                                             "viewer",
                                             "collapse"
                                         ],
-                                        "of": "fs2",
+                                        "of": "finder",
                                         "tags": [
                                             "implementation"
                                         ],
                                         "isOutput": false,
                                         "hasOutput": false,
                                         "hasSource": false,
-                                        "raw": "js !viewer !collapse of=fs2 #implementation"
+                                        "raw": "js !viewer !collapse of=finder #implementation"
                                     }
                                 }
                             }
@@ -1332,12 +1332,12 @@
                         "start": {
                             "line": 1671,
                             "column": 1,
-                            "offset": 48113
+                            "offset": 48116
                         },
                         "end": {
                             "line": 1673,
                             "column": 4,
-                            "offset": 48131
+                            "offset": 48134
                         }
                     },
                     "data": {
@@ -1356,12 +1356,12 @@
                                 "start": {
                                     "line": 1671,
                                     "column": 1,
-                                    "offset": 48113
+                                    "offset": 48116
                                 },
                                 "end": {
                                     "line": 1673,
                                     "column": 4,
-                                    "offset": 48131
+                                    "offset": 48134
                                 }
                             },
                             "data": {
@@ -1398,7 +1398,7 @@
                 "end": {
                     "line": 1673,
                     "column": 4,
-                    "offset": 48131
+                    "offset": 48134
                 }
             }
         }
@@ -1412,7 +1412,7 @@
         "end": {
             "line": 1675,
             "column": 1,
-            "offset": 48133
+            "offset": 48136
         }
     }
 }
