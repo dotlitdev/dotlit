@@ -1647,9 +1647,15 @@ export const viewer = ({node, React}) => {
   useEffect(async () => {
     const resp = await fetch("../manifest.json")
     const json = await resp.json()
+    let regex
+    try {regex = new RegExp(src)} catch(){}
     const res = json.nodes
         .map(x => x)
-        .filter(x => x.id.indexOf(src) >= 0)
+        .filter(x => {
+           return x.id.indexOf(src) >= 0
+              || (regex && x.id.match(regex)
+
+        })
         .sort()
         .map(x => item(x))
         //.join("\n")
