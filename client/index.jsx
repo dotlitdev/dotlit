@@ -147,4 +147,9 @@ export const init = async () => {
     }
 }
 
-init()
+if (typeof WorkerGlobalScope !== 'undefined'
+    && self instanceof WorkerGlobalScope) {
+   pushMessage("dotlit worker")
+} else {
+   init()
+}
