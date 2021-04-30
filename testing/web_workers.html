@@ -14,9 +14,9 @@
 </ul></div></cell></section></section>
 <section depth="2" class="" startpos="5:1-38" endpos="6:111-163"><cell startpos="5:1-38" endpos="6:111-163"><div class="cell-content"><h2 id="references">References</h2><p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers">Using Web Workers on MDN<span class="linkIcon">↗</span></a></p></div></cell></section>
 <section depth="2" class="" startpos="8:1-165" endpos="17:4-305"><cell startpos="8:1-165" endpos="8:11-175"><div class="cell-content"><h2 id="support">Support</h2></div></cell><cell startpos="12:1-179" endpos="17:4-305" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return `Worker supported: ${!!window.Worker}`
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1 day ago</span></span></span><output><pre><code class="txt">Worker supported: true
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.3 days ago</span></span></span><output><pre><code class="txt">Worker supported: true
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="19:1-307" endpos="129:4-4582"><cell startpos="19:1-307" endpos="19:18-324"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="20:1-325" endpos="24:4-463" class="code output"><div class="cell-content"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">importScripts(&#x27;../web.bundle.js&#x27;)
+<section depth="2" class="" startpos="19:1-307" endpos="129:4-4815"><cell startpos="19:1-307" endpos="19:18-324"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="20:1-325" endpos="24:4-463" class="code output"><div class="cell-content"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">importScripts(&#x27;../web.bundle.js&#x27;)
 postMessage(&quot;dotlit: &quot; + typeof dotlit)
 console.log(&quot;anyone here?&quot;)
 </code></pre></output></codecell></div></cell><cell startpos="25:1-464" endpos="28:4-547" class="code output"><div class="cell-content"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker2.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">postMessage(&quot;hi&quot;)
@@ -25,11 +25,11 @@ console.log(&quot;anyone here?&quot;)
   const resp = await fetch(&#x27;./worker.js&#x27;)
   return resp.status + &quot;\n&quot; + (await resp.text())
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.3 hours ago</span></span></span><output><pre><code class="txt">200
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">8.7 hours ago</span></span></span><output><pre><code class="txt">200
 importScripts(&#x27;../web.bundle.js&#x27;)
 postMessage(&quot;dotlit: &quot; + typeof dotlit)
 console.log(&quot;anyone here?&quot;)
-</code></pre></output></codecell></div></cell><section depth="3" class="" startpos="43:1-950" endpos="129:4-4582"><cell startpos="43:1-950" endpos="45:157-1119"><div class="cell-content"><h3 id="testing">Testing</h3><p><del>Current REPL results in script execution from cross-origin? Due to data:uri</del> was resolving the raw event from postMessage not <code>ev.data</code> which is necessary.</p></div></cell><cell startpos="47:1-1121" endpos="65:4-1697" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
+</code></pre></output></codecell></div></cell><section depth="3" class="" startpos="43:1-950" endpos="129:4-4815"><cell startpos="43:1-950" endpos="45:157-1119"><div class="cell-content"><h3 id="testing">Testing</h3><p><del>Current REPL results in script execution from cross-origin? Due to data:uri</del> was resolving the raw event from postMessage not <code>ev.data</code> which is necessary.</p></div></cell><cell startpos="47:1-1121" endpos="65:4-1697" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
   let myWorker;
   try {
     myWorker = new Worker(&#x27;worker.js&#x27;)
@@ -42,9 +42,9 @@ console.log(&quot;anyone here?&quot;)
   }
   
 })
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">25 minutes ago</span></span></span><output><pre><code class="txt">{ msg: &#x27;worker.onerror: ReferenceError: Can\&#x27;t find variable: document (https://dotlit.org/web.bundle.js:68421)&#x27;,
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">54 seconds ago</span></span></span><output><pre><code class="txt">{ msg: &#x27;worker.onerror: ReferenceError: Can\&#x27;t find variable: document (https://dotlit.org/web.bundle.js:68421)&#x27;,
   err: { isTrusted: [Getter] } }
-</code></pre></output></codecell></div></cell><cell startpos="67:1-1699" endpos="129:4-4582" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt;{
+</code></pre></output></codecell></div></cell><cell startpos="67:1-1699" endpos="129:4-4815" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt;{
    const url = &quot;https://dotlit.org/web.bundle.js&quot;
    const lineno = 68421
    const spread = 20
@@ -61,46 +61,46 @@ console.log(&quot;anyone here?&quot;)
            }).slice(lineno - spread, lineno + spread).join(&quot;\n&quot;)
 })()
 
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">15 minutes ago</span></span></span><output><pre><code class="txt">200
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">7.6 hours ago</span></span></span><output><pre><code class="txt">200
 227914,lines
-/* harmony export */   &quot;highlightSpecialChars&quot;: () =&gt; (/* binding */ highlightSpecialChars),
-/* harmony export */   &quot;keymap&quot;: () =&gt; (/* binding */ keymap),
-/* harmony export */   &quot;logException&quot;: () =&gt; (/* binding */ logException),
-/* harmony export */   &quot;placeholder&quot;: () =&gt; (/* binding */ placeholder),
-/* harmony export */   &quot;runScopeHandlers&quot;: () =&gt; (/* binding */ runScopeHandlers)
-/* harmony export */ });
-/* harmony import */ var _codemirror_state__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @codemirror/state */ &quot;./node_modules/@codemirror/state/dist/index.js&quot;);
-/* harmony import */ var _codemirror_text__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @codemirror/text */ &quot;./node_modules/@codemirror/text/dist/index.js&quot;);
-/* harmony import */ var style_mod__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! style-mod */ &quot;./node_modules/style-mod/src/style-mod.js&quot;);
-/* harmony import */ var _codemirror_rangeset__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @codemirror/rangeset */ &quot;./node_modules/@codemirror/rangeset/dist/index.js&quot;);
-/* harmony import */ var w3c_keyname__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! w3c-keyname */ &quot;./node_modules/w3c-keyname/index.es.js&quot;);
-
-
-
-
-
-
-
-let [nav, doc] = typeof navigator != &quot;undefined&quot;
-&gt;&gt;&gt;     ? [navigator, document]
-    : [{ userAgent: &quot;&quot;, vendor: &quot;&quot;, platform: &quot;&quot; }, { documentElement: { style: {} } }];
-const ie_edge = /Edge\/(\d+)/.exec(nav.userAgent);
-const ie_upto10 = /MSIE \d/.test(nav.userAgent);
-const ie_11up = /Trident\/(?:[7-9]|\d{2,})\..*rv:(\d+)/.exec(nav.userAgent);
-const ie = !!(ie_upto10 || ie_11up || ie_edge);
-const gecko = !ie &amp;&amp; /gecko\/(\d+)/i.test(nav.userAgent);
-const chrome = !ie &amp;&amp; /Chrome\/(\d+)/.exec(nav.userAgent);
-const webkit = &quot;webkitFontSmoothing&quot; in doc.documentElement.style;
-const safari = !ie &amp;&amp; /Apple Computer/.test(nav.vendor);
-var browser = {
-    mac: /Mac/.test(nav.platform),
-    ie,
-    ie_version: ie_upto10 ? doc.documentMode || 6 : ie_11up ? +ie_11up[1] : ie_edge ? +ie_edge[1] : 0,
-    gecko,
-    gecko_version: gecko ? +(/Firefox\/(\d+)/.exec(nav.userAgent) || [0, 0])[1] : 0,
-    chrome: !!chrome,
-    chrome_version: chrome ? +chrome[1] : 0,
-    ios: safari &amp;&amp; (/Mobile\/\w+/.test(nav.userAgent) || nav.maxTouchPoints &gt; 2),
-    android: /Android\b/.test(nav.userAgent),
-    webkit,
+68401 /* harmony export */   &quot;highlightSpecialChars&quot;: () =&gt; (/* binding */ highlightSpecialChars),
+68402 /* harmony export */   &quot;keymap&quot;: () =&gt; (/* binding */ keymap),
+68403 /* harmony export */   &quot;logException&quot;: () =&gt; (/* binding */ logException),
+68404 /* harmony export */   &quot;placeholder&quot;: () =&gt; (/* binding */ placeholder),
+68405 /* harmony export */   &quot;runScopeHandlers&quot;: () =&gt; (/* binding */ runScopeHandlers)
+68406 /* harmony export */ });
+68407 /* harmony import */ var _codemirror_state__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @codemirror/state */ &quot;./node_modules/@codemirror/state/dist/index.js&quot;);
+68408 /* harmony import */ var _codemirror_text__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @codemirror/text */ &quot;./node_modules/@codemirror/text/dist/index.js&quot;);
+68409 /* harmony import */ var style_mod__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! style-mod */ &quot;./node_modules/style-mod/src/style-mod.js&quot;);
+68410 /* harmony import */ var _codemirror_rangeset__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @codemirror/rangeset */ &quot;./node_modules/@codemirror/rangeset/dist/index.js&quot;);
+68411 /* harmony import */ var w3c_keyname__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! w3c-keyname */ &quot;./node_modules/w3c-keyname/index.es.js&quot;);
+68412 
+68413 
+68414 
+68415 
+68416 
+68417 
+68418 
+68419 let [nav, doc] = typeof navigator != &quot;undefined&quot;
+&gt;&gt;&gt;    ? [navigator, document]
+68421     : [{ userAgent: &quot;&quot;, vendor: &quot;&quot;, platform: &quot;&quot; }, { documentElement: { style: {} } }];
+68422 const ie_edge = /Edge\/(\d+)/.exec(nav.userAgent);
+68423 const ie_upto10 = /MSIE \d/.test(nav.userAgent);
+68424 const ie_11up = /Trident\/(?:[7-9]|\d{2,})\..*rv:(\d+)/.exec(nav.userAgent);
+68425 const ie = !!(ie_upto10 || ie_11up || ie_edge);
+68426 const gecko = !ie &amp;&amp; /gecko\/(\d+)/i.test(nav.userAgent);
+68427 const chrome = !ie &amp;&amp; /Chrome\/(\d+)/.exec(nav.userAgent);
+68428 const webkit = &quot;webkitFontSmoothing&quot; in doc.documentElement.style;
+68429 const safari = !ie &amp;&amp; /Apple Computer/.test(nav.vendor);
+68430 var browser = {
+68431     mac: /Mac/.test(nav.platform),
+68432     ie,
+68433     ie_version: ie_upto10 ? doc.documentMode || 6 : ie_11up ? +ie_11up[1] : ie_edge ? +ie_edge[1] : 0,
+68434     gecko,
+68435     gecko_version: gecko ? +(/Firefox\/(\d+)/.exec(nav.userAgent) || [0, 0])[1] : 0,
+68436     chrome: !!chrome,
+68437     chrome_version: chrome ? +chrome[1] : 0,
+68438     ios: safari &amp;&amp; (/Mobile\/\w+/.test(nav.userAgent) || nav.maxTouchPoints &gt; 2),
+68439     android: /Android\b/.test(nav.userAgent),
+68440     webkit,
 </code></pre></output></codecell></div></cell></section></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="Title TBD (testing/serviceworker.lit)" href="/testing/serviceworker.html">Title TBD (testing/serviceworker.lit)</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
