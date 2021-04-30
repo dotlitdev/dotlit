@@ -8,7 +8,7 @@ import footnotes from 'remark-footnotes'
 import gfm from 'remark-gfm'
 import { wikiLinkPlugin } from 'remark-wiki-link'
 import { select, selectAll } from 'unist-util-select'
-import toString from 'mdast-util-to-string'
+import { toString } from 'mdast-util-to-string'
 
 import {sections, groupIntoSections, ungroupSections} from './sections'
 import litcodeblocks from './codeblocks'
