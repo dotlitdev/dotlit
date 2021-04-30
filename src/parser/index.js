@@ -38,10 +38,16 @@ const baseProcessor = ({litroot, files} = {}) => {
     // Extact title
     .use((...args) => (tree,file) => {
         if(!file.data.frontmatter || !file.data.frontmatter.title) {
+           console.log("no title in frontmatter, extracting")
            file.data = file.data || {}
            file.data.frontmatter = file.data.frontmatter || {}
            const heading = select('heading', tree)
-           if (heading) file.data.frontmatter.title = toString(heading)
+           console.log("Found heading:", heading)
+           if (heading) {
+               const title = toString(heading)
+               console.log("As text: ", title)
+               file.data.frontmatter.title = title
+           }
         }
     },{})
 
