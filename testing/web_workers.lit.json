@@ -805,9 +805,9 @@
                                     "offset": 307
                                 },
                                 "end": {
-                                    "line": 292,
+                                    "line": 102,
                                     "column": 4,
-                                    "offset": 12506
+                                    "offset": 2798
                                 }
                             }
                         }
@@ -1023,9 +1023,9 @@
                                     "offset": 307
                                 },
                                 "end": {
-                                    "line": 292,
+                                    "line": 102,
                                     "column": 4,
-                                    "offset": 12506
+                                    "offset": 2798
                                 }
                             }
                         }
@@ -1215,9 +1215,9 @@
                                             "offset": 1050
                                         },
                                         "end": {
-                                            "line": 292,
+                                            "line": 102,
                                             "column": 4,
-                                            "offset": 12506
+                                            "offset": 2798
                                         }
                                     }
                                 }
@@ -1484,9 +1484,9 @@
                                     "offset": 1799
                                 },
                                 "end": {
-                                    "line": 292,
+                                    "line": 102,
                                     "column": 4,
-                                    "offset": 12506
+                                    "offset": 2798
                                 }
                             },
                             "data": {
@@ -1500,7 +1500,7 @@
                                     "type": "code",
                                     "lang": "js",
                                     "meta": null,
-                                    "value": "return (async fn =>{\n   const url = \"https://dotlit.org/web.bundle.js\"\n   const lineno = 68421\n   const spread = 100\n   const resp = await fetch(url)\n   console.log(resp.status)\n   const val = await resp.text()\n   const lines = val.split(\"\\n\")\n   console.log(lines.length, \"lines\")\n\n   \n   return lines.map((l,i) => {\n           if (i ===lineno-1) return \">>>\" + l\n           else return \"\" + i + \" \" + l\n           }).slice(lineno - spread, lineno + spread).join(\"\\n\")\n})()\n",
+                                    "value": "return (async fn =>{\n   const url = \"https://dotlit.org/web.bundle.js\"\n   const lineno = 68421\n   const spread = 5\n   const resp = await fetch(url)\n   console.log(resp.status)\n   const val = await resp.text()\n   const lines = val.split(\"\\n\")\n   console.log(lines.length, \"lines\")\n\n   \n   return lines.map((l,i) => {\n           if (i ===lineno-1) return \">>>\" + l\n           else return \"\" + i + \" \" + l\n           }).slice(lineno - spread, lineno + spread).join(\"\\n\")\n})()\n",
                                     "position": {
                                         "start": {
                                             "line": 70,
@@ -1508,9 +1508,9 @@
                                             "offset": 1799
                                         },
                                         "end": {
-                                            "line": 292,
+                                            "line": 102,
                                             "column": 4,
-                                            "offset": 12506
+                                            "offset": 2798
                                         }
                                     },
                                     "data": {
@@ -1538,48 +1538,48 @@
                                 {
                                     "type": "code",
                                     "lang": ">txt",
-                                    "meta": "attached=true updated=1619771321825",
-                                    "value": "200\n227913,lines\n68321     range.setEnd(toDOM.node, toDOM.offset);\n68322     range.setStart(fromDOM.node, fromDOM.offset);\n68323     let rects = range.getClientRects();\n68324     range.detach();\n68325     for (let i = 0; i < rects.length; i++) {\n68326         let rect = rects[i];\n68327         let dist = Math.max(rect.top - y, y - rect.bottom, rect.left - x, x - rect.right);\n68328         if (dist <= margin)\n68329             return true;\n68330     }\n68331     return false;\n68332 }\n68333 /// Enable a hover tooltip, which shows up when the pointer hovers\n68334 /// over ranges of text. The callback is called when the mouse hovers\n68335 /// over the document text. It should, if there is a tooltip\n68336 /// associated with position `pos` return the tooltip description\n68337 /// (either directly or in a promise). The `side` argument indicates\n68338 /// on which side of the position the pointer is—it will be -1 if the\n68339 /// pointer is before the position, 1 if after the position.\n68340 function hoverTooltip(source, options = {}) {\n68341     const setHover = _codemirror_state__WEBPACK_IMPORTED_MODULE_1__.StateEffect.define();\n68342     const hoverState = _codemirror_state__WEBPACK_IMPORTED_MODULE_1__.StateField.define({\n68343         create() { return null; },\n68344         update(value, tr) {\n68345             if (value && (options.hideOnChange && (tr.docChanged || tr.selection)))\n68346                 return null;\n68347             for (let effect of tr.effects)\n68348                 if (effect.is(setHover))\n68349                     return effect.value;\n68350             if (value && tr.docChanged) {\n68351                 let newPos = tr.changes.mapPos(value.pos, -1, _codemirror_state__WEBPACK_IMPORTED_MODULE_1__.MapMode.TrackDel);\n68352                 if (newPos == null)\n68353                     return null;\n68354                 let copy = Object.assign(Object.create(null), value);\n68355                 copy.pos = newPos;\n68356                 if (value.end != null)\n68357                     copy.end = tr.changes.mapPos(value.end);\n68358                 return copy;\n68359             }\n68360             return value;\n68361         },\n68362         provide: f => showTooltip.computeN([f], s => { let val = s.field(f); return val ? [val] : []; })\n68363     });\n68364     return [\n68365         hoverState,\n68366         _codemirror_view__WEBPACK_IMPORTED_MODULE_0__.ViewPlugin.define(view => new HoverPlugin(view, source, hoverState, setHover)),\n68367         tooltips()\n68368     ];\n68369 }\n68370 \n68371 \n68372 \n68373 \n68374 /***/ }),\n68375 \n68376 /***/ \"./node_modules/@codemirror/view/dist/index.js\":\n68377 /*!*****************************************************!*\\\n68378   !*** ./node_modules/@codemirror/view/dist/index.js ***!\n68379   \\*****************************************************/\n68380 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {\n68381 \n68382 \"use strict\";\n68383 __webpack_require__.r(__webpack_exports__);\n68384 /* harmony export */ __webpack_require__.d(__webpack_exports__, {\n68385 /* harmony export */   \"Range\": () => (/* reexport safe */ _codemirror_rangeset__WEBPACK_IMPORTED_MODULE_1__.Range),\n68386 /* harmony export */   \"BidiSpan\": () => (/* binding */ BidiSpan),\n68387 /* harmony export */   \"BlockInfo\": () => (/* binding */ BlockInfo),\n68388 /* harmony export */   \"BlockType\": () => (/* binding */ BlockType),\n68389 /* harmony export */   \"Decoration\": () => (/* binding */ Decoration),\n68390 /* harmony export */   \"Direction\": () => (/* binding */ Direction),\n68391 /* harmony export */   \"EditorView\": () => (/* binding */ EditorView),\n68392 /* harmony export */   \"MatchDecorator\": () => (/* binding */ MatchDecorator),\n68393 /* harmony export */   \"PluginField\": () => (/* binding */ PluginField),\n68394 /* harmony export */   \"PluginFieldProvider\": () => (/* binding */ PluginFieldProvider),\n68395 /* harmony export */   \"ViewPlugin\": () => (/* binding */ ViewPlugin),\n68396 /* harmony export */   \"ViewUpdate\": () => (/* binding */ ViewUpdate),\n68397 /* harmony export */   \"WidgetType\": () => (/* binding */ WidgetType),\n68398 /* harmony export */   \"__test\": () => (/* binding */ __test),\n68399 /* harmony export */   \"drawSelection\": () => (/* binding */ drawSelection),\n68400 /* harmony export */   \"highlightActiveLine\": () => (/* binding */ highlightActiveLine),\n68401 /* harmony export */   \"highlightSpecialChars\": () => (/* binding */ highlightSpecialChars),\n68402 /* harmony export */   \"keymap\": () => (/* binding */ keymap),\n68403 /* harmony export */   \"logException\": () => (/* binding */ logException),\n68404 /* harmony export */   \"placeholder\": () => (/* binding */ placeholder),\n68405 /* harmony export */   \"runScopeHandlers\": () => (/* binding */ runScopeHandlers)\n68406 /* harmony export */ });\n68407 /* harmony import */ var _codemirror_state__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @codemirror/state */ \"./node_modules/@codemirror/state/dist/index.js\");\n68408 /* harmony import */ var _codemirror_text__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @codemirror/text */ \"./node_modules/@codemirror/text/dist/index.js\");\n68409 /* harmony import */ var style_mod__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! style-mod */ \"./node_modules/style-mod/src/style-mod.js\");\n68410 /* harmony import */ var _codemirror_rangeset__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @codemirror/rangeset */ \"./node_modules/@codemirror/rangeset/dist/index.js\");\n68411 /* harmony import */ var w3c_keyname__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! w3c-keyname */ \"./node_modules/w3c-keyname/index.es.js\");\n68412 \n68413 \n68414 \n68415 \n68416 \n68417 \n68418 \n68419 let [nav, doc] = typeof navigator != \"undefined\"\n>>>    ? [navigator, document]\n68421     : [{ userAgent: \"\", vendor: \"\", platform: \"\" }, { documentElement: { style: {} } }];\n68422 const ie_edge = /Edge\\/(\\d+)/.exec(nav.userAgent);\n68423 const ie_upto10 = /MSIE \\d/.test(nav.userAgent);\n68424 const ie_11up = /Trident\\/(?:[7-9]|\\d{2,})\\..*rv:(\\d+)/.exec(nav.userAgent);\n68425 const ie = !!(ie_upto10 || ie_11up || ie_edge);\n68426 const gecko = !ie && /gecko\\/(\\d+)/i.test(nav.userAgent);\n68427 const chrome = !ie && /Chrome\\/(\\d+)/.exec(nav.userAgent);\n68428 const webkit = \"webkitFontSmoothing\" in doc.documentElement.style;\n68429 const safari = !ie && /Apple Computer/.test(nav.vendor);\n68430 var browser = {\n68431     mac: /Mac/.test(nav.platform),\n68432     ie,\n68433     ie_version: ie_upto10 ? doc.documentMode || 6 : ie_11up ? +ie_11up[1] : ie_edge ? +ie_edge[1] : 0,\n68434     gecko,\n68435     gecko_version: gecko ? +(/Firefox\\/(\\d+)/.exec(nav.userAgent) || [0, 0])[1] : 0,\n68436     chrome: !!chrome,\n68437     chrome_version: chrome ? +chrome[1] : 0,\n68438     ios: safari && (/Mobile\\/\\w+/.test(nav.userAgent) || nav.maxTouchPoints > 2),\n68439     android: /Android\\b/.test(nav.userAgent),\n68440     webkit,\n68441     safari,\n68442     webkit_version: webkit ? +(/\\bAppleWebKit\\/(\\d+)/.exec(navigator.userAgent) || [0, 0])[1] : 0,\n68443     tabSize: doc.documentElement.style.tabSize != null ? \"tab-size\" : \"-moz-tab-size\"\n68444 };\n68445 \n68446 function getSelection(root) {\n68447     return (root.getSelection ? root.getSelection() : document.getSelection());\n68448 }\n68449 // Work around Chrome issue https://bugs.chromium.org/p/chromium/issues/detail?id=447523\n68450 // (isCollapsed inappropriately returns true in shadow dom)\n68451 function selectionCollapsed(domSel) {\n68452     let collapsed = domSel.isCollapsed;\n68453     if (collapsed && browser.chrome && domSel.rangeCount && !domSel.getRangeAt(0).collapsed)\n68454         collapsed = false;\n68455     return collapsed;\n68456 }\n68457 function hasSelection(dom, selection) {\n68458     if (!selection.anchorNode)\n68459         return false;\n68460     try {\n68461         // Firefox will raise 'permission denied' errors when accessing\n68462         // properties of `sel.anchorNode` when it's in a generated CSS\n68463         // element.\n68464         return dom.contains(selection.anchorNode.nodeType == 3 ? selection.anchorNode.parentNode : selection.anchorNode);\n68465     }\n68466     catch (_) {\n68467         return false;\n68468     }\n68469 }\n68470 function clientRectsFor(dom) {\n68471     if (dom.nodeType == 3) {\n68472         let range = tempRange();\n68473         range.setEnd(dom, dom.nodeValue.length);\n68474         range.setStart(dom, 0);\n68475         return range.getClientRects();\n68476     }\n68477     else if (dom.nodeType == 1) {\n68478         return dom.getClientRects();\n68479     }\n68480     else {\n68481         return [];\n68482     }\n68483 }\n68484 // Scans forward and backward through DOM positions equivalent to the\n68485 // given one to see if the two are in the same place (i.e. after a\n68486 // text node vs at the end of that text node)\n68487 function isEquivalentPosition(node, off, targetNode, targetOff) {\n68488     return targetNode ? (scanFor(node, off, targetNode, targetOff, -1) ||\n68489         scanFor(node, off, targetNode, targetOff, 1)) : false;\n68490 }\n68491 function domIndex(node) {\n68492     for (var index = 0;; index++) {\n68493         node = node.previousSibling;\n68494         if (!node)\n68495             return index;\n68496     }\n68497 }\n68498 function scanFor(node, off, targetNode, targetOff, dir) {\n68499     for (;;) {\n68500         if (node == targetNode && off == targetOff)\n68501             return true;\n68502         if (off == (dir < 0 ? 0 : maxOffset(node))) {\n68503             if (node.nodeName == \"DIV\")\n68504                 return false;\n68505             let parent = node.parentNode;\n68506             if (!parent || parent.nodeType != 1)\n68507                 return false;\n68508             off = domIndex(node) + (dir < 0 ? 0 : 1);\n68509             node = parent;\n68510         }\n68511         else if (node.nodeType == 1) {\n68512             node = node.childNodes[off + (dir < 0 ? -1 : 0)];\n68513             off = dir < 0 ? maxOffset(node) : 0;\n68514         }\n68515         else {\n68516             return false;\n68517         }\n68518     }\n68519 }\n68520 function maxOffset(node) {",
+                                    "meta": "attached=true updated=1619782028606",
+                                    "value": "200\n227913,lines\n68416 \n68417 \n68418 \n68419 let [nav, doc] = typeof navigator != \"undefined\"\n>>>    ? [navigator, document]\n68421     : [{ userAgent: \"\", vendor: \"\", platform: \"\" }, { documentElement: { style: {} } }];\n68422 const ie_edge = /Edge\\/(\\d+)/.exec(nav.userAgent);\n68423 const ie_upto10 = /MSIE \\d/.test(nav.userAgent);\n68424 const ie_11up = /Trident\\/(?:[7-9]|\\d{2,})\\..*rv:(\\d+)/.exec(nav.userAgent);\n68425 const ie = !!(ie_upto10 || ie_11up || ie_edge);",
                                     "position": {
                                         "start": {
                                             "line": 89,
                                             "column": 1,
-                                            "offset": 2285
+                                            "offset": 2283
                                         },
                                         "end": {
-                                            "line": 292,
+                                            "line": 102,
                                             "column": 4,
-                                            "offset": 12506
+                                            "offset": 2798
                                         }
                                     },
                                     "data": {
                                         "meta": {
                                             "attrs": {
                                                 "attached": "true",
-                                                "updated": "1619771321825"
+                                                "updated": "1619782028606"
                                             },
                                             "lang": "txt",
                                             "attached": "true",
-                                            "updated": "1619771321825",
+                                            "updated": "1619782028606",
                                             "isOutput": true,
                                             "hasOutput": false,
                                             "hasSource": false,
-                                            "raw": ">txt attached=true updated=1619771321825"
+                                            "raw": ">txt attached=true updated=1619782028606"
                                         },
                                         "hProperties": {
                                             "className": "",
                                             "meta": {
                                                 "attrs": {
                                                     "attached": "true",
-                                                    "updated": "1619771321825"
+                                                    "updated": "1619782028606"
                                                 },
                                                 "lang": "txt",
                                                 "attached": "true",
-                                                "updated": "1619771321825",
+                                                "updated": "1619782028606",
                                                 "isOutput": true,
                                                 "hasOutput": false,
                                                 "hasSource": false,
-                                                "raw": ">txt attached=true updated=1619771321825"
+                                                "raw": ">txt attached=true updated=1619782028606"
                                             }
                                         }
                                     }
@@ -1594,9 +1594,9 @@
                             "offset": 1050
                         },
                         "end": {
-                            "line": 292,
+                            "line": 102,
                             "column": 4,
-                            "offset": 12506
+                            "offset": 2798
                         }
                     }
                 }
@@ -1608,9 +1608,9 @@
                     "offset": 307
                 },
                 "end": {
-                    "line": 292,
+                    "line": 102,
                     "column": 4,
-                    "offset": 12506
+                    "offset": 2798
                 }
             }
         }
@@ -1622,9 +1622,9 @@
             "offset": 0
         },
         "end": {
-            "line": 296,
+            "line": 106,
             "column": 1,
-            "offset": 12510
+            "offset": 2802
         }
     }
 }

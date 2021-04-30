@@ -16,7 +16,7 @@
 <section depth="2" class="" startpos="8:1-165" endpos="17:4-305"><cell startpos="8:1-165" endpos="8:11-175"><div class="cell-content"><h2 id="support">Support</h2></div></cell><cell startpos="12:1-179" endpos="17:4-305" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return `Worker supported: ${!!window.Worker}`
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.5 days ago</span></span></span><output><pre><code class="txt">Worker supported: true
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="19:1-307" endpos="292:4-12506"><cell startpos="19:1-307" endpos="19:18-324"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="20:1-325" endpos="27:4-563" class="code output"><div class="cell-content"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">// gross hack around one of codemirror/view bugs
+<section depth="2" class="" startpos="19:1-307" endpos="102:4-2798"><cell startpos="19:1-307" endpos="19:18-324"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="20:1-325" endpos="27:4-563" class="code output"><div class="cell-content"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">// gross hack around one of codemirror/view bugs
 let document = { documentElement: { style: {} } }
 
 importScripts(&#x27;../web.bundle.js&#x27;)
@@ -32,7 +32,7 @@ console.log(&quot;anyone here?&quot;)
 importScripts(&#x27;../web.bundle.js&#x27;)
 postMessage(&quot;dotlit: &quot; + typeof dotlit)
 console.log(&quot;anyone here?&quot;)
-</code></pre></output></codecell></div></cell><section depth="3" class="" startpos="46:1-1050" endpos="292:4-12506"><cell startpos="46:1-1050" endpos="48:157-1219"><div class="cell-content"><h3 id="testing">Testing</h3><p><del>Current REPL results in script execution from cross-origin? Due to data:uri</del> was resolving the raw event from postMessage not <code>ev.data</code> which is necessary.</p></div></cell><cell startpos="50:1-1221" endpos="68:4-1797" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
+</code></pre></output></codecell></div></cell><section depth="3" class="" startpos="46:1-1050" endpos="102:4-2798"><cell startpos="46:1-1050" endpos="48:157-1219"><div class="cell-content"><h3 id="testing">Testing</h3><p><del>Current REPL results in script execution from cross-origin? Due to data:uri</del> was resolving the raw event from postMessage not <code>ev.data</code> which is necessary.</p></div></cell><cell startpos="50:1-1221" endpos="68:4-1797" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
   let myWorker;
   try {
     myWorker = new Worker(&#x27;worker.js&#x27;)
@@ -45,12 +45,12 @@ console.log(&quot;anyone here?&quot;)
   }
   
 })
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">9 minutes ago</span></span></span><output><pre><code class="txt">{ msg: &#x27;worker.onerror: ReferenceError: Can\&#x27;t find variable: document (https://dotlit.org/web.bundle.js:68421)&#x27;,
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">11 minutes ago</span></span></span><output><pre><code class="txt">{ msg: &#x27;worker.onerror: ReferenceError: Can\&#x27;t find variable: document (https://dotlit.org/web.bundle.js:68421)&#x27;,
   err: { isTrusted: [Getter] } }
-</code></pre></output></codecell></div></cell><cell startpos="70:1-1799" endpos="292:4-12506" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt;{
+</code></pre></output></codecell></div></cell><cell startpos="70:1-1799" endpos="102:4-2798" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt;{
    const url = &quot;https://dotlit.org/web.bundle.js&quot;
    const lineno = 68421
-   const spread = 100
+   const spread = 5
    const resp = await fetch(url)
    console.log(resp.status)
    const val = await resp.text()
@@ -64,103 +64,8 @@ console.log(&quot;anyone here?&quot;)
            }).slice(lineno - spread, lineno + spread).join(&quot;\n&quot;)
 })()
 
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">3.0 hours ago</span></span></span><output><pre><code class="txt">200
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">50 seconds ago</span></span></span><output><pre><code class="txt">200
 227913,lines
-68321     range.setEnd(toDOM.node, toDOM.offset);
-68322     range.setStart(fromDOM.node, fromDOM.offset);
-68323     let rects = range.getClientRects();
-68324     range.detach();
-68325     for (let i = 0; i &lt; rects.length; i++) {
-68326         let rect = rects[i];
-68327         let dist = Math.max(rect.top - y, y - rect.bottom, rect.left - x, x - rect.right);
-68328         if (dist &lt;= margin)
-68329             return true;
-68330     }
-68331     return false;
-68332 }
-68333 /// Enable a hover tooltip, which shows up when the pointer hovers
-68334 /// over ranges of text. The callback is called when the mouse hovers
-68335 /// over the document text. It should, if there is a tooltip
-68336 /// associated with position `pos` return the tooltip description
-68337 /// (either directly or in a promise). The `side` argument indicates
-68338 /// on which side of the position the pointer is—it will be -1 if the
-68339 /// pointer is before the position, 1 if after the position.
-68340 function hoverTooltip(source, options = {}) {
-68341     const setHover = _codemirror_state__WEBPACK_IMPORTED_MODULE_1__.StateEffect.define();
-68342     const hoverState = _codemirror_state__WEBPACK_IMPORTED_MODULE_1__.StateField.define({
-68343         create() { return null; },
-68344         update(value, tr) {
-68345             if (value &amp;&amp; (options.hideOnChange &amp;&amp; (tr.docChanged || tr.selection)))
-68346                 return null;
-68347             for (let effect of tr.effects)
-68348                 if (effect.is(setHover))
-68349                     return effect.value;
-68350             if (value &amp;&amp; tr.docChanged) {
-68351                 let newPos = tr.changes.mapPos(value.pos, -1, _codemirror_state__WEBPACK_IMPORTED_MODULE_1__.MapMode.TrackDel);
-68352                 if (newPos == null)
-68353                     return null;
-68354                 let copy = Object.assign(Object.create(null), value);
-68355                 copy.pos = newPos;
-68356                 if (value.end != null)
-68357                     copy.end = tr.changes.mapPos(value.end);
-68358                 return copy;
-68359             }
-68360             return value;
-68361         },
-68362         provide: f =&gt; showTooltip.computeN([f], s =&gt; { let val = s.field(f); return val ? [val] : []; })
-68363     });
-68364     return [
-68365         hoverState,
-68366         _codemirror_view__WEBPACK_IMPORTED_MODULE_0__.ViewPlugin.define(view =&gt; new HoverPlugin(view, source, hoverState, setHover)),
-68367         tooltips()
-68368     ];
-68369 }
-68370 
-68371 
-68372 
-68373 
-68374 /***/ }),
-68375 
-68376 /***/ &quot;./node_modules/@codemirror/view/dist/index.js&quot;:
-68377 /*!*****************************************************!*\
-68378   !*** ./node_modules/@codemirror/view/dist/index.js ***!
-68379   \*****************************************************/
-68380 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) =&gt; {
-68381 
-68382 &quot;use strict&quot;;
-68383 __webpack_require__.r(__webpack_exports__);
-68384 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-68385 /* harmony export */   &quot;Range&quot;: () =&gt; (/* reexport safe */ _codemirror_rangeset__WEBPACK_IMPORTED_MODULE_1__.Range),
-68386 /* harmony export */   &quot;BidiSpan&quot;: () =&gt; (/* binding */ BidiSpan),
-68387 /* harmony export */   &quot;BlockInfo&quot;: () =&gt; (/* binding */ BlockInfo),
-68388 /* harmony export */   &quot;BlockType&quot;: () =&gt; (/* binding */ BlockType),
-68389 /* harmony export */   &quot;Decoration&quot;: () =&gt; (/* binding */ Decoration),
-68390 /* harmony export */   &quot;Direction&quot;: () =&gt; (/* binding */ Direction),
-68391 /* harmony export */   &quot;EditorView&quot;: () =&gt; (/* binding */ EditorView),
-68392 /* harmony export */   &quot;MatchDecorator&quot;: () =&gt; (/* binding */ MatchDecorator),
-68393 /* harmony export */   &quot;PluginField&quot;: () =&gt; (/* binding */ PluginField),
-68394 /* harmony export */   &quot;PluginFieldProvider&quot;: () =&gt; (/* binding */ PluginFieldProvider),
-68395 /* harmony export */   &quot;ViewPlugin&quot;: () =&gt; (/* binding */ ViewPlugin),
-68396 /* harmony export */   &quot;ViewUpdate&quot;: () =&gt; (/* binding */ ViewUpdate),
-68397 /* harmony export */   &quot;WidgetType&quot;: () =&gt; (/* binding */ WidgetType),
-68398 /* harmony export */   &quot;__test&quot;: () =&gt; (/* binding */ __test),
-68399 /* harmony export */   &quot;drawSelection&quot;: () =&gt; (/* binding */ drawSelection),
-68400 /* harmony export */   &quot;highlightActiveLine&quot;: () =&gt; (/* binding */ highlightActiveLine),
-68401 /* harmony export */   &quot;highlightSpecialChars&quot;: () =&gt; (/* binding */ highlightSpecialChars),
-68402 /* harmony export */   &quot;keymap&quot;: () =&gt; (/* binding */ keymap),
-68403 /* harmony export */   &quot;logException&quot;: () =&gt; (/* binding */ logException),
-68404 /* harmony export */   &quot;placeholder&quot;: () =&gt; (/* binding */ placeholder),
-68405 /* harmony export */   &quot;runScopeHandlers&quot;: () =&gt; (/* binding */ runScopeHandlers)
-68406 /* harmony export */ });
-68407 /* harmony import */ var _codemirror_state__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @codemirror/state */ &quot;./node_modules/@codemirror/state/dist/index.js&quot;);
-68408 /* harmony import */ var _codemirror_text__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @codemirror/text */ &quot;./node_modules/@codemirror/text/dist/index.js&quot;);
-68409 /* harmony import */ var style_mod__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! style-mod */ &quot;./node_modules/style-mod/src/style-mod.js&quot;);
-68410 /* harmony import */ var _codemirror_rangeset__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @codemirror/rangeset */ &quot;./node_modules/@codemirror/rangeset/dist/index.js&quot;);
-68411 /* harmony import */ var w3c_keyname__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! w3c-keyname */ &quot;./node_modules/w3c-keyname/index.es.js&quot;);
-68412 
-68413 
-68414 
-68415 
 68416 
 68417 
 68418 
@@ -171,99 +76,4 @@ console.log(&quot;anyone here?&quot;)
 68423 const ie_upto10 = /MSIE \d/.test(nav.userAgent);
 68424 const ie_11up = /Trident\/(?:[7-9]|\d{2,})\..*rv:(\d+)/.exec(nav.userAgent);
 68425 const ie = !!(ie_upto10 || ie_11up || ie_edge);
-68426 const gecko = !ie &amp;&amp; /gecko\/(\d+)/i.test(nav.userAgent);
-68427 const chrome = !ie &amp;&amp; /Chrome\/(\d+)/.exec(nav.userAgent);
-68428 const webkit = &quot;webkitFontSmoothing&quot; in doc.documentElement.style;
-68429 const safari = !ie &amp;&amp; /Apple Computer/.test(nav.vendor);
-68430 var browser = {
-68431     mac: /Mac/.test(nav.platform),
-68432     ie,
-68433     ie_version: ie_upto10 ? doc.documentMode || 6 : ie_11up ? +ie_11up[1] : ie_edge ? +ie_edge[1] : 0,
-68434     gecko,
-68435     gecko_version: gecko ? +(/Firefox\/(\d+)/.exec(nav.userAgent) || [0, 0])[1] : 0,
-68436     chrome: !!chrome,
-68437     chrome_version: chrome ? +chrome[1] : 0,
-68438     ios: safari &amp;&amp; (/Mobile\/\w+/.test(nav.userAgent) || nav.maxTouchPoints &gt; 2),
-68439     android: /Android\b/.test(nav.userAgent),
-68440     webkit,
-68441     safari,
-68442     webkit_version: webkit ? +(/\bAppleWebKit\/(\d+)/.exec(navigator.userAgent) || [0, 0])[1] : 0,
-68443     tabSize: doc.documentElement.style.tabSize != null ? &quot;tab-size&quot; : &quot;-moz-tab-size&quot;
-68444 };
-68445 
-68446 function getSelection(root) {
-68447     return (root.getSelection ? root.getSelection() : document.getSelection());
-68448 }
-68449 // Work around Chrome issue https://bugs.chromium.org/p/chromium/issues/detail?id=447523
-68450 // (isCollapsed inappropriately returns true in shadow dom)
-68451 function selectionCollapsed(domSel) {
-68452     let collapsed = domSel.isCollapsed;
-68453     if (collapsed &amp;&amp; browser.chrome &amp;&amp; domSel.rangeCount &amp;&amp; !domSel.getRangeAt(0).collapsed)
-68454         collapsed = false;
-68455     return collapsed;
-68456 }
-68457 function hasSelection(dom, selection) {
-68458     if (!selection.anchorNode)
-68459         return false;
-68460     try {
-68461         // Firefox will raise &#x27;permission denied&#x27; errors when accessing
-68462         // properties of `sel.anchorNode` when it&#x27;s in a generated CSS
-68463         // element.
-68464         return dom.contains(selection.anchorNode.nodeType == 3 ? selection.anchorNode.parentNode : selection.anchorNode);
-68465     }
-68466     catch (_) {
-68467         return false;
-68468     }
-68469 }
-68470 function clientRectsFor(dom) {
-68471     if (dom.nodeType == 3) {
-68472         let range = tempRange();
-68473         range.setEnd(dom, dom.nodeValue.length);
-68474         range.setStart(dom, 0);
-68475         return range.getClientRects();
-68476     }
-68477     else if (dom.nodeType == 1) {
-68478         return dom.getClientRects();
-68479     }
-68480     else {
-68481         return [];
-68482     }
-68483 }
-68484 // Scans forward and backward through DOM positions equivalent to the
-68485 // given one to see if the two are in the same place (i.e. after a
-68486 // text node vs at the end of that text node)
-68487 function isEquivalentPosition(node, off, targetNode, targetOff) {
-68488     return targetNode ? (scanFor(node, off, targetNode, targetOff, -1) ||
-68489         scanFor(node, off, targetNode, targetOff, 1)) : false;
-68490 }
-68491 function domIndex(node) {
-68492     for (var index = 0;; index++) {
-68493         node = node.previousSibling;
-68494         if (!node)
-68495             return index;
-68496     }
-68497 }
-68498 function scanFor(node, off, targetNode, targetOff, dir) {
-68499     for (;;) {
-68500         if (node == targetNode &amp;&amp; off == targetOff)
-68501             return true;
-68502         if (off == (dir &lt; 0 ? 0 : maxOffset(node))) {
-68503             if (node.nodeName == &quot;DIV&quot;)
-68504                 return false;
-68505             let parent = node.parentNode;
-68506             if (!parent || parent.nodeType != 1)
-68507                 return false;
-68508             off = domIndex(node) + (dir &lt; 0 ? 0 : 1);
-68509             node = parent;
-68510         }
-68511         else if (node.nodeType == 1) {
-68512             node = node.childNodes[off + (dir &lt; 0 ? -1 : 0)];
-68513             off = dir &lt; 0 ? maxOffset(node) : 0;
-68514         }
-68515         else {
-68516             return false;
-68517         }
-68518     }
-68519 }
-68520 function maxOffset(node) {
 </code></pre></output></codecell></div></cell></section></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="Title TBD (testing/serviceworker.lit)" href="/testing/serviceworker.html">Title TBD (testing/serviceworker.lit)</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
