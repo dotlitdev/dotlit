@@ -1154,6 +1154,191 @@
                     "offset": 46514
                 }
             }
+        },
+        {
+            "type": "section",
+            "data": {
+                "name": "finder-from-manifest",
+                "hName": "section",
+                "hProperties": {
+                    "depth": 3
+                }
+            },
+            "depth": 3,
+            "children": [
+                {
+                    "type": "cell",
+                    "position": {
+                        "start": {
+                            "line": 1615,
+                            "column": 1,
+                            "offset": 46516
+                        },
+                        "end": {
+                            "line": 1615,
+                            "column": 27,
+                            "offset": 46542
+                        }
+                    },
+                    "data": {
+                        "hName": "cell",
+                        "hProperties": {
+                            "class": "cell"
+                        },
+                        "section": {
+                            "position": {
+                                "start": {
+                                    "line": 1615,
+                                    "column": 1,
+                                    "offset": 46516
+                                },
+                                "end": {
+                                    "line": 1651,
+                                    "column": 4,
+                                    "offset": 47470
+                                }
+                            }
+                        }
+                    },
+                    "children": [
+                        {
+                            "type": "heading",
+                            "depth": 3,
+                            "children": [
+                                {
+                                    "type": "text",
+                                    "value": "Finder (from manifest)",
+                                    "position": {
+                                        "start": {
+                                            "line": 1615,
+                                            "column": 5,
+                                            "offset": 46520
+                                        },
+                                        "end": {
+                                            "line": 1615,
+                                            "column": 27,
+                                            "offset": 46542
+                                        }
+                                    }
+                                }
+                            ],
+                            "position": {
+                                "start": {
+                                    "line": 1615,
+                                    "column": 1,
+                                    "offset": 46516
+                                },
+                                "end": {
+                                    "line": 1615,
+                                    "column": 27,
+                                    "offset": 46542
+                                }
+                            },
+                            "data": {
+                                "hProperties": {
+                                    "id": "finder-from-manifest"
+                                },
+                                "id": "finder-from-manifest"
+                            },
+                            "processed": true
+                        }
+                    ]
+                },
+                {
+                    "type": "cell",
+                    "position": {
+                        "start": {
+                            "line": 1617,
+                            "column": 1,
+                            "offset": 46544
+                        },
+                        "end": {
+                            "line": 1651,
+                            "column": 4,
+                            "offset": 47470
+                        }
+                    },
+                    "data": {
+                        "hName": "cell",
+                        "hProperties": {
+                            "class": "cell"
+                        }
+                    },
+                    "children": [
+                        {
+                            "type": "code",
+                            "lang": "js",
+                            "meta": "!viewer !collapse of=fs2 #implementation",
+                            "value": "\nconst sortBy = keys => (a, b) => {\n  for (const key of keys) {\n     if (a[key] !== b[key]) break;\n     else return (a[key] > b[key]) ? 1 : -1\n  }\n}\n\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const src = meta.ls || node.data.value.trim()\n  const [content, setContent] = useState('Loading...')\n  \n  useEffect(async () => {\n    const l = await lit.fs.readdir(src)\n    const list = l.map(async x=>{\n       const stat = await lit.fs.stat(src + x)\n       return {f:x,t:stat.type}\n       \n    })\n    const res = (await Promise.all(list)).sort(sortBy(['t','f'])).map(r => {\n       return rc(\"div\", {className: r.t}, `${r.f}`)\n    })\n    setContent(res)\n  },[src])\n\n  return rc('div', {\n    className: 'custom-react-view',\n  }, content)\n}",
+                            "position": {
+                                "start": {
+                                    "line": 1617,
+                                    "column": 1,
+                                    "offset": 46544
+                                },
+                                "end": {
+                                    "line": 1651,
+                                    "column": 4,
+                                    "offset": 47470
+                                }
+                            },
+                            "data": {
+                                "meta": {
+                                    "attrs": {
+                                        "of": "fs2"
+                                    },
+                                    "lang": "js",
+                                    "directives": [
+                                        "viewer",
+                                        "collapse"
+                                    ],
+                                    "of": "fs2",
+                                    "tags": [
+                                        "implementation"
+                                    ],
+                                    "isOutput": false,
+                                    "hasOutput": false,
+                                    "hasSource": false,
+                                    "raw": "js !viewer !collapse of=fs2 #implementation"
+                                },
+                                "hProperties": {
+                                    "className": "tag-implementation",
+                                    "meta": {
+                                        "attrs": {
+                                            "of": "fs2"
+                                        },
+                                        "lang": "js",
+                                        "directives": [
+                                            "viewer",
+                                            "collapse"
+                                        ],
+                                        "of": "fs2",
+                                        "tags": [
+                                            "implementation"
+                                        ],
+                                        "isOutput": false,
+                                        "hasOutput": false,
+                                        "hasSource": false,
+                                        "raw": "js !viewer !collapse of=fs2 #implementation"
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            "position": {
+                "start": {
+                    "line": 1615,
+                    "column": 1,
+                    "offset": 46516
+                },
+                "end": {
+                    "line": 1651,
+                    "column": 4,
+                    "offset": 47470
+                }
+            }
         }
     ],
     "position": {
@@ -1163,9 +1348,9 @@
             "offset": 0
         },
         "end": {
-            "line": 1615,
+            "line": 1653,
             "column": 1,
-            "offset": 46516
+            "offset": 47472
         }
     }
 }
