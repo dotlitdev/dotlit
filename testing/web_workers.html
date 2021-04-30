@@ -16,20 +16,23 @@
 <section depth="2" class="" startpos="8:1-165" endpos="17:4-305"><cell startpos="8:1-165" endpos="8:11-175"><div class="cell-content"><h2 id="support">Support</h2></div></cell><cell startpos="12:1-179" endpos="17:4-305" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return `Worker supported: ${!!window.Worker}`
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.5 days ago</span></span></span><output><pre><code class="txt">Worker supported: true
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="19:1-307" endpos="289:4-12406"><cell startpos="19:1-307" endpos="19:18-324"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="20:1-325" endpos="24:4-463" class="code output"><div class="cell-content"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">importScripts(&#x27;../web.bundle.js&#x27;)
-postMessage(&quot;dotlit: &quot; + typeof dotlit)
-console.log(&quot;anyone here?&quot;)
-</code></pre></output></codecell></div></cell><cell startpos="25:1-464" endpos="28:4-547" class="code output"><div class="cell-content"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker2.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">postMessage(&quot;hi&quot;)
-console.log(&quot;anyone here?&quot;)
-</code></pre></output></codecell></div></cell><cell startpos="29:1-548" endpos="29:118-665"><div class="cell-content"><p>Check if web server has up to date content yet? This delay is really why we need a service worker in the first place.</p></div></cell><cell startpos="31:1-667" endpos="42:4-949" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt; {
-  const resp = await fetch(&#x27;./worker.js&#x27;)
-  return resp.status + &quot;\n&quot; + (await resp.text())
-})()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">12.7 hours ago</span></span></span><output><pre><code class="txt">200
+<section depth="2" class="" startpos="19:1-307" endpos="292:4-12506"><cell startpos="19:1-307" endpos="19:18-324"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="20:1-325" endpos="27:4-563" class="code output"><div class="cell-content"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">// gross hack around one of codemirror/view bugs
+let document = { documentElement: { style: {} } }
+
 importScripts(&#x27;../web.bundle.js&#x27;)
 postMessage(&quot;dotlit: &quot; + typeof dotlit)
 console.log(&quot;anyone here?&quot;)
-</code></pre></output></codecell></div></cell><section depth="3" class="" startpos="43:1-950" endpos="289:4-12406"><cell startpos="43:1-950" endpos="45:157-1119"><div class="cell-content"><h3 id="testing">Testing</h3><p><del>Current REPL results in script execution from cross-origin? Due to data:uri</del> was resolving the raw event from postMessage not <code>ev.data</code> which is necessary.</p></div></cell><cell startpos="47:1-1121" endpos="65:4-1697" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
+</code></pre></output></codecell></div></cell><cell startpos="28:1-564" endpos="31:4-647" class="code output"><div class="cell-content"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker2.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">postMessage(&quot;hi&quot;)
+console.log(&quot;anyone here?&quot;)
+</code></pre></output></codecell></div></cell><cell startpos="32:1-648" endpos="32:118-765"><div class="cell-content"><p>Check if web server has up to date content yet? This delay is really why we need a service worker in the first place.</p></div></cell><cell startpos="34:1-767" endpos="45:4-1049" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt; {
+  const resp = await fetch(&#x27;./worker.js&#x27;)
+  return resp.status + &quot;\n&quot; + (await resp.text())
+})()
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">12.8 hours ago</span></span></span><output><pre><code class="txt">200
+importScripts(&#x27;../web.bundle.js&#x27;)
+postMessage(&quot;dotlit: &quot; + typeof dotlit)
+console.log(&quot;anyone here?&quot;)
+</code></pre></output></codecell></div></cell><section depth="3" class="" startpos="46:1-1050" endpos="292:4-12506"><cell startpos="46:1-1050" endpos="48:157-1219"><div class="cell-content"><h3 id="testing">Testing</h3><p><del>Current REPL results in script execution from cross-origin? Due to data:uri</del> was resolving the raw event from postMessage not <code>ev.data</code> which is necessary.</p></div></cell><cell startpos="50:1-1221" endpos="68:4-1797" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
   let myWorker;
   try {
     myWorker = new Worker(&#x27;worker.js&#x27;)
@@ -42,9 +45,9 @@ console.log(&quot;anyone here?&quot;)
   }
   
 })
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">54 seconds ago</span></span></span><output><pre><code class="txt">{ msg: &#x27;worker.onerror: ReferenceError: Can\&#x27;t find variable: document (https://dotlit.org/web.bundle.js:68421)&#x27;,
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">9 minutes ago</span></span></span><output><pre><code class="txt">{ msg: &#x27;worker.onerror: ReferenceError: Can\&#x27;t find variable: document (https://dotlit.org/web.bundle.js:68421)&#x27;,
   err: { isTrusted: [Getter] } }
-</code></pre></output></codecell></div></cell><cell startpos="67:1-1699" endpos="289:4-12406" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt;{
+</code></pre></output></codecell></div></cell><cell startpos="70:1-1799" endpos="292:4-12506" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt;{
    const url = &quot;https://dotlit.org/web.bundle.js&quot;
    const lineno = 68421
    const spread = 100
@@ -61,7 +64,7 @@ console.log(&quot;anyone here?&quot;)
            }).slice(lineno - spread, lineno + spread).join(&quot;\n&quot;)
 })()
 
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.8 hours ago</span></span></span><output><pre><code class="txt">200
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">3.0 hours ago</span></span></span><output><pre><code class="txt">200
 227913,lines
 68321     range.setEnd(toDOM.node, toDOM.offset);
 68322     range.setStart(fromDOM.node, fromDOM.offset);
