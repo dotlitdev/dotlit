@@ -5,7 +5,11 @@ const path = require('path')
 const qs = require('querystring-es3')
 const FS = require('@isomorphic-git/lightning-fs')
 const git = require('isomorphic-git')
+
 const select = require('unist-util-select')
+const source = require('unist-util-source')
+const filter = require('unist-util-filter')
+const visit = require('unist-util-visit')
 
 const parser = require('../parser')
 const renderer = require('../renderer')
@@ -57,7 +61,12 @@ export const lit = {
     fs, lfs, git,
     utils: {
         React,
-        select,
+        unist: {
+            select,
+            source,
+            filter,
+            visit,
+        },
         path,
         vfile,
         delete: async (fp) => {
