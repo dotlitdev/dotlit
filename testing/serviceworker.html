@@ -22,11 +22,11 @@
 </code></pre></output></codecell></div></cell><cell startpos="33:1-646" endpos="40:4-799" class="code"><div class="cell-content"><codecell class="tag-register lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#d6dc2e" class="tag">register</span></span><pre><code class="js">return navigator
           .serviceWorker
           .register(&#x27;/serviceworker.js&#x27;)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">14 minutes ago</span></span></span><output><pre><code class="txt">{}
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">15 minutes ago</span></span></span><output><pre><code class="txt">{}
 </code></pre></output></codecell></div></cell><cell startpos="42:1-801" endpos="49:4-1007" class="code"><div class="cell-content"><codecell class="tag-status lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#cacdcf" class="tag">status</span></span><pre><code class="js">return navigator.serviceWorker.controller
          ? &quot;Service worker active.&quot;
          : &quot;Service worker Not active.&quot;
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">14 minutes ago</span></span></span><output><pre><code class="txt">Service worker active.
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">15 minutes ago</span></span></span><output><pre><code class="txt">Service worker active.
 </code></pre></output></codecell></div></cell><cell startpos="51:1-1009" endpos="66:4-1398" class="code"><div class="cell-content"><codecell class="tag-unregister lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#31d494" class="tag">unregister</span></span><pre><code class="js">return (async fn =&gt; {
   const regs = await navigator
                      .serviceWorker
@@ -37,23 +37,23 @@
   }
   return `Unregistered ${regs.length} regisration(s)`
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">15 minutes ago</span></span></span><output><pre><code class="txt">{}
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">16 minutes ago</span></span></span><output><pre><code class="txt">{}
 Unregistered 1 regisration(s)
 </code></pre></output></codecell></div></cell><cell startpos="67:1-1399" endpos="75:4-1544" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt; {
   const resp = await fetch(&#x27;/none&#x27;)
   return resp.status
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">29 minutes ago</span></span></span><output><pre><code class="txt">404
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">30 minutes ago</span></span></span><output><pre><code class="txt">404
 </code></pre></output></codecell></div></cell><cell startpos="76:1-1545" endpos="82:4-1671" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return fetch(&#x27;/manifest.json&#x27;)
        .then(resp =&gt; resp.status)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">14 minutes ago</span></span></span><output><pre><code class="txt">200
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">15 minutes ago</span></span></span><output><pre><code class="txt">200
 </code></pre></output></codecell></div></cell><cell startpos="83:1-1672" endpos="88:4-1773" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (new Response(&#x27;hello&#x27;)).text()
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">4 days ago</span></span></span><output><pre><code class="txt">hello
 </code></pre></output></codecell></div></cell><cell startpos="90:1-1775" endpos="90:195-1969"><div class="cell-content"><p>As of now, the service worker doesn&#x27;t cache anything and just passes through to the network as normal. Except if the <code>request.url</code> ends with <code>--sw</code> in which case it returns a mock/info response.</p></div></cell><cell startpos="91:1-1970" endpos="100:4-2236" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return fetch(&#x27;/manifest.json--sw&#x27;)
        .then(resp =&gt; resp.text()
                           .then( text =&gt; `${resp.status}\n${text}`)
        )
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">8 minutes ago</span></span></span><output><pre><code class="txt">200
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">9 minutes ago</span></span></span><output><pre><code class="txt">200
 sw:0.0.6 dotlit: objecthttps://dotlit.org/manifest.json--sw
 </code></pre></output></codecell></div></cell><cell startpos="103:1-2239" endpos="105:4-2277" class="code"><div class="cell-content"><codecell class="lang-text local"><span class="meta"><span class="lang">text</span><span class="source">&lt; ./getserviceworker--sw</span></span><pre><code class="text"></code></pre></codecell></div></cell></section>
 <section depth="2" class="" startpos="107:1-2279" endpos="192:4-4994"><cell startpos="107:1-2279" endpos="107:18-2296"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="109:1-2298" endpos="192:4-4994" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><output><pre><code class="js">
