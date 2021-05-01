@@ -386,7 +386,9 @@ const node = select('code[meta=#example2]', lit.ast)
 
 const cellSource = source(node.position, src)
 
-return node
+const update = async (pos, src) => {
+    await lit.fs.writeFile(lit.location.src, unist.patchSource(lit.file.contents, pos, src))
+}
 
 return "Warning outputting raw code cells causes havoc!"
 ```
