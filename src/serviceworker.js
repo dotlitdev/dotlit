@@ -3,7 +3,7 @@
 let document = { documentElement: { style: {} } }
 
 importScripts('web.bundle.js')
-const version = "sw:0.0.1 dotlit: " + typeof dotlit
+const version = "sw:0.0.3 dotlit: " + typeof dotlit
 
 const PRECACHE = Date.now() // no-cache 'precache-v1';
 const RUNTIME = 'runtime';
@@ -17,7 +17,12 @@ const PRECACHE_URLS = [
   //'demo.js'
 ];
 
-const getMockResponse = args => new Response(version)
+const getMockResponse = async (...args) => {
+    let stat
+    try { stat = await dotlit.lit.fs.stat('/index.lit')} catch(err) {}
+    new Response(version + " args: " + JSON.stringify([...args, dotlit.lit.location, stat]))
+
+}
 
 // The install handler takes care of precaching the resources we always need.
 self.addEventListener('install', event => {
@@ -48,8 +53,8 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   // Skip cross-origin requests, like those for Google Analytics. And add mock response
   if (event.request.url.startsWith(self.location.origin)) {
-    if (event.request.url.endsWith('/swversion')) {
-       event.respondWith(getMockResponse())
+    if (event.request.url.endsWith('--sw')) {
+       event.respondWith(getMockResponse(event.request.url))
     }
     else event.respondWith(
       caches.match(event.request).then(cachedResponse => {
