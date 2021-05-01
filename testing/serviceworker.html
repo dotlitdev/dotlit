@@ -8,37 +8,36 @@
 </li>
 <li>Initial source, from: <a href="https://googlechrome.github.io/samples/service-worker/basic/">https://googlechrome.github.io/samples/service-worker/basic/<span class="linkIcon">↗</span></a></li>
 </ul><p>See <a href="testing/web_workers.html?file=testing/web_workers.lit" title="testing/Web Workers" wikilink="true">testing/Web Workers</a> for related investigation.</p></div></cell></section></section>
-<section depth="2" class="" startpos="13:1-420" endpos="72:4-1558"><cell startpos="13:1-420" endpos="13:15-434"><div class="cell-content"><h2 id="exploration">Exploration</h2></div></cell><cell startpos="15:1-436" endpos="22:4-550" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">if (&#x27;serviceWorker&#x27; in navigator) {
+<section depth="2" class="" startpos="13:1-420" endpos="71:4-1533"><cell startpos="13:1-420" endpos="13:15-434"><div class="cell-content"><h2 id="exploration">Exploration</h2></div></cell><cell startpos="15:1-436" endpos="22:4-550" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">if (&#x27;serviceWorker&#x27; in navigator) {
   return true
 }
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">4.0 days ago</span></span></span><output><pre><code class="txt">true
 </code></pre></output></codecell></div></cell><cell startpos="23:1-551" endpos="28:4-652" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (new Response(&#x27;hello&#x27;)).text()
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">4.0 days ago</span></span></span><output><pre><code class="txt">hello
-</code></pre></output></codecell></div></cell><cell startpos="30:1-654" endpos="35:4-779" class="code"><div class="cell-content"><codecell class="tag-register lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#d6dc2e" class="tag">register</span></span><pre><code class="js">return (async () =&gt; {
-  await navigator
+</code></pre></output></codecell></div></cell><cell startpos="30:1-654" endpos="34:4-756" class="code"><div class="cell-content"><codecell class="tag-register lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#d6dc2e" class="tag">register</span></span><pre><code class="js">return navigator
           .serviceWorker
           .register(&#x27;/serviceworker.js&#x27;)
-</code></pre></codecell></div></cell><cell startpos="37:1-781" endpos="44:4-990" class="code"><div class="cell-content"><codecell class="tag-status lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#cacdcf" class="tag">status</span></span><pre><code class="js">  return navigator.serviceWorker.controller
+</code></pre></codecell></div></cell><cell startpos="36:1-758" endpos="43:4-965" class="code"><div class="cell-content"><codecell class="tag-status lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#cacdcf" class="tag">status</span></span><pre><code class="js">return navigator.serviceWorker.controller
          ? &quot;Service worker active.&quot;
          : &quot;Refresh to activate worker.&quot;
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">4.0 days ago</span></span></span><output><pre><code class="txt">Service worker active.
-</code></pre></output></codecell></div></cell><cell startpos="46:1-992" endpos="54:4-1220" class="code"><div class="cell-content"><codecell class="tag-unregister lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#31d494" class="tag">unregister</span></span><pre><code class="js">navigator.serviceWorker.getRegistrations().then(function(registrations) {
+</code></pre></output></codecell></div></cell><cell startpos="45:1-967" endpos="53:4-1195" class="code"><div class="cell-content"><codecell class="tag-unregister lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#31d494" class="tag">unregister</span></span><pre><code class="js">navigator.serviceWorker.getRegistrations().then(function(registrations) {
  for(let registration of registrations) {
   registration.unregister()
 } })
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">3 days ago</span></span></span><output><pre><code class="txt">undefined
-</code></pre></output></codecell></div></cell><cell startpos="55:1-1221" endpos="63:4-1366" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt; {
+</code></pre></output></codecell></div></cell><cell startpos="54:1-1196" endpos="62:4-1341" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt; {
   const resp = await fetch(&#x27;/none&#x27;)
   return resp.status
 })()
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">4.0 days ago</span></span></span><output><pre><code class="txt">404
-</code></pre></output></codecell></div></cell><cell startpos="64:1-1367" endpos="72:4-1558" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt; {
+</code></pre></output></codecell></div></cell><cell startpos="63:1-1342" endpos="71:4-1533" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt; {
   const resp = await fetch(&#x27;/mockresponse&#x27;)
   return resp.status + &quot; : &quot; + (await resp.text())
 })()
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">4.0 days ago</span></span></span><output><pre><code class="txt">200 : hello
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="74:1-1560" endpos="156:4-4516"><cell startpos="74:1-1560" endpos="74:18-1577"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="75:1-1578" endpos="156:4-4516" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><output><pre><code class="js">/*
+<section depth="2" class="" startpos="73:1-1535" endpos="155:4-4491"><cell startpos="73:1-1535" endpos="73:18-1552"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="74:1-1553" endpos="155:4-4491" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><output><pre><code class="js">/*
  Copyright 2016 Google Inc. All Rights Reserved.
  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  you may not use this file except in compliance with the License.
