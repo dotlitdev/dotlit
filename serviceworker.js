@@ -3,7 +3,7 @@
 let document = { documentElement: { style: {} } }
 
 importScripts('web.bundle.js')
-const version = "sw:0.0.5 dotlit: " + typeof dotlit
+const version = "sw:0.0.6 dotlit: " + typeof dotlit
 
 const PRECACHE = Date.now() // no-cache 'precache-v1';
 const RUNTIME = 'runtime';
@@ -19,7 +19,7 @@ const PRECACHE_URLS = [
 
 const getMockResponse = (event) => {
 
-    return new Reponse(version + event.request.url)
+    return new Response(version + event.request.url)
 
     let stat
     // try { stat = await dotlit.lit.fs.stat('/index.lit')} catch(err) {}
