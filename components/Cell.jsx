@@ -74,7 +74,7 @@ const Cell = props => {
         let result
         let error
         try {
-            result = await repl.exec(codeSource, meta, ctx.file.data.ast)
+            result = await repl.exec(codeSource, meta, node)
         } catch(res) {
             error = true
             console.log('REPL promise rejected', res)
