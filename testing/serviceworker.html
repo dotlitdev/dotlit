@@ -8,7 +8,7 @@
 </li>
 <li>Initial source, from: <a href="https://googlechrome.github.io/samples/service-worker/basic/">https://googlechrome.github.io/samples/service-worker/basic/<span class="linkIcon">↗</span></a></li>
 </ul><p>See <a href="testing/web_workers.html?file=testing/web_workers.lit" title="testing/Web Workers" wikilink="true">testing/Web Workers</a> for related investigation.</p></div></cell></section></section>
-<section depth="2" class="" startpos="13:1-420" endpos="78:4-1612"><cell startpos="13:1-420" endpos="13:15-434"><div class="cell-content"><h2 id="exploration">Exploration</h2></div></cell><cell startpos="14:1-435" endpos="19:4-512" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return navigator
+<section depth="2" class="" startpos="13:1-420" endpos="78:4-1609"><cell startpos="13:1-420" endpos="13:15-434"><div class="cell-content"><h2 id="exploration">Exploration</h2></div></cell><cell startpos="14:1-435" endpos="19:4-512" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return navigator
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">21 minutes ago</span></span></span><output><pre><code class="txt">{}
 </code></pre></output></codecell></div></cell><cell startpos="21:1-514" endpos="28:4-628" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">if (&#x27;serviceWorker&#x27; in navigator) {
   return true
@@ -33,13 +33,13 @@
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">4 days ago</span></span></span><output><pre><code class="txt">404
 </code></pre></output></codecell></div></cell><cell startpos="64:1-1319" endpos="69:4-1420" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (new Response(&#x27;hello&#x27;)).text()
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">4 days ago</span></span></span><output><pre><code class="txt">hello
-</code></pre></output></codecell></div></cell><cell startpos="70:1-1421" endpos="78:4-1612" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt; {
-  const resp = await fetch(&#x27;/mockresponse&#x27;)
+</code></pre></output></codecell></div></cell><cell startpos="70:1-1421" endpos="78:4-1609" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt; {
+  const resp = await fetch(&#x27;/swversion&#x27;)
   return resp.status + &quot; : &quot; + (await resp.text())
 })()
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">4.0 days ago</span></span></span><output><pre><code class="txt">200 : hello
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="80:1-1614" endpos="153:4-3976"><cell startpos="80:1-1614" endpos="80:18-1631"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="81:1-1632" endpos="153:4-3976" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><output><pre><code class="js">
+<section depth="2" class="" startpos="80:1-1611" endpos="153:4-3973"><cell startpos="80:1-1611" endpos="80:18-1628"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="81:1-1629" endpos="153:4-3973" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><output><pre><code class="js">
 // gross hack around one of @codemirror/view bugs
 let document = { documentElement: { style: {} } }
 
