@@ -102,7 +102,7 @@ return (async fn => {
 let document = { documentElement: { style: {} } }
 
 importScripts('web.bundle.js')
-const version = "sw:0.0.2 dotlit: " + typeof dotlit
+const version = "sw:0.0.3 dotlit: " + typeof dotlit
 
 const PRECACHE = Date.now() // no-cache 'precache-v1';
 const RUNTIME = 'runtime';
@@ -116,7 +116,12 @@ const PRECACHE_URLS = [
   //'demo.js'
 ];
 
-const getMockResponse = (...args) => new Response(version + " args: " + JSON.stringify(args))
+const getMockResponse = async (...args) => {
+    let stat
+    try { stat = await dotlit.lit.fs.stat('/index.lit')} catch(err) {}
+    new Response(version + " args: " + JSON.stringify([...args, dotlit.lit.location, stat]))
+
+}
 
 // The install handler takes care of precaching the resources we always need.
 self.addEventListener('install', event => {
