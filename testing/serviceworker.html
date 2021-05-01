@@ -17,11 +17,11 @@
 </code></pre></output></codecell></div></cell><cell startpos="31:1-624" endpos="38:4-777" class="code"><div class="cell-content"><codecell class="tag-register lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#d6dc2e" class="tag">register</span></span><pre><code class="js">return navigator
           .serviceWorker
           .register(&#x27;/serviceworker.js&#x27;)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">27 minutes ago</span></span></span><output><pre><code class="txt">{}
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">29 minutes ago</span></span></span><output><pre><code class="txt">{}
 </code></pre></output></codecell></div></cell><cell startpos="40:1-779" endpos="47:4-985" class="code"><div class="cell-content"><codecell class="tag-status lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#cacdcf" class="tag">status</span></span><pre><code class="js">return navigator.serviceWorker.controller
          ? &quot;Service worker active.&quot;
          : &quot;Service worker Not active.&quot;
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">36 minutes ago</span></span></span><output><pre><code class="txt">Service worker active.
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">39 minutes ago</span></span></span><output><pre><code class="txt">Service worker active.
 </code></pre></output></codecell></div></cell><cell startpos="49:1-987" endpos="64:4-1376" class="code"><div class="cell-content"><codecell class="tag-unregister lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#31d494" class="tag">unregister</span></span><pre><code class="js">return (async fn =&gt; {
   const regs = await navigator
                      .serviceWorker
@@ -32,20 +32,20 @@
   }
   return `Unregistered ${regs.length} regisration(s)`
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">38 minutes ago</span></span></span><output><pre><code class="txt">{}
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">41 minutes ago</span></span></span><output><pre><code class="txt">{}
 Unregistered 1 regisration(s)
 </code></pre></output></codecell></div></cell><cell startpos="65:1-1377" endpos="73:4-1522" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt; {
   const resp = await fetch(&#x27;/none&#x27;)
   return resp.status
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">49 minutes ago</span></span></span><output><pre><code class="txt">404
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">52 minutes ago</span></span></span><output><pre><code class="txt">404
 </code></pre></output></codecell></div></cell><cell startpos="74:1-1523" endpos="79:4-1624" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (new Response(&#x27;hello&#x27;)).text()
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">4 days ago</span></span></span><output><pre><code class="txt">hello
 </code></pre></output></codecell></div></cell><cell startpos="80:1-1625" endpos="88:4-1867" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt; {
   const resp = await fetch(&#x27;--sw&#x27;)
   return resp.status + &quot; : &quot; + (await resp.text())
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">48 seconds ago</span></span></span><output><pre><code class="txt">200 : sw:0.0.2 dotlit: object args: [&quot;https://dotlit.org/testing/--sw&quot;]
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">3 minutes ago</span></span></span><output><pre><code class="txt">200 : sw:0.0.2 dotlit: object args: [&quot;https://dotlit.org/testing/--sw&quot;]
 </code></pre></output></codecell></div></cell><cell startpos="90:1-1869" endpos="92:4-1907" class="code"><div class="cell-content"><codecell class="lang-text local"><span class="meta"><span class="lang">text</span><span class="source">&lt; ./getserviceworker--sw</span></span><pre><code class="text"></code></pre></codecell></div></cell></section>
 <section depth="2" class="" startpos="94:1-1909" endpos="167:4-4323"><cell startpos="94:1-1909" endpos="94:18-1926"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="95:1-1927" endpos="167:4-4323" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><output><pre><code class="js">
 // gross hack around one of @codemirror/view bugs
