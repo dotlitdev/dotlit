@@ -126,7 +126,7 @@ export const extendFs = (fs, litroot, ghOpts) => {
   const origStat = fs.stat
   fs.readFile = passThroughRead(origReadFile,litroot);
   fs.writeFile = writeFileP(fs);
-  fs.readStat = passThroughReadWithStat(origReadFile, origStat, litroot, ghOpts)
+  fs.readStat = passThroughReadWithStat(fs.readFile, origStat, litroot, ghOpts)
 
   if(ghOpts) fs.writeFile = passThroughWrite(fs, litroot, ghOpts);
   return fs
