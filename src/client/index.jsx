@@ -10,6 +10,7 @@ const select = require('unist-util-select')
 const source = require('unist-util-source')
 const filter = require('unist-util-filter')
 const visit = require('unist-util-visit')
+const patchSource = require('../utils/unist-util-patch-source')
 
 const parser = require('../parser')
 const renderer = require('../renderer')
@@ -66,6 +67,7 @@ export const lit = {
             source,
             filter,
             visit,
+            patchSource,
         },
         path,
         vfile,
