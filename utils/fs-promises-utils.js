@@ -7,7 +7,7 @@ const console = getConsoleForNamespace('fs')
 const passThroughRead = (origReadFile, litroot) => {
   
   return async (...args) => {
-    console.log('fs.passThroughRead')
+    console.log('fs.passThroughRead', args[0])
     try {
       return await origReadFile(...args);
     } catch (err) {
@@ -23,39 +23,43 @@ const passThroughRead = (origReadFile, litroot) => {
 const passThroughReadWithStat = (origReadFile, origStat, litroot, ghOpts) => {
 
   return async (...args) => {
-    console.log('fs.passThroughRead')
+    console.log('fs.passThroughReadWithStat', args[0])
 
     const resp = {
       local: { stat: undefined, value: undefined },
       remote: { stat: undefined, value: undefined },
     }
     try {
-      try { resp.local.stat = await origStat(...args) } catch(err){}
+      try {
+        resp.local.stat = await origStat(...args)
+      } catch(err){
+        console.log("fs.passThoughReadWithStat no stat on local file")
+      }
       const value = await origReadFile(...args)
       resp.local.value = value
     } catch (err) { 
-      console.log('fs.passThoughRead no local file', err)
+      console.log('fs.passThoughReadWithStat no local file', err)
     }
 
     const filePath = path.join(litroot, args[0])
 
     let remoteResp
     if (ghOpts) {
-        console.log("fs.passThroughtRead passing through to GitHub", filePath)
+        console.log("fs.passThroughtReadWithStat passing through to GitHub", filePath)
         const ghrf = ghReadFile(ghOpts)
         remoteResp = await ghrf(filePath)
     } else {
-        console.log('fs.passThroughRead passing through to fetch', filePath)
+        console.log('fs.passThroughReadWithStat passing through to fetch', filePath)
         remoteResp = await fetch(filePath)
     }
 
     if (remoteResp.status < 200 || remoteResp.status >= 400) {
       if (!resp.local.stat) {
-        console.log('fs.passThroughRead failed local and remote read')
+        console.log('fs.passThroughReadWithStat failed local and remote read')
         throw new Error(`${remoteResp.status} Error. Fetching File.`)
       }
     } else {
-      console.log("fs.passThroughRead found remote file")
+      console.log("fs.passThroughReadWithStat found remote file")
       const value = await remoteResp.text()
       const lastModified = remoteResp.headers && remoteResp.headers.get('last-modified')
       const contentLength = remoteResp.headers && remoteResp.headers.get('content-length')
