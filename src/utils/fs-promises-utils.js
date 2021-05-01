@@ -47,14 +47,18 @@ const passThroughReadWithStat = (origReadFile, origStat, litroot, ghOpts) => {
     if (ghOpts) {
         console.log("fs.passThroughtReadWithStat passing through to GitHub", filePath)
         const ghrf = ghReadFile(ghOpts)
-        remoteResp = await ghrf(filePath)
+        try {
+             remoteResp = await ghrf(filePath)
+        } catch(err){
+             console.log("fs.passThroughtReadWithStat GitHub read failed", err) 
+        }
     } else {
         console.log('fs.passThroughReadWithStat passing through to fetch', filePath)
         remoteResp = await fetch(filePath)
     }
 
-    if (remoteResp.status < 200 || remoteResp.status >= 400) {
-      if (!resp.local.stat) {
+    if (!remoteResp || remoteResp.status < 200 || remoteResp.status >= 400) {
+      if (!resp.local.stat && !resp.local.value) {
         console.log('fs.passThroughReadWithStat failed local and remote read')
         throw new Error(`${remoteResp.status} Error. Fetching File.`)
       }
