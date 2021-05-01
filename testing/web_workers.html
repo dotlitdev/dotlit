@@ -16,7 +16,7 @@
 <section depth="2" class="" startpos="8:1-165" endpos="17:4-305"><cell startpos="8:1-165" endpos="8:11-175"><div class="cell-content"><h2 id="support">Support</h2></div></cell><cell startpos="12:1-179" endpos="17:4-305" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return `Worker supported: ${!!window.Worker}`
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.5 days ago</span></span></span><output><pre><code class="txt">Worker supported: true
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="19:1-307" endpos="171:4-5251"><cell startpos="19:1-307" endpos="19:18-324"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="20:1-325" endpos="42:4-1030" class="code output"><div class="cell-content"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">// gross hack around one of @codemirror/view bugs
+<section depth="2" class="" startpos="19:1-307" endpos="151:4-6081"><cell startpos="19:1-307" endpos="19:18-324"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="20:1-325" endpos="42:4-1030" class="code output"><div class="cell-content"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">// gross hack around one of @codemirror/view bugs
 let document = { documentElement: { style: {} } }
 
 postMessage(&quot;Location: &quot; +  typeof location + JSON.stringify(location))
@@ -39,33 +39,13 @@ const getFsTest = async (filepath) =&gt; {
 getFsTest(&#x27;/index.lit&#x27;)
 </code></pre></output></codecell></div></cell><cell startpos="43:1-1031" endpos="46:4-1114" class="code output"><div class="cell-content"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker2.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">postMessage(&quot;hi&quot;)
 console.log(&quot;anyone here?&quot;)
-</code></pre></output></codecell></div></cell><cell startpos="47:1-1115" endpos="47:118-1232"><div class="cell-content"><p>Check if web server has up to date content yet? This delay is really why we need a service worker in the first place.</p></div></cell><cell startpos="49:1-1234" endpos="78:4-2111" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; text !collapse</span></span><pre><code class="js">return (async fn =&gt; {
+</code></pre></output></codecell></div></cell><cell startpos="47:1-1115" endpos="47:118-1232"><div class="cell-content"><p>Check if web server has up to date content yet? This delay is really why we need a service worker in the first place.</p></div></cell><cell startpos="49:1-1234" endpos="58:4-2941" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; text !collapse</span></span><pre><code class="js">return (async fn =&gt; {
   const resp = await fetch(&#x27;./worker.js&#x27;)
   return resp.status + &quot;\n&quot; + (await resp.text())
 })()
-</code></pre></codecell><codecell class="dir-collapse lang-text local collapsed output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="updatedAt">Updated <span class="Time relative">19.8 hours ago</span></span></span><output><pre><code class="text">200
-// gross hack around one of @codemirror/view bugs
-let document = { documentElement: { style: {} } }
-
-postMessage(&quot;Location: &quot; +  typeof location + JSON.stringify(location))
-importScripts(&#x27;../web.bundle.js&#x27;)
-postMessage(&quot;dotlit: &quot; + typeof dotlit)
-postMessage(&quot;lit&quot; + JSON.stringify(dotlit.lit.location))
-
-const getFsTest = async (filepath) =&gt; {
-    postMessage(`Getting ${filepath} from local fs.`)
-    try {
-        const file = await dotlit.lit.fs.readFile(filepath)
-        postMessage(&quot;length+&quot; + file.length)
-        postMessage(&#x27;done&#x27;)
-    } catch(err) {
-        postMessage(&quot;error:&quot; + err.toString())
-        postMessage(&#x27;done&#x27;)
-    }
-}
-
-getFsTest(&#x27;/index.lit&#x27;)
-</code></pre></output></codecell></div></cell><section depth="3" class="" startpos="79:1-2112" endpos="171:4-5251"><cell startpos="79:1-2112" endpos="81:157-2281"><div class="cell-content"><h3 id="testing">Testing</h3><p><del>Current REPL results in script execution from cross-origin? Due to data:uri</del> was resolving the raw event from postMessage not <code>ev.data</code> which is necessary.</p></div></cell><cell startpos="83:1-2283" endpos="104:4-2873" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
+</code></pre></codecell><codecell class="dir-collapse lang-text local collapsed output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="updatedAt">Updated <span class="Time relative">48 seconds ago</span></span></span><output><pre><code class="text">404
+&lt;html data-reactroot=&quot;&quot;&gt;&lt;head&gt;&lt;title&gt;Not yet found&lt;/title&gt;&lt;meta name=&quot;litsrc&quot; value=&quot;404.lit&quot;/&gt;&lt;meta name=&quot;litroot&quot; value=&quot;/&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0&quot;/&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;https://highlightjs.org/static/demo/styles/railscasts.css&quot;/&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/style.css&quot;/&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;lit-app&quot;&gt;&lt;div id=&quot;lit-header&quot;&gt;&lt;menu class=&quot;horizontal open has-children&quot;&gt;&lt;li class=&quot;MenuTitle&quot;&gt;&lt;a href=&quot;/&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;&lt;li class=&quot;MenuItems&quot;&gt;&lt;menu class=&quot;has-children&quot;&gt;&lt;li class=&quot;MenuTitle&quot;&gt;File&lt;/li&gt;&lt;/menu&gt;&lt;menu class=&quot;has-children&quot; disabled=&quot;&quot;&gt;&lt;li class=&quot;MenuTitle&quot;&gt;Cell&lt;/li&gt;&lt;/menu&gt;&lt;menu class=&quot;has-children&quot; disabled=&quot;&quot;&gt;&lt;li class=&quot;MenuTitle&quot;&gt;Section&lt;/li&gt;&lt;/menu&gt;&lt;menu class=&quot;has-children&quot;&gt;&lt;li class=&quot;MenuTitle&quot;&gt;Help&lt;/li&gt;&lt;/menu&gt;&lt;menu class=&quot;has-children right&quot;&gt;&lt;li class=&quot;MenuTitle&quot;&gt;&lt;span class=&quot;led led-grey&quot;&gt;&lt;/span&gt;&lt;/li&gt;&lt;/menu&gt;&lt;/li&gt;&lt;/menu&gt;&lt;div class=&quot;lit-messages&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;div id=&quot;content&quot;&gt;&lt;section depth=&quot;1&quot; class=&quot;&quot; startpos=&quot;1:1-0&quot; endpos=&quot;3:55-73&quot;&gt;&lt;cell startpos=&quot;1:1-0&quot; endpos=&quot;3:55-73&quot;&gt;&lt;div class=&quot;cell-content&quot;&gt;&lt;h1 id=&quot;not-yet-found&quot;&gt;Not &lt;em&gt;yet&lt;/em&gt; found&lt;/h1&gt;&lt;p&gt;The file was not found, edit this page to change that.&lt;/p&gt;&lt;/div&gt;&lt;/cell&gt;&lt;/section&gt;&lt;/div&gt;&lt;/div&gt;&lt;div id=&quot;backlinks&quot;&gt;&lt;h4&gt;Backlinks (1)&lt;/h4&gt;&lt;ol&gt;&lt;li&gt;&lt;a title=&quot;.lit&quot; href=&quot;/index.html&quot;&gt;.lit&lt;/a&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/div&gt;&lt;script src=&quot;//cdn.jsdelivr.net/npm/eruda&quot;&gt;&lt;/script&gt;&lt;script&gt;eruda.init();&lt;/script&gt;&lt;script src=&quot;/web.bundle.js&quot;&gt;&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;
+</code></pre></output></codecell></div></cell><section depth="3" class="" startpos="59:1-2942" endpos="151:4-6081"><cell startpos="59:1-2942" endpos="61:157-3111"><div class="cell-content"><h3 id="testing">Testing</h3><p><del>Current REPL results in script execution from cross-origin? Due to data:uri</del> was resolving the raw event from postMessage not <code>ev.data</code> which is necessary.</p></div></cell><cell startpos="63:1-3113" endpos="84:4-3703" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
   let myWorker;
   try {
     myWorker = new Worker(&#x27;worker.js&#x27;)
@@ -81,9 +61,9 @@ getFsTest(&#x27;/index.lit&#x27;)
   }
   
 })
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">54 seconds ago</span></span></span><output><pre><code class="txt">{ msg: &#x27;worker.onerror: undefined (undefined:undefined)&#x27;,
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1 minute ago</span></span></span><output><pre><code class="txt">{ msg: &#x27;worker.onerror: undefined (undefined:undefined)&#x27;,
   err: { isTrusted: [Getter] } }
-</code></pre></output></codecell></div></cell><cell startpos="105:1-2874" endpos="126:4-3519" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
+</code></pre></output></codecell></div></cell><cell startpos="85:1-3704" endpos="106:4-4349" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
   let myWorker;
   try {
     myWorker = new Worker(&#x27;/web.bundle.js&#x27;)
@@ -101,7 +81,7 @@ getFsTest(&#x27;/index.lit&#x27;)
 })
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2 minutes ago</span></span></span><output><pre><code class="txt">{ msg: &#x27;worker.onerror: ReferenceError: Can\&#x27;t find variable: document (https://dotlit.org/web.bundle.js:68421)&#x27;,
   err: { isTrusted: [Getter] } }
-</code></pre></output></codecell></div></cell><cell startpos="128:1-3521" endpos="171:4-5251" class="code"><div class="cell-content"><codecell class="dir-collapse tag-largefilelineno tag-tool lang-js local collapsed"><span class="meta"><span class="lang">js</span><span class="output">&gt; text #output !collapse</span><span style="color:white;background-color:#2016a6" class="tag">largefilelineno</span><span style="color:white;background-color:#036699" class="tag">tool</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><pre><code class="js">return (async fn =&gt;{
+</code></pre></output></codecell></div></cell><cell startpos="108:1-4351" endpos="151:4-6081" class="code"><div class="cell-content"><codecell class="dir-collapse tag-largefilelineno tag-tool lang-js local collapsed"><span class="meta"><span class="lang">js</span><span class="output">&gt; text #output !collapse</span><span style="color:white;background-color:#2016a6" class="tag">largefilelineno</span><span style="color:white;background-color:#036699" class="tag">tool</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><pre><code class="js">return (async fn =&gt;{
    const url = &quot;https://dotlit.org/web.bundle.js&quot;
    const lineno = 177281
    const spread = 10
