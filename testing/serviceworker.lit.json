@@ -2297,7 +2297,7 @@
                                 "end": {
                                     "line": 176,
                                     "column": 4,
-                                    "offset": 4671
+                                    "offset": 4667
                                 }
                             }
                         }
@@ -2357,7 +2357,7 @@
                         "end": {
                             "line": 176,
                             "column": 4,
-                            "offset": 4671
+                            "offset": 4667
                         }
                     },
                     "data": {
@@ -2371,7 +2371,7 @@
                             "type": "code",
                             "lang": ">js",
                             "meta": "../serviceworker.js !collapse #implementation",
-                            "value": "\n// gross hack around one of @codemirror/view bugs\nlet document = { documentElement: { style: {} } }\n\nimportScripts('web.bundle.js')\nconst version = \"sw:0.0.3 dotlit: \" + typeof dotlit\n\nconst PRECACHE = Date.now() // no-cache 'precache-v1';\nconst RUNTIME = 'runtime';\n\n// A list of local resources we always want to be cached.\nconst PRECACHE_URLS = [\n  //'index.html',\n  //'./', // Alias for index.html\n  //'styles.css',\n  //'../../styles/main.css',\n  //'demo.js'\n];\n\nconst getMockResponse = async (...args) => {\n    let stat\n    try { stat = await dotlit.lit.fs.stat('/index.lit')} catch(err) {}\n    new Response(version + \" args: \" + JSON.stringify([...args, dotlit.lit.location, stat]))\n\n}\n\n// The install handler takes care of precaching the resources we always need.\nself.addEventListener('install', event => {\n  event.waitUntil(\n    caches.open(PRECACHE)\n      .then(cache => cache.addAll(PRECACHE_URLS))\n      .then(self.skipWaiting())\n  );\n});\n\n// The activate handler takes care of cleaning up old caches.\nself.addEventListener('activate', event => {\n  const currentCaches = [PRECACHE, RUNTIME];\n  event.waitUntil(\n    caches.keys().then(cacheNames => {\n      return cacheNames.filter(cacheName => !currentCaches.includes(cacheName));\n    }).then(cachesToDelete => {\n      return Promise.all(cachesToDelete.map(cacheToDelete => {\n        return caches.delete(cacheToDelete);\n      }));\n    }).then(() => self.clients.claim())\n  );\n});\n\n// The fetch handler serves responses for same-origin resources from a cache.\n// If no response is found, it populates the runtime cache with the response\n// from the network before returning it to the page.\nself.addEventListener('fetch', event => {\n  // Skip cross-origin requests, like those for Google Analytics. And add mock response\n  if (event.request.url.startsWith(self.location.origin)) {\n    if (event.request.url.endsWith('--sw')) {\n       event.respondWith(getMockResponse(event.request.url))\n    }\n    else event.respondWith(\n      caches.match(event.request).then(cachedResponse => {\n        if (false && cachedResponse) {\n          return cachedResponse;\n        }\n\n        return caches.open(RUNTIME).then(cache => {\n          return fetch(event.request).then(response => {\n            // Put a copy of the response in the runtime cache.\n            return cache.put(event.request, response.clone()).then(() => {\n              return response;\n            });\n          });\n        });\n      })\n    );\n  }\n});",
+                            "value": "\n// gross hack around one of @codemirror/view bugs\nlet document = { documentElement: { style: {} } }\n\nimportScripts('web.bundle.js')\nconst version = \"sw:0.0.4 dotlit: \" + typeof dotlit\n\nconst PRECACHE = Date.now() // no-cache 'precache-v1';\nconst RUNTIME = 'runtime';\n\n// A list of local resources we always want to be cached.\nconst PRECACHE_URLS = [\n  //'index.html',\n  //'./', // Alias for index.html\n  //'styles.css',\n  //'../../styles/main.css',\n  //'demo.js'\n];\n\nconst getMockResponse = async (event) => {\n    let stat\n    try { stat = await dotlit.lit.fs.stat('/index.lit')} catch(err) {}\n    event.respondWith(new Response(version + \" args: \" + JSON.stringify([event.request.url, dotlit.lit.location, stat])))\n\n}\n\n// The install handler takes care of precaching the resources we always need.\nself.addEventListener('install', event => {\n  event.waitUntil(\n    caches.open(PRECACHE)\n      .then(cache => cache.addAll(PRECACHE_URLS))\n      .then(self.skipWaiting())\n  );\n});\n\n// The activate handler takes care of cleaning up old caches.\nself.addEventListener('activate', event => {\n  const currentCaches = [PRECACHE, RUNTIME];\n  event.waitUntil(\n    caches.keys().then(cacheNames => {\n      return cacheNames.filter(cacheName => !currentCaches.includes(cacheName));\n    }).then(cachesToDelete => {\n      return Promise.all(cachesToDelete.map(cacheToDelete => {\n        return caches.delete(cacheToDelete);\n      }));\n    }).then(() => self.clients.claim())\n  );\n});\n\n// The fetch handler serves responses for same-origin resources from a cache.\n// If no response is found, it populates the runtime cache with the response\n// from the network before returning it to the page.\nself.addEventListener('fetch', event => {\n  // Skip cross-origin requests, like those for Google Analytics. And add mock response\n  if (event.request.url.startsWith(self.location.origin)) {\n    if (event.request.url.endsWith('--sw')) {\n       getMockResponse(event)\n    }\n    else event.respondWith(\n      caches.match(event.request).then(cachedResponse => {\n        if (false && cachedResponse) {\n          return cachedResponse;\n        }\n\n        return caches.open(RUNTIME).then(cache => {\n          return fetch(event.request).then(response => {\n            // Put a copy of the response in the runtime cache.\n            return cache.put(event.request, response.clone()).then(() => {\n              return response;\n            });\n          });\n        });\n      })\n    );\n  }\n});",
                             "position": {
                                 "start": {
                                     "line": 99,
@@ -2381,7 +2381,7 @@
                                 "end": {
                                     "line": 176,
                                     "column": 4,
-                                    "offset": 4671
+                                    "offset": 4667
                                 }
                             },
                             "data": {
@@ -2432,7 +2432,7 @@
                 "end": {
                     "line": 176,
                     "column": 4,
-                    "offset": 4671
+                    "offset": 4667
                 }
             }
         }
@@ -2446,7 +2446,7 @@
         "end": {
             "line": 176,
             "column": 4,
-            "offset": 4671
+            "offset": 4667
         }
     }
 }
