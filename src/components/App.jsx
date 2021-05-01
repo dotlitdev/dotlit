@@ -35,6 +35,11 @@ const App = ({root, file, fs, result}) => {
         file.messages = []
         const processedFile = await processor(fs).process(file)
         console.log("Processed client", processedFile)
+
+        if (typeof window !== 'undefined') {
+            window.lit.file = processedFile
+            window.lit.ast = processedFile.data.ast
+        }
       
         try {
             await fs.writeFile(file.path, patchedSrc, {encoding: 'utf8'})
