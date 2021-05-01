@@ -16,7 +16,7 @@
 <section depth="2" class="" startpos="8:1-165" endpos="17:4-305"><cell startpos="8:1-165" endpos="8:11-175"><div class="cell-content"><h2 id="support">Support</h2></div></cell><cell startpos="12:1-179" endpos="17:4-305" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return `Worker supported: ${!!window.Worker}`
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.5 days ago</span></span></span><output><pre><code class="txt">Worker supported: true
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="19:1-307" endpos="175:4-5256"><cell startpos="19:1-307" endpos="19:18-324"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="20:1-325" endpos="42:4-1030" class="code output"><div class="cell-content"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">// gross hack around one of @codemirror/view bugs
+<section depth="2" class="" startpos="19:1-307" endpos="175:4-5254"><cell startpos="19:1-307" endpos="19:18-324"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="20:1-325" endpos="42:4-1030" class="code output"><div class="cell-content"><codecell class="tag-implementation lang-js local output"><span class="meta"><span class="lang">js</span><span class="filename">worker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">// gross hack around one of @codemirror/view bugs
 let document = { documentElement: { style: {} } }
 
 postMessage(&quot;Location: &quot; +  typeof location + JSON.stringify(location))
@@ -65,7 +65,7 @@ const getFsTest = async (filepath) =&gt; {
 }
 
 getFsTest(&#x27;/index.lit&#x27;)
-</code></pre></output></codecell></div></cell><section depth="3" class="" startpos="79:1-2112" endpos="175:4-5256"><cell startpos="79:1-2112" endpos="81:157-2281"><div class="cell-content"><h3 id="testing">Testing</h3><p><del>Current REPL results in script execution from cross-origin? Due to data:uri</del> was resolving the raw event from postMessage not <code>ev.data</code> which is necessary.</p></div></cell><cell startpos="83:1-2283" endpos="108:4-2932" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
+</code></pre></output></codecell></div></cell><section depth="3" class="" startpos="79:1-2112" endpos="175:4-5254"><cell startpos="79:1-2112" endpos="81:157-2281"><div class="cell-content"><h3 id="testing">Testing</h3><p><del>Current REPL results in script execution from cross-origin? Due to data:uri</del> was resolving the raw event from postMessage not <code>ev.data</code> which is necessary.</p></div></cell><cell startpos="83:1-2283" endpos="108:4-2932" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
   let myWorker;
   try {
     myWorker = new Worker(&#x27;worker.js&#x27;)
@@ -87,10 +87,10 @@ lit{&quot;src&quot;:&quot;&quot;,&quot;root&quot;:&quot;/&quot;,&quot;base&quot;
 Getting /index.lit from local fs.
 length+4589
 done
-</code></pre></output></codecell></div></cell><cell startpos="109:1-2933" endpos="130:4-3524" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
+</code></pre></output></codecell></div></cell><cell startpos="109:1-2933" endpos="130:4-3522" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
   let myWorker;
   try {
-    myWorker = new Worker(&#x27;../web.bundle.js&#x27;)
+    myWorker = new Worker(&#x27;/web.bundle.js&#x27;)
     myWorker.onmessage = (ev) =&gt; {
       if (ev.data === &#x27;done&#x27;) resolve(ev.data)
       else console.log(ev.data)
@@ -103,9 +103,9 @@ done
   }
   
 })
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">3 minutes ago</span></span></span><output><pre><code class="txt">{ msg: &#x27;worker.onerror: undefined (undefined:undefined)&#x27;,
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2 minutes ago</span></span></span><output><pre><code class="txt">{ msg: &#x27;worker.onerror: undefined (undefined:undefined)&#x27;,
   err: { isTrusted: [Getter] } }
-</code></pre></output></codecell></div></cell><cell startpos="132:1-3526" endpos="175:4-5256" class="code"><div class="cell-content"><codecell class="dir-collapse tag-largefilelineno tag-tool lang-js local collapsed"><span class="meta"><span class="lang">js</span><span class="output">&gt; text #output !collapse</span><span style="color:white;background-color:#2016a6" class="tag">largefilelineno</span><span style="color:white;background-color:#036699" class="tag">tool</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><pre><code class="js">return (async fn =&gt;{
+</code></pre></output></codecell></div></cell><cell startpos="132:1-3524" endpos="175:4-5254" class="code"><div class="cell-content"><codecell class="dir-collapse tag-largefilelineno tag-tool lang-js local collapsed"><span class="meta"><span class="lang">js</span><span class="output">&gt; text #output !collapse</span><span style="color:white;background-color:#2016a6" class="tag">largefilelineno</span><span style="color:white;background-color:#036699" class="tag">tool</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><pre><code class="js">return (async fn =&gt;{
    const url = &quot;https://dotlit.org/web.bundle.js&quot;
    const lineno = 177281
    const spread = 10
