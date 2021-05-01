@@ -3,7 +3,7 @@
 let document = { documentElement: { style: {} } }
 
 importScripts('web.bundle.js')
-postMessage("dotlit: " + typeof dotlit)
+const version = "sw:0.0.1 dotlit: " + typeof dotlit)
 
 const PRECACHE = Date.now() // no-cache 'precache-v1';
 const RUNTIME = 'runtime';
@@ -17,7 +17,7 @@ const PRECACHE_URLS = [
   //'demo.js'
 ];
 
-const getMockResponse = args => new Response('sv:version:0.0.1')
+const getMockResponse = args => new Response(version)
 
 // The install handler takes care of precaching the resources we always need.
 self.addEventListener('install', event => {
