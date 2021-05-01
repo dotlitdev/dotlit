@@ -14,7 +14,7 @@
 <li>Initial source, from: <a href="https://googlechrome.github.io/samples/service-worker/basic/">https://googlechrome.github.io/samples/service-worker/basic/<span class="linkIcon">↗</span></a></li>
 </ul><p>See <a href="testing/web_workers.html?file=testing/web_workers.lit" title="testing/Web Workers" wikilink="true">testing/Web Workers</a> for related investigation.</p></div></cell></section>
 <section depth="2" class="" startpos="15:1-435" endpos="96:4-2124"><cell startpos="15:1-435" endpos="15:15-449"><div class="cell-content"><h2 id="exploration">Exploration</h2></div></cell><cell startpos="16:1-450" endpos="21:4-527" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return navigator
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.8 hours ago</span></span></span><output><pre><code class="txt">{}
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2 hours ago</span></span></span><output><pre><code class="txt">{}
 </code></pre></output></codecell></div></cell><cell startpos="23:1-529" endpos="30:4-643" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">if (&#x27;serviceWorker&#x27; in navigator) {
   return true
 }
@@ -22,11 +22,11 @@
 </code></pre></output></codecell></div></cell><cell startpos="33:1-646" endpos="40:4-799" class="code"><div class="cell-content"><codecell class="tag-register lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#d6dc2e" class="tag">register</span></span><pre><code class="js">return navigator
           .serviceWorker
           .register(&#x27;/serviceworker.js&#x27;)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">54 minutes ago</span></span></span><output><pre><code class="txt">{}
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1 hour ago</span></span></span><output><pre><code class="txt">{}
 </code></pre></output></codecell></div></cell><cell startpos="42:1-801" endpos="49:4-1007" class="code"><div class="cell-content"><codecell class="tag-status lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#cacdcf" class="tag">status</span></span><pre><code class="js">return navigator.serviceWorker.controller
          ? &quot;Service worker active.&quot;
          : &quot;Service worker Not active.&quot;
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1 hour ago</span></span></span><output><pre><code class="txt">Service worker active.
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.2 hours ago</span></span></span><output><pre><code class="txt">Service worker active.
 </code></pre></output></codecell></div></cell><cell startpos="51:1-1009" endpos="66:4-1398" class="code"><div class="cell-content"><codecell class="tag-unregister lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#31d494" class="tag">unregister</span></span><pre><code class="js">return (async fn =&gt; {
   const regs = await navigator
                      .serviceWorker
@@ -37,22 +37,22 @@
   }
   return `Unregistered ${regs.length} regisration(s)`
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1 hour ago</span></span></span><output><pre><code class="txt">{}
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.3 hours ago</span></span></span><output><pre><code class="txt">{}
 Unregistered 1 regisration(s)
 </code></pre></output></codecell></div></cell><cell startpos="67:1-1399" endpos="75:4-1544" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt; {
   const resp = await fetch(&#x27;/none&#x27;)
   return resp.status
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.3 hours ago</span></span></span><output><pre><code class="txt">404
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.4 hours ago</span></span></span><output><pre><code class="txt">404
 </code></pre></output></codecell></div></cell><cell startpos="76:1-1545" endpos="81:4-1646" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (new Response(&#x27;hello&#x27;)).text()
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">4 days ago</span></span></span><output><pre><code class="txt">hello
 </code></pre></output></codecell></div></cell><cell startpos="83:1-1648" endpos="83:194-1841"><div class="cell-content"><p>As of now, the service worker doesn&#x27;t cache anything and just passes through to the network as normal. Except if the <code>request.url</code> ends with <code>--s</code> in which case it returns a mock/info response.</p></div></cell><cell startpos="84:1-1842" endpos="92:4-2084" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt; {
   const resp = await fetch(&#x27;--sw&#x27;)
   return resp.status + &quot; : &quot; + (await resp.text())
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">27 minutes ago</span></span></span><output><pre><code class="txt">200 : sw:0.0.2 dotlit: object args: [&quot;https://dotlit.org/testing/--sw&quot;]
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">38 minutes ago</span></span></span><output><pre><code class="txt">200 : sw:0.0.2 dotlit: object args: [&quot;https://dotlit.org/testing/--sw&quot;]
 </code></pre></output></codecell></div></cell><cell startpos="94:1-2086" endpos="96:4-2124" class="code"><div class="cell-content"><codecell class="lang-text local"><span class="meta"><span class="lang">text</span><span class="source">&lt; ./getserviceworker--sw</span></span><pre><code class="text"></code></pre></codecell></div></cell></section>
-<section depth="2" class="" startpos="98:1-2126" endpos="176:4-4667"><cell startpos="98:1-2126" endpos="98:18-2143"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="99:1-2144" endpos="176:4-4667" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><output><pre><code class="js">
+<section depth="2" class="" startpos="98:1-2126" endpos="257:4-7245"><cell startpos="98:1-2126" endpos="98:18-2143"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="99:1-2144" endpos="176:4-4667" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><output><pre><code class="js">
 // gross hack around one of @codemirror/view bugs
 let document = { documentElement: { style: {} } }
 
@@ -109,6 +109,85 @@ self.addEventListener(&#x27;fetch&#x27;, event =&gt; {
   if (event.request.url.startsWith(self.location.origin)) {
     if (event.request.url.endsWith(&#x27;--sw&#x27;)) {
        getMockResponse(event)
+    }
+    else event.respondWith(
+      caches.match(event.request).then(cachedResponse =&gt; {
+        if (false &amp;&amp; cachedResponse) {
+          return cachedResponse;
+        }
+
+        return caches.open(RUNTIME).then(cache =&gt; {
+          return fetch(event.request).then(response =&gt; {
+            // Put a copy of the response in the runtime cache.
+            return cache.put(event.request, response.clone()).then(() =&gt; {
+              return response;
+            });
+          });
+        });
+      })
+    );
+  }
+});
+</code></pre></output></codecell></div></cell><cell startpos="177:1-4668" endpos="257:4-7245" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><output><pre><code class="js">
+// gross hack around one of @codemirror/view bugs
+let document = { documentElement: { style: {} } }
+
+importScripts(&#x27;web.bundle.js&#x27;)
+const version = &quot;sw:0.0.5 dotlit: &quot; + typeof dotlit
+
+const PRECACHE = Date.now() // no-cache &#x27;precache-v1&#x27;;
+const RUNTIME = &#x27;runtime&#x27;;
+
+// A list of local resources we always want to be cached.
+const PRECACHE_URLS = [
+  //&#x27;index.html&#x27;,
+  //&#x27;./&#x27;, // Alias for index.html
+  //&#x27;styles.css&#x27;,
+  //&#x27;../../styles/main.css&#x27;,
+  //&#x27;demo.js&#x27;
+];
+
+const getMockResponse = (event) =&gt; {
+
+    return new Reponse(version + event.request.url)
+
+    let stat
+    // try { stat = await dotlit.lit.fs.stat(&#x27;/index.lit&#x27;)} catch(err) {}
+    // new Response(version + &quot; args: &quot; + JSON.stringify([event.request.url, dotlit.lit.location, stat]))
+
+}
+
+// The install handler takes care of precaching the resources we always need.
+self.addEventListener(&#x27;install&#x27;, event =&gt; {
+  event.waitUntil(
+    caches.open(PRECACHE)
+      .then(cache =&gt; cache.addAll(PRECACHE_URLS))
+      .then(self.skipWaiting())
+  );
+});
+
+// The activate handler takes care of cleaning up old caches.
+self.addEventListener(&#x27;activate&#x27;, event =&gt; {
+  const currentCaches = [PRECACHE, RUNTIME];
+  event.waitUntil(
+    caches.keys().then(cacheNames =&gt; {
+      return cacheNames.filter(cacheName =&gt; !currentCaches.includes(cacheName));
+    }).then(cachesToDelete =&gt; {
+      return Promise.all(cachesToDelete.map(cacheToDelete =&gt; {
+        return caches.delete(cacheToDelete);
+      }));
+    }).then(() =&gt; self.clients.claim())
+  );
+});
+
+// The fetch handler serves responses for same-origin resources from a cache.
+// If no response is found, it populates the runtime cache with the response
+// from the network before returning it to the page.
+self.addEventListener(&#x27;fetch&#x27;, event =&gt; {
+  // Skip cross-origin requests, like those for Google Analytics. And add mock response
+  if (event.request.url.startsWith(self.location.origin)) {
+    if (event.request.url.endsWith(&#x27;--sw&#x27;)) {
+       event.respondWith(getMockResponse(event))
     }
     else event.respondWith(
       caches.match(event.request).then(cachedResponse =&gt; {
