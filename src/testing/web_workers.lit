@@ -106,6 +106,32 @@ Getting /index.lit from local fs.
 length+4589
 done
 ```
+```js
+return new Promise((resolve,reject) => {
+  let myWorker;
+  try {
+    myWorker = new Worker('worker.js')
+    myWorker.onmessage = (ev) => {
+      if (ev.data === 'done') resolve(ev.data)
+      else console.log(ev.data)
+    }
+    myWorker.onerror = (err) => {
+      resolve({msg: "worker.onerror: " + err.message + " (" + err.filename + ":" + err.lineno + ")", err, err},)
+    }
+  } catch(err) {
+    resolve({msg: "Caught err", err})
+  }
+  
+})
+```
+```>txt attached=true updated=1619811354622
+Location: object{}
+dotlit: object
+lit{"src":"","root":"/","base":"https://dotlit.org/","query":{}}
+Getting /index.lit from local fs.
+length+4589
+done
+```
 
 ```js #largefilelineno #tool !collapse > text #output !collapse
 return (async fn =>{
