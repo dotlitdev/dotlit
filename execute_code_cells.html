@@ -1,4 +1,4 @@
-<html data-reactroot=""><head><title>Executing code cells</title><meta name="litsrc" value="execute_code_cells.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"><div class="lit-message"><span class="message">Viewer Error: Unexpected token &#x27;export&#x27;</span><span class="name">421:1-448:4</span></div><div class="lit-message"><span class="message">Viewer Error: Unexpected token &#x27;export&#x27;</span><span class="name">458:1-489:4</span></div></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="3:21-46"><cell startpos="1:1-0" endpos="1:25-24"><div class="cell-content"><h1 id="executing-code-cells">Executing <code>code</code> cells</h1></div></cell><section depth="2" class="" startpos="3:1-26" endpos="3:21-46"><cell startpos="3:1-26" endpos="3:21-46"><div class="cell-content"><h2 id="table-of-contents">Table of Contents</h2><ul>
+<html data-reactroot=""><head><title>Executing code cells</title><meta name="litsrc" value="execute_code_cells.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"><div class="lit-message"><span class="message">Viewer Error: Unexpected token &#x27;export&#x27;</span><span class="name">425:1-452:4</span></div><div class="lit-message"><span class="message">Viewer Error: Unexpected token &#x27;export&#x27;</span><span class="name">462:1-493:4</span></div></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="3:21-46"><cell startpos="1:1-0" endpos="1:25-24"><div class="cell-content"><h1 id="executing-code-cells">Executing <code>code</code> cells</h1></div></cell><section depth="2" class="" startpos="3:1-26" endpos="3:21-46"><cell startpos="3:1-26" endpos="3:21-46"><div class="cell-content"><h2 id="table-of-contents">Table of Contents</h2><ul>
 <li>
 <p><a href="#bugs--and-to-do-">Bugs 🐜 and To do ✅<span class="linkIcon">§</span></a></p>
 </li>
@@ -43,7 +43,7 @@ const fn = (opts : Options) =&gt; {
 return fn()
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.3 weeks ago</span></span></span><output><pre><code class="txt">12
 </code></pre></output></codecell></div></cell></section></section>
-<section depth="3" class="" startpos="53:1-656" endpos="86:4-1229"><cell startpos="53:1-656" endpos="53:23-678"><div class="cell-content"><h3 id="async-and-promises">Async and Promises</h3></div></cell><cell startpos="55:1-680" endpos="68:4-945" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="filename">test.js</span></span><pre><code class="js">const wait = (ms) =&gt; {
+<section depth="3" class="" startpos="53:1-656" endpos="90:4-1296"><cell startpos="53:1-656" endpos="53:23-678"><div class="cell-content"><h3 id="async-and-promises">Async and Promises</h3></div></cell><cell startpos="55:1-680" endpos="68:4-945" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="filename">test.js</span></span><pre><code class="js">const wait = (ms) =&gt; {
   return new Promise(resolve =&gt; {
     setTimeout( () =&gt; {
       resolve(new Date())
@@ -57,14 +57,16 @@ return wait(1000)
        .then( res =&gt; {
            return res.status
        })
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">4 minutes ago</span></span></span><output><pre><code class="txt">200
-</code></pre></output></codecell></div></cell><cell startpos="80:1-1108" endpos="86:4-1229" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt; {
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">6 minutes ago</span></span></span><output><pre><code class="txt">200
+</code></pre></output></codecell></div></cell><cell startpos="80:1-1108" endpos="90:4-1296" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt; {
     const size = await lit.fs.du(&#x27;/&#x27;)
     console.log(&quot;Preamble...&quot;)
     return size
 })()
-</code></pre></codecell></div></cell></section>
-<section depth="3" class="" startpos="96:1-1239" endpos="186:4-3292"><cell startpos="96:1-1239" endpos="96:16-1254"><div class="cell-content"><h3 id="react-jsx">React <code>jsx</code></h3></div></cell><cell startpos="98:1-1256" endpos="109:4-1483" class="code"><div class="cell-content"><codecell class="lang-jsx local"><span class="meta"><span class="lang">jsx</span><span class="repl">js</span><span class="filename">test.jsx</span></span><pre><code class="jsx">import React from &#x27;https://cdn.skypack.dev/react&#x27;
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">3 minutes ago</span></span></span><output><pre><code class="txt">Preamble...
+247220
+</code></pre></output></codecell></div></cell></section>
+<section depth="3" class="" startpos="100:1-1306" endpos="190:4-3359"><cell startpos="100:1-1306" endpos="100:16-1321"><div class="cell-content"><h3 id="react-jsx">React <code>jsx</code></h3></div></cell><cell startpos="102:1-1323" endpos="113:4-1550" class="code"><div class="cell-content"><codecell class="lang-jsx local"><span class="meta"><span class="lang">jsx</span><span class="repl">js</span><span class="filename">test.jsx</span></span><pre><code class="jsx">import React from &#x27;https://cdn.skypack.dev/react&#x27;
 
 const Component = props =&gt; {
   return &lt;div&gt;&lt;/div&gt;
@@ -72,7 +74,7 @@ const Component = props =&gt; {
 
 return &lt;Component/&gt;
 </code></pre></codecell><codecell class="dir-error lang-txt local output"><span class="meta"><span class="lang">txt</span><span style="color:white;background-color:red" class="directive dir-error">error</span><span class="updatedAt">Updated <span class="Time relative">3.0 days ago</span></span></span><output><pre><code class="txt">undefined
-</code></pre></output></codecell></div></cell><cell startpos="111:1-1485" endpos="127:4-1851" class="code"><div class="cell-content"><codecell class="lang-jsx local"><span class="meta"><span class="lang">jsx</span><span class="repl">js</span><span class="filename">test.jsx</span></span><pre><code class="jsx">return (async args =&gt; {
+</code></pre></output></codecell></div></cell><cell startpos="115:1-1552" endpos="131:4-1918" class="code"><div class="cell-content"><codecell class="lang-jsx local"><span class="meta"><span class="lang">jsx</span><span class="repl">js</span><span class="filename">test.jsx</span></span><pre><code class="jsx">return (async args =&gt; {
 
   const React = lit.utils.React
   const { useState } = React
@@ -87,7 +89,7 @@ return &lt;Component/&gt;
 
   return &lt;Clicker/&gt;
 })()
-</code></pre></codecell></div></cell><cell startpos="131:1-1855" endpos="148:4-2153" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async args =&gt; {
+</code></pre></codecell></div></cell><cell startpos="135:1-1922" endpos="152:4-2220" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async args =&gt; {
 
   const confetti = await 
   import(&#x27;https://cdn.skypack.dev/canvas-confetti&#x27;)
@@ -101,7 +103,7 @@ return &lt;Component/&gt;
   return &quot;yay 🥳&quot;
 })()
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.2 weeks ago</span></span></span><output><pre><code class="txt">yay 🥳
-</code></pre></output></codecell></div></cell><cell startpos="150:1-2155" endpos="186:4-3292" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span class="filename">current_viewport</span><span class="output">&gt; svg</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><pre><code class="js">const b = document.body
+</code></pre></output></codecell></div></cell><cell startpos="154:1-2222" endpos="190:4-3359" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span class="filename">current_viewport</span><span class="output">&gt; svg</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><pre><code class="js">const b = document.body
 const ch = b.clientHeight
 const cw = b.clientWidth
 const sh = b.scrollHeight
@@ -135,15 +137,15 @@ return {
   <rect x="151.05316382548398" y="159.67350476740828" width="43.94683617451604" height="74.82230569199653" style="fill:rgb(255,255,255);stroke-width:3;stroke:rgb(255,0,0)" />
 </svg>
 </div></codecell></div></cell></section>
-<section depth="3" class="" startpos="200:1-3306" endpos="222:4-3602"><cell startpos="200:1-3306" endpos="200:20-3325"><div class="cell-content"><h3 id="output-markdown">Output Markdown</h3></div></cell><cell startpos="202:1-3327" endpos="209:4-3493" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; md</span></span><pre><code class="js">console.log(&quot;A __*result*__: **`&quot; +  42/13 + &quot;`**&quot;)
+<section depth="3" class="" startpos="204:1-3373" endpos="226:4-3669"><cell startpos="204:1-3373" endpos="204:20-3392"><div class="cell-content"><h3 id="output-markdown">Output Markdown</h3></div></cell><cell startpos="206:1-3394" endpos="213:4-3560" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; md</span></span><pre><code class="js">console.log(&quot;A __*result*__: **`&quot; +  42/13 + &quot;`**&quot;)
 return 42
 </code></pre></codecell><codecell class="lang-md local output"><span class="meta"><span class="lang">md</span><span class="updatedAt">Updated <span class="Time relative">1.4 weeks ago</span></span></span><div class="md-block">
 <p>A <strong><em>result</em></strong>: <strong><code>3.230769230769231</code></strong>
 42</p>
-</div></codecell></div></cell><cell startpos="217:1-3501" endpos="222:4-3602" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; json</span></span><pre><code class="js">return { foo: &#x27;bar&#x27;}
+</div></codecell></div></cell><cell startpos="221:1-3568" endpos="226:4-3669" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; json</span></span><pre><code class="js">return { foo: &#x27;bar&#x27;}
 </code></pre></codecell><codecell class="lang-json local output"><span class="meta"><span class="lang">json</span><span class="updatedAt">Updated <span class="Time relative">1.5 weeks ago</span></span></span><output><pre><code class="json">{ foo: &#x27;bar&#x27; }
 </code></pre></output></codecell></div></cell></section>
-<section depth="3" class="" startpos="231:1-3611" endpos="410:4-7005"><cell startpos="231:1-3611" endpos="231:31-3641"><div class="cell-content"><h3 id="meta-lit-global-and-ast">Meta: <code>lit</code> global and AST</h3></div></cell><cell startpos="257:1-3667" endpos="301:4-4756" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; ast_info !collapse</span></span><pre><code class="js">return this
+<section depth="3" class="" startpos="235:1-3678" endpos="414:4-7072"><cell startpos="235:1-3678" endpos="235:31-3708"><div class="cell-content"><h3 id="meta-lit-global-and-ast">Meta: <code>lit</code> global and AST</h3></div></cell><cell startpos="261:1-3734" endpos="305:4-4823" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; ast_info !collapse</span></span><pre><code class="js">return this
 </code></pre></codecell><codecell class="dir-collapse lang-ast_info local collapsed output"><span class="meta"><span class="lang">ast_info</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="updatedAt">Updated <span class="Time relative">1.3 weeks ago</span></span></span><output><pre><code class="ast_info">{ type: &#x27;root&#x27;,
   children: 
    [ { type: &#x27;section&#x27;,
@@ -184,12 +186,12 @@ return 42
   position: 
    { start: { line: 1, column: 1, offset: 0 },
      end: { line: 315, column: 1, offset: 4807 } } }
-</code></pre></output></codecell></div></cell><cell startpos="308:1-4763" endpos="316:4-5005" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; litlocation !collapse</span></span><pre><code class="js">return lit.location
+</code></pre></output></codecell></div></cell><cell startpos="312:1-4830" endpos="320:4-5072" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; litlocation !collapse</span></span><pre><code class="js">return lit.location
 </code></pre></codecell><codecell class="dir-collapse lang-litlocation local collapsed output"><span class="meta"><span class="lang">litlocation</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="updatedAt">Updated <span class="Time relative">1.4 weeks ago</span></span></span><output><pre><code class="litlocation">{ src: &#x27;execute_code_cells.lit&#x27;,
   root: &#x27;/&#x27;,
   base: &#x27;https://dotlit.org/&#x27;,
   query: { file: &#x27;execute_code_cells.lit&#x27; } }
-</code></pre></output></codecell></div></cell><cell startpos="319:1-5008" endpos="346:4-5806" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; lit_utils !collapse</span></span><pre><code class="js">return lit.utils
+</code></pre></output></codecell></div></cell><cell startpos="323:1-5075" endpos="350:4-5873" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; lit_utils !collapse</span></span><pre><code class="js">return lit.utils
 </code></pre></codecell><codecell class="dir-collapse lang-lit_utils local collapsed output"><span class="meta"><span class="lang">lit_utils</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="updatedAt">Updated <span class="Time relative">1.4 weeks ago</span></span></span><output><pre><code class="lit_utils">{ select: 
    { matches: [Function: matches],
      selectAll: [Function: selectAll],
@@ -213,12 +215,12 @@ return 42
   vfile: [Function: VFile],
   delete: [Function: _delete],
   read: [Function: read] }
-</code></pre></output></codecell></div></cell><cell startpos="349:1-5809" endpos="357:4-6046" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; text #title</span></span><pre><code class="js">return Object.keys(lit.utils
+</code></pre></output></codecell></div></cell><cell startpos="353:1-5876" endpos="361:4-6113" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; text #title</span></span><pre><code class="js">return Object.keys(lit.utils
           .select
           .select(&#x27;heading&#x27;, ast))
           
-</code></pre></codecell><codecell class="tag-title lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:white;background-color:#694225" class="tag">title</span><span class="updatedAt">Updated <span class="Time relative">24.0 hours ago</span></span></span><output><pre><code class="text">[ &#x27;type&#x27;, &#x27;depth&#x27;, &#x27;children&#x27;, &#x27;position&#x27;, &#x27;data&#x27;, &#x27;processed&#x27; ]
-</code></pre></output></codecell></div></cell><cell startpos="358:1-6047" endpos="378:4-6561" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; json #headings !collapse</span></span><pre><code class="js">return lit.utils
+</code></pre></codecell><codecell class="tag-title lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:white;background-color:#694225" class="tag">title</span><span class="updatedAt">Updated <span class="Time relative">1 day ago</span></span></span><output><pre><code class="text">[ &#x27;type&#x27;, &#x27;depth&#x27;, &#x27;children&#x27;, &#x27;position&#x27;, &#x27;data&#x27;, &#x27;processed&#x27; ]
+</code></pre></output></codecell></div></cell><cell startpos="362:1-6114" endpos="382:4-6628" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; json #headings !collapse</span></span><pre><code class="js">return lit.utils
           .select
           .selectAll(&#x27;heading&#x27;, ast)
           .map( h =&gt; `${h.depth} ${h.data.id }`)
@@ -235,7 +237,7 @@ return 42
   &#x27;3 first-pass&#x27;,
   &#x27;3 version-2&#x27;,
   &#x27;3 module-from-string-🥲&#x27; ]
-</code></pre></output></codecell></div></cell><cell startpos="381:1-6564" endpos="395:4-6809" class="code"><div class="cell-content"><codecell class="dir-inline lang-html local"><span class="meta"><span class="lang">html</span><span style="color:black;background-color:#b96da2" class="directive dir-inline">inline</span></span><div><style>
+</code></pre></output></codecell></div></cell><cell startpos="385:1-6631" endpos="399:4-6876" class="code"><div class="cell-content"><codecell class="dir-inline lang-html local"><span class="meta"><span class="lang">html</span><span style="color:black;background-color:#b96da2" class="directive dir-inline">inline</span></span><div><style>
 codecell.collapsed.dir-collapse li span.dir-collapse {
   display: none;
 }
@@ -248,7 +250,7 @@ codecell.dir-error li span.dir-error {
   color: white;
 }
 </style>
-</div></codecell></div></cell><cell startpos="398:1-6812" endpos="400:39-6867"><div class="cell-content"><p>Trying out git</p><p>See more at <a href="testing/isomorphic_git.html?file=testing/isomorphic_git.lit" title="testing/Isomorphic Git" wikilink="true">testing/Isomorphic Git</a></p></div></cell><cell startpos="402:1-6869" endpos="410:4-7005" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async args =&gt; {
+</div></codecell></div></cell><cell startpos="402:1-6879" endpos="404:39-6934"><div class="cell-content"><p>Trying out git</p><p>See more at <a href="testing/isomorphic_git.html?file=testing/isomorphic_git.lit" title="testing/Isomorphic Git" wikilink="true">testing/Isomorphic Git</a></p></div></cell><cell startpos="406:1-6936" endpos="414:4-7072" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async args =&gt; {
 
   const git = (await 
   import(&#x27;https://cdn.skypack.dev/isomorphic-git&#x27;)).default
@@ -256,7 +258,7 @@ codecell.dir-error li span.dir-error {
   return git 
 })()
 </code></pre></codecell></div></cell></section>
-<section depth="2" class="" startpos="413:1-7008" endpos="448:4-8043"><cell startpos="413:1-7008" endpos="417:56-7136"><div class="cell-content"><h2 id="what-if">What if...</h2><p><strong>REPLs</strong> were just custom viewers <a href="renderer/viewers.html?file=renderer/viewers.lit" title="renderer/viewers" wikilink="true">renderer/viewers</a>?</p><p>Implementing clientside execution via custom <code>!viewer</code>.</p></div></cell><section depth="3" class="" startpos="419:1-7138" endpos="448:4-8043"><cell startpos="419:1-7138" endpos="419:15-7152"><div class="cell-content"><h3 id="first-pass">First pass</h3></div></cell><cell startpos="421:1-7154" endpos="448:4-8043" class="code"><div class="cell-content"><codecell class="dir-viewer dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#cf5332" class="directive dir-viewer">viewer</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=esm</span></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
+<section depth="2" class="" startpos="417:1-7075" endpos="452:4-8110"><cell startpos="417:1-7075" endpos="421:56-7203"><div class="cell-content"><h2 id="what-if">What if...</h2><p><strong>REPLs</strong> were just custom viewers <a href="renderer/viewers.html?file=renderer/viewers.lit" title="renderer/viewers" wikilink="true">renderer/viewers</a>?</p><p>Implementing clientside execution via custom <code>!viewer</code>.</p></div></cell><section depth="3" class="" startpos="423:1-7205" endpos="452:4-8110"><cell startpos="423:1-7205" endpos="423:15-7219"><div class="cell-content"><h3 id="first-pass">First pass</h3></div></cell><cell startpos="425:1-7221" endpos="452:4-8110" class="code"><div class="cell-content"><codecell class="dir-viewer dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#cf5332" class="directive dir-viewer">viewer</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=esm</span></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
   const rce = React.createElement
   const {useState, useEffect} = React
   const [resp, setResp] = useState(null)
@@ -283,7 +285,7 @@ codecell.dir-error li span.dir-error {
   return t
 }
 </code></pre></codecell></div></cell></section></section>
-<section depth="3" class="" startpos="454:1-8049" endpos="536:4-10042"><cell startpos="454:1-8049" endpos="456:72-8135"><div class="cell-content"><h3 id="version-2">Version 2</h3><p>useEffect for execution on load otherwise require button press to exec.</p></div></cell><cell startpos="458:1-8137" endpos="489:4-9044" class="code"><div class="cell-content"><codecell class="dir-viewer lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#cf5332" class="directive dir-viewer">viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=esm2</span></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
+<section depth="3" class="" startpos="458:1-8116" endpos="540:4-10109"><cell startpos="458:1-8116" endpos="460:72-8202"><div class="cell-content"><h3 id="version-2">Version 2</h3><p>useEffect for execution on load otherwise require button press to exec.</p></div></cell><cell startpos="462:1-8204" endpos="493:4-9111" class="code"><div class="cell-content"><codecell class="dir-viewer lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#cf5332" class="directive dir-viewer">viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=esm2</span></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
   const rce = React.createElement
   const {useState, useEffect} = React
   const [resp, setResp] = useState(null)
@@ -313,12 +315,12 @@ codecell.dir-error li span.dir-error {
   return t
 }
 if(typeof module !== &quot;undefined&quot;) module.exports.viewer = viewer
-</code></pre></codecell></div></cell><cell startpos="490:1-9045" endpos="496:4-9152" class="code"><div class="cell-content"><codecell class="dir-below lang-esm2 local"><span class="meta"><span class="lang">esm2</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="esm2">function foo(baz) {
+</code></pre></codecell></div></cell><cell startpos="494:1-9112" endpos="500:4-9219" class="code"><div class="cell-content"><codecell class="dir-below lang-esm2 local"><span class="meta"><span class="lang">esm2</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="esm2">function foo(baz) {
   alert(&quot;foo II&quot;)
   return &quot;bar:&quot; + baz
 }
 export const returns = foo
-</code></pre></codecell></div></cell><cell startpos="497:1-9153" endpos="506:4-9358" class="code"><div class="cell-content"><codecell class="dir-below lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span><span class="attribute attr-viewer" style="color:black;background-color:#cf5332">viewer=esm2</span></span><pre><code class="js">import confetti from &#x27;https://cdn.skypack.dev/canvas-confetti&#x27;
+</code></pre></codecell></div></cell><cell startpos="501:1-9220" endpos="510:4-9425" class="code"><div class="cell-content"><codecell class="dir-below lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span><span class="attribute attr-viewer" style="color:black;background-color:#cf5332">viewer=esm2</span></span><pre><code class="js">import confetti from &#x27;https://cdn.skypack.dev/canvas-confetti&#x27;
 
 export const returns = run =&gt; confetti({
   origin: {y: 0},
@@ -326,22 +328,22 @@ export const returns = run =&gt; confetti({
   particleCount: 100,
   ticks: 1000,
 })
-</code></pre></codecell></div></cell><cell startpos="508:1-9360" endpos="508:38-9397"><div class="cell-content"><p>Setting <code>exec</code> attribute to <code>onload</code></p></div></cell><cell startpos="510:1-9399" endpos="516:4-9542" class="code"><div class="cell-content"><codecell class="dir-below lang-esm2 local"><span class="meta"><span class="lang">esm2</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span><span class="attribute attr-exec" style="color:black;background-color:#02fb89">exec=onload</span></span><pre><code class="esm2">function output(num) {
+</code></pre></codecell></div></cell><cell startpos="512:1-9427" endpos="512:38-9464"><div class="cell-content"><p>Setting <code>exec</code> attribute to <code>onload</code></p></div></cell><cell startpos="514:1-9466" endpos="520:4-9609" class="code"><div class="cell-content"><codecell class="dir-below lang-esm2 local"><span class="meta"><span class="lang">esm2</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span><span class="attribute attr-exec" style="color:black;background-color:#02fb89">exec=onload</span></span><pre><code class="esm2">function output(num) {
   alert(&quot;execd onload!&quot;)
   return &quot;done: &quot; + new Date()
 }
 export const returns = output()
-</code></pre></codecell></div></cell><cell startpos="519:1-9545" endpos="519:66-9610"><div class="cell-content"><p>Cannot <em>yet</em> output raw DOM nodes, due to react setup of viewers.</p></div></cell><cell startpos="521:1-9612" endpos="528:4-9780" class="code"><div class="cell-content"><codecell class="dir-below lang-esm2 local"><span class="meta"><span class="lang">esm2</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="esm2">function output(num) {
+</code></pre></codecell></div></cell><cell startpos="523:1-9612" endpos="523:66-9677"><div class="cell-content"><p>Cannot <em>yet</em> output raw DOM nodes, due to react setup of viewers.</p></div></cell><cell startpos="525:1-9679" endpos="532:4-9847" class="code"><div class="cell-content"><codecell class="dir-below lang-esm2 local"><span class="meta"><span class="lang">esm2</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="esm2">function output(num) {
   const dom = document.createElement(&quot;pre&quot;)
   dom.innerHTML = `Run number ${num}`
   return dom
 }
 export const returns = output
-</code></pre></codecell></div></cell><cell startpos="530:1-9782" endpos="530:155-9936"><div class="cell-content"><p>So far so good, the only issue is that output is entirely ephemeral, how would we enable document modification, ie persist the output as an attached cell.</p></div></cell><cell startpos="532:1-9938" endpos="536:4-10042" class="code"><div class="cell-content"><codecell class="dir-below lang-esm2 local"><span class="meta"><span class="lang">esm2</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="esm2">import git from &#x27;https://cdn.skypack.dev/isomorphic-git&#x27;
+</code></pre></codecell></div></cell><cell startpos="534:1-9849" endpos="534:155-10003"><div class="cell-content"><p>So far so good, the only issue is that output is entirely ephemeral, how would we enable document modification, ie persist the output as an attached cell.</p></div></cell><cell startpos="536:1-10005" endpos="540:4-10109" class="code"><div class="cell-content"><codecell class="dir-below lang-esm2 local"><span class="meta"><span class="lang">esm2</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="esm2">import git from &#x27;https://cdn.skypack.dev/isomorphic-git&#x27;
 
 export const returns = git 
 </code></pre></codecell></div></cell></section>
-<section depth="3" class="" startpos="539:1-10045" endpos="576:4-10876"><cell startpos="539:1-10045" endpos="541:81-10152"><div class="cell-content"><h3 id="module-from-string-🥲">Module from string 🥲</h3><p>Instead of importing datauri for viewers and transformers use module constructor</p></div></cell><cell startpos="542:1-10153" endpos="554:4-10391" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return module
+<section depth="3" class="" startpos="543:1-10112" endpos="580:4-10943"><cell startpos="543:1-10112" endpos="545:81-10219"><div class="cell-content"><h3 id="module-from-string-🥲">Module from string 🥲</h3><p>Instead of importing datauri for viewers and transformers use module constructor</p></div></cell><cell startpos="546:1-10220" endpos="558:4-10458" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return module
 </code></pre></codecell><codecell class="dir-error lang-txt local output"><span class="meta"><span class="lang">txt</span><span style="color:white;background-color:red" class="directive dir-error">error</span><span class="updatedAt">Updated <span class="Time relative">3.9 days ago</span></span></span><output><pre><code class="txt">function toString() {
     [native code]
 }
@@ -350,7 +352,7 @@ untitled.js:4:63
 module code@untitled.js:4:139
 evaluate@[native code]
 moduleEvaluation@[native code]
-</code></pre></output></codecell></div></cell><cell startpos="556:1-10393" endpos="576:4-10876" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">function requireFromString(src, filename) {
+</code></pre></output></codecell></div></cell><cell startpos="560:1-10460" endpos="580:4-10943" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">function requireFromString(src, filename) {
   var Module = module.constructor;
   var m = new Module();
   m._compile(src, filename);
