@@ -1,19 +1,10 @@
-/*
- Copyright 2016 Google Inc. All Rights Reserved.
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
- http://www.apache.org/licenses/LICENSE-2.0
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
 
-// Names of the two caches used in this version of the service worker.
-// Change to v2, etc. when you update any of the local resources, which will
-// in turn trigger the install event again.
+// gross hack around one of @codemirror/view bugs
+let document = { documentElement: { style: {} } }
+
+importScripts('web.bundle.js')
+postMessage("dotlit: " + typeof dotlit)
+
 const PRECACHE = Date.now() // no-cache 'precache-v1';
 const RUNTIME = 'runtime';
 
@@ -26,7 +17,7 @@ const PRECACHE_URLS = [
   //'demo.js'
 ];
 
-const getMockResponse = args => new Response('hello')
+const getMockResponse = args => new Response('sv:version:0.0.1')
 
 // The install handler takes care of precaching the resources we always need.
 self.addEventListener('install', event => {
@@ -57,7 +48,7 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   // Skip cross-origin requests, like those for Google Analytics. And add mock response
   if (event.request.url.startsWith(self.location.origin)) {
-    if (event.request.url.endsWith('/mockresponse')) {
+    if (event.request.url.endsWith('/swversion')) {
        event.respondWith(getMockResponse())
     }
     else event.respondWith(
