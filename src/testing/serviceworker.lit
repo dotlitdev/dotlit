@@ -32,18 +32,18 @@ return (async () => {
   await navigator
           .serviceWorker
           .register('/serviceworker.js')
+```
 
+```js #status
   return navigator.serviceWorker.controller
          ? "Service worker active."
          : "Refresh to activate worker."
-  
-})()
 ```
 ```>txt attached=true updated=1619527124464
 Service worker active.
 ```
 
-```js
+```js #unregister
 navigator.serviceWorker.getRegistrations().then(function(registrations) {
  for(let registration of registrations) {
   registration.unregister()
@@ -102,8 +102,6 @@ const PRECACHE_URLS = [
 ];
 
 const getMockResponse = args => new Response('hello')
-
-importScripts('fs.js')
 
 // The install handler takes care of precaching the resources we always need.
 self.addEventListener('install', event => {
