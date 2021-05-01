@@ -1,4 +1,4 @@
-# testing/serviceworker
+# Service Worker
 
 ## References 
 
@@ -33,7 +33,7 @@ return navigator
           .serviceWorker
           .register('/serviceworker.js')
 ```
-```>txt attached=true updated=1619871342817
+```>txt attached=true updated=1619872698286
 {}
 ```
 
@@ -42,7 +42,7 @@ return navigator.serviceWorker.controller
          ? "Service worker active."
          : "Service worker Not active."
 ```
-```>txt attached=true updated=1619871348172
+```>txt attached=true updated=1619872129030
 Service worker active.
 ```
 
@@ -55,11 +55,12 @@ return (async fn => {
     console.log(registration)
     registration.unregister()
   }
-  return `Unregistered ${regs.length} regisrations`
+  return `Unregistered ${regs.length} regisration(s)`
 })()
 ```
-```>txt attached=true updated=1619871247623
-Unregistered 0 regisrations
+```>txt attached=true updated=1619872017006
+{}
+Unregistered 1 regisration(s)
 ```
 ```js
 return (async fn => {
@@ -78,12 +79,16 @@ hello
 ```
 ```js
 return (async fn => {
-  const resp = await fetch('/swversion')
+  const resp = await fetch('--sw')
   return resp.status + " : " + (await resp.text())
 })()
 ```
-```>txt attached=true updated=1619871359320
-200 : sw:0.0.1 dotlit: object
+```>txt attached=true updated=1619872711393
+200 : sw:0.0.1 dotlit: object args: ["https://dotlit.org/testing/--sw"]
+```
+
+```text < ./getserviceworker--sw 
+
 ```
 
 ## Implementation
@@ -93,7 +98,7 @@ return (async fn => {
 let document = { documentElement: { style: {} } }
 
 importScripts('web.bundle.js')
-const version = "sw:0.0.1 dotlit: " + typeof dotlit
+const version = "sw:0.0.2 dotlit: " + typeof dotlit
 
 const PRECACHE = Date.now() // no-cache 'precache-v1';
 const RUNTIME = 'runtime';
