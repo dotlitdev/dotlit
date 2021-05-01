@@ -42,16 +42,21 @@ return navigator.serviceWorker.controller
          ? "Service worker active."
          : "Service worker Not active."
 ```
-```>txt attached=true updated=1619871005957
-Refresh to activate worker.
+```>txt attached=true updated=1619871046128
+Service worker Not active.
 ```
 
 ```js #unregister
-navigator.serviceWorker.getRegistrations().then(function(registrations) {
- for(let registration of registrations) {
-  console.log(registration)
-  registration.unregister()
-} })
+return (async fn => {
+  const regs = await navigator
+                     .serviceWorker
+                     .getRegistrations()
+  for(let registration of regs) {
+    console.log(registration)
+    registration.unregister()
+  }
+  return `Unregistered ${regs.length} regisrations`
+})()
 ```
 ```>txt attached=true updated=1619870788357
 undefined
