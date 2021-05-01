@@ -1643,7 +1643,9 @@ return lit.fs.readStat('/manifest.json')
   remote: { stat: undefined, value: undefined } }
 ```
 ```js > json !collapse
-return lit.fs.readStat('/manifest.json')
+return lit.fs
+          .readStat('/manifest.json')
+          .then(stat => [stat.local.stat, stat.remote.stat])
 ```
 ```>json !collapse attached=true updated=1619874403200
 { local: 
