@@ -112,8 +112,9 @@ sw:0.0.6 dotlit: objecthttps://dotlit.org/manifest.json--sw
 let document = { documentElement: { style: {} } }
 
 importScripts('web.bundle.js')
-const version = "sw:0.0.7 dotlit: " + typeof dotlit
+const version = "sw:0.0.8 dotlit: " + typeof dotlit
 
+const ENABLE_CACHE = false
 const PRECACHE = Date.now() // no-cache 'precache-v1';
 const RUNTIME = 'runtime';
 
@@ -166,11 +167,13 @@ self.addEventListener('fetch', event => {
   // Skip cross-origin requests, like those for Google Analytics. And add mock response
   if (event.request.url.startsWith(self.location.origin)) {
     if (event.request.url.endsWith('--sw')) {
-       event.respondWith(getMockResponse(event))
+       // event.respondWith(
+       getMockResponse(event)
+       // )
     }
     else event.respondWith(
       caches.match(event.request).then(cachedResponse => {
-        if (false && cachedResponse) {
+        if (ENABLE_CACHE && cachedResponse) {
           return cachedResponse;
         }
 
