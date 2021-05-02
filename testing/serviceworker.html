@@ -55,12 +55,12 @@
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.3 days ago</span></span></span><output><pre><code class="txt">200
 sw:0.0.6 dotlit: objecthttps://dotlit.org/manifest.json--sw
 </code></pre></output></codecell></div></cell><cell startpos="102:1-2236" endpos="104:4-2274" class="code"><div class="cell-content"><codecell class="lang-text local"><span class="meta"><span class="lang">text</span><span class="source">&lt; ./getserviceworker--sw</span></span><pre><code class="text"></code></pre></codecell></div></cell></section>
-<section depth="2" class="" startpos="106:1-2276" endpos="191:4-4991"><cell startpos="106:1-2276" endpos="106:18-2293"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="108:1-2295" endpos="191:4-4991" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><output><pre><code class="js">
+<section depth="2" class="" startpos="106:1-2276" endpos="193:4-4985"><cell startpos="106:1-2276" endpos="106:18-2293"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="108:1-2295" endpos="193:4-4985" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><output><pre><code class="js">
 // gross hack around one of @codemirror/view bugs
 let document = { documentElement: { style: {} } }
 
 importScripts(&#x27;web.bundle.js&#x27;)
-const version = &quot;sw:0.0.8 dotlit: &quot; + typeof dotlit
+const version = &quot;sw:0.0.9 dotlit: &quot; + typeof dotlit
 
 const ENABLE_CACHE = false
 const PRECACHE = Date.now() // no-cache &#x27;precache-v1&#x27;;
@@ -76,10 +76,12 @@ const PRECACHE_URLS = [
 ];
 
 const getMockResponse = (event) =&gt; {
-    event.respondWith(version + event.request.url.slice(0,-4))
-    return new Response(version + event.request.url)
+    event.respondWith(version + event.request.url)
 
-    let stat
+
+    //return new Response(version + event.request.url)
+
+    //let stat
     // try { stat = await dotlit.lit.fs.stat(&#x27;/index.lit&#x27;)} catch(err) {}
     // new Response(version + &quot; args: &quot; + JSON.stringify([event.request.url, dotlit.lit.location, stat]))
 
