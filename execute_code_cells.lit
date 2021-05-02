@@ -433,13 +433,14 @@ const unist = lit.utils.unist
 const visit = unist.visit
 const select = unist.select.select
 const source = unist.source
+const patchSource = unist.patchSource.default
 
 const node = select('code[meta=#example2]', lit.ast)
 
 const cellSource = source(node.position, src)
 
 const update = async (pos, src) => {
-    await lit.fs.writeFile(lit.location.src, unist.patchSource(lit.file.contents, pos, src))
+    await lit.fs.writeFile(lit.location.src, patchSource(lit.file.contents, pos, src))
 }
 
 return update(node.position, "- [ ] Self mutated out of existence?")
