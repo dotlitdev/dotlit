@@ -3,7 +3,7 @@
 let document = { documentElement: { style: {} } }
 
 importScripts('web.bundle.js')
-const version = "sw:0.0.8 dotlit: " + typeof dotlit
+const version = "sw:0.0.9 dotlit: " + typeof dotlit
 
 const ENABLE_CACHE = false
 const PRECACHE = Date.now() // no-cache 'precache-v1';
@@ -19,10 +19,12 @@ const PRECACHE_URLS = [
 ];
 
 const getMockResponse = (event) => {
-    event.respondWith(version + event.request.url.slice(0,-4))
-    return new Response(version + event.request.url)
+    event.respondWith(version + event.request.url)
 
-    let stat
+
+    //return new Response(version + event.request.url)
+
+    //let stat
     // try { stat = await dotlit.lit.fs.stat('/index.lit')} catch(err) {}
     // new Response(version + " args: " + JSON.stringify([event.request.url, dotlit.lit.location, stat]))
 
