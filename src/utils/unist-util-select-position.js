@@ -6,11 +6,17 @@ const console = getConsoleForNamespace('util')
 
 export const atPos = pos => (node) => {
   const pos2 = node.position
-  if (!pos2 || !pos2.start || !pos2.end) console.error("no pos", node)
+  if (!pos2 || !pos2.start || !pos2.end) {
+    console.error("no pos", node)
+    return false
+  }
+
   const startInside = (pos2.start.line >= pos.start.line
     && pos2.start.line <= pos.end.line)
+
   const endInside = (pos2.end.line >= pos.start.line
     && pos2.end.line <= pos.end.line)
+
   const wraps = pos2.start.line <= pos.start.line 
     && pos2.end.line >= pos.end.line
 
