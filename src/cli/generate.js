@@ -201,7 +201,17 @@ The contents of this file are private. Only visible by the author.
                             }
                         }
                         return html_file;
-                    } catch (err) { console.error(`Failed to process ${file.path}`, err) }
+                    } catch (err) { 
+                        console.error(`Failed to process ${file.path}`, err) 
+                        file.contents = `# ⚠️ Failed to process file`
+                        file = await renderProcessor(fs).process(file)
+                        await fs.writeFile(path.join(cmd.output, file.path), file.contents)
+                        await fs.writeFile(path.join(cmd.output, file.path + '.json'), JSON.stringify(file.data.ast, null, 4))
+                        const html_file = await renderedVFileToDoc(await file, cmd)
+                        await fs.writeFile(path.join(cmd.output, file.path), file.contents)
+                        console.log(`Wrote  ${file.path} to "${path.join(cmd.output, file.path)}" to disk`)
+                        return html_file
+                    }
                 }))
 
                 const graph = {nodes: [], links: []}
