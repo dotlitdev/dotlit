@@ -83,11 +83,11 @@ const Cell = props => {
         console.log('Execution result', result)
         if (result && meta.react && result.resp && React.isValidElement(result.resp))
             setContent(result.resp)
-        else if (meta.selfmutate) {
+        else if (result && meta.selfmutate && typeof result.resp === "string") {
             console.log("Experimental!! Special setSrc as cell is self mutating")
             // assumes source has changed in the filesystem 
             // so re-render from that
-            ctx.setSrc(lit.ast.position, await lit.fs.readFile("/"+lit.location.src))
+            ctx.setSrc(lit.ast.position, result.resp)
         } else {
             const outputMeta = (meta.hasOutput ? meta.output : 'txt').trim() + (" attached=true updated=" + Date.now()) + (error ? ' !error' : '')
             const output = "\n```>"+ outputMeta +"\n" + result.stdout + "\n```\n"
