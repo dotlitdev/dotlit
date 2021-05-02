@@ -77,7 +77,7 @@ program
         const file = await vfile.read(cmd.path)
         console.log("Contents:", file.contents)
         console.log("[cli] cmd: parse", path, cmd.base, cmd.cwd, cmd.debug, cmd.output, cmd.format)
-        process.env.DEBUG = 'All'
+        process.env.DEBUG = 'All,-sections,-codeblocks,-Link,-Viewers'
         const resp = await parse(file, cmd)
         console.log("DONE: ", util.inspect(resp, false, 3, true))
         console.timeEnd('parse')
