@@ -400,20 +400,25 @@ return lit.utils
           .select('heading', lit.ast)
           
 ```
-```>json #heading #title attached=true updated=1619948348741 !error
-function toString() {
-    [native code]
-}
-untitled.js:3:18
-untitled.js:7:63
-module code@untitled.js:7:139
-evaluate@[native code]
-moduleEvaluation@[native code]
+```>json #heading #title attached=true updated=1619948405880
+{ type: 'heading',
+  depth: 1,
+  children: 
+   [ { type: 'text', value: 'Executing ', position: [Object] },
+     { type: 'inlineCode', value: 'code', position: [Object] },
+     { type: 'text', value: ' cells', position: [Object] } ],
+  position: 
+   { start: { line: 1, column: 1, offset: 0 },
+     end: { line: 1, column: 25, offset: 24 } },
+  data: 
+   { hProperties: { id: 'executing-code-cells' },
+     id: 'executing-code-cells' },
+  processed: true }
 ```
 ```js > json #headings !collapse
 return lit.utils
-          .select
-          .selectAll('heading', ast)
+          .unist.select
+          .selectAll('heading', lit.ast)
           .map( h => `${h.depth} ${h.data.id }`)
 ```
 ```>json #headings !collapse attached=true updated=1619817665646
