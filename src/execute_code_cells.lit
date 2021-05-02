@@ -390,12 +390,12 @@ const select = unist.select.select
 const source = unist.source
 const patchSource = unist.patchSource.default
 
-const selector = 'code[meta=#mutateme2]'
+const selector = 'code[meta=#mutateme]'
 const node = select(selector, lit.ast)
 const pos = node.position
 
 const original = source(pos, src)
-const newSrc = "- [ ] #mutateme2 Mutated out of existence?"
+const newSrc = "```js #mutateme\n// Mutated at " + new Date() + "\n```"
 
 return patchSource(src, pos, newSrc)
 ```
