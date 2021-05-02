@@ -3,7 +3,8 @@
 let document = { documentElement: { style: {} } }
 
 importScripts('web.bundle.js')
-const version = "sw:0.0.12 dotlit: " + typeof dotlit
+const version = "sw:0.0.14 dotlit: " + typeof dotlit
+let state = ''
 
 const ENABLE_CACHE = false
 const PRECACHE = Date.now() // no-cache 'precache-v1';
@@ -20,7 +21,7 @@ const PRECACHE_URLS = [
 
 const getMockResponse = async (event) => {
 
-    return new Response(version)
+    return new Response(`version: ${version} state: ${state} url: ${event.request.url}`)
 
     //let stat
     // try { stat = await dotlit.lit.fs.stat('/index.lit')} catch(err) {}
@@ -30,6 +31,7 @@ const getMockResponse = async (event) => {
 
 // The install handler takes care of precaching the resources we always need.
 self.addEventListener('install', event => {
+  state = new URL(location).searchParams.get('state')
   event.waitUntil(
     caches.open(PRECACHE)
       .then(cache => cache.addAll(PRECACHE_URLS))
