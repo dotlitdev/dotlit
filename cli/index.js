@@ -56,7 +56,7 @@ program
         cmd.path = path
         cmd.debug = program.debug
         console.log("[cli] cmd: generate", path, cmd.base, cmd.cwd, cmd.debug, cmd.output)
-        process.env.DEBUG = 'All'
+        process.env.DEBUG = 'All,-sections,-codeblocks,-Link,-Viewers'
         generate(cmd)
     })
 
