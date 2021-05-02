@@ -314,56 +314,11 @@ return lit.location
 ```js > lit_utils !collapse
 return lit.utils
 ```
-```>lit_utils !collapse attached=true updated=1619914306930
-{ React: 
-   { Fragment: {},
-     StrictMode: {},
-     Profiler: {},
-     Suspense: {},
-     Children: 
-      { map: [Function: mapChildren],
-        forEach: [Function: forEachChildren],
-        count: [Function: countChildren],
-        toArray: [Function: toArray],
-        only: [Function: onlyChild] },
-     Component: [Function: Component],
-     PureComponent: [Function: PureComponent],
-     __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED: 
-      { ReactCurrentDispatcher: [Object],
-        ReactCurrentBatchConfig: [Object],
-        ReactCurrentOwner: [Object],
-        IsSomeRendererActing: [Object],
-        assign: [Function: assign],
-        ReactDebugCurrentFrame: [Object] },
-     cloneElement: [Function: cloneElementWithValidation],
-     createContext: [Function: createContext],
-     createElement: [Function: createElementWithValidation],
-     createFactory: [Function: createFactoryWithValidation],
-     createRef: [Function: createRef],
-     forwardRef: [Function: forwardRef],
-     isValidElement: [Function: isValidElement],
-     lazy: [Function: lazy],
-     memo: [Function: memo],
-     useCallback: [Function: useCallback],
-     useContext: [Function: useContext],
-     useDebugValue: [Function: useDebugValue],
-     useEffect: [Function: useEffect],
-     useImperativeHandle: [Function: useImperativeHandle],
-     useLayoutEffect: [Function: useLayoutEffect],
-     useMemo: [Function: useMemo],
-     useReducer: [Function: useReducer],
-     useRef: [Function: useRef],
-     useState: [Function: useState],
-     version: '17.0.1' },
-  unist: 
-   { select: 
-      { matches: [Function: matches],
-        selectAll: [Function: selectAll],
-        select: [Function: select] },
-     source: [Function: source],
-     filter: [Function: filter],
-     visit: { [Function: visit] CONTINUE: true, SKIP: 'skip', EXIT: false },
-     patchSource: { default: [Getter] } },
+```>lit_utils !collapse attached=true updated=1619049230464
+{ select: 
+   { matches: [Function: matches],
+     selectAll: [Function: selectAll],
+     select: [Function: select] },
   path: 
    { resolve: [Function: resolve],
      normalize: [Function: normalize],
@@ -440,7 +395,7 @@ const node = select('code[meta=#example2]', lit.ast)
 const cellSource = source(node.position, src)
 
 const update = async (pos, src) => {
-    await lit.fs.writeFile(lit.location.src, patchSource(lit.file.contents, pos, src))
+    await lit.fs.writeFile(lit.location.src, unist.patchSource(lit.file.contents, pos, src))
 }
 
 return update(node.position, "- [ ] Self mutated out of existence?")
@@ -649,20 +604,3 @@ module code@untitled.js:11:139
 evaluate@[native code]
 moduleEvaluation@[native code]
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
