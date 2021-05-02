@@ -30,7 +30,7 @@ const hasLocation = typeof location !== "undefined"
 const query = hasLocation ? qs.parse(location.search.slice(1)) : {}
 const litsrcMeta = getMeta('src', '')
 const litsrc = (litsrcMeta === '404.lit')
-                ? (query.file || location.pathname.replace(/\.html$/, '.lit'))
+                ? (query.file || location.pathname.replace(/\.html$/, '.lit').slice(1))
                 : litsrcMeta
 const litroot = getMeta('root', '/')
 // const litbase = getMeta('base', '/')
