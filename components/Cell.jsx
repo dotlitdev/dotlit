@@ -87,7 +87,7 @@ const Cell = props => {
             console.log("Experimental!! Special setSrc as cell is self mutating")
             // assumes source has changed in the filesystem 
             // so re-render from that
-            ctx.setSrc(lit.ast.position, await lit.fs.readFile(lit.location.src))
+            ctx.setSrc(lit.ast.position, await lit.fs.readFile("/"+lit.location.src))
         } else {
             const outputMeta = (meta.hasOutput ? meta.output : 'txt').trim() + (" attached=true updated=" + Date.now()) + (error ? ' !error' : '')
             const output = "\n```>"+ outputMeta +"\n" + result.stdout + "\n```\n"
