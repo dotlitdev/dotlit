@@ -185,7 +185,7 @@ The contents of this file are private. Only visible by the author.
                            file = await renderProcessor(fs).process(file)
 
                         }
-
+                        await mkdirp(path.dirname(file.path))
                         await fs.writeFile(path.join(cmd.output, file.path), file.contents)
                         await fs.writeFile(path.join(cmd.output, file.path + '.json'), JSON.stringify(file.data.ast, null, 4))
                         const html_file = await renderedVFileToDoc(await file, cmd)
@@ -203,7 +203,10 @@ The contents of this file are private. Only visible by the author.
                         return html_file;
                     } catch (err) { 
                         console.error(`Failed to process ${file.path}`, err) 
-                        file.contents = `# ⚠️ Failed to process file`
+                        file.contents = `# ⚠️ Failed to process file
+File: ${file.path}
+    ${err.toString()}
+`
                         file = await renderProcessor(fs).process(file)
                         await mkdirp(path.dirname(file.path))
                         await fs.writeFile(path.join(cmd.output, file.path), file.contents)
