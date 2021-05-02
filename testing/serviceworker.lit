@@ -114,8 +114,8 @@ return fetch('/manifest.json--sw')
 let document = { documentElement: { style: {} } }
 
 importScripts('web.bundle.js')
-const version = "sw:0.0.14 dotlit: " + typeof dotlit
-let state = ''
+const version = "sw:0.0.15 dotlit: " + typeof dotlit
+let root = ''
 
 const ENABLE_CACHE = false
 const PRECACHE = Date.now() // no-cache 'precache-v1';
@@ -132,7 +132,7 @@ const PRECACHE_URLS = [
 
 const getMockResponse = async (event) => {
 
-    return new Response(`version: ${version} state: ${state} url: ${event.request.url}`)
+    return new Response(`version: ${version} root: ${root} url: ${event.request.url}`)
 
     //let stat
     // try { stat = await dotlit.lit.fs.stat('/index.lit')} catch(err) {}
@@ -142,7 +142,7 @@ const getMockResponse = async (event) => {
 
 // The install handler takes care of precaching the resources we always need.
 self.addEventListener('install', event => {
-  state = new URL(location).searchParams.get('state')
+  root = new URL(location).searchParams.get('root')
   event.waitUntil(
     caches.open(PRECACHE)
       .then(cache => cache.addAll(PRECACHE_URLS))
@@ -172,7 +172,7 @@ self.addEventListener('fetch', event => {
   if (event.request.url.startsWith(self.location.origin)) {
     if (event.request.url.endsWith('--sw')) {
        // event.respondWith(getMockResponse(event))
-       event.respondWith(getMockResponse())
+       event.respondWith(getMockResponse(event))
     }
     else event.respondWith(
       caches.match(event.request).then(cachedResponse => {
