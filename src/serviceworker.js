@@ -5,7 +5,7 @@ let document = { documentElement: { style: {} } }
 importScripts('web.bundle.js')
 
 const state = {
-    version: '0.1.8',
+    version: '0.1.9',
     dotlit: typeof dotlit,
     root: '',
     enableCache: false,
