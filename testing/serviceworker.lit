@@ -111,8 +111,12 @@ version: sw:0.0.15 dotlit: object root: / url: https://dotlit.org/manifest.json-
 let document = { documentElement: { style: {} } }
 
 importScripts('web.bundle.js')
-const version = "sw:0.0.15 dotlit: " + typeof dotlit
-let root = ''
+
+const state = {
+    version: '0.0.16',
+    dotlit: typeof dotlit,
+    root: '',
+}
 
 const ENABLE_CACHE = false
 const PRECACHE = Date.now() // no-cache 'precache-v1';
@@ -128,18 +132,12 @@ const PRECACHE_URLS = [
 ];
 
 const getMockResponse = async (event) => {
-
-    return new Response(`version: ${version} root: ${root} url: ${event.request.url}`)
-
-    //let stat
-    // try { stat = await dotlit.lit.fs.stat('/index.lit')} catch(err) {}
-    // new Response(version + " args: " + JSON.stringify([event.request.url, dotlit.lit.location, stat]))
-
+    return new Response(JSON.stringify(state, null, 2))
 }
 
 // The install handler takes care of precaching the resources we always need.
 self.addEventListener('install', event => {
-  root = new URL(location).searchParams.get('root')
+  state.root = new URL(location).searchParams.get('root')
   event.waitUntil(
     caches.open(PRECACHE)
       .then(cache => cache.addAll(PRECACHE_URLS))
