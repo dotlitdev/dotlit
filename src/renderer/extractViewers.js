@@ -98,7 +98,7 @@ export const extractViewers = ({fs} = {}) => {
                 file.data.plugins = file.data.plugins || {}
                 const type = meta.type || 'unknown'
                 file.data.plugins[type] = file.data.plugins[type] || {}
-                const len = Object.key(file.data.plugins[type]).length
+                const len = Object.keys(file.data.plugins[type]).length
                 const id = meta.of || meta.id || len
                 try {
                     let plugin = await extractModule(block.value, filename )
