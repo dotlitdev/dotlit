@@ -5,7 +5,7 @@ let document = { documentElement: { style: {} } }
 importScripts('web.bundle.js')
 
 const state = {
-    version: '0.1.9',
+    version: '0.1.10',
     dotlit: typeof dotlit,
     root: '',
     enableCache: false,
@@ -26,7 +26,7 @@ const PRECACHE_URLS = [
 const getMockResponse = async (event) => {
 
   if (typeof dotlit !== 'undefined') {
-    const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4).slice(1))
+    const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4)
     const stat = await dotlit.lit.fs.stat(filepath)
     const status = {
       ...state,
@@ -41,7 +41,7 @@ const getMockResponse = async (event) => {
 
 const localFile = async (event) => {
   if (typeof dotlit !== 'undefined') {
-    const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4).slice()
+    const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4)
     return await dotlit.lit.fs.readFile(filepath)
   } else throw new Error('dotlit module not loaded.')
 }
