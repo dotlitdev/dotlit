@@ -111,10 +111,14 @@ version: sw:0.0.15 dotlit: object root: / url: https://dotlit.org/testing/--sw
 let document = { documentElement: { style: {} } }
 
 importScripts('web.bundle.js')
-const version = "sw:0.0.15 dotlit: " + typeof dotlit
-let root = ''
 
-const ENABLE_CACHE = false
+const state = {
+    version: '0.1.8',
+    dotlit: typeof dotlit,
+    root: '',
+    enableCache: false,
+}
+
 const PRECACHE = Date.now() // no-cache 'precache-v1';
 const RUNTIME = 'runtime';
 
@@ -129,17 +133,30 @@ const PRECACHE_URLS = [
 
 const getMockResponse = async (event) => {
 
-    return new Response(`version: ${version} root: ${root} url: ${event.request.url}`)
+  if (typeof dotlit !== 'undefined') {
+    const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4).slice()
+    const stat = await dotlit.lit.fs.stat(filepath)
+    const status = {
+      ...state,
+      filepath, 
+      stat,
+    }
+    return new Response(JSON.stringify(status, null, 2))
+  } else {
+    return new Response(JSON.stringify(state, null, 2))
+  }
+}
 
-    //let stat
-    // try { stat = await dotlit.lit.fs.stat('/index.lit')} catch(err) {}
-    // new Response(version + " args: " + JSON.stringify([event.request.url, dotlit.lit.location, stat]))
-
+const localFile = async (event) => {
+  if (typeof dotlit !== 'undefined') {
+    const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4).slice()
+    return await dotlit.lit.fs.readFile(filepath)
+  } else throw new Error('dotlit module not loaded.')
 }
 
 // The install handler takes care of precaching the resources we always need.
 self.addEventListener('install', event => {
-  root = new URL(location).searchParams.get('root')
+  state.root = new URL(location).searchParams.get('root')
   event.waitUntil(
     caches.open(PRECACHE)
       .then(cache => cache.addAll(PRECACHE_URLS))
@@ -167,26 +184,29 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   // Skip cross-origin requests, like those for Google Analytics. And add mock response
   if (event.request.url.startsWith(self.location.origin)) {
-    if (event.request.url.endsWith('--sw')) {
-       // event.respondWith(getMockResponse(event))
-       event.respondWith(getMockResponse(event))
-    }
-    else event.respondWith(
-      caches.match(event.request).then(cachedResponse => {
-        if (ENABLE_CACHE && cachedResponse) {
-          return cachedResponse;
-        }
 
-        return caches.open(RUNTIME).then(cache => {
-          return fetch(event.request).then(response => {
-            // Put a copy of the response in the runtime cache.
-            return cache.put(event.request, response.clone()).then(() => {
-              return response;
-            });
-          });
-        });
-      })
-    );
+    if (event.request.url.endsWith('--sw')) { 
+      event.respondWith(getMockResponse(event))
+    } else {
+      event.respondWith(localFile(even)
+        .then( file => file).catch( err =>
+      caches.match(event.request).then(cachedResponse => {
+            if (state.enableCache && cachedResponse) {
+              return cachedResponse;
+            }
+    
+            return caches.open(RUNTIME).then(cache => {
+              return fetch(event.request).then(response => {
+                // Put a copy of the response in the runtime cache.
+                return cache.put(event.request, response.clone()).then(() => {
+                  return response;
+                })
+              })
+            })
+          })
+        )
+      )
+    }
   }
 });
 ```
