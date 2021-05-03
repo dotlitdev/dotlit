@@ -19,3 +19,13 @@ const getFsTest = async (filepath) => {
 }
 
 getFsTest('/index.lit')
+```
+```>txt attached=true updated=1620077687465 !error
+function toString() {
+    [native code]
+}
+worker.js:6:14
+worker.js:24:63
+module code@worker.js:24:139
+evaluate@[native code]
+moduleEvaluation@[native code]
