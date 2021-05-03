@@ -24,11 +24,11 @@
 </code></pre></output></codecell></div></cell><cell startpos="35:1-823" endpos="42:4-1000" class="code"><div class="cell-content"><codecell class="tag-register lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#d6dc2e" class="tag">register</span></span><pre><code class="js">return navigator
           .serviceWorker
           .register(&#x27;/serviceworker.js?root=&#x27;+lit.location.root)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1 minute ago</span></span></span><output><pre><code class="txt">{}
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">3 minutes ago</span></span></span><output><pre><code class="txt">{}
 </code></pre></output></codecell></div></cell><cell startpos="44:1-1002" endpos="51:4-1208" class="code"><div class="cell-content"><codecell class="tag-status lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#cacdcf" class="tag">status</span></span><pre><code class="js">return navigator.serviceWorker.controller
          ? &quot;Service worker active.&quot;
          : &quot;Service worker Not active.&quot;
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">26 minutes ago</span></span></span><output><pre><code class="txt">Service worker active.
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">27 minutes ago</span></span></span><output><pre><code class="txt">Service worker active.
 </code></pre></output></codecell></div></cell><cell startpos="53:1-1210" endpos="68:4-1599" class="code"><div class="cell-content"><codecell class="tag-unregister lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#31d494" class="tag">unregister</span></span><pre><code class="js">return (async fn =&gt; {
   const regs = await navigator
                      .serviceWorker
@@ -39,7 +39,7 @@
   }
   return `Unregistered ${regs.length} regisration(s)`
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2 minutes ago</span></span></span><output><pre><code class="txt">{}
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">3 minutes ago</span></span></span><output><pre><code class="txt">{}
 Unregistered 1 regisration(s)
 </code></pre></output></codecell></div></cell><cell startpos="69:1-1600" endpos="75:4-1719" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return fetch(&#x27;/none&#x27;)
        .then( resp =&gt; resp.status )
@@ -53,7 +53,7 @@ Unregistered 1 regisration(s)
        .then(resp =&gt; resp.text()
                           .then( text =&gt; `${resp.status}\n${text}`)
        )
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">50 seconds ago</span></span></span><output><pre><code class="txt">200
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2 minutes ago</span></span></span><output><pre><code class="txt">200
 {
   &quot;version&quot;: &quot;0.1.8&quot;,
   &quot;dotlit&quot;: &quot;object&quot;,
@@ -73,7 +73,7 @@ Unregistered 1 regisration(s)
   }
 }
 </code></pre></output></codecell></div></cell><cell startpos="120:1-2636" endpos="122:4-2674" class="code"><div class="cell-content"><codecell class="lang-text local"><span class="meta"><span class="lang">text</span><span class="source">&lt; ./getserviceworker--sw</span></span><pre><code class="text"></code></pre></codecell></div></cell></section>
-<section depth="2" class="" startpos="124:1-2676" endpos="230:4-5944"><cell startpos="124:1-2676" endpos="124:18-2693"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="126:1-2695" endpos="230:4-5944" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><output><pre><code class="js">
+<section depth="2" class="" startpos="124:1-2676" endpos="230:4-5946"><cell startpos="124:1-2676" endpos="124:18-2693"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="126:1-2695" endpos="230:4-5946" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><output><pre><code class="js">
 // gross hack around one of @codemirror/view bugs
 let document = { documentElement: { style: {} } }
 
@@ -101,7 +101,7 @@ const PRECACHE_URLS = [
 const getMockResponse = async (event) =&gt; {
 
   if (typeof dotlit !== &#x27;undefined&#x27;) {
-    const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4).slice()
+    const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4).slice(1))
     const stat = await dotlit.lit.fs.stat(filepath)
     const status = {
       ...state,
