@@ -114,7 +114,7 @@ const Message = ({message, setSelectedCell}) => {
 
 export const Header = (props) => {
   console.log('<Header/>', props)
-  const { root, local, remote, ageMessage, toggleViewSource } = props
+  const { root, toggleViewSource } = props
 
   const resetFile = ctx => async ev => {
     console.log("Reset File:", ctx.file.path)
@@ -183,6 +183,10 @@ export const Header = (props) => {
 
     const cellSelected = (ctx.selectedCell && ctx.selectedCell.start) || false
 
+    const local = ctx.file && ctx.file.data && ctx.file.data.times && ctx.file.data.times.local
+    const remote = ctx.file && ctx.file.data && ctx.file.data.times && ctx.file.data.times.remote
+    const ageMessage = ctx.file && ctx.file.data && ctx.file.data.times && ctx.file.data.times.ageMessage
+
     return <div id="lit-header">
       <Menu title="Home" horizontal href={root}>
       <Menu title="File">
@@ -230,17 +234,11 @@ export const Header = (props) => {
         </Menu>
       </Menu>
       <Menu right title={<Status local={local} remote={remote} />}>
-        {ctx.file && 
-          <span disabled>{`File: ${ctx.file.path}`}</span>}
-      {local && 
-          <span disabled>{`Local last updated ${local}`}</span> }
-      {remote && 
-          <span disabled>{`Remote last updated ${remote}`}</span> }
-        {ageMessage && 
-          <span disabled>{`Local is ${ageMessage} than remote.`}</span> }
-        { cellSelected && 
-          <span disabled>{`Lines ${ctx.selectedCell.start.line}-${ctx.selectedCell.end.line}`}</span> }
-
+        {ctx.file && <span disabled>{`File: ${ctx.file.path}`}</span>}
+        {local && <span disabled>{`Local last updated ${local}`}</span> }
+        {remote && <span disabled>{`Remote last updated ${remote}`}</span> }
+        {ageMessage && <span disabled>{`Local is ${ageMessage} than remote.`}</span> }
+        {cellSelected && <span disabled>{`Lines ${ctx.selectedCell.start.line}-${ctx.selectedCell.end.line}`}</span> }
       </Menu>
     </Menu>
     <div className="lit-messages">

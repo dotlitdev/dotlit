@@ -5,12 +5,12 @@ let document = { documentElement: { style: {} } }
 importScripts('web.bundle.js')
 
 const state = {
-    version: '0.0.16',
+    version: '0.1.1',
     dotlit: typeof dotlit,
     root: '',
+    enableCache: false,
 }
 
-const ENABLE_CACHE = false
 const PRECACHE = Date.now() // no-cache 'precache-v1';
 const RUNTIME = 'runtime';
 
@@ -24,7 +24,26 @@ const PRECACHE_URLS = [
 ];
 
 const getMockResponse = async (event) => {
+
+  if (typeof dotlit !== 'undefined') {
+    const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4).slice()
+    const stat = await dotlit.lit.fs.stat(filepath)
+    const status = {
+      ...state,
+      filepath, 
+      stat,
+    }
+    return new Response(JSON.stringify(status, null, 2))
+  } else {
     return new Response(JSON.stringify(state, null, 2))
+  }
+}
+
+const localFile = async (event) => {
+  if (typeof dotlit !== 'undefined') {
+    const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4).slice()
+    return dotlit.lit.fs.readFile(filepath)
+  } else throw new Error('dotlit module not loaded.')
 }
 
 // The install handler takes care of precaching the resources we always need.
@@ -57,25 +76,30 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   // Skip cross-origin requests, like those for Google Analytics. And add mock response
   if (event.request.url.startsWith(self.location.origin)) {
-    if (event.request.url.endsWith('--sw')) {
-       // event.respondWith(getMockResponse(event))
-       event.respondWith(getMockResponse(event))
-    }
-    else event.respondWith(
-      caches.match(event.request).then(cachedResponse => {
-        if (ENABLE_CACHE && cachedResponse) {
-          return cachedResponse;
-        }
 
-        return caches.open(RUNTIME).then(cache => {
-          return fetch(event.request).then(response => {
-            // Put a copy of the response in the runtime cache.
-            return cache.put(event.request, response.clone()).then(() => {
-              return response;
-            });
-          });
-        });
+    if (event.request.url.endsWith('--sw')) { 
+      event.respondWith(getMockResponse(event))
+    } else {
+      localFile.then( file => {
+        event.respondWith(file)
+      }).catch( err => {
+        event.respondWith(
+          caches.match(event.request).then(cachedResponse => {
+            if (ENABLE_CACHE && cachedResponse) {
+              return cachedResponse;
+            }
+    
+            return caches.open(RUNTIME).then(cache => {
+              return fetch(event.request).then(response => {
+                // Put a copy of the response in the runtime cache.
+                return cache.put(event.request, response.clone()).then(() => {
+                  return response;
+                })
+              })
+            })
+          })
+        )
       })
-    );
+    }
   }
 });

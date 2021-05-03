@@ -7,7 +7,9 @@ const console = getConsoleForNamespace('transcludeCode')
 
 export const transcludeCode = ({fs}) => {
     return async (tree,file) => {
-        if(!fs) return;
+        if(!fs) {
+            console.error("[Transclude] not enabled no fs.")
+        };
         console.log("[Transclude] Checking for files to transclude")
         for (const block of selectAll("code", tree)) {
             if (block.data && block.data.meta && block.data.meta.source) {

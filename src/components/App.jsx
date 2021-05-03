@@ -30,10 +30,14 @@ const App = ({root, file, fs, result}) => {
     const setSrcWrapper = async (pos, cellSource) => {
         console.log("<App/> Set src wrapper", pos, cellSource)
         const patchedSrc = patchSource(srcAndRes.src, pos, cellSource.trimEnd())
+        if (patchedSrc === srcAndRes.src) {
+            console.log("No Change to source of document. Not updating.")
+            return;
+        }
         
         file.contents = patchedSrc
         file.messages = []
-        const processedFile = await processor(fs).process(file)
+        const processedFile = await processor({fs}).process(file)
         console.log("Processed client", processedFile)
 
         if (typeof window !== 'undefined') {
@@ -87,14 +91,10 @@ const App = ({root, file, fs, result}) => {
         setSrc: setSrcWrapper
     }
 
-    const times = file  
-        && file.data 
-        && file.data.times
-
     console.log(`<App/> render "${file.path}" (selected: ${selectedCell} `)
 
     return <SelectionContext.Provider value={state}>
-        <Header root={root} file={file.path} {...times} toggleViewSource={toggleViewSource}/>
+        <Header root={root} toggleViewSource={toggleViewSource}/>
         <div id="content">
           { viewSource 
             // ? <Editor src={srcAndRes.src} update={()=>{}} />
