@@ -2586,9 +2586,9 @@
                                     "offset": 2676
                                 },
                                 "end": {
-                                    "line": 230,
-                                    "column": 4,
-                                    "offset": 5946
+                                    "line": 124,
+                                    "column": 18,
+                                    "offset": 2693
                                 }
                             }
                         }
@@ -2636,82 +2636,6 @@
                             "processed": true
                         }
                     ]
-                },
-                {
-                    "type": "cell",
-                    "position": {
-                        "start": {
-                            "line": 126,
-                            "column": 1,
-                            "offset": 2695
-                        },
-                        "end": {
-                            "line": 230,
-                            "column": 4,
-                            "offset": 5946
-                        }
-                    },
-                    "data": {
-                        "hName": "cell",
-                        "hProperties": {
-                            "class": "cell"
-                        }
-                    },
-                    "children": [
-                        {
-                            "type": "code",
-                            "lang": ">js",
-                            "meta": "../serviceworker.js !collapse #implementation",
-                            "value": "\n// gross hack around one of @codemirror/view bugs\nlet document = { documentElement: { style: {} } }\n\nimportScripts('web.bundle.js')\n\nconst state = {\n    version: '0.1.9',\n    dotlit: typeof dotlit,\n    root: '',\n    enableCache: false,\n}\n\nconst PRECACHE = Date.now() // no-cache 'precache-v1';\nconst RUNTIME = 'runtime';\n\n// A list of local resources we always want to be cached.\nconst PRECACHE_URLS = [\n  //'index.html',\n  //'./', // Alias for index.html\n  //'styles.css',\n  //'../../styles/main.css',\n  //'demo.js'\n];\n\nconst getMockResponse = async (event) => {\n\n  if (typeof dotlit !== 'undefined') {\n    const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4).slice(1))\n    const stat = await dotlit.lit.fs.stat(filepath)\n    const status = {\n      ...state,\n      filepath, \n      stat,\n    }\n    return new Response(JSON.stringify(status, null, 2))\n  } else {\n    return new Response(JSON.stringify(state, null, 2))\n  }\n}\n\nconst localFile = async (event) => {\n  if (typeof dotlit !== 'undefined') {\n    const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4).slice()\n    return await dotlit.lit.fs.readFile(filepath)\n  } else throw new Error('dotlit module not loaded.')\n}\n\n// The install handler takes care of precaching the resources we always need.\nself.addEventListener('install', event => {\n  state.root = new URL(location).searchParams.get('root')\n  event.waitUntil(\n    caches.open(PRECACHE)\n      .then(cache => cache.addAll(PRECACHE_URLS))\n      .then(self.skipWaiting())\n  );\n});\n\n// The activate handler takes care of cleaning up old caches.\nself.addEventListener('activate', event => {\n  const currentCaches = [PRECACHE, RUNTIME];\n  event.waitUntil(\n    caches.keys().then(cacheNames => {\n      return cacheNames.filter(cacheName => !currentCaches.includes(cacheName));\n    }).then(cachesToDelete => {\n      return Promise.all(cachesToDelete.map(cacheToDelete => {\n        return caches.delete(cacheToDelete);\n      }));\n    }).then(() => self.clients.claim())\n  );\n});\n\n// The fetch handler serves responses for same-origin resources from a cache.\n// If no response is found, it populates the runtime cache with the response\n// from the network before returning it to the page.\nself.addEventListener('fetch', event => {\n  // Skip cross-origin requests, like those for Google Analytics. And add mock response\n  if (event.request.url.startsWith(self.location.origin)) {\n\n    if (event.request.url.endsWith('--sw')) { \n      event.respondWith(getMockResponse(event))\n    } else {\n      event.respondWith(localFile(even)\n        .then( file => file).catch( err =>\n      caches.match(event.request).then(cachedResponse => {\n            if (state.enableCache && cachedResponse) {\n              return cachedResponse;\n            }\n    \n            return caches.open(RUNTIME).then(cache => {\n              return fetch(event.request).then(response => {\n                // Put a copy of the response in the runtime cache.\n                return cache.put(event.request, response.clone()).then(() => {\n                  return response;\n                })\n              })\n            })\n          })\n        )\n      )\n    }\n  }\n});",
-                            "position": {
-                                "start": {
-                                    "line": 126,
-                                    "column": 1,
-                                    "offset": 2695
-                                },
-                                "end": {
-                                    "line": 230,
-                                    "column": 4,
-                                    "offset": 5946
-                                }
-                            },
-                            "data": {
-                                "meta": {
-                                    "attrs": {},
-                                    "lang": "js",
-                                    "filename": "../serviceworker.js",
-                                    "directives": [
-                                        "collapse"
-                                    ],
-                                    "tags": [
-                                        "implementation"
-                                    ],
-                                    "isOutput": true,
-                                    "hasOutput": false,
-                                    "hasSource": false,
-                                    "raw": ">js ../serviceworker.js !collapse #implementation"
-                                },
-                                "hProperties": {
-                                    "className": "tag-implementation",
-                                    "meta": {
-                                        "attrs": {},
-                                        "lang": "js",
-                                        "filename": "../serviceworker.js",
-                                        "directives": [
-                                            "collapse"
-                                        ],
-                                        "tags": [
-                                            "implementation"
-                                        ],
-                                        "isOutput": true,
-                                        "hasOutput": false,
-                                        "hasSource": false,
-                                        "raw": ">js ../serviceworker.js !collapse #implementation"
-                                    }
-                                }
-                            }
-                        }
-                    ]
                 }
             ],
             "position": {
@@ -2721,9 +2645,9 @@
                     "offset": 2676
                 },
                 "end": {
-                    "line": 230,
-                    "column": 4,
-                    "offset": 5946
+                    "line": 124,
+                    "column": 18,
+                    "offset": 2693
                 }
             }
         }
@@ -2735,9 +2659,9 @@
             "offset": 0
         },
         "end": {
-            "line": 230,
-            "column": 4,
-            "offset": 5946
+            "line": 126,
+            "column": 1,
+            "offset": 2695
         }
     }
 }
