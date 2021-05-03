@@ -5,7 +5,7 @@ let document = { documentElement: { style: {} } }
 importScripts('web.bundle.js')
 
 const state = {
-    version: '0.1.11',
+    version: '0.1.12',
     dotlit: typeof dotlit,
     root: '',
     enableCache: false,
@@ -42,7 +42,7 @@ const getMockResponse = async (event) => {
 const localFile = async (event) => {
   if (typeof dotlit !== 'undefined') {
     const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4)
-    return await dotlit.lit.fs.readFile(filepath)
+    return await dotlit.lit.lfs.promises.readFile(filepath)
   } else throw new Error('dotlit module not loaded.')
 }
 
