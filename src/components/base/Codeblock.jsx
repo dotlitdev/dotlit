@@ -63,7 +63,7 @@ export const Codeblock = props => {
   return <SelectionContext.Consumer>
     { ctx => {
 
-      const Viewer = getViewer(meta, ctx.file.data.viewers)
+      const Viewer = getViewer(meta, ctx.file.data && ctx.file.data.plugins &&  ctx.file.data.plugins.viewer && ctx.file.data.plugins.viewer)
 
       const classes = [
         ...dirClasses,
