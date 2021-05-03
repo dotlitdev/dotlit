@@ -92,9 +92,14 @@ export const extractViewers = ({fs} = {}) => {
                 && block.data.meta.directives
                 && block.data.meta.directives.indexOf('plugin') >= 0) {
                 
-                console.log('Found Plugin', block.meta)
+                const meta = block.data.meta
+                console.log('Found Plugin', meta)
                 file.data = file.data || {}
                 file.data.plugins = file.data.plugins || {}
+                const type = meta.type || 'unknown'
+                file.data.plugins[type] = file.data.plugins[type] || {}
+                const len = Object.keys(file.data.plugins[type]).length
+                const id = meta.of || meta.id || len
                 try {
                     let plugin = await extractModule(block.value, filename )
                     if (plugin.asyncPlugin) plugin = await plugin.asyncPlugin()
@@ -103,13 +108,12 @@ export const extractViewers = ({fs} = {}) => {
                         console.log(plugin)
                         throw new Error("No plugin exported from module")
                     }
-                    file.data.plugins[block.data.meta.id] = plugin
+                    file.data.plugins[type][id] = plugin
                    
                 } catch(err) {
-                    console.log("Failed to init plugin", err)
-                    const msg = "Plugin Error: " + (err.message || err.toString())
-                    file.data.plugins[block.data.meta.of] 
-                     = () => msg
+                    console.error("Failed to init plugin", err)
+                    const msg = `Plugin Error (${type}:${id}): ` + (err.message || err.toString())
+                    file.data.plugins[type][id] = () => msg
                     file.message(msg, block)
                 }
             }
