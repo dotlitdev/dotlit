@@ -5,7 +5,7 @@ let document = { documentElement: { style: {} } }
 importScripts('web.bundle.js')
 
 const state = {
-    version: '0.1.1',
+    version: '0.1.8',
     dotlit: typeof dotlit,
     root: '',
     enableCache: false,
@@ -42,7 +42,7 @@ const getMockResponse = async (event) => {
 const localFile = async (event) => {
   if (typeof dotlit !== 'undefined') {
     const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4).slice()
-    return dotlit.lit.fs.readFile(filepath)
+    return await dotlit.lit.fs.readFile(filepath)
   } else throw new Error('dotlit module not loaded.')
 }
 
@@ -80,12 +80,10 @@ self.addEventListener('fetch', event => {
     if (event.request.url.endsWith('--sw')) { 
       event.respondWith(getMockResponse(event))
     } else {
-      localFile.then( file => {
-        event.respondWith(file)
-      }).catch( err => {
-        event.respondWith(
-          caches.match(event.request).then(cachedResponse => {
-            if (ENABLE_CACHE && cachedResponse) {
+      event.respondWith(localFile(even)
+        .then( file => file).catch( err =>
+      caches.match(event.request).then(cachedResponse => {
+            if (state.enableCache && cachedResponse) {
               return cachedResponse;
             }
     
@@ -99,7 +97,7 @@ self.addEventListener('fetch', event => {
             })
           })
         )
-      })
+      )
     }
   }
 });
