@@ -5,7 +5,7 @@ let document = { documentElement: { style: {} } }
 importScripts('web.bundle.js')
 
 const state = {
-    version: '0.1.7',
+    version: '0.1.12',
     dotlit: typeof dotlit,
     root: '',
     enableCache: false,
@@ -24,33 +24,25 @@ const PRECACHE_URLS = [
 ];
 
 const getMockResponse = async (event) => {
-  try { 
-    if (typeof dotlit !== 'undefined') {
-      const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4).slice()
-      const stat = await dotlit.lit.fs.stat(filepath)
-      const status = {
-        ...state,
-        filepath, 
-        stat,
-      }
-      return new Response(JSON.stringify(status, null, 2))
-    }
-  } catch (err) {
+
+  if (typeof dotlit !== 'undefined') {
+    const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4)
+    const stat = await dotlit.lit.fs.stat(filepath)
     const status = {
       ...state,
-      url: event.request.url,
-      err: err.message,
+      filepath, 
+      stat,
     }
     return new Response(JSON.stringify(status, null, 2))
+  } else {
+    return new Response(JSON.stringify(state, null, 2))
   }
 }
 
 const localFile = async (event) => {
   if (typeof dotlit !== 'undefined') {
-    const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4).slice()
-    await dotlit.lit.fs.stat(filepath)
-    const content = await dotlit.lit.fs.readFile(filepath)
-    return new Response(content)
+    const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4)
+    return await dotlit.lit.lfs.promises.readFile(filepath)
   } else throw new Error('dotlit module not loaded.')
 }
 
@@ -86,15 +78,11 @@ self.addEventListener('fetch', event => {
   if (event.request.url.startsWith(self.location.origin)) {
 
     if (event.request.url.endsWith('--sw')) { 
-      console.log("Mock/Info request")
       event.respondWith(getMockResponse(event))
     } else {
-      event.respondWith(localFile(event).then(file => {
-        console.log("Responding with", file)
-        return file
-      }).catch( err => {
-          console.log("Failed local file check, reverting to network", err)
-          return caches.match(event.request).then(cachedResponse => {
+      event.respondWith(localFile(event)
+        .then( file => file).catch( err =>
+      caches.match(event.request).then(cachedResponse => {
             if (state.enableCache && cachedResponse) {
               return cachedResponse;
             }
@@ -108,7 +96,7 @@ self.addEventListener('fetch', event => {
               })
             })
           })
-        })
+        )
       )
     }
   }
