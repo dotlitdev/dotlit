@@ -37,7 +37,7 @@ return navigator
           .serviceWorker
           .register('/serviceworker.js?root='+lit.location.root)
 ```
-```>txt attached=true updated=1620080208594
+```>txt attached=true updated=1620083052497
 {}
 ```
 
@@ -46,7 +46,7 @@ return navigator.serviceWorker.controller
          ? "Service worker active."
          : "Service worker Not active."
 ```
-```>txt attached=true updated=1620083008228
+```>txt attached=true updated=1619995435304
 Service worker Not active.
 ```
 
@@ -62,9 +62,8 @@ return (async fn => {
   return `Unregistered ${regs.length} regisration(s)`
 })()
 ```
-```>txt attached=true updated=1620082661150
-{}
-Unregistered 1 regisration(s)
+```>txt attached=true updated=1619995426959
+Unregistered 0 regisration(s)
 ```
 ```js
 return fetch('/none')
@@ -94,26 +93,9 @@ return fetch('--sw')
                           .then( text => `${resp.status}\n${text}`)
        )
 ```
-```>txt attached=true updated=1620080254175
-200
-{
-  "version": "0.1.10",
-  "dotlit": "object",
-  "root": "/",
-  "enableCache": false,
-  "filepath": "/testing/",
-  "stat": {
-    "type": "dir",
-    "mode": 511,
-    "size": 0,
-    "ino": 3,
-    "mtimeMs": 1619353965485,
-    "ctimeMs": 1619353965485,
-    "uid": 1,
-    "gid": 1,
-    "dev": 1
-  }
-}
+```>txt attached=true updated=1620083027507
+404
+<html data-reactroot=""><head><title>Not yet found</title><meta name="litsrc" value="404.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="3:55-73"><cell startpos="1:1-0" endpos="3:55-73"><div class="cell-content"><h1 id="not-yet-found">Not <em>yet</em> found</h1><p>The file was not found, edit this page to change that.</p></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
 ```
 
 
@@ -122,12 +104,8 @@ return fetch('--sw')
 ```
 
 ## Implementation
-```js #remotesource > js !collapse
-return fetch('/serviceworker.js')
-       .then(resp => resp.text().then( text => `${resp.status}\n${text}`))
-```
-```>js !collapse attached=true updated=1620082674623
-200
+
+```>js ../serviceworker.js !collapse #implementation
 
 // gross hack around one of @codemirror/view bugs
 let document = { documentElement: { style: {} } }
@@ -135,7 +113,7 @@ let document = { documentElement: { style: {} } }
 importScripts('web.bundle.js')
 
 const state = {
-    version: '0.1.12',
+    version: '0.1.7',
     dotlit: typeof dotlit,
     root: '',
     enableCache: false,
@@ -154,25 +132,33 @@ const PRECACHE_URLS = [
 ];
 
 const getMockResponse = async (event) => {
-
-  if (typeof dotlit !== 'undefined') {
-    const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4)
-    const stat = await dotlit.lit.fs.stat(filepath)
+  try { 
+    if (typeof dotlit !== 'undefined') {
+      const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4).slice()
+      const stat = await dotlit.lit.fs.stat(filepath)
+      const status = {
+        ...state,
+        filepath, 
+        stat,
+      }
+      return new Response(JSON.stringify(status, null, 2))
+    }
+  } catch (err) {
     const status = {
       ...state,
-      filepath, 
-      stat,
+      url: event.request.url,
+      err: err.message,
     }
     return new Response(JSON.stringify(status, null, 2))
-  } else {
-    return new Response(JSON.stringify(state, null, 2))
   }
 }
 
 const localFile = async (event) => {
   if (typeof dotlit !== 'undefined') {
-    const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4)
-    return await dotlit.lit.lfs.promises.readFile(filepath)
+    const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4).slice()
+    await dotlit.lit.fs.stat(filepath)
+    const content = await dotlit.lit.fs.readFile(filepath)
+    return new Response(content)
   } else throw new Error('dotlit module not loaded.')
 }
 
@@ -208,11 +194,15 @@ self.addEventListener('fetch', event => {
   if (event.request.url.startsWith(self.location.origin)) {
 
     if (event.request.url.endsWith('--sw')) { 
+      console.log("Mock/Info request")
       event.respondWith(getMockResponse(event))
     } else {
-      event.respondWith(localFile(event)
-        .then( file => file).catch( err =>
-      caches.match(event.request).then(cachedResponse => {
+      event.respondWith(localFile(event).then(file => {
+        console.log("Responding with", file)
+        return file
+      }).catch( err => {
+          console.log("Failed local file check, reverting to network", err)
+          return caches.match(event.request).then(cachedResponse => {
             if (state.enableCache && cachedResponse) {
               return cachedResponse;
             }
@@ -226,11 +216,9 @@ self.addEventListener('fetch', event => {
               })
             })
           })
-        )
+        })
       )
     }
   }
 });
 ```
-
-
