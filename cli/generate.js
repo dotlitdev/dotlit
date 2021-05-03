@@ -71,12 +71,14 @@ function getLinks(file, root) {
 }
 
 function generateBacklinks(files, root) {
+
+    const console = getConsoleForNamespace('Backlinks')
     let manifest = {}
-    console.log(`[Backlinks] for (${files.length}) files, in ${root}`)
+    console.log(`For (${files.length}) files, in ${root}`)
     files.forEach( file => {
         const fileLink = decorateLinkNode({ url: file.path })
         const title = file.data.frontmatter.title || `Title TBD (${fileLink.data.canonical})`
-        console.log(`[Manifest] Adding "${file.path}" as "${fileLink.data.canonical}"`)
+        console.log(`[${title}] Adding "${file.path}" as "${fileLink.data.canonical} to manifest."`)
         manifest[fileLink.data.canonical] = manifest[fileLink.data.canonical] || {
             backlinks: [],
             exists: true,
@@ -86,12 +88,12 @@ function generateBacklinks(files, root) {
     files.forEach( file => {
         
         const fileLink = decorateLinkNode({ url: file.path })
-        const title = file.data.frontmatter.title || `Title TBD (${fileLink.data.canonical})`
-        console.log("About to get links for file", file.path, title)
+        const title = file.data.frontmatter.title || path.basename(file.path, path.extname(file.path))
+        console.log(`About to get links for file: ${title} (${file.path})`)
         
         const links = getLinks(file, root)
         // console.log('fileLink', fileLink)
-        console.log(`[Backlinks] ${title} ${fileLink.data.canonical} links: (${links.length})`)
+        console.log(`[${title}] ${fileLink.data.canonical} links: (${links.length})`)
         links.forEach( (link, i) => {
             // console.log(link)
             // console.log(`[Backlinks] ${link.type} >> ${link.url} >> ${link.data.canonical} relative: ${link.data.isRelative}`)
@@ -102,10 +104,10 @@ function generateBacklinks(files, root) {
             }
             if (link.data.isRelative || link.data.isCode) {
                 if (manifest[link.data.canonical] && manifest[link.data.canonical].backlinks) {
-                    console.log(`[Manifest]:${i} Adding link ${fileLink.data.canonical} to existing "${link.data.canonical}"`)
+                    console.log(`[${title}][${i}] Adding link ${fileLink.data.canonical} to existing "${link.data.canonical}"`)
                     manifest[link.data.canonical].backlinks.push(linkNode)
                 } else {
-                    console.log(`[Manifest]:${i} Adding link ${fileLink.data.canonical} to "${link.data.canonical}"`)
+                    console.log(`[${title}][${i}] Adding link ${fileLink.data.canonical} to "${link.data.canonical}"`)
                     manifest[link.data.canonical] = {
                         backlinks: [linkNode], 
                         exists: link.exists || false,
@@ -113,7 +115,7 @@ function generateBacklinks(files, root) {
                     }
                 }
             } else {
-                console.log(`[Backlinks]:${i} Other`, link.data.canonical)
+                console.log(`[${title}][${i}] Other:`, link.data.canonical)
             }
         })
     })
@@ -190,7 +192,7 @@ The contents of this file are private. Only visible by the author.
                         await fs.writeFile(path.join(cmd.output, file.path + '.json'), JSON.stringify(file.data.ast, null, 4))
                         const html_file = await renderedVFileToDoc(await file, cmd)
                         await fs.writeFile(path.join(cmd.output, file.path), file.contents)
-                        console.log(`Wrote  ${file.path} to "${path.join(cmd.output, file.path)}" to disk`)
+                        console.log(`Wrote ${file.path} to "${path.join(cmd.output, file.path)}" to disk`)
 
                         for (const codefile of html_file.data.files) {
                             const filename = codefile.data && codefile.data.meta && codefile.data.meta.filename

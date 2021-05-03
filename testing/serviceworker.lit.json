@@ -1248,7 +1248,7 @@
                                 "end": {
                                     "line": 104,
                                     "column": 4,
-                                    "offset": 2463
+                                    "offset": 2464
                                 }
                             }
                         }
@@ -2232,7 +2232,7 @@
                                 "end": {
                                     "line": 104,
                                     "column": 4,
-                                    "offset": 2463
+                                    "offset": 2464
                                 }
                             }
                         }
@@ -2347,8 +2347,8 @@
                         },
                         "end": {
                             "line": 99,
-                            "column": 4,
-                            "offset": 2422
+                            "column": 5,
+                            "offset": 2423
                         }
                     },
                     "data": {
@@ -2371,8 +2371,8 @@
                                 },
                                 "end": {
                                     "line": 99,
-                                    "column": 4,
-                                    "offset": 2422
+                                    "column": 5,
+                                    "offset": 2423
                                 }
                             },
                             "data": {
@@ -2410,8 +2410,8 @@
                                 },
                                 "end": {
                                     "line": 99,
-                                    "column": 4,
-                                    "offset": 2422
+                                    "column": 5,
+                                    "offset": 2423
                                 }
                             },
                             "data": {
@@ -2454,12 +2454,12 @@
                         "start": {
                             "line": 102,
                             "column": 1,
-                            "offset": 2425
+                            "offset": 2426
                         },
                         "end": {
                             "line": 104,
                             "column": 4,
-                            "offset": 2463
+                            "offset": 2464
                         }
                     },
                     "data": {
@@ -2478,12 +2478,12 @@
                                 "start": {
                                     "line": 102,
                                     "column": 1,
-                                    "offset": 2425
+                                    "offset": 2426
                                 },
                                 "end": {
                                     "line": 104,
                                     "column": 4,
-                                    "offset": 2463
+                                    "offset": 2464
                                 }
                             },
                             "data": {
@@ -2524,8 +2524,12 @@
                                         },
                                         "raw": "text < ./getserviceworker--sw",
                                         "fromSource": "./getserviceworker--sw"
+                                    },
+                                    "data": {
+                                        "originalSource": ""
                                     }
-                                }
+                                },
+                                "originalSource": ""
                             }
                         }
                     ]
@@ -2540,7 +2544,7 @@
                 "end": {
                     "line": 104,
                     "column": 4,
-                    "offset": 2463
+                    "offset": 2464
                 }
             }
         },
@@ -2561,12 +2565,12 @@
                         "start": {
                             "line": 106,
                             "column": 1,
-                            "offset": 2465
+                            "offset": 2466
                         },
                         "end": {
                             "line": 106,
                             "column": 18,
-                            "offset": 2482
+                            "offset": 2483
                         }
                     },
                     "data": {
@@ -2579,12 +2583,12 @@
                                 "start": {
                                     "line": 106,
                                     "column": 1,
-                                    "offset": 2465
+                                    "offset": 2466
                                 },
                                 "end": {
-                                    "line": 190,
+                                    "line": 224,
                                     "column": 4,
-                                    "offset": 5050
+                                    "offset": 6142
                                 }
                             }
                         }
@@ -2601,12 +2605,12 @@
                                         "start": {
                                             "line": 106,
                                             "column": 4,
-                                            "offset": 2468
+                                            "offset": 2469
                                         },
                                         "end": {
                                             "line": 106,
                                             "column": 18,
-                                            "offset": 2482
+                                            "offset": 2483
                                         }
                                     }
                                 }
@@ -2615,12 +2619,12 @@
                                 "start": {
                                     "line": 106,
                                     "column": 1,
-                                    "offset": 2465
+                                    "offset": 2466
                                 },
                                 "end": {
                                     "line": 106,
                                     "column": 18,
-                                    "offset": 2482
+                                    "offset": 2483
                                 }
                             },
                             "data": {
@@ -2639,12 +2643,12 @@
                         "start": {
                             "line": 108,
                             "column": 1,
-                            "offset": 2484
+                            "offset": 2485
                         },
                         "end": {
-                            "line": 190,
+                            "line": 224,
                             "column": 4,
-                            "offset": 5050
+                            "offset": 6142
                         }
                     },
                     "data": {
@@ -2658,17 +2662,17 @@
                             "type": "code",
                             "lang": ">js",
                             "meta": "../serviceworker.js !collapse #implementation",
-                            "value": "\n// gross hack around one of @codemirror/view bugs\nlet document = { documentElement: { style: {} } }\n\nimportScripts('web.bundle.js')\n\nconst state = {\n    version: '0.0.16',\n    dotlit: typeof dotlit,\n    root: '',\n}\n\nconst ENABLE_CACHE = false\nconst PRECACHE = Date.now() // no-cache 'precache-v1';\nconst RUNTIME = 'runtime';\n\n// A list of local resources we always want to be cached.\nconst PRECACHE_URLS = [\n  //'index.html',\n  //'./', // Alias for index.html\n  //'styles.css',\n  //'../../styles/main.css',\n  //'demo.js'\n];\n\nconst getMockResponse = async (event) => {\n    return new Response(JSON.stringify(state, null, 2))\n}\n\n// The install handler takes care of precaching the resources we always need.\nself.addEventListener('install', event => {\n  state.root = new URL(location).searchParams.get('root')\n  event.waitUntil(\n    caches.open(PRECACHE)\n      .then(cache => cache.addAll(PRECACHE_URLS))\n      .then(self.skipWaiting())\n  );\n});\n\n// The activate handler takes care of cleaning up old caches.\nself.addEventListener('activate', event => {\n  const currentCaches = [PRECACHE, RUNTIME];\n  event.waitUntil(\n    caches.keys().then(cacheNames => {\n      return cacheNames.filter(cacheName => !currentCaches.includes(cacheName));\n    }).then(cachesToDelete => {\n      return Promise.all(cachesToDelete.map(cacheToDelete => {\n        return caches.delete(cacheToDelete);\n      }));\n    }).then(() => self.clients.claim())\n  );\n});\n\n// The fetch handler serves responses for same-origin resources from a cache.\n// If no response is found, it populates the runtime cache with the response\n// from the network before returning it to the page.\nself.addEventListener('fetch', event => {\n  // Skip cross-origin requests, like those for Google Analytics. And add mock response\n  if (event.request.url.startsWith(self.location.origin)) {\n    if (event.request.url.endsWith('--sw')) {\n       // event.respondWith(getMockResponse(event))\n       event.respondWith(getMockResponse(event))\n    }\n    else event.respondWith(\n      caches.match(event.request).then(cachedResponse => {\n        if (ENABLE_CACHE && cachedResponse) {\n          return cachedResponse;\n        }\n\n        return caches.open(RUNTIME).then(cache => {\n          return fetch(event.request).then(response => {\n            // Put a copy of the response in the runtime cache.\n            return cache.put(event.request, response.clone()).then(() => {\n              return response;\n            });\n          });\n        });\n      })\n    );\n  }\n});",
+                            "value": "\n// gross hack around one of @codemirror/view bugs\nlet document = { documentElement: { style: {} } }\n\nimportScripts('web.bundle.js')\n\nconst state = {\n    version: '0.1.7',\n    dotlit: typeof dotlit,\n    root: '',\n    enableCache: false,\n}\n\nconst PRECACHE = Date.now() // no-cache 'precache-v1';\nconst RUNTIME = 'runtime';\n\n// A list of local resources we always want to be cached.\nconst PRECACHE_URLS = [\n  //'index.html',\n  //'./', // Alias for index.html\n  //'styles.css',\n  //'../../styles/main.css',\n  //'demo.js'\n];\n\nconst getMockResponse = async (event) => {\n  try { \n    if (typeof dotlit !== 'undefined') {\n      const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4).slice()\n      const stat = await dotlit.lit.fs.stat(filepath)\n      const status = {\n        ...state,\n        filepath, \n        stat,\n      }\n      return new Response(JSON.stringify(status, null, 2))\n    }\n  } catch (err) {\n    const status = {\n      ...state,\n      url: event.request.url,\n      err: err.message,\n    }\n    return new Response(JSON.stringify(status, null, 2))\n  }\n}\n\nconst localFile = async (event) => {\n  if (typeof dotlit !== 'undefined') {\n    const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4).slice()\n    await dotlit.lit.fs.stat(filepath)\n    const content = await dotlit.lit.fs.readFile(filepath)\n    return new Response(content)\n  } else throw new Error('dotlit module not loaded.')\n}\n\n// The install handler takes care of precaching the resources we always need.\nself.addEventListener('install', event => {\n  state.root = new URL(location).searchParams.get('root')\n  event.waitUntil(\n    caches.open(PRECACHE)\n      .then(cache => cache.addAll(PRECACHE_URLS))\n      .then(self.skipWaiting())\n  );\n});\n\n// The activate handler takes care of cleaning up old caches.\nself.addEventListener('activate', event => {\n  const currentCaches = [PRECACHE, RUNTIME];\n  event.waitUntil(\n    caches.keys().then(cacheNames => {\n      return cacheNames.filter(cacheName => !currentCaches.includes(cacheName));\n    }).then(cachesToDelete => {\n      return Promise.all(cachesToDelete.map(cacheToDelete => {\n        return caches.delete(cacheToDelete);\n      }));\n    }).then(() => self.clients.claim())\n  );\n});\n\n// The fetch handler serves responses for same-origin resources from a cache.\n// If no response is found, it populates the runtime cache with the response\n// from the network before returning it to the page.\nself.addEventListener('fetch', event => {\n  // Skip cross-origin requests, like those for Google Analytics. And add mock response\n  if (event.request.url.startsWith(self.location.origin)) {\n\n    if (event.request.url.endsWith('--sw')) { \n      console.log(\"Mock/Info request\")\n      event.respondWith(getMockResponse(event))\n    } else {\n      event.respondWith(localFile(event).then(file => {\n        console.log(\"Responding with\", file)\n        return file\n      }).catch( err => {\n          console.log(\"Failed local file check, reverting to network\", err)\n          return caches.match(event.request).then(cachedResponse => {\n            if (state.enableCache && cachedResponse) {\n              return cachedResponse;\n            }\n    \n            return caches.open(RUNTIME).then(cache => {\n              return fetch(event.request).then(response => {\n                // Put a copy of the response in the runtime cache.\n                return cache.put(event.request, response.clone()).then(() => {\n                  return response;\n                })\n              })\n            })\n          })\n        })\n      )\n    }\n  }\n});",
                             "position": {
                                 "start": {
                                     "line": 108,
                                     "column": 1,
-                                    "offset": 2484
+                                    "offset": 2485
                                 },
                                 "end": {
-                                    "line": 190,
+                                    "line": 224,
                                     "column": 4,
-                                    "offset": 5050
+                                    "offset": 6142
                                 }
                             },
                             "data": {
@@ -2714,12 +2718,12 @@
                 "start": {
                     "line": 106,
                     "column": 1,
-                    "offset": 2465
+                    "offset": 2466
                 },
                 "end": {
-                    "line": 190,
+                    "line": 224,
                     "column": 4,
-                    "offset": 5050
+                    "offset": 6142
                 }
             }
         }
@@ -2731,9 +2735,9 @@
             "offset": 0
         },
         "end": {
-            "line": 190,
+            "line": 224,
             "column": 4,
-            "offset": 5050
+            "offset": 6142
         }
     }
 }

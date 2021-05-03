@@ -13,15 +13,15 @@ export const mdblocks = function ({baseProcessor}) {
             if (!node.data || !node.data.meta || node.data.meta.lang !== 'md') return;
 
             const idx = file.data.__mdcodeblocks++
-            // instead of await
+            // instead of await (why?)
             const p = new Promise(async resolve => {
-                 console.log(idx + "Node: ", node)
-                 const p = baseProcessor()
-                 const parsed = await p.parse( node.value )
-                 const ast = await p.run(parsed)
-                 console.log(idx + " AST: ", ast)
-                 node.children = ast.children
-                 resolve()
+                console.log(idx + "Node: ", node)
+                const p = baseProcessor()
+                const parsed = await p.parse( node.value )
+                const ast = await p.run(parsed)
+                //  console.log(idx + " AST: ", ast)
+                node.children = ast.children
+                resolve()
             });
            
             promises.push(p)

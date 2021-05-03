@@ -70,7 +70,7 @@ export const extractViewers = ({fs} = {}) => {
                 try {
                     let transformer = await extractModule(block.value, filename )
                     if (transformer.asyncTransformer) transformer = await transformer.asyncTransformer()
-                    else if (transformer. transformer) {
+                    else if (transformer.transformer) {
                     } else {
                         console.log(transformer)
                         throw new Error("No transformer exported from module")
@@ -81,6 +81,34 @@ export const extractViewers = ({fs} = {}) => {
                     console.log("Failed to init transformer", err)
                     const msg = "Transformer Error: " + (err.message || err.toString())
                     file.data.transformers[block.data.meta.of] 
+                     = () => msg
+                    file.message(msg, block)
+                }
+            }
+
+            // Generic plugins
+            if (block.data 
+                && block.data.meta 
+                && block.data.meta.directives
+                && block.data.meta.directives.indexOf('plugin') >= 0) {
+                
+                console.log('Found Plugin', block.meta)
+                file.data = file.data || {}
+                file.data.plugins = file.data.plugins || {}
+                try {
+                    let plugin = await extractModule(block.value, filename )
+                    if (plugin.asyncPlugin) plugin = await plugin.asyncPlugin()
+                    else if (plugin.plugin) {
+                    } else {
+                        console.log(plugin)
+                        throw new Error("No plugin exported from module")
+                    }
+                    file.data.plugins[block.data.meta.id] = plugin
+                   
+                } catch(err) {
+                    console.log("Failed to init plugin", err)
+                    const msg = "Plugin Error: " + (err.message || err.toString())
+                    file.data.plugins[block.data.meta.of] 
                      = () => msg
                     file.message(msg, block)
                 }
