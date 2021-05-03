@@ -24,11 +24,11 @@
 </code></pre></output></codecell></div></cell><cell startpos="35:1-823" endpos="42:4-1000" class="code"><div class="cell-content"><codecell class="tag-register lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#d6dc2e" class="tag">register</span></span><pre><code class="js">return navigator
           .serviceWorker
           .register(&#x27;/serviceworker.js?root=&#x27;+lit.location.root)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">22.9 hours ago</span></span></span><output><pre><code class="txt">{}
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">23.3 hours ago</span></span></span><output><pre><code class="txt">{}
 </code></pre></output></codecell></div></cell><cell startpos="44:1-1002" endpos="51:4-1208" class="code"><div class="cell-content"><codecell class="tag-status lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#cacdcf" class="tag">status</span></span><pre><code class="js">return navigator.serviceWorker.controller
          ? &quot;Service worker active.&quot;
          : &quot;Service worker Not active.&quot;
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">54 seconds ago</span></span></span><output><pre><code class="txt">Service worker active.
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">24 minutes ago</span></span></span><output><pre><code class="txt">Service worker active.
 </code></pre></output></codecell></div></cell><cell startpos="53:1-1210" endpos="67:4-1596" class="code"><div class="cell-content"><codecell class="tag-unregister lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#31d494" class="tag">unregister</span></span><pre><code class="js">return (async fn =&gt; {
   const regs = await navigator
                      .serviceWorker
@@ -39,31 +39,35 @@
   }
   return `Unregistered ${regs.length} regisration(s)`
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">22.9 hours ago</span></span></span><output><pre><code class="txt">Unregistered 0 regisration(s)
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">23.3 hours ago</span></span></span><output><pre><code class="txt">Unregistered 0 regisration(s)
 </code></pre></output></codecell></div></cell><cell startpos="68:1-1597" endpos="74:4-1716" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return fetch(&#x27;/none&#x27;)
        .then( resp =&gt; resp.status )
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">13.7 hours ago</span></span></span><output><pre><code class="txt">404
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">14 hours ago</span></span></span><output><pre><code class="txt">404
 </code></pre></output></codecell></div></cell><cell startpos="75:1-1717" endpos="81:4-1843" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return fetch(&#x27;/manifest.json&#x27;)
        .then(resp =&gt; resp.status)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.2 days ago</span></span></span><output><pre><code class="txt">200
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.3 days ago</span></span></span><output><pre><code class="txt">200
 </code></pre></output></codecell></div></cell><cell startpos="82:1-1844" endpos="87:4-1945" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (new Response(&#x27;hello&#x27;)).text()
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">6.4 days ago</span></span></span><output><pre><code class="txt">hello
 </code></pre></output></codecell></div></cell><cell startpos="89:1-1947" endpos="89:195-2141"><div class="cell-content"><p>As of now, the service worker doesn&#x27;t cache anything and just passes through to the network as normal. Except if the <code>request.url</code> ends with <code>--sw</code> in which case it returns a mock/info response.</p></div></cell><cell startpos="90:1-2142" endpos="99:4-2413" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return fetch(&#x27;--sw&#x27;)
        .then(resp =&gt; resp.text()
                           .then( text =&gt; `${resp.status}\n${text}`)
        )
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">13.7 hours ago</span></span></span><output><pre><code class="txt">200
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">14 hours ago</span></span></span><output><pre><code class="txt">200
 version: sw:0.0.15 dotlit: object root: / url: https://dotlit.org/testing/--sw
 </code></pre></output></codecell></div></cell><cell startpos="102:1-2416" endpos="104:4-2454" class="code"><div class="cell-content"><codecell class="lang-text local"><span class="meta"><span class="lang">text</span><span class="source">&lt; ./getserviceworker--sw</span></span><pre><code class="text"></code></pre></codecell></div></cell></section>
-<section depth="2" class="" startpos="106:1-2456" endpos="192:4-5248"><cell startpos="106:1-2456" endpos="106:18-2473"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="108:1-2475" endpos="192:4-5248" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><output><pre><code class="js">
+<section depth="2" class="" startpos="106:1-2456" endpos="212:4-5724"><cell startpos="106:1-2456" endpos="106:18-2473"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="108:1-2475" endpos="212:4-5724" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><output><pre><code class="js">
 // gross hack around one of @codemirror/view bugs
 let document = { documentElement: { style: {} } }
 
 importScripts(&#x27;web.bundle.js&#x27;)
-const version = &quot;sw:0.0.15 dotlit: &quot; + typeof dotlit
-let root = &#x27;&#x27;
 
-const ENABLE_CACHE = false
+const state = {
+    version: &#x27;0.1.8&#x27;,
+    dotlit: typeof dotlit,
+    root: &#x27;&#x27;,
+    enableCache: false,
+}
+
 const PRECACHE = Date.now() // no-cache &#x27;precache-v1&#x27;;
 const RUNTIME = &#x27;runtime&#x27;;
 
@@ -78,17 +82,30 @@ const PRECACHE_URLS = [
 
 const getMockResponse = async (event) =&gt; {
 
-    return new Response(`version: ${version} root: ${root} url: ${event.request.url}`)
+  if (typeof dotlit !== &#x27;undefined&#x27;) {
+    const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4).slice()
+    const stat = await dotlit.lit.fs.stat(filepath)
+    const status = {
+      ...state,
+      filepath, 
+      stat,
+    }
+    return new Response(JSON.stringify(status, null, 2))
+  } else {
+    return new Response(JSON.stringify(state, null, 2))
+  }
+}
 
-    //let stat
-    // try { stat = await dotlit.lit.fs.stat(&#x27;/index.lit&#x27;)} catch(err) {}
-    // new Response(version + &quot; args: &quot; + JSON.stringify([event.request.url, dotlit.lit.location, stat]))
-
+const localFile = async (event) =&gt; {
+  if (typeof dotlit !== &#x27;undefined&#x27;) {
+    const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4).slice()
+    return await dotlit.lit.fs.readFile(filepath)
+  } else throw new Error(&#x27;dotlit module not loaded.&#x27;)
 }
 
 // The install handler takes care of precaching the resources we always need.
 self.addEventListener(&#x27;install&#x27;, event =&gt; {
-  root = new URL(location).searchParams.get(&#x27;root&#x27;)
+  state.root = new URL(location).searchParams.get(&#x27;root&#x27;)
   event.waitUntil(
     caches.open(PRECACHE)
       .then(cache =&gt; cache.addAll(PRECACHE_URLS))
@@ -116,26 +133,29 @@ self.addEventListener(&#x27;activate&#x27;, event =&gt; {
 self.addEventListener(&#x27;fetch&#x27;, event =&gt; {
   // Skip cross-origin requests, like those for Google Analytics. And add mock response
   if (event.request.url.startsWith(self.location.origin)) {
-    if (event.request.url.endsWith(&#x27;--sw&#x27;)) {
-       // event.respondWith(getMockResponse(event))
-       event.respondWith(getMockResponse(event))
-    }
-    else event.respondWith(
-      caches.match(event.request).then(cachedResponse =&gt; {
-        if (ENABLE_CACHE &amp;&amp; cachedResponse) {
-          return cachedResponse;
-        }
 
-        return caches.open(RUNTIME).then(cache =&gt; {
-          return fetch(event.request).then(response =&gt; {
-            // Put a copy of the response in the runtime cache.
-            return cache.put(event.request, response.clone()).then(() =&gt; {
-              return response;
-            });
-          });
-        });
-      })
-    );
+    if (event.request.url.endsWith(&#x27;--sw&#x27;)) { 
+      event.respondWith(getMockResponse(event))
+    } else {
+      event.respondWith(localFile(even)
+        .then( file =&gt; file).catch( err =&gt;
+      caches.match(event.request).then(cachedResponse =&gt; {
+            if (state.enableCache &amp;&amp; cachedResponse) {
+              return cachedResponse;
+            }
+    
+            return caches.open(RUNTIME).then(cache =&gt; {
+              return fetch(event.request).then(response =&gt; {
+                // Put a copy of the response in the runtime cache.
+                return cache.put(event.request, response.clone()).then(() =&gt; {
+                  return response;
+                })
+              })
+            })
+          })
+        )
+      )
+    }
   }
 });
 </code></pre></output></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
