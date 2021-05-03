@@ -5,7 +5,7 @@ let document = { documentElement: { style: {} } }
 importScripts('web.bundle.js')
 
 const state = {
-    version: '0.1.10',
+    version: '0.1.11',
     dotlit: typeof dotlit,
     root: '',
     enableCache: false,
@@ -80,7 +80,7 @@ self.addEventListener('fetch', event => {
     if (event.request.url.endsWith('--sw')) { 
       event.respondWith(getMockResponse(event))
     } else {
-      event.respondWith(localFile(even)
+      event.respondWith(localFile(event)
         .then( file => file).catch( err =>
       caches.match(event.request).then(cachedResponse => {
             if (state.enableCache && cachedResponse) {
