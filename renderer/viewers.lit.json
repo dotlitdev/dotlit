@@ -6027,7 +6027,7 @@
                         {
                             "type": "code",
                             "lang": "js",
-                            "meta": "!viewer of=uml",
+                            "meta": "!plugin of=uml",
                             "value": "export const viewer = ({node, React}) => {\n   const c = React.createElement\n   const ref = React.createRef();\n   const [height, setHeight] = React.useState(null)\n   let [id] = React.useState(Math.round(Math.random() * 10000000).toString())\n\n  React.useEffect(() => {\n    const handler = event => {\n      if (ref && ref.current && event && event.data && typeof event.data === 'string') {\n          const data = JSON.parse(event.data)\n          if (id === data.source) {\n             console.log(\"Message: \", data)\n             setHeight(data.height)\n          }\n\n      }\n    }\n\n    window.addEventListener(\"message\", handler)\n\n    // clean up\n    return () => window.removeEventListener(\"message\", handler)\n  }, []) // empty array => run only once\n\n   const el = c('iframe', {ref: ref, style: {height: ( height ? (height + 'px') : 'auto') },srcDoc: `<!DOCTYPE html>\n    <html>\n      <head>\n        <title>PlantUML Viewer</title>\n        <style>html, body {margin: 0; padding: 0; } #plantuml { display: block; max-width: 100%; }</style>\n      </head>\n      <body>\n        <img id=\"plantuml\" />\n        <script type=\"module\">\n\n        function resize() {\n          const msg = JSON.stringify({\n            source: \"${id}\",\n            height: document.body.clientHeight\n          })\n          console.log(\"Resize Message\", msg)\n          window.parent.postMessage(msg, '*');\n        }\n        async function encodePlantUML(src) {\n          console.log(\"encoding\", src)\n          const module = await import(\"https://cdn.skypack.dev/plantuml-encoder\");\n          const encoded = module.encode(src)\n          console.log(encoded)\n          return encoded\n        }\n\n        encodePlantUML(\"${node.value.replace(/\\n/g, '\\\\n')}\")\n        .then(encoded => {\n            const url = \"https://plantuml.com/plantuml/svg/\" + encoded\n            const img = document.getElementById('plantuml')\n            img.setAttribute('src', url)\n            img.onload = resize\n        })\n\n        console.log(\"PlantUML Viewer.\")\n      </script>\n      </body>\n    </html>`})\n   console.log(\"PlantViewer iframe ref:\", el.ref.current)\n   return el\n}",
                             "position": {
                                 "start": {
@@ -6048,13 +6048,13 @@
                                     },
                                     "lang": "js",
                                     "directives": [
-                                        "viewer"
+                                        "plugin"
                                     ],
                                     "of": "uml",
                                     "isOutput": false,
                                     "hasOutput": false,
                                     "hasSource": false,
-                                    "raw": "js !viewer of=uml"
+                                    "raw": "js !plugin of=uml"
                                 },
                                 "hProperties": {
                                     "className": "",
@@ -6064,13 +6064,13 @@
                                         },
                                         "lang": "js",
                                         "directives": [
-                                            "viewer"
+                                            "plugin"
                                         ],
                                         "of": "uml",
                                         "isOutput": false,
                                         "hasOutput": false,
                                         "hasSource": false,
-                                        "raw": "js !viewer of=uml"
+                                        "raw": "js !plugin of=uml"
                                     }
                                 }
                             }
