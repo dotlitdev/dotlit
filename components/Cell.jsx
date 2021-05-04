@@ -73,7 +73,7 @@ const Cell = props => {
         
         let result
         let error
-        if (lit && lit.file && lit.file.data && lit.file.data.plugins && lit.file.data.plugins[meta.repl]) {
+        if (lit && lit.file && lit.file.data && lit.file.data.plugins && lit.file.data.plugins.repl && lit.file.data.plugins.repl[meta.repl]) {
             try { 
                  result = {stdout: lit.file.data.plugins[meta.repl](node) } 
              } catch(err) { 
