@@ -4191,7 +4191,7 @@
                                 "end": {
                                     "line": 286,
                                     "column": 4,
-                                    "offset": 5795
+                                    "offset": 5805
                                 }
                             }
                         }
@@ -4251,7 +4251,7 @@
                         "end": {
                             "line": 286,
                             "column": 4,
-                            "offset": 5795
+                            "offset": 5805
                         }
                     },
                     "data": {
@@ -4264,7 +4264,7 @@
                         {
                             "type": "code",
                             "lang": "js",
-                            "meta": null,
+                            "meta": "!collapse",
                             "value": "return (async function getFileStateChanges() {\n  const commitHash1 = '0c40ed746ebe53cf744d78191d0bbc2941537280'\n  const commitHash2 = 'b081f51cd27f54cf58915512006838d4eb67716b'\n  return lit.git.walk({\n    lit.lfs,\n    lit.location.root,\n    trees: [git.TREE({ ref: commitHash1 }), git.TREE({ ref: commitHash2 })],\n    map: async function(filepath, [A, B]) {\n      \n      console.log(\"Git walk for diff file: \", filepath)\n\n      // ignore directories\n      if (filepath === '.') {\n        return\n      }\n      if ((await A.type()) === 'tree' || (await B.type()) === 'tree') {\n        return\n      }\n\n      // generate ids\n      const Aoid = await A.oid()\n      const Boid = await B.oid()\n\n      // determine modification type\n      let type = 'equal'\n      if (Aoid !== Boid) {\n        type = 'modify'\n      }\n      if (Aoid === undefined) {\n        type = 'add'\n      }\n      if (Boid === undefined) {\n        type = 'remove'\n      }\n      if (Aoid === undefined && Boid === undefined) {\n        console.log('Something weird happened:')\n        console.log(A)\n        console.log(B)\n      }\n\n      return {\n        path: `/${filepath}`,\n        type: type,\n      }\n    },\n  })\n})()",
                             "position": {
                                 "start": {
@@ -4275,27 +4275,33 @@
                                 "end": {
                                     "line": 286,
                                     "column": 4,
-                                    "offset": 5795
+                                    "offset": 5805
                                 }
                             },
                             "data": {
                                 "meta": {
                                     "attrs": {},
                                     "lang": "js",
+                                    "directives": [
+                                        "collapse"
+                                    ],
                                     "isOutput": false,
                                     "hasOutput": false,
                                     "hasSource": false,
-                                    "raw": "js"
+                                    "raw": "js !collapse"
                                 },
                                 "hProperties": {
                                     "className": "",
                                     "meta": {
                                         "attrs": {},
                                         "lang": "js",
+                                        "directives": [
+                                            "collapse"
+                                        ],
                                         "isOutput": false,
                                         "hasOutput": false,
                                         "hasSource": false,
-                                        "raw": "js"
+                                        "raw": "js !collapse"
                                     }
                                 }
                             }
@@ -4309,12 +4315,12 @@
                                 "start": {
                                     "line": 284,
                                     "column": 1,
-                                    "offset": 5731
+                                    "offset": 5741
                                 },
                                 "end": {
                                     "line": 286,
                                     "column": 4,
-                                    "offset": 5795
+                                    "offset": 5805
                                 }
                             },
                             "data": {
@@ -4367,7 +4373,7 @@
                 "end": {
                     "line": 286,
                     "column": 4,
-                    "offset": 5795
+                    "offset": 5805
                 }
             }
         }
@@ -4381,7 +4387,7 @@
         "end": {
             "line": 286,
             "column": 4,
-            "offset": 5795
+            "offset": 5805
         }
     }
 }
