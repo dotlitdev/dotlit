@@ -26,10 +26,12 @@ export const Codeblock = props => {
     : null;
 
   const meta = codeNode ? codeNode.properties.meta : null
-  const dirs = meta && meta.directives
-  const tags = meta && meta.tags
-  const dirClasses = dirs ? dirs.map(d=>'dir-'+d) : []
-  const tagClasses = tags ? tags.map(t=>'tag-'+t) : []
+  const dirs = (meta && meta.directives) || []
+  const tags = (meta && meta.tags) || []
+  const attrs = (meta && meta.attrs) || {}
+  const id = attrs.id || (meta && meta.filename)
+  const dirClasses = dirs.map(d=>'dir-'+d)
+  const tagClasses = tags.map(t=>'tag-'+t)
 
   const hasDirective = (d) => {
     return meta && meta.directives && meta.directives.length && meta.directives.indexOf(d) >= 0
@@ -93,7 +95,7 @@ export const Codeblock = props => {
         console.log(meta && meta.raw, props )
         const highlighted = <Highlight language={(meta && meta.lang) || "plaintext"}>{source}</Highlight>
         const metaView = meta && <CodeMeta meta={meta} toggleCollapsed={toggleCollapsed} toggleFullscreen={toggleFullscreen} toggleLocalRemote={toggleLocalRemote} />
-        return <codecell className={classes}>
+        return <codecell className={classes} name={id}>
             { meta && !above && metaView}
             { Viewer 
               ? <ErrorBoundary>
