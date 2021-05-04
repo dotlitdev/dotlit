@@ -133,12 +133,14 @@ export const init = async () => {
     
     let settings
     try {
-        const settingsFile = await vfile( await lit.fs.readFile('/meta/settings.lit') )
+        const settingsPath = '/meta/settings.lit'
+        const settingsFile = await vfile({ path: settingsPath, contents: await lit.fs.readFile(settingsPath, {encoding: 'utf8'}) })
         settings = await renderer.processor({fs,litroot}).process(settingsFile)
     } catch(err) { console.log('Failed to load settings', err) }
 
     const file = await vfile({path: filepath, contents})
-    file.data = (settings && settings.data) || {}
+    file.data = file.data || {}
+    file.data.plugins = (settings && settings.data) || {}
     file.data.times = times
     
     const processedFile = await renderer.processor({fs,litroot}).process(file)
