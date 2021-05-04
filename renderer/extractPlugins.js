@@ -109,9 +109,6 @@ export const extractPlugins = ({fs} = {}) => {
                 file.data.plugins = file.data.plugins || {}
                 file.data.plugins[type] = file.data.plugins[type] || {}
                 
-                const len = Object.keys(file.data.plugins[type]).length
-               
-                
                 try {
                     let plugin = await extractModule(block.value, filename)
                     console.log("plugin module:", plugin)
@@ -124,6 +121,7 @@ export const extractPlugins = ({fs} = {}) => {
                         if (plugin[type]) {
                             foundExport = true
                             file.data.plugins[type] = file.data.plugins[type] || {}
+                            const len = Object.keys(file.data.plugins[type]).length
                             const id = meta.of || meta.id || meta.filename || len
                             if (file.data.plugins[type] && file.data.plugins[type][id]) {
                                 file.message(`Duplicate plugin for type: ${type} id: ${id}.`, block)
@@ -134,6 +132,7 @@ export const extractPlugins = ({fs} = {}) => {
                     }
                     if (types.indexOf(type) === -1 && plugin[type]) {
                        file.data.plugins[type] = file.data.plugins[type] || {}
+                       const len = Object.keys(file.data.plugins[type]).length
                        const id = meta.of || meta.id || meta.filename || len
                        file.data.plugins[type][id] = plugin[type]
                        foundExport = true
