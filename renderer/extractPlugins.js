@@ -30,69 +30,14 @@ export const extractPlugins = ({fs} = {}) => {
     return async (tree,file) => {
         console.log("Checking for plugins")
         file.data = file.data || {}
-        file.data.plugins = {}
+        // file.data.plugins = {}
 
         for (const block of selectAll("code", tree)) {
 
             const filename = (block.data
                              && block.data.meta
                              && block.data.meta.filename) || ''
-            // viewer
-            if (block.data 
-                && block.data.meta 
-                && block.data.meta.directives
-                && block.data.meta.directives.indexOf('viewer') >= 0) {
-                
-                console.log('Found Viewer', block.meta)
-                file.data = file.data || {}
-                file.data.viewers = file.data.viewers || {}
-                try {
-                    let viewer = await extractModule(block.value, filename)
-                    if (viewer.asyncViewer) {
-                        viewer = await viewer.asyncViewer()
-                    } else if (viewer.viewer) {
-                    } else {
-                        console.log(viewer)
-                        throw new Error("No viewer exported from module")
-                    }
-                    file.data.viewers[block.data.meta.of] = viewer
-                   
-                } catch(err) {
-                    console.log("Failed to init viewer", err)
-                    const msg = "Viewer Error: " + (err.message || err.toString())
-                    file.data.viewers[block.data.meta.of] 
-                     = () => msg
-                    file.message(msg, block)
-                }
-            }
-            // transformer
-            if (block.data 
-                && block.data.meta 
-                && block.data.meta.directives
-                && block.data.meta.directives.indexOf('transformer') >= 0) {
-                
-                console.log('Found Transformer', block.meta)
-                file.data = file.data || {}
-                file.data.transformers = file.data.transformers || {}
-                try {
-                    let transformer = await extractModule(block.value, filename )
-                    if (transformer.asyncTransformer) transformer = await transformer.asyncTransformer()
-                    else if (transformer.transformer) {
-                    } else {
-                        console.log(transformer)
-                        throw new Error("No transformer exported from module")
-                    }
-                    file.data.transformers[block.data.meta.of] = transformer
-                   
-                } catch(err) {
-                    console.log("Failed to init transformer", err)
-                    const msg = "Transformer Error: " + (err.message || err.toString())
-                    file.data.transformers[block.data.meta.of] 
-                     = () => msg
-                    file.message(msg, block)
-                }
-            }
-
+           
             // Generic plugins
             if (block.data 
                 && block.data.meta 
