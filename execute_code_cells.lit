@@ -472,36 +472,9 @@ return (async args => {
 
 Implementing clientside execution via custom `!viewer`.
 
-### First pass
 
-```js !viewer !collapse of=esm
-export const viewer = ({node, React}) => {
-  const rce = React.createElement
-  const {useState, useEffect} = React
-  const [resp, setResp] = useState(null)
-  const [run, setRun] = useState(0)
-  const exec = () => setRun(run+1)
-  const exec2 = () => load(node.data.value)
-  useEffect(async () => {
-       async function load(src) {
-          const val = `//run: ${run}\n${src}`
-          const module = await import(`data:text/javascript;base64,${ btoa(src)}`);
-         if (typeof module.returns === 'function') setResp(await module.returns(run))
-         else if (module.returns) setResp(module.returns)
-      }
 
-     try {
-        load(node.data.value)
-     } catch (err) {
-        alert(err.message || err.toString())
-     }
-  }, [run])
 
-  const btn = rce('button', {onClick: exec}, "Run " + run)
-  const t = rce('div', null, [btn, resp])
-  return t
-}
-```
 
 
 
@@ -511,7 +484,7 @@ export const viewer = ({node, React}) => {
 
 useEffect for execution on load otherwise require button press to exec.
 
-```js !plugin of=esm2
+```js !plugin of=esm
 export const viewer = ({node, React}) => {
   const rce = React.createElement
   const {useState, useEffect} = React

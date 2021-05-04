@@ -1,4 +1,4 @@
-<html data-reactroot=""><head><title>Executing code cells</title><meta name="litsrc" value="execute_code_cells.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"><div class="lit-message"><span class="message">Viewer Error: No viewer exported from module</span><span class="name">477:1-504:4</span></div><div class="lit-message"><span class="message">Plugin Error (unknown): No plugin exported from module. for !plugin of=esm2</span><span class="name">514:1-545:4</span></div></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="3:21-46"><cell startpos="1:1-0" endpos="1:25-24"><div class="cell-content"><h1 id="executing-code-cells">Executing <code>code</code> cells</h1></div></cell><section depth="2" class="" startpos="3:1-26" endpos="3:21-46"><cell startpos="3:1-26" endpos="3:21-46"><div class="cell-content"><h2 id="table-of-contents">Table of Contents</h2><ul>
+<html data-reactroot=""><head><title>Executing code cells</title><meta name="litsrc" value="execute_code_cells.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"><div class="lit-message"><span class="message">Plugin Error (unknown): No plugin exported from module. for !plugin of=esm</span><span class="name">487:1-518:4</span></div></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="3:21-46"><cell startpos="1:1-0" endpos="1:25-24"><div class="cell-content"><h1 id="executing-code-cells">Executing <code>code</code> cells</h1></div></cell><section depth="2" class="" startpos="3:1-26" endpos="3:21-46"><cell startpos="3:1-26" endpos="3:21-46"><div class="cell-content"><h2 id="table-of-contents">Table of Contents</h2><ul>
 <li>
 <p><a href="#bugs--and-to-do-">Bugs 🐜 and To do ✅<span class="linkIcon">§</span></a></p>
 </li>
@@ -38,7 +38,6 @@
 <li>
 <p><a href="#what-if">What if...<span class="linkIcon">§</span></a></p>
 <ul>
-<li><a href="#first-pass">First pass<span class="linkIcon">§</span></a></li>
 <li><a href="#version-2">Version 2<span class="linkIcon">§</span></a></li>
 <li><a href="#module-from-string-%F0%9F%A5%B2">Module from string 🥲<span class="linkIcon">§</span></a></li>
 </ul>
@@ -285,7 +284,7 @@ return patchSource(src, pos, newSrc)
   })
   return &quot;Wait for it... 🥳&quot;
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2 minutes ago</span></span></span><output><pre><code class="txt">Wait for it... 🥳
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">3 minutes ago</span></span></span><output><pre><code class="txt">Wait for it... 🥳
 </code></pre></output></codecell></div></cell><section depth="4" class="" startpos="454:1-9645" endpos="466:4-9843"><cell startpos="454:1-9645" endpos="456:39-9705"><div class="cell-content"><h4 id="trying-out-git">Trying out git</h4><p>See more at <a href="testing/isomorphic_git.html?file=testing/isomorphic_git.lit" title="testing/Isomorphic Git" wikilink="true">testing/Isomorphic Git</a></p></div></cell><cell startpos="458:1-9707" endpos="466:4-9843" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async args =&gt; {
 
   const git = (await 
@@ -294,34 +293,7 @@ return patchSource(src, pos, newSrc)
   return git 
 })()
 </code></pre></codecell></div></cell></section></section>
-<section depth="2" class="" startpos="469:1-9846" endpos="504:4-10881"><cell startpos="469:1-9846" endpos="473:56-9974"><div class="cell-content"><h2 id="what-if">What if...</h2><p><strong>REPLs</strong> were just custom viewers <a href="renderer/viewers.html?file=renderer/viewers.lit" title="renderer/viewers" wikilink="true">renderer/viewers</a>?</p><p>Implementing clientside execution via custom <code>!viewer</code>.</p></div></cell><section depth="3" class="" startpos="475:1-9976" endpos="504:4-10881"><cell startpos="475:1-9976" endpos="475:15-9990"><div class="cell-content"><h3 id="first-pass">First pass</h3></div></cell><cell startpos="477:1-9992" endpos="504:4-10881" class="code"><div class="cell-content"><codecell class="dir-viewer dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#cf5332" class="directive dir-viewer">viewer</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=esm</span></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
-  const rce = React.createElement
-  const {useState, useEffect} = React
-  const [resp, setResp] = useState(null)
-  const [run, setRun] = useState(0)
-  const exec = () =&gt; setRun(run+1)
-  const exec2 = () =&gt; load(node.data.value)
-  useEffect(async () =&gt; {
-       async function load(src) {
-          const val = `//run: ${run}\n${src}`
-          const module = await import(`data:text/javascript;base64,${ btoa(src)}`);
-         if (typeof module.returns === &#x27;function&#x27;) setResp(await module.returns(run))
-         else if (module.returns) setResp(module.returns)
-      }
-
-     try {
-        load(node.data.value)
-     } catch (err) {
-        alert(err.message || err.toString())
-     }
-  }, [run])
-
-  const btn = rce(&#x27;button&#x27;, {onClick: exec}, &quot;Run &quot; + run)
-  const t = rce(&#x27;div&#x27;, null, [btn, resp])
-  return t
-}
-</code></pre></codecell></div></cell></section></section>
-<section depth="3" class="" startpos="510:1-10887" endpos="592:4-12879"><cell startpos="510:1-10887" endpos="512:72-10973"><div class="cell-content"><h3 id="version-2">Version 2</h3><p>useEffect for execution on load otherwise require button press to exec.</p></div></cell><cell startpos="514:1-10975" endpos="545:4-11882" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=esm2</span></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
+<section depth="2" class="" startpos="469:1-9846" endpos="565:4-11975"><cell startpos="469:1-9846" endpos="473:56-9974"><div class="cell-content"><h2 id="what-if">What if...</h2><p><strong>REPLs</strong> were just custom viewers <a href="renderer/viewers.html?file=renderer/viewers.lit" title="renderer/viewers" wikilink="true">renderer/viewers</a>?</p><p>Implementing clientside execution via custom <code>!viewer</code>.</p></div></cell><section depth="3" class="" startpos="483:1-9984" endpos="565:4-11975"><cell startpos="483:1-9984" endpos="485:72-10070"><div class="cell-content"><h3 id="version-2">Version 2</h3><p>useEffect for execution on load otherwise require button press to exec.</p></div></cell><cell startpos="487:1-10072" endpos="518:4-10978" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=esm</span></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
   const rce = React.createElement
   const {useState, useEffect} = React
   const [resp, setResp] = useState(null)
@@ -351,12 +323,12 @@ return patchSource(src, pos, newSrc)
   return t
 }
 if(typeof module !== &quot;undefined&quot;) module.exports.viewer = viewer
-</code></pre></codecell></div></cell><cell startpos="546:1-11883" endpos="552:4-11990" class="code"><div class="cell-content"><codecell class="dir-below lang-esm2 local"><span class="meta"><span class="lang">esm2</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="esm2">function foo(baz) {
+</code></pre></codecell></div></cell><cell startpos="519:1-10979" endpos="525:4-11086" class="code"><div class="cell-content"><codecell class="dir-below lang-esm2 local"><span class="meta"><span class="lang">esm2</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="esm2">function foo(baz) {
   alert(&quot;foo II&quot;)
   return &quot;bar:&quot; + baz
 }
 export const returns = foo
-</code></pre></codecell></div></cell><cell startpos="553:1-11991" endpos="562:4-12196" class="code"><div class="cell-content"><codecell class="dir-below lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span><span class="attribute attr-viewer" style="color:black;background-color:#cf5332">viewer=esm2</span></span><pre><code class="js">import confetti from &#x27;https://cdn.skypack.dev/canvas-confetti&#x27;
+</code></pre></codecell></div></cell><cell startpos="526:1-11087" endpos="535:4-11292" class="code"><div class="cell-content"><codecell class="dir-below lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span><span class="attribute attr-viewer" style="color:black;background-color:#cf5332">viewer=esm2</span></span><pre><code class="js">import confetti from &#x27;https://cdn.skypack.dev/canvas-confetti&#x27;
 
 export const returns = run =&gt; confetti({
   origin: {y: 0},
@@ -364,22 +336,22 @@ export const returns = run =&gt; confetti({
   particleCount: 100,
   ticks: 1000,
 })
-</code></pre></codecell></div></cell><cell startpos="564:1-12198" endpos="564:37-12234"><div class="cell-content"><p>Setting <code>exec</code> attribute to <code>onload</code></p></div></cell><cell startpos="566:1-12236" endpos="572:4-12379" class="code"><div class="cell-content"><codecell class="dir-below lang-esm2 local"><span class="meta"><span class="lang">esm2</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span><span class="attribute attr-exec" style="color:black;background-color:#02fb89">exec=onload</span></span><pre><code class="esm2">function output(num) {
+</code></pre></codecell></div></cell><cell startpos="537:1-11294" endpos="537:37-11330"><div class="cell-content"><p>Setting <code>exec</code> attribute to <code>onload</code></p></div></cell><cell startpos="539:1-11332" endpos="545:4-11475" class="code"><div class="cell-content"><codecell class="dir-below lang-esm2 local"><span class="meta"><span class="lang">esm2</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span><span class="attribute attr-exec" style="color:black;background-color:#02fb89">exec=onload</span></span><pre><code class="esm2">function output(num) {
   alert(&quot;execd onload!&quot;)
   return &quot;done: &quot; + new Date()
 }
 export const returns = output()
-</code></pre></codecell></div></cell><cell startpos="575:1-12382" endpos="575:66-12447"><div class="cell-content"><p>Cannot <em>yet</em> output raw DOM nodes, due to react setup of viewers.</p></div></cell><cell startpos="577:1-12449" endpos="584:4-12617" class="code"><div class="cell-content"><codecell class="dir-below lang-esm2 local"><span class="meta"><span class="lang">esm2</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="esm2">function output(num) {
+</code></pre></codecell></div></cell><cell startpos="548:1-11478" endpos="548:66-11543"><div class="cell-content"><p>Cannot <em>yet</em> output raw DOM nodes, due to react setup of viewers.</p></div></cell><cell startpos="550:1-11545" endpos="557:4-11713" class="code"><div class="cell-content"><codecell class="dir-below lang-esm2 local"><span class="meta"><span class="lang">esm2</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="esm2">function output(num) {
   const dom = document.createElement(&quot;pre&quot;)
   dom.innerHTML = `Run number ${num}`
   return dom
 }
 export const returns = output
-</code></pre></codecell></div></cell><cell startpos="586:1-12619" endpos="586:155-12773"><div class="cell-content"><p>So far so good, the only issue is that output is entirely ephemeral, how would we enable document modification, ie persist the output as an attached cell.</p></div></cell><cell startpos="588:1-12775" endpos="592:4-12879" class="code"><div class="cell-content"><codecell class="dir-below lang-esm2 local"><span class="meta"><span class="lang">esm2</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="esm2">import git from &#x27;https://cdn.skypack.dev/isomorphic-git&#x27;
+</code></pre></codecell></div></cell><cell startpos="559:1-11715" endpos="559:155-11869"><div class="cell-content"><p>So far so good, the only issue is that output is entirely ephemeral, how would we enable document modification, ie persist the output as an attached cell.</p></div></cell><cell startpos="561:1-11871" endpos="565:4-11975" class="code"><div class="cell-content"><codecell class="dir-below lang-esm2 local"><span class="meta"><span class="lang">esm2</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="esm2">import git from &#x27;https://cdn.skypack.dev/isomorphic-git&#x27;
 
 export const returns = git 
-</code></pre></codecell></div></cell></section>
-<section depth="3" class="" startpos="595:1-12882" endpos="632:4-13713"><cell startpos="595:1-12882" endpos="597:81-12989"><div class="cell-content"><h3 id="module-from-string-🥲">Module from string 🥲</h3><p>Instead of importing datauri for viewers and transformers use module constructor</p></div></cell><cell startpos="598:1-12990" endpos="610:4-13228" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return module
+</code></pre></codecell></div></cell></section></section>
+<section depth="3" class="" startpos="568:1-11978" endpos="605:4-12809"><cell startpos="568:1-11978" endpos="570:81-12085"><div class="cell-content"><h3 id="module-from-string-🥲">Module from string 🥲</h3><p>Instead of importing datauri for viewers and transformers use module constructor</p></div></cell><cell startpos="571:1-12086" endpos="583:4-12324" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return module
 </code></pre></codecell><codecell class="dir-error lang-txt local output"><span class="meta"><span class="lang">txt</span><span style="color:white;background-color:red" class="directive dir-error">error</span><span class="updatedAt">Updated <span class="Time relative">6.5 days ago</span></span></span><output><pre><code class="txt">function toString() {
     [native code]
 }
@@ -388,7 +360,7 @@ untitled.js:4:63
 module code@untitled.js:4:139
 evaluate@[native code]
 moduleEvaluation@[native code]
-</code></pre></output></codecell></div></cell><cell startpos="612:1-13230" endpos="632:4-13713" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">function requireFromString(src, filename) {
+</code></pre></output></codecell></div></cell><cell startpos="585:1-12326" endpos="605:4-12809" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">function requireFromString(src, filename) {
   var Module = module.constructor;
   var m = new Module();
   m._compile(src, filename);
