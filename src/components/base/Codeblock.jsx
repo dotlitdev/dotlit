@@ -62,6 +62,7 @@ export const Codeblock = props => {
   
   const anchorClick = ev => {
      // add #id to history silently
+     history.replaceState(undefined, undefined, `#${id || ''}`)
   }
 
   return <SelectionContext.Consumer>
