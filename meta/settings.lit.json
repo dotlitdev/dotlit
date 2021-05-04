@@ -441,7 +441,7 @@
                                                 {
                                                     "type": "list",
                                                     "ordered": false,
-                                                    "spread": false,
+                                                    "spread": true,
                                                     "children": [
                                                         {
                                                             "type": "listItem",
@@ -529,7 +529,7 @@
                                                         },
                                                         {
                                                             "type": "listItem",
-                                                            "spread": false,
+                                                            "spread": true,
                                                             "children": [
                                                                 {
                                                                     "type": "paragraph",
@@ -562,6 +562,61 @@
                                                                                     }
                                                                                 }
                                                                             }
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "type": "list",
+                                                                    "ordered": false,
+                                                                    "spread": false,
+                                                                    "children": [
+                                                                        {
+                                                                            "type": "listItem",
+                                                                            "spread": false,
+                                                                            "children": [
+                                                                                {
+                                                                                    "type": "paragraph",
+                                                                                    "children": [
+                                                                                        {
+                                                                                            "type": "link",
+                                                                                            "url": "#plantuml-viewer",
+                                                                                            "children": [
+                                                                                                {
+                                                                                                    "type": "text",
+                                                                                                    "value": "Plant"
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "inlineCode",
+                                                                                                    "value": "uml"
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "text",
+                                                                                                    "value": " viewer"
+                                                                                                }
+                                                                                            ],
+                                                                                            "data": {
+                                                                                                "isAbsolute": false,
+                                                                                                "isFragment": true,
+                                                                                                "isRelative": false,
+                                                                                                "canonical": "#plantuml-viewer",
+                                                                                                "wikilink": false,
+                                                                                                "hProperties": {
+                                                                                                    "wikilink": false,
+                                                                                                    "data": {
+                                                                                                        "base": "",
+                                                                                                        "frag": "#",
+                                                                                                        "isAbsolute": false,
+                                                                                                        "isFragment": true,
+                                                                                                        "isRelative": false,
+                                                                                                        "canonical": "#plantuml-viewer",
+                                                                                                        "wikilink": false
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            ]
                                                                         }
                                                                     ]
                                                                 }
@@ -2098,9 +2153,9 @@
                                     "offset": 1716
                                 },
                                 "end": {
-                                    "line": 150,
+                                    "line": 152,
                                     "column": 4,
-                                    "offset": 3880
+                                    "offset": 3914
                                 }
                             }
                         }
@@ -2150,31 +2205,18 @@
                     ]
                 },
                 {
-                    "type": "cell",
-                    "position": {
-                        "start": {
-                            "line": 84,
-                            "column": 1,
-                            "offset": 1732
-                        },
-                        "end": {
-                            "line": 150,
-                            "column": 4,
-                            "offset": 3880
-                        }
-                    },
+                    "type": "section",
                     "data": {
-                        "hName": "cell",
+                        "name": "plantuml-viewer",
+                        "hName": "section",
                         "hProperties": {
-                            "class": "cell"
+                            "depth": 4
                         }
                     },
+                    "depth": 4,
                     "children": [
                         {
-                            "type": "code",
-                            "lang": "js",
-                            "meta": "!plugin of=uml",
-                            "value": "export const viewer = ({node, React}) => {\n   const c = React.createElement\n   const ref = React.createRef();\n   const [height, setHeight] = React.useState(null)\n   let [id] = React.useState(Math.round(Math.random() * 10000000).toString())\n\n  React.useEffect(() => {\n    const handler = event => {\n      if (ref && ref.current && event && event.data && typeof event.data === 'string') {\n          const data = JSON.parse(event.data)\n          if (id === data.source) {\n             console.log(\"Message: \", data)\n             setHeight(data.height)\n          }\n\n      }\n    }\n\n    window.addEventListener(\"message\", handler)\n\n    // clean up\n    return () => window.removeEventListener(\"message\", handler)\n  }, []) // empty array => run only once\n\n   const el = c('iframe', {ref: ref, style: {height: ( height ? (height + 'px') : 'auto') },srcDoc: `<!DOCTYPE html>\n    <html>\n      <head>\n        <title>PlantUML Viewer</title>\n        <style>html, body {margin: 0; padding: 0; } #plantuml { display: block; max-width: 100%; }</style>\n      </head>\n      <body>\n        <img id=\"plantuml\" />\n        <script type=\"module\">\n\n        function resize() {\n          const msg = JSON.stringify({\n            source: \"${id}\",\n            height: document.body.clientHeight\n          })\n          console.log(\"Resize Message\", msg)\n          window.parent.postMessage(msg, '*');\n        }\n        async function encodePlantUML(src) {\n          console.log(\"encoding\", src)\n          const module = await import(\"https://cdn.skypack.dev/plantuml-encoder\");\n          const encoded = module.encode(src)\n          console.log(encoded)\n          return encoded\n        }\n\n        encodePlantUML(\"${node.value.replace(/\\n/g, '\\\\n')}\")\n        .then(encoded => {\n            const url = \"https://plantuml.com/plantuml/svg/\" + encoded\n            const img = document.getElementById('plantuml')\n            img.setAttribute('src', url)\n            img.onload = resize\n        })\n\n        console.log(\"PlantUML Viewer.\")\n      </script>\n      </body>\n    </html>`})\n   console.log(\"PlantViewer iframe ref:\", el.ref.current)\n   return el\n}",
+                            "type": "cell",
                             "position": {
                                 "start": {
                                     "line": 84,
@@ -2182,46 +2224,196 @@
                                     "offset": 1732
                                 },
                                 "end": {
-                                    "line": 150,
-                                    "column": 4,
-                                    "offset": 3880
+                                    "line": 84,
+                                    "column": 23,
+                                    "offset": 1754
                                 }
                             },
                             "data": {
-                                "meta": {
-                                    "attrs": {
-                                        "of": "uml"
-                                    },
-                                    "lang": "js",
-                                    "directives": [
-                                        "plugin"
-                                    ],
-                                    "of": "uml",
-                                    "isOutput": false,
-                                    "hasOutput": false,
-                                    "hasSource": false,
-                                    "raw": "js !plugin of=uml"
-                                },
+                                "hName": "cell",
                                 "hProperties": {
-                                    "className": "",
-                                    "meta": {
-                                        "attrs": {
-                                            "of": "uml"
+                                    "class": "cell"
+                                },
+                                "section": {
+                                    "position": {
+                                        "start": {
+                                            "line": 84,
+                                            "column": 1,
+                                            "offset": 1732
                                         },
-                                        "lang": "js",
-                                        "directives": [
-                                            "plugin"
-                                        ],
-                                        "of": "uml",
-                                        "isOutput": false,
-                                        "hasOutput": false,
-                                        "hasSource": false,
-                                        "raw": "js !plugin of=uml"
+                                        "end": {
+                                            "line": 152,
+                                            "column": 4,
+                                            "offset": 3914
+                                        }
                                     }
                                 }
-                            }
+                            },
+                            "children": [
+                                {
+                                    "type": "heading",
+                                    "depth": 4,
+                                    "children": [
+                                        {
+                                            "type": "text",
+                                            "value": "Plant",
+                                            "position": {
+                                                "start": {
+                                                    "line": 84,
+                                                    "column": 6,
+                                                    "offset": 1737
+                                                },
+                                                "end": {
+                                                    "line": 84,
+                                                    "column": 11,
+                                                    "offset": 1742
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "type": "inlineCode",
+                                            "value": "uml",
+                                            "position": {
+                                                "start": {
+                                                    "line": 84,
+                                                    "column": 11,
+                                                    "offset": 1742
+                                                },
+                                                "end": {
+                                                    "line": 84,
+                                                    "column": 16,
+                                                    "offset": 1747
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "type": "text",
+                                            "value": " viewer",
+                                            "position": {
+                                                "start": {
+                                                    "line": 84,
+                                                    "column": 16,
+                                                    "offset": 1747
+                                                },
+                                                "end": {
+                                                    "line": 84,
+                                                    "column": 23,
+                                                    "offset": 1754
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "position": {
+                                        "start": {
+                                            "line": 84,
+                                            "column": 1,
+                                            "offset": 1732
+                                        },
+                                        "end": {
+                                            "line": 84,
+                                            "column": 23,
+                                            "offset": 1754
+                                        }
+                                    },
+                                    "data": {
+                                        "hProperties": {
+                                            "id": "plantuml-viewer"
+                                        },
+                                        "id": "plantuml-viewer"
+                                    },
+                                    "processed": true
+                                }
+                            ]
+                        },
+                        {
+                            "type": "cell",
+                            "position": {
+                                "start": {
+                                    "line": 86,
+                                    "column": 1,
+                                    "offset": 1756
+                                },
+                                "end": {
+                                    "line": 152,
+                                    "column": 4,
+                                    "offset": 3914
+                                }
+                            },
+                            "data": {
+                                "hName": "cell",
+                                "hProperties": {
+                                    "class": "cell"
+                                }
+                            },
+                            "children": [
+                                {
+                                    "type": "code",
+                                    "lang": "js",
+                                    "meta": "!plugin of=uml !collapse",
+                                    "value": "export const viewer = ({node, React}) => {\n   const c = React.createElement\n   const ref = React.createRef();\n   const [height, setHeight] = React.useState(null)\n   let [id] = React.useState(Math.round(Math.random() * 10000000).toString())\n\n  React.useEffect(() => {\n    const handler = event => {\n      if (ref && ref.current && event && event.data && typeof event.data === 'string') {\n          const data = JSON.parse(event.data)\n          if (id === data.source) {\n             console.log(\"Message: \", data)\n             setHeight(data.height)\n          }\n\n      }\n    }\n\n    window.addEventListener(\"message\", handler)\n\n    // clean up\n    return () => window.removeEventListener(\"message\", handler)\n  }, []) // empty array => run only once\n\n   const el = c('iframe', {ref: ref, style: {height: ( height ? (height + 'px') : 'auto') },srcDoc: `<!DOCTYPE html>\n    <html>\n      <head>\n        <title>PlantUML Viewer</title>\n        <style>html, body {margin: 0; padding: 0; } #plantuml { display: block; max-width: 100%; }</style>\n      </head>\n      <body>\n        <img id=\"plantuml\" />\n        <script type=\"module\">\n\n        function resize() {\n          const msg = JSON.stringify({\n            source: \"${id}\",\n            height: document.body.clientHeight\n          })\n          console.log(\"Resize Message\", msg)\n          window.parent.postMessage(msg, '*');\n        }\n        async function encodePlantUML(src) {\n          console.log(\"encoding\", src)\n          const module = await import(\"https://cdn.skypack.dev/plantuml-encoder\");\n          const encoded = module.encode(src)\n          console.log(encoded)\n          return encoded\n        }\n\n        encodePlantUML(\"${node.value.replace(/\\n/g, '\\\\n')}\")\n        .then(encoded => {\n            const url = \"https://plantuml.com/plantuml/svg/\" + encoded\n            const img = document.getElementById('plantuml')\n            img.setAttribute('src', url)\n            img.onload = resize\n        })\n\n        console.log(\"PlantUML Viewer.\")\n      </script>\n      </body>\n    </html>`})\n   console.log(\"PlantViewer iframe ref:\", el.ref.current)\n   return el\n}",
+                                    "position": {
+                                        "start": {
+                                            "line": 86,
+                                            "column": 1,
+                                            "offset": 1756
+                                        },
+                                        "end": {
+                                            "line": 152,
+                                            "column": 4,
+                                            "offset": 3914
+                                        }
+                                    },
+                                    "data": {
+                                        "meta": {
+                                            "attrs": {
+                                                "of": "uml"
+                                            },
+                                            "lang": "js",
+                                            "directives": [
+                                                "plugin",
+                                                "collapse"
+                                            ],
+                                            "of": "uml",
+                                            "isOutput": false,
+                                            "hasOutput": false,
+                                            "hasSource": false,
+                                            "raw": "js !plugin of=uml !collapse"
+                                        },
+                                        "hProperties": {
+                                            "className": "",
+                                            "meta": {
+                                                "attrs": {
+                                                    "of": "uml"
+                                                },
+                                                "lang": "js",
+                                                "directives": [
+                                                    "plugin",
+                                                    "collapse"
+                                                ],
+                                                "of": "uml",
+                                                "isOutput": false,
+                                                "hasOutput": false,
+                                                "hasSource": false,
+                                                "raw": "js !plugin of=uml !collapse"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
                         }
-                    ]
+                    ],
+                    "position": {
+                        "start": {
+                            "line": 84,
+                            "column": 1,
+                            "offset": 1732
+                        },
+                        "end": {
+                            "line": 152,
+                            "column": 4,
+                            "offset": 3914
+                        }
+                    }
                 }
             ],
             "position": {
@@ -2231,9 +2423,9 @@
                     "offset": 1716
                 },
                 "end": {
-                    "line": 150,
+                    "line": 152,
                     "column": 4,
-                    "offset": 3880
+                    "offset": 3914
                 }
             }
         }
@@ -2245,9 +2437,9 @@
             "offset": 0
         },
         "end": {
-            "line": 150,
+            "line": 152,
             "column": 4,
-            "offset": 3880
+            "offset": 3914
         }
     }
 }
