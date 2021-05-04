@@ -140,7 +140,7 @@ export const init = async () => {
 
     const file = await vfile({path: filepath, contents})
     file.data = file.data || {}
-    file.data.plugins = (settings && settings.data) || {}
+    file.data.plugins = (settings && settings.data && settings.data.plugins) || {}
     file.data.times = times
     
     const processedFile = await renderer.processor({fs,litroot}).process(file)
