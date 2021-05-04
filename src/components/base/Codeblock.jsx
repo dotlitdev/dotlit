@@ -95,7 +95,7 @@ export const Codeblock = props => {
         console.log(meta && meta.raw, props )
         const highlighted = <Highlight language={(meta && meta.lang) || "plaintext"}>{source}</Highlight>
         const metaView = meta && <CodeMeta meta={meta} toggleCollapsed={toggleCollapsed} toggleFullscreen={toggleFullscreen} toggleLocalRemote={toggleLocalRemote} />
-        return <a href={"#"+id}name={id}><codecell className={classes}>
+        return <a className="codecell-anchor" href={"#"+id}name={id}><codecell className={classes}>
             { meta && !above && metaView}
             { Viewer 
               ? <ErrorBoundary>
