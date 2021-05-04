@@ -69,10 +69,9 @@ export const extractPlugins = ({fs} = {}) => {
                             const len = Object.keys(file.data.plugins[type]).length
                             const id = meta.of || meta.id || meta.filename || len
                             if (file.data.plugins[type] && file.data.plugins[type][id]) {
-                                file.message(`Duplicate plugin for type: ${type} id: ${id}.`, block)
-                            } else {
-                                file.data.plugins[type][id] = plugin[type]
+                                console.log(`Duplicate plugin for type: ${type} id: ${id}, overwriting.`)
                             }
+                            file.data.plugins[type][id] = plugin[type]
                         }
                     }
                     if (types.indexOf(type) === -1 && plugin[type]) {
