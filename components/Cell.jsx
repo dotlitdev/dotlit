@@ -75,7 +75,7 @@ const Cell = props => {
         let error
         if (lit && lit.file && lit.file.data && lit.file.data.plugins && lit.file.data.plugins.repl && lit.file.data.plugins.repl[meta.repl]) {
             try { 
-                 result = {stdout: lit.file.data.plugins[meta.repl](node) } 
+                 result = {stdout: lit.file.data.plugins.repl[meta.repl](node) } 
              } catch(err) { 
                  console.error("REPL plugin error", err)
                  error = true 
