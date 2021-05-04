@@ -110,7 +110,7 @@ export const extractPlugins = ({fs} = {}) => {
                 file.data.plugins[type] = file.data.plugins[type] || {}
                 
                 const len = Object.keys(file.data.plugins[type]).length
-                const id = meta.of || meta.id || meta.filename || len
+               
                 
                 try {
                     let plugin = await extractModule(block.value, filename)
@@ -123,15 +123,21 @@ export const extractPlugins = ({fs} = {}) => {
                     for (const type of types) {
                         if (plugin[type]) {
                             foundExport = true
+                            file.data.plugins[type] = file.data.plugins[type] || {}
+                            const id = meta.of || meta.id || meta.filename || len
                             if (file.data.plugins[type] && file.data.plugins[type][id]) {
                                 file.message(`Duplicate plugin for type: ${type} id: ${id}.`, block)
                             } else {
-                                file.data.plugins[type] = file.data.plugins[type] || {}
                                 file.data.plugins[type][id] = plugin[type]
                             }
                         }
                     }
-
+                    if (types.indexOf(type) === -1 && plugin[type]) {
+                       file.data.plugins[type] = file.data.plugins[type] || {}
+                       const id = meta.of || meta.id || meta.filename || len
+                       file.data.plugins[type][id] = plugin[type]
+                       foundExport = true
+                    }
                     if (!foundExport) throw new Error(`No plugin exported from module. for ${block.meta}`)
                     
                    
