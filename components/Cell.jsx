@@ -69,16 +69,27 @@ const Cell = props => {
 
     const exec = ctx => async args => {
         console.log('Executing cell', {pos, codeSource, rawSource, originalSource})
-        const repl = new Repl()
+       
         
         let result
         let error
+        if (lit && lit.file && lit.file.data && lit.file.data.plugins && lit.file.data.plugins[meta.repl]) {
+            try { 
+                 result = {stdout: lit.file.data.plugins[meta.repl](node) } 
+             } catch(err) { 
+                 console.error("REPL plugin error", err)
+                 error = true 
+                 result = err
+             }
+        } else {
         try {
+            const repl = new Repl()
             result = await repl.exec(codeSource, meta, node)
         } catch(res) {
             error = true
             console.log('REPL promise rejected', res)
             result = res
+        }
         }
         console.log('Execution result', result)
         if (result && meta.react && result.resp && React.isValidElement(result.resp))
