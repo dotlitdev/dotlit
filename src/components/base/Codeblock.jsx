@@ -60,7 +60,9 @@ export const Codeblock = props => {
     return false
   }
   
-
+  const anchorClick = ev => {
+     // add #id to history silently
+  }
 
   return <SelectionContext.Consumer>
     { ctx => {
@@ -95,7 +97,8 @@ export const Codeblock = props => {
         console.log(meta && meta.raw, props )
         const highlighted = <Highlight language={(meta && meta.lang) || "plaintext"}>{source}</Highlight>
         const metaView = meta && <CodeMeta meta={meta} toggleCollapsed={toggleCollapsed} toggleFullscreen={toggleFullscreen} toggleLocalRemote={toggleLocalRemote} />
-        return <a className="codecell-anchor" href={"#"+id}name={id}><codecell className={classes}>
+        return <codecell className={classes} onClick={anchorClick}>
+            { id && <a name={id}/> }
             { meta && !above && metaView}
             { Viewer 
               ? <ErrorBoundary>
@@ -111,7 +114,7 @@ export const Codeblock = props => {
                    : null }
             { meta && above && metaView }
             { above && highlighted }
-        </codecell></a>
+        </codecell>
       } else {
           console.log("Default codeblock", this.props.node.children[0])
           return <codecell><pre className="default">{props.children}</pre></codecell>
