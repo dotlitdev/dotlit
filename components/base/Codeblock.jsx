@@ -95,8 +95,7 @@ export const Codeblock = props => {
         console.log(meta && meta.raw, props )
         const highlighted = <Highlight language={(meta && meta.lang) || "plaintext"}>{source}</Highlight>
         const metaView = meta && <CodeMeta meta={meta} toggleCollapsed={toggleCollapsed} toggleFullscreen={toggleFullscreen} toggleLocalRemote={toggleLocalRemote} />
-        return <codecell className={classes}>
-            <a name={id}>
+        return <a name={id}><codecell className={classes}>
             { meta && !above && metaView}
             { Viewer 
               ? <ErrorBoundary>
@@ -112,8 +111,7 @@ export const Codeblock = props => {
                    : null }
             { meta && above && metaView }
             { above && highlighted }
-            </a>
-        </codecell>
+        </codecell></a>
       } else {
           console.log("Default codeblock", this.props.node.children[0])
           return <codecell><pre className="default">{props.children}</pre></codecell>
