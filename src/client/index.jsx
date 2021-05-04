@@ -130,14 +130,22 @@ export const init = async () => {
         // contents = resp404.value
         contents = `# ${lit.location.src}\n\nFile not *yet* found, edit this to change that.`
     }
-  
+    
+    let settings
+    try {
+        const settingsFile = await vfile( await lit.fs.readFile('/settings.lit') )
+        settings = await renderer.processor({fs,litroot}).process(settingsFile)
+    } catch(err) { console.log('Failed to load settings', err) }
+
     const file = await vfile({path: filepath, contents})
+    file.data = (settings && settings.data) || {}
     file.data.times = times
     
     const processedFile = await renderer.processor({fs,litroot}).process(file)
     console.log("Processed client", processedFile)
     window.lit.ast = processedFile.data.ast
     window.lit.file = processedFile
+    window.lit.settings = settings
 
     try {
         lit.notebook = <App
