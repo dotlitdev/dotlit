@@ -88,7 +88,7 @@ export const data = {
 #### Plant`uml` viewer & repl
 Uses [plantuml.com](https://plantuml.com) to create `svg` images from `uml` source. Not included as a default viewer due to the external dependency, but it's great! See [[renderer/viewers/plantuml]] for more.
 
-*Implementaction:*
+*Implementation:*
 
 ```js !plugin of=uml !collapse #viewer type=repl
 
@@ -103,7 +103,10 @@ async function encodePlantUML(src) {
 const getEndpoint = (format, encoded) => `https://plantuml.com/plantuml/${format}/` + encoded
 
 export const repl = (node) => {
-  return "TODO: " + getEndpoint('svg', "Todo")
+  const meta = node.properties 
+               && node.properties.meta
+  const format = (meta && meta.format) || 'svg'
+  return "TODO: " + getEndpoint(format, "Todo")
 }
 
 export const viewer = ({node, React}) => {
