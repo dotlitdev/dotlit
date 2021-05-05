@@ -98,8 +98,9 @@ const getEndpoint = (format, encoded) => `https://plantuml.com/plantuml/${format
 
 export const repl = (src, meta, node) => {
   const format = (meta && meta.format) || 'svg'
-  // return JSON.stringify(node)
-  return "TODO: " + getEndpoint(format, "Todo")
+  const encoded = await encodePlantUML(node.data.value)
+  const url = getEndpoint(format, encoded)
+  return url
 }
 
 export const viewer = ({node, React}) => {
