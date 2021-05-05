@@ -82,30 +82,30 @@ const passThroughReadWithStat = (origReadFile, origStat, litroot, ghOpts) => {
   };
 }
 
-const writeFileP = (fs) => {
+const writeFileP = (fs, litroot) => {
   const wf = fs.writeFile
   return async (...args) => {
     console.log("fs.writeFileP")
-    const filepath = (args[0] = "/" + args[0]);
+    const filepath = (args[0] = litroot + args[0]);
     const p = path.parse(filepath);
     const parts = p.dir.split(path.sep);
     // console.log(`"Parts for "${filepath}"`, parts);
     for (var i = 0; i < parts.length; i++) {
-      console.log(`[${i}] <--- "${parts[i]}"`);
+      // console.log(`[${i}] <--- "${parts[i]}"`);
       if (i === 0) {
       } else {
         const subPath = parts.slice(0, i + 1).join(path.sep);
-        console.log(`"${subPath}" Sub path`);
+        // console.log(`"${subPath}" Sub path`);
         try {
           await fs.stat(subPath);
-          console.log(`"${subPath}" Existed, skipping`);
+          console.log(`[fs.writeFileP] "${subPath}" Existed, skipping`);
         } catch (err) {
-          console.log(`"${subPath}" Didn't exist, creating...`);
+          console.log(`[fs.writeFileP] "${subPath}" Didn't exist, creating...`);
           await fs.mkdir(subPath);
         }
       }
     }
-    // console.log("Writing file", ...args);
+    // console.log("[fs.writeFileP] Writing file", ...args);
     return wf(...args);
   };
 }
@@ -125,7 +125,7 @@ const passThroughWrite = (fs,litroot, ghOpts) => {
   };
 }
 
-export const extendFs = (fs, litroot, ghOpts) => {
+export const extendFs = (fs, litroot = "", ghOpts) => {
   const origReadFile = fs.readFile
   const origStat = fs.stat
   fs.readFile = passThroughRead(origReadFile,litroot);
