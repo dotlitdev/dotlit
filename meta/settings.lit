@@ -87,7 +87,22 @@ export const data = {
 
 #### Plant`uml` viewer
 
-```js !plugin of=uml !collapse #viewer
+```js !plugin of=uml !collapse #viewer type=repl
+
+async function encodePlantUML(src) {
+      console.log("encoding", src)
+      const module = await import("https://cdn.skypack.dev/plantuml-encoder");
+      const encoded = module.encode(src) //.replace(/\n/g, '\\n'))
+      console.log(encoded)
+      return encoded
+}
+
+const getEndpoint = (format, encoded) => `https://plantuml.com/plantuml/${format}/` + encoded
+
+export const repl = (node) => {
+  return "TODO: " + getEndpoint('svg', "Todo")
+}
+
 export const viewer = ({node, React}) => {
   const rc = React.createElement
   const {useState, useEffect} = React
@@ -97,18 +112,10 @@ export const viewer = ({node, React}) => {
   const format = (meta && meta.format) || 'svg'
   const [url, setUrl] = useState(null)
 
-  async function encodePlantUML(src) {
-      console.log("encoding", src)
-      const module = await import("https://cdn.skypack.dev/plantuml-encoder");
-      const encoded = module.encode(src) //.replace(/\n/g, '\\n'))
-      console.log(encoded)
-      return encoded
-  }
-
   const src = node.value
   useEffect(async ()=> {
     const encoded = await encodePlantUML(node.data.value)
-    const url = `https://plantuml.com/plantuml/${format}/` + encoded
+    const url = getEndpoint(format, encoded)
     setUrl(url)
   },[src])
 
