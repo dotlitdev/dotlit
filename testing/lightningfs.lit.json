@@ -41,7 +41,7 @@
                                 "end": {
                                     "line": 1740,
                                     "column": 4,
-                                    "offset": 95835
+                                    "offset": 95847
                                 }
                             }
                         }
@@ -199,7 +199,7 @@
                                         "end": {
                                             "line": 1740,
                                             "column": 4,
-                                            "offset": 95835
+                                            "offset": 95847
                                         }
                                     }
                                 }
@@ -1198,7 +1198,7 @@
                                                 "end": {
                                                     "line": 1740,
                                                     "column": 4,
-                                                    "offset": 95835
+                                                    "offset": 95847
                                                 }
                                             }
                                         }
@@ -1258,7 +1258,7 @@
                                         "end": {
                                             "line": 1737,
                                             "column": 4,
-                                            "offset": 95813
+                                            "offset": 95825
                                         }
                                     },
                                     "data": {
@@ -1271,7 +1271,7 @@
                                         {
                                             "type": "code",
                                             "lang": "js",
-                                            "meta": "!plugin !collapse of=search #implementation",
+                                            "meta": "!plugin type=viewer !collapse of=search #implementation",
                                             "value": "\nconst sortBy = keys => (a, b) => {\n  for (const key of keys) {\n     if (a[key] !== b[key]) break;\n     else return (a[key] > b[key]) ? 1 : -1\n  }\n}\n\nconst itemBuilder = (React) => item => {\n  const rc = React.createElement\n  return rc('li', {className: 'item'}, rc('a', {href: lit.href || (lit.location.root + item.id)}, item.title || item.id))\n}\n\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const [src,setSrc] = useState(meta.search || node.data.value.trim())\n  const [content, setContent] = useState('Loading...')\n  const item = itemBuilder(React)\n  \n  useEffect(async () => {\n    const resp = await fetch(\"/manifest.json\")\n    const json = await resp.json()\n    let regex\n    try {regex = new RegExp(src,'i')} catch(err){}\n    const res = json.nodes\n        .map(x => x)\n        .filter(x => {\n           return x.id.indexOf(src) >= 0\n              || (regex && regex.test(x.id)) || (x.title && (x.title.indexOf(src) >= 0\n              || (regex && regex.test(x.title))))\n\n        })\n        .sort()\n        .map(x => item(x))\n        //.join(\"\\n\")\n    setContent(rc('ol', null, res))\n  },[src])\n\n  return rc('div', {\n    className: 'custom-react-view',\n  }, [rc('input',{style:{width:'100%', fontSize: '1.2em'},value:src, onChange: e => setSrc(e.target.value)}), content])\n}",
                                             "position": {
                                                 "start": {
@@ -1282,12 +1282,13 @@
                                                 "end": {
                                                     "line": 1737,
                                                     "column": 4,
-                                                    "offset": 95813
+                                                    "offset": 95825
                                                 }
                                             },
                                             "data": {
                                                 "meta": {
                                                     "attrs": {
+                                                        "type": "viewer",
                                                         "of": "search"
                                                     },
                                                     "lang": "js",
@@ -1295,6 +1296,7 @@
                                                         "plugin",
                                                         "collapse"
                                                     ],
+                                                    "type": "viewer",
                                                     "of": "search",
                                                     "tags": [
                                                         "implementation"
@@ -1302,12 +1304,13 @@
                                                     "isOutput": false,
                                                     "hasOutput": false,
                                                     "hasSource": false,
-                                                    "raw": "js !plugin !collapse of=search #implementation"
+                                                    "raw": "js !plugin type=viewer !collapse of=search #implementation"
                                                 },
                                                 "hProperties": {
                                                     "className": "tag-implementation",
                                                     "meta": {
                                                         "attrs": {
+                                                            "type": "viewer",
                                                             "of": "search"
                                                         },
                                                         "lang": "js",
@@ -1315,6 +1318,7 @@
                                                             "plugin",
                                                             "collapse"
                                                         ],
+                                                        "type": "viewer",
                                                         "of": "search",
                                                         "tags": [
                                                             "implementation"
@@ -1322,7 +1326,7 @@
                                                         "isOutput": false,
                                                         "hasOutput": false,
                                                         "hasSource": false,
-                                                        "raw": "js !plugin !collapse of=search #implementation"
+                                                        "raw": "js !plugin type=viewer !collapse of=search #implementation"
                                                     }
                                                 }
                                             }
@@ -1335,12 +1339,12 @@
                                         "start": {
                                             "line": 1738,
                                             "column": 1,
-                                            "offset": 95814
+                                            "offset": 95826
                                         },
                                         "end": {
                                             "line": 1740,
                                             "column": 4,
-                                            "offset": 95835
+                                            "offset": 95847
                                         }
                                     },
                                     "data": {
@@ -1359,12 +1363,12 @@
                                                 "start": {
                                                     "line": 1738,
                                                     "column": 1,
-                                                    "offset": 95814
+                                                    "offset": 95826
                                                 },
                                                 "end": {
                                                     "line": 1740,
                                                     "column": 4,
-                                                    "offset": 95835
+                                                    "offset": 95847
                                                 }
                                             },
                                             "data": {
@@ -1401,7 +1405,7 @@
                                 "end": {
                                     "line": 1740,
                                     "column": 4,
-                                    "offset": 95835
+                                    "offset": 95847
                                 }
                             }
                         }
@@ -1415,7 +1419,7 @@
                         "end": {
                             "line": 1740,
                             "column": 4,
-                            "offset": 95835
+                            "offset": 95847
                         }
                     }
                 }
@@ -1429,7 +1433,7 @@
                 "end": {
                     "line": 1740,
                     "column": 4,
-                    "offset": 95835
+                    "offset": 95847
                 }
             }
         }
@@ -1443,7 +1447,7 @@
         "end": {
             "line": 1742,
             "column": 1,
-            "offset": 95837
+            "offset": 95849
         }
     }
 }
