@@ -129,7 +129,7 @@ export const extendFs = (fs, litroot = "", ghOpts) => {
   const origReadFile = fs.readFile
   const origStat = fs.stat
   fs.readFile = passThroughRead(origReadFile,litroot);
-  fs.writeFile = writeFileP(fs);
+  fs.writeFile = writeFileP(fs, litroot);
   fs.readStat = passThroughReadWithStat(fs.readFile, origStat, litroot, ghOpts)
 
   if(ghOpts) fs.writeFile = passThroughWrite(fs, litroot, ghOpts);
