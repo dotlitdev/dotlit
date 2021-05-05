@@ -2221,9 +2221,9 @@
                                     "offset": 1643
                                 },
                                 "end": {
-                                    "line": 151,
+                                    "line": 155,
                                     "column": 4,
-                                    "offset": 3569
+                                    "offset": 3523
                                 }
                             }
                         }
@@ -2310,9 +2310,9 @@
                                             "offset": 1659
                                         },
                                         "end": {
-                                            "line": 151,
+                                            "line": 155,
                                             "column": 4,
-                                            "offset": 3569
+                                            "offset": 3523
                                         }
                                     }
                                 }
@@ -2686,9 +2686,9 @@
                                     "offset": 1918
                                 },
                                 "end": {
-                                    "line": 132,
+                                    "line": 136,
                                     "column": 4,
-                                    "offset": 3183
+                                    "offset": 3259
                                 }
                             },
                             "data": {
@@ -2702,7 +2702,7 @@
                                     "type": "code",
                                     "lang": "js",
                                     "meta": "!plugin of=uml !collapse #viewer type=repl",
-                                    "value": "\nasync function encodePlantUML(src) {\n      console.log(\"encoding\", src)\n      const module = await import(\"https://cdn.skypack.dev/plantuml-encoder\");\n      const encoded = module.encode(src) //.replace(/\\n/g, '\\\\n'))\n      console.log(encoded)\n      return encoded\n}\n\nconst getEndpoint = (format, encoded) => `https://plantuml.com/plantuml/${format}/` + encoded\n\nexport const repl = async (src, meta, node) => {\n  const format = (meta && meta.format) || 'svg'\n  const encoded = await encodePlantUML(src)\n  const url = getEndpoint(format, encoded)\n  const resp = await fetch(url)\n  if (meta.writefile) {\n    \n  }\n  return resp.status\n}\n\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n\n  const format = (meta && meta.format) || 'svg'\n  const [url, setUrl] = useState(null)\n\n  const src = node.value\n  useEffect(async ()=> {\n    const encoded = await encodePlantUML(node.data.value)\n    const url = getEndpoint(format, encoded)\n    setUrl(url)\n  },[src])\n\n  return rc('div', {\n    className: 'lit-viewer-plantuml2',\n  }, url ? rc('img', {\n    src: url,\n  }) : \"Loading...\")\n}",
+                                    "value": "\nasync function encodePlantUML(src) {\n      console.log(\"encoding\", src)\n      const module = await import(\"https://cdn.skypack.dev/plantuml-encoder\");\n      const encoded = module.encode(src) //.replace(/\\n/g, '\\\\n'))\n      console.log(encoded)\n      return encoded\n}\n\nconst getEndpoint = (format, encoded) => `https://plantuml.com/plantuml/${format}/` + encoded\n\nexport const repl = async (src, meta, node) => {\n  const format = (meta && meta.format) || 'svg'\n  try {\n    const encoded = await encodePlantUML(src)\n    const url = getEndpoint(format, encoded)\n    const resp = await fetch(url)\n    if (meta.writefile) {\n    \n    }\n    return resp.status\n  } catch(err) {\n    return \"Error: \" + err.message\n  }\n}\n\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n\n  const format = (meta && meta.format) || 'svg'\n  const [url, setUrl] = useState(null)\n\n  const src = node.value\n  useEffect(async ()=> {\n    const encoded = await encodePlantUML(node.data.value)\n    const url = getEndpoint(format, encoded)\n    setUrl(url)\n  },[src])\n\n  return rc('div', {\n    className: 'lit-viewer-plantuml2',\n  }, url ? rc('img', {\n    src: url,\n  }) : \"Loading...\")\n}",
                                     "position": {
                                         "start": {
                                             "line": 87,
@@ -2710,9 +2710,9 @@
                                             "offset": 1918
                                         },
                                         "end": {
-                                            "line": 132,
+                                            "line": 136,
                                             "column": 4,
-                                            "offset": 3183
+                                            "offset": 3259
                                         }
                                     },
                                     "data": {
@@ -2767,14 +2767,14 @@
                             "type": "cell",
                             "position": {
                                 "start": {
-                                    "line": 138,
+                                    "line": 142,
                                     "column": 1,
-                                    "offset": 3189
+                                    "offset": 3265
                                 },
                                 "end": {
-                                    "line": 138,
+                                    "line": 142,
                                     "column": 17,
-                                    "offset": 3205
+                                    "offset": 3281
                                 }
                             },
                             "data": {
@@ -2790,9 +2790,9 @@
                                             "offset": 1659
                                         },
                                         "end": {
-                                            "line": 151,
+                                            "line": 155,
                                             "column": 4,
-                                            "offset": 3569
+                                            "offset": 3523
                                         }
                                     }
                                 }
@@ -2809,42 +2809,42 @@
                                                     "value": "Example usage:",
                                                     "position": {
                                                         "start": {
-                                                            "line": 138,
+                                                            "line": 142,
                                                             "column": 2,
-                                                            "offset": 3190
+                                                            "offset": 3266
                                                         },
                                                         "end": {
-                                                            "line": 138,
+                                                            "line": 142,
                                                             "column": 16,
-                                                            "offset": 3204
+                                                            "offset": 3280
                                                         }
                                                     }
                                                 }
                                             ],
                                             "position": {
                                                 "start": {
-                                                    "line": 138,
+                                                    "line": 142,
                                                     "column": 1,
-                                                    "offset": 3189
+                                                    "offset": 3265
                                                 },
                                                 "end": {
-                                                    "line": 138,
+                                                    "line": 142,
                                                     "column": 17,
-                                                    "offset": 3205
+                                                    "offset": 3281
                                                 }
                                             }
                                         }
                                     ],
                                     "position": {
                                         "start": {
-                                            "line": 138,
+                                            "line": 142,
                                             "column": 1,
-                                            "offset": 3189
+                                            "offset": 3265
                                         },
                                         "end": {
-                                            "line": 138,
+                                            "line": 142,
                                             "column": 17,
-                                            "offset": 3205
+                                            "offset": 3281
                                         }
                                     }
                                 }
@@ -2854,14 +2854,14 @@
                             "type": "cell",
                             "position": {
                                 "start": {
-                                    "line": 140,
+                                    "line": 144,
                                     "column": 1,
-                                    "offset": 3207
+                                    "offset": 3283
                                 },
                                 "end": {
-                                    "line": 151,
+                                    "line": 155,
                                     "column": 4,
-                                    "offset": 3569
+                                    "offset": 3523
                                 }
                             },
                             "data": {
@@ -2878,14 +2878,14 @@
                                     "value": "@startmindmap\n* root node\n\t* some first level node\n\t\t* second level node\n\t\t* another second level node\n\t* another first level node\n@endmindmap",
                                     "position": {
                                         "start": {
-                                            "line": 140,
+                                            "line": 144,
                                             "column": 1,
-                                            "offset": 3207
+                                            "offset": 3283
                                         },
                                         "end": {
-                                            "line": 151,
+                                            "line": 155,
                                             "column": 4,
-                                            "offset": 3569
+                                            "offset": 3523
                                         }
                                     },
                                     "data": {
@@ -2927,48 +2927,54 @@
                                 {
                                     "type": "code",
                                     "lang": ">img",
-                                    "meta": "attached=true updated=1620213179672",
-                                    "value": "https://plantuml.com/plantuml/png/SoWkIImgoStCIybDBE3IKYZApozHoCjFIUNYr58epizDLKZBB2ekKSX9BKlDWKg0P5AJy_DIq4KJy_9BCbABiCaY937CSqW5MWvr0000",
+                                    "meta": "attached=true updated=1620214601660 !error",
+                                    "value": "undefined",
                                     "position": {
                                         "start": {
-                                            "line": 149,
+                                            "line": 153,
                                             "column": 1,
-                                            "offset": 3383
+                                            "offset": 3459
                                         },
                                         "end": {
-                                            "line": 151,
+                                            "line": 155,
                                             "column": 4,
-                                            "offset": 3569
+                                            "offset": 3523
                                         }
                                     },
                                     "data": {
                                         "meta": {
                                             "attrs": {
                                                 "attached": "true",
-                                                "updated": "1620213179672"
+                                                "updated": "1620214601660"
                                             },
                                             "lang": "img",
                                             "attached": "true",
-                                            "updated": "1620213179672",
+                                            "updated": "1620214601660",
+                                            "directives": [
+                                                "error"
+                                            ],
                                             "isOutput": true,
                                             "hasOutput": false,
                                             "hasSource": false,
-                                            "raw": ">img attached=true updated=1620213179672"
+                                            "raw": ">img attached=true updated=1620214601660 !error"
                                         },
                                         "hProperties": {
                                             "className": "",
                                             "meta": {
                                                 "attrs": {
                                                     "attached": "true",
-                                                    "updated": "1620213179672"
+                                                    "updated": "1620214601660"
                                                 },
                                                 "lang": "img",
                                                 "attached": "true",
-                                                "updated": "1620213179672",
+                                                "updated": "1620214601660",
+                                                "directives": [
+                                                    "error"
+                                                ],
                                                 "isOutput": true,
                                                 "hasOutput": false,
                                                 "hasSource": false,
-                                                "raw": ">img attached=true updated=1620213179672"
+                                                "raw": ">img attached=true updated=1620214601660 !error"
                                             }
                                         }
                                     }
@@ -2983,9 +2989,9 @@
                             "offset": 1659
                         },
                         "end": {
-                            "line": 151,
+                            "line": 155,
                             "column": 4,
-                            "offset": 3569
+                            "offset": 3523
                         }
                     }
                 }
@@ -2997,9 +3003,9 @@
                     "offset": 1643
                 },
                 "end": {
-                    "line": 151,
+                    "line": 155,
                     "column": 4,
-                    "offset": 3569
+                    "offset": 3523
                 }
             }
         }
@@ -3011,9 +3017,9 @@
             "offset": 0
         },
         "end": {
-            "line": 151,
+            "line": 155,
             "column": 4,
-            "offset": 3569
+            "offset": 3523
         }
     }
 }

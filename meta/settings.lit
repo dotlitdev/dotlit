@@ -98,13 +98,17 @@ const getEndpoint = (format, encoded) => `https://plantuml.com/plantuml/${format
 
 export const repl = async (src, meta, node) => {
   const format = (meta && meta.format) || 'svg'
-  const encoded = await encodePlantUML(src)
-  const url = getEndpoint(format, encoded)
-  const resp = await fetch(url)
-  if (meta.writefile) {
+  try {
+    const encoded = await encodePlantUML(src)
+    const url = getEndpoint(format, encoded)
+    const resp = await fetch(url)
+    if (meta.writefile) {
     
+    }
+    return resp.status
+  } catch(err) {
+    return "Error: " + err.message
   }
-  return resp.status
 }
 
 export const viewer = ({node, React}) => {
@@ -146,6 +150,6 @@ export const viewer = ({node, React}) => {
 	* another first level node
 @endmindmap
 ```
-```>img attached=true updated=1620213179672
-https://plantuml.com/plantuml/png/SoWkIImgoStCIybDBE3IKYZApozHoCjFIUNYr58epizDLKZBB2ekKSX9BKlDWKg0P5AJy_DIq4KJy_9BCbABiCaY937CSqW5MWvr0000
+```>img attached=true updated=1620214601660 !error
+undefined
 ```
