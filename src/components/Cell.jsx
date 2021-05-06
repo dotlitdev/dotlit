@@ -37,8 +37,9 @@ const Cell = props => {
     const isSelected = ctx => {
         return ctx.selectedCell
             && ctx.selectedCell.start && ctx.selectedCell.end
-            && ctx.selectedCell.start.line === pos.start.line
-            && ctx.selectedCell.end.line === pos.end.line
+            $$ atPos(ctx.selectedCell)(node)
+            // && ctx.selectedCell.start.line === pos.start.line
+            // && ctx.selectedCell.end.line === pos.end.line
     }
     const toggleSelected = ctx => () => {
         const selected = isSelected(ctx)
