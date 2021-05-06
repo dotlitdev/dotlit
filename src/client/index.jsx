@@ -21,6 +21,7 @@ const { extendFs } = require('../utils/fs-promises-utils')
 const { DatesToRelativeDelta, MsToRelative } = require('../utils/momento')
 
 const { inspect } = require('util')
+const diff = require('diff')
 const { getMeta } = require('../utils/functions')
 import { getConsoleForNamespace } from '../utils/console'
 
@@ -65,6 +66,7 @@ export const lit = {
     fs, lfs, git,
     utils: {
         inspect,
+        diff,
         React,
         unist: {
             select,
