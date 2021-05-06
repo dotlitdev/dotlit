@@ -3,10 +3,12 @@ import watch from 'glob-watcher'
 import glob from 'glob'
 import mkdirp from 'mkdirp'
 import path from 'path'
-import {promises as fs} from 'fs'
-import  {selectAll} from 'unist-util-select'
+import {promises as fsPromises} from 'fs'
+import {selectAll} from 'unist-util-select'
 
 import {NoOp} from '../utils/functions'
+
+import { extendFs } from '../utils/fs-promises-utils'
 
 import {parse, stringify} from '../parser/index'
 import {renderedVFileToDoc, processor as renderProcessor} from '../renderer/index'
@@ -17,7 +19,7 @@ import { getConsoleForNamespace } from '../utils/console'
 import { Identity } from '../utils/functions'
 
 const console = getConsoleForNamespace('generate')
-
+const fs = extendFs(fsPromises)
 global.fetch = require("node-fetch")
 
 const copyFiles = async (filepaths, input, output) => await Promise.all( filepaths.map( async filepath => {
