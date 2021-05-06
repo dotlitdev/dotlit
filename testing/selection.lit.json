@@ -39,9 +39,9 @@
                                     "offset": 0
                                 },
                                 "end": {
-                                    "line": 42,
+                                    "line": 84,
                                     "column": 4,
-                                    "offset": 751
+                                    "offset": 1715
                                 }
                             }
                         }
@@ -288,9 +288,9 @@
                             "offset": 607
                         },
                         "end": {
-                            "line": 42,
+                            "line": 84,
                             "column": 4,
-                            "offset": 751
+                            "offset": 1715
                         }
                     },
                     "data": {
@@ -304,7 +304,7 @@
                             "type": "code",
                             "lang": "js",
                             "meta": null,
-                            "value": "\nconst {filter, select} = lit.utils.unist\n\nreturn filter.toString()",
+                            "value": "\nconst {filter, select} = lit.utils.unist\n\nreturn filter(lit.ast, 'heading')",
                             "position": {
                                 "start": {
                                     "line": 34,
@@ -312,9 +312,9 @@
                                     "offset": 607
                                 },
                                 "end": {
-                                    "line": 42,
+                                    "line": 84,
                                     "column": 4,
-                                    "offset": 751
+                                    "offset": 1715
                                 }
                             },
                             "data": {
@@ -342,48 +342,48 @@
                         {
                             "type": "code",
                             "lang": ">txt",
-                            "meta": "attached=true updated=1620344054350",
-                            "value": "[Function: filter]",
+                            "meta": "attached=true updated=1620344079436",
+                            "value": "function filter(tree, options, test) {\n  var is = convert(test || options)\n  var cascade = options.cascade == null ? true : options.cascade\n\n  return preorder(tree, null, null)\n\n  function preorder(node, index, parent) {\n    var children\n    var childIndex\n    var result\n    var next\n    var key\n\n    if (!is(node, index, parent)) return null\n\n    if (node.children) {\n      children = []\n      childIndex = -1\n\n      while (++childIndex < node.children.length) {\n        result = preorder(node.children[childIndex], childIndex, node)\n\n        if (result) {\n          children.push(result)\n        }\n      }\n\n      if (cascade && node.children.length && !children.length) return null\n    }\n\n    // Create a shallow clone, using the new children.\n    next = {}\n\n    for (key in node) {\n      /* istanbul ignore else - Prototype injection. */\n      if (own.call(node, key)) {\n        next[key] = key === 'children' ? children : node[key]\n      }\n    }\n\n    return next\n  }\n}",
                             "position": {
                                 "start": {
                                     "line": 40,
                                     "column": 1,
-                                    "offset": 685
+                                    "offset": 694
                                 },
                                 "end": {
-                                    "line": 42,
+                                    "line": 84,
                                     "column": 4,
-                                    "offset": 751
+                                    "offset": 1715
                                 }
                             },
                             "data": {
                                 "meta": {
                                     "attrs": {
                                         "attached": "true",
-                                        "updated": "1620344054350"
+                                        "updated": "1620344079436"
                                     },
                                     "lang": "txt",
                                     "attached": "true",
-                                    "updated": "1620344054350",
+                                    "updated": "1620344079436",
                                     "isOutput": true,
                                     "hasOutput": false,
                                     "hasSource": false,
-                                    "raw": ">txt attached=true updated=1620344054350"
+                                    "raw": ">txt attached=true updated=1620344079436"
                                 },
                                 "hProperties": {
                                     "className": "",
                                     "meta": {
                                         "attrs": {
                                             "attached": "true",
-                                            "updated": "1620344054350"
+                                            "updated": "1620344079436"
                                         },
                                         "lang": "txt",
                                         "attached": "true",
-                                        "updated": "1620344054350",
+                                        "updated": "1620344079436",
                                         "isOutput": true,
                                         "hasOutput": false,
                                         "hasSource": false,
-                                        "raw": ">txt attached=true updated=1620344054350"
+                                        "raw": ">txt attached=true updated=1620344079436"
                                     }
                                 }
                             }
@@ -398,9 +398,9 @@
                     "offset": 0
                 },
                 "end": {
-                    "line": 42,
+                    "line": 84,
                     "column": 4,
-                    "offset": 751
+                    "offset": 1715
                 }
             }
         }
@@ -412,9 +412,9 @@
             "offset": 0
         },
         "end": {
-            "line": 43,
+            "line": 85,
             "column": 1,
-            "offset": 752
+            "offset": 1716
         }
     }
 }
