@@ -4,6 +4,8 @@ import source from 'unist-util-source'
 import SelectionContext from './SelectionContext'
 import { Identity } from '../utils/functions'
 import { getConsoleForNamespace } from '../utils/console'
+import { ErrorBoundary } from './ErrorBoundry'
+import { lit } from '../client'
 
 
 const console = getConsoleForNamespace('Header')
@@ -187,6 +189,10 @@ export const Header = (props) => {
     const remote = ctx.file && ctx.file.data && ctx.file.data.times && ctx.file.data.times.remote
     const ageMessage = ctx.file && ctx.file.data && ctx.file.data.times && ctx.file.data.times.ageMessage
 
+    const menuPlugins = ctx?.file?.data?.plugins?.menu 
+
+    console.log('<Header/> plugins?', menuPlugins)
+
     return <div id="lit-header">
       <Menu title="Home" horizontal href={root}>
       <Menu title="File">
@@ -224,6 +230,9 @@ export const Header = (props) => {
           <span disabled>Down</span>
         </Menu>
       </Menu>
+      
+      { !menuPlugins ? null : menuPlugins && Object.keys(menuPlugins).map( key => <ErrorBoundary>{menuPlugins[key](ctx, {React, Menu})}</ErrorBoundary>) }
+      
       <Menu title="Help">
         <span disabled>About</span>
         <span disabled>Documentation</span>
