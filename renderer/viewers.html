@@ -141,23 +141,23 @@
 }
 </code></pre></output></codecell></div></cell><cell startpos="190:1-3752" endpos="192:4-3817" class="code"><div class="cell-content"><codecell class="dir-below lang-txt local"><span class="meta"><span class="lang">txt</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span><span class="attribute attr-viewer" style="color:black;background-color:#cf5332">viewer=meta</span><span class="source">&lt; file.txt</span></span><pre><code class="txt">show meta content below:
 </code></pre></codecell></div></cell></section>
-<section depth="3" class="" startpos="194:1-3819" endpos="217:4-4549"><cell startpos="194:1-3819" endpos="198:51-3978"><div class="cell-content"><h3 id="example-diff-viewer">Example: <code>diff</code> viewer</h3><p>v1 <code>https://cdn.skypack.dev/diff</code> didn&#x27;t work (via skyPack) but added to utils.</p><p>v2 <code>https://github.com/praneshr/react-diff-viewer</code></p></div></cell><cell startpos="199:1-3979" endpos="210:4-4306" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=diff</span></span><pre><code class="js">import diff from &#x27;https://cdn.skypack.dev/react-diff-viewer&#x27;
+<section depth="3" class="" startpos="194:1-3819" endpos="217:4-4579"><cell startpos="194:1-3819" endpos="198:51-3978"><div class="cell-content"><h3 id="example-diff-viewer">Example: <code>diff</code> viewer</h3><p>v1 <code>https://cdn.skypack.dev/diff</code> didn&#x27;t work (via skyPack) but added to utils.</p><p>v2 <code>https://github.com/praneshr/react-diff-viewer</code></p></div></cell><cell startpos="199:1-3979" endpos="210:4-4337" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=diff</span></span><pre><code class="js">import diff from &#x27;https://cdn.skypack.dev/react-diff-viewer&#x27;
 export const viewer = ({node,React}) =&gt; {
   const rc = React.createElement
   console.log(&quot;DIFF module&quot;, diff)
   return rc(&#x27;pre&#x27;, {style: {color: &#x27;black&#x27;}}, [rc(diff, {
-  oldValue: &quot;a\na\nc&quot;,
-  newValue: &quot;a\nb\ncc&quot;,
+  oldValue: node.properties.data.originalSource,
+  newValue: node.data.value,
   splitView: false
 })])
 }
-</code></pre></codecell></div></cell><cell startpos="211:1-4307" endpos="217:4-4549" class="code"><div class="cell-content"><codecell class="dir-inline lang-diff local"><span class="meta"><span class="lang">diff</span><span style="color:black;background-color:#b96da2" class="directive dir-inline">inline</span><span class="source">&lt; difftestA.txt</span></span><pre><code class="diff">Custom Content B as an new value
+</code></pre></codecell></div></cell><cell startpos="211:1-4338" endpos="217:4-4579" class="code"><div class="cell-content"><codecell class="dir-below lang-diff local"><span class="meta"><span class="lang">diff</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span><span class="source">&lt; difftestA.txt</span></span><pre><code class="diff">Custom Content B as an new value
 for testing diff viewer
 initially created as a txt file output
 flipper to transclude and modified cell
 giving a node with data.value and data.properties.data.originalSource 
 </code></pre></codecell></div></cell></section>
-<section depth="3" class="" startpos="219:1-4551" endpos="285:92-6359"><cell startpos="219:1-4551" endpos="221:73-4652"><div class="cell-content"><h3 id="example-graph-viewer">Example: <code>graph</code> viewer</h3><p>✅ This viewer has been folded into <code>.lit</code> as one of the default viewers.</p></div></cell><cell startpos="223:1-4654" endpos="268:4-6075" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=custom-graph</span></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
+<section depth="3" class="" startpos="219:1-4581" endpos="285:92-6389"><cell startpos="219:1-4581" endpos="221:73-4682"><div class="cell-content"><h3 id="example-graph-viewer">Example: <code>graph</code> viewer</h3><p>✅ This viewer has been folded into <code>.lit</code> as one of the default viewers.</p></div></cell><cell startpos="223:1-4684" endpos="268:4-6105" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=custom-graph</span></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
    const c = React.createElement
    const data = node.value
 
@@ -201,7 +201,7 @@ giving a node with data.value and data.properties.data.originalSource
 &lt;/body&gt;`})
    return el
 }
-</code></pre></codecell></div></cell><cell startpos="270:1-6077" endpos="280:4-6218" class="code"><div class="cell-content"><codecell class="dir-inline lang-custom-graph local"><span class="meta"><span class="lang">custom-graph</span><span style="color:black;background-color:#b96da2" class="directive dir-inline">inline</span></span><pre><code class="custom-graph">{
+</code></pre></codecell></div></cell><cell startpos="270:1-6107" endpos="280:4-6248" class="code"><div class="cell-content"><codecell class="dir-inline lang-custom-graph local"><span class="meta"><span class="lang">custom-graph</span><span style="color:black;background-color:#b96da2" class="directive dir-inline">inline</span></span><pre><code class="custom-graph">{
   &quot;nodes&quot;:[
     {&quot;id&quot;: &quot;foo&quot;},
     {&quot;id&quot;: &quot;bar&quot;}
@@ -210,9 +210,9 @@ giving a node with data.value and data.properties.data.originalSource
     {&quot;source&quot;: &quot;foo&quot;, &quot;target&quot;: &quot;bar&quot;}
   ]
 }
-</code></pre></codecell></div></cell><cell startpos="282:1-6220" endpos="283:4-6266" class="code"><div class="cell-content"><codecell class="dir-inline lang-custom-graph local"><span class="meta"><span class="lang">custom-graph</span><span style="color:black;background-color:#b96da2" class="directive dir-inline">inline</span><span class="source">&lt; ../manifest.json</span></span><pre><code class="custom-graph"></code></pre></codecell></div></cell><cell startpos="285:1-6268" endpos="285:92-6359"><div class="cell-content"><p>The above automatically transcludes the <code>.lit</code> manifest and focuses on the current document</p></div></cell></section>
-<section depth="3" class="" startpos="287:1-6361" endpos="331:4-7572"><cell startpos="287:1-6361" endpos="290:71-6478"><div class="cell-content"><h3 id="example-vega">Example: Vega</h3><p>Still a <em>Work in progress</em>
-Docs: <a href="https://vega.github.io/vega-lite/usage/compile.html">vega-lite<span class="linkIcon">↗</span></a></p></div></cell><cell startpos="292:1-6480" endpos="331:4-7572" class="code output"><div class="cell-content"><codecell class="lang-iframe local output"><span class="meta"><span class="lang">iframe</span><span class="attribute attr-xviewer" style="color:white;background-color:#9b3ef8">xviewer=meta</span></span><iframe srcDoc="&lt;!DOCTYPE html&gt;
+</code></pre></codecell></div></cell><cell startpos="282:1-6250" endpos="283:4-6296" class="code"><div class="cell-content"><codecell class="dir-inline lang-custom-graph local"><span class="meta"><span class="lang">custom-graph</span><span style="color:black;background-color:#b96da2" class="directive dir-inline">inline</span><span class="source">&lt; ../manifest.json</span></span><pre><code class="custom-graph"></code></pre></codecell></div></cell><cell startpos="285:1-6298" endpos="285:92-6389"><div class="cell-content"><p>The above automatically transcludes the <code>.lit</code> manifest and focuses on the current document</p></div></cell></section>
+<section depth="3" class="" startpos="287:1-6391" endpos="331:4-7602"><cell startpos="287:1-6391" endpos="290:71-6508"><div class="cell-content"><h3 id="example-vega">Example: Vega</h3><p>Still a <em>Work in progress</em>
+Docs: <a href="https://vega.github.io/vega-lite/usage/compile.html">vega-lite<span class="linkIcon">↗</span></a></p></div></cell><cell startpos="292:1-6510" endpos="331:4-7602" class="code output"><div class="cell-content"><codecell class="lang-iframe local output"><span class="meta"><span class="lang">iframe</span><span class="attribute attr-xviewer" style="color:white;background-color:#9b3ef8">xviewer=meta</span></span><iframe srcDoc="&lt;!DOCTYPE html&gt;
 &lt;html&gt;
   &lt;head&gt;
     &lt;title&gt;Embedding Vega-Lite&lt;/title&gt;
@@ -251,7 +251,7 @@ Docs: <a href="https://vega.github.io/vega-lite/usage/compile.html">vega-lite<sp
   &lt;/body&gt;
 &lt;/html&gt;
 " style="aspect-ratio:1.6"></iframe></codecell></div></cell></section>
-<section depth="3" class="" startpos="333:1-7574" endpos="390:95-8826"><cell startpos="333:1-7574" endpos="335:53-7665"><div class="cell-content"><h3 id="example-d3-graphviz-dot-viewer">Example: D3 Graphviz <code>dot</code> viewer</h3><p>Docs: <a href="https://github.com/magjac/d3-graphviz#examples">https://github.com/magjac/d3-graphviz#examples<span class="linkIcon">↗</span></a></p></div></cell><cell startpos="337:1-7667" endpos="355:4-8220" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=dot</span></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
+<section depth="3" class="" startpos="333:1-7604" endpos="390:95-8856"><cell startpos="333:1-7604" endpos="335:53-7695"><div class="cell-content"><h3 id="example-d3-graphviz-dot-viewer">Example: D3 Graphviz <code>dot</code> viewer</h3><p>Docs: <a href="https://github.com/magjac/d3-graphviz#examples">https://github.com/magjac/d3-graphviz#examples<span class="linkIcon">↗</span></a></p></div></cell><cell startpos="337:1-7697" endpos="355:4-8250" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=dot</span></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
    const c = React.createElement
    const el = c(&#x27;iframe&#x27;, {srcDoc: `&lt;!DOCTYPE html&gt;
 &lt;meta charset=&quot;utf-8&quot;&gt;
@@ -268,8 +268,8 @@ d3.select(&quot;#graph&quot;).graphviz()
 &lt;/script&gt;`})
    return el
 }
-</code></pre></codecell></div></cell><cell startpos="357:1-8222" endpos="359:4-8266" class="code output"><div class="cell-content"><codecell class="lang-dot local output"><span class="meta"><span class="lang">dot</span><span class="attribute attr-xviewer" style="color:white;background-color:#9b3ef8">xviewer=meta</span></span><output><pre><code class="dot">digraph  { a -&gt; b }
-</code></pre></output></codecell></div></cell><cell startpos="361:1-8268" endpos="388:4-8730" class="code output"><div class="cell-content"><codecell class="lang-dot local output"><span class="meta"><span class="lang">dot</span></span><output><pre><code class="dot">digraph Q {
+</code></pre></codecell></div></cell><cell startpos="357:1-8252" endpos="359:4-8296" class="code output"><div class="cell-content"><codecell class="lang-dot local output"><span class="meta"><span class="lang">dot</span><span class="attribute attr-xviewer" style="color:white;background-color:#9b3ef8">xviewer=meta</span></span><output><pre><code class="dot">digraph  { a -&gt; b }
+</code></pre></output></codecell></div></cell><cell startpos="361:1-8298" endpos="388:4-8760" class="code output"><div class="cell-content"><codecell class="lang-dot local output"><span class="meta"><span class="lang">dot</span></span><output><pre><code class="dot">digraph Q {
 
   node [shape=record];
 
@@ -295,8 +295,8 @@ d3.select(&quot;#graph&quot;).graphviz()
   }
 
 }
-</code></pre></output></codecell></div></cell><cell startpos="390:1-8732" endpos="390:95-8826"><div class="cell-content"><p>The above mildly more complex example doesn&#x27;t render, likely due to not being actual graphviz.</p></div></cell></section>
-<section depth="3" class="" startpos="392:1-8828" endpos="484:4-11502"><cell startpos="392:1-8828" endpos="392:31-8858"><div class="cell-content"><h3 id="example-plantuml-viewer">Example: Plant<code>UML</code> viewer</h3></div></cell><cell startpos="394:1-8860" endpos="460:4-11008" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=uml</span></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
+</code></pre></output></codecell></div></cell><cell startpos="390:1-8762" endpos="390:95-8856"><div class="cell-content"><p>The above mildly more complex example doesn&#x27;t render, likely due to not being actual graphviz.</p></div></cell></section>
+<section depth="3" class="" startpos="392:1-8858" endpos="484:4-11532"><cell startpos="392:1-8858" endpos="392:31-8888"><div class="cell-content"><h3 id="example-plantuml-viewer">Example: Plant<code>UML</code> viewer</h3></div></cell><cell startpos="394:1-8890" endpos="460:4-11038" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=uml</span></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
    const c = React.createElement
    const ref = React.createRef();
    const [height, setHeight] = React.useState(null)
@@ -361,8 +361,8 @@ d3.select(&quot;#graph&quot;).graphviz()
    console.log(&quot;PlantViewer iframe ref:&quot;, el.ref.current)
    return el
 }
-</code></pre></codecell></div></cell><cell startpos="462:1-11010" endpos="464:4-11039" class="code"><div class="cell-content"><codecell class="dir-inline lang-uml local"><span class="meta"><span class="lang">uml</span><span style="color:black;background-color:#b96da2" class="directive dir-inline">inline</span></span><pre><code class="uml">[A] -&gt; [B]
-</code></pre></codecell></div></cell><cell startpos="466:1-11041" endpos="484:4-11502" class="code output"><div class="cell-content"><codecell class="lang-uml local output"><span class="meta"><span class="lang">uml</span></span><output><pre><code class="uml">@startuml
+</code></pre></codecell></div></cell><cell startpos="462:1-11040" endpos="464:4-11069" class="code"><div class="cell-content"><codecell class="dir-inline lang-uml local"><span class="meta"><span class="lang">uml</span><span style="color:black;background-color:#b96da2" class="directive dir-inline">inline</span></span><pre><code class="uml">[A] -&gt; [B]
+</code></pre></codecell></div></cell><cell startpos="466:1-11071" endpos="484:4-11532" class="code output"><div class="cell-content"><codecell class="lang-uml local output"><span class="meta"><span class="lang">uml</span></span><output><pre><code class="uml">@startuml
 participant participant as Foo
 actor       actor       as Foo1
 boundary    boundary    as Foo2
@@ -380,21 +380,21 @@ Foo -&gt; Foo6 : To collections
 Foo -&gt; Foo7 : To queue
 @enduml
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="486:1-11504" endpos="507:4-11857"><cell startpos="486:1-11504" endpos="486:10-11513"><div class="cell-content"><h2 id="errors">Errors</h2></div></cell><section depth="3" class="" startpos="488:1-11515" endpos="507:4-11857"><cell startpos="488:1-11515" endpos="488:12-11526"><div class="cell-content"><h3 id="runtime">Runtime</h3></div></cell><cell startpos="490:1-11528" endpos="494:4-11643" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=testerror</span></span><pre><code class="js">export const viewer = ({node}) =&gt; {
+<section depth="2" class="" startpos="486:1-11534" endpos="507:4-11887"><cell startpos="486:1-11534" endpos="486:10-11543"><div class="cell-content"><h2 id="errors">Errors</h2></div></cell><section depth="3" class="" startpos="488:1-11545" endpos="507:4-11887"><cell startpos="488:1-11545" endpos="488:12-11556"><div class="cell-content"><h3 id="runtime">Runtime</h3></div></cell><cell startpos="490:1-11558" endpos="494:4-11673" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=testerror</span></span><pre><code class="js">export const viewer = ({node}) =&gt; {
   throw new Error(&quot;Test Error: Broken Viewer&quot;)
 }
-</code></pre></codecell></div></cell><cell startpos="496:1-11645" endpos="500:4-11763" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=syntaxerror</span></span><pre><code class="js">export const viewer = ({node}) =&gt; {
+</code></pre></codecell></div></cell><cell startpos="496:1-11675" endpos="500:4-11793" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=syntaxerror</span></span><pre><code class="js">export const viewer = ({node}) =&gt; {
   throw new Error(&quot;Syntax Error: Broken Viewer&quot;
 }
-</code></pre></codecell></div></cell><cell startpos="501:1-11764" endpos="503:4-11804" class="code output"><div class="cell-content"><codecell class="lang-testerror local output"><span class="meta"><span class="lang">testerror</span></span><output><pre><code class="testerror">Viewer throws an Error
-</code></pre></output></codecell></div></cell><cell startpos="505:1-11806" endpos="507:4-11857" class="code output"><div class="cell-content"><codecell class="lang-syntaxerror local output"><span class="meta"><span class="lang">syntaxerror</span></span><output><pre><code class="syntaxerror">TODO: Viewer has a syntax error
+</code></pre></codecell></div></cell><cell startpos="501:1-11794" endpos="503:4-11834" class="code output"><div class="cell-content"><codecell class="lang-testerror local output"><span class="meta"><span class="lang">testerror</span></span><output><pre><code class="testerror">Viewer throws an Error
+</code></pre></output></codecell></div></cell><cell startpos="505:1-11836" endpos="507:4-11887" class="code output"><div class="cell-content"><codecell class="lang-syntaxerror local output"><span class="meta"><span class="lang">syntaxerror</span></span><output><pre><code class="syntaxerror">TODO: Viewer has a syntax error
 </code></pre></output></codecell></div></cell></section></section>
-<section depth="3" class="" startpos="509:1-11859" endpos="516:4-12002"><cell startpos="509:1-11859" endpos="509:11-11869"><div class="cell-content"><h3 id="import">Import</h3></div></cell><cell startpos="511:1-11871" endpos="516:4-12002" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=testerror2</span></span><pre><code class="js">throw new Error(&quot;Test Error: Broken Viewer&quot;)
+<section depth="3" class="" startpos="509:1-11889" endpos="516:4-12032"><cell startpos="509:1-11889" endpos="509:11-11899"><div class="cell-content"><h3 id="import">Import</h3></div></cell><cell startpos="511:1-11901" endpos="516:4-12032" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=testerror2</span></span><pre><code class="js">throw new Error(&quot;Test Error: Broken Viewer&quot;)
 export const viewer = ({node}) =&gt; {
   return &quot;never&quot;
 }
 </code></pre></codecell></div></cell></section>
-<section depth="2" class="" startpos="518:1-12004" endpos="541:4-12440"><cell startpos="518:1-12004" endpos="518:21-12024"><div class="cell-content"><h2 id="initial-prototype">Initial prototype</h2></div></cell><cell startpos="520:1-12026" endpos="541:4-12440" class="code"><div class="cell-content"><codecell class="lang-html local"><span class="meta"><span class="lang">html</span></span><pre><code class="html">&lt;!DOCTYPE html&gt;
+<section depth="2" class="" startpos="518:1-12034" endpos="541:4-12470"><cell startpos="518:1-12034" endpos="518:21-12054"><div class="cell-content"><h2 id="initial-prototype">Initial prototype</h2></div></cell><cell startpos="520:1-12056" endpos="541:4-12470" class="code"><div class="cell-content"><codecell class="lang-html local"><span class="meta"><span class="lang">html</span></span><pre><code class="html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
   &lt;head&gt;
     &lt;title&gt;Test page&lt;/title&gt;
@@ -415,7 +415,7 @@ export const viewer = ({node}) =&gt; {
   &lt;/body&gt;
 &lt;/html&gt;
 </code></pre></codecell></div></cell></section>
-<section depth="2" class="" startpos="543:1-12442" endpos="599:4-13825"><cell startpos="543:1-12442" endpos="543:15-12456"><div class="cell-content"><h2 id="experiments">Experiments</h2></div></cell><cell startpos="545:1-12458" endpos="574:4-13305" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=plantuml2</span></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
+<section depth="2" class="" startpos="543:1-12472" endpos="599:4-13855"><cell startpos="543:1-12472" endpos="543:15-12486"><div class="cell-content"><h2 id="experiments">Experiments</h2></div></cell><cell startpos="545:1-12488" endpos="574:4-13335" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=plantuml2</span></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
   const rc = React.createElement
   const {useState, useEffect} = React
   const meta = node.properties 
@@ -443,10 +443,10 @@ export const viewer = ({node}) =&gt; {
     src: url,
   }) : &quot;Loading...&quot;)
 }
-</code></pre></codecell></div></cell><cell startpos="576:1-13307" endpos="580:4-13363" class="code"><div class="cell-content"><codecell class="dir-inline lang-plantuml2 local"><span class="meta"><span class="lang">plantuml2</span><span style="color:black;background-color:#b96da2" class="directive dir-inline">inline</span></span><pre><code class="plantuml2">@startuml
+</code></pre></codecell></div></cell><cell startpos="576:1-13337" endpos="580:4-13393" class="code"><div class="cell-content"><codecell class="dir-inline lang-plantuml2 local"><span class="meta"><span class="lang">plantuml2</span><span style="color:black;background-color:#b96da2" class="directive dir-inline">inline</span></span><pre><code class="plantuml2">@startuml
 class Example
 @enduml
-</code></pre></codecell></div></cell><cell startpos="581:1-13364" endpos="599:4-13825" class="code output"><div class="cell-content"><codecell class="lang-uml local output"><span class="meta"><span class="lang">uml</span></span><output><pre><code class="uml">@startuml
+</code></pre></codecell></div></cell><cell startpos="581:1-13394" endpos="599:4-13855" class="code output"><div class="cell-content"><codecell class="lang-uml local output"><span class="meta"><span class="lang">uml</span></span><output><pre><code class="uml">@startuml
 participant participant as Foo
 actor       actor       as Foo1
 boundary    boundary    as Foo2
