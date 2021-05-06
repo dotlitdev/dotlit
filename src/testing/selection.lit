@@ -16,12 +16,15 @@ export const data = {
   }
 }
 ```
-```js !plugin id=example-menu type=menu
+```js !plugin id=selection type=menu
+
+const pos = lit.file.data.plugins.data.fakePos
+
 export const menu = (ctx, {React, Menu}) => {
   const rc = React.createElement
   return rc( Menu, {
-    title:"Example",
+    title:"Selection",
     disabled: false,
-  }, [rc('span', {onClick: () => alert("Hi From example plugin!")}, 'Menu Item')])
+  }, [rc('span', {onClick: () => ctx.selectCell(pos))}, 'Select fakePos')])
 }
 ```
