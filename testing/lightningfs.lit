@@ -1684,7 +1684,10 @@ return lit.fs
 const filename = '/index.lit'
 return lit.fs
           .readStat(filename)
-          .then(stats => lit.utils.diff.createPatch(filename, stats.local.value, stats.remote.value))
+          .then(stats =>  {
+             return [stats.local.value, stats.remote.value]
+lit.utils.diff.createPatch(filename, stats.local.value, stats.remote.value)
+})
 ```
 ```>json !collapse attached=true updated=1619878403441
 { type: 'file',
