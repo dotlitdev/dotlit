@@ -19,7 +19,7 @@ import { getConsoleForNamespace } from '../utils/console'
 import { Identity } from '../utils/functions'
 
 const console = getConsoleForNamespace('generate')
-const fs = extendFs(fsPromises, __dirname)
+const fs = extendFs(fsPromises)
 global.fetch = require("node-fetch")
 
 const copyFiles = async (filepaths, input, output) => await Promise.all( filepaths.map( async filepath => {
