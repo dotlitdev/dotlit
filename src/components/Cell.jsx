@@ -37,7 +37,7 @@ const Cell = props => {
     const isSelected = ctx => {
         return ctx.selectedCell
             && ctx.selectedCell.start && ctx.selectedCell.end
-            $$ atPos(ctx.selectedCell)(node)
+            && atPos(ctx.selectedCell)(node)
             // && ctx.selectedCell.start.line === pos.start.line
             // && ctx.selectedCell.end.line === pos.end.line
     }
