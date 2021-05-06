@@ -12,6 +12,7 @@ import filter from 'unist-util-filter'
 import { atPos } from '../utils/unist-util-select-position'
 import { selectAll } from 'unist-util-select'
 import { posstr } from '../utils/functions'
+import { ErrorBoundary } from './ErrorBoundry'
 
 const console = getConsoleForNamespace('App')
 
@@ -94,12 +95,12 @@ const App = ({root, file, fs, result}) => {
     console.log(`<App/> render "${file.path}" (selected: ${selectedCell} `)
 
     return <SelectionContext.Provider value={state}>
-        <Header root={root} toggleViewSource={toggleViewSource}/>
+        <ErrorBoundary><Header root={root} toggleViewSource={toggleViewSource}/></ErrorBoundary>
         <div id="content">
           { viewSource 
             // ? <Editor src={srcAndRes.src} update={()=>{}} />
-            ? <Highlight language="md">{srcAndRes.src}</Highlight>
-            : srcAndRes.res }
+            ? <ErrorBoundary><Highlight language="md">{srcAndRes.src}</Highlight></ErrorBoundary>
+            : <ErrorBoundary>{srcAndRes.res}</ErrorBoundary> }
         </div>
     </SelectionContext.Provider>
 }

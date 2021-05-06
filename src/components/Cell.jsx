@@ -70,12 +70,18 @@ const Cell = props => {
     const exec = ctx => async args => {
         console.log('Executing cell', {pos, codeSource, rawSource, originalSource})
        
-        
+        const repl = meta.repl ? meta.repl : meta.lang
         let result
         let error
-        if (lit && lit.file && lit.file.data && lit.file.data.plugins && lit.file.data.plugins.repl && lit.file.data.plugins.repl[meta.repl]) {
+        if (lit 
+            && lit.file 
+            && lit.file.data 
+            && lit.file.data.plugins 
+            && lit.file.data.plugins.repl 
+            && lit.file.data.plugins.repl[repl]) {
+
             try { 
-                 result = {stdout: await lit.file.data.plugins.repl[meta.repl](codeSource, meta, node) } 
+                 result = {stdout: await lit.file.data.plugins.repl[repl](codeSource, meta, node) } 
              } catch(err) { 
                  console.error("REPL plugin error", err)
                  error = true 

@@ -105,11 +105,10 @@ export const parser = (...args) => {
   }
 }
 ```
+
 ### Renderer
 
 *Not yet Implemented.*
-
-
 
 ```js !plugin id=example-renderer
 export const renderer = (...args) => {
@@ -119,6 +118,19 @@ export const renderer = (...args) => {
   }
 }
 ```
+
+### Menu
+
+```js !plugin id=example-menu type=menu
+export const menu = (ctx, {React, Menu}) => {
+  const rc = React.createElement
+  return rc( Menu, {
+    title:"Example",
+    disabled: false,
+  }, [rc('span', {onClick: () => alert("Hi From example plugin!")}, 'Menu Item')])
+}
+```
+
 ### Custom
 
 Since all plugins are extracted (to the global `lit` object) during parsing, regardless of implementation status, you can define your own. A good example is exporting data to be used in other cells.
