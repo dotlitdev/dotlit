@@ -53,6 +53,22 @@ return Object.keys(all).map(t=>`${t} (${Object.keys(all[t]).length})`)
 
 
 ## My plugins
+```js !plugin of=json
+// see https://github.com/mac-s-g/react-json-view
+import reactJsonView from 'https://cdn.skypack.dev/react-json-view'
+
+export const viewer = ({node, React}) => {
+  const rc = React.createElement
+  let obj
+  try { obj = JSON.parse(node.data.value)
+  } catch(err) {}
+  return rc( 'div', {className: 'json-viewer', onClick:ev=>{ev.preventDefault(); ev.stopPropagation(); return false;}}, rc(reactJsonView, {
+    src: obj,
+    collapseStringsAfterLength: 20,
+    collapsed: node.properties.meta.collapse || 1,
+  }))
+}
+```
 
 #### Plant`uml` viewer & repl
 Uses [plantuml.com](https://plantuml.com) to create `svg` images from `uml` source. Not included as a default viewer due to the external dependency, but it's great! See [[renderer/viewers/plantuml]] for more.
