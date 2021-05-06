@@ -2,7 +2,7 @@
 
 This file is special in that it is parsed and any `!plugins` it contains are pre-populated for all other `.lit` documents.
 
-Move or copy any document specific `!plugin` here to have it apply to all documents.
+Move or copy any document specific `!plugin`s here to have them apply to all documents.
 
 ## Table of Contents
 
@@ -52,14 +52,8 @@ return Object.keys(all).map(t=>`${t} (${Object.keys(all[t]).length})`)
 
 
 
-## Custom plugins
-
-Included below, and therefore available my all `.lit` documents in this notebook.
-
-### `json2` viewer
-*Implementation:*
-
-```js !plugin of=json2 type=viewer !collapse
+## My plugins
+```js !plugin of=json !collapse
 // see https://github.com/mac-s-g/react-json-view
 import reactJsonView from 'https://cdn.skypack.dev/react-json-view'
 
@@ -70,18 +64,17 @@ export const viewer = ({node, React}) => {
   } catch(err) {}
   return rc( 'div', {className: 'json-viewer', onClick:ev=>{ev.preventDefault(); ev.stopPropagation(); return false;}}, rc(reactJsonView, {
     src: obj,
+    iconStyle: 'circle',
     collapseStringsAfterLength: 20,
     collapsed: node.properties.meta.collapse || 1,
   }))
 }
 ```
 
-*Example usage:*
-
-```json2 !inline < ../manifest.json
+```json !inline #usage < ../manifest.json
 ```
 
-### Plant`uml` viewer & repl
+#### Plant`uml` viewer & repl
 Uses [plantuml.com](https://plantuml.com) to create `svg` images from `uml` source. Not included as a default viewer due to the external dependency, but it's great! See [[renderer/viewers/plantuml]] for more.
 
 *Implementation:*
