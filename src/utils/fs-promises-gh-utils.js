@@ -32,7 +32,7 @@ export const ghWriteFile = (opts) => async (...args) => {
    
     const file = (opts.prefix || '') + args[0]
     const content = args[1].toString()
-    console.log("ghWriteFile",file, content, args)
+    console.log("ghWriteFile", file)
     const endpoint = getEndpoint(opts, file)
     const resp1 = await fetch(endpoint)
     const json1 = await resp1.json()
