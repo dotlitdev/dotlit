@@ -1679,6 +1679,77 @@ return lit.fs
   gid: 1,
   dev: 1 }
 ```
+```js > diff !collapse
+// https://github.com/kpdecker/jsdiff
+const {root,src} = lit.location
+const {join} = lit.utils.path
+const filename = join(root,src)
+
+const withStats = async stats => {
+  const cp = lit.utils.diff.createPatch
+  // const f = 
+  const local = stats.local.value
+  const remote = stats.remote.value
+  const patch = cp(filename, local, remote)
+  console.log(patch.split('\n').map(l=>'    '+l).join('\n'))
+  return "logged patch"
+}
+
+const stats = lit.fs.readStat(filename, {encoding: 'utf8'})
+return stats.then(withStats)
+```
+```>diff !collapse attached=true updated=1620338108145
+    Index: /testing/lightningfs.lit
+    ===================================================================
+    --- /testing/lightningfs.lit
+    +++ /testing/lightningfs.lit
+    @@ -1680,34 +1680,31 @@
+       dev: 1 }
+     ```
+     ```js > diff !collapse
+     // https://github.com/kpdecker/jsdiff
+    -const {root,src} = lit.location
+    -const {join} = lit.utils.path
+    -const filename = join(root,src)
+    +const filename = '/index.lit'
+     
+     const withStats = async stats => {
+       const cp = lit.utils.diff.createPatch
+    -  // const f = 
+    +  // const f = lit.location.src
+       const local = stats.local.value
+       const remote = stats.remote.value
+       const patch = cp(filename, local, remote)
+    -  console.log(patch.split('\n').map(l=>'    '+l).join('\n'))
+    +  // console.log(patch)
+       return "logged patch"
+     }
+     
+     const stats = lit.fs.readStat(filename, {encoding: 'utf8'})
+     return stats.then(withStats)
+     ```
+    -```>diff !collapse attached=true updated=1620337567383
+    -Index: /testing/lightningfs.lit
+    +```>text !collapse attached=true updated=1620336678219
+    +Index: /index.lit
+     ===================================================================
+    ---- /testing/lightningfs.lit
+    -+++ /testing/lightningfs.lit
+    -@@ -1680,26 +1680,24 @@
+    -   dev: 1 }
+    - ```
+    +--- /index.lit
+    ++++ /index.lit
+     
+    +logged patch
+    +```
+     
+     
+     ```>fs ls=/
+     
+    
+logged patch
+```
 
 
 
