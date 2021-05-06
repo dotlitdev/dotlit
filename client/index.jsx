@@ -45,7 +45,7 @@ const lfs = new FS(baseUrl, {
     wipe: query.__lfs_wipe==="true" ? confirm("Are you sure you want to wipe the local file system: " + baseUrl) : undefined,
     url: baseUrl,
 })
-const fs = extendFs(lfs.promises, litroot, typeof localStorage !== "undefined" && localStorage.getItem("ghToken") && {
+const fs = extendFs(lfs.promises, litroot, !query.__no_gh && typeof localStorage !== "undefined" && localStorage.getItem("ghToken") && {
     username: "dotlitdev",
     repository: "dotlit", 
     prefix: "src",
