@@ -39,9 +39,9 @@
                                     "offset": 0
                                 },
                                 "end": {
-                                    "line": 1754,
+                                    "line": 1762,
                                     "column": 4,
-                                    "offset": 106660
+                                    "offset": 106771
                                 }
                             }
                         }
@@ -197,9 +197,9 @@
                                             "offset": 64
                                         },
                                         "end": {
-                                            "line": 1754,
+                                            "line": 1762,
                                             "column": 4,
-                                            "offset": 106660
+                                            "offset": 106771
                                         }
                                     }
                                 }
@@ -1099,9 +1099,9 @@
                                     "offset": 94288
                                 },
                                 "end": {
-                                    "line": 1695,
+                                    "line": 1703,
                                     "column": 4,
-                                    "offset": 105100
+                                    "offset": 105211
                                 }
                             },
                             "data": {
@@ -1115,7 +1115,7 @@
                                     "type": "code",
                                     "lang": "js",
                                     "meta": "> text !collapse",
-                                    "value": "// https://github.com/kpdecker/jsdiff\nconst filename = '/index.lit'\nreturn lit.fs\n          .readStat(filename, {encoding: 'utf8'})\n          .then(stats =>  {\n             //return [stats.local.value, stats.remote.value]\nreturn lit.utils.diff.createPatch(filename, stats.local.value, stats.remote.value)\n})",
+                                    "value": "// https://github.com/kpdecker/jsdiff\nconst filename = '/index.lit'\n\n\nconst withStats = async stats => {\n  const cp = lit.utils.diff.createPatch\n  const f = lit.location.src\n  const local = stats.local.value\n  const remote = stats.remote.value\n  const patch = cp(f, local, remote)\n  console.log(patch)\n  return \"logged patch\"\n}\nreturn lit.fs\n          .readStat(filename, {encoding: 'utf8'})\n          .then(withStats)",
                                     "position": {
                                         "start": {
                                             "line": 1682,
@@ -1123,9 +1123,9 @@
                                             "offset": 94288
                                         },
                                         "end": {
-                                            "line": 1695,
+                                            "line": 1703,
                                             "column": 4,
-                                            "offset": 105100
+                                            "offset": 105211
                                         }
                                     },
                                     "data": {
@@ -1159,14 +1159,14 @@
                                     "value": "[ '<!-- data\\ntitle: .lit \\n-->\\n\\n# `.lit`\\n\\n[![Open Source](https://img.shields.io/badge/🌱-Open%20Source-green)](https://github.com/dotlitdev/dotlit)\\n[![npm (scoped)](https://img.shields.io/npm/v/@dotlit/dotlit)](https://npmjs.org/@dotlit/dotlit)\\n[![Deploy](https://github.com/dotlitdev/dotlit/actions/workflows/generate.yaml/badge.svg)](https://github.com/dotlitdev/dotlit/actions/workflows/generate.yaml)\\n\\n`.lit` is a plain text document format, really it\\'s just **Markdown**. But with *Sections*, *Cells*, <kbd>interactive</kbd> & *executable* `code` blocks and _meta_ programming over its own <abbr>AST</abbr>.\\n\\n## Table of Contents\\n\\n## About\\n\\n```>md !warn\\n⚠️ **`.lit`** is still a *Work in progress*.\\n\\nThis iteration is a from-scratch rewrite of an [initial prototype], with many features yet to be re-implemented.\\n```\\n\\n**🧪 [[Scratch ⚠️ Pad 🔬]]**\\n\\n```graph !inline < manifest.json\\n```\\n\\n**☑️ To Do** or *in progress*\\n- [ ] local git repo [[testing/Isomorphic Git]]\\n- [ ] fragments in [[wiki-links]]\\n- [ ] remove global fetch hack for nodejs and bundle properly with webpack\\n- [ ] [[testing/Local & Remote files]]\\n- [x] [[testing/ServiceWorker]]\\n- [x] [[testing/Private Files]]\\n- [ ] [[meta/Settings]]\\n\\n**🐜 Bugs**\\n- [ ] Next/sibling sections are getting nested\\n- [x] Code cell anchor links using href are annoying. TODO onClick add to history silently and don\\'t scroll. ([c.f.](https://stackoverflow.com/questions/62331314/anchor-link-without-creating-history-entry))\\n- [x] Sometimes on cell save result is not shown due to `pos2.start` of undefined.\\n    Caused by generated text child of wikiLinks.\\n- [ ] Transcluding failure breaks the page see [[meta/Github workflows]]\\n- [x] When authenticated with GitHub, pass through reads cannot resolve generated files  cf. `/metadata.json`\\n- [ ] Transcludes break (not displayed) on re-render (ie due to edit)\\n- [x] Doppelgänger pages, some ~pages~ links are resulting in duplicate **and diverging** files in the local filesystem. See [[testing/Lighting FS#Bugs]]\\n- [ ] Inline html in Markdown source not surviving to final rendered output.\\n- [x] Executed code cells get a new line appended to source each time\\n\\n**✅ Done**\\n- [x] [[Execute `code` cells]]\\n- [x] Check lists ([[gfm]] Github Flavoured Markdown)\\n- [x] [[Persist to GitHub]]\\n\\n## Getting Started\\n\\n\\n### Starter template repo\\n\\nWhile `.lit` is still under active development and not quite ready for prime time, you can fork this [GitHub template repository](https://github.com/dotlitdev/dotlit-starter) to deploy your own \"instance\" hosted on GitHub Pages.\\n\\n### From the command line\\n\\nTo use `.lit` from the command line, see usage and documentation [here](cli/cli.lit).\\n\\n## Documentation \\n\\nCurrently my [[Scratch ⚠️ Pad 🔬]] is the closest thing to documentation, start there for now.\\n\\n### Divergence from Markdown\\n\\nGenerally `.lit` is backward compatible with Markdown. That is to say that a valid Markdown file is a valid `.lit` file and vice versa.\\n\\nThe primary difference being that a basic/normal Markdown viewer will lack many of the niceties afforded by `.lit` but the intent is that it should still render *correctly* for the reader.\\n\\n**Key differences**\\n\\n- **Frontmatter**: We consider existing frontmatter implementations *Not* backward compatable with basic Markdown. Primarily due to the fact that they are rendered at all (and badly) by renderers that do not support frontmatter. Therefor we define frontmatter as HTML Comments with a `data` prefix.\\n\\n      <!-- data\\n      title: foo\\n      -->\\n\\n- **Code block meta**:\\n\\n      ```lang [...meta]\\n      content\\n      ```\\n\\n- **Wiki-Links**:\\n\\n## Implementation\\n\\n### Parser\\n\\nBuilt atop the unified ecosystem, specifically remark, which takes `.lit` Markdown source and outputs `.lit` AST (Abstract Syntax Tree). [Read More](parser/parser.lit)\\n\\n### Renderer\\n\\nThe default render output is `html` which includes client-side `javascript` which hydrates a React application. [Read More](renderer/renderer.lit)\\n\\n### Client\\n\\nThe static html generated by `.lit` does not *require* JavaScript to function for the reader. But by default includes a [[client/client]] which re-hydrates the page to become fully interactive, enabling editing of the original document in place. See [[components/components]] for implementation details.\\n\\n### Plugins\\n\\n`.lit` has a flexible [[Plugin system]], primarily to allow the author to create custom [[Viewers]] and [[REPLs]] but also includes other types.\\n\\n\\n\\n### Filesystem\\n\\nImplemented on top of [[testing/LightningFS]] on the client side with pass through reads and writes to a remote backend (currently GitHub API see [[persist to GitHub]]). Additionally see [[testing/Isomorphic Git]] for experimental `git` support.\\n\\n### Utils\\n\\nCollection of utilities used throughout `.lit` which should probably be extracted and published as individual packages. [Read more](utils/index.lit)\\n\\n\\n\\n## Meta\\n\\n- [[404]]\\n- [[meta/GitHub Workflows]]\\n- [[meta/Styling and Themes]]\\n- [[meta/Files and Links]]\\n- [[meta/Settings]]\\n\\n```>html\\n<style>\\n\\n</style>\\n```\\n\\n<!-- This is a trailing html comment -->\\n',\n  '<!-- data\\ntitle: .lit \\n-->\\n\\n# `.lit`\\n\\n[![Open Source](https://img.shields.io/badge/🌱-Open%20Source-green)](https://github.com/dotlitdev/dotlit)\\n[![npm (scoped)](https://img.shields.io/npm/v/@dotlit/dotlit)](https://npmjs.org/@dotlit/dotlit)\\n[![Deploy](https://github.com/dotlitdev/dotlit/actions/workflows/generate.yaml/badge.svg)](https://github.com/dotlitdev/dotlit/actions/workflows/generate.yaml)\\n\\n`.lit` is a plain text document format, really it\\'s just **Markdown**. But with *Sections*, *Cells*, <kbd>interactive</kbd> & *executable* `code` blocks and _meta_ programming over its own <abbr>AST</abbr>.\\n\\n## Table of Contents\\n\\n## About\\n\\n```>md !warn\\n⚠️ **`.lit`** is still a *Work in progress*.\\n\\nThis iteration is a from-scratch rewrite of an [initial prototype], with many features yet to be re-implemented.\\n```\\n\\n**🧪 [[Scratch ⚠️ Pad 🔬]]**\\n\\n```graph !inline < manifest.json\\n```\\n\\n**☑️ To Do** or *in progress*\\n- [ ] local git repo [[testing/Isomorphic Git]]\\n- [ ] fragments in [[wiki-links]]\\n- [ ] remove global fetch hack for nodejs and bundle properly with webpack\\n- [ ] [[testing/Local & Remote files]]\\n- [x] [[testing/ServiceWorker]]\\n- [x] [[testing/Private Files]]\\n- [ ] [[meta/Settings]]\\n\\n**🐜 Bugs**\\n- [ ] Next/sibling sections are getting nested\\n- [x] Code cell anchor links using href are annoying. TODO onClick add to history silently and don\\'t scroll. ([c.f.](https://stackoverflow.com/questions/62331314/anchor-link-without-creating-history-entry))\\n- [x] Sometimes on cell save result is not shown due to `pos2.start` of undefined.\\n    Caused by generated text child of wikiLinks.\\n- [ ] Transcluding failure breaks the page see [[meta/Github workflows]]\\n- [x] When authenticated with GitHub, pass through reads cannot resolve generated files  cf. `/metadata.json`\\n- [ ] Transcludes break (not displayed) on re-render (ie due to edit)\\n- [x] Doppelgänger pages, some ~pages~ links are resulting in duplicate **and diverging** files in the local filesystem. See [[testing/Lighting FS#Bugs]]\\n- [ ] Inline html in Markdown source not surviving to final rendered output.\\n- [x] Executed code cells get a new line appended to source each time\\n\\n**✅ Done**\\n- [x] [[Execute `code` cells]]\\n- [x] Check lists ([[gfm]] Github Flavoured Markdown)\\n- [x] [[Persist to GitHub]]\\n\\n## Getting Started\\n\\n\\n### Starter template repo\\n\\nWhile `.lit` is still under active development and not quite ready for prime time, you can fork this [GitHub template repository](https://github.com/dotlitdev/dotlit-starter) to deploy your own \"instance\" hosted on GitHub Pages.\\n\\n### From the command line\\n\\nTo use `.lit` from the command line, see usage and documentation [here](cli/cli.lit).\\n\\n## Documentation \\n\\nCurrently my [[Scratch ⚠️ Pad 🔬]] is the closest thing to documentation, start there for now.\\n\\n### Divergence from Markdown\\n\\nGenerally `.lit` is backward compatible with Markdown. That is to say that a valid Markdown file is a valid `.lit` file and vice versa.\\n\\nThe primary difference being that a basic/normal Markdown viewer will lack many of the niceties afforded by `.lit` but the intent is that it should still render *correctly* for the reader.\\n\\n**Key differences**\\n\\n- **Frontmatter**: We consider existing frontmatter implementations *Not* backward compatable with basic Markdown. Primarily due to the fact that they are rendered at all (and badly) by renderers that do not support frontmatter. Therefor we define frontmatter as HTML Comments with a `data` prefix.\\n\\n      <!-- data\\n      title: foo\\n      -->\\n\\n- **Code block meta**:\\n\\n      ```lang [...meta]\\n      content\\n      ```\\n\\n- **Wiki-Links**:\\n\\n## Implementation\\n\\n### Parser\\n\\nBuilt atop the unified ecosystem, specifically remark, which takes `.lit` Markdown source and outputs `.lit` AST (Abstract Syntax Tree). [Read More](parser/parser.lit)\\n\\n### Renderer\\n\\nThe default render output is `html` which includes client-side `javascript` which hydrates a React application. [Read More](renderer/renderer.lit)\\n\\n### Client\\n\\nThe static html generated by `.lit` does not *require* JavaScript to function for the reader. But by default includes a [[client/client]] which re-hydrates the page to become fully interactive, enabling editing of the original document in place. See [[components/components]] for implementation details.\\n\\n### Plugins\\n\\n`.lit` has a flexible [[Plugin system]], primarily to allow the author to create custom [[Viewers]] and [[REPLs]] but also includes other types.\\n\\n\\n\\n### Filesystem\\n\\nImplemented on top of [[testing/LightningFS]] on the client side with pass through reads and writes to a remote backend (currently GitHub API see [[persist to GitHub]]). Additionally see [[testing/Isomorphic Git]] for experimental `git` support.\\n\\n### Utils\\n\\nCollection of utilities used throughout `.lit` which should probably be extracted and published as individual packages. [Read more](utils/index.lit)\\n\\n\\n\\n## Meta\\n\\n- [[404]]\\n- [[meta/GitHub Workflows]]\\n- [[meta/Styling and Themes]]\\n- [[meta/Files and Links]]\\n- [[meta/Settings]]\\n\\n```>html\\n<style>\\n\\n</style>\\n```\\n\\n<!-- This is a trailing html comment -->\\n' ]",
                                     "position": {
                                         "start": {
-                                            "line": 1692,
+                                            "line": 1700,
                                             "column": 1,
-                                            "offset": 94623
+                                            "offset": 94734
                                         },
                                         "end": {
-                                            "line": 1695,
+                                            "line": 1703,
                                             "column": 4,
-                                            "offset": 105100
+                                            "offset": 105211
                                         }
                                     },
                                     "data": {
@@ -1213,14 +1213,14 @@
                             "type": "cell",
                             "position": {
                                 "start": {
-                                    "line": 1698,
+                                    "line": 1706,
                                     "column": 1,
-                                    "offset": 105103
+                                    "offset": 105214
                                 },
                                 "end": {
-                                    "line": 1700,
+                                    "line": 1708,
                                     "column": 4,
-                                    "offset": 105119
+                                    "offset": 105230
                                 }
                             },
                             "data": {
@@ -1237,14 +1237,14 @@
                                     "value": "",
                                     "position": {
                                         "start": {
-                                            "line": 1698,
+                                            "line": 1706,
                                             "column": 1,
-                                            "offset": 105103
+                                            "offset": 105214
                                         },
                                         "end": {
-                                            "line": 1700,
+                                            "line": 1708,
                                             "column": 4,
-                                            "offset": 105119
+                                            "offset": 105230
                                         }
                                     },
                                     "data": {
@@ -1292,14 +1292,14 @@
                                     "type": "cell",
                                     "position": {
                                         "start": {
-                                            "line": 1702,
+                                            "line": 1710,
                                             "column": 1,
-                                            "offset": 105121
+                                            "offset": 105232
                                         },
                                         "end": {
-                                            "line": 1702,
+                                            "line": 1710,
                                             "column": 27,
-                                            "offset": 105147
+                                            "offset": 105258
                                         }
                                     },
                                     "data": {
@@ -1310,14 +1310,14 @@
                                         "section": {
                                             "position": {
                                                 "start": {
-                                                    "line": 1702,
+                                                    "line": 1710,
                                                     "column": 1,
-                                                    "offset": 105121
+                                                    "offset": 105232
                                                 },
                                                 "end": {
-                                                    "line": 1754,
+                                                    "line": 1762,
                                                     "column": 4,
-                                                    "offset": 106660
+                                                    "offset": 106771
                                                 }
                                             }
                                         }
@@ -1332,28 +1332,28 @@
                                                     "value": "Finder (from manifest)",
                                                     "position": {
                                                         "start": {
-                                                            "line": 1702,
+                                                            "line": 1710,
                                                             "column": 5,
-                                                            "offset": 105125
+                                                            "offset": 105236
                                                         },
                                                         "end": {
-                                                            "line": 1702,
+                                                            "line": 1710,
                                                             "column": 27,
-                                                            "offset": 105147
+                                                            "offset": 105258
                                                         }
                                                     }
                                                 }
                                             ],
                                             "position": {
                                                 "start": {
-                                                    "line": 1702,
+                                                    "line": 1710,
                                                     "column": 1,
-                                                    "offset": 105121
+                                                    "offset": 105232
                                                 },
                                                 "end": {
-                                                    "line": 1702,
+                                                    "line": 1710,
                                                     "column": 27,
-                                                    "offset": 105147
+                                                    "offset": 105258
                                                 }
                                             },
                                             "data": {
@@ -1370,14 +1370,14 @@
                                     "type": "cell",
                                     "position": {
                                         "start": {
-                                            "line": 1705,
+                                            "line": 1713,
                                             "column": 1,
-                                            "offset": 105150
+                                            "offset": 105261
                                         },
                                         "end": {
-                                            "line": 1751,
+                                            "line": 1759,
                                             "column": 4,
-                                            "offset": 106638
+                                            "offset": 106749
                                         }
                                     },
                                     "data": {
@@ -1394,14 +1394,14 @@
                                             "value": "\nconst sortBy = keys => (a, b) => {\n  for (const key of keys) {\n     if (a[key] !== b[key]) break;\n     else return (a[key] > b[key]) ? 1 : -1\n  }\n}\n\nconst itemBuilder = (React) => item => {\n  const rc = React.createElement\n  return rc('li', {className: 'item'}, rc('a', {href: lit.href || (lit.location.root + item.id)}, item.title || item.id))\n}\n\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const [src,setSrc] = useState(meta.search || node.data.value.trim())\n  const [content, setContent] = useState('Loading...')\n  const item = itemBuilder(React)\n  \n  useEffect(async () => {\n    const resp = await fetch(\"/manifest.json\")\n    const json = await resp.json()\n    let regex\n    try {regex = new RegExp(src,'i')} catch(err){}\n    const res = json.nodes\n        .map(x => x)\n        .filter(x => {\n           return x.id.indexOf(src) >= 0\n              || (regex && regex.test(x.id)) || (x.title && (x.title.indexOf(src) >= 0\n              || (regex && regex.test(x.title))))\n\n        })\n        .sort()\n        .map(x => item(x))\n        //.join(\"\\n\")\n    setContent(rc('ol', null, res))\n  },[src])\n\n  return rc('div', {\n    className: 'custom-react-view',\n  }, [rc('input',{style:{width:'100%', fontSize: '1.2em'},value:src, onChange: e => setSrc(e.target.value)}), content])\n}",
                                             "position": {
                                                 "start": {
-                                                    "line": 1705,
+                                                    "line": 1713,
                                                     "column": 1,
-                                                    "offset": 105150
+                                                    "offset": 105261
                                                 },
                                                 "end": {
-                                                    "line": 1751,
+                                                    "line": 1759,
                                                     "column": 4,
-                                                    "offset": 106638
+                                                    "offset": 106749
                                                 }
                                             },
                                             "data": {
@@ -1456,14 +1456,14 @@
                                     "type": "cell",
                                     "position": {
                                         "start": {
-                                            "line": 1752,
+                                            "line": 1760,
                                             "column": 1,
-                                            "offset": 106639
+                                            "offset": 106750
                                         },
                                         "end": {
-                                            "line": 1754,
+                                            "line": 1762,
                                             "column": 4,
-                                            "offset": 106660
+                                            "offset": 106771
                                         }
                                     },
                                     "data": {
@@ -1480,14 +1480,14 @@
                                             "value": "G.*hUb",
                                             "position": {
                                                 "start": {
-                                                    "line": 1752,
+                                                    "line": 1760,
                                                     "column": 1,
-                                                    "offset": 106639
+                                                    "offset": 106750
                                                 },
                                                 "end": {
-                                                    "line": 1754,
+                                                    "line": 1762,
                                                     "column": 4,
-                                                    "offset": 106660
+                                                    "offset": 106771
                                                 }
                                             },
                                             "data": {
@@ -1517,14 +1517,14 @@
                             ],
                             "position": {
                                 "start": {
-                                    "line": 1702,
+                                    "line": 1710,
                                     "column": 1,
-                                    "offset": 105121
+                                    "offset": 105232
                                 },
                                 "end": {
-                                    "line": 1754,
+                                    "line": 1762,
                                     "column": 4,
-                                    "offset": 106660
+                                    "offset": 106771
                                 }
                             }
                         }
@@ -1536,9 +1536,9 @@
                             "offset": 64
                         },
                         "end": {
-                            "line": 1754,
+                            "line": 1762,
                             "column": 4,
-                            "offset": 106660
+                            "offset": 106771
                         }
                     }
                 }
@@ -1550,9 +1550,9 @@
                     "offset": 0
                 },
                 "end": {
-                    "line": 1754,
+                    "line": 1762,
                     "column": 4,
-                    "offset": 106660
+                    "offset": 106771
                 }
             }
         }
@@ -1564,9 +1564,9 @@
             "offset": 0
         },
         "end": {
-            "line": 1756,
+            "line": 1764,
             "column": 1,
-            "offset": 106662
+            "offset": 106773
         }
     }
 }
