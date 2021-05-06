@@ -20,7 +20,7 @@ const { Header } = require('../components/Header')
 const { extendFs } = require('../utils/fs-promises-utils')
 const { DatesToRelativeDelta, MsToRelative } = require('../utils/momento')
 
-const { inspect } = require('until')
+const { inspect } = require('util')
 const { getMeta } = require('../utils/functions')
 import { getConsoleForNamespace } from '../utils/console'
 
