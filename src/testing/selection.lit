@@ -30,12 +30,16 @@ export const menu = (ctx, {React, Menu}) => {
     const secs = selectPosition.selectAll('section', ctx.selectedCell, lit.ast)
    const last = secs.slice(-1)[0]
    console.log("Sections", secs, last)
-   return last
+   return last.position 
   }
 
   const selectAll = rc('span', {onClick: () => ctx.setSelectedCell(lit.ast.position)}, 'Select All')
 
-  const selectSec = rc('span', {onClick: () => secFromCell(ctx.selectedCell)}, 'Select Section')
+  const selectSec = rc('span', {onClick: () => {
+ctx.setSelectedCell(
+secFromCell(ctx.selectedCell)
+)
+}}, 'Select Section')
 
   return rc( Menu, {
     title:"Selection",
