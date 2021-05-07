@@ -342,9 +342,11 @@ It would likely require the expansion of `!plugin` types to include `menu`and `o
 ```js !plugin id=git type=menu
 export const menu = (ctx, {React, Menu}) => {
   const rc = React.createElement
+  const commit = lit.file.data.plugins.fn['git-commit-all']
+  const onClick = async ev => alert(await commit())
   return rc( Menu, {
     title:"Git",
     disabled: false,
-  }, [rc('span', {}, 'TODO')])
+  }, [rc('span', {onClick}, 'Commit All')])
 }
 ```
