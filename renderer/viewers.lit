@@ -196,16 +196,42 @@ show meta content below:
 v1 `https://cdn.skypack.dev/diff` didn't work (via skyPack) but added to utils.
 
 v2 `https://github.com/praneshr/react-diff-viewer`
+
 ```js !plugin of=diff
 import diff from 'https://cdn.skypack.dev/react-diff-viewer'
 export const viewer = ({node,React}) => {
   const rc = React.createElement
-  console.log("DIFF module", diff)
-  return rc('pre', {style: {color: 'black'}}, [rc(diff, {
-  newValue: node.properties.data.originalSource,
-  oldValue: node.data.value,
-  splitView: false
-})])
+  const meta = node.properties.meta
+  const styles = {
+    lineNumber: {
+      fontWeight: 'bold'
+    },
+    gutter: {
+      minWidth: '0.6em',
+      padding: '0 0.2em',
+    },
+    marker: {
+      width: 'auto',
+      padding: '0 0.2em'
+    },
+    contentText: {
+      lineHeight: '1em !important',
+      wordBreak: 'break-all',
+    },
+    content: {
+      width: 'auto',
+      padding: 0,
+    }
+  }
+  return rc(diff, {
+    newValue: node.properties.data.originalSource,
+    rightTitle: 'right',
+    oldValue: node.data.value,
+    leftTitle: 'left',
+    splitView: meta && meta.split === 'true',
+    styles,
+    compareMethod: diff[(meta && meta.method && meta.method.toUpperCase()) || 'CHARS']
+  })
 }
 ```
 ```diff !inline < difftestA.txt
