@@ -32,7 +32,7 @@ export const menu = (ctx, {React, Menu}) => {
 ```
 
 ```js
-const {filter, select} = lit.utils.unist
+const {filter, select, selectPosition} = lit.utils.unist
 const is = t => node => {
   console.log(node.type)
   return node.type === t
@@ -40,25 +40,53 @@ const is = t => node => {
 
 // return lit.ast
 // return filter.toString()
-filter(lit.ast, {cascade: false } , is('heading'))
-return lit.ast.children[0].children[0]
+// filter(lit.ast, {cascade: false } , is('heading'))
+return lit.notebook
 ```
-```>txt attached=true updated=1620345328877
-root
-{ type: 'cell',
-  position: 
-   { start: { line: 1, column: 1, offset: 0 },
-     end: { line: 3, column: 37, offset: 63 } },
-  data: 
-   { hName: 'cell',
-     hProperties: { class: 'cell' },
-     section: { id: undefined, position: [Object] } },
-  children: 
-   [ { type: 'heading',
-       depth: 1,
-       children: [Object],
-       position: [Object],
-       data: [Object],
-       processed: true },
-     { type: 'paragraph', children: [Object], position: [Object] } ] }
+```>txt attached=true updated=1620345671136
+{ '$$typeof': {},
+  type: [Function: App],
+  key: null,
+  ref: null,
+  props: 
+   { root: '/',
+     fs: 
+      { init: [Function: bound init],
+        readFile: [Function],
+        writeFile: [Function],
+        unlink: [Function],
+        readdir: [Function],
+        mkdir: [Function],
+        rmdir: [Function],
+        rename: [Function],
+        stat: [Function],
+        lstat: [Function],
+        readlink: [Function],
+        symlink: [Function],
+        backFile: [Function],
+        du: [Function],
+        _deactivationPromise: {},
+        _deactivationTimeout: 213,
+        _activationPromise: null,
+        _operations: {},
+        _initPromise: {},
+        readStat: [Function],
+        _backend: [Object] },
+     file: 
+      { data: [Object],
+        messages: [],
+        history: [Object],
+        cwd: '/',
+        contents: '# More powerful selection\n\nIe multi cell and section selection.\n\n```js !plugin type=data id=fakePos\nexport const data = {\n  start: {\n    line: 1,\n    column: 1,\n    offset: 0\n  },\n  end: {\n    line: 99,\n    column: 99,\n    offset: 999999\n  }\n}\n```\n\n```js !plugin id=selection type=menu\nexport const menu = (ctx, {React, Menu}) => {\n  const pos = lit.file.data.plugins.data.fakePos\n  const rc = React.createElement\n\n  const selectAll = rc(\'span\', {onClick: () => ctx.setSelectedCell(lit.ast.position)}, \'Select All\')\n\n  return rc( Menu, {\n    title:"Selection",\n    disabled: false,\n  }, [selectAll])\n}\n```\n\n```js\nconst {filter, select, selectPosition} = lit.utils.unist\nconst is = t => node => {\n  console.log(node.type)\n  return node.type === t\n}\n\n// return lit.ast\n// return filter.toString()\n// filter(lit.ast, {cascade: false } , is(\'heading\'))\nreturn lit.notebook\n```\n```>txt attached=true updated=1620345651577\nundefined\n```\n',
+        result: [Object] },
+     result: 
+      { '$$typeof': {},
+        type: {},
+        key: null,
+        ref: null,
+        props: [Object],
+        _owner: null,
+        _store: {} } },
+  _owner: null,
+  _store: {} }
 ```

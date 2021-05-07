@@ -1,4 +1,4 @@
-<html data-reactroot=""><head><title>More powerful selection</title><meta name="litsrc" value="testing/selection.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"><div class="lit-message"><span class="message">Plugin Error (data): No plugin exported from module. for !plugin type=data id=fakePos</span><span class="name">5:1-18:4</span></div><div class="lit-message"><span class="message">Plugin Error (menu): No plugin exported from module. for !plugin id=selection type=menu</span><span class="name">20:1-32:4</span></div></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="64:4-1399"><cell startpos="1:1-0" endpos="3:37-63"><div class="cell-content"><h1 id="more-powerful-selection">More powerful selection</h1><p>Ie multi cell and section selection.</p></div></cell><cell startpos="5:1-65" endpos="18:4-247" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><a name="fakePos"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=data</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=fakePos</span></span><pre><code class="js">export const data = {
+<html data-reactroot=""><head><title>More powerful selection</title><meta name="litsrc" value="testing/selection.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"><div class="lit-message"><span class="message">Plugin Error (data): No plugin exported from module. for !plugin type=data id=fakePos</span><span class="name">5:1-18:4</span></div><div class="lit-message"><span class="message">Plugin Error (menu): No plugin exported from module. for !plugin id=selection type=menu</span><span class="name">20:1-32:4</span></div></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="92:4-2977"><cell startpos="1:1-0" endpos="3:37-63"><div class="cell-content"><h1 id="more-powerful-selection">More powerful selection</h1><p>Ie multi cell and section selection.</p></div></cell><cell startpos="5:1-65" endpos="18:4-247" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><a name="fakePos"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=data</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=fakePos</span></span><pre><code class="js">export const data = {
   start: {
     line: 1,
     column: 1,
@@ -21,7 +21,7 @@
     disabled: false,
   }, [selectAll])
 }
-</code></pre></codecell></div></cell><cell startpos="34:1-607" endpos="64:4-1399" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const {filter, select} = lit.utils.unist
+</code></pre></codecell></div></cell><cell startpos="34:1-607" endpos="92:4-2977" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const {filter, select, selectPosition} = lit.utils.unist
 const is = t =&gt; node =&gt; {
   console.log(node.type)
   return node.type === t
@@ -29,23 +29,51 @@ const is = t =&gt; node =&gt; {
 
 // return lit.ast
 // return filter.toString()
-filter(lit.ast, {cascade: false } , is(&#x27;heading&#x27;))
-return lit.ast.children[0].children[0]
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">3 minutes ago</span></span></span><output><pre><code class="txt">root
-{ type: &#x27;cell&#x27;,
-  position: 
-   { start: { line: 1, column: 1, offset: 0 },
-     end: { line: 3, column: 37, offset: 63 } },
-  data: 
-   { hName: &#x27;cell&#x27;,
-     hProperties: { class: &#x27;cell&#x27; },
-     section: { id: undefined, position: [Object] } },
-  children: 
-   [ { type: &#x27;heading&#x27;,
-       depth: 1,
-       children: [Object],
-       position: [Object],
-       data: [Object],
-       processed: true },
-     { type: &#x27;paragraph&#x27;, children: [Object], position: [Object] } ] }
+// filter(lit.ast, {cascade: false } , is(&#x27;heading&#x27;))
+return lit.notebook
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">49 seconds ago</span></span></span><output><pre><code class="txt">{ &#x27;$$typeof&#x27;: {},
+  type: [Function: App],
+  key: null,
+  ref: null,
+  props: 
+   { root: &#x27;/&#x27;,
+     fs: 
+      { init: [Function: bound init],
+        readFile: [Function],
+        writeFile: [Function],
+        unlink: [Function],
+        readdir: [Function],
+        mkdir: [Function],
+        rmdir: [Function],
+        rename: [Function],
+        stat: [Function],
+        lstat: [Function],
+        readlink: [Function],
+        symlink: [Function],
+        backFile: [Function],
+        du: [Function],
+        _deactivationPromise: {},
+        _deactivationTimeout: 213,
+        _activationPromise: null,
+        _operations: {},
+        _initPromise: {},
+        readStat: [Function],
+        _backend: [Object] },
+     file: 
+      { data: [Object],
+        messages: [],
+        history: [Object],
+        cwd: &#x27;/&#x27;,
+        contents: &#x27;# More powerful selection\n\nIe multi cell and section selection.\n\n```js !plugin type=data id=fakePos\nexport const data = {\n  start: {\n    line: 1,\n    column: 1,\n    offset: 0\n  },\n  end: {\n    line: 99,\n    column: 99,\n    offset: 999999\n  }\n}\n```\n\n```js !plugin id=selection type=menu\nexport const menu = (ctx, {React, Menu}) =&gt; {\n  const pos = lit.file.data.plugins.data.fakePos\n  const rc = React.createElement\n\n  const selectAll = rc(\&#x27;span\&#x27;, {onClick: () =&gt; ctx.setSelectedCell(lit.ast.position)}, \&#x27;Select All\&#x27;)\n\n  return rc( Menu, {\n    title:&quot;Selection&quot;,\n    disabled: false,\n  }, [selectAll])\n}\n```\n\n```js\nconst {filter, select, selectPosition} = lit.utils.unist\nconst is = t =&gt; node =&gt; {\n  console.log(node.type)\n  return node.type === t\n}\n\n// return lit.ast\n// return filter.toString()\n// filter(lit.ast, {cascade: false } , is(\&#x27;heading\&#x27;))\nreturn lit.notebook\n```\n```&gt;txt attached=true updated=1620345651577\nundefined\n```\n&#x27;,
+        result: [Object] },
+     result: 
+      { &#x27;$$typeof&#x27;: {},
+        type: {},
+        key: null,
+        ref: null,
+        props: [Object],
+        _owner: null,
+        _store: {} } },
+  _owner: null,
+  _store: {} }
 </code></pre></output></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
