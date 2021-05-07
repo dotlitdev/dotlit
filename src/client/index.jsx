@@ -11,8 +11,9 @@ const source = require('unist-util-source')
 const filter = require('unist-util-filter')
 const visit = require('unist-util-visit')
 const patchSource = require('../utils/unist-util-patch-source')
-
 const selectPosition = require('../utils/unist-util-select-position')
+
+const { to_string } = require('../parser/utils/mdast-util-to-string')
 
 const parser = require('../parser')
 const renderer = require('../renderer')
@@ -54,7 +55,6 @@ const fs = extendFs(lfs.promises, litroot, !query.__no_gh && typeof localStorage
     token: localStorage.getItem("ghToken"),
 })
 
-
 export const lit = {
     location: {
         src: litsrc,
@@ -77,6 +77,9 @@ export const lit = {
             visit,
             patchSource,
             selectPosition,
+        },
+        mdast: {
+            to_string,
         },
         path,
         vfile,

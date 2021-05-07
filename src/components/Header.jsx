@@ -5,7 +5,6 @@ import SelectionContext from './SelectionContext'
 import { Identity } from '../utils/functions'
 import { getConsoleForNamespace } from '../utils/console'
 import { ErrorBoundary } from './ErrorBoundry'
-import { lit } from '../client'
 
 
 const console = getConsoleForNamespace('Header')

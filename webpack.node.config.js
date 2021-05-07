@@ -58,6 +58,7 @@ module.exports = {
         use: [{ loader: 'file-loader?name=font/[name]__[hash:base64:5].[ext]' }],
         include: /src/
       },
+      
       // {
       //   test: /\.json$/, 
       //   loaders: ['json-loader']

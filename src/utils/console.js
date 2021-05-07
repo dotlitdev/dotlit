@@ -1,7 +1,7 @@
 import { NoOp } from './functions'
 
 const ROOT_NS = '.lit'
-const ROOT_PREFIX = `[${ROOT_NS}] `
+const ROOT_PREFIX = `${ROOT_NS}`
 
 const debugKeys = (...args) => {
   let debugStr = ''
@@ -17,7 +17,7 @@ const debugKeys = (...args) => {
   return debugStr.split(',')
 }
 
-console.log("DEBUG:", debugKeys() )
+// console.log("[console] log mask:", debugKeys().join(',') )
 
 const shouldLog = ns => {
   const keys = debugKeys()
@@ -40,13 +40,13 @@ const prefixArgs = (prefix, fn, self) => {
 }
 
 const getConsole = (ns) => {
-  const prefix = `[${ns}] `
+  const prefix = `[${ROOT_PREFIX}:${ns}] `
   return {
     level: level,
     log: prefixArgs(prefix, console.log, console),
-    dir: console.dir,
-    info: console.info,
-    error: console.error,
+    dir: prefixArgs(prefix, console.dir, console),
+    info: prefixArgs(prefix, console.info, console),
+    error: prefixArgs(prefix, console.error, console),
     time: console.time,
     timeEnd: console.timeEnd,
     getConsoleForNamespace,
@@ -58,7 +58,7 @@ export function getConsoleForNamespace(ns) {
   if (shouldLog(ns)) {
     return getConsole(ns)
   } else {
-    console.log(ROOT_PREFIX + "Hiding console for NS", ns)
+    if (debugKeys()[0] !== 'None') console.log(`[${ROOT_PREFIX}] Hiding console for NS "${ns}"`)
     return {
       level: NoOp,
       log: NoOp,

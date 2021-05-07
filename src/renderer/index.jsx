@@ -22,7 +22,7 @@ import { Section } from '../components/Section'
 import { getConsoleForNamespace } from '../utils/console'
 
 
-const console = getConsoleForNamespace('codeblocks')
+const console = getConsoleForNamespace('renderer')
 
 export function processor({fs,litroot} = {}) {
     return parserProcessor({fs,litroot})
@@ -30,7 +30,7 @@ export function processor({fs,litroot} = {}) {
     // hoist ast to data
     .use( (...args) => {
          return (tree,file) => {
-             console.log("[Hoist AST data]")
+             console.log("Hoisting AST data to file.data.ast")
              file.data.ast = tree
          }
      })
@@ -45,7 +45,7 @@ export function processor({fs,litroot} = {}) {
     // extract files to data
     .use( (...args) => {
          return (tree,file) => {
-             console.log("[Extact files]")
+             console.log("Extact codeblocks to file.data.files")
              file.data.files = selectAll("code", tree)
          }
      })
@@ -55,7 +55,7 @@ export function processor({fs,litroot} = {}) {
     .use( (...args) => {
          return (tree,file) => {
 
-             console.log("[Hoist mdast data] disabled")
+             console.log("Hoist mdast data (disabled)")
              for (const code of selectAll("code", tree)) {
                  if (false && code.data) {
                      code.data.hProperties = code.data.hProperties || {}
@@ -92,7 +92,7 @@ export async function renderedVFileToDoc(vfile, cmd) {
     const dir = path.dirname( path.join(root, vfile.path) )
     const relroot = path.relative(dir, root) || '.'
 
-    console.log('[Render] to document vFile', vfile.path)
+    console.log('Render to document vFile', vfile.path)
 
     const notebook = <Document
         file={vfile}

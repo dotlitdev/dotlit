@@ -18,6 +18,8 @@ import { decorateLinkNode } from '../parser/links'
 import { getConsoleForNamespace } from '../utils/console'
 import { Identity } from '../utils/functions'
 
+// import { createServer } from 'http-server'
+
 const console = getConsoleForNamespace('generate')
 const fs = extendFs(fsPromises)
 global.fetch = require("node-fetch")
@@ -128,6 +130,13 @@ function generateBacklinks(files, root) {
             file.data.backlinks = manifest[file.path].backlinks
             return file
         }), manifest]
+}
+
+export function server(cmd) {
+    // return createServer({
+    //     root: cmd.output,
+    //     showDotfiles: false,
+    // })
 }
 
 export function generate(cmd) {

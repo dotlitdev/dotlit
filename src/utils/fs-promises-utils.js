@@ -85,7 +85,7 @@ const passThroughReadWithStat = (origReadFile, origStat, litroot, ghOpts) => {
 const writeFileP = (fs, litroot) => {
   const wf = fs.writeFile
   return async (...args) => {
-    console.log("fs.writeFileP")
+    console.log("fs.writeFileP ", args[0])
     const filepath = (args[0] = litroot + args[0]);
     const p = path.parse(filepath);
     const parts = p.dir.split(path.sep);
@@ -126,12 +126,13 @@ const passThroughWrite = (fs,litroot, ghOpts) => {
 }
 
 export const extendFs = (fs, litroot = "", ghOpts) => {
-  const origReadFile = fs.readFile
-  const origStat = fs.stat
-  fs.readFile = passThroughRead(origReadFile,litroot);
-  fs.writeFile = writeFileP(fs, litroot);
-  fs.readStat = passThroughReadWithStat(fs.readFile, origStat, litroot, ghOpts)
+  const clonedfs = {...fs}
+  const origReadFile = clonedfs.readFile
+  const origStat = clonedfs.stat
+  clonedfs.readFile = passThroughRead(origReadFile,litroot);
+  clonedfs.writeFile = writeFileP(clonedfs, litroot);
+  clonedfs.readStat = passThroughReadWithStat(clonedfs.readFile, origStat, litroot, ghOpts)
 
-  if(ghOpts) fs.writeFile = passThroughWrite(fs, litroot, ghOpts);
-  return fs
+  if(ghOpts) clonedfs.writeFile = passThroughWrite(clonedfs, litroot, ghOpts);
+  return clonedfs
 };
