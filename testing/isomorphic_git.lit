@@ -107,7 +107,7 @@ return (async () => {
   })
 })()
 ```
-```>txt attached=true updated=1619357634909
+```>txt attached=true updated=1620404973947
 undefined
 ```
 ### Status
@@ -301,60 +301,10 @@ ${indentLines(x.commit.message)}`).join('\n')
     })
   )}
 ```
-```
-
-```js !collapse
-  const commitHash1 = '0c40ed746ebe53cf744d78191d0bbc2941537280'
-  const commitHash2 = 'b081f51cd27f54cf58915512006838d4eb67716b'
-  return lit.git.walk({
-    lit.lfs,
-    lit.location.root,
-    trees: [git.TREE({ ref: commitHash1 }), git.TREE({ ref: commitHash2 })],
-    map: async function(filepath, [A, B]) {
-      return filepath
-    })
-  )}
-      console.log("Git walk for diff file: ", filepath)
-
-      // ignore directories
-      if (filepath === '.') {
-        return
-      }
-      if ((await A.type()) === 'tree' || (await B.type()) === 'tree') {
-        return
-      }
-
-      // generate ids
-      const Aoid = await A.oid()
-      const Boid = await B.oid()
-
-      // determine modification type
-      let type = 'equal'
-      if (Aoid !== Boid) {
-        type = 'modify'
-      }
-      if (Aoid === undefined) {
-        type = 'add'
-      }
-      if (Boid === undefined) {
-        type = 'remove'
-      }
-      if (Aoid === undefined && Boid === undefined) {
-        console.log('Something weird happened:')
-        console.log(A)
-        console.log(B)
-      }
-
-      return {
-        path: `/${filepath}`,
-        type: type,
-      }
-    },
-  })
-```
-```>txt attached=true updated=1620404874417 !error
+```>txt attached=true updated=1620404954816 !error
 undefined
 ```
+
 
 
 
