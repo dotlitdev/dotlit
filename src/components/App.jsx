@@ -96,11 +96,11 @@ const App = ({root, file, fs, result}) => {
         const onloads = file?.data?.plugins?.onload || {}
         const keys = Object.keys(onloads)
         console.log("Onload plugins: ", keys.length)
-        keys.forEach( key => {
+        for (const key of keys) {
             if (typeof onloads[key] === 'function') {
                 await onloads[key](state)
             }
-        })
+        }
     },[])
 
     console.log(`Render "${file.path}" (selected: ${selectedCell} `)
