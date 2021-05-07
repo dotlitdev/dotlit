@@ -2,7 +2,7 @@
 <li>
 <p><a href="#initial-plan">Initial plan<span class="linkIcon">§</span></a></p>
 <ul>
-<li><a href="#implementation"><em>Implementation:</em><span class="linkIcon">§</span></a></li>
+<li><a href="#implementation"><em>Implementation</em><span class="linkIcon">§</span></a></li>
 </ul>
 </li>
 <li>
@@ -16,7 +16,7 @@
 </ul>
 </li>
 </ul></div></cell></section></section>
-<section depth="2" class="" startpos="8:1-205" endpos="88:4-2207"><cell startpos="8:1-205" endpos="12:131-435"><div class="cell-content"><h2 id="initial-plan">Initial plan</h2><p>The initial plan is to just auto commit on all actions, enabling &quot;infinite&quot; undo.</p><p>Thereafter that may remain the default but ideally an ergonomic version of the raw git api can be exposed for more advanced users.</p></div></cell><section depth="3" class="" startpos="14:1-437" endpos="88:4-2207"><cell startpos="14:1-437" endpos="14:22-458"><div class="cell-content"><h3 id="implementation"><em>Implementation:</em></h3></div></cell><cell startpos="20:1-464" endpos="68:4-1659" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><a name="git-commit-all"></a><span class="meta"><span class="lang">js</span><span class="filename">../utils/git-commit-all.js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=fn</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=git-commit-all</span></span><pre><code class="js">// initially, because it&#x27;s on every change 
+<section depth="2" class="" startpos="8:1-205" endpos="88:4-2206"><cell startpos="8:1-205" endpos="12:131-435"><div class="cell-content"><h2 id="initial-plan">Initial plan</h2><p>The initial plan is to just auto commit on all actions, enabling &quot;infinite&quot; undo.</p><p>Thereafter that may remain the default but ideally an ergonomic version of the raw git api can be exposed for more advanced users.</p></div></cell><section depth="3" class="" startpos="14:1-437" endpos="88:4-2206"><cell startpos="14:1-437" endpos="14:21-457"><div class="cell-content"><h3 id="implementation"><em>Implementation</em></h3></div></cell><cell startpos="20:1-463" endpos="68:4-1658" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><a name="git-commit-all"></a><span class="meta"><span class="lang">js</span><span class="filename">../utils/git-commit-all.js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=fn</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=git-commit-all</span></span><pre><code class="js">// initially, because it&#x27;s on every change 
 // a commit will mostly be for a single
 // file at a time the immediate exception 
 // being when a file with output files 
@@ -63,7 +63,7 @@ ${files.map(f=&gt; &quot;- &quot; + f).join(&#x27;\n&#x27;)}`
   return `Committed ${sha.slice(0,6)} 
 ${message}`
 }
-</code></pre></codecell></div></cell><cell startpos="69:1-1660" endpos="79:4-2000" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><a name="git"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=git</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=menu</span></span><pre><code class="js">export const menu = (ctx, {React, Menu}) =&gt; {
+</code></pre></codecell></div></cell><cell startpos="69:1-1659" endpos="79:4-1999" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><a name="git"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=git</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=menu</span></span><pre><code class="js">export const menu = (ctx, {React, Menu}) =&gt; {
   const rc = React.createElement
   const commit = lit.file.data.plugins.fn[&#x27;git-commit-all&#x27;]
   const onClick = async ev =&gt; alert(await commit())
@@ -72,7 +72,7 @@ ${message}`
     disabled: false,
   }, [rc(&#x27;span&#x27;, {onClick}, &#x27;Commit All&#x27;)])
 }
-</code></pre></codecell></div></cell><cell startpos="80:1-2001" endpos="88:4-2207" class="code"><div class="cell-content"><codecell class="lang-txt local"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.6 weeks ago</span></span></span><pre><code class="txt">Committed d738da 
+</code></pre></codecell></div></cell><cell startpos="80:1-2000" endpos="88:4-2206" class="code"><div class="cell-content"><codecell class="lang-txt local"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.6 weeks ago</span></span></span><pre><code class="txt">Committed d738da 
 Auto commit testing/isomorphic_git.lit
 
 at: 2021-04-26T08:25:54.893Z
@@ -80,20 +80,20 @@ includes the following 2 files:
 - testing/isomorphic_git.lit
 - utils/git-commit-all.js
 </code></pre></codecell></div></cell></section></section>
-<section depth="2" class="" startpos="89:1-2208" endpos="162:4-3700"><cell startpos="89:1-2208" endpos="89:21-2228"><div class="cell-content"><h2 id="investigating-api">Investigating API</h2></div></cell><cell startpos="92:1-2231" endpos="101:4-2397" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return lit.fs
+<section depth="2" class="" startpos="89:1-2207" endpos="162:4-3699"><cell startpos="89:1-2207" endpos="89:21-2227"><div class="cell-content"><h2 id="investigating-api">Investigating API</h2></div></cell><cell startpos="92:1-2230" endpos="101:4-2396" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return lit.fs
        .readFile(&#x27;/.git/HEAD&#x27;, {
           encoding: &#x27;utf8&#x27;
         })
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.7 weeks ago</span></span></span><output><pre><code class="txt">ref: refs/heads/master
 
-</code></pre></output></codecell></div></cell><cell startpos="102:1-2398" endpos="112:4-2572" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async () =&gt; {
+</code></pre></output></codecell></div></cell><cell startpos="102:1-2397" endpos="112:4-2571" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async () =&gt; {
   return await lit.git.init({
     fs: lit.lfs, 
     dir: lit.location.root
   })
 })()
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.7 weeks ago</span></span></span><output><pre><code class="txt">undefined
-</code></pre></output></codecell></div></cell><section depth="3" class="" startpos="113:1-2573" endpos="162:4-3700"><cell startpos="113:1-2573" endpos="113:11-2583"><div class="cell-content"><h3 id="status">Status</h3></div></cell><cell startpos="115:1-2585" endpos="126:4-2848" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async () =&gt; {
+</code></pre></output></codecell></div></cell><section depth="3" class="" startpos="113:1-2572" endpos="162:4-3699"><cell startpos="113:1-2572" endpos="113:11-2582"><div class="cell-content"><h3 id="status">Status</h3></div></cell><cell startpos="115:1-2584" endpos="126:4-2847" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async () =&gt; {
   return lit.location.src + &quot; : &quot; + await lit.git.status({
     fs: lit.lfs, 
     dir: lit.location.root, 
@@ -101,7 +101,7 @@ includes the following 2 files:
   })
 })()
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.7 weeks ago</span></span></span><output><pre><code class="txt">testing/isomorphic_git.lit : *added
-</code></pre></output></codecell></div></cell><cell startpos="127:1-2849" endpos="142:4-3260" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async () =&gt; {
+</code></pre></output></codecell></div></cell><cell startpos="127:1-2848" endpos="142:4-3259" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async () =&gt; {
   return await lit.git.statusMatrix({
     fs: lit.lfs, 
     dir: lit.location.root, 
@@ -113,7 +113,7 @@ includes the following 2 files:
   [ &#x27;testing/lightningfs.lit&#x27;, 1, 1, 1 ],
   [ &#x27;testing/local_remote_files.lit&#x27;, 1, 1, 1 ],
   [ &#x27;wiki-links.lit&#x27;, 1, 1, 1 ] ]
-</code></pre></output></codecell></div></cell><cell startpos="146:1-3264" endpos="162:4-3700" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const fs = lit.lfs 
+</code></pre></output></codecell></div></cell><cell startpos="146:1-3263" endpos="162:4-3699" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const fs = lit.lfs 
 const dir = lit.location.root
 const git = lit.git
 const FILE = 0, WORKDIR = 2, STAGE = 3
@@ -127,7 +127,7 @@ return (async () =&gt; {
 })()
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.6 weeks ago</span></span></span><output><pre><code class="txt">[ &#x27;testing/isomorphic_git.lit&#x27;, &#x27;utils/git-commit-all.js&#x27; ]
 </code></pre></output></codecell></div></cell></section></section>
-<section depth="3" class="" startpos="163:1-3701" endpos="180:4-3923"><cell startpos="163:1-3701" endpos="163:8-3708"><div class="cell-content"><h3 id="add">Add</h3></div></cell><cell startpos="165:1-3710" endpos="180:4-3923" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">
+<section depth="3" class="" startpos="163:1-3700" endpos="180:4-3922"><cell startpos="163:1-3700" endpos="163:8-3707"><div class="cell-content"><h3 id="add">Add</h3></div></cell><cell startpos="165:1-3709" endpos="180:4-3922" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">
 const fs = lit.lfs
 const dir = lit.location.root
 
@@ -140,7 +140,7 @@ return (async ()=&gt; {
 })()
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.7 weeks ago</span></span></span><output><pre><code class="txt">undefined
 </code></pre></output></codecell></div></cell></section>
-<section depth="3" class="" startpos="184:1-3927" endpos="210:4-4330"><cell startpos="184:1-3927" endpos="184:11-3937"><div class="cell-content"><h3 id="commit">Commit</h3></div></cell><cell startpos="186:1-3939" endpos="210:4-4330" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">
+<section depth="3" class="" startpos="184:1-3926" endpos="210:4-4329"><cell startpos="184:1-3926" endpos="184:11-3936"><div class="cell-content"><h3 id="commit">Commit</h3></div></cell><cell startpos="186:1-3938" endpos="210:4-4329" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">
 const fs = lit.lfs
 const dir = lit.location.root
 
@@ -162,7 +162,7 @@ console.log(sha)
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.7 weeks ago</span></span></span><output><pre><code class="txt">2c1dcf840173cd7c36aa1e5b96bc0922006de579
 undefined
 </code></pre></output></codecell></div></cell></section>
-<section depth="3" class="" startpos="212:1-4332" endpos="289:4-6046"><cell startpos="212:1-4332" endpos="212:8-4339"><div class="cell-content"><h3 id="log">Log</h3></div></cell><cell startpos="214:1-4341" endpos="289:4-6046" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; text !collapse</span></span><pre><code class="js">const indentLines = str =&gt; str.split(&#x27;\n&#x27;).map( line =&gt; `      ${line}`).join(&#x27;\n&#x27;)
+<section depth="3" class="" startpos="212:1-4331" endpos="289:4-6045"><cell startpos="212:1-4331" endpos="212:8-4338"><div class="cell-content"><h3 id="log">Log</h3></div></cell><cell startpos="214:1-4340" endpos="289:4-6045" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; text !collapse</span></span><pre><code class="js">const indentLines = str =&gt; str.split(&#x27;\n&#x27;).map( line =&gt; `      ${line}`).join(&#x27;\n&#x27;)
 
 return (async ()=&gt; {
   let commits = await lit.git.log({
@@ -235,8 +235,7 @@ ${indentLines(x.commit.message)}`).join(&#x27;\n&#x27;)
       Commit All!!!
       
 </code></pre></output></codecell></div></cell></section>
-<section depth="3" class="" startpos="291:1-6048" endpos="344:4-7324"><cell startpos="291:1-6048" endpos="291:9-6056"><div class="cell-content"><h3 id="diff">Diff</h3></div></cell><cell startpos="293:1-6058" endpos="344:4-7324" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><pre><code class="js">return (async function getFileStateChanges() {
-  const commitHash1 = &#x27;0c40ed746ebe53cf744d78191d0bbc2941537280&#x27;
+<section depth="3" class="" startpos="291:1-6047" endpos="342:4-7271"><cell startpos="291:1-6047" endpos="291:9-6055"><div class="cell-content"><h3 id="diff">Diff</h3></div></cell><cell startpos="293:1-6057" endpos="342:4-7271" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><pre><code class="js">  const commitHash1 = &#x27;0c40ed746ebe53cf744d78191d0bbc2941537280&#x27;
   const commitHash2 = &#x27;b081f51cd27f54cf58915512006838d4eb67716b&#x27;
   return lit.git.walk({
     lit.lfs,
@@ -281,6 +280,5 @@ ${indentLines(x.commit.message)}`).join(&#x27;\n&#x27;)
       }
     },
   })
-})()
-</code></pre></codecell><codecell class="dir-error lang-txt local output"><span class="meta"><span class="lang">txt</span><span style="color:white;background-color:red" class="directive dir-error">error</span><span class="updatedAt">Updated <span class="Time relative">4.2 hours ago</span></span></span><output><pre><code class="txt">undefined
+</code></pre></codecell><codecell class="dir-error lang-txt local output"><span class="meta"><span class="lang">txt</span><span style="color:white;background-color:red" class="directive dir-error">error</span><span class="updatedAt">Updated <span class="Time relative">4.5 hours ago</span></span></span><output><pre><code class="txt">undefined
 </code></pre></output></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (3)</h4><ol><li><a title="Executing code cells" href="/execute_code_cells.html">Executing code cells</a></li><li><a title=".lit" href="/index.html">.lit</a></li><li><a title=".lit" href="/index.html">.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
