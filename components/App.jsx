@@ -16,6 +16,22 @@ import { ErrorBoundary } from './ErrorBoundry'
 
 const console = getConsoleForNamespace('App')
 
+
+const ONLOAD = "onload"
+const ONSAVE = "onsave"
+const ONSELECT = "onselect"
+
+const onLifecyclePlugins = async (type, ...args) => {
+    const plugins = file?.data?.plugins?.[type] || {}
+    const keys = Object.keys(plugins)
+    console.log(`[${type}] plugins: ${keys.length}`)
+    for (const key of keys) {
+        if (typeof plugins[key] === 'function') {
+            await plugins[key](...args)
+        }
+    }
+}
+
 const App = ({root, file, fs, result}) => {
 
     const [srcAndRes, setSrcAndRes] = useState({
@@ -40,6 +56,8 @@ const App = ({root, file, fs, result}) => {
         file.messages = []
         const processedFile = await processor({fs}).process(file)
         console.log("Processed client", processedFile)
+
+        await onLifecyclePlugins(ONSAVE, patchedSrc, processedFile, processedFile.data.ast)
 
         if (typeof window !== 'undefined') {
             window.lit.file = processedFile
@@ -75,8 +93,9 @@ const App = ({root, file, fs, result}) => {
        })
     }
 
-    const setSelectedCellWrapper = (pos, scroll) => {
+    const setSelectedCellWrapper = async (pos, scroll) => {
         console.log("Selected Cell:", pos)
+        await onLifecyclePlugins(ONSELECT, pos, scroll)
         setSelectedCell(pos)
         if (pos && scroll) {
             document.querySelector(`[startpos="${posstr(pos.start)}"]`).scrollIntoViewIfNeeded()
@@ -93,14 +112,7 @@ const App = ({root, file, fs, result}) => {
     }
 
     useEffect( async fn => {
-        const onloads = file?.data?.plugins?.onload || {}
-        const keys = Object.keys(onloads)
-        console.log("Onload plugins: ", keys.length)
-        for (const key of keys) {
-            if (typeof onloads[key] === 'function') {
-                await onloads[key](state)
-            }
-        }
+       await onLifecyclePlugins(ONLOAD, ctx)
     },[])
 
     console.log(`Render "${file.path}" (selected: ${selectedCell} `)
