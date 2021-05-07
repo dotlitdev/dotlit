@@ -112,7 +112,7 @@ const App = ({root, file, fs, result}) => {
     }
 
     useEffect( async fn => {
-       await onLifecyclePlugins(ONLOAD, ctx)
+       await onLifecyclePlugins(ONLOAD, state)
     },[])
 
     console.log(`Render "${file.path}" (selected: ${selectedCell} `)
