@@ -4,6 +4,7 @@ import {btoa} from '../utils/safe-encoders'
 
 import {viewer as mdViewer} from './viewers/md'
 import {viewer as graphViewer} from './viewers/graph'
+
 const console = getConsoleForNamespace('Viewers')
 
 const viewers = {
@@ -43,6 +44,8 @@ export const getViewer = (meta, customViewers = {}) => {
   const useViewer = view && (meta.viewer || meta.isOutput 
        || hasViewDirective(meta))
   const viewer = CustomViewer || viewers[view]
-  console.log(`[Viewer] view: ${view} custom: ${!!CustomViewer} use: ${!!useViewer}`)
-  return view && useViewer && viewer
-}
+  const enabled = view && useViewer && viewer
+
+  if (enabled) console.log(`[Viewer] view: ${view} custom: ${!!CustomViewer} use: ${!!useViewer}`)
+  return enabled
+  }

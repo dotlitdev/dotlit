@@ -10,7 +10,7 @@ import {CodeMeta} from '../CodeMeta'
 import { Identity } from '../../utils/functions'
 import { ErrorBoundary } from '../ErrorBoundry'
 
-const console = getConsoleForNamespace('codeblocks', {disabled: true})
+const console = getConsoleForNamespace('Codeblock')
 
 const hasDirective = (meta, d) => {
   return meta && meta.directives && meta.directives.length && meta.directives.indexOf(d) >= 0
@@ -95,7 +95,7 @@ export const Codeblock = props => {
         const above = Viewer && meta.directives && (meta.directives.indexOf('above') >= 0)
         const below = Viewer && meta.directives && (meta.directives.indexOf('below') >= 0)
 
-        console.log(meta && meta.raw, props )
+        console.log(meta && meta.raw)
         const highlighted = <Highlight language={(meta && meta.lang) || "plaintext"}>{source}</Highlight>
         const metaView = meta && <CodeMeta meta={meta} toggleCollapsed={toggleCollapsed} toggleFullscreen={toggleFullscreen} toggleLocalRemote={toggleLocalRemote} />
         return <codecell className={classes} onClick={anchorClick}>
