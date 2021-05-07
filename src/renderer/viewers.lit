@@ -208,6 +208,43 @@ export const viewer = ({node,React}) => {
 })])
 }
 ```
+```js !plugin of=diff
+import diff from 'https://cdn.skypack.dev/react-diff-viewer'
+export const viewer = ({node,React}) => {
+  const rc = React.createElement
+  const meta = node.properties.meta
+  const styles = {
+    lineNumber: {
+      fontWeight: 'bold'
+    },
+    gutter: {
+      minWidth: '0.6em',
+      padding: '0 0.2em',
+    },
+    marker: {
+      width: 'auto',
+      padding: '0 0.2em'
+    },
+    contentText: {
+      lineHeight: '1em !important',
+      wordBreak: 'break-all',
+    },
+    content: {
+      width: 'auto',
+      padding: 0,
+    }
+  }
+  return rc(diff, {
+    newValue: node.properties.data.originalSource,
+    rightTitle: 'right',
+    oldValue: node.data.value,
+    leftTitle: 'left',
+    splitView: meta && meta.split === 'true',
+    styles,
+    compareMethod: diff[(meta && meta.method && meta.method.toUpperCase()) || 'CHARS']
+  })
+}
+```
 ```diff !inline < difftestA.txt
 Custom Content B as a new value
 for testing diff viewer
