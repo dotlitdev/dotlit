@@ -6,7 +6,7 @@
 // is edited, in which case the commit 
 // includes those files.
 
-export const onSave = async (filename) => {
+export const fn = async (filename) => {
   const now = (new Date()).toISOString()
 
   const fs = lit.lfs 
