@@ -41,7 +41,7 @@
                                 "end": {
                                     "line": 1827,
                                     "column": 4,
-                                    "offset": 98636
+                                    "offset": 98620
                                 }
                             }
                         }
@@ -199,7 +199,7 @@
                                         "end": {
                                             "line": 1827,
                                             "column": 4,
-                                            "offset": 98636
+                                            "offset": 98620
                                         }
                                     }
                                 }
@@ -1317,7 +1317,7 @@
                                                 "end": {
                                                     "line": 1827,
                                                     "column": 4,
-                                                    "offset": 98636
+                                                    "offset": 98620
                                                 }
                                             }
                                         }
@@ -1377,7 +1377,7 @@
                                         "end": {
                                             "line": 1824,
                                             "column": 4,
-                                            "offset": 98614
+                                            "offset": 98598
                                         }
                                     },
                                     "data": {
@@ -1390,7 +1390,7 @@
                                         {
                                             "type": "code",
                                             "lang": "js",
-                                            "meta": "!plugin type=viewer !collapse of=search #implementation",
+                                            "meta": "!plugin type=viewer !collapse of=search",
                                             "value": "\nconst sortBy = keys => (a, b) => {\n  for (const key of keys) {\n     if (a[key] !== b[key]) break;\n     else return (a[key] > b[key]) ? 1 : -1\n  }\n}\n\nconst itemBuilder = (React) => item => {\n  const rc = React.createElement\n  return rc('li', {className: 'item'}, rc('a', {href: lit.href || (lit.location.root + item.id)}, item.title || item.id))\n}\n\nexport const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const {useState, useEffect} = React\n  const meta = node.properties \n               && node.properties.meta\n  const [src,setSrc] = useState(meta.search || node.data.value.trim())\n  const [content, setContent] = useState('Loading...')\n  const item = itemBuilder(React)\n  \n  useEffect(async () => {\n    const resp = await fetch(\"/manifest.json\")\n    const json = await resp.json()\n    let regex\n    try {regex = new RegExp(src,'i')} catch(err){}\n    const res = json.nodes\n        .map(x => x)\n        .filter(x => {\n           return x.id.indexOf(src) >= 0\n              || (regex && regex.test(x.id)) || (x.title && (x.title.indexOf(src) >= 0\n              || (regex && regex.test(x.title))))\n\n        })\n        .sort()\n        .map(x => item(x))\n        //.join(\"\\n\")\n    setContent(rc('ol', null, res))\n  },[src])\n\n  return rc('div', {\n    className: 'custom-react-view',\n  }, [rc('input',{style:{width:'100%', fontSize: '1.2em'},value:src, onChange: e => setSrc(e.target.value)}), content])\n}",
                                             "position": {
                                                 "start": {
@@ -1401,7 +1401,7 @@
                                                 "end": {
                                                     "line": 1824,
                                                     "column": 4,
-                                                    "offset": 98614
+                                                    "offset": 98598
                                                 }
                                             },
                                             "data": {
@@ -1417,16 +1417,13 @@
                                                     ],
                                                     "type": "viewer",
                                                     "of": "search",
-                                                    "tags": [
-                                                        "implementation"
-                                                    ],
                                                     "isOutput": false,
                                                     "hasOutput": false,
                                                     "hasSource": false,
-                                                    "raw": "js !plugin type=viewer !collapse of=search #implementation"
+                                                    "raw": "js !plugin type=viewer !collapse of=search"
                                                 },
                                                 "hProperties": {
-                                                    "className": "tag-implementation",
+                                                    "className": "",
                                                     "meta": {
                                                         "attrs": {
                                                             "type": "viewer",
@@ -1439,13 +1436,10 @@
                                                         ],
                                                         "type": "viewer",
                                                         "of": "search",
-                                                        "tags": [
-                                                            "implementation"
-                                                        ],
                                                         "isOutput": false,
                                                         "hasOutput": false,
                                                         "hasSource": false,
-                                                        "raw": "js !plugin type=viewer !collapse of=search #implementation"
+                                                        "raw": "js !plugin type=viewer !collapse of=search"
                                                     }
                                                 }
                                             }
@@ -1458,12 +1452,12 @@
                                         "start": {
                                             "line": 1825,
                                             "column": 1,
-                                            "offset": 98615
+                                            "offset": 98599
                                         },
                                         "end": {
                                             "line": 1827,
                                             "column": 4,
-                                            "offset": 98636
+                                            "offset": 98620
                                         }
                                     },
                                     "data": {
@@ -1482,12 +1476,12 @@
                                                 "start": {
                                                     "line": 1825,
                                                     "column": 1,
-                                                    "offset": 98615
+                                                    "offset": 98599
                                                 },
                                                 "end": {
                                                     "line": 1827,
                                                     "column": 4,
-                                                    "offset": 98636
+                                                    "offset": 98620
                                                 }
                                             },
                                             "data": {
@@ -1524,7 +1518,7 @@
                                 "end": {
                                     "line": 1827,
                                     "column": 4,
-                                    "offset": 98636
+                                    "offset": 98620
                                 }
                             }
                         }
@@ -1538,7 +1532,7 @@
                         "end": {
                             "line": 1827,
                             "column": 4,
-                            "offset": 98636
+                            "offset": 98620
                         }
                     }
                 }
@@ -1552,7 +1546,7 @@
                 "end": {
                     "line": 1827,
                     "column": 4,
-                    "offset": 98636
+                    "offset": 98620
                 }
             }
         }
@@ -1566,7 +1560,7 @@
         "end": {
             "line": 1829,
             "column": 1,
-            "offset": 98638
+            "offset": 98622
         }
     }
 }
