@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import path from 'path'
 import SelectionContext from './SelectionContext'
 import { Header } from './Header'
@@ -92,7 +92,18 @@ const App = ({root, file, fs, result}) => {
         setSrc: setSrcWrapper
     }
 
-    console.log(`<App/> render "${file.path}" (selected: ${selectedCell} `)
+    useEffect( async fn => {
+        const onloads = file?.data?.plugins?.onload || {}
+        const keys = Object.keys(onloads)
+        console.log("Onload plugins: ", keys.length)
+        for (const key of keys) {
+            if (typeof onloads[key] === 'function') {
+                await onloads[key](state)
+            }
+        }
+    },[])
+
+    console.log(`Render "${file.path}" (selected: ${selectedCell} `)
 
     return <SelectionContext.Provider value={state}>
         <ErrorBoundary><Header root={root} toggleViewSource={toggleViewSource}/></ErrorBoundary>
