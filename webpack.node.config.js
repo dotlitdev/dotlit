@@ -3,7 +3,7 @@ const webpack = require('webpack')
 // const nodeExternals = require('webpack-node-externals')
 
 const distDir = path.resolve(__dirname, './dist')
-const stage = "production"
+const stage = "development"
 
 module.exports = {
   mode: stage,
