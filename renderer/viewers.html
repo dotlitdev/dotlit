@@ -419,7 +419,7 @@ export const viewer = ({node}) =&gt; {
   return &quot;never&quot;
 }
 </code></pre></codecell></div></cell></section>
-<section depth="2" class="" startpos="544:1-12553" endpos="567:4-12989"><cell startpos="544:1-12553" endpos="544:21-12573"><div class="cell-content"><h2 id="initial-prototype">Initial prototype</h2></div></cell><cell startpos="546:1-12575" endpos="567:4-12989" class="code"><div class="cell-content"><codecell class="lang-html local"><span class="meta"><span class="lang">html</span></span><pre><code class="html">&lt;!DOCTYPE html&gt;
+<section depth="2" class="" startpos="544:1-12553" endpos="567:4-12996"><cell startpos="544:1-12553" endpos="544:21-12573"><div class="cell-content"><h2 id="initial-prototype">Initial prototype</h2></div></cell><cell startpos="546:1-12575" endpos="567:4-12996" class="code"><div class="cell-content"><codecell class="dir-below lang-html local"><span class="meta"><span class="lang">html</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
   &lt;head&gt;
     &lt;title&gt;Test page&lt;/title&gt;
@@ -439,8 +439,28 @@ export const viewer = ({node}) =&gt; {
   &lt;/script&gt;
   &lt;/body&gt;
 &lt;/html&gt;
-</code></pre></codecell></div></cell></section>
-<section depth="2" class="" startpos="569:1-12991" endpos="625:4-14374"><cell startpos="569:1-12991" endpos="569:15-13005"><div class="cell-content"><h2 id="experiments">Experiments</h2></div></cell><cell startpos="571:1-13007" endpos="600:4-13854" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=plantuml2</span></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
+</code></pre><div><!DOCTYPE html>
+<html>
+  <head>
+    <title>Test page</title>
+  </head>
+  <body>
+  <script type="module">
+
+    async function getViewer(src) {
+      const module = await import(`data:text/javascript;base64,${ btoa(src)}`);
+      return module.viewer;
+    }
+
+    getViewer(`export const viewer = () => "foo!"`).then(viewer => {
+       alert("Got viewer " + !!viewer)
+    })
+
+  </script>
+  </body>
+</html>
+</div></codecell></div></cell></section>
+<section depth="2" class="" startpos="569:1-12998" endpos="625:4-14381"><cell startpos="569:1-12998" endpos="569:15-13012"><div class="cell-content"><h2 id="experiments">Experiments</h2></div></cell><cell startpos="571:1-13014" endpos="600:4-13861" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=plantuml2</span></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
   const rc = React.createElement
   const {useState, useEffect} = React
   const meta = node.properties 
@@ -468,10 +488,10 @@ export const viewer = ({node}) =&gt; {
     src: url,
   }) : &quot;Loading...&quot;)
 }
-</code></pre></codecell></div></cell><cell startpos="602:1-13856" endpos="606:4-13912" class="code"><div class="cell-content"><codecell class="dir-inline lang-plantuml2 local"><span class="meta"><span class="lang">plantuml2</span><span style="color:black;background-color:#b96da2" class="directive dir-inline">inline</span></span><pre><code class="plantuml2">@startuml
+</code></pre></codecell></div></cell><cell startpos="602:1-13863" endpos="606:4-13919" class="code"><div class="cell-content"><codecell class="dir-inline lang-plantuml2 local"><span class="meta"><span class="lang">plantuml2</span><span style="color:black;background-color:#b96da2" class="directive dir-inline">inline</span></span><pre><code class="plantuml2">@startuml
 class Example
 @enduml
-</code></pre></codecell></div></cell><cell startpos="607:1-13913" endpos="625:4-14374" class="code output"><div class="cell-content"><codecell class="lang-uml local output"><span class="meta"><span class="lang">uml</span></span><output><pre><code class="uml">@startuml
+</code></pre></codecell></div></cell><cell startpos="607:1-13920" endpos="625:4-14381" class="code output"><div class="cell-content"><codecell class="lang-uml local output"><span class="meta"><span class="lang">uml</span></span><output><pre><code class="uml">@startuml
 participant participant as Foo
 actor       actor       as Foo1
 boundary    boundary    as Foo2
