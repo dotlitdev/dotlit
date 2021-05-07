@@ -37,8 +37,8 @@ ${files.map(f=> "- " + f).join('\n')}`
   const sha = await git.commit({fs, dir,
     message,
     author: {
-      name: 'dotlit',
-      email: 'bit@dotlit.org'
+      name: 'dotlitbot',
+      email: 'bot@dotlit.org'
     }
   })
   return `Committed ${sha.slice(0,6)} 
