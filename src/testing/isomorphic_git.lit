@@ -57,8 +57,8 @@ ${files.map(f=> "- " + f).join('\n')}`
   const sha = await git.commit({fs, dir,
     message,
     author: {
-      name: 'dotlit',
-      email: 'bit@dotlit.org'
+      name: 'dotlitbot',
+      email: 'bot@dotlit.org'
     }
   })
   return `Committed ${sha.slice(0,6)} 
@@ -67,6 +67,17 @@ ${message}`
 
 // return onSave(lit.location.src)
 
+```
+```js !plugin id=git type=menu
+export const menu = (ctx, {React, Menu}) => {
+  const rc = React.createElement
+  const commit = lit.file.data.plugins.fn['git-commit-all']
+  const onClick = async ev => alert(await commit())
+  return rc( Menu, {
+    title:"Git",
+    disabled: false,
+  }, [rc('span', {onClick}, 'Commit All')])
+}
 ```
 ```txt updated=1619425559711
 Committed d738da 
