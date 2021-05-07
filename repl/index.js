@@ -1,13 +1,8 @@
 import util from 'util'
-// import { Base64 } from 'js-base64';
 import {transformSync} from '@babel/core'
 
 import presetReact from "@babel/preset-react"
 import presetTypescript from "@babel/preset-typescript"
-// import pluginClassProps from "@babel/plugin-proposal-class-properties"
-// import {version} from '../../package.json'
-
-if (typeof window !== 'undefined') window.transformSync = transformSync
 
 const NoOp = () => {}
 

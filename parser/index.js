@@ -31,10 +31,16 @@ const wait = async (ms) => {
 
 const baseProcessor = ({litroot, files} = {}) => {
     return unified()
+
+    .use((...args) => (tree, file) => {
+        console.log("Parsing file", file.path)
+    })
+
     // remark
     .use(markdown, {})
     .use(gfm)
     .use(frontmatter, {})
+
     // Extact title
     .use((...args) => (tree,file) => {
         if(!file.data.frontmatter || !file.data.frontmatter.title) {
@@ -59,7 +65,7 @@ const baseProcessor = ({litroot, files} = {}) => {
 }
 
 export const processor = ({files, fs, litroot} = {files: []}) => {
-    console.log(litroot, {files: !!files, fs: !!fs})
+    console.log(`Setting up processor litroot: "${litroot}" files: ${!!files} fs: ${!!fs}`)
     return baseProcessor({files, litroot})
     // remark-litmd (rehype compatable)
 
