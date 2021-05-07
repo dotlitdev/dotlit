@@ -201,8 +201,14 @@ v2 `https://github.com/praneshr/react-diff-viewer`
 import diff from 'https://cdn.skypack.dev/react-diff-viewer'
 export const viewer = ({node,React}) => {
   const rc = React.createElement
-  const meta = node.properties.meta
-  const styles = {
+ const {useState, useEffect} = React
+  const meta = node.properties 
+               && node.properties.meta
+  const [content, setContent] = useState('Loading...')
+  const src = node.data.value
+  useEffect(()=>{
+
+const styles = {
     lineNumber: {
       fontWeight: 'bold'
     },
@@ -223,15 +229,27 @@ export const viewer = ({node,React}) => {
       padding: 0,
     }
   }
-  return rc(diff, {
+
+  const view = rc(diff, {
     newValue: node.properties.data.originalSource,
     rightTitle: 'local',
-    oldValue: node.data.value,
+    oldValue: src,
     leftTitle: 'remote',
     splitView: meta && meta.split === 'true',
     styles,
     compareMethod: diff[(meta && meta.method && meta.method.toUpperCase()) || 'CHARS']
   })
+
+
+    setContent(view)
+  },[src])
+
+  
+
+  return rc('div', {
+    className: 'custom-diff-view',
+  }, content)
+
 }
 ```
 ```diff !inline split=true < difftestA.txt
