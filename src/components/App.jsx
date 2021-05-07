@@ -21,7 +21,7 @@ const ONLOAD = "onload"
 const ONSAVE = "onsave"
 const ONSELECT = "onselect"
 
-const onLifecyclePlugins = async (type, ...args) => {
+const onLifecyclePlugins = async (file, type, ...args) => {
     const plugins = file?.data?.plugins?.[type] || {}
     const keys = Object.keys(plugins)
     console.log(`[${type}] plugins: ${keys.length}`)
@@ -57,7 +57,7 @@ const App = ({root, file, fs, result}) => {
         const processedFile = await processor({fs}).process(file)
         console.log("Processed client", processedFile)
 
-        await onLifecyclePlugins(ONSAVE, patchedSrc, processedFile, processedFile.data.ast)
+        await onLifecyclePlugins(processedFile, ONSAVE, patchedSrc, processedFile, processedFile.data.ast)
 
         if (typeof window !== 'undefined') {
             window.lit.file = processedFile
@@ -95,7 +95,7 @@ const App = ({root, file, fs, result}) => {
 
     const setSelectedCellWrapper = async (pos, scroll) => {
         console.log("Selected Cell:", pos)
-        await onLifecyclePlugins(ONSELECT, pos, scroll)
+        await onLifecyclePlugins(window.lit.file, ONSELECT, pos, scroll)
         setSelectedCell(pos)
         if (pos && scroll) {
             document.querySelector(`[startpos="${posstr(pos.start)}"]`).scrollIntoViewIfNeeded()
@@ -112,7 +112,7 @@ const App = ({root, file, fs, result}) => {
     }
 
     useEffect( async fn => {
-       await onLifecyclePlugins(ONLOAD, state)
+       await onLifecyclePlugins(file, ONLOAD, state)
     },[])
 
     console.log(`Render "${file.path}" (selected: ${selectedCell} `)
