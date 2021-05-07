@@ -39,9 +39,9 @@
                                     "offset": 0
                                 },
                                 "end": {
-                                    "line": 92,
+                                    "line": 103,
                                     "column": 4,
-                                    "offset": 2977
+                                    "offset": 3382
                                 }
                             }
                         }
@@ -210,9 +210,9 @@
                             "offset": 249
                         },
                         "end": {
-                            "line": 32,
+                            "line": 43,
                             "column": 4,
-                            "offset": 605
+                            "offset": 1010
                         }
                     },
                     "data": {
@@ -226,7 +226,7 @@
                             "type": "code",
                             "lang": "js",
                             "meta": "!plugin id=selection type=menu",
-                            "value": "export const menu = (ctx, {React, Menu}) => {\n  const pos = lit.file.data.plugins.data.fakePos\n  const rc = React.createElement\n\n  const selectAll = rc('span', {onClick: () => ctx.setSelectedCell(lit.ast.position)}, 'Select All')\n\n  return rc( Menu, {\n    title:\"Selection\",\n    disabled: false,\n  }, [selectAll])\n}",
+                            "value": "\nexport const menu = (ctx, {React, Menu}) => {\n  const pos = lit.file.data.plugins.data.fakePos\n  const {filter, select, selectPosition} = lit.utils.unist\n  const rc = React.createElement\n\n  const secFromCell = (pos) => {\n    const secs = selectPosition.selectAll('section', ctx.selectedCell, lit.ast)\n   const last = secs.slice(-1)[0]\n   console.log(\"Sections\", secs, last)\n   ctx.setSelectedCell(last.position)\n  }\n\n  const selectAll = rc('span', {onClick: () => ctx.setSelectedCell(lit.ast.position)}, 'Select All')\n\n  const selectSrc= rc('span', {onClick: () => ctx.setSelectedCell(lit.ast.position)}, 'Select Section')\n\n  return rc( Menu, {\n    title:\"Selection\",\n    disabled: false,\n  }, [selectAll, selectSec])\n}",
                             "position": {
                                 "start": {
                                     "line": 20,
@@ -234,9 +234,9 @@
                                     "offset": 249
                                 },
                                 "end": {
-                                    "line": 32,
+                                    "line": 43,
                                     "column": 4,
-                                    "offset": 605
+                                    "offset": 1010
                                 }
                             },
                             "data": {
@@ -283,14 +283,14 @@
                     "type": "cell",
                     "position": {
                         "start": {
-                            "line": 34,
+                            "line": 45,
                             "column": 1,
-                            "offset": 607
+                            "offset": 1012
                         },
                         "end": {
-                            "line": 92,
+                            "line": 103,
                             "column": 4,
-                            "offset": 2977
+                            "offset": 3382
                         }
                     },
                     "data": {
@@ -307,14 +307,14 @@
                             "value": "const {filter, select, selectPosition} = lit.utils.unist\nconst is = t => node => {\n  console.log(node.type)\n  return node.type === t\n}\n\n// return lit.ast\n// return filter.toString()\n// filter(lit.ast, {cascade: false } , is('heading'))\nreturn lit.notebook",
                             "position": {
                                 "start": {
-                                    "line": 34,
+                                    "line": 45,
                                     "column": 1,
-                                    "offset": 607
+                                    "offset": 1012
                                 },
                                 "end": {
-                                    "line": 92,
+                                    "line": 103,
                                     "column": 4,
-                                    "offset": 2977
+                                    "offset": 3382
                                 }
                             },
                             "data": {
@@ -346,14 +346,14 @@
                             "value": "{ '$$typeof': {},\n  type: [Function: App],\n  key: null,\n  ref: null,\n  props: \n   { root: '/',\n     fs: \n      { init: [Function: bound init],\n        readFile: [Function],\n        writeFile: [Function],\n        unlink: [Function],\n        readdir: [Function],\n        mkdir: [Function],\n        rmdir: [Function],\n        rename: [Function],\n        stat: [Function],\n        lstat: [Function],\n        readlink: [Function],\n        symlink: [Function],\n        backFile: [Function],\n        du: [Function],\n        _deactivationPromise: {},\n        _deactivationTimeout: 213,\n        _activationPromise: null,\n        _operations: {},\n        _initPromise: {},\n        readStat: [Function],\n        _backend: [Object] },\n     file: \n      { data: [Object],\n        messages: [],\n        history: [Object],\n        cwd: '/',\n        contents: '# More powerful selection\\n\\nIe multi cell and section selection.\\n\\n```js !plugin type=data id=fakePos\\nexport const data = {\\n  start: {\\n    line: 1,\\n    column: 1,\\n    offset: 0\\n  },\\n  end: {\\n    line: 99,\\n    column: 99,\\n    offset: 999999\\n  }\\n}\\n```\\n\\n```js !plugin id=selection type=menu\\nexport const menu = (ctx, {React, Menu}) => {\\n  const pos = lit.file.data.plugins.data.fakePos\\n  const rc = React.createElement\\n\\n  const selectAll = rc(\\'span\\', {onClick: () => ctx.setSelectedCell(lit.ast.position)}, \\'Select All\\')\\n\\n  return rc( Menu, {\\n    title:\"Selection\",\\n    disabled: false,\\n  }, [selectAll])\\n}\\n```\\n\\n```js\\nconst {filter, select, selectPosition} = lit.utils.unist\\nconst is = t => node => {\\n  console.log(node.type)\\n  return node.type === t\\n}\\n\\n// return lit.ast\\n// return filter.toString()\\n// filter(lit.ast, {cascade: false } , is(\\'heading\\'))\\nreturn lit.notebook\\n```\\n```>txt attached=true updated=1620345651577\\nundefined\\n```\\n',\n        result: [Object] },\n     result: \n      { '$$typeof': {},\n        type: {},\n        key: null,\n        ref: null,\n        props: [Object],\n        _owner: null,\n        _store: {} } },\n  _owner: null,\n  _store: {} }",
                             "position": {
                                 "start": {
-                                    "line": 46,
+                                    "line": 57,
                                     "column": 1,
-                                    "offset": 873
+                                    "offset": 1278
                                 },
                                 "end": {
-                                    "line": 92,
+                                    "line": 103,
                                     "column": 4,
-                                    "offset": 2977
+                                    "offset": 3382
                                 }
                             },
                             "data": {
@@ -398,9 +398,9 @@
                     "offset": 0
                 },
                 "end": {
-                    "line": 92,
+                    "line": 103,
                     "column": 4,
-                    "offset": 2977
+                    "offset": 3382
                 }
             }
         }
@@ -412,9 +412,9 @@
             "offset": 0
         },
         "end": {
-            "line": 93,
+            "line": 104,
             "column": 1,
-            "offset": 2978
+            "offset": 3383
         }
     }
 }
