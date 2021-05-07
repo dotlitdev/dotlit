@@ -33,6 +33,8 @@ export const fn = async (filename) => {
 at ${now} includes the following ${files.length} files:
 ${files.map(f=> "- " + f).join('\n')}`
 
+  return message
+
   // commit
   const sha = await git.commit({fs, dir,
     message,
