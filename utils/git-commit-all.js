@@ -1,4 +1,3 @@
-
 // initially, because it's on every change 
 // a commit will mostly be for a single
 // file at a time the immediate exception 
@@ -46,5 +45,3 @@ ${files.map(f=> "- " + f).join('\n')}`
   return `Committed ${sha.slice(0,6)} 
 ${message}`
 }
-
-// return onSave(lit.location.src)
