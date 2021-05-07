@@ -22,7 +22,7 @@ const ONSAVE = "onsave"
 const ONSELECT = "onselect"
 
 const onLifecyclePlugins = async (type, ...args) => {
-    const plugins = file?.data?.plugins?[type] || {}
+    const plugins = file?.data?.plugins?.[type] || {}
     const keys = Object.keys(plugins)
     console.log(`[${type}] plugins: ${keys.length}`)
     for (const key of keys) {
