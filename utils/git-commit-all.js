@@ -5,7 +5,7 @@
 // is edited, in which case the commit 
 // includes those files.
 
-export const fn = async (filename) => {
+export const fn = async () => {
   const now = (new Date()).toISOString()
 
   const fs = lit.lfs 
@@ -27,7 +27,7 @@ export const fn = async (filename) => {
   await git.add({fs, dir, filepath: '.'})
 
   // message 
-  const message = `Auto commit ${filename}
+  const message = `Commit ${lit.location.src}
 
 at ${now} includes the following ${files.length} files:
 ${files.map(f=> "- " + f).join('\n')}`
