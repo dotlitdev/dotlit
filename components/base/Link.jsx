@@ -14,7 +14,7 @@ const Link = props => {
                    ? '§'
                    : null
 
-    console.log("<Link/>", title, props)
+    console.log("<Link/>", title, props.href)
 
     const imgOnlyLink = props.node.children
                         && props.node.children.length === 1

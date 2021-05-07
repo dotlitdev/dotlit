@@ -59,12 +59,13 @@ export function getConsoleForNamespace(ns) {
     return getConsole(ns)
   } else {
     if (debugKeys()[0] !== 'None') console.log(`[${ROOT_PREFIX}] Hiding console for NS "${ns}"`)
+    const prefix = `[${ROOT_PREFIX}:${ns}] `
     return {
       level: NoOp,
       log: NoOp,
       dir: NoOp,
       info: NoOp,
-      error: NoOp,
+      error: prefixArgs(prefix, console.error, console),
       time: NoOp,
       timeEnd: NoOp,
     }
