@@ -5,6 +5,7 @@ import SelectionContext from './SelectionContext'
 import { Identity } from '../utils/functions'
 import { getConsoleForNamespace } from '../utils/console'
 import { ErrorBoundary } from './ErrorBoundry'
+import {version} from '../../package.json'
 
 
 const console = getConsoleForNamespace('Header')
@@ -233,6 +234,7 @@ export const Header = (props) => {
       { !menuPlugins ? null : menuPlugins && Object.keys(menuPlugins).map( key => <ErrorBoundary>{menuPlugins[key](ctx, {React, Menu})}</ErrorBoundary>) }
       
       <Menu title="Help">
+        <span disabled>{`v${version}`}</span>
         <span disabled>About</span>
         <span disabled>Documentation</span>
         <span disabled={!ghToken} onClick={setGhToken}>GitHub Token</span>
