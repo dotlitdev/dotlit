@@ -190,10 +190,10 @@ export const Header = (props) => {
     const ageMessage = ctx.file && ctx.file.data && ctx.file.data.times && ctx.file.data.times.ageMessage
 
     const menuPlugins = ctx?.file?.data?.plugins?.menu
-    const fileMenuPlugins = ctx?.file?.data?.plugins?.["menu:file"]
-    const cellMenuPlugins = ctx?.file?.data?.plugins?.["menu:cell"]
-    const sectionMenuPlugins = ctx?.file?.data?.plugins?.["menu:section"]
-    const helpMenuPlugins = ctx?.file?.data?.plugins?.["menu:help"]
+    const fileMenuPlugins = ctx?.file?.data?.plugins?.["filemenu"]
+    const cellMenuPlugins = ctx?.file?.data?.plugins?.["cellmenu"]
+    const sectionMenuPlugins = ctx?.file?.data?.plugins?.["sectionmenu"]
+    const helpMenuPlugins = ctx?.file?.data?.plugins?.["helpmenu"]
 
     console.log('<Header/> plugins?', menuPlugins)
 
