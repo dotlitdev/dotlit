@@ -113,7 +113,7 @@ const Cell = props => {
             const outputMeta = (meta.hasOutput ? meta.output : 'txt').trim() + (" attached=true updated=" + Date.now()) + (error ? ' !error' : '')
             const output = "\n```>"+ outputMeta +"\n" + result.stdout + "\n```\n"
             if (ctx) ctx.setSrc(pos, rawSource + output)
-            else return output
+            else return rawSource + output
         }
     }
 
@@ -124,6 +124,7 @@ const Cell = props => {
             console.log("produced output",output)
             const result = await processor({fs: lit.fs,litroot: lit.location.root}).process(output)
             console.log("Result", result)
+            setContent(result.result)
         }
     },[])
 
