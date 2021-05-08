@@ -189,7 +189,11 @@ export const Header = (props) => {
     const remote = ctx.file && ctx.file.data && ctx.file.data.times && ctx.file.data.times.remote
     const ageMessage = ctx.file && ctx.file.data && ctx.file.data.times && ctx.file.data.times.ageMessage
 
-    const menuPlugins = ctx?.file?.data?.plugins?.menu 
+    const menuPlugins = ctx?.file?.data?.plugins?.menu
+    const fileMenuPlugins = ctx?.file?.data?.plugins?.["menu:file"]
+    const cellMenuPlugins = ctx?.file?.data?.plugins?.["menu:cell"]
+    const sectionMenuPlugins = ctx?.file?.data?.plugins?.["menu:section"]
+    const helpMenuPlugins = ctx?.file?.data?.plugins?.["menu:help"]
 
     console.log('<Header/> plugins?', menuPlugins)
 
@@ -204,6 +208,9 @@ export const Header = (props) => {
         <span onClick={copyToClipboard(ctx)}>Copy</span>
         <span onClick={resetFile(ctx)}>Reset</span>
         <span disabled>Delete</span>
+
+        { !fileMenuPlugins ? null : fileMenuPlugins && Object.keys(fileMenuPlugins).map( key => <ErrorBoundary>{fileMenuPlugins[key](ctx, {React, Menu})}</ErrorBoundary>) }
+
       </Menu>
       <Menu title="Cell" disabled={!cellSelected}>
         <span disabled className="meta">
@@ -221,6 +228,8 @@ export const Header = (props) => {
         <span disabled={!cellSelected} onClick={copyCell(ctx)}>Copy</span>
         <span disabled={!cellSelected} onClick={cutCell(ctx)}>Cut</span>
         <span disabled={!cellSelected} onClick={pasteAfterCell(ctx)}>Paste After</span>
+
+        { !cellMenuPlugins ? null : cellMenuPlugins && Object.keys(cellMenuPlugins).map( key => <ErrorBoundary>{cellMenuPlugins[key](ctx, {React, Menu})}</ErrorBoundary>) }
       </Menu>
       <Menu title="Section" disabled={!cellSelected}>
         <span disabled>Collapse</span>
@@ -229,6 +238,9 @@ export const Header = (props) => {
           <span disabled>Up</span>
           <span disabled>Down</span>
         </Menu>
+
+        { !sectionMenuPlugins ? null : sectionMenuPlugins && Object.keys(sectionMenuPlugins).map( key => <ErrorBoundary>{sectionMenuPlugins[key](ctx, {React, Menu})}</ErrorBoundary>) }
+
       </Menu>
       
       { !menuPlugins ? null : menuPlugins && Object.keys(menuPlugins).map( key => <ErrorBoundary>{menuPlugins[key](ctx, {React, Menu})}</ErrorBoundary>) }
@@ -242,6 +254,7 @@ export const Header = (props) => {
             <span onClick={setDebug}>Set Mask</span>
             <span onClick={showInspector}>Show Inspector</span>
         </Menu>
+                { !helpMenuPlugins ? null : helpMenuPlugins && Object.keys(helpMenuPlugins).map( key => <ErrorBoundary>{helpMenuPlugins[key](ctx, {React, Menu})}</ErrorBoundary>) }
       </Menu>
       <Menu right title={<Status local={local} remote={remote} />}>
         {ctx.file && <span disabled>{`File: ${ctx.file.path}`}</span>}
