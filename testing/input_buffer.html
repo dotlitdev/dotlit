@@ -1,4 +1,4 @@
-<html data-reactroot=""><head><title>Input Buffer</title><meta name="litsrc" value="testing/input_buffer.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"><div class="lit-message"><span class="message">Plugin Error (onload): No plugin exported from module. for !plugin type=onload</span><span class="name">9:1-13:4</span></div></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="60:4-1389"><cell startpos="1:1-0" endpos="7:6-253"><div class="cell-content"><h1 id="input-buffer">Input Buffer</h1><ul class="contains-task-list">
+<html data-reactroot=""><head><title>Input Buffer</title><meta name="litsrc" value="testing/input_buffer.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"><div class="lit-message"><span class="message">Plugin Error (onload): No plugin exported from module. for !plugin type=onload</span><span class="name">9:1-13:4</span></div></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="60:4-1398"><cell startpos="1:1-0" endpos="7:6-253"><div class="cell-content"><h1 id="input-buffer">Input Buffer</h1><ul class="contains-task-list">
 <li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->On load check for url query string <code>input</code>.<!-- -->
 <ul class="contains-task-list">
 <li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->If <code>input</code> is available, decode markdown.</li>
@@ -10,7 +10,7 @@
 </ul></div></cell><cell startpos="9:1-255" endpos="13:4-317" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=onload</span></span><pre><code class="js">export const onload = () =&gt; {
 
 }
-</code></pre></codecell></div></cell><cell startpos="14:1-318" endpos="42:4-906" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; md</span></span><pre><code class="js">const insp = lit.utils.inspect
+</code></pre></codecell></div></cell><cell startpos="14:1-318" endpos="42:4-915" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; md</span></span><pre><code class="js">const insp = lit.utils.inspect
 const qs = lit.utils.querystring
 
 const search = location.search
@@ -21,7 +21,7 @@ if (query?.input) {
   const input = query.input
   delete query.input
   const qsWoInput = qs.stringify(query)
-  // window.history.replaceState(null,null,&#x27;?&#x27;)
+  window.history.replaceState(null,null,&#x27;?&#x27; + qsWoInput)
   return `***Captured Input:***
 
 ${input}
@@ -30,18 +30,18 @@ new querystring: ${qsWoInput}`
 } else {
   return &quot;No input detected.&quot;
 }
-</code></pre></codecell><codecell class="lang-md local output"><span class="meta"><span class="lang">md</span><span class="updatedAt">Updated <span class="Time relative">44 seconds ago</span></span></span><div class="md-block">
+</code></pre></codecell><codecell class="lang-md local output"><span class="meta"><span class="lang">md</span><span class="updatedAt">Updated <span class="Time relative">48 seconds ago</span></span></span><div class="md-block">
 <p><em><strong>Captured Input:</strong></em></p>
 <ul class="contains-task-list">
 <li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->some <strong>Input</strong></li>
 </ul>
 <p>new querystring: file=testing%2Finput_buffer.lit</p>
-</div></codecell></div></cell><cell startpos="44:1-908" endpos="50:4-1210" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; md #mockinput</span></span><pre><code class="js">const qs = location.search.slice(1)
+</div></codecell></div></cell><cell startpos="44:1-917" endpos="50:4-1219" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; md #mockinput</span></span><pre><code class="js">const qs = location.search.slice(1)
 return `[Mock Input](?${qs + (qs ? &#x27;&amp;&#x27; : &#x27;&#x27;)}input=${encodeURIComponent(&quot;- [ ] some **Input**&quot;)})`
-</code></pre></codecell><codecell class="tag-mockinput lang-md local output"><span class="meta"><span class="lang">md</span><span style="color:white;background-color:#5d6084" class="tag">mockinput</span><span class="updatedAt">Updated <span class="Time relative">2 minutes ago</span></span></span><div class="md-block tag-mockinput">
+</code></pre></codecell><codecell class="tag-mockinput lang-md local output"><span class="meta"><span class="lang">md</span><span style="color:white;background-color:#5d6084" class="tag">mockinput</span><span class="updatedAt">Updated <span class="Time relative">4 minutes ago</span></span></span><div class="md-block tag-mockinput">
 <p><a href="?file=testing/input_buffer.lit&amp;input=-%20%5B%20%5D%20some%20**Input**">Mock Input<span class="linkIcon">§</span></a></p>
-</div></codecell></div></cell><cell startpos="52:1-1212" endpos="60:4-1389" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return lit.utils.querystring
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">10 minutes ago</span></span></span><output><pre><code class="txt">{ parse: [Function],
+</div></codecell></div></cell><cell startpos="52:1-1221" endpos="60:4-1398" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return lit.utils.querystring
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">12 minutes ago</span></span></span><output><pre><code class="txt">{ parse: [Function],
   decode: [Function],
   stringify: [Function],
   encode: [Function] }
