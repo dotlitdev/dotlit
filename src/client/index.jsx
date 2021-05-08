@@ -82,6 +82,7 @@ export const lit = {
             to_string,
         },
         path,
+        querystring: qs,
         vfile,
         delete: async (fp) => {
             const f = fp || litsrc
