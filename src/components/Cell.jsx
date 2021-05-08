@@ -9,7 +9,7 @@ import CellMenu from './CellMenu'
 import SelectionContext from './SelectionContext'
 import Editor from './Editor'
 import {Repl} from '../repl'
-import {processor} from './renderer'
+import {processor} from '../renderer'
 
 import { getConsoleForNamespace } from '../utils/console'
 import { posstr } from '../utils/functions'
