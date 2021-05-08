@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useState,useEffect} from "react"
 import source from 'unist-util-source'
 
 import filter from 'unist-util-filter'
@@ -32,6 +32,7 @@ const Cell = props => {
     const [content, setContent] = useState(null)
     // const content = props.children
     const [editing, setEditing] = useState(false)
+    const [executing, setExexuting] = useState(false)
     const toggleEditing = () => setEditing(!editing)
     
     const isSelected = ctx => {
@@ -105,13 +106,19 @@ const Cell = props => {
             console.log("Experimental!! Special setSrc as cell is self mutating")
             // assumes source has changed in the filesystem 
             // so re-render from that
-            ctx.setSrc(lit.ast.position, result.resp)
+            if (ctx) ctx.setSrc(lit.ast.position, result.resp)
         } else {
             const outputMeta = (meta.hasOutput ? meta.output : 'txt').trim() + (" attached=true updated=" + Date.now()) + (error ? ' !error' : '')
             const output = "\n```>"+ outputMeta +"\n" + result.stdout + "\n```\n"
-            ctx.setSrc(pos, rawSource + output)
+            if (ctx) ctx.setSrc(pos, rawSource + output)
         }
     }
+
+    useEffect( () => {
+        if (meta && meta.exec === 'onload') {
+            exec()()
+        }
+    },[])
 
     const getClasses = ctx => [
         isSelected(ctx) ? 'selected' : '',
