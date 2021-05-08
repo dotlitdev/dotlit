@@ -1,14 +1,12 @@
 # Input Buffer
 
-- [ ] On load check for url query string `input`.
-  - [ ] If `input` is available, decode markdown.
+- [x] On load check for url query string `input`.
+  - [x] If `input` is available, decode markdown.
   - [ ] Check document for section corresponding to current date, if available append `input` other wise create with `input`.
-- [ ]
-- [ ]
 
 
-```js > md
-const checkForInput = () => {}
+```js !collapse exec=onload > md
+const checkForInput = () => {
   const insp = lit.utils.inspect
   const qs = lit.utils.querystring
 
@@ -23,19 +21,18 @@ const checkForInput = () => {}
     window.history.replaceState(null,null,'?' + qsWoInput)
     return `***Captured Input:***
 
-${input}
-
-new querystring: ${qsWoInput}`
+${input}`
     } else {
       return "No input detected."
   }
 }
+return checkForInput()
 ```
 ```>md attached=true updated=1620508210977
 No input detected.
 ```
 
-```js > md #mockinput
+```js !collapse > md #mockinput
 const qs = location.search.slice(1)
 return `[Mock Input](?${qs + (qs ? '&' : '')}input=${encodeURIComponent("- [ ] some **Input**")})`
 ```
@@ -44,6 +41,13 @@ return `[Mock Input](?${qs + (qs ? '&' : '')}input=${encodeURIComponent("- [ ] s
 ```
 
 ```js exec=onload
-return lit.utils.querystring
+return new Date()
 ```
+
+
+
+
+
+
+
 
