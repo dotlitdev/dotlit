@@ -6,3 +6,56 @@
 - [ ]
 - [ ]
 
+```js !plugin type=onload
+export const onload = () => {
+
+}
+```
+```js > md
+const insp = lit.utils.inspect
+const qs = lit.utils.querystring
+
+const search = location.search
+const query = search
+              && qs.parse(search.slice(1))
+
+if (query?.input) {
+  const input = query.input
+  delete query.input
+  const qsWoInput = qs.stringify(query)
+  // window.history.replaceState(null,null,'?')
+  return `***Captured Input:***
+
+${input}
+
+new querystring: ${qsWoInput}`
+} else {
+  return "No input detected."
+}
+```
+```>md attached=true updated=1620507752620
+***Captured Input:***
+
+- [ ] some **Input**
+
+new querystring: 
+```
+
+```js > md #mockinput
+const qs = location.search.slice(1)
+return `[Mock Input](?${qs + (qs ? '&' : '')}input=${encodeURIComponent("- [ ] some **Input**")})`
+```
+```>md #mockinput attached=true updated=1620507894315
+[Mock Input](?input=-%20%5B%20%5D%20some%20**Input**&input=-%20%5B%20%5D%20some%20**Input**)
+```
+
+```js
+return lit.utils.querystring
+```
+```>txt attached=true updated=1620507536789
+{ parse: [Function],
+  decode: [Function],
+  stringify: [Function],
+  encode: [Function] }
+```
+
