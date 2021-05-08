@@ -100,6 +100,7 @@ const Cell = props => {
         }
         }
         console.log('Execution result', result)
+        
         if (result && meta.react && result.resp && React.isValidElement(result.resp))
             setContent(result.resp)
         else if (result && meta.selfmutate && typeof result.resp === "string") {
@@ -111,6 +112,7 @@ const Cell = props => {
             const outputMeta = (meta.hasOutput ? meta.output : 'txt').trim() + (" attached=true updated=" + Date.now()) + (error ? ' !error' : '')
             const output = "\n```>"+ outputMeta +"\n" + result.stdout + "\n```\n"
             if (ctx) ctx.setSrc(pos, rawSource + output)
+            else setContent(output)
         }
     }
 
