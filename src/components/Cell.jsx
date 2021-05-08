@@ -101,7 +101,7 @@ const Cell = props => {
         }
         console.log('Execution result', result)
         
-        else if (result && meta.react && result.resp && React.isValidElement(result.resp))
+        if (result && meta.react && result.resp && React.isValidElement(result.resp))
             setContent(result.resp)
         else if (result && meta.selfmutate && typeof result.resp === "string") {
             console.log("Experimental!! Special setSrc as cell is self mutating")
