@@ -22,7 +22,7 @@
 </ul>
 </li>
 </ul></div></cell></section>
-<section depth="2" class="" startpos="15:1-287" endpos="84:4-2117"><cell startpos="15:1-287" endpos="15:18-304"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="18:1-307" endpos="43:4-922" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-exec" style="color:black;background-color:#02fb89">exec=onload</span><span class="output">&gt; md !info</span></span><pre><code class="js">const checkForInput = () =&gt; {
+<section depth="2" class="" startpos="15:1-287" endpos="84:4-2116"><cell startpos="15:1-287" endpos="15:18-304"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="18:1-307" endpos="43:4-922" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-exec" style="color:black;background-color:#02fb89">exec=onload</span><span class="output">&gt; md !info</span></span><pre><code class="js">const checkForInput = () =&gt; {
   const insp = lit.utils.inspect
   const qs = lit.utils.querystring
 
@@ -49,26 +49,26 @@ return checkForInput()
 return `[Mock Input](?${qs + (qs ? &#x27;&amp;&#x27; : &#x27;&#x27;)}input=${encodeURIComponent(&quot;- [ ] some **Input**&quot;)})`
 </code></pre></codecell><codecell class="tag-mockinput lang-md local output"><span class="meta"><span class="lang">md</span><span style="color:white;background-color:#5d6084" class="tag">mockinput</span><span class="updatedAt">Updated <span class="Time relative">15.9 hours ago</span></span></span><div class="md-block tag-mockinput">
 <p><a href="?file=testing/input_buffer.lit&amp;input=-%20%5B%20%5D%20some%20**Input**">Mock Input<span class="linkIcon">§</span></a></p>
-</div></codecell></div></cell><cell startpos="53:1-1238" endpos="70:4-1713" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-exec" style="color:black;background-color:#02fb89">exec=onload</span><span class="output">&gt; md</span></span><pre><code class="js">const today = (new Date()).toISOString().split(&quot;T&quot;)[0]
+</div></codecell></div></cell><cell startpos="53:1-1238" endpos="70:4-1712" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-exec" style="color:black;background-color:#02fb89">exec=onload</span><span class="output">&gt; md</span></span><pre><code class="js">const today = (new Date()).toISOString().split(&quot;T&quot;)[0]
 
 const checkForTodayFile = async () =&gt; { 
   let stat
   try {
   stat = await lit.fs.readStat(`${today}.lit`)
   } catch(err) {}
-  const msg = `Today is ${today}, exists: ${!!stat &amp;&amp; !!(stat.local.stat || stat.remote.stat)}`
+  const msg = `*Today* is **${today}**, exists: *${!!stat &amp;&amp; !!(stat.local.stat || stat.remote.stat)}*`
   lit.file.message(msg, this.position)
-  return &quot;### &quot; + msg
+  return msg
 }
 
 return checkForTodayFile()
-</code></pre></codecell><codecell class="lang-md local output"><span class="meta"><span class="lang">md</span><span class="updatedAt">Updated <span class="Time relative">12 minutes ago</span></span></span><div class="md-block">
+</code></pre></codecell><codecell class="lang-md local output"><span class="meta"><span class="lang">md</span><span class="updatedAt">Updated <span class="Time relative">14 minutes ago</span></span></span><div class="md-block">
 <h3 id="today-is-2021-05-09">Today is 2021-05-09</h3>
-</div></codecell></div></cell><section depth="3" class="" startpos="72:1-1715" endpos="84:4-2117"><cell startpos="72:1-1715" endpos="72:16-1730"><div class="cell-content"><h3 id="bookmarklet">Bookmarklet</h3></div></cell><cell startpos="74:1-1732" endpos="80:4-2053" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=bookmarklet</span></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
+</div></codecell></div></cell><section depth="3" class="" startpos="72:1-1714" endpos="84:4-2116"><cell startpos="72:1-1714" endpos="72:16-1729"><div class="cell-content"><h3 id="bookmarklet">Bookmarklet</h3></div></cell><cell startpos="74:1-1731" endpos="80:4-2052" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=bookmarklet</span></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
   const rc = React.createElement
   const meta = node.properties.meta
   return rc(&#x27;span&#x27;, null, [&#x27;Bookmarklet: &#x27;, rc(&#x27;a&#x27;, {href: `javascript:(function(){${node.data.value}})()`}, `Run ${meta &amp;&amp; meta.id ? meta.id: &quot;bookmarklet&quot;}` )])
 }
-</code></pre></codecell></div></cell><cell startpos="82:1-2055" endpos="84:4-2117" class="code"><div class="cell-content"><codecell class="dir-below lang-js local"><a name="Input"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span><span class="attribute attr-viewer" style="color:black;background-color:#cf5332">viewer=bookmarklet</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=Input</span></span><pre><code class="js">alert(&quot;Success!&quot;)
+</code></pre></codecell></div></cell><cell startpos="82:1-2054" endpos="84:4-2116" class="code"><div class="cell-content"><codecell class="dir-below lang-js local"><a name="Input"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span><span class="attribute attr-viewer" style="color:black;background-color:#cf5332">viewer=bookmarklet</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=Input</span></span><pre><code class="js">alert(&quot;Success!&quot;)
 </code></pre></codecell></div></cell></section></section>
-<section depth="3" class="" startpos="86:1-2119" endpos="88:4-2140"><cell startpos="86:1-2119" endpos="88:4-2140"><div class="cell-content"><h3 id="ios-shortcut">iOS shortcut</h3><p>...</p></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
+<section depth="3" class="" startpos="86:1-2118" endpos="88:4-2139"><cell startpos="86:1-2118" endpos="88:4-2139"><div class="cell-content"><h3 id="ios-shortcut">iOS shortcut</h3><p>...</p></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
