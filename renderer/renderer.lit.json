@@ -615,9 +615,9 @@
                                     "offset": 298
                                 },
                                 "end": {
-                                    "line": 66,
-                                    "column": 4,
-                                    "offset": 1983
+                                    "line": 19,
+                                    "column": 21,
+                                    "offset": 331
                                 }
                             }
                         }
@@ -735,7 +735,32 @@
                             }
                         }
                     ]
+                }
+            ],
+            "position": {
+                "start": {
+                    "line": 17,
+                    "column": 1,
+                    "offset": 298
                 },
+                "end": {
+                    "line": 19,
+                    "column": 21,
+                    "offset": 331
+                }
+            }
+        },
+        {
+            "type": "section",
+            "data": {
+                "name": "renderer-steps",
+                "hName": "section",
+                "hProperties": {
+                    "depth": 2
+                }
+            },
+            "depth": 2,
+            "children": [
                 {
                     "type": "cell",
                     "position": {
@@ -745,9 +770,87 @@
                             "offset": 338
                         },
                         "end": {
-                            "line": 66,
+                            "line": 26,
+                            "column": 18,
+                            "offset": 355
+                        }
+                    },
+                    "data": {
+                        "hName": "cell",
+                        "hProperties": {
+                            "class": "cell"
+                        },
+                        "section": {
+                            "position": {
+                                "start": {
+                                    "line": 26,
+                                    "column": 1,
+                                    "offset": 338
+                                },
+                                "end": {
+                                    "line": 29,
+                                    "column": 4,
+                                    "offset": 386
+                                }
+                            }
+                        }
+                    },
+                    "children": [
+                        {
+                            "type": "heading",
+                            "depth": 2,
+                            "children": [
+                                {
+                                    "type": "text",
+                                    "value": "Renderer steps",
+                                    "position": {
+                                        "start": {
+                                            "line": 26,
+                                            "column": 4,
+                                            "offset": 341
+                                        },
+                                        "end": {
+                                            "line": 26,
+                                            "column": 18,
+                                            "offset": 355
+                                        }
+                                    }
+                                }
+                            ],
+                            "position": {
+                                "start": {
+                                    "line": 26,
+                                    "column": 1,
+                                    "offset": 338
+                                },
+                                "end": {
+                                    "line": 26,
+                                    "column": 18,
+                                    "offset": 355
+                                }
+                            },
+                            "data": {
+                                "hProperties": {
+                                    "id": "renderer-steps"
+                                },
+                                "id": "renderer-steps"
+                            },
+                            "processed": true
+                        }
+                    ]
+                },
+                {
+                    "type": "cell",
+                    "position": {
+                        "start": {
+                            "line": 28,
+                            "column": 1,
+                            "offset": 357
+                        },
+                        "end": {
+                            "line": 29,
                             "column": 4,
-                            "offset": 1983
+                            "offset": 386
                         }
                     },
                     "data": {
@@ -761,17 +864,17 @@
                             "type": "code",
                             "lang": "js",
                             "meta": "< transcludeCode.js",
-                            "value": "\nimport { getConsoleForNamespace } from '../utils/console'\n\nconst console = getConsoleForNamespace('transcludeCode')\n\nexport const transcludeCode = ({fs}) => {\n         return async (tree,file) => {\n             if(!fs) return;\n             console.log(\"Checking for files to transclude\")\n             for (const block of selectAll(\"code\", tree)) {\n                 if (block.data && block.data.meta && block.data.meta.source) {\n                    const source = block.data.meta.source\n                    console.log(\"has source\", source)\n\n                    if (source.uri) {\n                        const resp = await fetch(source.uri)\n                        if (resp.status >= 200 && resp.status < 400) {\n                            const value = await resp.text()\n                            console.log(\"has value\", value)\n                            block.value = value\n                        }\n                    }\n                    else if (source.filename) {\n                        const filePath = path.join(path.dirname(file.path), source.filename)\n                        console.log(\"to filePath\", filePath)\n\n                        try {\n                            \n                            const value = await fs.readFile(filePath)\n                            console.log(\"has value\", value)\n                            block.value = value\n                        } catch(err) {\n                            file.message(\"Failed to load \" + block.data.meta.fromSource + \" as \" + filePath)\n                        }\n                    }\n                 }\n             }\n         }\n     }",
+                            "value": "",
                             "position": {
                                 "start": {
-                                    "line": 26,
+                                    "line": 28,
                                     "column": 1,
-                                    "offset": 338
+                                    "offset": 357
                                 },
                                 "end": {
-                                    "line": 66,
+                                    "line": 29,
                                     "column": 4,
-                                    "offset": 1983
+                                    "offset": 386
                                 }
                             },
                             "data": {
@@ -814,10 +917,10 @@
                                         "fromSource": "transcludeCode.js"
                                     },
                                     "data": {
-                                        "originalSource": "\nimport { getConsoleForNamespace } from '../utils/console'\n\nconst console = getConsoleForNamespace('transcludeCode')\n\nexport const transcludeCode = ({fs}) => {\n         return async (tree,file) => {\n             if(!fs) return;\n             console.log(\"Checking for files to transclude\")\n             for (const block of selectAll(\"code\", tree)) {\n                 if (block.data && block.data.meta && block.data.meta.source) {\n                    const source = block.data.meta.source\n                    console.log(\"has source\", source)\n\n                    if (source.uri) {\n                        const resp = await fetch(source.uri)\n                        if (resp.status >= 200 && resp.status < 400) {\n                            const value = await resp.text()\n                            console.log(\"has value\", value)\n                            block.value = value\n                        }\n                    }\n                    else if (source.filename) {\n                        const filePath = path.join(path.dirname(file.path), source.filename)\n                        console.log(\"to filePath\", filePath)\n\n                        try {\n                            \n                            const value = await fs.readFile(filePath)\n                            console.log(\"has value\", value)\n                            block.value = value\n                        } catch(err) {\n                            file.message(\"Failed to load \" + block.data.meta.fromSource + \" as \" + filePath)\n                        }\n                    }\n                 }\n             }\n         }\n     }"
+                                        "originalSource": ""
                                     }
                                 },
-                                "originalSource": "\nimport { getConsoleForNamespace } from '../utils/console'\n\nconst console = getConsoleForNamespace('transcludeCode')\n\nexport const transcludeCode = ({fs}) => {\n         return async (tree,file) => {\n             if(!fs) return;\n             console.log(\"Checking for files to transclude\")\n             for (const block of selectAll(\"code\", tree)) {\n                 if (block.data && block.data.meta && block.data.meta.source) {\n                    const source = block.data.meta.source\n                    console.log(\"has source\", source)\n\n                    if (source.uri) {\n                        const resp = await fetch(source.uri)\n                        if (resp.status >= 200 && resp.status < 400) {\n                            const value = await resp.text()\n                            console.log(\"has value\", value)\n                            block.value = value\n                        }\n                    }\n                    else if (source.filename) {\n                        const filePath = path.join(path.dirname(file.path), source.filename)\n                        console.log(\"to filePath\", filePath)\n\n                        try {\n                            \n                            const value = await fs.readFile(filePath)\n                            console.log(\"has value\", value)\n                            block.value = value\n                        } catch(err) {\n                            file.message(\"Failed to load \" + block.data.meta.fromSource + \" as \" + filePath)\n                        }\n                    }\n                 }\n             }\n         }\n     }"
+                                "originalSource": ""
                             }
                         }
                     ]
@@ -825,14 +928,14 @@
             ],
             "position": {
                 "start": {
-                    "line": 17,
+                    "line": 26,
                     "column": 1,
-                    "offset": 298
+                    "offset": 338
                 },
                 "end": {
-                    "line": 66,
+                    "line": 29,
                     "column": 4,
-                    "offset": 1983
+                    "offset": 386
                 }
             }
         }
@@ -844,9 +947,9 @@
             "offset": 0
         },
         "end": {
-            "line": 66,
+            "line": 29,
             "column": 4,
-            "offset": 1983
+            "offset": 386
         }
     }
 }
