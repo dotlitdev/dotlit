@@ -5,32 +5,7 @@
   - [ ] Check document for section corresponding to current date, if available append `input` other wise create with `input`.
 
 
-```js !collapse exec=onload > md !info
-const checkForInput = () => {
-  const insp = lit.utils.inspect
-  const qs = lit.utils.querystring
 
-  const search = location.search
-  const query = search
-              && qs.parse(search.slice(1))
-
-  if (query?.input) {
-    const input = query.input
-    delete query.input
-    const qsWoInput = qs.stringify(query)
-    window.history.replaceState(null,null,'?' + qsWoInput)
-    return `***Captured Input:***
-
-${input}`
-    } else {
-      return "*No input detected.*"
-  }
-}
-return checkForInput()
-```
-```>md !warn attached=true updated=1620508210977
-Checking for input...
-```
 
 ```js !collapse > md #mockinput
 const qs = location.search.slice(1)
