@@ -53,9 +53,12 @@ return `[Mock Input](?${qs + (qs ? '&' : '')}input=${encodeURIComponent("- [ ] s
 ```js exec=onload !collapse > md
 const today = (new Date()).toISOString().split("T")[0]
 
-const checkForTodayFile = async () => {
-  const stat = await lit.fs.readStat(`${today}.lit`)
-  const msg = `Today is ${today}, exists: ${stat.local.stat || stat.remote.stat}`
+const checkForTodayFile = async () => { 
+  let stat
+  try {
+  stat = await lit.fs.readStat(`${today}.lit`)
+  } catch(err) {}
+  const msg = `Today is ${today}, exists: ${stat && (stat.local.stat || stat.remote.stat)}`
   lit.file.message(msg, this.position)
   return "### " + msg
 }
