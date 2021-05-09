@@ -617,7 +617,7 @@
                                 "end": {
                                     "line": 66,
                                     "column": 4,
-                                    "offset": 1981
+                                    "offset": 1983
                                 }
                             }
                         }
@@ -747,7 +747,7 @@
                         "end": {
                             "line": 66,
                             "column": 4,
-                            "offset": 1981
+                            "offset": 1983
                         }
                     },
                     "data": {
@@ -760,7 +760,7 @@
                         {
                             "type": "code",
                             "lang": "js",
-                            "meta": "transcludeCode.js",
+                            "meta": "< transcludeCode.js",
                             "value": "\nimport { getConsoleForNamespace } from '../utils/console'\n\nconst console = getConsoleForNamespace('transcludeCode')\n\nexport const transcludeCode = ({fs}) => {\n         return async (tree,file) => {\n             if(!fs) return;\n             console.log(\"Checking for files to transclude\")\n             for (const block of selectAll(\"code\", tree)) {\n                 if (block.data && block.data.meta && block.data.meta.source) {\n                    const source = block.data.meta.source\n                    console.log(\"has source\", source)\n\n                    if (source.uri) {\n                        const resp = await fetch(source.uri)\n                        if (resp.status >= 200 && resp.status < 400) {\n                            const value = await resp.text()\n                            console.log(\"has value\", value)\n                            block.value = value\n                        }\n                    }\n                    else if (source.filename) {\n                        const filePath = path.join(path.dirname(file.path), source.filename)\n                        console.log(\"to filePath\", filePath)\n\n                        try {\n                            \n                            const value = await fs.readFile(filePath)\n                            console.log(\"has value\", value)\n                            block.value = value\n                        } catch(err) {\n                            file.message(\"Failed to load \" + block.data.meta.fromSource + \" as \" + filePath)\n                        }\n                    }\n                 }\n             }\n         }\n     }",
                             "position": {
                                 "start": {
@@ -771,31 +771,53 @@
                                 "end": {
                                     "line": 66,
                                     "column": 4,
-                                    "offset": 1981
+                                    "offset": 1983
                                 }
                             },
                             "data": {
                                 "meta": {
                                     "attrs": {},
                                     "lang": "js",
-                                    "filename": "transcludeCode.js",
                                     "isOutput": false,
                                     "hasOutput": false,
-                                    "hasSource": false,
-                                    "raw": "js transcludeCode.js"
+                                    "hasSource": true,
+                                    "source": {
+                                        "attrs": {},
+                                        "lang": "txt",
+                                        "filename": "transcludeCode.js",
+                                        "isOutput": false,
+                                        "hasOutput": false,
+                                        "hasSource": false,
+                                        "raw": "txt transcludeCode.js"
+                                    },
+                                    "raw": "js < transcludeCode.js",
+                                    "fromSource": "transcludeCode.js"
                                 },
                                 "hProperties": {
                                     "className": "",
                                     "meta": {
                                         "attrs": {},
                                         "lang": "js",
-                                        "filename": "transcludeCode.js",
                                         "isOutput": false,
                                         "hasOutput": false,
-                                        "hasSource": false,
-                                        "raw": "js transcludeCode.js"
+                                        "hasSource": true,
+                                        "source": {
+                                            "attrs": {},
+                                            "lang": "txt",
+                                            "filename": "transcludeCode.js",
+                                            "isOutput": false,
+                                            "hasOutput": false,
+                                            "hasSource": false,
+                                            "raw": "txt transcludeCode.js"
+                                        },
+                                        "raw": "js < transcludeCode.js",
+                                        "fromSource": "transcludeCode.js"
+                                    },
+                                    "data": {
+                                        "originalSource": "\nimport { getConsoleForNamespace } from '../utils/console'\n\nconst console = getConsoleForNamespace('transcludeCode')\n\nexport const transcludeCode = ({fs}) => {\n         return async (tree,file) => {\n             if(!fs) return;\n             console.log(\"Checking for files to transclude\")\n             for (const block of selectAll(\"code\", tree)) {\n                 if (block.data && block.data.meta && block.data.meta.source) {\n                    const source = block.data.meta.source\n                    console.log(\"has source\", source)\n\n                    if (source.uri) {\n                        const resp = await fetch(source.uri)\n                        if (resp.status >= 200 && resp.status < 400) {\n                            const value = await resp.text()\n                            console.log(\"has value\", value)\n                            block.value = value\n                        }\n                    }\n                    else if (source.filename) {\n                        const filePath = path.join(path.dirname(file.path), source.filename)\n                        console.log(\"to filePath\", filePath)\n\n                        try {\n                            \n                            const value = await fs.readFile(filePath)\n                            console.log(\"has value\", value)\n                            block.value = value\n                        } catch(err) {\n                            file.message(\"Failed to load \" + block.data.meta.fromSource + \" as \" + filePath)\n                        }\n                    }\n                 }\n             }\n         }\n     }"
                                     }
-                                }
+                                },
+                                "originalSource": "\nimport { getConsoleForNamespace } from '../utils/console'\n\nconst console = getConsoleForNamespace('transcludeCode')\n\nexport const transcludeCode = ({fs}) => {\n         return async (tree,file) => {\n             if(!fs) return;\n             console.log(\"Checking for files to transclude\")\n             for (const block of selectAll(\"code\", tree)) {\n                 if (block.data && block.data.meta && block.data.meta.source) {\n                    const source = block.data.meta.source\n                    console.log(\"has source\", source)\n\n                    if (source.uri) {\n                        const resp = await fetch(source.uri)\n                        if (resp.status >= 200 && resp.status < 400) {\n                            const value = await resp.text()\n                            console.log(\"has value\", value)\n                            block.value = value\n                        }\n                    }\n                    else if (source.filename) {\n                        const filePath = path.join(path.dirname(file.path), source.filename)\n                        console.log(\"to filePath\", filePath)\n\n                        try {\n                            \n                            const value = await fs.readFile(filePath)\n                            console.log(\"has value\", value)\n                            block.value = value\n                        } catch(err) {\n                            file.message(\"Failed to load \" + block.data.meta.fromSource + \" as \" + filePath)\n                        }\n                    }\n                 }\n             }\n         }\n     }"
                             }
                         }
                     ]
@@ -810,7 +832,7 @@
                 "end": {
                     "line": 66,
                     "column": 4,
-                    "offset": 1981
+                    "offset": 1983
                 }
             }
         }
@@ -824,7 +846,7 @@
         "end": {
             "line": 66,
             "column": 4,
-            "offset": 1981
+            "offset": 1983
         }
     }
 }
