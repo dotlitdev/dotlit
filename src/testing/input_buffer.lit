@@ -72,11 +72,14 @@ const today = (new Date()).toISOString().split("T")[0]
 const checkForTodayFile = async () => { 
   let stat
   try {
-  stat = await lit.fs.readStat(`${today}.lit`)
+  stat = await lit.fs.readStat(`testing/log/${today}.lit`)
   } catch(err) {}
   const msg = `*Today* is **${today}**, exists: *${!!stat && !!(stat.local.stat || stat.remote.stat)}*`
   lit.file.message(msg, this.position)
-  return msg
+  return msg + `
+
+Create it now? [[testing/log/${today}]]
+`
 }
 
 return checkForTodayFile()
