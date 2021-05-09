@@ -58,7 +58,7 @@ const checkForTodayFile = async () => {
   try {
   stat = await lit.fs.readStat(`${today}.lit`)
   } catch(err) {}
-  const msg = `Today is ${today}, exists: ${stat && (stat.local.stat || stat.remote.stat)}`
+  const msg = `Today is ${today}, exists: ${stat && !!(stat.local.stat || stat.remote.stat)}`
   lit.file.message(msg, this.position)
   return "### " + msg
 }
