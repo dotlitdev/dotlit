@@ -49,13 +49,13 @@ function getLinks(file, root) {
             const meta = codeblock.data.meta
             let type, url;
             if (meta.filename){
-               type = 'file'
+               type = 'source'
                url = meta.filename
             }
             if (meta.source 
                 && meta.source.filename){
-               type = 'file'
-               url = meta.source.filename
+               type = 'transclude'
+               url = path.join(path.dirname(file.path), meta.source.filename)
             }
 
             if (type) links.push({
