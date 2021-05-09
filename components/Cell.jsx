@@ -126,7 +126,7 @@ const Cell = props => {
             console.log("Result", result)
             setContent(result.result)
         }
-    },[])
+    },[props.children])
 
     const getClasses = ctx => [
         isSelected(ctx) ? 'selected' : '',
