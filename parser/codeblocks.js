@@ -49,11 +49,15 @@ function parseMeta (node) {
 
     if (isOutput) {
         [_, input] = raw.split('>').map( x => x.trim() )
-    } else if (hasOutput) {
+    } else {
+      if (hasOutput) {
         [input, output] = raw.split('>').map( x => x.trim() )
-    } else if (hasSource) {
-        [input,source] = raw.split('<').map( x => x.trim() )
+      }
+
+      if (hasSource) {
+        [input,source] = input.split('<').map( x => x.trim() )
         source = getSource(source)
+      }
     }
 
     const meta = input
