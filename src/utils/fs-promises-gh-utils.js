@@ -58,3 +58,17 @@ export const ghWriteFile = (opts) => async (...args) => {
     }
     return resp2 && resp2.status
 }
+
+export const ghDeleteFile = opts => async (...args) => {
+    const file = (opts.prefix || '') + args[0]
+    const params = {
+        method: "DELETE",
+        headers: {
+            "Authorization": `token ${opts.token}`,
+            'Content-Type': 'application/json'
+        },
+    }
+    const resp = await fetch(getEndpoint(opts,file)
+    console.log("ghDeleteFile", file, resp)
+    return resp
+}
