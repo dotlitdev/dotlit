@@ -2,6 +2,8 @@ const checkForInput = async () => {
   const insp = lit.utils.inspect
   const qs = lit.utils.querystring
 
+  await lit.utils.find.wait(10000)
+
   const search = location.search
   const query = search
               && qs.parse(search.slice(1))
