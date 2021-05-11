@@ -122,7 +122,8 @@ const Cell = props => {
             console.log("Onload execution")
             const output = await exec()()
             console.log("produced output",output)
-            const result = await processor({fs: lit.fs,litroot: lit.location.root}).process(output)
+            const outputVFile = await vfile({ path: meta.filename || 'untitled.js', contents: output})
+            const result = await processor({fs: lit.fs,litroot: lit.location.root}).process(outputVFile)
             console.log("Result", result)
             setContent(result.result)
         }
