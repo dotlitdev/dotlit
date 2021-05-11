@@ -1,5 +1,5 @@
 const today = (new Date()).toISOString().split("T")[0]
-const filename = `testing/log/${today}.lit`
+const filename = `testing/log/${today}`
 
 const checkForInput = async () => {
   const insp = lit.utils.inspect
@@ -16,10 +16,10 @@ const checkForInput = async () => {
     window.history.replaceState(null,null,'?' + qsWoInput)
 
     let stat = {local:{},remote:{}} 
-    try { stat = await lit.fs.readStat(filename, {encodin: 'utf8'}) } catch(err) {}
+    try { stat = await lit.fs.readStat(filename + ".lit", {encodin: 'utf8'}) } catch(err) {}
     const newContent = (stat.local.value || stat.remote.value || `# ${today}`) + ("\n" + input)
-    await lit.fs.writeFile(filename, newContent)
-    return `***Captured Input (below) to ${filename}***
+    await lit.fs.writeFile(filename + ".lit", newContent)
+    return `***Captured Input (below) to [[${filename}]]***
 
 ${input}`
     } else {
