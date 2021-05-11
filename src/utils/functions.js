@@ -20,3 +20,12 @@ export const wait = async (ms) => {
         setTimeout(resolve, ms);
     });
 }
+
+export const template = (templateString, templateVars) => {
+    console.log(templateString)
+    const escaped = templateString.replace(/`/g, '\\`')
+    console.log(escaped)
+    const body = "return `"+ escaped +"`;"
+    console.log(body)
+    return new Function(body).call(templateVars)
+}
