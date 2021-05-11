@@ -61,14 +61,31 @@ export const ghWriteFile = (opts) => async (...args) => {
 
 export const ghDeleteFile = opts => async (...args) => {
     const file = (opts.prefix || '') + args[0]
+    const content = args[1].toString()
+    console.log("ghDeleteFile", file)
+    const endpoint = getEndpoint(opts, file)
+    const resp1 = await fetch(endpoint)
+    const json1 = await resp1.json()
+    console.log(endpoint, json1.sha ? "Exists, deleting...":"Dosn't exist")
     const params = {
         method: "DELETE",
         headers: {
             "Authorization": `token ${opts.token}`,
             'Content-Type': 'application/json'
         },
+        body: JSON.stringify({
+            sha: json1.sha,
+            message: opts.commitMessage || `Deleted ${file}`,
+        })
     }
-    const resp = await fetch(getEndpoint(opts,file))
-    console.log("ghDeleteFile", file, resp)
-    return resp
+    console.log("ghDeleteFile params", params)
+    let resp2;
+    try {
+      resp2 = await fetch(endpoint, params)
+      const json = await resp2.json()
+      console.log("ghDeleteFile DELETE response", resp2, json)
+    } catch(err) {
+      console.log("ghDeleteFile DELETE failed", err)
+    }
+    return resp2 && resp2.status
 }
