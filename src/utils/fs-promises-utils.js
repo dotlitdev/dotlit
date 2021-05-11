@@ -1,5 +1,5 @@
 import path from "path";
-import { ghWriteFile, ghReadFile } from "../utils/fs-promises-gh-utils";
+import { ghWriteFile, ghReadFile, ghDeleteFile } from "../utils/fs-promises-gh-utils";
 import { getConsoleForNamespace } from './console'
 
 const console = getConsoleForNamespace('fs')
@@ -125,6 +125,23 @@ const passThroughWrite = (fs,litroot, ghOpts) => {
   };
 }
 
+const passThroughUnlink = (fs,litroot, ghOpts) => {
+  const uf = fs.unlink
+  return async (...args) => {
+    console.log('fs.passThroughUnlink')
+    await uf(...args);
+    const ghdf = ghDeleteFile(ghOpts);
+    let ghResp
+    try {
+      ghResp = await ghdf(...args);
+      console.log("GitHub delete resp", ghResp);
+    } catch (err) {
+      console.error("GitHub delete threw", err);
+    }
+    return ghResp
+  };
+}
+
 export const extendFs = (fs, litroot = "", ghOpts) => {
   const clonedfs = {...fs}
   const origReadFile = clonedfs.readFile
@@ -134,5 +151,7 @@ export const extendFs = (fs, litroot = "", ghOpts) => {
   clonedfs.readStat = passThroughReadWithStat(clonedfs.readFile, origStat, litroot, ghOpts)
 
   if(ghOpts) clonedfs.writeFile = passThroughWrite(clonedfs, litroot, ghOpts);
+  if(ghOpts) clonedfs.unlink = passThroughUnlink(clonedfs, litroot, ghOpts);
+
   return clonedfs
 };
