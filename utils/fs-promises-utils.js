@@ -136,7 +136,7 @@ const passThroughUnlink = (fs,litroot, ghOpts) => {
       ghResp = await ghdf(...args);
       console.log("GitHub delete resp", ghResp);
     } catch (err) {
-      console.error("GitHub delete threw", err);
+      console.error("GitHub delete threw", err.message, err);
     }
     return ghResp
   };
