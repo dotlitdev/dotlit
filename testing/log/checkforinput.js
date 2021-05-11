@@ -26,7 +26,7 @@ const checkForInput = async () => {
 
     let stat = {local:{},remote:{}} 
     try { stat = await lit.fs.readStat(`/${filename}.lit`, {encoding: 'utf8'}) } catch(err) {}
-    const newContent = (stat.local.value || stat.remote.value || `# ${today}
+    const newContent = ((stat.local.stat && stat.local.value) || stat.remote.value || `# ${today}
 
 See [week ${week}](/testing/log/${year}-w${week}), [month ${month}](/testing/log/${year}-${month}) or [year ${year}](/testing/log/${year})
 `) + ("\n" + input)
