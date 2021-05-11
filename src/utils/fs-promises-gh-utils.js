@@ -68,7 +68,7 @@ export const ghDeleteFile = opts => async (...args) => {
             'Content-Type': 'application/json'
         },
     }
-    const resp = await fetch(getEndpoint(opts,file)
+    const resp = await fetch(getEndpoint(opts,file))
     console.log("ghDeleteFile", file, resp)
     return resp
 }
