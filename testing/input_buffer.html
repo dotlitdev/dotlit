@@ -1,39 +1,4 @@
-<html data-reactroot=""><head><title>Input Buffer</title><meta name="litsrc" value="testing/input_buffer.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"><div class="lit-message"><span class="message">[Transclude] Failed to load log/checkforinput.js as testing/log/checkforinput.js</span><span class="name">3:1-7:4</span></div><div class="lit-message"><span class="message">Plugin Error (viewer): No plugin exported from module. for !plugin type=viewer of=bookmarklet</span><span class="name">96:1-102:4</span></div></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="12:21-181"><cell startpos="1:1-0" endpos="1:15-14"><div class="cell-content"><h1 id="input-buffer">Input Buffer</h1></div></cell><cell startpos="3:1-16" endpos="7:4-156" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-exec" style="color:black;background-color:#02fb89">exec=onload</span><span class="source">&lt; log/checkforinput.js</span><span class="output">&gt; md !info</span></span><pre><code class="js"></code></pre></codecell><codecell class="dir-warn lang-md local output"><span class="meta"><span class="lang">md</span><span style="color:white;background-color:#037928" class="directive dir-warn">warn</span><span class="updatedAt">Updated <span class="Time relative">2.5 days ago</span></span></span><div class="md-block dir-warn">
-<p>Checking for input...</p>
-</div></codecell></div></cell><section depth="2" class="" startpos="12:1-161" endpos="12:21-181"><cell startpos="12:1-161" endpos="12:21-181"><div class="cell-content"><h2 id="table-of-contents">Table of Contents</h2><ul>
-<li>
-<p><a href="#about">About<span class="linkIcon">§</span></a></p>
-</li>
-<li>
-<p><a href="#to-do">To Do<span class="linkIcon">§</span></a></p>
-</li>
-<li>
-<p><a href="#implementation">Implementation<span class="linkIcon">§</span></a></p>
-<ul>
-<li><a href="#core">Core<span class="linkIcon">§</span></a></li>
-<li><a href="#bookmarklet">Bookmarklet<span class="linkIcon">§</span></a></li>
-<li><a href="#ios-shortcut">iOS shortcut<span class="linkIcon">§</span></a></li>
-</ul>
-</li>
-</ul></div></cell></section></section>
-<section depth="2" class="" startpos="13:1-182" endpos="27:241-1173"><cell startpos="13:1-182" endpos="27:241-1173"><div class="cell-content"><h2 id="about">About</h2><p><em>Inspired by <a href="https://twitter.com/mymind">mymind<span class="linkIcon">↗</span></a> iOS app, <a href="https://twitter.com/BlackboxPuzzles">Blackbox<span class="linkIcon">↗</span></a> ios game and terrible ios clipboards.</em></p><p><strong>aka:</strong> <a href="https://en.m.wikipedia.org/wiki/Peripheral">Peripheral<span class="linkIcon">↗</span></a>, Input, AUX (Auxiliary)</p><ul>
-<li><a href="https://www.electronics-tutorials.ws/logic/logic_9.html">https://www.electronics-tutorials.ws/logic/logic_9.html<span class="linkIcon">↗</span></a></li>
-</ul><blockquote>
-<p>A peripheral or peripheral device is ancillary device used to put information into and get information out of the computer.</p>
-</blockquote><blockquote>
-<p>peripheria, from Ancient Greek περιφέρεια (periphéreia, “the line around the circle, circumference, part of a circle, an arc, the outer surface”)</p>
-</blockquote><p>Universal ios sharesheet <del>app</del>webapp, anything shared to the app is stored, catelogued, linked and editable, sortable, searchable and explorable offline in the app.</p><blockquote>
-<p>I&#x27;m prepared to wait as long as needed for Elon Musks NeuraLink to reach primetime but, We cant afford to sit around till then, we need incremental improvements of our Peripherals, over the Keyboard, Mouse and Touch Screens we have today.</p>
-</blockquote></div></cell></section>
-<section depth="2" class="" startpos="29:1-1175" endpos="33:126-1410"><cell startpos="29:1-1175" endpos="33:126-1410"><div class="cell-content"><h2 id="to-do">To Do</h2><ul class="contains-task-list">
-<li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <!-- -->On load check for url query string <code>input</code>.<!-- -->
-<ul class="contains-task-list">
-<li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <!-- -->If <code>input</code> is available, decode markdown.</li>
-<li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->Check document for section corresponding to current date, if available append <code>input</code> other wise create with <code>input</code>.</li>
-</ul>
-</li>
-</ul></div></cell></section>
-<section depth="2" class="" startpos="35:1-1412" endpos="92:4-2829"><cell startpos="35:1-1412" endpos="35:18-1429"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><section depth="3" class="" startpos="37:1-1431" endpos="92:4-2829"><cell startpos="37:1-1431" endpos="37:9-1439"><div class="cell-content"><h3 id="core">Core</h3></div></cell><cell startpos="40:1-1442" endpos="62:4-1980" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><a name="log/checkforinput.js"></a><span class="meta"><span class="lang">js</span><span class="filename">log/checkforinput.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><pre><code class="js">const checkForInput = () =&gt; {
+<html data-reactroot=""><head><title>Input Buffer</title><meta name="litsrc" value="testing/input_buffer.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"><div class="lit-message"><span class="message">[Transclude] Failed to load log/checkforinput.js as testing/log/checkforinput.js</span><span class="name">3:1-28:4</span></div><div class="lit-message"><span class="message">Plugin Error (viewer): No plugin exported from module. for !plugin type=viewer of=bookmarklet</span><span class="name">117:1-123:4</span></div></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="33:21-678"><cell startpos="1:1-0" endpos="1:15-14"><div class="cell-content"><h1 id="input-buffer">Input Buffer</h1></div></cell><cell startpos="3:1-16" endpos="28:4-653" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-exec" style="color:black;background-color:#02fb89">exec=onload</span><span class="source">&lt; log/checkforinput.js</span><span class="output">&gt; md !info</span></span><pre><code class="js">const checkForInput = () =&gt; {
   const insp = lit.utils.inspect
   const qs = lit.utils.querystring
 
@@ -54,11 +19,67 @@ ${input}`
   }
 }
 return checkForInput()
-</code></pre></codecell></div></cell><cell startpos="64:1-1982" endpos="70:4-2294" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="output">&gt; md #mockinput</span></span><pre><code class="js">const qs = location.search.slice(1)
+</code></pre></codecell><codecell class="dir-info lang-md local output"><span class="meta"><span class="lang">md</span><span style="color:white;background-color:#03164a" class="directive dir-info">info</span><span class="updatedAt">Updated <span class="Time relative">54 seconds ago</span></span></span><div class="md-block dir-info">
+<p><em>No input detected.</em></p>
+</div></codecell></div></cell><section depth="2" class="" startpos="33:1-658" endpos="33:21-678"><cell startpos="33:1-658" endpos="33:21-678"><div class="cell-content"><h2 id="table-of-contents">Table of Contents</h2><ul>
+<li>
+<p><a href="#about">About<span class="linkIcon">§</span></a></p>
+</li>
+<li>
+<p><a href="#to-do">To Do<span class="linkIcon">§</span></a></p>
+</li>
+<li>
+<p><a href="#implementation">Implementation<span class="linkIcon">§</span></a></p>
+<ul>
+<li><a href="#core">Core<span class="linkIcon">§</span></a></li>
+<li><a href="#bookmarklet">Bookmarklet<span class="linkIcon">§</span></a></li>
+<li><a href="#ios-shortcut">iOS shortcut<span class="linkIcon">§</span></a></li>
+</ul>
+</li>
+</ul></div></cell></section></section>
+<section depth="2" class="" startpos="34:1-679" endpos="48:241-1670"><cell startpos="34:1-679" endpos="48:241-1670"><div class="cell-content"><h2 id="about">About</h2><p><em>Inspired by <a href="https://twitter.com/mymind">mymind<span class="linkIcon">↗</span></a> iOS app, <a href="https://twitter.com/BlackboxPuzzles">Blackbox<span class="linkIcon">↗</span></a> ios game and terrible ios clipboards.</em></p><p><strong>aka:</strong> <a href="https://en.m.wikipedia.org/wiki/Peripheral">Peripheral<span class="linkIcon">↗</span></a>, Input, AUX (Auxiliary)</p><ul>
+<li><a href="https://www.electronics-tutorials.ws/logic/logic_9.html">https://www.electronics-tutorials.ws/logic/logic_9.html<span class="linkIcon">↗</span></a></li>
+</ul><blockquote>
+<p>A peripheral or peripheral device is ancillary device used to put information into and get information out of the computer.</p>
+</blockquote><blockquote>
+<p>peripheria, from Ancient Greek περιφέρεια (periphéreia, “the line around the circle, circumference, part of a circle, an arc, the outer surface”)</p>
+</blockquote><p>Universal ios sharesheet <del>app</del>webapp, anything shared to the app is stored, catelogued, linked and editable, sortable, searchable and explorable offline in the app.</p><blockquote>
+<p>I&#x27;m prepared to wait as long as needed for Elon Musks NeuraLink to reach primetime but, We cant afford to sit around till then, we need incremental improvements of our Peripherals, over the Keyboard, Mouse and Touch Screens we have today.</p>
+</blockquote></div></cell></section>
+<section depth="2" class="" startpos="50:1-1672" endpos="54:126-1907"><cell startpos="50:1-1672" endpos="54:126-1907"><div class="cell-content"><h2 id="to-do">To Do</h2><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <!-- -->On load check for url query string <code>input</code>.<!-- -->
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <!-- -->If <code>input</code> is available, decode markdown.</li>
+<li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->Check document for section corresponding to current date, if available append <code>input</code> other wise create with <code>input</code>.</li>
+</ul>
+</li>
+</ul></div></cell></section>
+<section depth="2" class="" startpos="56:1-1909" endpos="113:4-3326"><cell startpos="56:1-1909" endpos="56:18-1926"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><section depth="3" class="" startpos="58:1-1928" endpos="113:4-3326"><cell startpos="58:1-1928" endpos="58:9-1936"><div class="cell-content"><h3 id="core">Core</h3></div></cell><cell startpos="61:1-1939" endpos="83:4-2477" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><a name="log/checkforinput.js"></a><span class="meta"><span class="lang">js</span><span class="filename">log/checkforinput.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><pre><code class="js">const checkForInput = () =&gt; {
+  const insp = lit.utils.inspect
+  const qs = lit.utils.querystring
+
+  const search = location.search
+  const query = search
+              &amp;&amp; qs.parse(search.slice(1))
+
+  if (query?.input) {
+    const input = query.input
+    delete query.input
+    const qsWoInput = qs.stringify(query)
+    window.history.replaceState(null,null,&#x27;?&#x27; + qsWoInput)
+    return `***Captured Input:***
+
+${input}`
+    } else {
+      return &quot;*No input detected.*&quot;
+  }
+}
+return checkForInput()
+</code></pre></codecell></div></cell><cell startpos="85:1-2479" endpos="91:4-2791" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="output">&gt; md #mockinput</span></span><pre><code class="js">const qs = location.search.slice(1)
 return `[Mock Input](?${qs + (qs ? &#x27;&amp;&#x27; : &#x27;&#x27;)}input=${encodeURIComponent(&quot;- [ ] some **Input**&quot;)})`
 </code></pre></codecell><codecell class="tag-mockinput lang-md local output"><span class="meta"><span class="lang">md</span><span style="color:white;background-color:#5d6084" class="tag">mockinput</span><span class="updatedAt">Updated <span class="Time relative">2.5 days ago</span></span></span><div class="md-block tag-mockinput">
 <p><a href="?file=testing/input_buffer.lit&amp;input=-%20%5B%20%5D%20some%20**Input**">Mock Input<span class="linkIcon">§</span></a></p>
-</div></codecell></div></cell><cell startpos="72:1-2296" endpos="92:4-2829" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-exec" style="color:black;background-color:#02fb89">exec=onload</span><span class="output">&gt; md</span></span><pre><code class="js">const today = (new Date()).toISOString().split(&quot;T&quot;)[0]
+</div></codecell></div></cell><cell startpos="93:1-2793" endpos="113:4-3326" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-exec" style="color:black;background-color:#02fb89">exec=onload</span><span class="output">&gt; md</span></span><pre><code class="js">const today = (new Date()).toISOString().split(&quot;T&quot;)[0]
 
 const checkForTodayFile = async () =&gt; { 
   let stat
@@ -77,11 +98,11 @@ return checkForTodayFile()
 </code></pre></codecell><codecell class="lang-md local output"><span class="meta"><span class="lang">md</span><span class="updatedAt">Updated <span class="Time relative">1.8 days ago</span></span></span><div class="md-block">
 <h3 id="today-is-2021-05-09">Today is 2021-05-09</h3>
 </div></codecell></div></cell></section></section>
-<section depth="3" class="" startpos="94:1-2831" endpos="106:4-3233"><cell startpos="94:1-2831" endpos="94:16-2846"><div class="cell-content"><h3 id="bookmarklet">Bookmarklet</h3></div></cell><cell startpos="96:1-2848" endpos="102:4-3169" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=bookmarklet</span></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
+<section depth="3" class="" startpos="115:1-3328" endpos="127:4-3730"><cell startpos="115:1-3328" endpos="115:16-3343"><div class="cell-content"><h3 id="bookmarklet">Bookmarklet</h3></div></cell><cell startpos="117:1-3345" endpos="123:4-3666" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=bookmarklet</span></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
   const rc = React.createElement
   const meta = node.properties.meta
   return rc(&#x27;span&#x27;, null, [&#x27;Bookmarklet: &#x27;, rc(&#x27;a&#x27;, {href: `javascript:(function(){${node.data.value}})()`}, `Run ${meta &amp;&amp; meta.id ? meta.id: &quot;bookmarklet&quot;}` )])
 }
-</code></pre></codecell></div></cell><cell startpos="104:1-3171" endpos="106:4-3233" class="code"><div class="cell-content"><codecell class="dir-below lang-js local"><a name="Input"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span><span class="attribute attr-viewer" style="color:black;background-color:#cf5332">viewer=bookmarklet</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=Input</span></span><pre><code class="js">alert(&quot;Success!&quot;)
+</code></pre></codecell></div></cell><cell startpos="125:1-3668" endpos="127:4-3730" class="code"><div class="cell-content"><codecell class="dir-below lang-js local"><a name="Input"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span><span class="attribute attr-viewer" style="color:black;background-color:#cf5332">viewer=bookmarklet</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=Input</span></span><pre><code class="js">alert(&quot;Success!&quot;)
 </code></pre></codecell></div></cell></section>
-<section depth="3" class="" startpos="108:1-3235" endpos="110:4-3256"><cell startpos="108:1-3235" endpos="110:4-3256"><div class="cell-content"><h3 id="ios-shortcut">iOS shortcut</h3><p>...</p></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
+<section depth="3" class="" startpos="129:1-3732" endpos="131:4-3753"><cell startpos="129:1-3732" endpos="131:4-3753"><div class="cell-content"><h3 id="ios-shortcut">iOS shortcut</h3><p>...</p></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
