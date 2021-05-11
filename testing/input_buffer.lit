@@ -39,7 +39,7 @@ Universal ios sharesheet ~~app~~webapp, anything shared to the app is stored, ca
 
 ```>js log/checkforinput.js !collapse
 const today = (new Date()).toISOString().split("T")[0]
-const filename = `testing/log/${today}.lit`
+const filename = `testing/log/${today}`
 
 const checkForInput = async () => {
   const insp = lit.utils.inspect
@@ -56,10 +56,10 @@ const checkForInput = async () => {
     window.history.replaceState(null,null,'?' + qsWoInput)
 
     let stat = {local:{},remote:{}} 
-    try { stat = await lit.fs.readStat(filename, {encodin: 'utf8'}) } catch(err) {}
+    try { stat = await lit.fs.readStat(filename + ".lit", {encodin: 'utf8'}) } catch(err) {}
     const newContent = (stat.local.value || stat.remote.value || `# ${today}`) + ("\n" + input)
-    await lit.fs.writeFile(filename, newContent)
-    return `***Captured Input (below) to ${filename}***
+    await lit.fs.writeFile(filename + ".lit", newContent)
+    return `***Captured Input (below) to [[${filename}]]***
 
 ${input}`
     } else {
@@ -73,8 +73,8 @@ return checkForInput()
 const qs = location.search.slice(1)
 return `[Mock Input](?${qs + (qs ? '&' : '')}input=${encodeURIComponent("- [ ] some **Input**" + new Date())})`
 ```
-```>md #mockinput attached=true updated=1620734773361
-[Mock Input](?file=testing%2Finput_buffer.lit&input=-%20%5B%20%5D%20some%20**Input**Tue%20May%2011%202021%2013%3A06%3A13%20GMT%2B0100%20(BST))
+```>md #mockinput attached=true updated=1620734780406
+[Mock Input](?file=testing%2Finput_buffer.lit&input=-%20%5B%20%5D%20some%20**Input**Tue%20May%2011%202021%2013%3A06%3A20%20GMT%2B0100%20(BST))
 ```
 
 ```js exec=onload !collapse > md
