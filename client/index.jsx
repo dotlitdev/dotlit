@@ -136,11 +136,23 @@ export const init = async () => {
         
         contents = resp.local.value || resp.remote.value
     } catch(err) {
-        console.error(`Error fething local or remote file`, err)
+        console.error(`Error fetching local and remote file`, err)
+
+        
+        if (query.template) {
+            console.log(`Loading template (${query.template}) for 404 file "${lit.location.src}".`)
+            try {
+                const template = await lt.fs.readStat(`/${query.template}`, {encoding: 'utf8'})
+                contents = template.local.value || template.remote.value
+            } catch (err) {
+                console.error(`Failed to load template: ${query.template}`, err)
+            }
+        }
+        
         console.log(`Showing 404 page`)
         // const resp404 = await lit.fs.readStat( '/' + path.join(litroot, "404.lit") )
         // contents = resp404.value
-        contents = `# ${lit.location.src}\n\nFile not *yet* found, edit this to change that.`
+        if (!contents) contents = `# ${lit.location.src}\n\nFile not *yet* found, edit this to change that.`
     }
     
     let settings
