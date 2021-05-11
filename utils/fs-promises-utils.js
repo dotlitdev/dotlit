@@ -139,7 +139,7 @@ const passThroughUnlink = (fs,litroot, ghOpts) => {
     const ghdf = ghDeleteFile(ghOpts);
     let ghResp
     try {
-      ghResp = await ghdf(filepath);
+      ghResp = await ghdf(filepath.slice(1));
       console.log("GitHub delete resp", ghResp);
     } catch (err) {
       console.error("GitHub delete threw", err.message, err);
