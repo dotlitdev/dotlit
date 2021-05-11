@@ -1,5 +1,5 @@
 const today = (new Date()).toISOString().split("T")[0]
-const filename = `log/${today}.lit`
+const filename = `testing/log/${today}.lit`
 
 const checkForInput = async () => {
   const insp = lit.utils.inspect
