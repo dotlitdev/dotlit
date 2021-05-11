@@ -131,7 +131,7 @@ const passThroughUnlink = (fs,litroot, ghOpts) => {
     console.log('fs.passThroughUnlink')
     let local
     try {
-        local = await uf(...args)
+        local = await uf(filepath, localOnly)
     } catch (err) {
         console.log("fs.passThroughUnlink didn't unlink local file", err)
     }
@@ -139,7 +139,7 @@ const passThroughUnlink = (fs,litroot, ghOpts) => {
     const ghdf = ghDeleteFile(ghOpts);
     let ghResp
     try {
-      ghResp = await ghdf(...args);
+      ghResp = await ghdf(filepath);
       console.log("GitHub delete resp", ghResp);
     } catch (err) {
       console.error("GitHub delete threw", err.message, err);
