@@ -142,8 +142,8 @@ export const init = async () => {
         if (query.template) {
             console.log(`Loading template (${query.template}) for 404 file "${lit.location.src}".`)
             try {
-                const template = await lt.fs.readStat(`/${query.template}`, {encoding: 'utf8'})
-                contents = template.local.value || template.remote.value
+                const template = await lit.fs.readStat(`/${query.template}`, {encoding: 'utf8'})
+                contents = lit.utils.fns.template(template.local.value || template.remote.value, window)
             } catch (err) {
                 console.error(`Failed to load template: ${query.template}`, err)
             }
@@ -152,6 +152,7 @@ export const init = async () => {
         console.log(`Showing 404 page`)
         // const resp404 = await lit.fs.readStat( '/' + path.join(litroot, "404.lit") )
         // contents = resp404.value
+        const filename = lit.utils.path.basename(lit.location.src).slice(0, 0-lit.utils.path.extname(lit.location.src).length)
         if (!contents) contents = `# ${lit.location.src}\n\nFile not *yet* found, edit this to change that.`
     }
     
