@@ -120,10 +120,11 @@ export const Header = (props) => {
 
   const resetFile = (ctx, localOnly) => async ev => {
     console.log("Reset File:", ctx.file.path)
-    if (confirm(`Are you sure you want to delete the local copy of "${ctx.file.path}"`)) {
+    const qualifier = localOnly ? "local" : "local And remote"
+    if (confirm(`Are you sure you want to delete the ${qualifier} copy of "${ctx.file.path}"`)) {
       await ctx.fs.unlink('/' + ctx.file.path, localOnly)
-      console.log("Deleted ", ctx.file.path, "reloading page")
-      location.reload()
+      console.log("Deleted ", ctx.file.path, "reload page")
+      // location.reload()
     }
   }
 
