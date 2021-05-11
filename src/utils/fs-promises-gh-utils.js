@@ -61,7 +61,6 @@ export const ghWriteFile = (opts) => async (...args) => {
 
 export const ghDeleteFile = opts => async (...args) => {
     const file = (opts.prefix || '') + args[0]
-    const content = args[1].toString()
     console.log("ghDeleteFile", file)
     const endpoint = getEndpoint(opts, file)
     const resp1 = await fetch(endpoint)
@@ -85,7 +84,7 @@ export const ghDeleteFile = opts => async (...args) => {
       const json = await resp2.json()
       console.log("ghDeleteFile DELETE response", resp2, json)
     } catch(err) {
-      console.log("ghDeleteFile DELETE failed", err)
+      console.log("ghDeleteFile DELETE failed", err.message, err)
     }
     return resp2 && resp2.status
 }
