@@ -33,7 +33,7 @@ const Cell = props => {
     const [content, setContent] = useState(null)
     // const content = props.children
     const [editing, setEditing] = useState(false)
-    const [executing, setExexuting] = useState(false)
+    const [executing, setExecuting] = useState(false)
     const toggleEditing = () => setEditing(!editing)
     
     const isSelected = ctx => {
@@ -72,17 +72,11 @@ const Cell = props => {
 
     const exec = ctx => async args => {
         console.log('Executing cell', {pos, codeSource, rawSource, originalSource})
-       
+        setExecuting(true)
         const repl = meta.repl ? meta.repl : meta.lang
         let result
         let error
-        if (lit 
-            && lit.file 
-            && lit.file.data 
-            && lit.file.data.plugins 
-            && lit.file.data.plugins.repl 
-            && lit.file.data.plugins.repl[repl]) {
-
+        if (lit?.file?.data?.plugins?.repl?.[repl]) {
             try { 
                  result = {stdout: await lit.file.data.plugins.repl[repl](codeSource, meta, node) } 
              } catch(err) { 
@@ -101,7 +95,7 @@ const Cell = props => {
         }
         }
         console.log('Execution result', result)
-        
+        setExecuting(false)
         if (result && meta.react && result.resp && React.isValidElement(result.resp))
             setContent(result.resp)
         else if (result && meta.selfmutate && typeof result.resp === "string") {
@@ -121,7 +115,7 @@ const Cell = props => {
         if (meta && meta.exec === 'onload') {
             console.log("Onload execution")
             const output = await exec()()
-            console.log("produced output",output)
+            console.log("produced output", output)
             const outputVFile = await vfile({ path: meta.filename || 'untitled.js', contents: output})
             const result = await processor({fs: lit.fs,litroot: lit.location.root}).process(outputVFile)
             console.log("Result", result)
@@ -134,6 +128,7 @@ const Cell = props => {
         editing ? 'editing' : '',
         isCodeCell ? 'code' : '',
         output ? 'output' : '',
+        executing ? 'executing' :'',
     ].join(' ').trim() || undefined
 
     return <SelectionContext.Consumer>

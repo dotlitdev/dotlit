@@ -14,3 +14,9 @@ export const getMeta = (key,def) => {
 export const posstr = pos => {
     return pos ? `${pos.line}:${pos.column}-${pos.offset}` : undefined
 }
+
+export const wait = async (ms) => {
+    return new Promise(resolve => {
+        setTimeout(resolve, ms);
+    });
+}

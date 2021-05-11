@@ -25,7 +25,7 @@ const { DatesToRelativeDelta, MsToRelative } = require('../utils/momento')
 
 const { inspect } = require('util')
 const diff = require('diff')
-const { getMeta } = require('../utils/functions')
+const fns = require('../utils/functions')
 import { getConsoleForNamespace } from '../utils/console'
 
 const console = getConsoleForNamespace('client')
@@ -33,11 +33,11 @@ const console = getConsoleForNamespace('client')
 const hasLocation = typeof location !== "undefined"
 
 const query = hasLocation ? qs.parse(location.search.slice(1)) : {}
-const litsrcMeta = getMeta('src', '')
+const litsrcMeta = fns.getMeta('src', '')
 const litsrc = (litsrcMeta === '404.lit')
                 ? (query.file || location.pathname.replace(/\.html$/, '.lit').slice(1))
                 : litsrcMeta
-const litroot = getMeta('root', '/')
+const litroot = fns.getMeta('root', '/')
 // const litbase = getMeta('base', '/')
 const litbase = (!hasLocation || litroot === '/')
                  ? litroot 
@@ -81,6 +81,7 @@ export const lit = {
         mdast: {
             to_string,
         },
+        fns,
         path,
         querystring: qs,
         vfile,

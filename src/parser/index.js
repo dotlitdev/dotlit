@@ -21,14 +21,6 @@ import { getConsoleForNamespace} from '../utils/console'
 const jsTransform = null
 const console = getConsoleForNamespace('parser')
 
-
-// used for testing add to functions util if useful
-const wait = async (ms) => {
-  return new Promise(resolve => {
-    setTimeout(resolve, ms);
-  });
-}
-
 const baseProcessor = ({litroot, files} = {}) => {
     return unified()
 
