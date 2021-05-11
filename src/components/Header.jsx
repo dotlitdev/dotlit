@@ -118,10 +118,10 @@ export const Header = (props) => {
   console.log('<Header/>', props)
   const { root, toggleViewSource } = props
 
-  const resetFile = ctx => async ev => {
+  const resetFile = (ctx, localOnly) => async ev => {
     console.log("Reset File:", ctx.file.path)
     if (confirm(`Are you sure you want to delete the local copy of "${ctx.file.path}"`)) {
-      await ctx.fs.unlink('/' + ctx.file.path)
+      await ctx.fs.unlink('/' + ctx.file.path, localOnly)
       console.log("Deleted ", ctx.file.path, "reloading page")
       location.reload()
     }
@@ -206,8 +206,8 @@ export const Header = (props) => {
         <span disabled>Save</span>
         <span onClick={toggleViewSource}>View Source</span>
         <span onClick={copyToClipboard(ctx)}>Copy</span>
-        <span onClick={resetFile(ctx)}>Reset</span>
-        <span disabled>Delete</span>
+        <span onClick={resetFile(ctx, true)}>Reset</span>
+        <span onClick={resetFile(ctx)}>Delete</span>
 
         { !fileMenuPlugins ? null : fileMenuPlugins && Object.keys(fileMenuPlugins).map( key => <ErrorBoundary>{fileMenuPlugins[key](ctx, {React, Menu})}</ErrorBoundary>) }
 
