@@ -21,24 +21,24 @@ export const MsToRelative = (ms, p, f) => {
     // console.log({ms, abs, seconds, minutes, hours, days, weeks})
     if (abs < minute) {
         val = Math.round(seconds)
-        unit = 'second'
+        unit = 's'
     } else if (abs < hour) {
         val = Math.round(minutes)
-        unit = 'minute' 
+        unit = 'm' 
     } else if (abs < day) {
         val = (hours % 1 > 0.2) ? hours.toFixed(1) : Math.round(hours)
-        unit = 'hour'
+        unit = 'h'
     } else if (abs < week) {
         val = (days % 1 > 0.2) ? days.toFixed(1) : Math.round(days)
-        unit = 'day'
+        unit = 'd'
     } else {
         val = (weeks % 1 > 0.2) ? weeks.toFixed(1) : Math.round(weeks)
-        unit = 'week'
+        unit = 'w'
     }
 
-    if (val > 1) unit = `${unit}s`
+    // if (val > 1) unit = `${unit}s`
 
-    return `${val} ${unit} ${suffix}`
+    return `${val}${unit} ${suffix}`
 }
 
 export const DatesToRelativeDelta = (a, b) => {
