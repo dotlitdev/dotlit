@@ -129,7 +129,11 @@ const passThroughUnlink = (fs,litroot, ghOpts) => {
   const uf = fs.unlink
   return async (...args) => {
     console.log('fs.passThroughUnlink')
-    await uf(...args);
+    try {
+        await uf(...args)
+    } catch (err) {
+        console.log("fs.passThroughUnlink didn't unlink local file", err)
+    }
     const ghdf = ghDeleteFile(ghOpts);
     let ghResp
     try {
