@@ -55,7 +55,8 @@ const checkForInput = async () => {
     const qsWoInput = qs.stringify(query)
     window.history.replaceState(null,null,'?' + qsWoInput)
 
-    const stat = await lit.fs.readStat(filename, {encodin: 'utf8'})
+    let stat = {local:{},remote:{}} 
+    try { stat = await lit.fs.readStat(filename, {encodin: 'utf8'}) } catch(err) {}
     const newContent = (stat.local.value || stat.remote.value || `# ${today}`) + ("\n" + input)
     await lit.fs.writeFile(filename, newContent)
     return `***Captured Input (below) to ${filename}***
