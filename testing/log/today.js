@@ -8,7 +8,7 @@ const firstDayOfYear = new Date(year, 0, 1);
 const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
 const week = [year, 'w'+ Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7)].join('-')
 
-const prefix = `testing/log/`
+const prefix = `/testing/log/`
 const pathFor = log => `${prefix}${log}.lit`
 
 const checkForTodayFile = async () => { 
