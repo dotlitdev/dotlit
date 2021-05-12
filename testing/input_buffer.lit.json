@@ -1133,6 +1133,46 @@
                                                                     "children": [
                                                                         {
                                                                             "type": "link",
+                                                                            "url": "#bugs-and-todos",
+                                                                            "children": [
+                                                                                {
+                                                                                    "type": "text",
+                                                                                    "value": "Bugs and Todos"
+                                                                                }
+                                                                            ],
+                                                                            "data": {
+                                                                                "isAbsolute": false,
+                                                                                "isFragment": true,
+                                                                                "isRelative": false,
+                                                                                "canonical": "#bugs-and-todos",
+                                                                                "wikilink": false,
+                                                                                "hProperties": {
+                                                                                    "wikilink": false,
+                                                                                    "data": {
+                                                                                        "base": "",
+                                                                                        "frag": "#",
+                                                                                        "isAbsolute": false,
+                                                                                        "isFragment": true,
+                                                                                        "isRelative": false,
+                                                                                        "canonical": "#bugs-and-todos",
+                                                                                        "wikilink": false
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "listItem",
+                                                            "spread": false,
+                                                            "children": [
+                                                                {
+                                                                    "type": "paragraph",
+                                                                    "children": [
+                                                                        {
+                                                                            "type": "link",
                                                                             "url": "#core",
                                                                             "children": [
                                                                                 {
@@ -2335,9 +2375,9 @@
                                     "offset": 2162
                                 },
                                 "end": {
-                                    "line": 150,
-                                    "column": 4,
-                                    "offset": 5453
+                                    "line": 54,
+                                    "column": 16,
+                                    "offset": 2259
                                 }
                             }
                         }
@@ -2389,7 +2429,7 @@
                 {
                     "type": "section",
                     "data": {
-                        "name": "core",
+                        "name": "bugs-and-todos",
                         "hName": "section",
                         "hProperties": {
                             "depth": 3
@@ -2406,9 +2446,9 @@
                                     "offset": 2181
                                 },
                                 "end": {
-                                    "line": 51,
-                                    "column": 9,
-                                    "offset": 2189
+                                    "line": 54,
+                                    "column": 16,
+                                    "offset": 2259
                                 }
                             },
                             "data": {
@@ -2424,9 +2464,9 @@
                                             "offset": 2181
                                         },
                                         "end": {
-                                            "line": 150,
-                                            "column": 4,
-                                            "offset": 5453
+                                            "line": 54,
+                                            "column": 16,
+                                            "offset": 2259
                                         }
                                     }
                                 }
@@ -2438,7 +2478,7 @@
                                     "children": [
                                         {
                                             "type": "text",
-                                            "value": "Core",
+                                            "value": "Bugs and Todos",
                                             "position": {
                                                 "start": {
                                                     "line": 51,
@@ -2447,8 +2487,8 @@
                                                 },
                                                 "end": {
                                                     "line": 51,
-                                                    "column": 9,
-                                                    "offset": 2189
+                                                    "column": 19,
+                                                    "offset": 2199
                                                 }
                                             }
                                         }
@@ -2460,639 +2500,156 @@
                                             "offset": 2181
                                         },
                                         "end": {
-                                            "line": 51,
-                                            "column": 9,
-                                            "offset": 2189
+                                            "line": 54,
+                                            "column": 16,
+                                            "offset": 2259
                                         }
                                     },
                                     "data": {
                                         "hProperties": {
-                                            "id": "core"
+                                            "id": "bugs-and-todos"
                                         },
-                                        "id": "core"
+                                        "id": "bugs-and-todos"
                                     },
                                     "processed": true
-                                }
-                            ]
-                        },
-                        {
-                            "type": "cell",
-                            "position": {
-                                "start": {
-                                    "line": 54,
-                                    "column": 1,
-                                    "offset": 2192
-                                },
-                                "end": {
-                                    "line": 96,
-                                    "column": 4,
-                                    "offset": 3599
-                                }
-                            },
-                            "data": {
-                                "hName": "cell",
-                                "hProperties": {
-                                    "class": "cell"
-                                }
-                            },
-                            "children": [
-                                {
-                                    "type": "code",
-                                    "lang": ">js",
-                                    "meta": "log/checkforinput.js !collapse",
-                                    "value": "const date = new Date()\nconst isoDate = date.toISOString().split(\"T\")[0]\nconst today = isoDate\nconst year = date.getFullYear()\nconst month = isoDate.split('-')[1]\n\nconst firstDayOfYear = new Date(year, 0, 1);\nconst pastDaysOfYear = (date - firstDayOfYear) / 86400000;\nconst week = Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);\n\nconst filename = `testing/log/${today}`\n\nconst checkForInput = async () => {\n  const insp = lit.utils.inspect\n  const qs = lit.utils.querystring\n\n  const search = location.search\n  const query = search\n              && qs.parse(search.slice(1))\n\n  if (query?.input) {\n    const input = query.input\n    delete query.input\n    const qsWoInput = qs.stringify(query)\n    window.history.replaceState(null,null,'?' + qsWoInput)\n\n    let stat = {local:{},remote:{}} \n    try { stat = await lit.fs.readStat(`/${filename}.lit`, {encoding: 'utf8'}) } catch(err) {}\n    const newContent = ((stat.local.stat && stat.local.value) || stat.remote.value || `# ${today}\n\nSee [week ${week}](/testing/log/${year}-w${week}), [month ${month}](/testing/log/${year}-${month}) or [year ${year}](/testing/log/${year})\n`) + (\"\\n\" + input)\n    await lit.fs.writeFile(`/${filename}.lit`, newContent)\n    return `***Captured Input (below) to [[${filename}]]***\n\n${input}`\n    } else {\n      return \"*No input detected.*\"\n  }\n}\nreturn checkForInput()",
-                                    "position": {
-                                        "start": {
-                                            "line": 54,
-                                            "column": 1,
-                                            "offset": 2192
-                                        },
-                                        "end": {
-                                            "line": 96,
-                                            "column": 4,
-                                            "offset": 3599
-                                        }
-                                    },
-                                    "data": {
-                                        "meta": {
-                                            "attrs": {},
-                                            "lang": "js",
-                                            "filename": "log/checkforinput.js",
-                                            "directives": [
-                                                "collapse"
-                                            ],
-                                            "isOutput": true,
-                                            "hasOutput": false,
-                                            "hasSource": false,
-                                            "raw": ">js log/checkforinput.js !collapse"
-                                        },
-                                        "hProperties": {
-                                            "className": "",
-                                            "meta": {
-                                                "attrs": {},
-                                                "lang": "js",
-                                                "filename": "log/checkforinput.js",
-                                                "directives": [
-                                                    "collapse"
-                                                ],
-                                                "isOutput": true,
-                                                "hasOutput": false,
-                                                "hasSource": false,
-                                                "raw": ">js log/checkforinput.js !collapse"
-                                            }
-                                        }
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "type": "cell",
-                            "position": {
-                                "start": {
-                                    "line": 100,
-                                    "column": 1,
-                                    "offset": 3603
-                                },
-                                "end": {
-                                    "line": 123,
-                                    "column": 4,
-                                    "offset": 4469
-                                }
-                            },
-                            "data": {
-                                "hName": "cell",
-                                "hProperties": {
-                                    "class": "cell"
-                                }
-                            },
-                            "children": [
-                                {
-                                    "type": "code",
-                                    "lang": ">js",
-                                    "meta": "log/today.js !collapse",
-                                    "value": "const date = new Date()\nconst isoDate = date.toISOString().split(\"T\")[0]\nconst today = isoDate\nconst year = date.getFullYear()\nconst month = isoDate.split('-').slice(0,-1).join('-')\n\nconst firstDayOfYear = new Date(year, 0, 1);\nconst pastDaysOfYear = (date - firstDayOfYear) / 86400000;\nconst week = [year, 'w'+ Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7)].join('-')\n\nconst prefix = `/testing/log/`\nconst pathFor = log => `${prefix}${log}.lit`\n\nconst checkForTodayFile = async () => { \n  let stat\n  try {\n  stat = await lit.fs.readStat(pathFor(today))\n  } catch(err) {}\n  return `*Today* is [**${today}**](${pathFor(today)}), a log exists: *${!!stat && !!(stat.local.stat || stat.remote.stat)}*; See [week](${pathFor(week)}), [month](${pathFor(month)}) or [year](${pathFor('year')}).`\n}\n\nreturn checkForTodayFile()",
-                                    "position": {
-                                        "start": {
-                                            "line": 100,
-                                            "column": 1,
-                                            "offset": 3603
-                                        },
-                                        "end": {
-                                            "line": 123,
-                                            "column": 4,
-                                            "offset": 4469
-                                        }
-                                    },
-                                    "data": {
-                                        "meta": {
-                                            "attrs": {},
-                                            "lang": "js",
-                                            "filename": "log/today.js",
-                                            "directives": [
-                                                "collapse"
-                                            ],
-                                            "isOutput": true,
-                                            "hasOutput": false,
-                                            "hasSource": false,
-                                            "raw": ">js log/today.js !collapse"
-                                        },
-                                        "hProperties": {
-                                            "className": "",
-                                            "meta": {
-                                                "attrs": {},
-                                                "lang": "js",
-                                                "filename": "log/today.js",
-                                                "directives": [
-                                                    "collapse"
-                                                ],
-                                                "isOutput": true,
-                                                "hasOutput": false,
-                                                "hasSource": false,
-                                                "raw": ">js log/today.js !collapse"
-                                            }
-                                        }
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "type": "cell",
-                            "position": {
-                                "start": {
-                                    "line": 125,
-                                    "column": 1,
-                                    "offset": 4471
-                                },
-                                "end": {
-                                    "line": 131,
-                                    "column": 4,
-                                    "offset": 4562
-                                }
-                            },
-                            "data": {
-                                "hName": "cell",
-                                "hProperties": {
-                                    "class": "cell"
-                                }
-                            },
-                            "children": [
-                                {
-                                    "type": "code",
-                                    "lang": ">html",
-                                    "meta": "!below !collapse #styling",
-                                    "value": "<style>\n.dir-bigger {\n  font-size: 1.2em;\n}\n</style>",
-                                    "position": {
-                                        "start": {
-                                            "line": 125,
-                                            "column": 1,
-                                            "offset": 4471
-                                        },
-                                        "end": {
-                                            "line": 131,
-                                            "column": 4,
-                                            "offset": 4562
-                                        }
-                                    },
-                                    "data": {
-                                        "meta": {
-                                            "attrs": {},
-                                            "lang": "html",
-                                            "directives": [
-                                                "below",
-                                                "collapse"
-                                            ],
-                                            "tags": [
-                                                "styling"
-                                            ],
-                                            "isOutput": true,
-                                            "hasOutput": false,
-                                            "hasSource": false,
-                                            "raw": ">html !below !collapse #styling"
-                                        },
-                                        "hProperties": {
-                                            "className": "tag-styling",
-                                            "meta": {
-                                                "attrs": {},
-                                                "lang": "html",
-                                                "directives": [
-                                                    "below",
-                                                    "collapse"
-                                                ],
-                                                "tags": [
-                                                    "styling"
-                                                ],
-                                                "isOutput": true,
-                                                "hasOutput": false,
-                                                "hasSource": false,
-                                                "raw": ">html !below !collapse #styling"
-                                            }
-                                        }
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "type": "cell",
-                            "position": {
-                                "start": {
-                                    "line": 132,
-                                    "column": 1,
-                                    "offset": 4563
-                                },
-                                "end": {
-                                    "line": 138,
-                                    "column": 4,
-                                    "offset": 5002
-                                }
-                            },
-                            "data": {
-                                "hName": "cell",
-                                "hProperties": {
-                                    "class": "cell"
-                                }
-                            },
-                            "children": [
-                                {
-                                    "type": "code",
-                                    "lang": "js",
-                                    "meta": "!collapse #mockinput > md",
-                                    "value": "const qs = location.search.slice(1)\nreturn `Here's a [Mock Input](?${qs + (qs ? '&' : '')}input=${encodeURIComponent(\"- [ ] some **Input** \" + new Date())}) to test input capture.`",
-                                    "position": {
-                                        "start": {
-                                            "line": 132,
-                                            "column": 1,
-                                            "offset": 4563
-                                        },
-                                        "end": {
-                                            "line": 138,
-                                            "column": 4,
-                                            "offset": 5002
-                                        }
-                                    },
-                                    "data": {
-                                        "meta": {
-                                            "attrs": {},
-                                            "lang": "js",
-                                            "directives": [
-                                                "collapse"
-                                            ],
-                                            "tags": [
-                                                "mockinput"
-                                            ],
-                                            "isOutput": false,
-                                            "output": "md",
-                                            "hasOutput": true,
-                                            "hasSource": false,
-                                            "raw": "js !collapse #mockinput > md"
-                                        },
-                                        "hProperties": {
-                                            "className": "tag-mockinput",
-                                            "meta": {
-                                                "attrs": {},
-                                                "lang": "js",
-                                                "directives": [
-                                                    "collapse"
-                                                ],
-                                                "tags": [
-                                                    "mockinput"
-                                                ],
-                                                "isOutput": false,
-                                                "output": "md",
-                                                "hasOutput": true,
-                                                "hasSource": false,
-                                                "raw": "js !collapse #mockinput > md"
-                                            }
-                                        }
-                                    }
                                 },
                                 {
-                                    "type": "code",
-                                    "lang": ">md",
-                                    "meta": "attached=true updated=1620859751266",
-                                    "value": "Here's a [Mock Input](?file=testing/input_buffer.lit&input=-%20%5B%20%5D%20some%20**Input**%20Wed%20May%2012%202021%2023%3A49%3A11%20GMT%2B0100%20(BST)) to test input capture.",
-                                    "position": {
-                                        "start": {
-                                            "line": 136,
-                                            "column": 1,
-                                            "offset": 4780
-                                        },
-                                        "end": {
-                                            "line": 138,
-                                            "column": 4,
-                                            "offset": 5002
-                                        }
-                                    },
-                                    "data": {
-                                        "meta": {
-                                            "attrs": {
-                                                "attached": "true",
-                                                "updated": "1620859751266"
-                                            },
-                                            "lang": "md",
-                                            "attached": "true",
-                                            "updated": "1620859751266",
-                                            "isOutput": true,
-                                            "hasOutput": false,
-                                            "hasSource": false,
-                                            "raw": ">md attached=true updated=1620859751266"
-                                        },
-                                        "hProperties": {
-                                            "className": "",
-                                            "meta": {
-                                                "attrs": {
-                                                    "attached": "true",
-                                                    "updated": "1620859751266"
-                                                },
-                                                "lang": "md",
-                                                "attached": "true",
-                                                "updated": "1620859751266",
-                                                "isOutput": true,
-                                                "hasOutput": false,
-                                                "hasSource": false,
-                                                "raw": ">md attached=true updated=1620859751266"
-                                            }
-                                        }
-                                    },
+                                    "type": "list",
+                                    "ordered": false,
+                                    "start": null,
+                                    "spread": false,
                                     "children": [
                                         {
-                                            "type": "paragraph",
+                                            "type": "listItem",
+                                            "spread": false,
+                                            "checked": false,
                                             "children": [
                                                 {
-                                                    "type": "text",
-                                                    "value": "Here's a ",
-                                                    "position": {
-                                                        "start": {
-                                                            "line": 1,
-                                                            "column": 1,
-                                                            "offset": 0
-                                                        },
-                                                        "end": {
-                                                            "line": 1,
-                                                            "column": 10,
-                                                            "offset": 9
-                                                        }
-                                                    }
-                                                },
-                                                {
-                                                    "type": "link",
-                                                    "url": "?file=testing/input_buffer.lit&input=-%20%5B%20%5D%20some%20**Input**%20Wed%20May%2012%202021%2023%3A49%3A11%20GMT%2B0100%20(BST)",
+                                                    "type": "paragraph",
                                                     "children": [
                                                         {
-                                                            "type": "text",
-                                                            "value": "Mock Input",
+                                                            "type": "inlineCode",
+                                                            "value": "exec=onload",
                                                             "position": {
                                                                 "start": {
-                                                                    "line": 1,
-                                                                    "column": 11,
-                                                                    "offset": 10
+                                                                    "line": 53,
+                                                                    "column": 7,
+                                                                    "offset": 2207
                                                                 },
                                                                 "end": {
-                                                                    "line": 1,
-                                                                    "column": 21,
-                                                                    "offset": 20
+                                                                    "line": 53,
+                                                                    "column": 20,
+                                                                    "offset": 2220
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "text",
+                                                            "value": " output is still buggy.",
+                                                            "position": {
+                                                                "start": {
+                                                                    "line": 53,
+                                                                    "column": 20,
+                                                                    "offset": 2220
+                                                                },
+                                                                "end": {
+                                                                    "line": 53,
+                                                                    "column": 43,
+                                                                    "offset": 2243
                                                                 }
                                                             }
                                                         }
                                                     ],
                                                     "position": {
                                                         "start": {
-                                                            "line": 1,
-                                                            "column": 10,
-                                                            "offset": 9
+                                                            "line": 53,
+                                                            "column": 3,
+                                                            "offset": 2203
                                                         },
                                                         "end": {
-                                                            "line": 1,
-                                                            "column": 153,
-                                                            "offset": 152
-                                                        }
-                                                    },
-                                                    "data": {
-                                                        "isAbsolute": false,
-                                                        "isFragment": true,
-                                                        "isRelative": false,
-                                                        "canonical": "?file=testing/input_buffer.lit&input=-%20%5B%20%5D%20some%20**Input**%20Wed%20May%2012%202021%2023%3A49%3A11%20GMT%2B0100%20(BST)",
-                                                        "wikilink": false,
-                                                        "hProperties": {
-                                                            "wikilink": false,
-                                                            "data": {
-                                                                "base": "",
-                                                                "frag": "?",
-                                                                "isAbsolute": false,
-                                                                "isFragment": true,
-                                                                "isRelative": false,
-                                                                "canonical": "?file=testing/input_buffer.lit&input=-%20%5B%20%5D%20some%20**Input**%20Wed%20May%2012%202021%2023%3A49%3A11%20GMT%2B0100%20(BST)",
-                                                                "wikilink": false
-                                                            }
-                                                        }
-                                                    }
-                                                },
-                                                {
-                                                    "type": "text",
-                                                    "value": " to test input capture.",
-                                                    "position": {
-                                                        "start": {
-                                                            "line": 1,
-                                                            "column": 153,
-                                                            "offset": 152
-                                                        },
-                                                        "end": {
-                                                            "line": 1,
-                                                            "column": 176,
-                                                            "offset": 175
+                                                            "line": 53,
+                                                            "column": 43,
+                                                            "offset": 2243
                                                         }
                                                     }
                                                 }
                                             ],
                                             "position": {
                                                 "start": {
-                                                    "line": 1,
+                                                    "line": 53,
                                                     "column": 1,
-                                                    "offset": 0
+                                                    "offset": 2201
                                                 },
                                                 "end": {
-                                                    "line": 1,
-                                                    "column": 176,
-                                                    "offset": 175
+                                                    "line": 53,
+                                                    "column": 43,
+                                                    "offset": 2243
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "type": "listItem",
+                                            "spread": false,
+                                            "checked": false,
+                                            "children": [
+                                                {
+                                                    "type": "paragraph",
+                                                    "children": [
+                                                        {
+                                                            "type": "text",
+                                                            "value": "Search 🔍",
+                                                            "position": {
+                                                                "start": {
+                                                                    "line": 54,
+                                                                    "column": 7,
+                                                                    "offset": 2250
+                                                                },
+                                                                "end": {
+                                                                    "line": 54,
+                                                                    "column": 16,
+                                                                    "offset": 2259
+                                                                }
+                                                            }
+                                                        }
+                                                    ],
+                                                    "position": {
+                                                        "start": {
+                                                            "line": 54,
+                                                            "column": 7,
+                                                            "offset": 2250
+                                                        },
+                                                        "end": {
+                                                            "line": 54,
+                                                            "column": 16,
+                                                            "offset": 2259
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "position": {
+                                                "start": {
+                                                    "line": 54,
+                                                    "column": 1,
+                                                    "offset": 2244
+                                                },
+                                                "end": {
+                                                    "line": 54,
+                                                    "column": 16,
+                                                    "offset": 2259
                                                 }
                                             }
                                         }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "type": "cell",
-                            "position": {
-                                "start": {
-                                    "line": 140,
-                                    "column": 1,
-                                    "offset": 5004
-                                },
-                                "end": {
-                                    "line": 142,
-                                    "column": 4,
-                                    "offset": 5049
-                                }
-                            },
-                            "data": {
-                                "hName": "cell",
-                                "hProperties": {
-                                    "class": "cell"
-                                }
-                            },
-                            "children": [
-                                {
-                                    "type": "code",
-                                    "lang": "lit",
-                                    "meta": "!collapse #template < log/day.lit",
-                                    "value": "",
+                                    ],
                                     "position": {
                                         "start": {
-                                            "line": 140,
+                                            "line": 53,
                                             "column": 1,
-                                            "offset": 5004
+                                            "offset": 2201
                                         },
                                         "end": {
-                                            "line": 142,
-                                            "column": 4,
-                                            "offset": 5049
-                                        }
-                                    },
-                                    "data": {
-                                        "meta": {
-                                            "attrs": {},
-                                            "lang": "lit",
-                                            "directives": [
-                                                "collapse"
-                                            ],
-                                            "tags": [
-                                                "template"
-                                            ],
-                                            "isOutput": false,
-                                            "hasOutput": false,
-                                            "hasSource": true,
-                                            "source": {
-                                                "attrs": {},
-                                                "lang": "txt",
-                                                "filename": "log/day.lit",
-                                                "isOutput": false,
-                                                "hasOutput": false,
-                                                "hasSource": false,
-                                                "raw": "txt log/day.lit"
-                                            },
-                                            "raw": "lit !collapse #template < log/day.lit",
-                                            "fromSource": "log/day.lit"
-                                        },
-                                        "hProperties": {
-                                            "className": "tag-template",
-                                            "meta": {
-                                                "attrs": {},
-                                                "lang": "lit",
-                                                "directives": [
-                                                    "collapse"
-                                                ],
-                                                "tags": [
-                                                    "template"
-                                                ],
-                                                "isOutput": false,
-                                                "hasOutput": false,
-                                                "hasSource": true,
-                                                "source": {
-                                                    "attrs": {},
-                                                    "lang": "txt",
-                                                    "filename": "log/day.lit",
-                                                    "isOutput": false,
-                                                    "hasOutput": false,
-                                                    "hasSource": false,
-                                                    "raw": "txt log/day.lit"
-                                                },
-                                                "raw": "lit !collapse #template < log/day.lit",
-                                                "fromSource": "log/day.lit"
-                                            },
-                                            "data": {
-                                                "originalSource": ""
-                                            }
-                                        },
-                                        "originalSource": ""
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "type": "cell",
-                            "position": {
-                                "start": {
-                                    "line": 143,
-                                    "column": 1,
-                                    "offset": 5050
-                                },
-                                "end": {
-                                    "line": 150,
-                                    "column": 4,
-                                    "offset": 5453
-                                }
-                            },
-                            "data": {
-                                "hName": "cell",
-                                "hProperties": {
-                                    "class": "cell"
-                                }
-                            },
-                            "children": [
-                                {
-                                    "type": "code",
-                                    "lang": "js",
-                                    "meta": "!plugin !collapse type=viewer of=bookmarklet",
-                                    "value": "export const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const meta = node.properties.meta\n  const href = `javascript:(function(){${node.data.value}})()`\n  return rc('span', null, ['Bookmarklet: ', rc('a', {href: href}, `Run ${meta && meta.id ? meta.id: \"bookmarklet\"}` ), \" href: \", rc('pre', null, rc('code', null, href))])\n}",
-                                    "position": {
-                                        "start": {
-                                            "line": 143,
-                                            "column": 1,
-                                            "offset": 5050
-                                        },
-                                        "end": {
-                                            "line": 150,
-                                            "column": 4,
-                                            "offset": 5453
-                                        }
-                                    },
-                                    "data": {
-                                        "meta": {
-                                            "attrs": {
-                                                "type": "viewer",
-                                                "of": "bookmarklet"
-                                            },
-                                            "lang": "js",
-                                            "directives": [
-                                                "plugin",
-                                                "collapse"
-                                            ],
-                                            "type": "viewer",
-                                            "of": "bookmarklet",
-                                            "isOutput": false,
-                                            "hasOutput": false,
-                                            "hasSource": false,
-                                            "raw": "js !plugin !collapse type=viewer of=bookmarklet"
-                                        },
-                                        "hProperties": {
-                                            "className": "",
-                                            "meta": {
-                                                "attrs": {
-                                                    "type": "viewer",
-                                                    "of": "bookmarklet"
-                                                },
-                                                "lang": "js",
-                                                "directives": [
-                                                    "plugin",
-                                                    "collapse"
-                                                ],
-                                                "type": "viewer",
-                                                "of": "bookmarklet",
-                                                "isOutput": false,
-                                                "hasOutput": false,
-                                                "hasSource": false,
-                                                "raw": "js !plugin !collapse type=viewer of=bookmarklet"
-                                            }
+                                            "line": 54,
+                                            "column": 16,
+                                            "offset": 2259
                                         }
                                     }
                                 }
@@ -3106,9 +2663,9 @@
                             "offset": 2181
                         },
                         "end": {
-                            "line": 150,
-                            "column": 4,
-                            "offset": 5453
+                            "line": 54,
+                            "column": 16,
+                            "offset": 2259
                         }
                     }
                 }
@@ -3120,9 +2677,735 @@
                     "offset": 2162
                 },
                 "end": {
-                    "line": 150,
+                    "line": 54,
+                    "column": 16,
+                    "offset": 2259
+                }
+            }
+        },
+        {
+            "type": "section",
+            "data": {
+                "name": "core",
+                "hName": "section",
+                "hProperties": {
+                    "depth": 3
+                }
+            },
+            "depth": 3,
+            "children": [
+                {
+                    "type": "cell",
+                    "position": {
+                        "start": {
+                            "line": 56,
+                            "column": 1,
+                            "offset": 2261
+                        },
+                        "end": {
+                            "line": 56,
+                            "column": 9,
+                            "offset": 2269
+                        }
+                    },
+                    "data": {
+                        "hName": "cell",
+                        "hProperties": {
+                            "class": "cell"
+                        },
+                        "section": {
+                            "position": {
+                                "start": {
+                                    "line": 56,
+                                    "column": 1,
+                                    "offset": 2261
+                                },
+                                "end": {
+                                    "line": 155,
+                                    "column": 4,
+                                    "offset": 5533
+                                }
+                            }
+                        }
+                    },
+                    "children": [
+                        {
+                            "type": "heading",
+                            "depth": 3,
+                            "children": [
+                                {
+                                    "type": "text",
+                                    "value": "Core",
+                                    "position": {
+                                        "start": {
+                                            "line": 56,
+                                            "column": 5,
+                                            "offset": 2265
+                                        },
+                                        "end": {
+                                            "line": 56,
+                                            "column": 9,
+                                            "offset": 2269
+                                        }
+                                    }
+                                }
+                            ],
+                            "position": {
+                                "start": {
+                                    "line": 56,
+                                    "column": 1,
+                                    "offset": 2261
+                                },
+                                "end": {
+                                    "line": 56,
+                                    "column": 9,
+                                    "offset": 2269
+                                }
+                            },
+                            "data": {
+                                "hProperties": {
+                                    "id": "core"
+                                },
+                                "id": "core"
+                            },
+                            "processed": true
+                        }
+                    ]
+                },
+                {
+                    "type": "cell",
+                    "position": {
+                        "start": {
+                            "line": 59,
+                            "column": 1,
+                            "offset": 2272
+                        },
+                        "end": {
+                            "line": 101,
+                            "column": 4,
+                            "offset": 3679
+                        }
+                    },
+                    "data": {
+                        "hName": "cell",
+                        "hProperties": {
+                            "class": "cell"
+                        }
+                    },
+                    "children": [
+                        {
+                            "type": "code",
+                            "lang": ">js",
+                            "meta": "log/checkforinput.js !collapse",
+                            "value": "const date = new Date()\nconst isoDate = date.toISOString().split(\"T\")[0]\nconst today = isoDate\nconst year = date.getFullYear()\nconst month = isoDate.split('-')[1]\n\nconst firstDayOfYear = new Date(year, 0, 1);\nconst pastDaysOfYear = (date - firstDayOfYear) / 86400000;\nconst week = Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);\n\nconst filename = `testing/log/${today}`\n\nconst checkForInput = async () => {\n  const insp = lit.utils.inspect\n  const qs = lit.utils.querystring\n\n  const search = location.search\n  const query = search\n              && qs.parse(search.slice(1))\n\n  if (query?.input) {\n    const input = query.input\n    delete query.input\n    const qsWoInput = qs.stringify(query)\n    window.history.replaceState(null,null,'?' + qsWoInput)\n\n    let stat = {local:{},remote:{}} \n    try { stat = await lit.fs.readStat(`/${filename}.lit`, {encoding: 'utf8'}) } catch(err) {}\n    const newContent = ((stat.local.stat && stat.local.value) || stat.remote.value || `# ${today}\n\nSee [week ${week}](/testing/log/${year}-w${week}), [month ${month}](/testing/log/${year}-${month}) or [year ${year}](/testing/log/${year})\n`) + (\"\\n\" + input)\n    await lit.fs.writeFile(`/${filename}.lit`, newContent)\n    return `***Captured Input (below) to [[${filename}]]***\n\n${input}`\n    } else {\n      return \"*No input detected.*\"\n  }\n}\nreturn checkForInput()",
+                            "position": {
+                                "start": {
+                                    "line": 59,
+                                    "column": 1,
+                                    "offset": 2272
+                                },
+                                "end": {
+                                    "line": 101,
+                                    "column": 4,
+                                    "offset": 3679
+                                }
+                            },
+                            "data": {
+                                "meta": {
+                                    "attrs": {},
+                                    "lang": "js",
+                                    "filename": "log/checkforinput.js",
+                                    "directives": [
+                                        "collapse"
+                                    ],
+                                    "isOutput": true,
+                                    "hasOutput": false,
+                                    "hasSource": false,
+                                    "raw": ">js log/checkforinput.js !collapse"
+                                },
+                                "hProperties": {
+                                    "className": "",
+                                    "meta": {
+                                        "attrs": {},
+                                        "lang": "js",
+                                        "filename": "log/checkforinput.js",
+                                        "directives": [
+                                            "collapse"
+                                        ],
+                                        "isOutput": true,
+                                        "hasOutput": false,
+                                        "hasSource": false,
+                                        "raw": ">js log/checkforinput.js !collapse"
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "cell",
+                    "position": {
+                        "start": {
+                            "line": 105,
+                            "column": 1,
+                            "offset": 3683
+                        },
+                        "end": {
+                            "line": 128,
+                            "column": 4,
+                            "offset": 4549
+                        }
+                    },
+                    "data": {
+                        "hName": "cell",
+                        "hProperties": {
+                            "class": "cell"
+                        }
+                    },
+                    "children": [
+                        {
+                            "type": "code",
+                            "lang": ">js",
+                            "meta": "log/today.js !collapse",
+                            "value": "const date = new Date()\nconst isoDate = date.toISOString().split(\"T\")[0]\nconst today = isoDate\nconst year = date.getFullYear()\nconst month = isoDate.split('-').slice(0,-1).join('-')\n\nconst firstDayOfYear = new Date(year, 0, 1);\nconst pastDaysOfYear = (date - firstDayOfYear) / 86400000;\nconst week = [year, 'w'+ Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7)].join('-')\n\nconst prefix = `/testing/log/`\nconst pathFor = log => `${prefix}${log}.lit`\n\nconst checkForTodayFile = async () => { \n  let stat\n  try {\n  stat = await lit.fs.readStat(pathFor(today))\n  } catch(err) {}\n  return `*Today* is [**${today}**](${pathFor(today)}), a log exists: *${!!stat && !!(stat.local.stat || stat.remote.stat)}*; See [week](${pathFor(week)}), [month](${pathFor(month)}) or [year](${pathFor('year')}).`\n}\n\nreturn checkForTodayFile()",
+                            "position": {
+                                "start": {
+                                    "line": 105,
+                                    "column": 1,
+                                    "offset": 3683
+                                },
+                                "end": {
+                                    "line": 128,
+                                    "column": 4,
+                                    "offset": 4549
+                                }
+                            },
+                            "data": {
+                                "meta": {
+                                    "attrs": {},
+                                    "lang": "js",
+                                    "filename": "log/today.js",
+                                    "directives": [
+                                        "collapse"
+                                    ],
+                                    "isOutput": true,
+                                    "hasOutput": false,
+                                    "hasSource": false,
+                                    "raw": ">js log/today.js !collapse"
+                                },
+                                "hProperties": {
+                                    "className": "",
+                                    "meta": {
+                                        "attrs": {},
+                                        "lang": "js",
+                                        "filename": "log/today.js",
+                                        "directives": [
+                                            "collapse"
+                                        ],
+                                        "isOutput": true,
+                                        "hasOutput": false,
+                                        "hasSource": false,
+                                        "raw": ">js log/today.js !collapse"
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "cell",
+                    "position": {
+                        "start": {
+                            "line": 130,
+                            "column": 1,
+                            "offset": 4551
+                        },
+                        "end": {
+                            "line": 136,
+                            "column": 4,
+                            "offset": 4642
+                        }
+                    },
+                    "data": {
+                        "hName": "cell",
+                        "hProperties": {
+                            "class": "cell"
+                        }
+                    },
+                    "children": [
+                        {
+                            "type": "code",
+                            "lang": ">html",
+                            "meta": "!below !collapse #styling",
+                            "value": "<style>\n.dir-bigger {\n  font-size: 1.2em;\n}\n</style>",
+                            "position": {
+                                "start": {
+                                    "line": 130,
+                                    "column": 1,
+                                    "offset": 4551
+                                },
+                                "end": {
+                                    "line": 136,
+                                    "column": 4,
+                                    "offset": 4642
+                                }
+                            },
+                            "data": {
+                                "meta": {
+                                    "attrs": {},
+                                    "lang": "html",
+                                    "directives": [
+                                        "below",
+                                        "collapse"
+                                    ],
+                                    "tags": [
+                                        "styling"
+                                    ],
+                                    "isOutput": true,
+                                    "hasOutput": false,
+                                    "hasSource": false,
+                                    "raw": ">html !below !collapse #styling"
+                                },
+                                "hProperties": {
+                                    "className": "tag-styling",
+                                    "meta": {
+                                        "attrs": {},
+                                        "lang": "html",
+                                        "directives": [
+                                            "below",
+                                            "collapse"
+                                        ],
+                                        "tags": [
+                                            "styling"
+                                        ],
+                                        "isOutput": true,
+                                        "hasOutput": false,
+                                        "hasSource": false,
+                                        "raw": ">html !below !collapse #styling"
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "cell",
+                    "position": {
+                        "start": {
+                            "line": 137,
+                            "column": 1,
+                            "offset": 4643
+                        },
+                        "end": {
+                            "line": 143,
+                            "column": 4,
+                            "offset": 5082
+                        }
+                    },
+                    "data": {
+                        "hName": "cell",
+                        "hProperties": {
+                            "class": "cell"
+                        }
+                    },
+                    "children": [
+                        {
+                            "type": "code",
+                            "lang": "js",
+                            "meta": "!collapse #mockinput > md",
+                            "value": "const qs = location.search.slice(1)\nreturn `Here's a [Mock Input](?${qs + (qs ? '&' : '')}input=${encodeURIComponent(\"- [ ] some **Input** \" + new Date())}) to test input capture.`",
+                            "position": {
+                                "start": {
+                                    "line": 137,
+                                    "column": 1,
+                                    "offset": 4643
+                                },
+                                "end": {
+                                    "line": 143,
+                                    "column": 4,
+                                    "offset": 5082
+                                }
+                            },
+                            "data": {
+                                "meta": {
+                                    "attrs": {},
+                                    "lang": "js",
+                                    "directives": [
+                                        "collapse"
+                                    ],
+                                    "tags": [
+                                        "mockinput"
+                                    ],
+                                    "isOutput": false,
+                                    "output": "md",
+                                    "hasOutput": true,
+                                    "hasSource": false,
+                                    "raw": "js !collapse #mockinput > md"
+                                },
+                                "hProperties": {
+                                    "className": "tag-mockinput",
+                                    "meta": {
+                                        "attrs": {},
+                                        "lang": "js",
+                                        "directives": [
+                                            "collapse"
+                                        ],
+                                        "tags": [
+                                            "mockinput"
+                                        ],
+                                        "isOutput": false,
+                                        "output": "md",
+                                        "hasOutput": true,
+                                        "hasSource": false,
+                                        "raw": "js !collapse #mockinput > md"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "type": "code",
+                            "lang": ">md",
+                            "meta": "attached=true updated=1620859751266",
+                            "value": "Here's a [Mock Input](?file=testing/input_buffer.lit&input=-%20%5B%20%5D%20some%20**Input**%20Wed%20May%2012%202021%2023%3A49%3A11%20GMT%2B0100%20(BST)) to test input capture.",
+                            "position": {
+                                "start": {
+                                    "line": 141,
+                                    "column": 1,
+                                    "offset": 4860
+                                },
+                                "end": {
+                                    "line": 143,
+                                    "column": 4,
+                                    "offset": 5082
+                                }
+                            },
+                            "data": {
+                                "meta": {
+                                    "attrs": {
+                                        "attached": "true",
+                                        "updated": "1620859751266"
+                                    },
+                                    "lang": "md",
+                                    "attached": "true",
+                                    "updated": "1620859751266",
+                                    "isOutput": true,
+                                    "hasOutput": false,
+                                    "hasSource": false,
+                                    "raw": ">md attached=true updated=1620859751266"
+                                },
+                                "hProperties": {
+                                    "className": "",
+                                    "meta": {
+                                        "attrs": {
+                                            "attached": "true",
+                                            "updated": "1620859751266"
+                                        },
+                                        "lang": "md",
+                                        "attached": "true",
+                                        "updated": "1620859751266",
+                                        "isOutput": true,
+                                        "hasOutput": false,
+                                        "hasSource": false,
+                                        "raw": ">md attached=true updated=1620859751266"
+                                    }
+                                }
+                            },
+                            "children": [
+                                {
+                                    "type": "paragraph",
+                                    "children": [
+                                        {
+                                            "type": "text",
+                                            "value": "Here's a ",
+                                            "position": {
+                                                "start": {
+                                                    "line": 1,
+                                                    "column": 1,
+                                                    "offset": 0
+                                                },
+                                                "end": {
+                                                    "line": 1,
+                                                    "column": 10,
+                                                    "offset": 9
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "type": "link",
+                                            "url": "?file=testing/input_buffer.lit&input=-%20%5B%20%5D%20some%20**Input**%20Wed%20May%2012%202021%2023%3A49%3A11%20GMT%2B0100%20(BST)",
+                                            "children": [
+                                                {
+                                                    "type": "text",
+                                                    "value": "Mock Input",
+                                                    "position": {
+                                                        "start": {
+                                                            "line": 1,
+                                                            "column": 11,
+                                                            "offset": 10
+                                                        },
+                                                        "end": {
+                                                            "line": 1,
+                                                            "column": 21,
+                                                            "offset": 20
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "position": {
+                                                "start": {
+                                                    "line": 1,
+                                                    "column": 10,
+                                                    "offset": 9
+                                                },
+                                                "end": {
+                                                    "line": 1,
+                                                    "column": 153,
+                                                    "offset": 152
+                                                }
+                                            },
+                                            "data": {
+                                                "isAbsolute": false,
+                                                "isFragment": true,
+                                                "isRelative": false,
+                                                "canonical": "?file=testing/input_buffer.lit&input=-%20%5B%20%5D%20some%20**Input**%20Wed%20May%2012%202021%2023%3A49%3A11%20GMT%2B0100%20(BST)",
+                                                "wikilink": false,
+                                                "hProperties": {
+                                                    "wikilink": false,
+                                                    "data": {
+                                                        "base": "",
+                                                        "frag": "?",
+                                                        "isAbsolute": false,
+                                                        "isFragment": true,
+                                                        "isRelative": false,
+                                                        "canonical": "?file=testing/input_buffer.lit&input=-%20%5B%20%5D%20some%20**Input**%20Wed%20May%2012%202021%2023%3A49%3A11%20GMT%2B0100%20(BST)",
+                                                        "wikilink": false
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "type": "text",
+                                            "value": " to test input capture.",
+                                            "position": {
+                                                "start": {
+                                                    "line": 1,
+                                                    "column": 153,
+                                                    "offset": 152
+                                                },
+                                                "end": {
+                                                    "line": 1,
+                                                    "column": 176,
+                                                    "offset": 175
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "position": {
+                                        "start": {
+                                            "line": 1,
+                                            "column": 1,
+                                            "offset": 0
+                                        },
+                                        "end": {
+                                            "line": 1,
+                                            "column": 176,
+                                            "offset": 175
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "cell",
+                    "position": {
+                        "start": {
+                            "line": 145,
+                            "column": 1,
+                            "offset": 5084
+                        },
+                        "end": {
+                            "line": 147,
+                            "column": 4,
+                            "offset": 5129
+                        }
+                    },
+                    "data": {
+                        "hName": "cell",
+                        "hProperties": {
+                            "class": "cell"
+                        }
+                    },
+                    "children": [
+                        {
+                            "type": "code",
+                            "lang": "lit",
+                            "meta": "!collapse #template < log/day.lit",
+                            "value": "",
+                            "position": {
+                                "start": {
+                                    "line": 145,
+                                    "column": 1,
+                                    "offset": 5084
+                                },
+                                "end": {
+                                    "line": 147,
+                                    "column": 4,
+                                    "offset": 5129
+                                }
+                            },
+                            "data": {
+                                "meta": {
+                                    "attrs": {},
+                                    "lang": "lit",
+                                    "directives": [
+                                        "collapse"
+                                    ],
+                                    "tags": [
+                                        "template"
+                                    ],
+                                    "isOutput": false,
+                                    "hasOutput": false,
+                                    "hasSource": true,
+                                    "source": {
+                                        "attrs": {},
+                                        "lang": "txt",
+                                        "filename": "log/day.lit",
+                                        "isOutput": false,
+                                        "hasOutput": false,
+                                        "hasSource": false,
+                                        "raw": "txt log/day.lit"
+                                    },
+                                    "raw": "lit !collapse #template < log/day.lit",
+                                    "fromSource": "log/day.lit"
+                                },
+                                "hProperties": {
+                                    "className": "tag-template",
+                                    "meta": {
+                                        "attrs": {},
+                                        "lang": "lit",
+                                        "directives": [
+                                            "collapse"
+                                        ],
+                                        "tags": [
+                                            "template"
+                                        ],
+                                        "isOutput": false,
+                                        "hasOutput": false,
+                                        "hasSource": true,
+                                        "source": {
+                                            "attrs": {},
+                                            "lang": "txt",
+                                            "filename": "log/day.lit",
+                                            "isOutput": false,
+                                            "hasOutput": false,
+                                            "hasSource": false,
+                                            "raw": "txt log/day.lit"
+                                        },
+                                        "raw": "lit !collapse #template < log/day.lit",
+                                        "fromSource": "log/day.lit"
+                                    },
+                                    "data": {
+                                        "originalSource": ""
+                                    }
+                                },
+                                "originalSource": ""
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "cell",
+                    "position": {
+                        "start": {
+                            "line": 148,
+                            "column": 1,
+                            "offset": 5130
+                        },
+                        "end": {
+                            "line": 155,
+                            "column": 4,
+                            "offset": 5533
+                        }
+                    },
+                    "data": {
+                        "hName": "cell",
+                        "hProperties": {
+                            "class": "cell"
+                        }
+                    },
+                    "children": [
+                        {
+                            "type": "code",
+                            "lang": "js",
+                            "meta": "!plugin !collapse type=viewer of=bookmarklet",
+                            "value": "export const viewer = ({node, React}) => {\n  const rc = React.createElement\n  const meta = node.properties.meta\n  const href = `javascript:(function(){${node.data.value}})()`\n  return rc('span', null, ['Bookmarklet: ', rc('a', {href: href}, `Run ${meta && meta.id ? meta.id: \"bookmarklet\"}` ), \" href: \", rc('pre', null, rc('code', null, href))])\n}",
+                            "position": {
+                                "start": {
+                                    "line": 148,
+                                    "column": 1,
+                                    "offset": 5130
+                                },
+                                "end": {
+                                    "line": 155,
+                                    "column": 4,
+                                    "offset": 5533
+                                }
+                            },
+                            "data": {
+                                "meta": {
+                                    "attrs": {
+                                        "type": "viewer",
+                                        "of": "bookmarklet"
+                                    },
+                                    "lang": "js",
+                                    "directives": [
+                                        "plugin",
+                                        "collapse"
+                                    ],
+                                    "type": "viewer",
+                                    "of": "bookmarklet",
+                                    "isOutput": false,
+                                    "hasOutput": false,
+                                    "hasSource": false,
+                                    "raw": "js !plugin !collapse type=viewer of=bookmarklet"
+                                },
+                                "hProperties": {
+                                    "className": "",
+                                    "meta": {
+                                        "attrs": {
+                                            "type": "viewer",
+                                            "of": "bookmarklet"
+                                        },
+                                        "lang": "js",
+                                        "directives": [
+                                            "plugin",
+                                            "collapse"
+                                        ],
+                                        "type": "viewer",
+                                        "of": "bookmarklet",
+                                        "isOutput": false,
+                                        "hasOutput": false,
+                                        "hasSource": false,
+                                        "raw": "js !plugin !collapse type=viewer of=bookmarklet"
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            "position": {
+                "start": {
+                    "line": 56,
+                    "column": 1,
+                    "offset": 2261
+                },
+                "end": {
+                    "line": 155,
                     "column": 4,
-                    "offset": 5453
+                    "offset": 5533
                 }
             }
         }
@@ -3134,9 +3417,9 @@
             "offset": 0
         },
         "end": {
-            "line": 173,
+            "line": 178,
             "column": 1,
-            "offset": 5476
+            "offset": 5556
         }
     }
 }
