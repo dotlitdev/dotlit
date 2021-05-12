@@ -1823,7 +1823,7 @@
                                 {
                                     "type": "code",
                                     "lang": "js",
-                                    "meta": "exec=onload !collapse > md id=now",
+                                    "meta": "exec=onload !collapse > md !idnow",
                                     "value": "const date = new Date()\nconst isoDate = date.toISOString().split(\"T\")[0]\nconst today = isoDate\nconst year = date.getFullYear()\nconst month = isoDate.split('-').slice(0,-1).join('-')\n\nconst firstDayOfYear = new Date(year, 0, 1);\nconst pastDaysOfYear = (date - firstDayOfYear) / 86400000;\nconst week = [year, 'w'+ Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7)].join('-')\n\nconst prefix = `testing/log/`\nconst pathFor = log => `${prefix}${log}.lit`\n\nconst checkForTodayFile = async () => { \n  let stat\n  try {\n  stat = await lit.fs.readStat(pathFor(today))\n  } catch(err) {}\n  return `*Today* is [**${today}**](${pathFor(today)}), exists: *${!!stat && !!(stat.local.stat || stat.remote.stat)}*\n\nSee [week](${pathFor(week)}), [month](${pathFor(month)}) or [year](${pathFor('year')}), `\n}\n\nreturn checkForTodayFile()",
                                     "position": {
                                         "start": {
@@ -1848,10 +1848,10 @@
                                                 "collapse"
                                             ],
                                             "isOutput": false,
-                                            "output": "md id=now",
+                                            "output": "md !idnow",
                                             "hasOutput": true,
                                             "hasSource": false,
-                                            "raw": "js exec=onload !collapse > md id=now"
+                                            "raw": "js exec=onload !collapse > md !idnow"
                                         },
                                         "hProperties": {
                                             "className": "",
@@ -1865,10 +1865,10 @@
                                                     "collapse"
                                                 ],
                                                 "isOutput": false,
-                                                "output": "md id=now",
+                                                "output": "md !idnow",
                                                 "hasOutput": true,
                                                 "hasSource": false,
-                                                "raw": "js exec=onload !collapse > md id=now"
+                                                "raw": "js exec=onload !collapse > md !idnow"
                                             }
                                         }
                                     }
