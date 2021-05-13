@@ -21,10 +21,9 @@ import { Identity } from '../utils/functions'
 // import { createServer } from 'http-server'
 
 const console = getConsoleForNamespace('generate')
-const fs = extendFs(fsPromises)
 global.fetch = require("node-fetch")
 
-const copyFiles = async (filepaths, input, output) => await Promise.all( filepaths.map( async filepath => {
+const copyFiles = async (fs, filepaths, input, output) => await Promise.all( filepaths.map( async filepath => {
                     const src = path.join(input, filepath)
                     const dest = path.join(output, filepath)
                     await mkdirp(path.dirname(dest))
@@ -146,6 +145,8 @@ export function generate(cmd) {
 
     console.log(`Generating from path: ${cmd.path} (${globAll})`)
     console.log(`Output path: ${cmd.output} cwd: ${cmd.cwd}`)
+    console.log(path.resolve(cmd.output))
+    const fs = extendFs(fsPromises, path.resolve(cmd.output) + '/', null, true)
     
     function processFilesystem(done) {
         console.time('generate')
@@ -158,7 +159,7 @@ export function generate(cmd) {
 
                 try {
 
-                const copied = await copyFiles(nonLitFiles, cmd.path, cmd.output)
+                const copied = await copyFiles(fs, nonLitFiles, cmd.path, cmd.output)
                 console.log(`Copied ${copied.length} file(s) from source.`)
 
           
@@ -175,7 +176,7 @@ export function generate(cmd) {
                     try {
                         const fetchedFile = await file
                        
-                        const renderedFile = await renderProcessor(fs).process(fetchedFile)
+                        const renderedFile = await renderProcessor({fs}).process(fetchedFile)
                        
                         return renderedFile
                     } catch (err) {
@@ -185,7 +186,7 @@ export function generate(cmd) {
                 const [ast_files, manifest] = generateBacklinks(ast_files_prelinks, cmd.output)
                 const html_files = await Promise.all(ast_files.map( async file => {
                     try {
-                        if(file && file.data && file.data.frontmatter && file.data.frontmatter.private) {
+                        if(file?.data?.frontmatter?.private) {
                             file.contents = `# 🔐 Private File
 
 <!-- data
@@ -195,20 +196,22 @@ private: true
 The contents of this file are private. Only visible by the author.
 
 `
-                           file = await renderProcessor(fs).process(file)
+                           file = await renderProcessor({fs}).process(file)
 
                         }
-                        await mkdirp(path.join(cmd.output,path.dirname(file.path)))
-                        await fs.writeFile(path.join(cmd.output, file.path), file.contents)
-                        await fs.writeFile(path.join(cmd.output, file.path + '.json'), JSON.stringify(file.data.ast, null, 4))
+                        // await mkdirp(path.join(cmd.output,path.dirname(file.path)))
+                        await fs.writeFile(file.path, file.contents)
+                        await fs.writeFile(file.path + '.json', JSON.stringify(file.data.ast, null, 4))
                         const html_file = await renderedVFileToDoc(await file, cmd)
-                        await fs.writeFile(path.join(cmd.output, file.path), file.contents)
+                        await fs.writeFile(file.path, file.contents)
                         console.log(`Wrote ${file.path} to "${path.join(cmd.output, file.path)}" to disk`)
 
                         for (const codefile of html_file.data.files) {
-                            const filename = codefile.data && codefile.data.meta && codefile.data.meta.filename
-                            if (filename) {
-                                const filepath = path.join(cmd.output, path.dirname(file.path), filename)
+                            const filename = codefile?.data?.meta?.filename
+                            const hasValue = !!codefile.value
+                            if (filename && hasValue) {
+                                const filepath = path.join(path.dirname(file.path), filename)
+                                console.log("Writing codefile to path: ", filepath, hasValue)
                                 await fs.writeFile(filepath, codefile.value)
                                 console.log(`Wrote codefile ${filename} to "${filepath}" on disk`)
                             }
@@ -220,12 +223,12 @@ The contents of this file are private. Only visible by the author.
 File: ${file.path}
     ${err.toString()}
 `
-                        file = await renderProcessor(fs).process(file)
-                        await mkdirp(path.join(cmd.output,path.dirname(file.path)))
-                        await fs.writeFile(path.join(cmd.output, file.path), file.contents)
-                        await fs.writeFile(path.join(cmd.output, file.path + '.json'), JSON.stringify(file.data.ast, null, 4))
+                        file = await renderProcessor({fs}).process(file)
+                        // await mkdirp(path.join(cmd.output,path.dirname(file.path)))
+                        await fs.writeFile(file.path, file.contents)
+                        await fs.writeFile(file.path + '.json', JSON.stringify(file.data.ast, null, 4))
                         const html_file = await renderedVFileToDoc(await file, cmd)
-                        await fs.writeFile(path.join(cmd.output, file.path), file.contents)
+                        await fs.writeFile(file.path, file.contents)
                         console.log(`Wrote  ${file.path} to "${path.join(cmd.output, file.path)}" to disk`)
                         return html_file
                     }
@@ -240,7 +243,7 @@ File: ${file.path}
                     })
                 })
                 
-                await fs.writeFile(path.join(cmd.output, 'manifest.json'), JSON.stringify(graph, null, 4))
+                await fs.writeFile('manifest.json', JSON.stringify(graph, null, 4))
                 console.log(`Wrote ${html_files.filter(Identity).length}/${html_files.length} .lit file(s) to disk`)
 
                 if (global.litenv) {
