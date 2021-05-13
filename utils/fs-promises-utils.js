@@ -20,15 +20,16 @@ const passThroughRead = (origReadFile, litroot) => {
   };
 }
 
-const passThroughReadWithStat = (origReadFile, origStat, litroot, ghOpts) => {
+const passThroughReadWithStat = (origReadFile, origStat, litroot, ghOpts, noPassthrough) => {
 
   return async (...args) => {
-    console.log('fs.passThroughReadWithStat', args[0])
+    console.log('fs.passThroughReadWithStat', litroot, args[0])
 
     const resp = {
       local: { stat: undefined, value: undefined },
       remote: { stat: undefined, value: undefined },
     }
+    const filePath = args[0] = path.join(litroot, args[0])
     try {
       try {
         resp.local.stat = await origStat(...args)
@@ -41,7 +42,7 @@ const passThroughReadWithStat = (origReadFile, origStat, litroot, ghOpts) => {
       console.log('fs.passThoughReadWithStat no local file', err)
     }
 
-    const filePath = path.join(litroot, args[0])
+    
 
     let remoteResp
     if (ghOpts) {
@@ -52,6 +53,8 @@ const passThroughReadWithStat = (origReadFile, origStat, litroot, ghOpts) => {
         } catch(err){
              console.log("fs.passThroughtReadWithStat GitHub read failed", err) 
         }
+    } else if (noPassthrough) {
+      return resp
     } else {
         console.log('fs.passThroughReadWithStat passing through to fetch', filePath)
         remoteResp = await fetch(filePath)
@@ -60,7 +63,7 @@ const passThroughReadWithStat = (origReadFile, origStat, litroot, ghOpts) => {
     if (!remoteResp || remoteResp.status < 200 || remoteResp.status >= 400) {
       if (!resp.local.stat && !resp.local.value) {
         console.log('fs.passThroughReadWithStat failed local and remote read')
-        throw new Error(`${remoteResp.status} Error. Fetching File.`)
+        throw new Error(`${remoteResp?.status || "Request"} Error. Fetching File.`)
       }
     } else {
       console.log("fs.passThroughReadWithStat found remote file")
@@ -98,7 +101,7 @@ const writeFileP = (fs, litroot) => {
         // console.log(`"${subPath}" Sub path`);
         try {
           await fs.stat(subPath);
-          console.log(`[fs.writeFileP] "${subPath}" Existed, skipping`);
+          // console.log(`[fs.writeFileP] "${subPath}" Existed, skipping`);
         } catch (err) {
           console.log(`[fs.writeFileP] "${subPath}" Didn't exist, creating...`);
           await fs.mkdir(subPath);
@@ -115,12 +118,14 @@ const passThroughWrite = (fs,litroot, ghOpts) => {
   return async (...args) => {
     console.log('fs.passThroughWrite')
     await wf(...args);
-    const ghwf = ghWriteFile(ghOpts);
-    try {
-      const ghResp = await ghwf(...args);
-      console.log("GitHub write resp", ghResp);
-    } catch (err) {
-      console.error("GitHub write threw", err);
+    if (ghOpts) {
+      const ghwf = ghWriteFile(ghOpts);
+      try {
+        const ghResp = await ghwf(...args);
+        console.log("GitHub write resp", ghResp);
+      } catch (err) {
+        console.error("GitHub write threw", err);
+      }
     }
   };
 }
@@ -136,25 +141,31 @@ const passThroughUnlink = (fs,litroot, ghOpts) => {
         console.log("fs.passThroughUnlink didn't unlink local file", err)
     }
     if (localOnly) return local;
-    const ghdf = ghDeleteFile(ghOpts);
-    let ghResp
-    try {
-      ghResp = await ghdf(filepath.slice(1));
-      console.log("GitHub delete resp", ghResp);
-    } catch (err) {
-      console.error("GitHub delete threw", err.message, err);
+    if (ghOpts) {
+      const ghdf = ghDeleteFile(ghOpts);
+      let ghResp
+      try {
+        ghResp = await ghdf(filepath.slice(1));
+        console.log("GitHub delete resp", ghResp);
+      } catch (err) {
+        console.error("GitHub delete threw", err.message, err);
+      }
+      return ghResp
+    } else {
+      return local
     }
-    return ghResp
   };
 }
 
-export const extendFs = (fs, litroot = "", ghOpts) => {
+export const extendFs = (fs, litroot = "", ghOpts, noPassthrough) => {
   const clonedfs = {...fs}
   const origReadFile = clonedfs.readFile
   const origStat = clonedfs.stat
-  clonedfs.readFile = passThroughRead(origReadFile,litroot);
+  
+  
+  if (!noPassthrough) clonedfs.readFile = passThroughRead(origReadFile,litroot);
   clonedfs.writeFile = writeFileP(clonedfs, litroot);
-  clonedfs.readStat = passThroughReadWithStat(clonedfs.readFile, origStat, litroot, ghOpts)
+  clonedfs.readStat = passThroughReadWithStat(clonedfs.readFile, origStat, litroot, ghOpts, noPassthrough)
 
   if(ghOpts) clonedfs.writeFile = passThroughWrite(clonedfs, litroot, ghOpts);
   if(ghOpts) clonedfs.unlink = passThroughUnlink(clonedfs, litroot, ghOpts);

@@ -21,7 +21,9 @@ const { Repl } = require('../repl')
 
 const { Header } = require('../components/Header')
 const { extendFs } = require('../utils/fs-promises-utils')
-const { DatesToRelativeDelta, MsToRelative } = require('../utils/momento')
+const momento = require('../utils/momento')
+const colors = require('../utils/colors')
+const safeEncoders = require('../utils/safe-encoders')
 
 const { inspect } = require('util')
 const diff = require('diff')
@@ -29,6 +31,8 @@ const fns = require('../utils/functions')
 import { getConsoleForNamespace } from '../utils/console'
 
 const console = getConsoleForNamespace('client')
+
+const  { DatesToRelativeDelta, MsToRelative } = momento
 
 const hasLocation = typeof location !== "undefined"
 
@@ -81,6 +85,9 @@ export const lit = {
         mdast: {
             to_string,
         },
+        momento,
+        colors,
+        safeEncoders,
         fns,
         path,
         querystring: qs,

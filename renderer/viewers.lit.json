@@ -3225,7 +3225,7 @@
                             "type": "code",
                             "lang": "js",
                             "meta": "!plugin of=md !collapse <  viewers/md/index.jsx",
-                            "value": "",
+                            "value": "export const viewer = ({children,node, React}) => {\n\n  const ch = children\n  const chc = ch[0].props.children\n  const rc = React.createElement\n  const np = node.properties\n\n  const meta = np && np.meta\n  const dirs = meta && meta.directives\n  const tags = meta && meta.tags\n  \n  const dc = dirs && dirs.map(d=>'dir-'+d)\n  const tc = tags && tags.map(t=>'tag-'+t)\n\n  const classes = ['md-block']\n  const add = arr => arr.forEach( c => { \n                        classes.push(c)\n                     })\n  if (dc) add(dc)\n  if (tc) add(tc)\n\n  const className = classes\n                    .filter(x=>x)\n                    .join(' ')\n                    .trim()\n\n  return rc('div', {className}, chc)\n}\n",
                             "position": {
                                 "start": {
                                     "line": 115,
@@ -4393,7 +4393,6 @@
                             "type": "code",
                             "lang": "txt",
                             "meta": "!below viewer=meta < file.txt",
-                            "value": "show meta content below:",
                             "position": {
                                 "start": {
                                     "line": 186,
@@ -4816,7 +4815,7 @@
                             "type": "code",
                             "lang": "diff",
                             "meta": "!inline split=true < difftestA.txt",
-                            "value": "Custom Content B as a new value\nfor testing diff viewer\ninitially created as a txt file output\nflipped to transclude and modified cell\ngiving a node with data.value and data.properties.data.originalSource ",
+                            "value": "Custom Content as an initial value\nfor testing diff viewer\ninitially created as a txt file output\nplan to flip to transclude and modify cell\ngiving a node with data.value and data.properties.data.originalSource ",
                             "position": {
                                 "start": {
                                     "line": 251,
@@ -5258,7 +5257,6 @@
                             "type": "code",
                             "lang": "custom-graph",
                             "meta": "!inline < ../manifest.json",
-                            "value": "",
                             "position": {
                                 "start": {
                                     "line": 322,
