@@ -151,6 +151,7 @@ exports.endpoint = function(req,res) {
   req.on('data', chunk => {
     data += chunk;
   })
+
   req.on('end', async () => {
     const payload = JSON.parse(data)
     const exported = requireFromString(payload.src, payload.meta.filename || "untitled.js")
@@ -170,7 +171,7 @@ exports.endpoint = function(req,res) {
       }))
     }
   })
-  }
+}
 ```
 
 ```js !plugin type=repl of=node !collapse
@@ -212,6 +213,6 @@ module.exports = async (meta) => {
   return `Hello world! From .lit and Nodejs ${process.env.NODE_VERSION} (${process.platform} ${process.arch}) thanks to RunKit. At ${new Date()}`
 }
 ```
-```>txt attached=true updated=1621035563137 !error
+```>txt attached=true updated=1621035650802 !error
 undefined
 ```
