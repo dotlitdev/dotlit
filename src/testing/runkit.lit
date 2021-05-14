@@ -148,7 +148,14 @@ export const repl = async (src, meta, node) => {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': '*',
   });
-  res.end('{"ping": "pong!"}')
+
+  let data = '';
+  req.on('data', chunk => {
+    data += chunk;
+  })
+  req.on('end', () => {
+    res.end('{"ping": "pong!", "data": "'+data+' "}')
+  })
   }`
 }) 
     return "Setting up repl endpoint"
