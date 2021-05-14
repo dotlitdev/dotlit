@@ -1,10 +1,12 @@
 import Embed from 'https://cdn.skypack.dev/runkit-embed-react'
 
 export const viewer = ({node,React}) => {
+  const {useState} = React
+  const [url, setUrl] = useState(false)
 
-  const onLoad = async (rk) => alert(await rk.getEndpointURL())
+  const onLoad = async (rk) => setUrl(await rk.getEndpointURL())
 
-  return <Embed
+  return url || <Embed
             mode='endpoint'
             readOnly={true}
             evaluateOnLoad={true}
