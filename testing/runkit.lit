@@ -126,8 +126,12 @@ export const repl = async (src, meta, node) => {
     evaluateOnLoad: true,
     // specify the source of the notebook
     source: `module.exports = function(req,res) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.end("pong!")
+  res.writeHead(200, {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': '*',
+  });
+  res.end(`{"ping": "pong!"}`)
   }`
 }) 
     return "Setting up repl endpoint"
@@ -139,6 +143,6 @@ export const repl = async (src, meta, node) => {
 ```js repl=node
 console.log("Hello world! From .lit and Nodejs thanks to RunKit.")
 ```
-```>txt attached=true updated=1621029346843
-Setting up repl endpoint
+```>txt attached=true updated=1621029350841 !error
+undefined
 ```

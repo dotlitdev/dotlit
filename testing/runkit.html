@@ -1,6 +1,14 @@
 <html data-reactroot=""><head><title>testing/runkit.lit</title><meta name="litsrc" value="testing/runkit.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"><div class="lit-message"><span class="message">Plugin Error (viewer): Cannot find module &#x27;@babel/runtime/helpers/interopRequireDefault&#x27;
 Require stack:
-- </span><span class="name">78:1-103:4</span></div></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="5:21-100"><cell startpos="1:1-0" endpos="3:57-78"><div class="cell-content"><h1 id="testingrunkitlit">testing/runkit.lit</h1><p>Experimenting using RunKit as a custom repl for nodejs.</p></div></cell><section depth="2" class="" startpos="5:1-80" endpos="5:21-100"><cell startpos="5:1-80" endpos="5:21-100"><div class="cell-content"><h2 id="table-of-contents">Table of Contents</h2><ul>
+- </span><span class="name">78:1-103:4</span></div><div class="lit-message"><span class="message">Plugin Error (repl): /home/runner/work/dotlit/dotlit: Unexpected token, expected &quot;,&quot; (18:11)
+
+  16 |     &#x27;Access-Control-Allow-Methods&#x27;: &#x27;*&#x27;,
+  17 |   });
+&gt; 18 |   res.end(`{&quot;ping&quot;: &quot;pong!&quot;}`)
+     |            ^
+  19 |   }`
+  20 | }) 
+  21 |     return &quot;Setting up repl endpoint&quot;</span><span class="name">116:1-142:4</span></div></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="5:21-100"><cell startpos="1:1-0" endpos="3:57-78"><div class="cell-content"><h1 id="testingrunkitlit">testing/runkit.lit</h1><p>Experimenting using RunKit as a custom repl for nodejs.</p></div></cell><section depth="2" class="" startpos="5:1-80" endpos="5:21-100"><cell startpos="5:1-80" endpos="5:21-100"><div class="cell-content"><h2 id="table-of-contents">Table of Contents</h2><ul>
 <li><a href="#embed">Embed<span class="linkIcon">§</span></a></li>
 <li><a href="#endpoint">Endpoint<span class="linkIcon">§</span></a></li>
 <li><a href="#viewer-plug-in">Viewer plug-in<span class="linkIcon">§</span></a></li>
@@ -15,7 +23,7 @@ Require stack:
     // specify the source of the notebook
     source: &quot;// GeoJSON!\nvar getJSON = require(\&quot;async-get-json\&quot;);\n\nawait getJSON(\&quot;https://storage.googleapis.com/maps-devrel/google.json\&quot;);&quot;
 })
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">47m ago</span></span></span><output><pre><code class="txt">{ onEvaluate: [Function: onEvaluate],
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">49m ago</span></span></span><output><pre><code class="txt">{ onEvaluate: [Function: onEvaluate],
   onLoad: undefined,
   onResize: undefined,
   onSave: undefined,
@@ -79,7 +87,7 @@ export const viewer = ({node,React}) =&gt; {
     res.end(&quot;Hello world! From .lit and Nodejs thanks to RunKit.&quot;);
 }
 </code></pre></codecell></div></cell></section>
-<section depth="2" class="" startpos="114:1-3014" endpos="144:4-3891"><cell startpos="114:1-3014" endpos="114:32-3045"><div class="cell-content"><h2 id="repl-endpoint-plug-in-node">REPL endpoint plug-in <code>node</code></h2></div></cell><cell startpos="116:1-3047" endpos="138:4-3731" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=repl</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=node</span></span><pre><code class="js">export const repl = async (src, meta, node) =&gt; {
+<section depth="2" class="" startpos="114:1-3014" endpos="148:4-3995"><cell startpos="114:1-3014" endpos="114:32-3045"><div class="cell-content"><h2 id="repl-endpoint-plug-in-node">REPL endpoint plug-in <code>node</code></h2></div></cell><cell startpos="116:1-3047" endpos="142:4-3843" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=repl</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=node</span></span><pre><code class="js">export const repl = async (src, meta, node) =&gt; {
   if (!window.__runkitNodeEnpoint) {
     RunKit.createNotebook({
     // the parent element for the new notebook
@@ -91,8 +99,12 @@ export const viewer = ({node,React}) =&gt; {
     evaluateOnLoad: true,
     // specify the source of the notebook
     source: `module.exports = function(req,res) {
-  res.header(&quot;Access-Control-Allow-Origin&quot;, &quot;*&quot;);
-  res.end(&quot;pong!&quot;)
+  res.writeHead(200, {
+    &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+    &#x27;Access-Control-Allow-Origin&#x27;: &#x27;*&#x27;,
+    &#x27;Access-Control-Allow-Methods&#x27;: &#x27;*&#x27;,
+  });
+  res.end(`{&quot;ping&quot;: &quot;pong!&quot;}`)
   }`
 }) 
     return &quot;Setting up repl endpoint&quot;
@@ -100,6 +112,6 @@ export const viewer = ({node,React}) =&gt; {
     return await (await fetch(window.__runkitNodeEnpoint)).text()
   }
 }
-</code></pre></codecell></div></cell><cell startpos="139:1-3732" endpos="144:4-3891" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="repl">node</span></span><pre><code class="js">console.log(&quot;Hello world! From .lit and Nodejs thanks to RunKit.&quot;)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">50s ago</span></span></span><output><pre><code class="txt">Setting up repl endpoint
+</code></pre></codecell></div></cell><cell startpos="143:1-3844" endpos="148:4-3995" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="repl">node</span></span><pre><code class="js">console.log(&quot;Hello world! From .lit and Nodejs thanks to RunKit.&quot;)
+</code></pre></codecell><codecell class="dir-error lang-txt local output"><span class="meta"><span class="lang">txt</span><span style="color:white;background-color:red" class="directive dir-error">error</span><span class="updatedAt">Updated <span class="Time relative">3m ago</span></span></span><output><pre><code class="txt">undefined
 </code></pre></output></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="2021-05-13" href="/testing/log/2021-05-13.html">2021-05-13</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
