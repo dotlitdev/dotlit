@@ -18,6 +18,7 @@ exports.endpoint = function(req,res) {
   req.on('data', chunk => {
     data += chunk;
   })
+
   req.on('end', async () => {
     const payload = JSON.parse(data)
     const exported = requireFromString(payload.src, payload.meta.filename || "untitled.js")
@@ -37,4 +38,4 @@ exports.endpoint = function(req,res) {
       }))
     }
   })
-  }
+}
