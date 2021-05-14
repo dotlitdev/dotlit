@@ -81,7 +81,10 @@ export const viewer = ({node,React}) => {
   const [url, setUrl] = useState(false)
   const meta = node?.propertie?.meta || {}
 
-  const onLoad = async (rk) => setUrl(await rk.getEndpointURL())
+  const onLoad = async (rk) => {
+     if (meta.mode === 'endpoint')
+       setUrl(await rk.getEndpointURL())
+  }
 
   return url || <Embed
             mode={meta.mode || 'default'}
