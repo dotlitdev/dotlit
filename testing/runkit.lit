@@ -164,7 +164,7 @@ exports.endpoint = function(req,res) {
   req.on('end', () => {
     const payload = JSON.parse(data)
     const exported = requireFromString(payload.src, payload.meta.filename || "untitled.js")
-    res.end(util.inspect({"ping": "pong!", data: payload}))
+    res.end(util.inspect({"ping": "pong!", data: payload, exports: exported}))
   })
   }`
 }) 
@@ -180,6 +180,18 @@ exports.endpoint = function(req,res) {
 ```js test.js repl=node
 console.log("Hello world! From .lit and Nodejs thanks to RunKit.")
 ```
-```>json attached=true updated=1621031083131
-{"ping":"pong!","data":"{\"src\":\"console.log(\\\"Hello world! From .lit and Nodejs thanks to RunKit.\\\")\\n\",\"meta\":{\"attrs\":{\"repl\":\"node\"},\"lang\":\"js\",\"repl\":\"node\",\"isOutput\":false,\"output\":\"json\",\"hasOutput\":true,\"hasSource\":false,\"raw\":\"js repl=node > json\"}}"}
+```>txt attached=true updated=1621031797521
+{ ping: 'pong!',
+  data:
+   { src:
+      'console.log("Hello world! From .lit and Nodejs thanks to RunKit.")\n',
+     meta:
+      { attrs: [Object],
+        lang: 'js',
+        filename: 'test.js',
+        repl: 'node',
+        isOutput: false,
+        hasOutput: false,
+        hasSource: false,
+        raw: 'js test.js repl=node' } } }
 ```
