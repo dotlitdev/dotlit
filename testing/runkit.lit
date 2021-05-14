@@ -163,7 +163,7 @@ exports.endpoint = function(req,res) {
   req.on('data', chunk => {
     data += chunk;
   })
-  req.on('end', () => {
+  req.on('end', async () => {
     const payload = JSON.parse(data)
     const exported = requireFromString(payload.src, payload.meta.filename || "untitled.js")
     let result;
@@ -199,6 +199,6 @@ exports.fn = async (meta) => {
   return 42
 }
 ```
-```>txt attached=true updated=1621033376276 !error
+```>txt attached=true updated=1621033444604 !error
 undefined
 ```
