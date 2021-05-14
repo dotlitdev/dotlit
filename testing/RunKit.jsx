@@ -1,4 +1,4 @@
-exports const viewer = ({node,React}) => {
+export const viewer = ({node,React}) => {
 
   const Embed = (await import('https://cdn.skypack.dev/runkit-embed-react')).default
 
