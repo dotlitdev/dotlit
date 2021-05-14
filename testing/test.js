@@ -1,1 +1,1 @@
-console.log("Hello world! From .lit and Nodejs thanks to RunKit.")
+exports.welcome = "Hello world! From .lit and Nodejs thanks to RunKit. " + __dirname
