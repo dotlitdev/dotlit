@@ -166,7 +166,10 @@ exports.endpoint = function(req,res) {
   req.on('end', () => {
     const payload = JSON.parse(data)
     const exported = requireFromString(payload.src, payload.meta.filename || "untitled.js")
-    res.end(util.inspect({"ping": "pong!", exports: exported}))
+    let result;
+    if (typeof exported === 'function') result = await exported(payload.meta)
+    res.end(util.inspect({
+       result, exports: exported}))
   })
   }`
 }) 
@@ -194,11 +197,12 @@ const info = {
 }
 exports.info = info
 ```
-```>txt attached=true updated=1621032762734
+```>txt attached=true updated=1621033055409
 { ping: 'pong!',
   exports:
    { info:
-      { text: 'Hello world! From .lit and Nodejs thanks to RunKit.',
+      { text:
+         'Hello world! From .lit and Nodejs (linux x64) thanks to RunKit.',
         cwd: '/app',
         env: [Object] } } }
 ```
