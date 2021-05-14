@@ -4,17 +4,18 @@ export const viewer = ({node,React}) => {
   const {useState} = React
   const [url, setUrl] = useState(false)
   const meta = node?.propertie?.meta || {}
+  const endpoint = meta.mode === 'endpoint'
 
   const onLoad = async (rk) => {
-     if (meta.mode === 'endpoint')
+     if (endpoint)
        setUrl(await rk.getEndpointURL())
   }
 
   return url || <Embed
             mode={meta.mode || 'default'}
-            readOnly={true}
-            evaluateOnLoad={true}
-            // hidesActionButton={true}
+            readOnly={endpoint}
+            evaluateOnLoad={endpoint}
+            hidesActionButton={endpoint}
             source={ node.data.value } 
             // ref='embed'
             onLoad={ onLoad } 
