@@ -4,4 +4,4 @@ const info = {
   cwd: process.cwd(),
   
 }
-exports = info
+exports.info = info
