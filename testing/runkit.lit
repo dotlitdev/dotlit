@@ -114,11 +114,22 @@ exports.endpoint = function(req, res) {
 ## REPL endpoint plug-in `node`
 
 ```js !plugin type=repl of=node
-export const repl = () => {
+export const repl = (src, meta, node) => {
   if (!window.__runkitNodeEnpoint) {
+    RunKit.createNotebook({
+    // the parent element for the new notebook
+    element: document.getElementById("my-element"),
+    node: 'endpoint',
+    onLoad: async (rk) => { 
+      window.__runkitNodeEnpoint = await rk.getEndpointURL
+    },
+    evaluateOnLoad: true,
+    // specify the source of the notebook
+    source: "module.exports = function(req,res) {res.end("pong!")}"
+}) 
     return "Setting up repl endpoint"
   } else {
-
+    return true
   }
 }
 ```
