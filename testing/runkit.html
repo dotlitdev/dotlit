@@ -15,7 +15,7 @@ Require stack:
     // specify the source of the notebook
     source: &quot;// GeoJSON!\nvar getJSON = require(\&quot;async-get-json\&quot;);\n\nawait getJSON(\&quot;https://storage.googleapis.com/maps-devrel/google.json\&quot;);&quot;
 })
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">57m ago</span></span></span><output><pre><code class="txt">{ onEvaluate: [Function: onEvaluate],
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">58m ago</span></span></span><output><pre><code class="txt">{ onEvaluate: [Function: onEvaluate],
   onLoad: undefined,
   onResize: undefined,
   onSave: undefined,
@@ -50,7 +50,7 @@ Require stack:
 </code></pre></codecell></div></cell><cell startpos="73:1-1969" endpos="75:4-2018" class="code"><div class="cell-content"><codecell class="dir-below lang-uri local"><span class="meta"><span class="lang">uri</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="uri">https://2mkz0r1anfrl.runkit.sh/
 </code></pre><iframe src="https://2mkz0r1anfrl.runkit.sh/
 "></iframe></codecell></div></cell></section>
-<section depth="2" class="" startpos="76:1-2019" endpos="117:5-3158"><cell startpos="76:1-2019" endpos="76:18-2036"><div class="cell-content"><h2 id="viewer-plug-in">Viewer plug-in</h2></div></cell><cell startpos="78:1-2038" endpos="103:4-2776" class="code"><div class="cell-content"><codecell class="dir-collapse dir-plugin lang-jsx local collapsed"><a name="rk.jsx"></a><span class="meta"><span class="lang">jsx</span><span class="filename">rk.jsx</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=runkit</span></span><pre><code class="jsx">import Embed from &#x27;https://cdn.skypack.dev/runkit-embed-react&#x27;
+<section depth="2" class="" startpos="76:1-2019" endpos="122:5-3268"><cell startpos="76:1-2019" endpos="76:18-2036"><div class="cell-content"><h2 id="viewer-plug-in">Viewer plug-in</h2></div></cell><cell startpos="78:1-2038" endpos="103:4-2776" class="code"><div class="cell-content"><codecell class="dir-collapse dir-plugin lang-jsx local collapsed"><a name="rk.jsx"></a><span class="meta"><span class="lang">jsx</span><span class="filename">rk.jsx</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=runkit</span></span><pre><code class="jsx">import Embed from &#x27;https://cdn.skypack.dev/runkit-embed-react&#x27;
 
 export const viewer = ({node,React}) =&gt; {
   const {useState} = React
@@ -78,11 +78,16 @@ export const viewer = ({node,React}) =&gt; {
 </code></pre></codecell></div></cell><cell startpos="108:1-2867" endpos="112:5-3012" class="code"><div class="cell-content"><codecell class="dir-below lang-runkit local"><span class="meta"><span class="lang">runkit</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span><span class="attribute attr-mode" style="color:white;background-color:#03339a">mode=endpoint</span></span><pre><code class="runkit">exports.endpoint = function(req, res) {
     res.end(&quot;Hello world! From .lit and Nodejs thanks to RunKit.&quot;);
 }
-</code></pre></codecell></div></cell><cell startpos="113:1-3013" endpos="117:5-3158" class="code"><div class="cell-content"><codecell class="dir-below lang-runkit local"><span class="meta"><span class="lang">runkit</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span><span class="attribute attr-mode" style="color:white;background-color:#03339a">mode=endpoint</span></span><pre><code class="runkit">exports.endpoint = function(req, res) {
-    res.end(&quot;Hello world! From .lit and Nodejs thanks to RunKit.&quot;);
+</code></pre></codecell></div></cell><cell startpos="113:1-3013" endpos="122:5-3268" class="code"><div class="cell-content"><codecell class="dir-below lang-runkit local"><span class="meta"><span class="lang">runkit</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span><span class="attribute attr-mode" style="color:white;background-color:#03339a">mode=endpoint</span></span><pre><code class="runkit">module.exports = function(req,res) {
+  res.writeHead(200, {
+    &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+    &#x27;Access-Control-Allow-Origin&#x27;: &#x27;*&#x27;,
+    &#x27;Access-Control-Allow-Methods&#x27;: &#x27;*&#x27;,
+  });
+  res.end(&#x27;{&quot;ping&quot;: &quot;pong!&quot;}&#x27;)
 }
 </code></pre></codecell></div></cell></section>
-<section depth="2" class="" startpos="119:1-3160" endpos="153:4-4141"><cell startpos="119:1-3160" endpos="119:32-3191"><div class="cell-content"><h2 id="repl-endpoint-plug-in-node">REPL endpoint plug-in <code>node</code></h2></div></cell><cell startpos="121:1-3193" endpos="147:4-3989" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=repl</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=node</span></span><pre><code class="js">export const repl = async (src, meta, node) =&gt; {
+<section depth="2" class="" startpos="124:1-3270" endpos="158:4-4251"><cell startpos="124:1-3270" endpos="124:32-3301"><div class="cell-content"><h2 id="repl-endpoint-plug-in-node">REPL endpoint plug-in <code>node</code></h2></div></cell><cell startpos="126:1-3303" endpos="152:4-4099" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=repl</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=node</span></span><pre><code class="js">export const repl = async (src, meta, node) =&gt; {
   if (!window.__runkitNodeEnpoint) {
     RunKit.createNotebook({
     // the parent element for the new notebook
@@ -107,6 +112,6 @@ export const viewer = ({node,React}) =&gt; {
     return await (await fetch(window.__runkitNodeEnpoint)).text()
   }
 }
-</code></pre></codecell></div></cell><cell startpos="148:1-3990" endpos="153:4-4141" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="repl">node</span></span><pre><code class="js">console.log(&quot;Hello world! From .lit and Nodejs thanks to RunKit.&quot;)
-</code></pre></codecell><codecell class="dir-error lang-txt local output"><span class="meta"><span class="lang">txt</span><span style="color:white;background-color:red" class="directive dir-error">error</span><span class="updatedAt">Updated <span class="Time relative">8m ago</span></span></span><output><pre><code class="txt">undefined
+</code></pre></codecell></div></cell><cell startpos="153:1-4100" endpos="158:4-4251" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="repl">node</span></span><pre><code class="js">console.log(&quot;Hello world! From .lit and Nodejs thanks to RunKit.&quot;)
+</code></pre></codecell><codecell class="dir-error lang-txt local output"><span class="meta"><span class="lang">txt</span><span style="color:white;background-color:red" class="directive dir-error">error</span><span class="updatedAt">Updated <span class="Time relative">9m ago</span></span></span><output><pre><code class="txt">undefined
 </code></pre></output></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="2021-05-13" href="/testing/log/2021-05-13.html">2021-05-13</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
