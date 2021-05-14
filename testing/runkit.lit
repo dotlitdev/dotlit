@@ -4,7 +4,7 @@ Experimenting using RunKit as a custom repl for nodejs.
 
 ## Embed
 
-Lets start with just the simple [demo embed,](https://runkit.com/docs/embed) adding embed script and a container below.
+Lets start with just the simple [demo embed,](https://runkit.com/docs/embed) adding the embed script and a container below.
 
 ```script https://embed.runkit.com !inline
 // inject https://embed.runkit.com
@@ -68,4 +68,28 @@ return (async fn => {
 
 ```uri !below
 https://2mkz0r1anfrl.runkit.sh/
+```
+```jsx babel=true react=true repl=js !below #react #endpoint 
+return (async fn => {
+
+  const React = lit.utils.React
+  const Embed = (await import('https://cdn.skypack.dev/runkit-embed-react')).default
+
+  const helloSource = `exports.endpoint = function(request, response) {
+    response.end("Hello world! From .lit and Nodejs thanks to RunKit.");
+}`
+
+  const onLoad = (...args) => alert(JSON.stringify([...args]))
+
+  return <Embed
+            mode='endpoint'
+            readOnly={true}
+            evaluateOnLoad={true}
+            // hidesActionButton={true}
+            source={ helloSource } 
+            // ref='embed'
+            onLoad={ onLoad } 
+          />
+
+})()
 ```
