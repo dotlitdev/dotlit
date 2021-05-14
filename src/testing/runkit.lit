@@ -133,12 +133,14 @@ return fetch("https://jzc0q8a4nyog.runkit.sh").then(res => res.text())
 ```js !plugin type=repl of=node
 
 if (!window.__runkitNodeEnpoint) {
+    const el = document.createElement('div')
+    document.body.appendChild(el)
     RunKit.createNotebook({
-    // the parent element for the new notebook
-    element: document.getElementById("my-element"),
+    element: el,
     mode: 'endpoint',
     onLoad: async (rk) => { 
       window.__runkitNodeEnpoint = await rk.getEndpointURL()
+      document.body.removeChild(el)
     },
     evaluateOnLoad: true,
     // specify the source of the notebook
