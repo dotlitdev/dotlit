@@ -5,6 +5,6 @@ const info = {
   env: process.env,
   
 }
-module.exports = async (meta) => {
+exports.fn = async (meta) => {
   return 42
 }
