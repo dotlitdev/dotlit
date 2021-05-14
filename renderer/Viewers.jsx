@@ -29,6 +29,18 @@ const viewers = {
   },
   graph: graphViewer,
   md: mdViewer,
+  script: ({node}) => {
+    const path = node?.properties?.meta?.uri || node?.properties?.meta?.filename
+    return path 
+      ? <script src={path} {...node?.properties?.meta?.attr}></script>
+      : <script {...node?.properties?.meta?.attr} dangerouslySetInnerHTML={{__html: node.value}}></script>
+  },
+  style: ({node}) => {
+    const path = node?.properties?.meta?.uri || node?.properties?.meta?.filename
+    return path 
+      ? <link rel="stylesheet" href={path} {...node?.properties?.meta?.attr}/>
+      : <style {...node?.properties?.meta?.attr} dangerouslySetInnerHTML={{__html: node.value}}></style>
+  },
 }
 
 const hasViewDirective = meta => {

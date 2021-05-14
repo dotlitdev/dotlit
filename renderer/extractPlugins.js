@@ -45,7 +45,7 @@ export const extractPlugins = ({fs} = {}) => {
                 && block.data.meta.directives.indexOf('plugin') >= 0) {
                 
                 const meta = block.data.meta
-                console.log('Found Plugin', meta)
+                console.log('Found Plugin', meta.raw)
                 
                 let type = meta.type || 'unknown'
                 const types = ['parser', 'renderer', 'transformer', 'viewer', 'unknown']
