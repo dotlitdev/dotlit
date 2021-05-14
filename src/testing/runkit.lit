@@ -69,15 +69,10 @@ return (async fn => {
 ```uri !below
 https://2mkz0r1anfrl.runkit.sh/
 ```
-```jsx babel=true react=true repl=js !below #react #endpoint 
-return (async fn => {
+```jsx of=nodejs
+exports const viewer = ({node,React}) => {
 
-  const React = lit.utils.React
   const Embed = (await import('https://cdn.skypack.dev/runkit-embed-react')).default
-
-  const helloSource = `exports.endpoint = function(request, response) {
-    response.end("Hello world! From .lit and Nodejs thanks to RunKit.");
-}`
 
   const onLoad = (...args) => alert(JSON.stringify([...args]))
 
@@ -86,10 +81,10 @@ return (async fn => {
             readOnly={true}
             evaluateOnLoad={true}
             // hidesActionButton={true}
-            source={ helloSource } 
+            source={ node.data.value } 
             // ref='embed'
             onLoad={ onLoad } 
           />
 
-})()
+}
 ```
