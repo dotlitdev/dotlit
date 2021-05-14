@@ -131,8 +131,8 @@ return fetch("https://jzc0q8a4nyog.runkit.sh").then(res => res.text())
 ## REPL endpoint plug-in `node`
 
 ```js !plugin type=repl of=node
-export const repl = async (src, meta, node) => {
-  if (!window.__runkitNodeEnpoint) {
+
+if (!window.__runkitNodeEnpoint) {
     RunKit.createNotebook({
     // the parent element for the new notebook
     element: document.getElementById("my-element"),
@@ -168,7 +168,10 @@ exports.endpoint = function(req,res) {
   })
   }`
 }) 
-    return "Setting up repl endpoint"
+} 
+export const repl = async (src, meta, node) => {
+  if (!window.__runkitNodeEnpoint) {
+    return "Still setting up repl endpoint"
   } else {
     return await (await fetch(window.__runkitNodeEnpoint, {
   method: "POST",
@@ -187,10 +190,11 @@ const info = {
 }
 exports.info = info
 ```
-```>txt attached=true updated=1621032332528
+```>txt attached=true updated=1621032372056
 { ping: 'pong!',
   exports:
    { info:
       { text: 'Hello world! From .lit and Nodejs thanks to RunKit.',
-        cwd: '/app' } } }
+        cwd: '/app',
+        env: [Object] } } }
 ```
