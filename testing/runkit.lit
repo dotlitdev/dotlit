@@ -164,7 +164,7 @@ exports.endpoint = function(req,res) {
   req.on('end', () => {
     const payload = JSON.parse(data)
     const exported = requireFromString(payload.src, payload.meta.filename || "untitled.js")
-    res.end(util.inspect({"ping": "pong!", data: payload, exports: exported}))
+    res.end(util.inspect({"ping": "pong!", exports: exported}))
   })
   }`
 }) 
@@ -186,11 +186,11 @@ const info = {
 }
 exports.info = info
 ```
-```>txt attached=true updated=1621032113149
+```>txt attached=true updated=1621032192711
 { ping: 'pong!',
   data:
    { src:
-      '\nconst info = {\n  text: "Hello world! From .lit and Nodejs thanks to RunKit.",\n  cwd: process.cwd(),\n  \n}\nexports = info\n',
+      '\nconst info = {\n  text: "Hello world! From .lit and Nodejs thanks to RunKit.",\n  cwd: process.cwd(),\n  \n}\nexports.info = info\n',
      meta:
       { attrs: [Object],
         lang: 'js',
@@ -200,5 +200,8 @@ exports.info = info
         hasOutput: false,
         hasSource: false,
         raw: 'js test.js repl=node' } },
-  exports: {} }
+  exports:
+   { info:
+      { text: 'Hello world! From .lit and Nodejs thanks to RunKit.',
+        cwd: '/app' } } }
 ```
