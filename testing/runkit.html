@@ -15,7 +15,7 @@ Require stack:
     // specify the source of the notebook
     source: &quot;// GeoJSON!\nvar getJSON = require(\&quot;async-get-json\&quot;);\n\nawait getJSON(\&quot;https://storage.googleapis.com/maps-devrel/google.json\&quot;);&quot;
 })
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.3h ago</span></span></span><output><pre><code class="txt">{ onEvaluate: [Function: onEvaluate],
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.4h ago</span></span></span><output><pre><code class="txt">{ onEvaluate: [Function: onEvaluate],
   onLoad: undefined,
   onResize: undefined,
   onSave: undefined,
@@ -87,9 +87,9 @@ export const viewer = ({node,React}) =&gt; {
   res.end(&#x27;{&quot;ping&quot;: &quot;pong!&quot;}&#x27;)
 }
 </code></pre></codecell></div></cell><cell startpos="124:1-3272" endpos="129:4-3418" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return fetch(&quot;https://jzc0q8a4nyog.runkit.sh&quot;).then(res =&gt; res.text())
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.3h ago</span></span></span><output><pre><code class="txt">{&quot;ping&quot;: &quot;pong!&quot;}
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.4h ago</span></span></span><output><pre><code class="txt">{&quot;ping&quot;: &quot;pong!&quot;}
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="131:1-3420" endpos="208:4-5575"><cell startpos="131:1-3420" endpos="131:32-3451"><div class="cell-content"><h2 id="repl-endpoint-plug-in-node">REPL endpoint plug-in <code>node</code></h2></div></cell><cell startpos="133:1-3453" endpos="163:4-4276" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-source lang-js local collapsed output"><a name="./runkit-repl-endpoint.js"></a><span class="meta"><span class="lang">js</span><span class="filename">./runkit-repl-endpoint.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#ca9068" class="tag">source</span></span><output><pre><code class="js">const util = require(&#x27;util&#x27;)
+<section depth="2" class="" startpos="131:1-3420" endpos="216:4-5696"><cell startpos="131:1-3420" endpos="131:32-3451"><div class="cell-content"><h2 id="repl-endpoint-plug-in-node">REPL endpoint plug-in <code>node</code></h2></div></cell><cell startpos="133:1-3453" endpos="171:4-4397" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-source lang-js local collapsed output"><a name="./runkit-repl-endpoint.js"></a><span class="meta"><span class="lang">js</span><span class="filename">./runkit-repl-endpoint.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#ca9068" class="tag">source</span></span><output><pre><code class="js">const util = require(&#x27;util&#x27;)
 
 function requireFromString(src, filename) {
   var Module = module.constructor;
@@ -113,12 +113,20 @@ exports.endpoint = function(req,res) {
     const payload = JSON.parse(data)
     const exported = requireFromString(payload.src, payload.meta.filename || &quot;untitled.js&quot;)
     let result;
-    if (typeof exported === &#x27;function&#x27;) result = await exported(payload.meta)
-    res.end(util.inspect({
-       result, exports: exported}))
+    if (typeof exported === &#x27;function&#x27;) {
+      try {
+        result = await exported(payload.meta)
+      } catch(error) {
+        res.end(util.inspect({error}))
+      }
+    } else {
+      res.end(util.inspect({
+        result, exports: exported
+      }))
+    }
   })
   }
-</code></pre></output></codecell></div></cell><cell startpos="165:1-4278" endpos="198:4-5133" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=repl</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=node</span></span><pre><code class="js">
+</code></pre></output></codecell></div></cell><cell startpos="173:1-4399" endpos="206:4-5254" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=repl</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=node</span></span><pre><code class="js">
 if (typeof lit !== &#x27;undefined&#x27; &amp;&amp; !window.__runkitNodeEnpoint) {
 
   (async fn =&gt; {
@@ -150,10 +158,10 @@ export const repl = async (src, meta, node) =&gt; {
   })).text()
   }
 }
-</code></pre></codecell></div></cell><cell startpos="199:1-5134" endpos="208:4-5575" class="code"><div class="cell-content"><codecell class="lang-js local"><a name="test.js"></a><span class="meta"><span class="lang">js</span><span class="repl">node</span><span class="filename">test.js</span></span><pre><code class="js">module.exports = async (meta) =&gt; {
+</code></pre></codecell></div></cell><cell startpos="207:1-5255" endpos="216:4-5696" class="code"><div class="cell-content"><codecell class="lang-js local"><a name="test.js"></a><span class="meta"><span class="lang">js</span><span class="repl">node</span><span class="filename">test.js</span></span><pre><code class="js">module.exports = async (meta) =&gt; {
   return `Hello world! From .lit and Nodejs ${process.env.NODE_VERSION} (${process.platform} ${process.arch}) thanks to RunKit. At ${new Date()}`
 }
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">5m ago</span></span></span><output><pre><code class="txt">{ result:
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">14m ago</span></span></span><output><pre><code class="txt">{ result:
    &#x27;Hello world! From .lit and Nodejs 10.24.1 (linux x64) thanks to RunKit. At Fri May 14 2021 23:22:35 GMT+0000 (Coordinated Universal Time)&#x27;,
   exports: [AsyncFunction] }
 </code></pre></output></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="2021-05-13" href="/testing/log/2021-05-13.html">2021-05-13</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
