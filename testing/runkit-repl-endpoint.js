@@ -25,12 +25,15 @@ exports.endpoint = function(req,res) {
     if (typeof exported === 'function') {
       try {
         result = await exported(payload.meta)
+        res.end(util.inspect({
+          result
+        }))
       } catch(error) {
         res.end(util.inspect({error}))
       }
     } else {
       res.end(util.inspect({
-        result, exports: exported
+        exports: exported
       }))
     }
   })
