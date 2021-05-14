@@ -3,6 +3,7 @@ import {transformSync} from '@babel/core'
 
 import presetReact from "@babel/preset-react"
 import presetTypescript from "@babel/preset-typescript"
+import pluginTransformModulesCommonjs from '@babel/plugin-transform-modules-commonjs'
 
 const NoOp = () => {}
 
@@ -31,6 +32,24 @@ function wrapConsole(console, stdoutUpdate) {
 
 function isPromise(obj) {
     return obj && typeof obj.then === 'function'
+}
+
+export const transform = (filename, source, {type} = {}) => {
+
+    const plugins = []
+    if (type === 'commonjs') plugins.push(pluginTransformModulesCommonjs)
+    const babel = transformSync(source, { 
+        filename: filename,
+        sourceMaps: false,
+        parserOpts: { allowReturnOutsideFunction: true },
+        presets: [
+            presetReact,
+            presetTypescript
+        ],
+        plugins: plugins,
+    })
+
+    return babel
 }
 
 export class Repl {
@@ -100,18 +119,7 @@ export class Repl {
 
             try {
                 if(config && config.babel) {
-                const babel = transformSync(source, { 
-                    filename: filename,
-                    sourceMaps: false,
-                    parserOpts: { allowReturnOutsideFunction: true },
-                    presets: [
-                        presetReact,
-                        presetTypescript
-                    ],
-                    plugins: [
-                        // pluginClassProps
-                    ]
-                })
+                const babel = transform(filename, source)
                 console.log("[babel] transformed", babel)
                 source = babel.code
                 }

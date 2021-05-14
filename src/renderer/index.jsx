@@ -64,6 +64,18 @@ export function processor({fs,litroot} = {}) {
              }
          }
      })
+
+     // use render plugins
+    .use( (...args) => {
+        return async (tree, file) => {
+            const rendererPlugins = Object.keys(file?.data?.plugins?.renderer || {})
+            console.log("Looking for renderer plugins ",  )
+            for (const plugin in rendererPlugins) {
+                console.log("Render Plugin", plugin)
+                // await plugin(...args)(tree, file)
+            }
+        }
+    })
     .use(remark2rehype, {
         allowDangerousHtml: true,
         // passThrough: ['mdcode'],

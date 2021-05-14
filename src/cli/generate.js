@@ -78,7 +78,13 @@ function generateBacklinks(files, root) {
     const console = getConsoleForNamespace('Backlinks')
     let manifest = {}
     console.log(`For (${files.length}) files, in ${root}`)
+
+    files = files.filter(Identity)
+
+    console.log(`Only (${files.length}) files, actually usable`)
+    
     files.forEach( file => {
+        if (!file) { console.error('Cannot get links for file.'); return;}
         const fileLink = decorateLinkNode({ url: file.path })
         const title = file.data.frontmatter.title || `Title TBD (${fileLink.data.canonical})`
         console.log(`[${title}] Adding "${file.path}" as "${fileLink.data.canonical} to manifest."`)
@@ -89,7 +95,7 @@ function generateBacklinks(files, root) {
         }
     })
     files.forEach( file => {
-        
+        if (!file) return
         const fileLink = decorateLinkNode({ url: file.path })
         const title = file.data.frontmatter.title || path.basename(file.path, path.extname(file.path))
         console.log(`About to get links for file: ${title} (${file.path})`)
@@ -175,7 +181,7 @@ export function generate(cmd) {
                 let ast_files_prelinks = await Promise.all(src_files.map( async file => {
                     try {
                         const fetchedFile = await file
-                       
+                        await fs.writeFile(fetchedFile.path, fetchedFile.contents)
                         const renderedFile = await renderProcessor({fs}).process(fetchedFile)
                        
                         return renderedFile
@@ -200,8 +206,8 @@ The contents of this file are private. Only visible by the author.
 
                         }
                         // await mkdirp(path.join(cmd.output,path.dirname(file.path)))
-                        await fs.writeFile(file.path, file.contents)
-                        await fs.writeFile(file.path + '.json', JSON.stringify(file.data.ast, null, 4))
+                        // await fs.writeFile(file.path, file.contents)
+                        // await fs.writeFile(file.path + '.json', JSON.stringify(file.data.ast, null, 4))
                         const html_file = await renderedVFileToDoc(await file, cmd)
                         await fs.writeFile(file.path, file.contents)
                         console.log(`Wrote ${file.path} to "${path.join(cmd.output, file.path)}" to disk`)
@@ -225,8 +231,8 @@ File: ${file.path}
 `
                         file = await renderProcessor({fs}).process(file)
                         // await mkdirp(path.join(cmd.output,path.dirname(file.path)))
-                        await fs.writeFile(file.path, file.contents)
-                        await fs.writeFile(file.path + '.json', JSON.stringify(file.data.ast, null, 4))
+                        // await fs.writeFile(file.path, file.contents)
+                        // await fs.writeFile(file.path + '.json', JSON.stringify(file.data.ast, null, 4))
                         const html_file = await renderedVFileToDoc(await file, cmd)
                         await fs.writeFile(file.path, file.contents)
                         console.log(`Wrote  ${file.path} to "${path.join(cmd.output, file.path)}" to disk`)
