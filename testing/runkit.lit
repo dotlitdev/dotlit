@@ -148,7 +148,14 @@ export const repl = async (src, meta, node) => {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': '*',
   });
-  res.end('{"ping": "pong!"}')
+
+  let data = '';
+  req.on('data', chunk => {
+    data += chunk;
+  })
+  req.on('end', () => {
+    res.end('{"ping": "pong!", "data": "'+data+' "}')
+  })
   }`
 }) 
     return "Setting up repl endpoint"
@@ -163,6 +170,6 @@ export const repl = async (src, meta, node) => {
 ```js repl=node > json
 console.log("Hello world! From .lit and Nodejs thanks to RunKit.")
 ```
-```>json attached=true updated=1621030766931
-[object Object]
+```>json attached=true updated=1621030979600
+{"ping": "pong!", "data": "{"src":"console.log(\"Hello world! From .lit and Nodejs thanks to RunKit.\")\n","meta":{"attrs":{"repl":"node"},"lang":"js","repl":"node","isOutput":false,"output":"json","hasOutput":true,"hasSource":false,"raw":"js repl=node > json"}} "}
 ```
