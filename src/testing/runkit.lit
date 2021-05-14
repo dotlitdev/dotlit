@@ -26,14 +26,14 @@ return RunKit.createNotebook({
     source: "// GeoJSON!\nvar getJSON = require(\"async-get-json\");\n\nawait getJSON(\"https://storage.googleapis.com/maps-devrel/google.json\");"
 })
 ```
-```>txt attached=true updated=1620992547444
+```>txt attached=true updated=1620996024770
 { onEvaluate: [Function: onEvaluate],
   onLoad: undefined,
   onResize: undefined,
   onSave: undefined,
   onURLChanged: undefined,
-  UUID: 0,
-  name: 'runkit-embed-0',
+  UUID: 1,
+  name: 'runkit-embed-1',
   URL: null,
   endpointURL: null }
 ```
@@ -51,25 +51,15 @@ return (async fn => {
     response.end("Hello world!");
 }`
 
-  class App extends React.Component {
-    run() {
-        this.refs.embed.evaluate()
-    }
-    render() {
-        return (
-          <Embed
+  return <Embed
             mode='endpoint'
             readOnly={true}
+            evaluateOnLoad={true}
             hidesActionButton={true}
             source={ helloSource } 
             ref='embed'
             onLoad={ this.run.bind(this) } 
           />
-        )
-    }
-  }
-
-  return <App/>
 
 })()
 ```
