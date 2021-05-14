@@ -1,0 +1,1 @@
+console.log("Hello world! From .lit and Nodejs thanks to RunKit.")
