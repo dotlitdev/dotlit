@@ -153,13 +153,16 @@ export const repl = async (src, meta, node) => {
 }) 
     return "Setting up repl endpoint"
   } else {
-    return await (await fetch(window.__runkitNodeEnpoint, {method: "POST"})).json()
+    return await (await fetch(window.__runkitNodeEnpoint, {
+  method: "POST",
+  body: JSON.stringify({src,meta})
+  })).json()
   }
 }
 ```
 ```js repl=node > json
 console.log("Hello world! From .lit and Nodejs thanks to RunKit.")
 ```
-```>json attached=true updated=1621030414950
-{"ping": "pong!"}
+```>json attached=true updated=1621030766931
+[object Object]
 ```
