@@ -114,7 +114,7 @@ exports.endpoint = function(req, res) {
 ## REPL endpoint plug-in `node`
 
 ```js !plugin type=repl of=node
-export const repl = (src, meta, node) => {
+export const repl = async (src, meta, node) => {
   if (!window.__runkitNodeEnpoint) {
     RunKit.createNotebook({
     // the parent element for the new notebook
@@ -129,13 +129,13 @@ export const repl = (src, meta, node) => {
 }) 
     return "Setting up repl endpoint"
   } else {
-    return window.__runkitNodeEnpoint
+    return await (await fetch(window.__runkitNodeEnpoint)).text()
   }
 }
 ```
 ```js repl=node
 console.log("Hello world! From .lit and Nodejs thanks to RunKit.")
 ```
-```>txt attached=true updated=1621028721485
-true
+```>txt attached=true updated=1621028881204
+https://k0tbn6fvlbed.runkit.sh
 ```
