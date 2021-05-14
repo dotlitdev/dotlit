@@ -1,17 +1,18 @@
 const util = require('util')
+
+function requireFromString(src, filename) {
+  var Module = module.constructor;
+  var m = new Module();
+  m._compile(src, filename);
+  return m.exports;
+}
+
 exports.endpoint = function(req,res) {
   res.writeHead(200, {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': '*',
   });
-
-  function requireFromString(src, filename) {
-    var Module = module.constructor;
-    var m = new Module();
-    m._compile(src, filename);
-    return m.exports;
-}
 
   let data = '';
   req.on('data', chunk => {
