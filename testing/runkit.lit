@@ -201,10 +201,14 @@ export const repl = async (src, meta, node) => {
   if (!window.__runkitNodeEnpoint) {
     return "Still setting up repl endpoint"
   } else {
+    try {
     return await (await fetch(window.__runkitNodeEnpoint, {
   method: "POST",
   body: JSON.stringify({src,meta})
   })).text()
+    } catch(err) {
+      return err.message
+    }
   }
 }
 ```
