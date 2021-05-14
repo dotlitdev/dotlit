@@ -155,9 +155,17 @@ exports.endpoint = function(req,res) {
     const payload = JSON.parse(data)
     const exported = requireFromString(payload.src, payload.meta.filename || "untitled.js")
     let result;
-    if (typeof exported === 'function') result = await exported(payload.meta)
-    res.end(util.inspect({
-       result, exports: exported}))
+    if (typeof exported === 'function') {
+      try {
+        result = await exported(payload.meta)
+      } catch(error) {
+        res.end(util.inspect({error}))
+      }
+    } else {
+      res.end(util.inspect({
+        result, exports: exported
+      }))
+    }
   })
   }
 ```
