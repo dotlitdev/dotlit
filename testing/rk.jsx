@@ -12,7 +12,7 @@ export const viewer = ({node,React}) => {
   }
 
   return url || <Embed
-            mode={meta.mode || 'default'}
+            mode={meta.attrs.mode}
             readOnly={endpoint}
             evaluateOnLoad={endpoint}
             hidesActionButton={endpoint}
