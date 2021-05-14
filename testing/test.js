@@ -1,1 +1,1 @@
-exports.welcome = "Hello world! From .lit and Nodejs thanks to RunKit. " + __dirname
+exports.welcome = "Hello world! From .lit and Nodejs thanks to RunKit. " + process.cwd()
