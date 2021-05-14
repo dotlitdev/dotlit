@@ -15,7 +15,7 @@ export const mdblocks = function ({baseProcessor}) {
             const idx = file.data.__mdcodeblocks++
             // instead of await (why?)
             const p = new Promise(async resolve => {
-                console.log(idx + "Node: ", node)
+                // console.log(idx + "Node: ", node)
                 const p = baseProcessor()
                 const parsed = await p.parse( node.value )
                 const ast = await p.run(parsed)
