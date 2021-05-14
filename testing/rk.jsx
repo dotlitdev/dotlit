@@ -2,7 +2,7 @@ import Embed from 'https://cdn.skypack.dev/runkit-embed-react'
 
 export const viewer = ({node,React}) => {
 
-  const onLoad = (...args) => alert(JSON.stringify([...args]))
+  constantly  onLoad = (...args) => alert(JSON.stringify([...args]))
 
   return <Embed
             mode='endpoint'
