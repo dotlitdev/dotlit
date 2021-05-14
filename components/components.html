@@ -62,7 +62,7 @@ const Document = props =&gt; {
             &lt;link rel=&quot;stylesheet&quot; href={path.join(props.root, &#x27;style.css&#x27;)}/&gt;
         &lt;/head&gt;
         &lt;body&gt;
-            &lt;div id=&quot;lit-app&quot;&gt;&lt;App root={props.root} file={props.file} fs={props.fs} result={result}/&gt;&lt;/div&gt;
+            &lt;div id=&quot;lit-app&quot;&gt;&lt;App root={props.root} file={props.file} fs={props.fs} result={result} ssr={true}/&gt;&lt;/div&gt;
             &lt;div id=&quot;backlinks&quot;&gt;&lt;Backlinks root={props.root} links={props.backlinks || []}/&gt;&lt;/div&gt;
             &lt;script src=&quot;//cdn.jsdelivr.net/npm/eruda&quot;&gt;&lt;/script&gt;
             &lt;script&gt;eruda.init();&lt;/script&gt;
@@ -192,7 +192,7 @@ const Message = ({message, setSelectedCell}) =&gt; {
 
 export const Header = (props) =&gt; {
   console.log(&#x27;&lt;Header/&gt;&#x27;, props)
-  const { root, toggleViewSource } = props
+  const { root, toggleViewSource, ssr } = props
 
   const resetFile = (ctx, localOnly) =&gt; async ev =&gt; {
     console.log(&quot;Reset File:&quot;, ctx.file.path)
@@ -266,11 +266,12 @@ export const Header = (props) =&gt; {
     const remote = ctx.file &amp;&amp; ctx.file.data &amp;&amp; ctx.file.data.times &amp;&amp; ctx.file.data.times.remote
     const ageMessage = ctx.file &amp;&amp; ctx.file.data &amp;&amp; ctx.file.data.times &amp;&amp; ctx.file.data.times.ageMessage
 
-    const menuPlugins = ctx?.file?.data?.plugins?.menu
-    const fileMenuPlugins = ctx?.file?.data?.plugins?.[&quot;filemenu&quot;]
-    const cellMenuPlugins = ctx?.file?.data?.plugins?.[&quot;cellmenu&quot;]
-    const sectionMenuPlugins = ctx?.file?.data?.plugins?.[&quot;sectionmenu&quot;]
-    const helpMenuPlugins = ctx?.file?.data?.plugins?.[&quot;helpmenu&quot;]
+      
+    const menuPlugins = !ssr &amp;&amp; ctx?.file?.data?.plugins?.menu
+    const fileMenuPlugins = !ssr &amp;&amp; ctx?.file?.data?.plugins?.[&quot;filemenu&quot;]
+    const cellMenuPlugins = !ssr &amp;&amp; ctx?.file?.data?.plugins?.[&quot;cellmenu&quot;]
+    const sectionMenuPlugins = !ssr &amp;&amp; ctx?.file?.data?.plugins?.[&quot;sectionmenu&quot;]
+    const helpMenuPlugins = !ssr &amp;&amp; ctx?.file?.data?.plugins?.[&quot;helpmenu&quot;]
 
     console.log(&#x27;&lt;Header/&gt; plugins?&#x27;, menuPlugins)
 
@@ -386,7 +387,7 @@ const onLifecyclePlugins = async (file, type, ...args) =&gt; {
     }
 }
 
-const App = ({root, file, fs, result}) =&gt; {
+const App = ({root, file, fs, result, ssr}) =&gt; {
 
     const [srcAndRes, setSrcAndRes] = useState({
         src: file.contents.toString(),
@@ -472,7 +473,7 @@ const App = ({root, file, fs, result}) =&gt; {
     console.log(`Render &quot;${file.path}&quot; (selected: ${selectedCell} `)
 
     return &lt;SelectionContext.Provider value={state}&gt;
-        &lt;ErrorBoundary&gt;&lt;Header root={root} toggleViewSource={toggleViewSource}/&gt;&lt;/ErrorBoundary&gt;
+        &lt;ErrorBoundary&gt;{ &lt;Header root={root} toggleViewSource={toggleViewSource} ssr={ssr}/&gt; }&lt;/ErrorBoundary&gt;
         &lt;div id=&quot;content&quot;&gt;
           { viewSource 
             // ? &lt;Editor src={srcAndRes.src} update={()=&gt;{}} /&gt;

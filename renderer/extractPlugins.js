@@ -2,6 +2,7 @@ import path from 'path'
 import { getConsoleForNamespace } from '../utils/console'
 import { selectAll } from 'unist-util-select'
 import {btoa, atob } from '../utils/safe-encoders'
+import { transform } from '../repl'
 
 const console = getConsoleForNamespace('plugins')
    
@@ -12,18 +13,19 @@ const extractModule = async (src, filename) => {
         var m = new Module();
 
         if (typeof m._compile === 'function') {
-            return {}
-        //     m._compile(src, filename);
-        //     console.log("Compiled as commonjs module", m, m.exports)
-        //     if (m.exports && Object.keys(m.exports).length) return m.exports;
-        //     else throw new Error("No module.exports when loaded as commonjs")
+            const babel = transform(filename, src, {type: 'commonjs'})
+            m._compile(babel.code, filename);
+            console.log("Compiled as commonjs module", m, m.exports)
+            if (m.exports && Object.keys(m.exports).length) return m.exports;
+            else throw new Error("No module.exports when loaded as commonjs")
         }
         
     }
     console.log("Importing as es6 module via data:uri import.")
     // const blobUrl = URL.createObjectURL(new Blob([src], {type: 'text/javascript'}))
     // return await import(/* webpackIgnore: true */ blobUrl)
-    return await import(/* webpackIgnore: true */ `data:text/javascript;base64,${ btoa(src)}`)
+    const babel = transform(filename, src) 
+    return await import(/* webpackIgnore: true */ `data:text/javascript;base64,${ btoa(babel.code)}`)
 }
 
 export const extractPlugins = ({fs} = {}) => {
@@ -48,7 +50,7 @@ export const extractPlugins = ({fs} = {}) => {
                 console.log('Found Plugin', meta.raw)
                 
                 let type = meta.type || 'unknown'
-                const types = ['parser', 'renderer', 'transformer', 'viewer', 'unknown']
+                const types = ['parser', 'renderer', 'transformer', 'viewer', 'unknown', 'onsave', 'onload', 'onselect', 'menu', 'data', 'setting']
                 
                 file.data = file.data || {}
                 file.data.plugins = file.data.plugins || {}

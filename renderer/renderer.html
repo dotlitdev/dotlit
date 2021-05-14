@@ -67,6 +67,18 @@ export function processor({fs,litroot} = {}) {
              }
          }
      })
+
+     // use render plugins
+    .use( (...args) =&gt; {
+        return async (tree, file) =&gt; {
+            const rendererPlugins = Object.keys(file?.data?.plugins?.renderer || {})
+            console.log(&quot;Looking for renderer plugins &quot;,  )
+            for (const plugin in rendererPlugins) {
+                console.log(&quot;Render Plugin&quot;, plugin)
+                // await plugin(...args)(tree, file)
+            }
+        }
+    })
     .use(remark2rehype, {
         allowDangerousHtml: true,
         // passThrough: [&#x27;mdcode&#x27;],
@@ -112,6 +124,7 @@ export async function renderedVFileToDoc(vfile, cmd) {
 import { getConsoleForNamespace } from &#x27;../utils/console&#x27;
 import { selectAll } from &#x27;unist-util-select&#x27;
 import {btoa, atob } from &#x27;../utils/safe-encoders&#x27;
+import { transform } from &#x27;../repl&#x27;
 
 const console = getConsoleForNamespace(&#x27;plugins&#x27;)
    
@@ -122,18 +135,19 @@ const extractModule = async (src, filename) =&gt; {
         var m = new Module();
 
         if (typeof m._compile === &#x27;function&#x27;) {
-            return {}
-        //     m._compile(src, filename);
-        //     console.log(&quot;Compiled as commonjs module&quot;, m, m.exports)
-        //     if (m.exports &amp;&amp; Object.keys(m.exports).length) return m.exports;
-        //     else throw new Error(&quot;No module.exports when loaded as commonjs&quot;)
+            const babel = transform(filename, src, {type: &#x27;commonjs&#x27;})
+            m._compile(babel.code, filename);
+            console.log(&quot;Compiled as commonjs module&quot;, m, m.exports)
+            if (m.exports &amp;&amp; Object.keys(m.exports).length) return m.exports;
+            else throw new Error(&quot;No module.exports when loaded as commonjs&quot;)
         }
         
     }
     console.log(&quot;Importing as es6 module via data:uri import.&quot;)
     // const blobUrl = URL.createObjectURL(new Blob([src], {type: &#x27;text/javascript&#x27;}))
     // return await import(/* webpackIgnore: true */ blobUrl)
-    return await import(/* webpackIgnore: true */ `data:text/javascript;base64,${ btoa(src)}`)
+    const babel = transform(filename, src) 
+    return await import(/* webpackIgnore: true */ `data:text/javascript;base64,${ btoa(babel.code)}`)
 }
 
 export const extractPlugins = ({fs} = {}) =&gt; {
@@ -158,7 +172,7 @@ export const extractPlugins = ({fs} = {}) =&gt; {
                 console.log(&#x27;Found Plugin&#x27;, meta.raw)
                 
                 let type = meta.type || &#x27;unknown&#x27;
-                const types = [&#x27;parser&#x27;, &#x27;renderer&#x27;, &#x27;transformer&#x27;, &#x27;viewer&#x27;, &#x27;unknown&#x27;]
+                const types = [&#x27;parser&#x27;, &#x27;renderer&#x27;, &#x27;transformer&#x27;, &#x27;viewer&#x27;, &#x27;unknown&#x27;, &#x27;onsave&#x27;, &#x27;onload&#x27;, &#x27;onselect&#x27;, &#x27;menu&#x27;, &#x27;data&#x27;, &#x27;setting&#x27;]
                 
                 file.data = file.data || {}
                 file.data.plugins = file.data.plugins || {}

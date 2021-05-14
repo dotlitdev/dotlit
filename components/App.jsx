@@ -32,7 +32,7 @@ const onLifecyclePlugins = async (file, type, ...args) => {
     }
 }
 
-const App = ({root, file, fs, result}) => {
+const App = ({root, file, fs, result, ssr}) => {
 
     const [srcAndRes, setSrcAndRes] = useState({
         src: file.contents.toString(),
@@ -118,7 +118,7 @@ const App = ({root, file, fs, result}) => {
     console.log(`Render "${file.path}" (selected: ${selectedCell} `)
 
     return <SelectionContext.Provider value={state}>
-        <ErrorBoundary><Header root={root} toggleViewSource={toggleViewSource}/></ErrorBoundary>
+        <ErrorBoundary>{ <Header root={root} toggleViewSource={toggleViewSource} ssr={ssr}/> }</ErrorBoundary>
         <div id="content">
           { viewSource 
             // ? <Editor src={srcAndRes.src} update={()=>{}} />

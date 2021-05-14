@@ -7,6 +7,8 @@ import {viewer as graphViewer} from './viewers/graph'
 
 const console = getConsoleForNamespace('Viewers')
 
+const lit = typeof window !== 'undefined' ? window.lit : {}
+
 const viewers = {
   csv: ({node}) => {
     const rows = node.value.split("\n").map( (row,i) => {

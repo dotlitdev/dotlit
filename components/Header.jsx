@@ -116,7 +116,7 @@ const Message = ({message, setSelectedCell}) => {
 
 export const Header = (props) => {
   console.log('<Header/>', props)
-  const { root, toggleViewSource } = props
+  const { root, toggleViewSource, ssr } = props
 
   const resetFile = (ctx, localOnly) => async ev => {
     console.log("Reset File:", ctx.file.path)
@@ -190,11 +190,12 @@ export const Header = (props) => {
     const remote = ctx.file && ctx.file.data && ctx.file.data.times && ctx.file.data.times.remote
     const ageMessage = ctx.file && ctx.file.data && ctx.file.data.times && ctx.file.data.times.ageMessage
 
-    const menuPlugins = ctx?.file?.data?.plugins?.menu
-    const fileMenuPlugins = ctx?.file?.data?.plugins?.["filemenu"]
-    const cellMenuPlugins = ctx?.file?.data?.plugins?.["cellmenu"]
-    const sectionMenuPlugins = ctx?.file?.data?.plugins?.["sectionmenu"]
-    const helpMenuPlugins = ctx?.file?.data?.plugins?.["helpmenu"]
+      
+    const menuPlugins = !ssr && ctx?.file?.data?.plugins?.menu
+    const fileMenuPlugins = !ssr && ctx?.file?.data?.plugins?.["filemenu"]
+    const cellMenuPlugins = !ssr && ctx?.file?.data?.plugins?.["cellmenu"]
+    const sectionMenuPlugins = !ssr && ctx?.file?.data?.plugins?.["sectionmenu"]
+    const helpMenuPlugins = !ssr && ctx?.file?.data?.plugins?.["helpmenu"]
 
     console.log('<Header/> plugins?', menuPlugins)
 

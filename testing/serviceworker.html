@@ -20,7 +20,7 @@
 </code></pre></output></codecell></div></cell><cell startpos="25:1-706" endpos="32:4-820" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">if (&#x27;serviceWorker&#x27; in navigator) {
   return true
 }
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.4w ago</span></span></span><output><pre><code class="txt">true
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.5w ago</span></span></span><output><pre><code class="txt">true
 </code></pre></output></codecell></div></cell><cell startpos="35:1-823" endpos="42:4-1000" class="code"><div class="cell-content"><codecell class="tag-register lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#d6dc2e" class="tag">register</span></span><pre><code class="js">return navigator
           .serviceWorker
           .register(&#x27;/serviceworker.js?root=&#x27;+lit.location.root)
@@ -46,9 +46,9 @@ Unregistered 1 regisration(s)
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.6w ago</span></span></span><output><pre><code class="txt">404
 </code></pre></output></codecell></div></cell><cell startpos="76:1-1720" endpos="82:4-1846" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return fetch(&#x27;/manifest.json&#x27;)
        .then(resp =&gt; resp.status)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.8w ago</span></span></span><output><pre><code class="txt">200
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.9w ago</span></span></span><output><pre><code class="txt">200
 </code></pre></output></codecell></div></cell><cell startpos="83:1-1847" endpos="88:4-1948" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (new Response(&#x27;hello&#x27;)).text()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.4w ago</span></span></span><output><pre><code class="txt">hello
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.5w ago</span></span></span><output><pre><code class="txt">hello
 </code></pre></output></codecell></div></cell><cell startpos="90:1-1950" endpos="90:195-2144"><div class="cell-content"><p>As of now, the service worker doesn&#x27;t cache anything and just passes through to the network as normal. Except if the <code>request.url</code> ends with <code>--sw</code> in which case it returns a mock/info response.</p></div></cell><cell startpos="91:1-2145" endpos="100:4-3836" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return fetch(&#x27;--sw&#x27;)
        .then(resp =&gt; resp.text()
                           .then( text =&gt; `${resp.status}\n${text}`)
