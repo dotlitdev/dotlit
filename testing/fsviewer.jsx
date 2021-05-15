@@ -27,6 +27,7 @@ export const viewer = ({node, React}) => {
   return <div>
      <input value={src} onChange={ev=>setSrc(ev.target.value)}/>
      <Stat stat={stat}/>
-     {content}
+     {!stat && content}
+     {stat && <button>Delete</button>}
     </div>
 }
