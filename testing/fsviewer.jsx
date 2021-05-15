@@ -6,7 +6,7 @@ export const viewer = ({node, React}) => {
     if (stat.message) return <div>{stat.message}</div>
     return <div>
       Type: <span>{stat.type}</span> mtime: <span>{stat.mtimeMs}</span>
-      {stat.contents && stat.contents.map( l => <div>{l}</div>)}
+      {stat.contents && stat.contents.map( l => <div>{props.src + l}</div>)}
     </div>
   }
 
@@ -30,7 +30,7 @@ export const viewer = ({node, React}) => {
 
   return <div>
      <input value={src} onChange={ev=>setSrc(ev.target.value)}/>
-     <Stat stat={stat}/>
+     <Stat src={src} stat={stat}/>
      {!stat && content}
      {stat && <button>Delete</button>}
      {stat && <button>Reset</button>}

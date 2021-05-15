@@ -1752,7 +1752,7 @@ return lit.fs.unlink(path)
      end: { line: 1761, column: 4, offset: 96999 } } }
 422
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="1782:1-97429" endpos="1830:4-98642"><cell startpos="1782:1-97429" endpos="1782:12-97440"><div class="cell-content"><h2 id="plugins">Plugins</h2></div></cell><section depth="3" class="" startpos="1784:1-97442" endpos="1830:4-98642"><cell startpos="1784:1-97442" endpos="1784:16-97457"><div class="cell-content"><h3 id="fs-plugin"><code>fs</code> plugin</h3></div></cell><cell startpos="1786:1-97459" endpos="1826:4-98612" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-jsx local collapsed"><a name="fsviewer.jsx"></a><span class="meta"><span class="lang">jsx</span><span class="filename">fsviewer.jsx</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=fs</span></span><pre><code class="jsx">export const viewer = ({node, React}) =&gt; {
+<section depth="2" class="" startpos="1782:1-97429" endpos="1830:4-98664"><cell startpos="1782:1-97429" endpos="1782:12-97440"><div class="cell-content"><h2 id="plugins">Plugins</h2></div></cell><section depth="3" class="" startpos="1784:1-97442" endpos="1830:4-98664"><cell startpos="1784:1-97442" endpos="1784:16-97457"><div class="cell-content"><h3 id="fs-plugin"><code>fs</code> plugin</h3></div></cell><cell startpos="1786:1-97459" endpos="1826:4-98634" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-jsx local collapsed"><a name="fsviewer.jsx"></a><span class="meta"><span class="lang">jsx</span><span class="filename">fsviewer.jsx</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=fs</span></span><pre><code class="jsx">export const viewer = ({node, React}) =&gt; {
   const {useState, useEffect} = React
 
   const Stat = (props) =&gt; {
@@ -1760,7 +1760,7 @@ return lit.fs.unlink(path)
     if (stat.message) return &lt;div&gt;{stat.message}&lt;/div&gt;
     return &lt;div&gt;
       Type: &lt;span&gt;{stat.type}&lt;/span&gt; mtime: &lt;span&gt;{stat.mtimeMs}&lt;/span&gt;
-      {stat.contents &amp;&amp; stat.contents.map( l =&gt; &lt;div&gt;{l}&lt;/div&gt;)}
+      {stat.contents &amp;&amp; stat.contents.map( l =&gt; &lt;div&gt;{props.src + l}&lt;/div&gt;)}
     &lt;/div&gt;
   }
 
@@ -1784,16 +1784,16 @@ return lit.fs.unlink(path)
 
   return &lt;div&gt;
      &lt;input value={src} onChange={ev=&gt;setSrc(ev.target.value)}/&gt;
-     &lt;Stat stat={stat}/&gt;
+     &lt;Stat src={src} stat={stat}/&gt;
      {!stat &amp;&amp; content}
      {stat &amp;&amp; &lt;button&gt;Delete&lt;/button&gt;}
      {stat &amp;&amp; &lt;button&gt;Reset&lt;/button&gt;}
      {stat &amp;&amp; &lt;button&gt;Diff&lt;/button&gt;}
     &lt;/div&gt;
 }
-</code></pre></codecell></div></cell><cell startpos="1828:1-98614" endpos="1830:4-98642" class="code output"><div class="cell-content"><codecell class="lang-fs local output"><span class="meta"><span class="lang">fs</span></span><output><pre><code class="fs">/renderer/viewers
+</code></pre></codecell></div></cell><cell startpos="1828:1-98636" endpos="1830:4-98664" class="code output"><div class="cell-content"><codecell class="lang-fs local output"><span class="meta"><span class="lang">fs</span></span><output><pre><code class="fs">/renderer/viewers
 </code></pre></output></codecell></div></cell></section></section>
-<section depth="3" class="" startpos="1832:1-98644" endpos="2038:4-103345"><cell startpos="1832:1-98644" endpos="1832:22-98665"><div class="cell-content"><h3 id="finder-local-fs">Finder (local fs)</h3></div></cell><cell startpos="1834:1-98667" endpos="2038:4-103345" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="output">&gt; json !collapse</span></span><pre><code class="js">const path = lit.utils.path
+<section depth="3" class="" startpos="1832:1-98666" endpos="2038:4-103367"><cell startpos="1832:1-98666" endpos="1832:22-98687"><div class="cell-content"><h3 id="finder-local-fs">Finder (local fs)</h3></div></cell><cell startpos="1834:1-98689" endpos="2038:4-103367" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="output">&gt; json !collapse</span></span><pre><code class="js">const path = lit.utils.path
 const visit = async (root) =&gt; {
   const list = await lit.fs.readdir(root)
   return Promise.all(list.map( async key =&gt; {
@@ -1810,7 +1810,7 @@ const visit = async (root) =&gt; {
 }
 
 return (async fn =&gt; JSON.stringify(await visit(&#x27;/&#x27;), null, 2))()
-</code></pre></codecell><codecell class="dir-collapse lang-json local collapsed output"><span class="meta"><span class="lang">json</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="updatedAt">Updated <span class="Time relative">46m ago</span></span></span><output><pre><code class="json">[
+</code></pre></codecell><codecell class="dir-collapse lang-json local collapsed output"><span class="meta"><span class="lang">json</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="updatedAt">Updated <span class="Time relative">47m ago</span></span></span><output><pre><code class="json">[
   {
     &quot;pathname&quot;: &quot;/testing&quot;,
     &quot;type&quot;: &quot;dir&quot;,
@@ -1995,7 +1995,7 @@ return (async fn =&gt; JSON.stringify(await visit(&#x27;/&#x27;), null, 2))()
   }
 ]
 </code></pre></output></codecell></div></cell></section>
-<section depth="3" class="" startpos="2040:1-103347" endpos="2092:4-104870"><cell startpos="2040:1-103347" endpos="2040:27-103373"><div class="cell-content"><h3 id="finder-from-manifest">Finder (from manifest)</h3></div></cell><cell startpos="2043:1-103376" endpos="2089:4-104848" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=search</span></span><pre><code class="js">
+<section depth="3" class="" startpos="2040:1-103369" endpos="2092:4-104892"><cell startpos="2040:1-103369" endpos="2040:27-103395"><div class="cell-content"><h3 id="finder-from-manifest">Finder (from manifest)</h3></div></cell><cell startpos="2043:1-103398" endpos="2089:4-104870" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=search</span></span><pre><code class="js">
 const sortBy = keys =&gt; (a, b) =&gt; {
   for (const key of keys) {
      if (a[key] !== b[key]) break;
@@ -2040,4 +2040,4 @@ export const viewer = ({node, React}) =&gt; {
     className: &#x27;custom-react-view&#x27;,
   }, [rc(&#x27;input&#x27;,{style:{width:&#x27;100%&#x27;, fontSize: &#x27;1.2em&#x27;},value:src, onChange: e =&gt; setSrc(e.target.value)}), content])
 }
-</code></pre></codecell></div></cell><cell startpos="2090:1-104849" endpos="2092:4-104870" class="code output"><div class="cell-content"><codecell class="lang-search local output"><span class="meta"><span class="lang">search</span></span><div class="custom-react-view"><input style="width:100%;font-size:1.2em" value="G.*hUb"/>Loading...</div></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (3)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li><li><a title="Isomorphic Git" href="/testing/isomorphic_git.html">Isomorphic Git</a></li><li><a title="Local and Remote files" href="/testing/local_remote_files.html">Local and Remote files</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
+</code></pre></codecell></div></cell><cell startpos="2090:1-104871" endpos="2092:4-104892" class="code output"><div class="cell-content"><codecell class="lang-search local output"><span class="meta"><span class="lang">search</span></span><div class="custom-react-view"><input style="width:100%;font-size:1.2em" value="G.*hUb"/>Loading...</div></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (3)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li><li><a title="Isomorphic Git" href="/testing/isomorphic_git.html">Isomorphic Git</a></li><li><a title="Local and Remote files" href="/testing/local_remote_files.html">Local and Remote files</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
