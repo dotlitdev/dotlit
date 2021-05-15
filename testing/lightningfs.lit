@@ -1778,24 +1778,30 @@ return lit.fs.unlink(path)
 ### `fs` plugin
 
 ```jsx fsviewer.jsx babel=true !plugin of=fs !collapse
+
+const Stat = (props) => {
+  return <div>
+    Type: {props.type} mtime: {props.mtimeMs}
+  </div>
+}
 export const viewer = ({node, React}) => {
   const {useState, useEffect} = React
   const [content, setContent] = useState(<span>loading...</span>)
-  const [type, setType] = useState(undefined)
+  const [stat, setStat] = useState({})
   const [src, setSrc] = useState(node.data.value.trim())
   const meta = node.properties.meta
   useEffect(async fn => {
     let stat
     try {
       stat = await lit.fs.stat(src)
-      setType(stat.type)
+      setStat(stat)
     } catch(err) {
       setContent(<span>{err.message}</span>)
     }
   }, [src])
   return <div>
      <input value={src} onChange={ev=>setSrc(ev.target.value)}/>
-     <div>Type: {type}</div>
+     <Stat {...stat}/>
      {content}
     </div>
 }
