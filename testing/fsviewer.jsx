@@ -1,7 +1,8 @@
 export const viewer = ({node, React}) => {
   const {useState, useEffect} = React
 
-  const Stat = ({stat}={}) => {
+  const Stat = (props) => {
+    const stat = props?.stat || {}
     return <div>
       Type: <span>{stat.type}</span>
       mtime: <span>{stat.mtimeMs}</span>
