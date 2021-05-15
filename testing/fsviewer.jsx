@@ -9,12 +9,12 @@ export const viewer = ({node, React}) => {
       Type: <span>{stat.type}</span> mtime: <span>{stat.mtimeMs}</span>
       {stat.contents && stat.contents.map( l => {
 
-      const name = l[0]
+      const name = join(props.src,l[0])
       const type = l[1].type
       const style = type === 'dir'
                     ? {color: "red"}
                     : null
-      return <div style={style}>{join(props.src,name)}</div>
+      return <div onClick={props.select(name)} style={style}>{name}</div>
      })}
     </div>
   }
@@ -41,7 +41,7 @@ export const viewer = ({node, React}) => {
 
   return <div>
      <input value={src} onChange={ev=>setSrc(ev.target.value)}/>
-     <Stat src={src} stat={stat}/>
+     <Stat src={src} stat={stat} select={setSrc}/>
      {!stat && content}
      {stat && <button>Delete</button>}
      {stat && <button>Reset</button>}
