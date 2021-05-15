@@ -1789,6 +1789,7 @@ export const viewer = ({node, React}) => {
 
   const Stat = (props) => {
     const stat = props?.stat || {}
+    if (stat.message) return <div>{stat.message}</div>
     return <div>
       Type: <span>{stat.type}</span> 
       mtime: <span>{stat.mtimeMs}</span>
@@ -1806,7 +1807,7 @@ export const viewer = ({node, React}) => {
       stat = await lit.fs.stat(src)
       setStat(stat)
     } catch(err) {
-      setContent(<span>{err.message}</span>)
+      setStat(err)
     }
   }, [src])
 
