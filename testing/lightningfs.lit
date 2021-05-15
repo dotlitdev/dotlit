@@ -1769,7 +1769,7 @@ const visit = async (root) => {
     const stat = await lit.fs.stat(pathname)
     let contents
     if (stat.type === 'dir') contents = await visit(pathname)
-    else contents = await lit.fs.readFile(pathname, {encoding: 'utf8'})
+    else contents = (await lit.fs.readFile(pathname, {encoding: 'utf8'})).slice(0,10) + "..."
     return {pathname, type: stat.type, contents}
   }))
 }
