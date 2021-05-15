@@ -88,10 +88,13 @@ function generateBacklinks(files, root) {
         const fileLink = decorateLinkNode({ url: file.path })
         const title = file.data.frontmatter.title || `Title TBD (${fileLink.data.canonical})`
         console.log(`[${title}] Adding "${file.path}" as "${fileLink.data.canonical} to manifest."`)
+        const links = getLinks(file, root)
         manifest[fileLink.data.canonical] = manifest[fileLink.data.canonical] || {
             backlinks: [],
             exists: true,
             title: title
+            links: links.length,
+            size: file.contents.length,
         }
     })
     files.forEach( file => {
