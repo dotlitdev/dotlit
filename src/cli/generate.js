@@ -92,7 +92,7 @@ function generateBacklinks(files, root) {
         manifest[fileLink.data.canonical] = manifest[fileLink.data.canonical] || {
             backlinks: [],
             exists: true,
-            title: title
+            title: title,
             links: links.length,
             size: file.contents.length,
         }
