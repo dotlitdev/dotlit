@@ -1,7 +1,7 @@
 export const viewer = ({node, React}) => {
   const {useState, useEffect} = React
   const [content, setContent] = useState(<span>loading...</span>)
-  const src = node.data.value.trim()
+  const [src, setSrc] = useState(node.data.value.trim())
   const meta = node.properties.meta
   useEffect(async fn => {
     let stat
@@ -13,7 +13,7 @@ export const viewer = ({node, React}) => {
     }
   }, [src])
   return <div>
-     <input value={src}/>
+     <input value={src} onChange={ev=>setSrc(ev.target.value)}/>
      {content}
     </div>
 }
