@@ -1,7 +1,8 @@
 
 const Stat = ({stat}={}) => {
   return <div>
-    Type: {stat.type} mtime: {stat.mtimeMs}
+    Type: <span>{stat.type}</span>
+    mtime: <span>{stat.mtimeMs}</span>
   </div>
 }
 export const viewer = ({node, React}) => {
