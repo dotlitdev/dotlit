@@ -29,5 +29,7 @@ export const viewer = ({node, React}) => {
      <Stat stat={stat}/>
      {!stat && content}
      {stat && <button>Delete</button>}
+     {stat && <button>Reset</button>}
+     {stat && <button>Diff</button>}
     </div>
 }
