@@ -1,6 +1,6 @@
 <html data-reactroot=""><head><title>Lightning FS</title><meta name="litsrc" value="testing/lightningfs.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"><div class="lit-message"><span class="message">Plugin Error (unknown): Cannot find module &#x27;@babel/runtime/helpers/interopRequireDefault&#x27;
 Require stack:
-- </span><span class="name">1786:1-1834:4</span></div></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="5:21-84"><cell startpos="1:1-0" endpos="3:47-62"><div class="cell-content"><h1 id="lightning-fs">Lightning FS</h1><p><a href="https://github.com/isomorphic-git/lightning-fs">https://github.com/isomorphic-git/lightning-fs<span class="linkIcon">↗</span></a></p></div></cell><section depth="2" class="" startpos="5:1-64" endpos="5:21-84"><cell startpos="5:1-64" endpos="5:21-84"><div class="cell-content"><h2 id="table-of-contents">Table of Contents</h2><ul>
+- </span><span class="name">1786:1-1837:4</span></div></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="5:21-84"><cell startpos="1:1-0" endpos="3:47-62"><div class="cell-content"><h1 id="lightning-fs">Lightning FS</h1><p><a href="https://github.com/isomorphic-git/lightning-fs">https://github.com/isomorphic-git/lightning-fs<span class="linkIcon">↗</span></a></p></div></cell><section depth="2" class="" startpos="5:1-64" endpos="5:21-84"><cell startpos="5:1-64" endpos="5:21-84"><div class="cell-content"><h2 id="table-of-contents">Table of Contents</h2><ul>
 <li>
 <p><a href="#bugs-">Bugs 🐜<span class="linkIcon">§</span></a></p>
 </li>
@@ -1752,7 +1752,7 @@ return lit.fs.unlink(path)
      end: { line: 1761, column: 4, offset: 96999 } } }
 422
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="1782:1-97429" endpos="1838:4-98922"><cell startpos="1782:1-97429" endpos="1782:12-97440"><div class="cell-content"><h2 id="plugins">Plugins</h2></div></cell><section depth="3" class="" startpos="1784:1-97442" endpos="1838:4-98922"><cell startpos="1784:1-97442" endpos="1784:16-97457"><div class="cell-content"><h3 id="fs-plugin"><code>fs</code> plugin</h3></div></cell><cell startpos="1786:1-97459" endpos="1834:4-98892" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-jsx local collapsed"><a name="fsviewer.jsx"></a><span class="meta"><span class="lang">jsx</span><span class="filename">fsviewer.jsx</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=fs</span></span><pre><code class="jsx">export const viewer = ({node, React}) =&gt; {
+<section depth="2" class="" startpos="1782:1-97429" endpos="1841:4-99035"><cell startpos="1782:1-97429" endpos="1782:12-97440"><div class="cell-content"><h2 id="plugins">Plugins</h2></div></cell><section depth="3" class="" startpos="1784:1-97442" endpos="1841:4-99035"><cell startpos="1784:1-97442" endpos="1784:16-97457"><div class="cell-content"><h3 id="fs-plugin"><code>fs</code> plugin</h3></div></cell><cell startpos="1786:1-97459" endpos="1837:4-99005" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-jsx local collapsed"><a name="fsviewer.jsx"></a><span class="meta"><span class="lang">jsx</span><span class="filename">fsviewer.jsx</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=fs</span></span><pre><code class="jsx">export const viewer = ({node, React}) =&gt; {
   const {useState, useEffect} = React
   const join = lit.utils.path.join
 
@@ -1765,7 +1765,10 @@ return lit.fs.unlink(path)
 
       const name = l[0]
       const type = l[1].type
-      return &lt;div&gt;{join(props.src,name)}&lt;/div&gt;
+      const style = type === &#x27;dir&#x27;
+                    ? {color: &quot;red&quot;}
+                    : null
+      return &lt;div style={style}&gt;{join(props.src,name)}&lt;/div&gt;
      })}
     &lt;/div&gt;
   }
@@ -1799,9 +1802,9 @@ return lit.fs.unlink(path)
      {stat &amp;&amp; &lt;button&gt;Diff&lt;/button&gt;}
     &lt;/div&gt;
 }
-</code></pre></codecell></div></cell><cell startpos="1836:1-98894" endpos="1838:4-98922" class="code output"><div class="cell-content"><codecell class="lang-fs local output"><span class="meta"><span class="lang">fs</span></span><output><pre><code class="fs">/renderer/viewers
+</code></pre></codecell></div></cell><cell startpos="1839:1-99007" endpos="1841:4-99035" class="code output"><div class="cell-content"><codecell class="lang-fs local output"><span class="meta"><span class="lang">fs</span></span><output><pre><code class="fs">/renderer/viewers
 </code></pre></output></codecell></div></cell></section></section>
-<section depth="3" class="" startpos="1840:1-98924" endpos="2046:4-103625"><cell startpos="1840:1-98924" endpos="1840:22-98945"><div class="cell-content"><h3 id="finder-local-fs">Finder (local fs)</h3></div></cell><cell startpos="1842:1-98947" endpos="2046:4-103625" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="output">&gt; json !collapse</span></span><pre><code class="js">const path = lit.utils.path
+<section depth="3" class="" startpos="1843:1-99037" endpos="2049:4-103738"><cell startpos="1843:1-99037" endpos="1843:22-99058"><div class="cell-content"><h3 id="finder-local-fs">Finder (local fs)</h3></div></cell><cell startpos="1845:1-99060" endpos="2049:4-103738" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="output">&gt; json !collapse</span></span><pre><code class="js">const path = lit.utils.path
 const visit = async (root) =&gt; {
   const list = await lit.fs.readdir(root)
   return Promise.all(list.map( async key =&gt; {
@@ -2003,7 +2006,7 @@ return (async fn =&gt; JSON.stringify(await visit(&#x27;/&#x27;), null, 2))()
   }
 ]
 </code></pre></output></codecell></div></cell></section>
-<section depth="3" class="" startpos="2048:1-103627" endpos="2100:4-105150"><cell startpos="2048:1-103627" endpos="2048:27-103653"><div class="cell-content"><h3 id="finder-from-manifest">Finder (from manifest)</h3></div></cell><cell startpos="2051:1-103656" endpos="2097:4-105128" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=search</span></span><pre><code class="js">
+<section depth="3" class="" startpos="2051:1-103740" endpos="2103:4-105263"><cell startpos="2051:1-103740" endpos="2051:27-103766"><div class="cell-content"><h3 id="finder-from-manifest">Finder (from manifest)</h3></div></cell><cell startpos="2054:1-103769" endpos="2100:4-105241" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=search</span></span><pre><code class="js">
 const sortBy = keys =&gt; (a, b) =&gt; {
   for (const key of keys) {
      if (a[key] !== b[key]) break;
@@ -2048,4 +2051,4 @@ export const viewer = ({node, React}) =&gt; {
     className: &#x27;custom-react-view&#x27;,
   }, [rc(&#x27;input&#x27;,{style:{width:&#x27;100%&#x27;, fontSize: &#x27;1.2em&#x27;},value:src, onChange: e =&gt; setSrc(e.target.value)}), content])
 }
-</code></pre></codecell></div></cell><cell startpos="2098:1-105129" endpos="2100:4-105150" class="code output"><div class="cell-content"><codecell class="lang-search local output"><span class="meta"><span class="lang">search</span></span><div class="custom-react-view"><input style="width:100%;font-size:1.2em" value="G.*hUb"/>Loading...</div></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (3)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li><li><a title="Isomorphic Git" href="/testing/isomorphic_git.html">Isomorphic Git</a></li><li><a title="Local and Remote files" href="/testing/local_remote_files.html">Local and Remote files</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
+</code></pre></codecell></div></cell><cell startpos="2101:1-105242" endpos="2103:4-105263" class="code output"><div class="cell-content"><codecell class="lang-search local output"><span class="meta"><span class="lang">search</span></span><div class="custom-react-view"><input style="width:100%;font-size:1.2em" value="G.*hUb"/>Loading...</div></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (3)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li><li><a title="Isomorphic Git" href="/testing/isomorphic_git.html">Isomorphic Git</a></li><li><a title="Local and Remote files" href="/testing/local_remote_files.html">Local and Remote files</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
