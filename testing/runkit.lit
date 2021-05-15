@@ -187,17 +187,15 @@ if (typeof lit !== 'undefined' && !window.__runkitNodeEnpoint) {
     document.body.appendChild(el)
     el.setAttribute("style", "height:0;")
     RunKit.createNotebook({
-    element: el,
-    mode: 'endpoint',
-    onLoad: async (rk) => { 
-      window.__runkitNodeEnpoint = await rk.getEndpointURL()
-      document.body.removeChild(el)
-    },
-    evaluateOnLoad: true,
-    // specify the source of the notebook
-    source: await lit.fs.readFile("testing/runkit-repl-endpoint.js", {encoding: 'utf8'})
-  })
-
+      element: el,
+      mode: 'endpoint',
+      onLoad: async (rk) => { 
+        window.__runkitNodeEnpoint = await rk.getEndpointURL()
+        document.body.removeChild(el)
+      },
+      evaluateOnLoad: true,
+      source: await lit.fs.readFile("testing/runkit-repl-endpoint.js", {encoding: 'utf8'})
+    })
   })()
 }
 
