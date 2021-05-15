@@ -1761,8 +1761,33 @@ logged patch
 ### Finder (local fs)
 
 ```js
-const root = lit.fs.readdir('/')
-return root
+const path = lit.utils.path
+const visit = async (root) => {
+  const list = await lit.fs.readdir(root)
+  return Promise.all(list.map( async key => {
+    const pathname = path.join(root,key)
+    const stat = await lit.fs.stat(pathname)
+    return {pathname, type: stat.type}
+  }))
+}
+
+return visit('/')
+```
+```>txt attached=true updated=1621115045613
+[ 'testing',
+  '.git',
+  'index.lit',
+  'scratch_pad.lit',
+  'plugin_system.lit',
+  'parser',
+  '<',
+  'meta',
+  'renderer',
+  'log',
+  'execute_code_cells.lit',
+  'articles',
+  'utils',
+  'repls.lit' ]
 ```
 
 ### Finder (from manifest)
