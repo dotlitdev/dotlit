@@ -11,7 +11,7 @@ export const viewer = ({node, React}) => {
 
       const name = l[0]
       const type = l[1].type
-      return <div style={{fontWeight: type === 'dir' ? 'bold' : 'normal'}}>{join(props.src,name)}</div>
+      return <div>{join(props.src,name)}</div>
      })}
     </div>
   }
