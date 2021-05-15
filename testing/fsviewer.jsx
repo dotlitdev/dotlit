@@ -14,7 +14,7 @@ export const viewer = ({node, React}) => {
       const style = type === 'dir'
                     ? {color: "red"}
                     : null
-      return <div onClick={props.select(name)} style={style}>{name}</div>
+      return <div onClick={ev=> props.select(name)} style={style}>{name}</div>
      })}
     </div>
   }
