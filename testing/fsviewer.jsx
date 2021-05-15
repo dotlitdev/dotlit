@@ -26,7 +26,7 @@ export const viewer = ({node, React}) => {
     try {
       stat = await lit.fs.stat(src)
       if (stat.type === 'dir') {
-          stat.contents = Promise.all((await lit.fs.readdir(src)).map( async l => [l,await lit.fs.stat(join(src,l))]))
+          stat.contents = await Promise.all((await lit.fs.readdir(src)).map( async l => [l,await lit.fs.stat(join(src,l))]))
       }
       setStat(stat)
     } catch(err) {
