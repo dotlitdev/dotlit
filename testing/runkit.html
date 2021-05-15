@@ -16,7 +16,7 @@ Require stack:
     // specify the source of the notebook
     source: &quot;// GeoJSON!\nvar getJSON = require(\&quot;async-get-json\&quot;);\n\nawait getJSON(\&quot;https://storage.googleapis.com/maps-devrel/google.json\&quot;);&quot;
 })
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">14.6h ago</span></span></span><output><pre><code class="txt">{ onEvaluate: [Function: onEvaluate],
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">14.7h ago</span></span></span><output><pre><code class="txt">{ onEvaluate: [Function: onEvaluate],
   onLoad: undefined,
   onResize: undefined,
   onSave: undefined,
@@ -90,7 +90,7 @@ export const viewer = ({node,React}) =&gt; {
 </code></pre></codecell></div></cell><cell startpos="126:1-3401" endpos="131:4-3547" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return fetch(&quot;https://jzc0q8a4nyog.runkit.sh&quot;).then(res =&gt; res.text())
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">13.6h ago</span></span></span><output><pre><code class="txt">{&quot;ping&quot;: &quot;pong!&quot;}
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="133:1-3549" endpos="230:4-6167"><cell startpos="133:1-3549" endpos="135:97-3678"><div class="cell-content"><h2 id="repl-endpoint-plug-in-node">REPL endpoint plug-in <code>node</code></h2><p>Split out the endpoint source to its own <code>.lit</code> cell for legibility instead of an inline string.</p></div></cell><cell startpos="137:1-3680" endpos="179:4-4675" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-source lang-js local collapsed output"><a name="./runkit-repl-endpoint.js"></a><span class="meta"><span class="lang">js</span><span class="filename">./runkit-repl-endpoint.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#ca9068" class="tag">source</span></span><output><pre><code class="js">const util = require(&#x27;util&#x27;)
+<section depth="2" class="" startpos="133:1-3549" endpos="228:4-6165"><cell startpos="133:1-3549" endpos="135:97-3678"><div class="cell-content"><h2 id="repl-endpoint-plug-in-node">REPL endpoint plug-in <code>node</code></h2><p>Split out the endpoint source to its own <code>.lit</code> cell for legibility instead of an inline string.</p></div></cell><cell startpos="137:1-3680" endpos="179:4-4675" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-source lang-js local collapsed output"><a name="./runkit-repl-endpoint.js"></a><span class="meta"><span class="lang">js</span><span class="filename">./runkit-repl-endpoint.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#ca9068" class="tag">source</span></span><output><pre><code class="js">const util = require(&#x27;util&#x27;)
 
 function requireFromString(src, filename) {
   var Module = module.constructor;
@@ -131,9 +131,7 @@ exports.endpoint = function(req,res) {
     }
   })
 }
-</code></pre></output></codecell></div></cell><cell startpos="181:1-4677" endpos="181:109-4785"><div class="cell-content"><p>On load the following <code>repl</code> <code>!plugin</code> creates a RunKit endpoint if it doesn&#x27;t exist using the above source.</p></div></cell><cell startpos="183:1-4787" endpos="219:4-5743" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=repl</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=node</span></span><pre><code class="js">
-if (typeof lit !== &#x27;undefined&#x27; &amp;&amp; !window.__runkitNodeEnpoint) {
-
+</code></pre></output></codecell></div></cell><cell startpos="181:1-4677" endpos="181:109-4785"><div class="cell-content"><p>On load the following <code>repl</code> <code>!plugin</code> creates a RunKit endpoint if it doesn&#x27;t exist using the above source.</p></div></cell><cell startpos="183:1-4787" endpos="217:4-5741" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=repl</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=node</span></span><pre><code class="js">if (typeof lit !== &#x27;undefined&#x27; &amp;&amp; !window.__runkitNodeEnpoint) {
   (async fn =&gt; {
     const el = document.createElement(&#x27;div&#x27;)
     document.body.appendChild(el)
@@ -166,13 +164,13 @@ export const repl = async (src, meta, node) =&gt; {
     }
   }
 }
-</code></pre></codecell></div></cell><cell startpos="221:1-5745" endpos="221:9-5753"><div class="cell-content"><p><em>Usage:</em></p></div></cell><cell startpos="222:1-5754" endpos="230:4-6167" class="code"><div class="cell-content"><codecell class="lang-js local"><a name="test.js"></a><span class="meta"><span class="lang">js</span><span class="repl">node</span><span class="filename">test.js</span></span><pre><code class="js">module.exports = async (meta) =&gt; {
+</code></pre></codecell></div></cell><cell startpos="219:1-5743" endpos="219:9-5751"><div class="cell-content"><p><em>Usage:</em></p></div></cell><cell startpos="220:1-5752" endpos="228:4-6165" class="code"><div class="cell-content"><codecell class="lang-js local"><a name="test.js"></a><span class="meta"><span class="lang">js</span><span class="repl">node</span><span class="filename">test.js</span></span><pre><code class="js">module.exports = async (meta) =&gt; {
   return `Hello world! From .lit and Nodejs ${process.env.NODE_VERSION} (${process.platform} ${process.arch}) thanks to RunKit. At ${new Date()}`
 }
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">12h ago</span></span></span><output><pre><code class="txt">{ result:
    &#x27;Hello world! From .lit and Nodejs 10.24.1 (linux x64) thanks to RunKit. At Fri May 14 2021 23:42:19 GMT+0000 (Coordinated Universal Time)&#x27; }
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="232:1-6169" endpos="235:92-6397"><cell startpos="232:1-6169" endpos="235:92-6397"><div class="cell-content"><h2 id="next-steps-and-improvements">Next steps and improvements</h2><ul class="contains-task-list">
+<section depth="2" class="" startpos="230:1-6167" endpos="233:92-6395"><cell startpos="230:1-6167" endpos="233:92-6395"><div class="cell-content"><h2 id="next-steps-and-improvements">Next steps and improvements</h2><ul class="contains-task-list">
 <li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->Don&#x27;t start the endpoint on every page load, and instead lazily setup just before first execution.</li>
 <li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->Don&#x27;t use require module from string hack, and instead use a proper <code>vm</code> abd context.</li>
 </ul></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (2)</h4><ol><li><a title="REPLs" href="/repls.html">REPLs</a></li><li><a title="2021-05-13" href="/testing/log/2021-05-13.html">2021-05-13</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
