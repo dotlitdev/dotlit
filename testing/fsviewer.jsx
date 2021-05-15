@@ -25,7 +25,7 @@ export const viewer = ({node, React}) => {
 
   return <div>
      <input value={src} onChange={ev=>setSrc(ev.target.value)}/>
-     
+     <Stat/>
      {content}
     </div>
 }
