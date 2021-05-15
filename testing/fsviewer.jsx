@@ -5,6 +5,7 @@ const Stat = ({stat}={}) => {
     mtime: <span>{stat.mtimeMs}</span>
   </div>
 }
+
 export const viewer = ({node, React}) => {
   const {useState, useEffect} = React
   const [content, setContent] = useState(<span>loading...</span>)
@@ -15,7 +16,7 @@ export const viewer = ({node, React}) => {
     let stat
     try {
       stat = await lit.fs.stat(src)
-      setStat(stat)
+      // setStat(stat)
     } catch(err) {
       setContent(<span>{err.message}</span>)
     }
