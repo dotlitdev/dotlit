@@ -7,7 +7,7 @@ const Stat = ({stat}={}) => {
 export const viewer = ({node, React}) => {
   const {useState, useEffect} = React
   const [content, setContent] = useState(<span>loading...</span>)
-  const [stat, setStat] = useState({})
+  const [stat, setStat] = useState(undefined)
   const [src, setSrc] = useState(node.data.value.trim())
   const meta = node.properties.meta
   useEffect(async fn => {
