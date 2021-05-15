@@ -94,7 +94,7 @@ function generateBacklinks(files, root) {
             exists: true,
             title: title,
             links: links.length,
-            size: file.contents.length,
+            size: file.contents.toString().length,
         }
     })
     files.forEach( file => {
