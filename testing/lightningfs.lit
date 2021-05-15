@@ -1767,27 +1767,29 @@ const visit = async (root) => {
   return Promise.all(list.map( async key => {
     const pathname = path.join(root,key)
     const stat = await lit.fs.stat(pathname)
-    return {pathname, type: stat.type}
+    let contents
+    if (stat.type === 'dir') contents = await visit(pathname)
+    return {pathname, type: stat.type, contents}
   }))
 }
 
 return visit('/')
 ```
-```>txt attached=true updated=1621115045613
-[ 'testing',
-  '.git',
-  'index.lit',
-  'scratch_pad.lit',
-  'plugin_system.lit',
-  'parser',
-  '<',
-  'meta',
-  'renderer',
-  'log',
-  'execute_code_cells.lit',
-  'articles',
-  'utils',
-  'repls.lit' ]
+```>txt attached=true updated=1621115530423
+[ { pathname: '/testing', type: 'dir' },
+  { pathname: '/.git', type: 'dir' },
+  { pathname: '/index.lit', type: 'file' },
+  { pathname: '/scratch_pad.lit', type: 'file' },
+  { pathname: '/plugin_system.lit', type: 'file' },
+  { pathname: '/parser', type: 'dir' },
+  { pathname: '/<', type: 'file' },
+  { pathname: '/meta', type: 'dir' },
+  { pathname: '/renderer', type: 'dir' },
+  { pathname: '/log', type: 'dir' },
+  { pathname: '/execute_code_cells.lit', type: 'file' },
+  { pathname: '/articles', type: 'dir' },
+  { pathname: '/utils', type: 'dir' },
+  { pathname: '/repls.lit', type: 'file' } ]
 ```
 
 ### Finder (from manifest)
