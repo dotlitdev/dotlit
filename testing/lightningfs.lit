@@ -1768,7 +1768,10 @@ const visit = async (root) => {
     const pathname = path.join(root,key)
     const stat = await lit.fs.stat(pathname)
     let contents
-    if (stat.type === 'dir') contents = await visit(pathname)
+    if (key === '.git') {
+      return {pathname, type: stat.type}
+    }
+    else if (stat.type === 'dir') contents = await visit(pathname)
     else contents = (await lit.fs.readFile(pathname, {encoding: 'utf8'})).slice(0,10) + "..."
     return {pathname, type: stat.type, contents}
   }))
@@ -1776,7 +1779,7 @@ const visit = async (root) => {
 
 return visit('/')
 ```
-```>txt attached=true updated=1621115698838
+```>txt attached=true updated=1621116593643
 [ { pathname: '/testing',
     type: 'dir',
     contents: 
@@ -1797,15 +1800,17 @@ return visit('/')
        [Object],
        [Object],
        [Object] ] },
-  { pathname: '/index.lit', type: 'file', contents: undefined },
+  { pathname: '/index.lit',
+    type: 'file',
+    contents: '<!-- data\n...' },
   { pathname: '/scratch_pad.lit',
     type: 'file',
-    contents: undefined },
+    contents: '# 🔥 Scrat...' },
   { pathname: '/plugin_system.lit',
     type: 'file',
-    contents: undefined },
+    contents: '# 🔌 Plugi...' },
   { pathname: '/parser', type: 'dir', contents: [ [Object] ] },
-  { pathname: '/<', type: 'file', contents: undefined },
+  { pathname: '/<', type: 'file', contents: '...' },
   { pathname: '/meta', type: 'dir', contents: [ [Object] ] },
   { pathname: '/renderer',
     type: 'dir',
@@ -1813,10 +1818,12 @@ return visit('/')
   { pathname: '/log', type: 'dir', contents: [ [Object] ] },
   { pathname: '/execute_code_cells.lit',
     type: 'file',
-    contents: undefined },
+    contents: '# Executin...' },
   { pathname: '/articles', type: 'dir', contents: [ [Object] ] },
   { pathname: '/utils', type: 'dir', contents: [ [Object] ] },
-  { pathname: '/repls.lit', type: 'file', contents: undefined } ]
+  { pathname: '/repls.lit',
+    type: 'file',
+    contents: '# REPLs\n\nS...' } ]
 ```
 
 ### Finder (from manifest)
