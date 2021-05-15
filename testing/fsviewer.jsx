@@ -7,7 +7,12 @@ export const viewer = ({node, React}) => {
     if (stat.message) return <div>{stat.message}</div>
     return <div>
       Type: <span>{stat.type}</span> mtime: <span>{stat.mtimeMs}</span>
-      {stat.contents && stat.contents.map( l => <div>{join(props.src,l)}</div>)}
+      {stat.contents && stat.contents.map( l => {
+
+      const name = l[0]
+      const type = l[1].type
+      return <div style={{fontWeight: type === 'dir' ? 'bold' : 'normal'}}>{join(props.src,name)}</div>
+     })}
     </div>
   }
 
@@ -21,7 +26,7 @@ export const viewer = ({node, React}) => {
     try {
       stat = await lit.fs.stat(src)
       if (stat.type === 'dir') {
-          stat.contents = Promise.all((await lit.fs.readdir(src)).map( async l => await lit.fs.stat(join(src,l))))
+          stat.contents = Promise.all((await lit.fs.readdir(src)).map( async l => [l,await lit.fs.stat(join(src,l))]))
       }
       setStat(stat)
     } catch(err) {
