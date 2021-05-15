@@ -5,8 +5,8 @@ export const viewer = ({node, React}) => {
     const stat = props?.stat || {}
     if (stat.message) return <div>{stat.message}</div>
     return <div>
-      Type: <span>{stat.type}</span> 
-      mtime: <span>{stat.mtimeMs}</span>
+      Type: <span>{stat.type}</span> mtime: <span>{stat.mtimeMs}</span>
+      {stat.contents && stat.contents.map( l => <div>{l}</div>)}
     </div>
   }
 
@@ -19,6 +19,9 @@ export const viewer = ({node, React}) => {
     let stat
     try {
       stat = await lit.fs.stat(src)
+      if (stat.type === 'dir') {
+          stat.contents = await lit.readdir(src)
+      }
       setStat(stat)
     } catch(err) {
       setStat(err)
