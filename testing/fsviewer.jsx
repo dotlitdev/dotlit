@@ -1,6 +1,13 @@
 export const viewer = ({node, React}) => {
   const {useState, useEffect} = React
 
+  const Stat = ({stat}={}) => {
+    return <div>
+      Type: <span>{stat.type}</span>
+      mtime: <span>{stat.mtimeMs}</span>
+    </div>
+  }
+
   const [content, setContent] = useState(<span>loading...</span>)
   // const [stat, setStat] = useState(undefined)
   const [src, setSrc] = useState(node?.data?.value?.trim())
@@ -18,7 +25,7 @@ export const viewer = ({node, React}) => {
 
   return <div>
      <input value={src} onChange={ev=>setSrc(ev.target.value)}/>
-     // <Stat stat={stat}/>
+     
      {content}
     </div>
 }
