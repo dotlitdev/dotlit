@@ -1,7 +1,7 @@
 
-const Stat = (props) => {
+const Stat = ({stat}={}) => {
   return <div>
-    Type: {props.type} mtime: {props.mtimeMs}
+    Type: {stat.type} mtime: {stat.mtimeMs}
   </div>
 }
 export const viewer = ({node, React}) => {
@@ -21,7 +21,7 @@ export const viewer = ({node, React}) => {
   }, [src])
   return <div>
      <input value={src} onChange={ev=>setSrc(ev.target.value)}/>
-     <Stat {...stat}/>
+     <Stat stat={stat}/>
      {content}
     </div>
 }
