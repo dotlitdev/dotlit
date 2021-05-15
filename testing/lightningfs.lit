@@ -1769,27 +1769,54 @@ const visit = async (root) => {
     const stat = await lit.fs.stat(pathname)
     let contents
     if (stat.type === 'dir') contents = await visit(pathname)
+    else contents = await lit.fs.readFile(pathname, {encoding: 'utf8'})
     return {pathname, type: stat.type, contents}
   }))
 }
 
 return visit('/')
 ```
-```>txt attached=true updated=1621115530423
-[ { pathname: '/testing', type: 'dir' },
-  { pathname: '/.git', type: 'dir' },
-  { pathname: '/index.lit', type: 'file' },
-  { pathname: '/scratch_pad.lit', type: 'file' },
-  { pathname: '/plugin_system.lit', type: 'file' },
-  { pathname: '/parser', type: 'dir' },
-  { pathname: '/<', type: 'file' },
-  { pathname: '/meta', type: 'dir' },
-  { pathname: '/renderer', type: 'dir' },
-  { pathname: '/log', type: 'dir' },
-  { pathname: '/execute_code_cells.lit', type: 'file' },
-  { pathname: '/articles', type: 'dir' },
-  { pathname: '/utils', type: 'dir' },
-  { pathname: '/repls.lit', type: 'file' } ]
+```>txt attached=true updated=1621115698838
+[ { pathname: '/testing',
+    type: 'dir',
+    contents: 
+     [ [Object],
+       [Object],
+       [Object],
+       [Object],
+       [Object],
+       [Object],
+       [Object] ] },
+  { pathname: '/.git',
+    type: 'dir',
+    contents: 
+     [ [Object],
+       [Object],
+       [Object],
+       [Object],
+       [Object],
+       [Object],
+       [Object] ] },
+  { pathname: '/index.lit', type: 'file', contents: undefined },
+  { pathname: '/scratch_pad.lit',
+    type: 'file',
+    contents: undefined },
+  { pathname: '/plugin_system.lit',
+    type: 'file',
+    contents: undefined },
+  { pathname: '/parser', type: 'dir', contents: [ [Object] ] },
+  { pathname: '/<', type: 'file', contents: undefined },
+  { pathname: '/meta', type: 'dir', contents: [ [Object] ] },
+  { pathname: '/renderer',
+    type: 'dir',
+    contents: [ [Object], [Object] ] },
+  { pathname: '/log', type: 'dir', contents: [ [Object] ] },
+  { pathname: '/execute_code_cells.lit',
+    type: 'file',
+    contents: undefined },
+  { pathname: '/articles', type: 'dir', contents: [ [Object] ] },
+  { pathname: '/utils', type: 'dir', contents: [ [Object] ] },
+  { pathname: '/repls.lit', type: 'file', contents: undefined } ]
 ```
 
 ### Finder (from manifest)
