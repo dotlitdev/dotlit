@@ -21,7 +21,7 @@ export const ghReadFile = opts => async (...args) => {
         const data = await resp.json()
         console.log("ghReadFile data", data)
         const content = b64DecodeUnicode(data.content)
-        console.log("ghReadFile decoded", content)
+        console.log("ghReadFile decoded")
         return content
     }
     console.log("ghReadFile", file, resp)
