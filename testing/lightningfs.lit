@@ -18,19 +18,8 @@ return lit.fs.readdir('/testing/log')
 ```js > json !collapse
 return lit.lfs.promises.writeFile('/testing/data.json', "{}", {encoding: 'utf8'})
 ```
-```>json !collapse attached=true updated=1621193069139 !error
-function toString() {
-    [native code]
-}
-once@https://dotlit.org/web.bundle.js:194680:20
-wrapCallback@https://dotlit.org/web.bundle.js:129831:12
-writeFile@https://dotlit.org/web.bundle.js:129863:43
-writeFile@[native code]
-untitled.js:2:41
-untitled.js:4:63
-module code@untitled.js:4:139
-evaluate@[native code]
-moduleEvaluation@[native code]
+```>json !collapse attached=true updated=1621193177415
+null
 ```
 
 ```js > json !collapse
@@ -518,17 +507,25 @@ G.*hUb
 ## Sync `local|remote|origin`
 
 ```js #sync !collapse
-// fetch all remote files and store locally if they don't already exist 
+// fetch all remote files and store
+// locally if they don't already exist 
 return (async fn => {
   const t = Date.now()
-  const m = await fetch('/manifest.json').then(res => res.json())
+  const m = await fetch('/manifest.json')
+                  .then(res => res.json())
+                  .catch(e=>({nodes:[]}))
+
   const synced = []
   const errors = []
   const res = await Promise.all(m.nodes.map( async n => {
     try {
-    n.stats = await lit.fs.readStat(n.id).then(x=>x).catch(x=>({local: {}, remote: {}}))
+    n.stats = await lit.fs.readStat(n.id)
+      .then(x=>x)
+      .catch(x=>({local: {}, remote: {}}))
+
     if (!n.stats.local.stat && n.stats.remote.stat) {
-        await lit.lfs.writeFile(n.id, n.stats.remote.value, {encoding: 'utf8'})
+        // use raw lfs to prevent passThrough back to remote.
+        await lit.lfs.promises.writeFile(n.id, n.stats.remote.value, {encoding: 'utf8'})
         synced.push(n)
     }
     return n
