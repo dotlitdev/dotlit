@@ -506,11 +506,17 @@ G.*hUb
 ```
 ## Sync `local|remote|origin`
 
+
 ```js #sync !collapse
 // fetch all remote files and store
 // locally if they don't already exist 
 return (async fn => {
   const t = Date.now()
+  const p = lit.utils.path
+  const writePLocal = async (...args) => {
+    
+  }
+
   const m = await fetch('/manifest.json')
                   .then(res => res.json())
                   .catch(e=>({nodes:[]}))
@@ -523,26 +529,64 @@ return (async fn => {
     n.stats = await lit.fs.readStat(n.id)
       .then(x=>x)
       .catch(err=>{
-          duds.push(err)
+          duds.push(n.id)
           return {local: {}, remote: {}}
       })
 
     if (!n.stats.local.stat && n.stats.remote.stat) {
         // use raw lfs to prevent passThrough back to remote.
-        // await lit.lfs.promises.writeFile(n.id, n.stats.remote.value, {encoding: 'utf8'})
+        // await lit.fs.writeFile(n.id, n.stats.remote.value, {encoding: 'utf8'})
         synced.push(n)
     }
-    if ()
+    
     return n
     } catch(err) {errors.push(n.id + " : " + err.message)} 
   } ))
-  console.log(`Synced ${synced.length}/${m.nodes.length} files in ${(Date.now() - t)/1000} seconds`)
+  console.log(`Synced ${synced.length}/${m.nodes.length} files in ${(Date.now() - t)/1000} seconds. Duds: ${duds.length} Errors: ${errors.length}`)
   return {duds, errors}
 })()
 
 ```
-```>txt attached=true updated=1621200502765 !error
-undefined
+```>txt attached=true updated=1621202073697
+Synced 6/131 files in 3.217 seconds. Duds: 33 Errors: 3
+{ duds: 
+   [ 'litconfig.lit',
+     'transfomers.lit',
+     'meta/settings.lit',
+     'viewers.lit',
+     'articles/ideas.lit',
+     'meta/github_workflows.lit',
+     'components.lit',
+     '../../../../../meta/settings.lit#plantuml-viewer--repl',
+     'markdown.lit',
+     'remark.lit',
+     'unified.lit',
+     'utils/urifragments.lit',
+     'viewers/meta.js',
+     'executing_code_cells.lit',
+     'meta/styling_and_themes.lit',
+     'utils/fs.lit',
+     'meta/styling_and_themes.lit#viewers',
+     'renderer/file.txt',
+     'filename',
+     'wikilinks.lit',
+     '../../../../../testing/log/2021-05.lit',
+     'log/today.js',
+     'fsviewer.jsx',
+     '../../../../../testing/log/year.lit',
+     '../../../../../testing/log/2021-05',
+     'log/checkforinput.js',
+     '../../../../../testing/log/2021',
+     'testing/getserviceworker--sw',
+     'worker2.js',
+     'worker.js',
+     '../../../../../testing/log/2021.lit',
+     './runkit-repl-endpoint.js',
+     'rk.jsx' ],
+  errors: 
+   [ '../serviceworker.js : Unable to normalize path - traverses above root directory',
+     '../../../../../testing/log/2021-w21 : Unable to normalize path - traverses above root directory',
+     '../../../../../testing/log/2021-w20 : Unable to normalize path - traverses above root directory' ] }
 ```
 
 ## Emergency wipe ⚠️
