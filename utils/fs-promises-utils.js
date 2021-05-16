@@ -100,11 +100,10 @@ const writeFileP = (fs, litroot) => {
         const subPath = parts.slice(0, i + 1).join(path.sep);
         // console.log(`"${subPath}" Sub path`);
         try {
-          await fs.stat(subPath);
-          // console.log(`[fs.writeFileP] "${subPath}" Existed, skipping`);
-        } catch (err) {
-          console.log(`[fs.writeFileP] "${subPath}" Didn't exist, creating...`);
           await fs.mkdir(subPath);
+        } catch (err) {
+          console.log(`[fs.writeFileP] "${subPath}" Failed to mkdir`);
+         
         }
       }
     }
