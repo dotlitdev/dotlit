@@ -91,10 +91,10 @@ const checkForInput = async () => {
     try { stat = await lit.fs.readStat(`/${filename(today)}`, {encoding: 'utf8'}) } catch(err) {}
     const newContent = ((stat.local.stat && stat.local.value) || stat.remote.value || `# ${today}
 
-See [week ${week}](${filename(year + "-w" + week)}), [month ${month}](${filename(year+"-"+month)}) or [year ${year}](${filename(year)})
+See [week ${week}](/${filename(year + "-w" + week)}), [month ${month}](/${filename(year+"-"+month)}) or [year ${year}](/${filename(year)})
 `) + ("\n" + input)
     await lit.fs.writeFile(`/${filename(today)}`, newContent)
-    return `***Captured Input (below) to [${today}](${filename(today)})***
+    return `***Captured Input (below) to [${today}](/${filename(today)})***
 
 ${input}`
     } else {
