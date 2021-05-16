@@ -202,15 +202,15 @@ export function generate(cmd) {
                 })
 
                 let ast_files_prelinks = await Promise.all(src_files.map( async file => {
+                    let wroteFile
                     try {
                         const fetchedFile = await file
                         await fs.writeFile(fetchedFile.path, fetchedFile.contents)
-                        const renderedFile = await renderProcessor({fs}).process(fetchedFile)
-                       
-                        return renderedFile
+                        wroteFile = true
+                        return await renderProcessor({fs}).process(fetchedFile)
                     } catch (err) {
                         failures[file.path] = failures[file.path] || []
-                        failures[file.path].push("Failed to Process to AST (prelinks) due to: " + err.message)
+                        failures[file.path].push(!wroteFile ? ("Failed to write source due to:" + err.message) : ("Failed to Process to AST (prelinks) due to: " + err.message))
                         console.error(`Failed to process ${file.path}`, err)
                     }
                 }))
