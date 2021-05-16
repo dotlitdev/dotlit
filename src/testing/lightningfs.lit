@@ -12,13 +12,13 @@ https://github.com/isomorphic-git/lightning-fs
 ```js
 return lit.fs.readdir('/testing/log')
 ```
-```>txt attached=true updated=1621167869916
-[ 'checkforinput.js', 'today.js', '2021-05-16.lit' ]
+```>txt attached=true updated=1620735036304
+[ '2021-05-09.lit', 'checkforinput.js', '2021-05-11.lit' ]
 ```
 ```js > json !collapse
 return lit.fs.readFile('/manifest.json')
 ```
-```>json !collapse attached=true updated=1619873702134
+```>json !collapse updated=1619873702134
 {
     "nodes": [
         {
@@ -1867,30 +1867,45 @@ const visit = async (root) => {
 
 return (async fn => JSON.stringify(await visit('/'), null, 2))()
 ```
-```>json !collapse attached=true updated=1621169433619
+```>json !collapse attached=true updated=1621118521378
 [
   {
     "pathname": "/testing",
     "type": "dir",
     "contents": [
       {
-        "pathname": "/testing/lightningfs.lit",
+        "pathname": "/testing/isomorphic_git.lit",
         "type": "file",
-        "contents": "# Lightnin..."
+        "contents": "# Isomorph..."
       },
       {
-        "pathname": "/testing/input_buffer.lit",
+        "pathname": "/testing/serviceworker.lit",
         "type": "file",
-        "contents": "# Input Bu..."
+        "contents": "# Service ..."
       },
       {
         "pathname": "/testing/log",
         "type": "dir",
         "contents": [
           {
+            "pathname": "/testing/log/2021-05-09.lit",
+            "type": "file",
+            "contents": "# 2021-05-..."
+          },
+          {
             "pathname": "/testing/log/checkforinput.js",
             "type": "file",
             "contents": "const date..."
+          },
+          {
+            "pathname": "/testing/log/2021-05-11.lit",
+            "type": "file",
+            "contents": "# 2021-05-..."
+          },
+          {
+            "pathname": "/testing/log/2021-05-12.lit",
+            "type": "file",
+            "contents": "# 2021-05-..."
           },
           {
             "pathname": "/testing/log/today.js",
@@ -1898,16 +1913,71 @@ return (async fn => JSON.stringify(await visit('/'), null, 2))()
             "contents": "const date..."
           },
           {
-            "pathname": "/testing/log/2021-05-16.lit",
+            "pathname": "/testing/log/2021-05-13.lit",
             "type": "file",
             "contents": "# 2021-05-..."
           },
           {
-            "pathname": "/testing/log/2021-w21.lit",
+            "pathname": "/testing/log/2021-w20.lit",
             "type": "file",
-            "contents": "# 2021-w21..."
+            "contents": "# 2021 wee..."
+          },
+          {
+            "pathname": "/testing/log/2021-05-15.lit",
+            "type": "file",
+            "contents": "# 2021-05-..."
           }
         ]
+      },
+      {
+        "pathname": "/testing/input_buffer.lit",
+        "type": "file",
+        "contents": "# Input Bu..."
+      },
+      {
+        "pathname": "/testing/runkit.lit",
+        "type": "file",
+        "contents": "# testing/..."
+      },
+      {
+        "pathname": "/testing/runkit-repl-endpoint.js",
+        "type": "file",
+        "contents": "const util..."
+      },
+      {
+        "pathname": "/testing/lightningfs.lit",
+        "type": "file",
+        "contents": "# Lightnin..."
+      }
+    ]
+  },
+  {
+    "pathname": "/.git",
+    "type": "dir"
+  },
+  {
+    "pathname": "/index.lit",
+    "type": "file",
+    "contents": "<!-- data\n..."
+  },
+  {
+    "pathname": "/scratch_pad.lit",
+    "type": "file",
+    "contents": "# 🔥 Scrat..."
+  },
+  {
+    "pathname": "/plugin_system.lit",
+    "type": "file",
+    "contents": "# 🔌 Plugi..."
+  },
+  {
+    "pathname": "/parser",
+    "type": "dir",
+    "contents": [
+      {
+        "pathname": "/parser/parser.lit",
+        "type": "file",
+        "contents": "# Parser\n\n..."
       }
     ]
   },
@@ -1923,9 +1993,63 @@ return (async fn => JSON.stringify(await visit('/'), null, 2))()
     ]
   },
   {
-    "pathname": "/index.lit",
+    "pathname": "/renderer",
+    "type": "dir",
+    "contents": [
+      {
+        "pathname": "/renderer/viewers",
+        "type": "file",
+        "contents": "<html data..."
+      },
+      {
+        "pathname": "/renderer/renderer.lit",
+        "type": "file",
+        "contents": "<!--\ntitle..."
+      }
+    ]
+  },
+  {
+    "pathname": "/log",
+    "type": "dir",
+    "contents": [
+      {
+        "pathname": "/log/2021-05-11.lit",
+        "type": "file",
+        "contents": "# 2021-05-..."
+      }
+    ]
+  },
+  {
+    "pathname": "/execute_code_cells.lit",
     "type": "file",
-    "contents": "<!-- data\n..."
+    "contents": "# Executin..."
+  },
+  {
+    "pathname": "/articles",
+    "type": "dir",
+    "contents": [
+      {
+        "pathname": "/articles/ideas_for.lit",
+        "type": "file",
+        "contents": "# Ideas 💡..."
+      }
+    ]
+  },
+  {
+    "pathname": "/utils",
+    "type": "dir",
+    "contents": [
+      {
+        "pathname": "/utils/momento.lit",
+        "type": "file",
+        "contents": "# momento\n..."
+      }
+    ]
+  },
+  {
+    "pathname": "/repls.lit",
+    "type": "file",
+    "contents": "# REPLs\n\nS..."
   }
 ]
 ```
@@ -1983,40 +2107,4 @@ export const viewer = ({node, React}) => {
 ```>search
 G.*hUb
 ```
-
-## Sync `local|remote|origin`
-
-```js #sync !collapse
-// fetch all remote files and store locally if they don't already exist 
-return (async fn => {
-  const t = Date.now()
-  const m = await fetch('/manifest.json').then(res => res.json())
-  const synced = []
-  const errors = []
-  const res = await Promise.all(m.nodes.map( async n => {
-    try {
-    n.stats = await lit.fs.readStat(n.id).then(x=>x).catch(x=>({local: {}, remote: {}}))
-    if (!n.stats.local.stat && n.stats.remote.stat) {
-        await lit.fs.writeFile(n.id, n.stats.remote.value, {encoding: 'utf8'})
-        synced.push(n)
-    }
-    return n
-    } catch(err) {errors.push(n.id + " : " + err.message)} 
-  } ))
-  console.log(`Synced ${synced.length}/${m.nodes.length} files in ${(Date.now() - t)/1000} seconds`)
-  return {errors}
-})()
-```
-```>txt attached=true updated=1621172721774
-Synced 0/127 files in 1.022 seconds
-{ errors: [ '../../../../../meta/settings.lit#plantuml-viewer--repl : Unable to normalize path - traverses above root directory' ] }
-```
-
-## Emergency wipe ⚠️
-
-```>md !warn
-Clicking log he following link will prompt you to confirm you want to wipe the local file system.
-```
-
-[WIPE ⚠️](?__lfs_wipe=true)
 
