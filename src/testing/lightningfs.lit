@@ -1988,9 +1988,10 @@ G.*hUb
 
 ```js #mock
 // fetch all remote files and store locally if they don't already exist 
-return (async fn => { 
+return (async fn => {
+  const t = Date.now()
   const m = await fetch('/manifest.json').then(res => res.json())
-  return await Promise.all(m.nodes.map( async n => {
+  const res = await Promise.all(m.nodes.map( async n => {
     n.stats = await lit.fs.readStat(n.id).then(x=>x).catch(x=>({local: {}, remote: {}}))
     if (!n.stats.local.stat && n.stats.remote.stat) {
         await lit.fs.writeFile(n.id, n.stats.remote.value, {encoding: 'utf8'})
@@ -1998,6 +1999,8 @@ return (async fn => {
     }
     return n
   } ))
+  console.log((Date.now() - t)/1000)
+  return res
 })()
 ```
 ```>txt attached=true updated=1621171318205
