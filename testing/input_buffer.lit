@@ -53,8 +53,8 @@ window.location.href = "https://dotlit.org/testing/input_buffer.html?input=" + e
 const qs = location.search.slice(1)
 return `Here's a [Mock Input](?${qs + (qs ? '&' : '')}input=${encodeURIComponent("- [ ] some **Input** " + new Date())}) to test input capture.`
 ```
-```>md attached=true updated=1620860886838
-Here's a [Mock Input](?file=testing/input_buffer.lit&input=-%20%5B%20%5D%20some%20**Input**%20Thu%20May%2013%202021%2000%3A08%3A06%20GMT%2B0100%20(BST)) to test input capture.
+```>md attached=true updated=1621167143944
+Here's a [Mock Input](?file=testing/input_buffer.lit&input=-%20%5B%20%5D%20some%20**Input**%20Sun%20May%2016%202021%2013%3A12%3A23%20GMT%2B0100%20(BST)) to test input capture.
 ```
 
 ### Core
@@ -71,7 +71,7 @@ const firstDayOfYear = new Date(year, 0, 1);
 const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
 const week = Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
 
-const filename = `testing/log/${today}`
+const filename = t => `testing/log/${t}.lit`
 
 const checkForInput = async () => {
   const insp = lit.utils.inspect
@@ -88,13 +88,13 @@ const checkForInput = async () => {
     window.history.replaceState(null,null,'?' + qsWoInput)
 
     let stat = {local:{},remote:{}} 
-    try { stat = await lit.fs.readStat(`/${filename}.lit`, {encoding: 'utf8'}) } catch(err) {}
+    try { stat = await lit.fs.readStat(`/${filename(today)}`, {encoding: 'utf8'}) } catch(err) {}
     const newContent = ((stat.local.stat && stat.local.value) || stat.remote.value || `# ${today}
 
-See [week ${week}](/testing/log/${year}-w${week}), [month ${month}](/testing/log/${year}-${month}) or [year ${year}](/testing/log/${year})
+See [week ${week}](/${filename(year + "-w" + week)}), [month ${month}](/${filename(year+"-"+month)}) or [year ${year}](/${filename(year)})
 `) + ("\n" + input)
-    await lit.fs.writeFile(`/${filename}.lit`, newContent)
-    return `***Captured Input (below) to [[${filename}]]***
+    await lit.fs.writeFile(`/${filename(today)}`, newContent)
+    return `***Captured Input (below) to [${today}](/${filename(today)})***
 
 ${input}`
     } else {
@@ -125,7 +125,7 @@ const checkForTodayFile = async () => {
   try {
   stat = await lit.fs.readStat(pathFor(today))
   } catch(err) {}
-  return `*Today* is [**${today}**](${pathFor(today)}), a log exists: *${!!stat && !!(stat.local.stat || stat.remote.stat)}*; See [week](${pathFor(week)}), [month](${pathFor(month)}) or [year](${pathFor('year')}).`
+  return `*Today* is [**${today}**](${pathFor(today)}), a log exists: *${!!stat && !!(stat.local.stat || stat.remote.stat)}*; See [week](${pathFor(week)}), [month](${pathFor(month)}) or [year](${pathFor(year)}).`
 }
 
 return checkForTodayFile()

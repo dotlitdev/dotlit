@@ -8,7 +8,7 @@ const firstDayOfYear = new Date(year, 0, 1);
 const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
 const week = Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
 
-const filename = `testing/log/${today}`
+const filename = t => `testing/log/${t}.lit`
 
 const checkForInput = async () => {
   const insp = lit.utils.inspect
@@ -25,13 +25,13 @@ const checkForInput = async () => {
     window.history.replaceState(null,null,'?' + qsWoInput)
 
     let stat = {local:{},remote:{}} 
-    try { stat = await lit.fs.readStat(`/${filename}.lit`, {encoding: 'utf8'}) } catch(err) {}
+    try { stat = await lit.fs.readStat(`/${filename(today)}`, {encoding: 'utf8'}) } catch(err) {}
     const newContent = ((stat.local.stat && stat.local.value) || stat.remote.value || `# ${today}
 
-See [week ${week}](/testing/log/${year}-w${week}), [month ${month}](/testing/log/${year}-${month}) or [year ${year}](/testing/log/${year})
+See [week ${week}](/${filename(year + "-w" + week)}), [month ${month}](/${filename(year+"-"+month)}) or [year ${year}](/${filename(year)})
 `) + ("\n" + input)
-    await lit.fs.writeFile(`/${filename}.lit`, newContent)
-    return `***Captured Input (below) to [[${filename}]]***
+    await lit.fs.writeFile(`/${filename(today)}`, newContent)
+    return `***Captured Input (below) to [${today}](/${filename(today)})***
 
 ${input}`
     } else {

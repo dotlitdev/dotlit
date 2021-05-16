@@ -12,7 +12,7 @@ function wrapConsole(console, stdoutUpdate) {
     let buffer = []
     const wrapConsoleMethod = (method) =&gt; {
         return (...args) =&gt; {
-            const pretty = args.map( a =&gt; typeof a === &#x27;string&#x27; ? a : util.inspect(a,{depth: 2} ) )
+            const pretty = args.map( a =&gt; typeof a === &#x27;string&#x27; ? a : util.inspect(a,{maxStringLength: 20} ) )
             // pretty.unshift(`[${method}] `)
             buffer.push(pretty);
             stdoutUpdate(buffer.join(&#x27;\n&#x27;))
