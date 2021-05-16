@@ -44,7 +44,7 @@ export const viewer = ({node, React}) => {
      <input value={src} onChange={ev=>setSrc(ev.target.value)}/>
      <Stat src={src} stat={stat} select={setSrc}/>
      {!stat && content}
-     {stat && <button>Delete</button>}
+     {stat && <button onClick={ev=> confirm("Are you sure you want to delete " + src) && lit.fs.unlink(src)}>Delete</button>}
      {stat && <button>Reset</button>}
      {stat && <button>Diff</button>}
     </div>
