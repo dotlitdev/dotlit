@@ -1997,11 +1997,11 @@ return (async fn => {
     try {
     n.stats = await lit.fs.readStat(n.id).then(x=>x).catch(x=>({local: {}, remote: {}}))
     if (!n.stats.local.stat && n.stats.remote.stat) {
-        // await lit.fs.writeFile(n.id, n.stats.remote.value, {encoding: 'utf8'})
+        await lit.fs.writeFile(n.id, n.stats.remote.value, {encoding: 'utf8'})
         synced.push(n)
     }
     return n
-    } catch(err) {errors.push(n)}
+    } catch(err) {errors.push(n.id)}
   } ))
   console.log((Date.now() - t)/1000)
   return {errors, synced: synced.length, total: m.nodes.length}
