@@ -1763,7 +1763,7 @@ const path = "/rendere/viewers"
 console.log(ast)
 return lit.fs.unlink(path)
 ```
-```>txt attached=true updated=1621117208967
+```>txt attached=true updated=1621123644778
 { type: 'element',
   tagName: 'cell',
   properties: { class: 'cell' },
@@ -1772,10 +1772,15 @@ return lit.fs.unlink(path)
        tagName: 'pre',
        properties: {},
        children: [Object],
+       position: [Object] },
+     { type: 'element',
+       tagName: 'pre',
+       properties: {},
+       children: [Object],
        position: [Object] } ],
   position: 
-   { start: { line: 1757, column: 1, offset: 96909 },
-     end: { line: 1761, column: 4, offset: 96999 } } }
+   { start: { line: 1761, column: 1, offset: 96951 },
+     end: { line: 1780, column: 4, offset: 97441 } } }
 422
 ```
 
@@ -1830,7 +1835,7 @@ export const viewer = ({node, React}) => {
      <input value={src} onChange={ev=>setSrc(ev.target.value)}/>
      <Stat src={src} stat={stat} select={setSrc}/>
      {!stat && content}
-     {stat && <button>Delete</button>}
+     {stat && <button onClick={ev=> confirm("Are you sure you want to delete " + src) && lit.fs.unlink(src)}>Delete</button>}
      {stat && <button>Reset</button>}
      {stat && <button>Diff</button>}
     </div>
