@@ -1988,2395 +1988,825 @@ G.*hUb
 
 ```js #mock
 // fetch all remote files and store locally if they don't already exist 
-return fetch('/manifest.json').then(res => res.json())
+return (async fn => { 
+  const m = await fetch('/manifest.json').then(res => res.json())
+  return await Promise.all(m.nodes.map( async n => {
+    n.local = await lit.fs.stat(n.id).then(s => true).catch(s => false)
+    return n
+  } ))
+})()
 ```
-```>txt attached=true updated=1621170963476
-{
-    "nodes": [
-        {
-            "id": "404.lit",
-            "backlinks": [
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                }
-            ],
-            "exists": true,
-            "title": "Not yet found",
-            "links": 0,
-            "size": 73
-        },
-        {
-            "id": "articles/ideas_for.lit",
-            "backlinks": [],
-            "exists": true,
-            "title": "Ideas 💡 for Articles",
-            "links": 0,
-            "size": 278
-        },
-        {
-            "id": "cli/cli.lit",
-            "backlinks": [
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                }
-            ],
-            "exists": true,
-            "title": "Command Line Interface",
-            "links": 9,
-            "size": 1564
-        },
-        {
-            "id": "client/client.lit",
-            "backlinks": [
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                }
-            ],
-            "exists": true,
-            "title": "Client",
-            "links": 1,
-            "size": 59
-        },
-        {
-            "id": "components/components.lit",
-            "backlinks": [
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                }
-            ],
-            "exists": true,
-            "title": "Components",
-            "links": 25,
-            "size": 731
-        },
-        {
-            "id": "dummy/🔥.lit",
-            "backlinks": [
-                {
-                    "id": "scratch_pad.lit",
-                    "url": "scratch_pad.html",
-                    "title": "🔥 Scratch ⚠️ Pad 🔬"
-                }
-            ],
-            "exists": true,
-            "title": "Title TBD (dummy/🔥.lit)",
-            "links": 0,
-            "size": 26
-        },
-        {
-            "id": "execute_code_cells.lit",
-            "backlinks": [
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                },
-                {
-                    "id": "plugin_system.lit",
-                    "url": "plugin_system.html",
-                    "title": "🔌 Plugin system"
-                },
-                {
-                    "id": "repl/index.lit",
-                    "url": "repl/index.html",
-                    "title": "REPL"
-                },
-                {
-                    "id": "scratch_pad.lit",
-                    "url": "scratch_pad.html",
-                    "title": "🔥 Scratch ⚠️ Pad 🔬"
-                }
-            ],
-            "exists": true,
-            "title": "Executing code cells",
-            "links": 23,
-            "size": 13521
-        },
-        {
-            "id": "functions.lit",
-            "backlinks": [],
-            "exists": true,
-            "title": "Utility functions",
-            "links": 1,
-            "size": 320
-        },
-        {
-            "id": "index.lit",
-            "backlinks": [],
-            "exists": true,
-            "title": ".lit",
-            "links": 50,
-            "size": 1316729
-        },
-        {
-            "id": "meta/files_and_links.lit",
-            "backlinks": [
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                }
-            ],
-            "exists": true,
-            "title": "Files & Links",
-            "links": 2,
-            "size": 234
-        },
-        {
-            "id": "parser/parser.lit",
-            "backlinks": [
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                }
-            ],
-            "exists": true,
-            "title": "Parser",
-            "links": 17,
-            "size": 1008
-        },
-        {
-            "id": "persist_to_github.lit",
-            "backlinks": [
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                },
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                }
-            ],
-            "exists": true,
-            "title": "Persist to GitHub",
-            "links": 1,
-            "size": 357
-        },
-        {
-            "id": "plugin_system.lit",
-            "backlinks": [
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                },
-                {
-                    "id": "repl/index.lit",
-                    "url": "repl/index.html",
-                    "title": "REPL"
-                },
-                {
-                    "id": "repls.lit",
-                    "url": "repls.html",
-                    "title": "REPLs"
-                }
-            ],
-            "exists": true,
-            "title": "🔌 Plugin system",
-            "links": 17,
-            "size": 4923
-        },
-        {
-            "id": "renderer/renderer.lit",
-            "backlinks": [
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                }
-            ],
-            "exists": true,
-            "title": "Renderer",
-            "links": 6,
-            "size": 468
-        },
-        {
-            "id": "renderer/viewers.lit",
-            "backlinks": [
-                {
-                    "id": "execute_code_cells.lit",
-                    "url": "execute_code_cells.html",
-                    "title": "Executing code cells"
-                },
-                {
-                    "id": "execute_code_cells.lit",
-                    "url": "execute_code_cells.html",
-                    "title": "Executing code cells"
-                },
-                {
-                    "id": "renderer/renderer.lit",
-                    "url": "renderer/renderer.html",
-                    "title": "Renderer"
-                },
-                {
-                    "id": "scratch_pad.lit",
-                    "url": "scratch_pad.html",
-                    "title": "🔥 Scratch ⚠️ Pad 🔬"
-                }
-            ],
-            "exists": true,
-            "title": "Custom Viewers",
-            "links": 26,
-            "size": 14774
-        },
-        {
-            "id": "renderer/viewers/md/admonitions.lit",
-            "backlinks": [
-                {
-                    "id": "renderer/viewers.lit",
-                    "url": "renderer/viewers.html",
-                    "title": "Custom Viewers"
-                }
-            ],
-            "exists": true,
-            "title": "Admonitions",
-            "links": 1,
-            "size": 681
-        },
-        {
-            "id": "renderer/viewers/plantuml.lit",
-            "backlinks": [],
-            "exists": true,
-            "title": "Plant uml",
-            "links": 2,
-            "size": 1687
-        },
-        {
-            "id": "repl/index.lit",
-            "backlinks": [
-                {
-                    "id": "scratch_pad.lit",
-                    "url": "scratch_pad.html",
-                    "title": "🔥 Scratch ⚠️ Pad 🔬"
-                }
-            ],
-            "exists": true,
-            "title": "REPL",
-            "links": 4,
-            "size": 257
-        },
-        {
-            "id": "repls.lit",
-            "backlinks": [
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                },
-                {
-                    "id": "plugin_system.lit",
-                    "url": "plugin_system.html",
-                    "title": "🔌 Plugin system"
-                },
-                {
-                    "id": "plugin_system.lit",
-                    "url": "plugin_system.html",
-                    "title": "🔌 Plugin system"
-                },
-                {
-                    "id": "repl/index.lit",
-                    "url": "repl/index.html",
-                    "title": "REPL"
-                }
-            ],
-            "exists": true,
-            "title": "REPLs",
-            "links": 3,
-            "size": 186
-        },
-        {
-            "id": "scratch_pad.lit",
-            "backlinks": [
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                },
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                }
-            ],
-            "exists": true,
-            "title": "🔥 Scratch ⚠️ Pad 🔬",
-            "links": 46,
-            "size": 10503
-        },
-        {
-            "id": "testing/input_buffer.lit",
-            "backlinks": [
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                }
-            ],
-            "exists": true,
-            "title": "Input Buffer",
-            "links": 21,
-            "size": 5563
-        },
-        {
-            "id": "testing/isomorphic_git.lit",
-            "backlinks": [
-                {
-                    "id": "execute_code_cells.lit",
-                    "url": "execute_code_cells.html",
-                    "title": "Executing code cells"
-                },
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                },
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                }
-            ],
-            "exists": true,
-            "title": "Isomorphic Git",
-            "links": 11,
-            "size": 7504
-        },
-        {
-            "id": "testing/lightningfs.lit",
-            "backlinks": [
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                },
-                {
-                    "id": "testing/isomorphic_git.lit",
-                    "url": "testing/isomorphic_git.html",
-                    "title": "Isomorphic Git"
-                },
-                {
-                    "id": "testing/local_remote_files.lit",
-                    "url": "testing/local_remote_files.html",
-                    "title": "Local and Remote files"
-                }
-            ],
-            "exists": true,
-            "title": "Lightning FS",
-            "links": 8,
-            "size": 105621
-        },
-        {
-            "id": "testing/local_remote_files.lit",
-            "backlinks": [
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                },
-                {
-                    "id": "scratch_pad.lit",
-                    "url": "scratch_pad.html",
-                    "title": "🔥 Scratch ⚠️ Pad 🔬"
-                }
-            ],
-            "exists": true,
-            "title": "Local and Remote files",
-            "links": 4,
-            "size": 1166
-        },
-        {
-            "id": "testing/log/2021-05-09.lit",
-            "backlinks": [],
-            "exists": true,
-            "title": "2021-05-09",
-            "links": 0,
-            "size": 44
-        },
-        {
-            "id": "testing/log/2021-05-11.lit",
-            "backlinks": [],
-            "exists": true,
-            "title": "2021-05-11",
-            "links": 3,
-            "size": 241
-        },
-        {
-            "id": "testing/log/2021-05-12.lit",
-            "backlinks": [],
-            "exists": true,
-            "title": "2021-05-12",
-            "links": 5,
-            "size": 790
-        },
-        {
-            "id": "testing/log/2021-05-13.lit",
-            "backlinks": [],
-            "exists": true,
-            "title": "2021-05-13",
-            "links": 7,
-            "size": 423
-        },
-        {
-            "id": "testing/log/2021-05-15.lit",
-            "backlinks": [],
-            "exists": true,
-            "title": "2021-05-15",
-            "links": 6,
-            "size": 505
-        },
-        {
-            "id": "testing/log/2021-w20.lit",
-            "backlinks": [],
-            "exists": true,
-            "title": "2021 week 20",
-            "links": 0,
-            "size": 29
-        },
-        {
-            "id": "testing/log/day.lit",
-            "backlinks": [
-                {
-                    "id": "testing/input_buffer.lit",
-                    "url": "testing/input_buffer.html",
-                    "title": "Input Buffer"
-                }
-            ],
-            "exists": true,
-            "title": "${(new Date()).toISOString().split(\"T\")[0]}",
-            "links": 0,
-            "size": 94
-        },
-        {
-            "id": "testing/private_files.lit",
-            "backlinks": [
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                }
-            ],
-            "exists": true,
-            "title": "🔒 Private Files",
-            "links": 0,
-            "size": 306
-        },
-        {
-            "id": "testing/runkit.lit",
-            "backlinks": [
-                {
-                    "id": "repls.lit",
-                    "url": "repls.html",
-                    "title": "REPLs"
-                },
-                {
-                    "id": "testing/log/2021-05-13.lit",
-                    "url": "testing/log/2021-05-13.html",
-                    "title": "2021-05-13"
-                }
-            ],
-            "exists": true,
-            "title": "testing/runkit.lit",
-            "links": 12,
-            "size": 6461
-        },
-        {
-            "id": "testing/selection.lit",
-            "backlinks": [
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                }
-            ],
-            "exists": true,
-            "title": "More powerful selection",
-            "links": 0,
-            "size": 1393
-        },
-        {
-            "id": "testing/serviceworker.lit",
-            "backlinks": [
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                }
-            ],
-            "exists": true,
-            "title": "Service Worker",
-            "links": 12,
-            "size": 7556
-        },
-        {
-            "id": "testing/web_workers.lit",
-            "backlinks": [
-                {
-                    "id": "testing/serviceworker.lit",
-                    "url": "testing/serviceworker.html",
-                    "title": "Service Worker"
-                }
-            ],
-            "exists": true,
-            "title": "Web Workers",
-            "links": 7,
-            "size": 6169
-        },
-        {
-            "id": "throwaway/codevaluebug.lit",
-            "backlinks": [
-                {
-                    "id": "scratch_pad.lit",
-                    "url": "scratch_pad.html",
-                    "title": "🔥 Scratch ⚠️ Pad 🔬"
-                }
-            ],
-            "exists": true,
-            "title": "throwaway/codevaluebug.lit",
-            "links": 0,
-            "size": 61
-        },
-        {
-            "id": "utils/index.lit",
-            "backlinks": [
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                }
-            ],
-            "exists": true,
-            "title": ".lit Utils",
-            "links": 10,
-            "size": 1024
-        },
-        {
-            "id": "utils/momento.lit",
-            "backlinks": [
-                {
-                    "id": "utils/index.lit",
-                    "url": "utils/index.html",
-                    "title": ".lit Utils"
-                }
-            ],
-            "exists": true,
-            "title": "momento",
-            "links": 1,
-            "size": 246
-        },
-        {
-            "id": "wiki-links.lit",
-            "backlinks": [
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                },
-                {
-                    "id": "renderer/viewers/md/admonitions.lit",
-                    "url": "renderer/viewers/md/admonitions.html",
-                    "title": "Admonitions"
-                },
-                {
-                    "id": "scratch_pad.lit",
-                    "url": "scratch_pad.html",
-                    "title": "🔥 Scratch ⚠️ Pad 🔬"
-                }
-            ],
-            "exists": true,
-            "title": "wiki-links",
-            "links": 0,
-            "size": 791
-        },
-        {
-            "id": "client/index.jsx",
-            "backlinks": [
-                {
-                    "id": "client/client.lit",
-                    "url": "client/client.html",
-                    "title": "Client"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "components/Document.jsx",
-            "backlinks": [
-                {
-                    "id": "components/components.lit",
-                    "url": "components/components.html",
-                    "title": "Components"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "components/Header.jsx",
-            "backlinks": [
-                {
-                    "id": "components/components.lit",
-                    "url": "components/components.html",
-                    "title": "Components"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "components/App.jsx",
-            "backlinks": [
-                {
-                    "id": "components/components.lit",
-                    "url": "components/components.html",
-                    "title": "Components"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "components/SelectionContext.jsx",
-            "backlinks": [
-                {
-                    "id": "components/components.lit",
-                    "url": "components/components.html",
-                    "title": "Components"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "components/Cell.jsx",
-            "backlinks": [
-                {
-                    "id": "components/components.lit",
-                    "url": "components/components.html",
-                    "title": "Components"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "components/CellMenu.jsx",
-            "backlinks": [
-                {
-                    "id": "components/components.lit",
-                    "url": "components/components.html",
-                    "title": "Components"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "components/Editor.jsx",
-            "backlinks": [
-                {
-                    "id": "components/components.lit",
-                    "url": "components/components.html",
-                    "title": "Components"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "components/Icons.jsx",
-            "backlinks": [
-                {
-                    "id": "components/components.lit",
-                    "url": "components/components.html",
-                    "title": "Components"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "components/CodeMeta.jsx",
-            "backlinks": [
-                {
-                    "id": "components/components.lit",
-                    "url": "components/components.html",
-                    "title": "Components"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "components/base/Codeblock.jsx",
-            "backlinks": [
-                {
-                    "id": "components/components.lit",
-                    "url": "components/components.html",
-                    "title": "Components"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "components/base/Link.jsx",
-            "backlinks": [
-                {
-                    "id": "components/components.lit",
-                    "url": "components/components.html",
-                    "title": "Components"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "components/Backlinks.jsx",
-            "backlinks": [
-                {
-                    "id": "components/components.lit",
-                    "url": "components/components.html",
-                    "title": "Components"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "transfomers.lit",
-            "backlinks": [
-                {
-                    "id": "execute_code_cells.lit",
-                    "url": "execute_code_cells.html",
-                    "title": "Executing code cells"
-                }
-            ],
-            "exists": false,
-            "type": "link"
-        },
-        {
-            "id": "test.js",
-            "backlinks": [
-                {
-                    "id": "execute_code_cells.lit",
-                    "url": "execute_code_cells.html",
-                    "title": "Executing code cells"
-                },
-                {
-                    "id": "testing/runkit.lit",
-                    "url": "testing/runkit.html",
-                    "title": "testing/runkit.lit"
-                }
-            ],
-            "exists": true,
-            "type": "source"
-        },
-        {
-            "id": "test.ts",
-            "backlinks": [
-                {
-                    "id": "execute_code_cells.lit",
-                    "url": "execute_code_cells.html",
-                    "title": "Executing code cells"
-                }
-            ],
-            "exists": true,
-            "type": "source"
-        },
-        {
-            "id": "test.jsx",
-            "backlinks": [
-                {
-                    "id": "execute_code_cells.lit",
-                    "url": "execute_code_cells.html",
-                    "title": "Executing code cells"
-                },
-                {
-                    "id": "execute_code_cells.lit",
-                    "url": "execute_code_cells.html",
-                    "title": "Executing code cells"
-                }
-            ],
-            "exists": true,
-            "type": "source"
-        },
-        {
-            "id": "./utils/functions.js",
-            "backlinks": [
-                {
-                    "id": "functions.lit",
-                    "url": "functions.html",
-                    "title": "Utility functions"
-                }
-            ],
-            "exists": true,
-            "type": "source"
-        },
-        {
-            "id": "meta/settings.lit",
-            "backlinks": [
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                },
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                },
-                {
-                    "id": "plugin_system.lit",
-                    "url": "plugin_system.html",
-                    "title": "🔌 Plugin system"
-                }
-            ],
-            "exists": false,
-            "type": "link"
-        },
-        {
-            "id": "litconfig.lit",
-            "backlinks": [
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                }
-            ],
-            "exists": false,
-            "type": "link"
-        },
-        {
-            "id": "articles/ideas.lit",
-            "backlinks": [
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                }
-            ],
-            "exists": false,
-            "type": "link"
-        },
-        {
-            "id": "viewers.lit",
-            "backlinks": [
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                },
-                {
-                    "id": "plugin_system.lit",
-                    "url": "plugin_system.html",
-                    "title": "🔌 Plugin system"
-                },
-                {
-                    "id": "plugin_system.lit",
-                    "url": "plugin_system.html",
-                    "title": "🔌 Plugin system"
-                }
-            ],
-            "exists": false,
-            "type": "link"
-        },
-        {
-            "id": "meta/github_workflows.lit",
-            "backlinks": [
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                }
-            ],
-            "exists": false,
-            "type": "link"
-        },
-        {
-            "id": "meta/styling_and_themes.lit",
-            "backlinks": [
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                }
-            ],
-            "exists": false,
-            "type": "link"
-        },
-        {
-            "id": "manifest.json",
-            "backlinks": [
-                {
-                    "id": "index.lit",
-                    "url": "index.html",
-                    "title": ".lit"
-                },
-                {
-                    "id": "meta/files_and_links.lit",
-                    "url": "meta/files_and_links.html",
-                    "title": "Files & Links"
-                },
-                {
-                    "id": "meta/files_and_links.lit",
-                    "url": "meta/files_and_links.html",
-                    "title": "Files & Links"
-                },
-                {
-                    "id": "renderer/viewers.lit",
-                    "url": "renderer/viewers.html",
-                    "title": "Custom Viewers"
-                },
-                {
-                    "id": "scratch_pad.lit",
-                    "url": "scratch_pad.html",
-                    "title": "🔥 Scratch ⚠️ Pad 🔬"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "unified.lit",
-            "backlinks": [
-                {
-                    "id": "parser/parser.lit",
-                    "url": "parser/parser.html",
-                    "title": "Parser"
-                }
-            ],
-            "exists": false,
-            "type": "link"
-        },
-        {
-            "id": "remark.lit",
-            "backlinks": [
-                {
-                    "id": "parser/parser.lit",
-                    "url": "parser/parser.html",
-                    "title": "Parser"
-                }
-            ],
-            "exists": false,
-            "type": "link"
-        },
-        {
-            "id": "markdown.lit",
-            "backlinks": [
-                {
-                    "id": "parser/parser.lit",
-                    "url": "parser/parser.html",
-                    "title": "Parser"
-                }
-            ],
-            "exists": false,
-            "type": "link"
-        },
-        {
-            "id": "parser/index.js",
-            "backlinks": [
-                {
-                    "id": "parser/parser.lit",
-                    "url": "parser/parser.html",
-                    "title": "Parser"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "parser/frontmatter.js",
-            "backlinks": [
-                {
-                    "id": "parser/parser.lit",
-                    "url": "parser/parser.html",
-                    "title": "Parser"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "parser/sections.js",
-            "backlinks": [
-                {
-                    "id": "parser/parser.lit",
-                    "url": "parser/parser.html",
-                    "title": "Parser"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "parser/codeblocks.js",
-            "backlinks": [
-                {
-                    "id": "parser/parser.lit",
-                    "url": "parser/parser.html",
-                    "title": "Parser"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "parser/mdblocks.js",
-            "backlinks": [
-                {
-                    "id": "parser/parser.lit",
-                    "url": "parser/parser.html",
-                    "title": "Parser"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "parser/links.js",
-            "backlinks": [
-                {
-                    "id": "parser/parser.lit",
-                    "url": "parser/parser.html",
-                    "title": "Parser"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "utils/fs-promises-gh-utils.js",
-            "backlinks": [
-                {
-                    "id": "persist_to_github.lit",
-                    "url": "persist_to_github.html",
-                    "title": "Persist to GitHub"
-                },
-                {
-                    "id": "utils/index.lit",
-                    "url": "utils/index.html",
-                    "title": ".lit Utils"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "renderer/viewers/meta.js",
-            "backlinks": [
-                {
-                    "id": "plugin_system.lit",
-                    "url": "plugin_system.html",
-                    "title": "🔌 Plugin system"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "components.lit",
-            "backlinks": [
-                {
-                    "id": "renderer/renderer.lit",
-                    "url": "renderer/renderer.html",
-                    "title": "Renderer"
-                }
-            ],
-            "exists": false,
-            "type": "link"
-        },
-        {
-            "id": "../components/components.lit",
-            "backlinks": [
-                {
-                    "id": "renderer/renderer.lit",
-                    "url": "renderer/renderer.html",
-                    "title": "Renderer"
-                }
-            ],
-            "exists": false,
-            "type": "link"
-        },
-        {
-            "id": "renderer/index.jsx",
-            "backlinks": [
-                {
-                    "id": "renderer/renderer.lit",
-                    "url": "renderer/renderer.html",
-                    "title": "Renderer"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "renderer/extractPlugins.js",
-            "backlinks": [
-                {
-                    "id": "renderer/renderer.lit",
-                    "url": "renderer/renderer.html",
-                    "title": "Renderer"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "renderer/transcludeCode.js",
-            "backlinks": [
-                {
-                    "id": "renderer/renderer.lit",
-                    "url": "renderer/renderer.html",
-                    "title": "Renderer"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "renderer/viewers/md/index.jsx",
-            "backlinks": [
-                {
-                    "id": "renderer/viewers.lit",
-                    "url": "renderer/viewers.html",
-                    "title": "Custom Viewers"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "viewers/meta.js",
-            "backlinks": [
-                {
-                    "id": "renderer/viewers.lit",
-                    "url": "renderer/viewers.html",
-                    "title": "Custom Viewers"
-                }
-            ],
-            "exists": true,
-            "type": "source"
-        },
-        {
-            "id": "renderer/file.txt",
-            "backlinks": [
-                {
-                    "id": "renderer/viewers.lit",
-                    "url": "renderer/viewers.html",
-                    "title": "Custom Viewers"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "renderer/difftestA.txt",
-            "backlinks": [
-                {
-                    "id": "renderer/viewers.lit",
-                    "url": "renderer/viewers.html",
-                    "title": "Custom Viewers"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "../../../../../meta/settings.lit#plantuml-viewer--repl",
-            "backlinks": [
-                {
-                    "id": "renderer/viewers/plantuml.lit",
-                    "url": "renderer/viewers/plantuml.html",
-                    "title": "Plant uml"
-                },
-                {
-                    "id": "scratch_pad.lit",
-                    "url": "scratch_pad.html",
-                    "title": "🔥 Scratch ⚠️ Pad 🔬"
-                }
-            ],
-            "exists": false,
-            "type": "link"
-        },
-        {
-            "id": "repl/index.js",
-            "backlinks": [
-                {
-                    "id": "repl/index.lit",
-                    "url": "repl/index.html",
-                    "title": "REPL"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "executing_code_cells.lit",
-            "backlinks": [
-                {
-                    "id": "repls.lit",
-                    "url": "repls.html",
-                    "title": "REPLs"
-                }
-            ],
-            "exists": false,
-            "type": "link"
-        },
-        {
-            "id": "index",
-            "backlinks": [
-                {
-                    "id": "scratch_pad.lit",
-                    "url": "scratch_pad.html",
-                    "title": "🔥 Scratch ⚠️ Pad 🔬"
-                }
-            ],
-            "exists": false,
-            "type": "link"
-        },
-        {
-            "id": "utils/fs.lit",
-            "backlinks": [
-                {
-                    "id": "scratch_pad.lit",
-                    "url": "scratch_pad.html",
-                    "title": "🔥 Scratch ⚠️ Pad 🔬"
-                }
-            ],
-            "exists": false,
-            "type": "link"
-        },
-        {
-            "id": "utils/urifragments.lit",
-            "backlinks": [
-                {
-                    "id": "scratch_pad.lit",
-                    "url": "scratch_pad.html",
-                    "title": "🔥 Scratch ⚠️ Pad 🔬"
-                }
-            ],
-            "exists": false,
-            "type": "link"
-        },
-        {
-            "id": "wikilinks.lit",
-            "backlinks": [
-                {
-                    "id": "scratch_pad.lit",
-                    "url": "scratch_pad.html",
-                    "title": "🔥 Scratch ⚠️ Pad 🔬"
-                }
-            ],
-            "exists": false,
-            "type": "link"
-        },
-        {
-            "id": "meta/styling_and_themes.lit#viewers",
-            "backlinks": [
-                {
-                    "id": "scratch_pad.lit",
-                    "url": "scratch_pad.html",
-                    "title": "🔥 Scratch ⚠️ Pad 🔬"
-                }
-            ],
-            "exists": false,
-            "type": "link"
-        },
-        {
-            "id": "filename",
-            "backlinks": [
-                {
-                    "id": "scratch_pad.lit",
-                    "url": "scratch_pad.html",
-                    "title": "🔥 Scratch ⚠️ Pad 🔬"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "dummy/example.svg",
-            "backlinks": [
-                {
-                    "id": "scratch_pad.lit",
-                    "url": "scratch_pad.html",
-                    "title": "🔥 Scratch ⚠️ Pad 🔬"
-                }
-            ],
-            "exists": true,
-            "type": "source"
-        },
-        {
-            "id": "dummy/plain.txt",
-            "backlinks": [
-                {
-                    "id": "scratch_pad.lit",
-                    "url": "scratch_pad.html",
-                    "title": "🔥 Scratch ⚠️ Pad 🔬"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "dummy/data.csv",
-            "backlinks": [
-                {
-                    "id": "scratch_pad.lit",
-                    "url": "scratch_pad.html",
-                    "title": "🔥 Scratch ⚠️ Pad 🔬"
-                }
-            ],
-            "exists": true,
-            "type": "source"
-        },
-        {
-            "id": "../../../../../testing/log/2021-05-12.lit",
-            "backlinks": [
-                {
-                    "id": "testing/input_buffer.lit",
-                    "url": "testing/input_buffer.html",
-                    "title": "Input Buffer"
-                }
-            ],
-            "exists": false,
-            "type": "link"
-        },
-        {
-            "id": "../../../../../testing/log/2021-w20.lit",
-            "backlinks": [
-                {
-                    "id": "testing/input_buffer.lit",
-                    "url": "testing/input_buffer.html",
-                    "title": "Input Buffer"
-                }
-            ],
-            "exists": false,
-            "type": "link"
-        },
-        {
-            "id": "../../../../../testing/log/2021-05.lit",
-            "backlinks": [
-                {
-                    "id": "testing/input_buffer.lit",
-                    "url": "testing/input_buffer.html",
-                    "title": "Input Buffer"
-                }
-            ],
-            "exists": false,
-            "type": "link"
-        },
-        {
-            "id": "../../../../../testing/log/year.lit",
-            "backlinks": [
-                {
-                    "id": "testing/input_buffer.lit",
-                    "url": "testing/input_buffer.html",
-                    "title": "Input Buffer"
-                }
-            ],
-            "exists": false,
-            "type": "link"
-        },
-        {
-            "id": "testing/log/checkforinput.js",
-            "backlinks": [
-                {
-                    "id": "testing/input_buffer.lit",
-                    "url": "testing/input_buffer.html",
-                    "title": "Input Buffer"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "testing/log/today.js",
-            "backlinks": [
-                {
-                    "id": "testing/input_buffer.lit",
-                    "url": "testing/input_buffer.html",
-                    "title": "Input Buffer"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "log/checkforinput.js",
-            "backlinks": [
-                {
-                    "id": "testing/input_buffer.lit",
-                    "url": "testing/input_buffer.html",
-                    "title": "Input Buffer"
-                }
-            ],
-            "exists": true,
-            "type": "source"
-        },
-        {
-            "id": "log/today.js",
-            "backlinks": [
-                {
-                    "id": "testing/input_buffer.lit",
-                    "url": "testing/input_buffer.html",
-                    "title": "Input Buffer"
-                }
-            ],
-            "exists": true,
-            "type": "source"
-        },
-        {
-            "id": "../utils/git-commit-all.js",
-            "backlinks": [
-                {
-                    "id": "testing/isomorphic_git.lit",
-                    "url": "testing/isomorphic_git.html",
-                    "title": "Isomorphic Git"
-                }
-            ],
-            "exists": true,
-            "type": "source"
-        },
-        {
-            "id": "fsviewer.jsx",
-            "backlinks": [
-                {
-                    "id": "testing/lightningfs.lit",
-                    "url": "testing/lightningfs.html",
-                    "title": "Lightning FS"
-                }
-            ],
-            "exists": true,
-            "type": "source"
-        },
-        {
-            "id": "testing/test.txt",
-            "backlinks": [
-                {
-                    "id": "testing/local_remote_files.lit",
-                    "url": "testing/local_remote_files.html",
-                    "title": "Local and Remote files"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "../../../../../testing/log/2021-w20",
-            "backlinks": [
-                {
-                    "id": "testing/log/2021-05-11.lit",
-                    "url": "testing/log/2021-05-11.html",
-                    "title": "2021-05-11"
-                },
-                {
-                    "id": "testing/log/2021-05-12.lit",
-                    "url": "testing/log/2021-05-12.html",
-                    "title": "2021-05-12"
-                },
-                {
-                    "id": "testing/log/2021-05-13.lit",
-                    "url": "testing/log/2021-05-13.html",
-                    "title": "2021-05-13"
-                }
-            ],
-            "exists": false,
-            "type": "link"
-        },
-        {
-            "id": "../../../../../testing/log/2021-05",
-            "backlinks": [
-                {
-                    "id": "testing/log/2021-05-11.lit",
-                    "url": "testing/log/2021-05-11.html",
-                    "title": "2021-05-11"
-                },
-                {
-                    "id": "testing/log/2021-05-12.lit",
-                    "url": "testing/log/2021-05-12.html",
-                    "title": "2021-05-12"
-                },
-                {
-                    "id": "testing/log/2021-05-13.lit",
-                    "url": "testing/log/2021-05-13.html",
-                    "title": "2021-05-13"
-                },
-                {
-                    "id": "testing/log/2021-05-15.lit",
-                    "url": "testing/log/2021-05-15.html",
-                    "title": "2021-05-15"
-                }
-            ],
-            "exists": false,
-            "type": "link"
-        },
-        {
-            "id": "../../../../../testing/log/2021",
-            "backlinks": [
-                {
-                    "id": "testing/log/2021-05-11.lit",
-                    "url": "testing/log/2021-05-11.html",
-                    "title": "2021-05-11"
-                },
-                {
-                    "id": "testing/log/2021-05-12.lit",
-                    "url": "testing/log/2021-05-12.html",
-                    "title": "2021-05-12"
-                },
-                {
-                    "id": "testing/log/2021-05-13.lit",
-                    "url": "testing/log/2021-05-13.html",
-                    "title": "2021-05-13"
-                },
-                {
-                    "id": "testing/log/2021-05-15.lit",
-                    "url": "testing/log/2021-05-15.html",
-                    "title": "2021-05-15"
-                }
-            ],
-            "exists": false,
-            "type": "link"
-        },
-        {
-            "id": "../../../../../testing/log/2021-w21",
-            "backlinks": [
-                {
-                    "id": "testing/log/2021-05-15.lit",
-                    "url": "testing/log/2021-05-15.html",
-                    "title": "2021-05-15"
-                }
-            ],
-            "exists": false,
-            "type": "link"
-        },
-        {
-            "id": "rk.jsx",
-            "backlinks": [
-                {
-                    "id": "testing/runkit.lit",
-                    "url": "testing/runkit.html",
-                    "title": "testing/runkit.lit"
-                }
-            ],
-            "exists": true,
-            "type": "source"
-        },
-        {
-            "id": "./runkit-repl-endpoint.js",
-            "backlinks": [
-                {
-                    "id": "testing/runkit.lit",
-                    "url": "testing/runkit.html",
-                    "title": "testing/runkit.lit"
-                }
-            ],
-            "exists": true,
-            "type": "source"
-        },
-        {
-            "id": "testing/getserviceworker--sw",
-            "backlinks": [
-                {
-                    "id": "testing/serviceworker.lit",
-                    "url": "testing/serviceworker.html",
-                    "title": "Service Worker"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "../serviceworker.js",
-            "backlinks": [
-                {
-                    "id": "testing/serviceworker.lit",
-                    "url": "testing/serviceworker.html",
-                    "title": "Service Worker"
-                }
-            ],
-            "exists": true,
-            "type": "source"
-        },
-        {
-            "id": "worker.js",
-            "backlinks": [
-                {
-                    "id": "testing/web_workers.lit",
-                    "url": "testing/web_workers.html",
-                    "title": "Web Workers"
-                }
-            ],
-            "exists": true,
-            "type": "source"
-        },
-        {
-            "id": "worker2.js",
-            "backlinks": [
-                {
-                    "id": "testing/web_workers.lit",
-                    "url": "testing/web_workers.html",
-                    "title": "Web Workers"
-                }
-            ],
-            "exists": true,
-            "type": "source"
-        },
-        {
-            "id": "utils/functions.js",
-            "backlinks": [
-                {
-                    "id": "utils/index.lit",
-                    "url": "utils/index.html",
-                    "title": ".lit Utils"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "utils/console.js",
-            "backlinks": [
-                {
-                    "id": "utils/index.lit",
-                    "url": "utils/index.html",
-                    "title": ".lit Utils"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "utils/colors.js",
-            "backlinks": [
-                {
-                    "id": "utils/index.lit",
-                    "url": "utils/index.html",
-                    "title": ".lit Utils"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "utils/safe-encoders.js",
-            "backlinks": [
-                {
-                    "id": "utils/index.lit",
-                    "url": "utils/index.html",
-                    "title": ".lit Utils"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "utils/unist-util-patch-source.js",
-            "backlinks": [
-                {
-                    "id": "utils/index.lit",
-                    "url": "utils/index.html",
-                    "title": ".lit Utils"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "utils/unist-util-select-position.js",
-            "backlinks": [
-                {
-                    "id": "utils/index.lit",
-                    "url": "utils/index.html",
-                    "title": ".lit Utils"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "utils/fs-promises-utils.js",
-            "backlinks": [
-                {
-                    "id": "utils/index.lit",
-                    "url": "utils/index.html",
-                    "title": ".lit Utils"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "utils/git-commit-all.js",
-            "backlinks": [
-                {
-                    "id": "utils/index.lit",
-                    "url": "utils/index.html",
-                    "title": ".lit Utils"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        },
-        {
-            "id": "utils/momento.js",
-            "backlinks": [
-                {
-                    "id": "utils/momento.lit",
-                    "url": "utils/momento.html",
-                    "title": "momento"
-                }
-            ],
-            "exists": true,
-            "type": "transclude"
-        }
-    ],
-    "links": [
-        {
-            "source": "index.lit",
-            "target": "404.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "cli/cli.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "client/client.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "components/components.lit"
-        },
-        {
-            "source": "scratch_pad.lit",
-            "target": "dummy/🔥.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "execute_code_cells.lit"
-        },
-        {
-            "source": "plugin_system.lit",
-            "target": "execute_code_cells.lit"
-        },
-        {
-            "source": "repl/index.lit",
-            "target": "execute_code_cells.lit"
-        },
-        {
-            "source": "scratch_pad.lit",
-            "target": "execute_code_cells.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "meta/files_and_links.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "parser/parser.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "persist_to_github.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "persist_to_github.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "plugin_system.lit"
-        },
-        {
-            "source": "repl/index.lit",
-            "target": "plugin_system.lit"
-        },
-        {
-            "source": "repls.lit",
-            "target": "plugin_system.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "renderer/renderer.lit"
-        },
-        {
-            "source": "execute_code_cells.lit",
-            "target": "renderer/viewers.lit"
-        },
-        {
-            "source": "execute_code_cells.lit",
-            "target": "renderer/viewers.lit"
-        },
-        {
-            "source": "renderer/renderer.lit",
-            "target": "renderer/viewers.lit"
-        },
-        {
-            "source": "scratch_pad.lit",
-            "target": "renderer/viewers.lit"
-        },
-        {
-            "source": "renderer/viewers.lit",
-            "target": "renderer/viewers/md/admonitions.lit"
-        },
-        {
-            "source": "scratch_pad.lit",
-            "target": "repl/index.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "repls.lit"
-        },
-        {
-            "source": "plugin_system.lit",
-            "target": "repls.lit"
-        },
-        {
-            "source": "plugin_system.lit",
-            "target": "repls.lit"
-        },
-        {
-            "source": "repl/index.lit",
-            "target": "repls.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "scratch_pad.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "scratch_pad.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "testing/input_buffer.lit"
-        },
-        {
-            "source": "execute_code_cells.lit",
-            "target": "testing/isomorphic_git.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "testing/isomorphic_git.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "testing/isomorphic_git.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "testing/lightningfs.lit"
-        },
-        {
-            "source": "testing/isomorphic_git.lit",
-            "target": "testing/lightningfs.lit"
-        },
-        {
-            "source": "testing/local_remote_files.lit",
-            "target": "testing/lightningfs.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "testing/local_remote_files.lit"
-        },
-        {
-            "source": "scratch_pad.lit",
-            "target": "testing/local_remote_files.lit"
-        },
-        {
-            "source": "testing/input_buffer.lit",
-            "target": "testing/log/day.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "testing/private_files.lit"
-        },
-        {
-            "source": "repls.lit",
-            "target": "testing/runkit.lit"
-        },
-        {
-            "source": "testing/log/2021-05-13.lit",
-            "target": "testing/runkit.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "testing/selection.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "testing/serviceworker.lit"
-        },
-        {
-            "source": "testing/serviceworker.lit",
-            "target": "testing/web_workers.lit"
-        },
-        {
-            "source": "scratch_pad.lit",
-            "target": "throwaway/codevaluebug.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "utils/index.lit"
-        },
-        {
-            "source": "utils/index.lit",
-            "target": "utils/momento.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "wiki-links.lit"
-        },
-        {
-            "source": "renderer/viewers/md/admonitions.lit",
-            "target": "wiki-links.lit"
-        },
-        {
-            "source": "scratch_pad.lit",
-            "target": "wiki-links.lit"
-        },
-        {
-            "source": "client/client.lit",
-            "target": "client/index.jsx"
-        },
-        {
-            "source": "components/components.lit",
-            "target": "components/Document.jsx"
-        },
-        {
-            "source": "components/components.lit",
-            "target": "components/Header.jsx"
-        },
-        {
-            "source": "components/components.lit",
-            "target": "components/App.jsx"
-        },
-        {
-            "source": "components/components.lit",
-            "target": "components/SelectionContext.jsx"
-        },
-        {
-            "source": "components/components.lit",
-            "target": "components/Cell.jsx"
-        },
-        {
-            "source": "components/components.lit",
-            "target": "components/CellMenu.jsx"
-        },
-        {
-            "source": "components/components.lit",
-            "target": "components/Editor.jsx"
-        },
-        {
-            "source": "components/components.lit",
-            "target": "components/Icons.jsx"
-        },
-        {
-            "source": "components/components.lit",
-            "target": "components/CodeMeta.jsx"
-        },
-        {
-            "source": "components/components.lit",
-            "target": "components/base/Codeblock.jsx"
-        },
-        {
-            "source": "components/components.lit",
-            "target": "components/base/Link.jsx"
-        },
-        {
-            "source": "components/components.lit",
-            "target": "components/Backlinks.jsx"
-        },
-        {
-            "source": "execute_code_cells.lit",
-            "target": "transfomers.lit"
-        },
-        {
-            "source": "execute_code_cells.lit",
-            "target": "test.js"
-        },
-        {
-            "source": "testing/runkit.lit",
-            "target": "test.js"
-        },
-        {
-            "source": "execute_code_cells.lit",
-            "target": "test.ts"
-        },
-        {
-            "source": "execute_code_cells.lit",
-            "target": "test.jsx"
-        },
-        {
-            "source": "execute_code_cells.lit",
-            "target": "test.jsx"
-        },
-        {
-            "source": "functions.lit",
-            "target": "./utils/functions.js"
-        },
-        {
-            "source": "index.lit",
-            "target": "meta/settings.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "meta/settings.lit"
-        },
-        {
-            "source": "plugin_system.lit",
-            "target": "meta/settings.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "litconfig.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "articles/ideas.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "viewers.lit"
-        },
-        {
-            "source": "plugin_system.lit",
-            "target": "viewers.lit"
-        },
-        {
-            "source": "plugin_system.lit",
-            "target": "viewers.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "meta/github_workflows.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "meta/styling_and_themes.lit"
-        },
-        {
-            "source": "index.lit",
-            "target": "manifest.json"
-        },
-        {
-            "source": "meta/files_and_links.lit",
-            "target": "manifest.json"
-        },
-        {
-            "source": "meta/files_and_links.lit",
-            "target": "manifest.json"
-        },
-        {
-            "source": "renderer/viewers.lit",
-            "target": "manifest.json"
-        },
-        {
-            "source": "scratch_pad.lit",
-            "target": "manifest.json"
-        },
-        {
-            "source": "parser/parser.lit",
-            "target": "unified.lit"
-        },
-        {
-            "source": "parser/parser.lit",
-            "target": "remark.lit"
-        },
-        {
-            "source": "parser/parser.lit",
-            "target": "markdown.lit"
-        },
-        {
-            "source": "parser/parser.lit",
-            "target": "parser/index.js"
-        },
-        {
-            "source": "parser/parser.lit",
-            "target": "parser/frontmatter.js"
-        },
-        {
-            "source": "parser/parser.lit",
-            "target": "parser/sections.js"
-        },
-        {
-            "source": "parser/parser.lit",
-            "target": "parser/codeblocks.js"
-        },
-        {
-            "source": "parser/parser.lit",
-            "target": "parser/mdblocks.js"
-        },
-        {
-            "source": "parser/parser.lit",
-            "target": "parser/links.js"
-        },
-        {
-            "source": "persist_to_github.lit",
-            "target": "utils/fs-promises-gh-utils.js"
-        },
-        {
-            "source": "utils/index.lit",
-            "target": "utils/fs-promises-gh-utils.js"
-        },
-        {
-            "source": "plugin_system.lit",
-            "target": "renderer/viewers/meta.js"
-        },
-        {
-            "source": "renderer/renderer.lit",
-            "target": "components.lit"
-        },
-        {
-            "source": "renderer/renderer.lit",
-            "target": "../components/components.lit"
-        },
-        {
-            "source": "renderer/renderer.lit",
-            "target": "renderer/index.jsx"
-        },
-        {
-            "source": "renderer/renderer.lit",
-            "target": "renderer/extractPlugins.js"
-        },
-        {
-            "source": "renderer/renderer.lit",
-            "target": "renderer/transcludeCode.js"
-        },
-        {
-            "source": "renderer/viewers.lit",
-            "target": "renderer/viewers/md/index.jsx"
-        },
-        {
-            "source": "renderer/viewers.lit",
-            "target": "viewers/meta.js"
-        },
-        {
-            "source": "renderer/viewers.lit",
-            "target": "renderer/file.txt"
-        },
-        {
-            "source": "renderer/viewers.lit",
-            "target": "renderer/difftestA.txt"
-        },
-        {
-            "source": "renderer/viewers/plantuml.lit",
-            "target": "../../../../../meta/settings.lit#plantuml-viewer--repl"
-        },
-        {
-            "source": "scratch_pad.lit",
-            "target": "../../../../../meta/settings.lit#plantuml-viewer--repl"
-        },
-        {
-            "source": "repl/index.lit",
-            "target": "repl/index.js"
-        },
-        {
-            "source": "repls.lit",
-            "target": "executing_code_cells.lit"
-        },
-        {
-            "source": "scratch_pad.lit",
-            "target": "index"
-        },
-        {
-            "source": "scratch_pad.lit",
-            "target": "utils/fs.lit"
-        },
-        {
-            "source": "scratch_pad.lit",
-            "target": "utils/urifragments.lit"
-        },
-        {
-            "source": "scratch_pad.lit",
-            "target": "wikilinks.lit"
-        },
-        {
-            "source": "scratch_pad.lit",
-            "target": "meta/styling_and_themes.lit#viewers"
-        },
-        {
-            "source": "scratch_pad.lit",
-            "target": "filename"
-        },
-        {
-            "source": "scratch_pad.lit",
-            "target": "dummy/example.svg"
-        },
-        {
-            "source": "scratch_pad.lit",
-            "target": "dummy/plain.txt"
-        },
-        {
-            "source": "scratch_pad.lit",
-            "target": "dummy/data.csv"
-        },
-        {
-            "source": "testing/input_buffer.lit",
-            "target": "../../../../../testing/log/2021-05-12.lit"
-        },
-        {
-            "source": "testing/input_buffer.lit",
-            "target": "../../../../../testing/log/2021-w20.lit"
-        },
-        {
-            "source": "testing/input_buffer.lit",
-            "target": "../../../../../testing/log/2021-05.lit"
-        },
-        {
-            "source": "testing/input_buffer.lit",
-            "target": "../../../../../testing/log/year.lit"
-        },
-        {
-            "source": "testing/input_buffer.lit",
-            "target": "testing/log/checkforinput.js"
-        },
-        {
-            "source": "testing/input_buffer.lit",
-            "target": "testing/log/today.js"
-        },
-        {
-            "source": "testing/input_buffer.lit",
-            "target": "log/checkforinput.js"
-        },
-        {
-            "source": "testing/input_buffer.lit",
-            "target": "log/today.js"
-        },
-        {
-            "source": "testing/isomorphic_git.lit",
-            "target": "../utils/git-commit-all.js"
-        },
-        {
-            "source": "testing/lightningfs.lit",
-            "target": "fsviewer.jsx"
-        },
-        {
-            "source": "testing/local_remote_files.lit",
-            "target": "testing/test.txt"
-        },
-        {
-            "source": "testing/log/2021-05-11.lit",
-            "target": "../../../../../testing/log/2021-w20"
-        },
-        {
-            "source": "testing/log/2021-05-12.lit",
-            "target": "../../../../../testing/log/2021-w20"
-        },
-        {
-            "source": "testing/log/2021-05-13.lit",
-            "target": "../../../../../testing/log/2021-w20"
-        },
-        {
-            "source": "testing/log/2021-05-11.lit",
-            "target": "../../../../../testing/log/2021-05"
-        },
-        {
-            "source": "testing/log/2021-05-12.lit",
-            "target": "../../../../../testing/log/2021-05"
-        },
-        {
-            "source": "testing/log/2021-05-13.lit",
-            "target": "../../../../../testing/log/2021-05"
-        },
-        {
-            "source": "testing/log/2021-05-15.lit",
-            "target": "../../../../../testing/log/2021-05"
-        },
-        {
-            "source": "testing/log/2021-05-11.lit",
-            "target": "../../../../../testing/log/2021"
-        },
-        {
-            "source": "testing/log/2021-05-12.lit",
-            "target": "../../../../../testing/log/2021"
-        },
-        {
-            "source": "testing/log/2021-05-13.lit",
-            "target": "../../../../../testing/log/2021"
-        },
-        {
-            "source": "testing/log/2021-05-15.lit",
-            "target": "../../../../../testing/log/2021"
-        },
-        {
-            "source": "testing/log/2021-05-15.lit",
-            "target": "../../../../../testing/log/2021-w21"
-        },
-        {
-            "source": "testing/runkit.lit",
-            "target": "rk.jsx"
-        },
-        {
-            "source": "testing/runkit.lit",
-            "target": "./runkit-repl-endpoint.js"
-        },
-        {
-            "source": "testing/serviceworker.lit",
-            "target": "testing/getserviceworker--sw"
-        },
-        {
-            "source": "testing/serviceworker.lit",
-            "target": "../serviceworker.js"
-        },
-        {
-            "source": "testing/web_workers.lit",
-            "target": "worker.js"
-        },
-        {
-            "source": "testing/web_workers.lit",
-            "target": "worker2.js"
-        },
-        {
-            "source": "utils/index.lit",
-            "target": "utils/functions.js"
-        },
-        {
-            "source": "utils/index.lit",
-            "target": "utils/console.js"
-        },
-        {
-            "source": "utils/index.lit",
-            "target": "utils/colors.js"
-        },
-        {
-            "source": "utils/index.lit",
-            "target": "utils/safe-encoders.js"
-        },
-        {
-            "source": "utils/index.lit",
-            "target": "utils/unist-util-patch-source.js"
-        },
-        {
-            "source": "utils/index.lit",
-            "target": "utils/unist-util-select-position.js"
-        },
-        {
-            "source": "utils/index.lit",
-            "target": "utils/fs-promises-utils.js"
-        },
-        {
-            "source": "utils/index.lit",
-            "target": "utils/git-commit-all.js"
-        },
-        {
-            "source": "utils/momento.lit",
-            "target": "utils/momento.js"
-        }
-    ]
-}
+```>txt attached=true updated=1621171008267
+{ nodes: 
+   [ { id: '404.lit',
+       backlinks: [Object],
+       exists: true,
+       title: 'Not yet found',
+       links: 0,
+       size: 73 },
+     { id: 'articles/ideas_for.lit',
+       backlinks: [],
+       exists: true,
+       title: 'Ideas 💡 for Articles',
+       links: 0,
+       size: 278 },
+     { id: 'cli/cli.lit',
+       backlinks: [Object],
+       exists: true,
+       title: 'Command Line Interface',
+       links: 9,
+       size: 1564 },
+     { id: 'client/client.lit',
+       backlinks: [Object],
+       exists: true,
+       title: 'Client',
+       links: 1,
+       size: 59 },
+     { id: 'components/components.lit',
+       backlinks: [Object],
+       exists: true,
+       title: 'Components',
+       links: 25,
+       size: 731 },
+     { id: 'dummy/🔥.lit',
+       backlinks: [Object],
+       exists: true,
+       title: 'Title TBD (dummy/🔥.lit)',
+       links: 0,
+       size: 26 },
+     { id: 'execute_code_cells.lit',
+       backlinks: [Object],
+       exists: true,
+       title: 'Executing code cells',
+       links: 23,
+       size: 13521 },
+     { id: 'functions.lit',
+       backlinks: [],
+       exists: true,
+       title: 'Utility functions',
+       links: 1,
+       size: 320 },
+     { id: 'index.lit',
+       backlinks: [],
+       exists: true,
+       title: '.lit',
+       links: 50,
+       size: 1316729 },
+     { id: 'meta/files_and_links.lit',
+       backlinks: [Object],
+       exists: true,
+       title: 'Files & Links',
+       links: 2,
+       size: 234 },
+     { id: 'parser/parser.lit',
+       backlinks: [Object],
+       exists: true,
+       title: 'Parser',
+       links: 17,
+       size: 1008 },
+     { id: 'persist_to_github.lit',
+       backlinks: [Object],
+       exists: true,
+       title: 'Persist to GitHub',
+       links: 1,
+       size: 357 },
+     { id: 'plugin_system.lit',
+       backlinks: [Object],
+       exists: true,
+       title: '🔌 Plugin system',
+       links: 17,
+       size: 4923 },
+     { id: 'renderer/renderer.lit',
+       backlinks: [Object],
+       exists: true,
+       title: 'Renderer',
+       links: 6,
+       size: 468 },
+     { id: 'renderer/viewers.lit',
+       backlinks: [Object],
+       exists: true,
+       title: 'Custom Viewers',
+       links: 26,
+       size: 14774 },
+     { id: 'renderer/viewers/md/admonitions.lit',
+       backlinks: [Object],
+       exists: true,
+       title: 'Admonitions',
+       links: 1,
+       size: 681 },
+     { id: 'renderer/viewers/plantuml.lit',
+       backlinks: [],
+       exists: true,
+       title: 'Plant uml',
+       links: 2,
+       size: 1687 },
+     { id: 'repl/index.lit',
+       backlinks: [Object],
+       exists: true,
+       title: 'REPL',
+       links: 4,
+       size: 257 },
+     { id: 'repls.lit',
+       backlinks: [Object],
+       exists: true,
+       title: 'REPLs',
+       links: 3,
+       size: 186 },
+     { id: 'scratch_pad.lit',
+       backlinks: [Object],
+       exists: true,
+       title: '🔥 Scratch ⚠️ Pad 🔬',
+       links: 46,
+       size: 10503 },
+     { id: 'testing/input_buffer.lit',
+       backlinks: [Object],
+       exists: true,
+       title: 'Input Buffer',
+       links: 21,
+       size: 5563 },
+     { id: 'testing/isomorphic_git.lit',
+       backlinks: [Object],
+       exists: true,
+       title: 'Isomorphic Git',
+       links: 11,
+       size: 7504 },
+     { id: 'testing/lightningfs.lit',
+       backlinks: [Object],
+       exists: true,
+       title: 'Lightning FS',
+       links: 8,
+       size: 105621 },
+     { id: 'testing/local_remote_files.lit',
+       backlinks: [Object],
+       exists: true,
+       title: 'Local and Remote files',
+       links: 4,
+       size: 1166 },
+     { id: 'testing/log/2021-05-09.lit',
+       backlinks: [],
+       exists: true,
+       title: '2021-05-09',
+       links: 0,
+       size: 44 },
+     { id: 'testing/log/2021-05-11.lit',
+       backlinks: [],
+       exists: true,
+       title: '2021-05-11',
+       links: 3,
+       size: 241 },
+     { id: 'testing/log/2021-05-12.lit',
+       backlinks: [],
+       exists: true,
+       title: '2021-05-12',
+       links: 5,
+       size: 790 },
+     { id: 'testing/log/2021-05-13.lit',
+       backlinks: [],
+       exists: true,
+       title: '2021-05-13',
+       links: 7,
+       size: 423 },
+     { id: 'testing/log/2021-05-15.lit',
+       backlinks: [],
+       exists: true,
+       title: '2021-05-15',
+       links: 6,
+       size: 505 },
+     { id: 'testing/log/2021-w20.lit',
+       backlinks: [],
+       exists: true,
+       title: '2021 week 20',
+       links: 0,
+       size: 29 },
+     { id: 'testing/log/day.lit',
+       backlinks: [Object],
+       exists: true,
+       title: '${(new Date()).toISOString().split("T")[0]}',
+       links: 0,
+       size: 94 },
+     { id: 'testing/private_files.lit',
+       backlinks: [Object],
+       exists: true,
+       title: '🔒 Private Files',
+       links: 0,
+       size: 306 },
+     { id: 'testing/runkit.lit',
+       backlinks: [Object],
+       exists: true,
+       title: 'testing/runkit.lit',
+       links: 12,
+       size: 6461 },
+     { id: 'testing/selection.lit',
+       backlinks: [Object],
+       exists: true,
+       title: 'More powerful selection',
+       links: 0,
+       size: 1393 },
+     { id: 'testing/serviceworker.lit',
+       backlinks: [Object],
+       exists: true,
+       title: 'Service Worker',
+       links: 12,
+       size: 7556 },
+     { id: 'testing/web_workers.lit',
+       backlinks: [Object],
+       exists: true,
+       title: 'Web Workers',
+       links: 7,
+       size: 6169 },
+     { id: 'throwaway/codevaluebug.lit',
+       backlinks: [Object],
+       exists: true,
+       title: 'throwaway/codevaluebug.lit',
+       links: 0,
+       size: 61 },
+     { id: 'utils/index.lit',
+       backlinks: [Object],
+       exists: true,
+       title: '.lit Utils',
+       links: 10,
+       size: 1024 },
+     { id: 'utils/momento.lit',
+       backlinks: [Object],
+       exists: true,
+       title: 'momento',
+       links: 1,
+       size: 246 },
+     { id: 'wiki-links.lit',
+       backlinks: [Object],
+       exists: true,
+       title: 'wiki-links',
+       links: 0,
+       size: 791 },
+     { id: 'client/index.jsx',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'components/Document.jsx',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'components/Header.jsx',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'components/App.jsx',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'components/SelectionContext.jsx',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'components/Cell.jsx',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'components/CellMenu.jsx',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'components/Editor.jsx',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'components/Icons.jsx',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'components/CodeMeta.jsx',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'components/base/Codeblock.jsx',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'components/base/Link.jsx',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'components/Backlinks.jsx',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'transfomers.lit',
+       backlinks: [Object],
+       exists: false,
+       type: 'link' },
+     { id: 'test.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'source' },
+     { id: 'test.ts',
+       backlinks: [Object],
+       exists: true,
+       type: 'source' },
+     { id: 'test.jsx',
+       backlinks: [Object],
+       exists: true,
+       type: 'source' },
+     { id: './utils/functions.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'source' },
+     { id: 'meta/settings.lit',
+       backlinks: [Object],
+       exists: false,
+       type: 'link' },
+     { id: 'litconfig.lit',
+       backlinks: [Object],
+       exists: false,
+       type: 'link' },
+     { id: 'articles/ideas.lit',
+       backlinks: [Object],
+       exists: false,
+       type: 'link' },
+     { id: 'viewers.lit',
+       backlinks: [Object],
+       exists: false,
+       type: 'link' },
+     { id: 'meta/github_workflows.lit',
+       backlinks: [Object],
+       exists: false,
+       type: 'link' },
+     { id: 'meta/styling_and_themes.lit',
+       backlinks: [Object],
+       exists: false,
+       type: 'link' },
+     { id: 'manifest.json',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'unified.lit',
+       backlinks: [Object],
+       exists: false,
+       type: 'link' },
+     { id: 'remark.lit',
+       backlinks: [Object],
+       exists: false,
+       type: 'link' },
+     { id: 'markdown.lit',
+       backlinks: [Object],
+       exists: false,
+       type: 'link' },
+     { id: 'parser/index.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'parser/frontmatter.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'parser/sections.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'parser/codeblocks.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'parser/mdblocks.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'parser/links.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'utils/fs-promises-gh-utils.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'renderer/viewers/meta.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'components.lit',
+       backlinks: [Object],
+       exists: false,
+       type: 'link' },
+     { id: '../components/components.lit',
+       backlinks: [Object],
+       exists: false,
+       type: 'link' },
+     { id: 'renderer/index.jsx',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'renderer/extractPlugins.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'renderer/transcludeCode.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'renderer/viewers/md/index.jsx',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'viewers/meta.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'source' },
+     { id: 'renderer/file.txt',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'renderer/difftestA.txt',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: '../../../../../meta/settings.lit#plantuml-viewer--repl',
+       backlinks: [Object],
+       exists: false,
+       type: 'link' },
+     { id: 'repl/index.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'executing_code_cells.lit',
+       backlinks: [Object],
+       exists: false,
+       type: 'link' },
+     { id: 'index', backlinks: [Object], exists: false, type: 'link' },
+     { id: 'utils/fs.lit',
+       backlinks: [Object],
+       exists: false,
+       type: 'link' },
+     { id: 'utils/urifragments.lit',
+       backlinks: [Object],
+       exists: false,
+       type: 'link' },
+     { id: 'wikilinks.lit',
+       backlinks: [Object],
+       exists: false,
+       type: 'link' },
+     { id: 'meta/styling_and_themes.lit#viewers',
+       backlinks: [Object],
+       exists: false,
+       type: 'link' },
+     { id: 'filename',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'dummy/example.svg',
+       backlinks: [Object],
+       exists: true,
+       type: 'source' },
+     { id: 'dummy/plain.txt',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'dummy/data.csv',
+       backlinks: [Object],
+       exists: true,
+       type: 'source' },
+     { id: '../../../../../testing/log/2021-05-12.lit',
+       backlinks: [Object],
+       exists: false,
+       type: 'link' },
+     { id: '../../../../../testing/log/2021-w20.lit',
+       backlinks: [Object],
+       exists: false,
+       type: 'link' },
+     { id: '../../../../../testing/log/2021-05.lit',
+       backlinks: [Object],
+       exists: false,
+       type: 'link' },
+     { id: '../../../../../testing/log/year.lit',
+       backlinks: [Object],
+       exists: false,
+       type: 'link' },
+     { id: 'testing/log/checkforinput.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'testing/log/today.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'log/checkforinput.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'source' },
+     { id: 'log/today.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'source' },
+     { id: '../utils/git-commit-all.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'source' },
+     { id: 'fsviewer.jsx',
+       backlinks: [Object],
+       exists: true,
+       type: 'source' },
+     { id: 'testing/test.txt',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: '../../../../../testing/log/2021-w20',
+       backlinks: [Object],
+       exists: false,
+       type: 'link' },
+     { id: '../../../../../testing/log/2021-05',
+       backlinks: [Object],
+       exists: false,
+       type: 'link' },
+     { id: '../../../../../testing/log/2021',
+       backlinks: [Object],
+       exists: false,
+       type: 'link' },
+     { id: '../../../../../testing/log/2021-w21',
+       backlinks: [Object],
+       exists: false,
+       type: 'link' },
+     { id: 'rk.jsx',
+       backlinks: [Object],
+       exists: true,
+       type: 'source' },
+     { id: './runkit-repl-endpoint.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'source' },
+     { id: 'testing/getserviceworker--sw',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: '../serviceworker.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'source' },
+     { id: 'worker.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'source' },
+     { id: 'worker2.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'source' },
+     { id: 'utils/functions.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'utils/console.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'utils/colors.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'utils/safe-encoders.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'utils/unist-util-patch-source.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'utils/unist-util-select-position.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'utils/fs-promises-utils.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'utils/git-commit-all.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' },
+     { id: 'utils/momento.js',
+       backlinks: [Object],
+       exists: true,
+       type: 'transclude' } ],
+  links: 
+   [ { source: 'index.lit', target: '404.lit' },
+     { source: 'index.lit', target: 'cli/cli.lit' },
+     { source: 'index.lit', target: 'client/client.lit' },
+     { source: 'index.lit', target: 'components/components.lit' },
+     { source: 'scratch_pad.lit', target: 'dummy/🔥.lit' },
+     { source: 'index.lit', target: 'execute_code_cells.lit' },
+     { source: 'plugin_system.lit',
+       target: 'execute_code_cells.lit' },
+     { source: 'repl/index.lit', target: 'execute_code_cells.lit' },
+     { source: 'scratch_pad.lit', target: 'execute_code_cells.lit' },
+     { source: 'index.lit', target: 'meta/files_and_links.lit' },
+     { source: 'index.lit', target: 'parser/parser.lit' },
+     { source: 'index.lit', target: 'persist_to_github.lit' },
+     { source: 'index.lit', target: 'persist_to_github.lit' },
+     { source: 'index.lit', target: 'plugin_system.lit' },
+     { source: 'repl/index.lit', target: 'plugin_system.lit' },
+     { source: 'repls.lit', target: 'plugin_system.lit' },
+     { source: 'index.lit', target: 'renderer/renderer.lit' },
+     { source: 'execute_code_cells.lit',
+       target: 'renderer/viewers.lit' },
+     { source: 'execute_code_cells.lit',
+       target: 'renderer/viewers.lit' },
+     { source: 'renderer/renderer.lit',
+       target: 'renderer/viewers.lit' },
+     { source: 'scratch_pad.lit', target: 'renderer/viewers.lit' },
+     { source: 'renderer/viewers.lit',
+       target: 'renderer/viewers/md/admonitions.lit' },
+     { source: 'scratch_pad.lit', target: 'repl/index.lit' },
+     { source: 'index.lit', target: 'repls.lit' },
+     { source: 'plugin_system.lit', target: 'repls.lit' },
+     { source: 'plugin_system.lit', target: 'repls.lit' },
+     { source: 'repl/index.lit', target: 'repls.lit' },
+     { source: 'index.lit', target: 'scratch_pad.lit' },
+     { source: 'index.lit', target: 'scratch_pad.lit' },
+     { source: 'index.lit', target: 'testing/input_buffer.lit' },
+     { source: 'execute_code_cells.lit',
+       target: 'testing/isomorphic_git.lit' },
+     { source: 'index.lit', target: 'testing/isomorphic_git.lit' },
+     { source: 'index.lit', target: 'testing/isomorphic_git.lit' },
+     { source: 'index.lit', target: 'testing/lightningfs.lit' },
+     { source: 'testing/isomorphic_git.lit',
+       target: 'testing/lightningfs.lit' },
+     { source: 'testing/local_remote_files.lit',
+       target: 'testing/lightningfs.lit' },
+     { source: 'index.lit',
+       target: 'testing/local_remote_files.lit' },
+     { source: 'scratch_pad.lit',
+       target: 'testing/local_remote_files.lit' },
+     { source: 'testing/input_buffer.lit',
+       target: 'testing/log/day.lit' },
+     { source: 'index.lit', target: 'testing/private_files.lit' },
+     { source: 'repls.lit', target: 'testing/runkit.lit' },
+     { source: 'testing/log/2021-05-13.lit',
+       target: 'testing/runkit.lit' },
+     { source: 'index.lit', target: 'testing/selection.lit' },
+     { source: 'index.lit', target: 'testing/serviceworker.lit' },
+     { source: 'testing/serviceworker.lit',
+       target: 'testing/web_workers.lit' },
+     { source: 'scratch_pad.lit',
+       target: 'throwaway/codevaluebug.lit' },
+     { source: 'index.lit', target: 'utils/index.lit' },
+     { source: 'utils/index.lit', target: 'utils/momento.lit' },
+     { source: 'index.lit', target: 'wiki-links.lit' },
+     { source: 'renderer/viewers/md/admonitions.lit',
+       target: 'wiki-links.lit' },
+     { source: 'scratch_pad.lit', target: 'wiki-links.lit' },
+     { source: 'client/client.lit', target: 'client/index.jsx' },
+     { source: 'components/components.lit',
+       target: 'components/Document.jsx' },
+     { source: 'components/components.lit',
+       target: 'components/Header.jsx' },
+     { source: 'components/components.lit',
+       target: 'components/App.jsx' },
+     { source: 'components/components.lit',
+       target: 'components/SelectionContext.jsx' },
+     { source: 'components/components.lit',
+       target: 'components/Cell.jsx' },
+     { source: 'components/components.lit',
+       target: 'components/CellMenu.jsx' },
+     { source: 'components/components.lit',
+       target: 'components/Editor.jsx' },
+     { source: 'components/components.lit',
+       target: 'components/Icons.jsx' },
+     { source: 'components/components.lit',
+       target: 'components/CodeMeta.jsx' },
+     { source: 'components/components.lit',
+       target: 'components/base/Codeblock.jsx' },
+     { source: 'components/components.lit',
+       target: 'components/base/Link.jsx' },
+     { source: 'components/components.lit',
+       target: 'components/Backlinks.jsx' },
+     { source: 'execute_code_cells.lit', target: 'transfomers.lit' },
+     { source: 'execute_code_cells.lit', target: 'test.js' },
+     { source: 'testing/runkit.lit', target: 'test.js' },
+     { source: 'execute_code_cells.lit', target: 'test.ts' },
+     { source: 'execute_code_cells.lit', target: 'test.jsx' },
+     { source: 'execute_code_cells.lit', target: 'test.jsx' },
+     { source: 'functions.lit', target: './utils/functions.js' },
+     { source: 'index.lit', target: 'meta/settings.lit' },
+     { source: 'index.lit', target: 'meta/settings.lit' },
+     { source: 'plugin_system.lit', target: 'meta/settings.lit' },
+     { source: 'index.lit', target: 'litconfig.lit' },
+     { source: 'index.lit', target: 'articles/ideas.lit' },
+     { source: 'index.lit', target: 'viewers.lit' },
+     { source: 'plugin_system.lit', target: 'viewers.lit' },
+     { source: 'plugin_system.lit', target: 'viewers.lit' },
+     { source: 'index.lit', target: 'meta/github_workflows.lit' },
+     { source: 'index.lit', target: 'meta/styling_and_themes.lit' },
+     { source: 'index.lit', target: 'manifest.json' },
+     { source: 'meta/files_and_links.lit', target: 'manifest.json' },
+     { source: 'meta/files_and_links.lit', target: 'manifest.json' },
+     { source: 'renderer/viewers.lit', target: 'manifest.json' },
+     { source: 'scratch_pad.lit', target: 'manifest.json' },
+     { source: 'parser/parser.lit', target: 'unified.lit' },
+     { source: 'parser/parser.lit', target: 'remark.lit' },
+     { source: 'parser/parser.lit', target: 'markdown.lit' },
+     { source: 'parser/parser.lit', target: 'parser/index.js' },
+     { source: 'parser/parser.lit', target: 'parser/frontmatter.js' },
+     { source: 'parser/parser.lit', target: 'parser/sections.js' },
+     { source: 'parser/parser.lit', target: 'parser/codeblocks.js' },
+     { source: 'parser/parser.lit', target: 'parser/mdblocks.js' },
+     { source: 'parser/parser.lit', target: 'parser/links.js' },
+     { source: 'persist_to_github.lit',
+       target: 'utils/fs-promises-gh-utils.js' },
+     { source: 'utils/index.lit',
+       target: 'utils/fs-promises-gh-utils.js' },
+     { source: 'plugin_system.lit',
+       target: 'renderer/viewers/meta.js' },
+     { source: 'renderer/renderer.lit', target: 'components.lit' },
+     { source: 'renderer/renderer.lit',
+       target: '../components/components.lit' },
+     { source: 'renderer/renderer.lit',
+       target: 'renderer/index.jsx' },
+     { source: 'renderer/renderer.lit',
+       target: 'renderer/extractPlugins.js' },
+     { source: 'renderer/renderer.lit',
+       target: 'renderer/transcludeCode.js' },
+     { source: 'renderer/viewers.lit',
+       target: 'renderer/viewers/md/index.jsx' },
+     { source: 'renderer/viewers.lit', target: 'viewers/meta.js' },
+     { source: 'renderer/viewers.lit', target: 'renderer/file.txt' },
+     { source: 'renderer/viewers.lit',
+       target: 'renderer/difftestA.txt' },
+     { source: 'renderer/viewers/plantuml.lit',
+       target: '../../../../../meta/settings.lit#plantuml-viewer--repl' },
+     { source: 'scratch_pad.lit',
+       target: '../../../../../meta/settings.lit#plantuml-viewer--repl' },
+     { source: 'repl/index.lit', target: 'repl/index.js' },
+     { source: 'repls.lit', target: 'executing_code_cells.lit' },
+     { source: 'scratch_pad.lit', target: 'index' },
+     { source: 'scratch_pad.lit', target: 'utils/fs.lit' },
+     { source: 'scratch_pad.lit', target: 'utils/urifragments.lit' },
+     { source: 'scratch_pad.lit', target: 'wikilinks.lit' },
+     { source: 'scratch_pad.lit',
+       target: 'meta/styling_and_themes.lit#viewers' },
+     { source: 'scratch_pad.lit', target: 'filename' },
+     { source: 'scratch_pad.lit', target: 'dummy/example.svg' },
+     { source: 'scratch_pad.lit', target: 'dummy/plain.txt' },
+     { source: 'scratch_pad.lit', target: 'dummy/data.csv' },
+     { source: 'testing/input_buffer.lit',
+       target: '../../../../../testing/log/2021-05-12.lit' },
+     { source: 'testing/input_buffer.lit',
+       target: '../../../../../testing/log/2021-w20.lit' },
+     { source: 'testing/input_buffer.lit',
+       target: '../../../../../testing/log/2021-05.lit' },
+     { source: 'testing/input_buffer.lit',
+       target: '../../../../../testing/log/year.lit' },
+     { source: 'testing/input_buffer.lit',
+       target: 'testing/log/checkforinput.js' },
+     { source: 'testing/input_buffer.lit',
+       target: 'testing/log/today.js' },
+     { source: 'testing/input_buffer.lit',
+       target: 'log/checkforinput.js' },
+     { source: 'testing/input_buffer.lit', target: 'log/today.js' },
+     { source: 'testing/isomorphic_git.lit',
+       target: '../utils/git-commit-all.js' },
+     { source: 'testing/lightningfs.lit', target: 'fsviewer.jsx' },
+     { source: 'testing/local_remote_files.lit',
+       target: 'testing/test.txt' },
+     { source: 'testing/log/2021-05-11.lit',
+       target: '../../../../../testing/log/2021-w20' },
+     { source: 'testing/log/2021-05-12.lit',
+       target: '../../../../../testing/log/2021-w20' },
+     { source: 'testing/log/2021-05-13.lit',
+       target: '../../../../../testing/log/2021-w20' },
+     { source: 'testing/log/2021-05-11.lit',
+       target: '../../../../../testing/log/2021-05' },
+     { source: 'testing/log/2021-05-12.lit',
+       target: '../../../../../testing/log/2021-05' },
+     { source: 'testing/log/2021-05-13.lit',
+       target: '../../../../../testing/log/2021-05' },
+     { source: 'testing/log/2021-05-15.lit',
+       target: '../../../../../testing/log/2021-05' },
+     { source: 'testing/log/2021-05-11.lit',
+       target: '../../../../../testing/log/2021' },
+     { source: 'testing/log/2021-05-12.lit',
+       target: '../../../../../testing/log/2021' },
+     { source: 'testing/log/2021-05-13.lit',
+       target: '../../../../../testing/log/2021' },
+     { source: 'testing/log/2021-05-15.lit',
+       target: '../../../../../testing/log/2021' },
+     { source: 'testing/log/2021-05-15.lit',
+       target: '../../../../../testing/log/2021-w21' },
+     { source: 'testing/runkit.lit', target: 'rk.jsx' },
+     { source: 'testing/runkit.lit',
+       target: './runkit-repl-endpoint.js' },
+     { source: 'testing/serviceworker.lit',
+       target: 'testing/getserviceworker--sw' },
+     { source: 'testing/serviceworker.lit',
+       target: '../serviceworker.js' },
+     { source: 'testing/web_workers.lit', target: 'worker.js' },
+     { source: 'testing/web_workers.lit', target: 'worker2.js' },
+     { source: 'utils/index.lit', target: 'utils/functions.js' },
+     { source: 'utils/index.lit', target: 'utils/console.js' },
+     { source: 'utils/index.lit', target: 'utils/colors.js' },
+     { source: 'utils/index.lit', target: 'utils/safe-encoders.js' },
+     { source: 'utils/index.lit',
+       target: 'utils/unist-util-patch-source.js' },
+     { source: 'utils/index.lit',
+       target: 'utils/unist-util-select-position.js' },
+     { source: 'utils/index.lit',
+       target: 'utils/fs-promises-utils.js' },
+     { source: 'utils/index.lit', target: 'utils/git-commit-all.js' },
+     { source: 'utils/momento.lit', target: 'utils/momento.js' } ] }
 ```
 
