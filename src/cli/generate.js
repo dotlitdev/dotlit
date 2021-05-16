@@ -189,10 +189,16 @@ export function generate(cmd) {
                 const failures = {}
 
                 const src_files = litFiles.map( async filepath => {
-                    return await vfile.read({
+                    try {
+                    const sources = await vfile.read({
                         path: filepath,
                         cwd: cmd.path
                     })
+                    return sources
+                    } catch(err) {
+                        failures[filepath] = failures[filepath] || []
+                        failures[filepath].push("Failed read source due to: " + err.message)
+                    }
                 })
 
                 let ast_files_prelinks = await Promise.all(src_files.map( async file => {
@@ -232,13 +238,19 @@ The contents of this file are private. Only visible by the author.
                         console.log(`Wrote ${file.path} to "${path.join(cmd.output, file.path)}" to disk`)
 
                         for (const codefile of html_file.data.files) {
+                            
                             const filename = codefile?.data?.meta?.filename
+                            try {
                             const hasValue = !!codefile.value
                             if (filename && hasValue) {
                                 const filepath = path.join(path.dirname(file.path), filename)
                                 console.log("Writing codefile to path: ", filepath, hasValue)
                                 await fs.writeFile(filepath, codefile.value)
                                 console.log(`Wrote codefile ${filename} to "${filepath}" on disk`)
+                            }
+                            } catch(err) {
+                                failures[file.path] = failures[file.path] || []
+                                failures[file.path].push(`Failed to extract codefile ${filename} due to: ` + err.message)
                             }
                         }
                         return html_file;
@@ -273,6 +285,8 @@ File: ${file.path}
                 
                 await fs.writeFile('manifest.json', JSON.stringify(graph, null, 4))
                 meta.failures2 = failures 
+                meta.litFiles = litFiles.length
+                meta.nonLitFiles = nknLitFiles.length
                 await fs.writeFile('meta.json', JSON.stringify(meta, null, 4))
                 console.log(`Wrote ${html_files.filter(Identity).length}/${html_files.length} .lit file(s) to disk`)
 
