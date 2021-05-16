@@ -176,7 +176,7 @@ export function generate(cmd) {
                 const failures = {}
 
                 const src_files = litFiles.map( async filepath => {
-                    return vfile.read({
+                    return await vfile.read({
                         path: filepath,
                         cwd: cmd.path
                     })
