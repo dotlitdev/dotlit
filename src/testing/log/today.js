@@ -16,7 +16,7 @@ const checkForTodayFile = async () => {
   try {
   stat = await lit.fs.readStat(pathFor(today))
   } catch(err) {}
-  return `*Today* is [**${today}**](${pathFor(today)}), a log exists: *${!!stat && !!(stat.local.stat || stat.remote.stat)}*; See [week](${pathFor(week)}), [month](${pathFor(month)}) or [year](${pathFor('year')}).`
+  return `*Today* is [**${today}**](${pathFor(today)}), a log exists: *${!!stat && !!(stat.local.stat || stat.remote.stat)}*; See [week](${pathFor(week)}), [month](${pathFor(month)}) or [year](${pathFor(year)}).`
 }
 
 return checkForTodayFile()
