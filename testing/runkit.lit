@@ -1,0 +1,235 @@
+# testing/runkit.lit
+
+Experimenting using [RunKit](https://runkit.com) as a custom repl for nodejs. Warning, it starts off messy, but in the end we have a reusable `nodejs` custom REPL.
+
+## Table of Contents
+
+## Embed
+
+Lets start with just the simple [demo embed,](https://runkit.com/docs/embed) adding the embed script and a container below.
+
+```script https://embed.runkit.com !inline
+// injecting https://embed.runkit.com script
+```
+
+```html !inline
+<!-- anywhere else on your page -->
+<div id="my-element">A container to hold the embed.</div>
+```
+
+Run the #init cell below 👇 to populate it With some demo source.
+
+
+
+```js #init !collapse
+return RunKit.createNotebook({
+    // the parent element for the new notebook
+    element: document.getElementById("my-element"),
+    onEvaluate: (...args) => alert(JSON.stringify([...args])),
+    // specify the source of the notebook
+    source: "// GeoJSON!\nvar getJSON = require(\"async-get-json\");\n\nawait getJSON(\"https://storage.googleapis.com/maps-devrel/google.json\");"
+})
+```
+```>txt attached=true updated=1621026584476
+{ onEvaluate: [Function: onEvaluate],
+  onLoad: undefined,
+  onResize: undefined,
+  onSave: undefined,
+  onURLChanged: undefined,
+  UUID: 4,
+  name: 'runkit-embed-4',
+  URL: null,
+  endpointURL: null }
+```
+
+## Endpoint
+
+react bindings for simple embed: https://github.com/runkitdev/react-runkit and trying out https://runkit.com/docs/endpoint
+
+
+```jsx babel=true react=true repl=js !below #react #endpoint 
+return (async fn => {
+
+  const React = lit.utils.React
+  const Embed = (await import('https://cdn.skypack.dev/runkit-embed-react')).default
+
+  const createdAt = new Date()
+
+  const helloSource = `exports.endpoint = function(request, response) {
+    response.end("Hello world! From .lit and Nodejs thanks to RunKit. Created at " + createdAt);
+}`
+
+  const onLoad = (...args) => console.log(JSON.stringify([...args]))
+
+  return <Embed
+            mode='endpoint'
+            readOnly={true}
+            evaluateOnLoad={true}
+            // hidesActionButton={true}
+            source={ helloSource } 
+            // ref='embed'
+            onLoad={ onLoad } 
+          />
+
+})()
+```
+
+```uri !below
+https://2mkz0r1anfrl.runkit.sh/
+```
+## Viewer plug-in
+
+```jsx rk.jsx !collapse !plugin type=viewer of=runkit
+import Embed from 'https://cdn.skypack.dev/runkit-embed-react'
+
+export const viewer = ({node,React}) => {
+  const {useState} = React
+  const [url, setUrl] = useState(false)
+  const meta = node?.properties?.meta || {}
+  const endpoint = meta.attrs && meta.attrs.mode === 'endpoint'
+
+  const onLoad = async (rk) => {
+     if (endpoint)
+       setUrl(await rk.getEndpointURL())
+  }
+
+  return url || <Embed
+            mode={endpoint ? 'endpoint' : 'default'}
+            readOnly={endpoint}
+            evaluateOnLoad={endpoint}
+            hidesActionButton={endpoint}
+            source={ node.data.value } 
+            // ref='embed'
+            onLoad={ onLoad } 
+          />
+
+}
+```
+
+```runkit !inline
+console.log("Hello world! From .lit and Nodejs thanks to RunKit.")
+```
+```runkit !below mode=endpoint
+exports.endpoint = function(req, res) {
+    res.end("Hello world! From .lit and Nodejs thanks to RunKit.");
+}
+````
+```runkit !below mode=endpoint
+exports.endpoint = function(req,res) {
+  res.writeHead(200, {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': '*',
+  });
+  res.end('{"ping": "pong!"}')
+}
+````
+
+```js
+return fetch("https://jzc0q8a4nyog.runkit.sh").then(res => res.text())
+```
+```>txt attached=true updated=1621030315807
+{"ping": "pong!"}
+```
+
+## REPL endpoint plug-in `node`
+
+Split out the endpoint source to its own `.lit` cell for legibility instead of an inline string.
+
+```>js ./runkit-repl-endpoint.js !collapse #source
+const util = require('util')
+
+function requireFromString(src, filename) {
+  var Module = module.constructor;
+  var m = new Module();
+  m._compile(src, filename);
+  return m.exports;
+}
+
+exports.endpoint = function(req,res) {
+  res.writeHead(200, {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': '*',
+  });
+
+  let data = '';
+  req.on('data', chunk => {
+    data += chunk;
+  })
+
+  req.on('end', async () => {
+    const payload = JSON.parse(data)
+    const exported = requireFromString(payload.src, payload.meta.filename || "untitled.js")
+    let result;
+    if (typeof exported === 'function') {
+      try {
+        result = await exported(payload.meta)
+        res.end(util.inspect({
+          result
+        }))
+      } catch(error) {
+        res.end(util.inspect({error}))
+      }
+    } else {
+      res.end(util.inspect({
+        exports: exported
+      }))
+    }
+  })
+}
+```
+
+On load the following `repl` `!plugin` creates a RunKit endpoint if it doesn't exist using the above source.
+
+```js !plugin type=repl of=node !collapse
+if (typeof lit !== 'undefined' && !window.__runkitNodeEnpoint) {
+  (async fn => {
+    const el = document.createElement('div')
+    document.body.appendChild(el)
+    // el.setAttribute("style", "height:0;")
+    RunKit.createNotebook({
+      element: el,
+      mode: 'endpoint',
+      onLoad: async (rk) => { 
+        window.__runkitNodeEnpoint = await rk.getEndpointURL()
+        // document.body.removeChild(el)
+      },
+      evaluateOnLoad: true,
+      source: await lit.fs.readFile("testing/runkit-repl-endpoint.js", {encoding: 'utf8'})
+    })
+  })()
+}
+
+
+export const repl = async (src, meta, node) => {
+  if (!window.__runkitNodeEnpoint) {
+    return "Still setting up repl endpoint"
+  } else {
+    try {
+      return await (await fetch(window.__runkitNodeEnpoint, {
+        method: "POST",
+        body: JSON.stringify({src,meta})
+      })).text()
+    } catch(err) {
+      return err.message
+    }
+  }
+}
+```
+
+*Usage:*
+```js test.js repl=node
+module.exports = async (meta) => {
+  return `Hello world! From .lit and Nodejs ${process.env.NODE_VERSION} (${process.platform} ${process.arch}) thanks to RunKit. At ${new Date()}`
+}
+```
+```>txt attached=true updated=1621086966109
+{ result:
+   'Hello world! From .lit and Nodejs 10.24.1 (linux x64) thanks to RunKit. At Sat May 15 2021 13:56:05 GMT+0000 (Coordinated Universal Time)' }
+```
+
+## Next steps and improvements
+
+- [ ] Don't start the endpoint on every page load, and instead lazily setup just before first execution.
+- [ ] Don't use require module from string hack, and instead use a proper `vm` abd context.

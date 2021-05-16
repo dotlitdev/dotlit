@@ -1,0 +1,225 @@
+# Service Worker
+
+## Table of Contents
+
+## References 
+
+- https://ponyfoo.com/articles/serviceworker-revolution
+- https://github.com/homam/service-workers-example
+- Communication 
+  - ~[broadcast channels](https://stackoverflow.com/a/66784901/371040)~ not available in safari, desktop or iOS 
+- Initial source, from: https://googlechrome.github.io/samples/service-worker/basic/
+- https://developer.mozilla.org/en-US/docs/Web/API/FetchEvent/respondWith
+- https://stackoverflow.com/questions/44424709/passing-state-info-into-a-service-worker-before-install
+
+See [[testing/Web Workers]] for related investigation.
+
+## Exploration
+```js
+return navigator
+```
+```>txt attached=true updated=1619869271361
+{}
+```
+
+```js
+if ('serviceWorker' in navigator) {
+  return true
+}
+```
+```>txt attached=true updated=1619524117633
+true
+```
+
+
+```js #register
+return navigator
+          .serviceWorker
+          .register('/serviceworker.js?root='+lit.location.root)
+```
+```>txt attached=true updated=1620646787598
+{}
+```
+
+```js #status
+return navigator.serviceWorker.controller
+         ? "Service worker active."
+         : "Service worker Not active."
+```
+```>txt attached=true updated=1620646792980
+Service worker active.
+```
+
+```js #unregister
+return (async fn => {
+  const regs = await navigator
+                     .serviceWorker
+                     .getRegistrations()
+  for(let registration of regs) {
+    console.log(registration)
+    registration.unregister()
+  }
+  return `Unregistered ${regs.length} regisration(s)`
+})()
+```
+```>txt attached=true updated=1620646853320
+{}
+Unregistered 1 regisration(s)
+```
+```js
+return fetch('/none')
+       .then( resp => resp.status )
+```
+```>txt attached=true updated=1620028398727
+404
+```
+```js
+return fetch('/manifest.json')
+       .then(resp => resp.status)
+```
+```>txt attached=true updated=1619884198845
+200
+```
+```js
+return (new Response('hello')).text()
+```
+```>txt attached=true updated=1619524123503
+hello
+```
+
+As of now, the service worker doesn't cache anything and just passes through to the network as normal. Except if the `request.url` ends with `--sw` in which case it returns a mock/info response.
+```js
+return fetch('--sw')
+       .then(resp => resp.text()
+                          .then( text => `${resp.status}\n${text}`)
+       )
+```
+```>txt attached=true updated=1620083027507
+404
+<html data-reactroot=""><head><title>Not yet found</title><meta name="litsrc" value="404.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="3:55-73"><cell startpos="1:1-0" endpos="3:55-73"><div class="cell-content"><h1 id="not-yet-found">Not <em>yet</em> found</h1><p>The file was not found, edit this page to change that.</p></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
+```
+
+
+```text < ./getserviceworker--sw 
+
+```
+
+## Implementation
+
+```>js ../serviceworker.js !collapse #implementation
+
+// gross hack around one of @codemirror/view bugs
+let document = { documentElement: { style: {} } }
+
+importScripts('web.bundle.js')
+
+const state = {
+    version: '0.1.7',
+    dotlit: typeof dotlit,
+    root: '',
+    enableCache: false,
+}
+
+const PRECACHE = Date.now() // no-cache 'precache-v1';
+const RUNTIME = 'runtime';
+
+// A list of local resources we always want to be cached.
+const PRECACHE_URLS = [
+  //'index.html',
+  //'./', // Alias for index.html
+  //'styles.css',
+  //'../../styles/main.css',
+  //'demo.js'
+];
+
+const getMockResponse = async (event) => {
+  try { 
+    if (typeof dotlit !== 'undefined') {
+      const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4).slice()
+      const stat = await dotlit.lit.fs.stat(filepath)
+      const status = {
+        ...state,
+        filepath, 
+        stat,
+      }
+      return new Response(JSON.stringify(status, null, 2))
+    }
+  } catch (err) {
+    const status = {
+      ...state,
+      url: event.request.url,
+      err: err.message,
+    }
+    return new Response(JSON.stringify(status, null, 2))
+  }
+}
+
+const localFile = async (event) => {
+  if (typeof dotlit !== 'undefined') {
+    const filepath = event.request.url.slice(dotlit.lit.location.base.length - 1,-4).slice()
+    await dotlit.lit.fs.stat(filepath)
+    const content = await dotlit.lit.fs.readFile(filepath)
+    return new Response(content)
+  } else throw new Error('dotlit module not loaded.')
+}
+
+// The install handler takes care of precaching the resources we always need.
+self.addEventListener('install', event => {
+  state.root = new URL(location).searchParams.get('root')
+  event.waitUntil(
+    caches.open(PRECACHE)
+      .then(cache => cache.addAll(PRECACHE_URLS))
+      .then(self.skipWaiting())
+  );
+});
+
+// The activate handler takes care of cleaning up old caches.
+self.addEventListener('activate', event => {
+  const currentCaches = [PRECACHE, RUNTIME];
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return cacheNames.filter(cacheName => !currentCaches.includes(cacheName));
+    }).then(cachesToDelete => {
+      return Promise.all(cachesToDelete.map(cacheToDelete => {
+        return caches.delete(cacheToDelete);
+      }));
+    }).then(() => self.clients.claim())
+  );
+});
+
+// The fetch handler serves responses for same-origin resources from a cache.
+// If no response is found, it populates the runtime cache with the response
+// from the network before returning it to the page.
+self.addEventListener('fetch', event => {
+  // Skip cross-origin requests, like those for Google Analytics. And add mock response
+  if (event.request.url.startsWith(self.location.origin)) {
+
+    if (event.request.url.endsWith('--sw')) { 
+      console.log("Mock/Info request")
+      event.respondWith(getMockResponse(event))
+    } else {
+      event.respondWith(localFile(event).then(file => {
+        console.log("Responding with", file)
+        return file
+      }).catch( err => {
+          console.log("Failed local file check, reverting to network", err)
+          return caches.match(event.request).then(cachedResponse => {
+            if (state.enableCache && cachedResponse) {
+              return cachedResponse;
+            }
+    
+            return caches.open(RUNTIME).then(cache => {
+              return fetch(event.request).then(response => {
+                // Put a copy of the response in the runtime cache.
+                return cache.put(event.request, response.clone()).then(() => {
+                  return response;
+                })
+              })
+            })
+          })
+        })
+      )
+    }
+  }
+});
+```

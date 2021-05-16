@@ -1,0 +1,594 @@
+# Lightning FS
+
+https://github.com/isomorphic-git/lightning-fs
+
+## Table of Contents
+
+## Bugs 🐜
+
+- [x] wikiLinks and 404 behaviour results in incorrect/dangling lfs due to incorrect baseUrl.
+
+## Tour of the API
+```js
+return lit.fs.readdir('/testing/log')
+```
+```>txt attached=true updated=1620735036304
+[ '2021-05-09.lit', 'checkforinput.js', '2021-05-11.lit' ]
+```
+```js > json !collapse
+return lit.lfs.promises.writeFile('/testing/data.json', "{}", {encoding: 'utf8'})
+```
+```>json !collapse attached=true updated=1621193177415
+null
+```
+
+```js > json !collapse
+return lit.fs.readFile('/doesntexist.json')
+```
+```js > json !collapse
+return lit.fs.readStat('/manifest.json')
+```
+```>json !collapse attached=true updated=1619874403200
+{ local: 
+   { stat: undefined,
+     value: '{\n    "nodes": [\n        {\n            "id": "404.lit",\n            "backlinks": [\n                {\n                    "id": "index.lit",\n                    "url": "index.html",\n                    "title": ".lit"\n                }\n            ],\n            "exists": true,\n            "title": "Not yet found"\n        },\n        {\n            "id": "cli/cli.lit",\n            "backlinks": [],\n            "exists": true,\n            "title": "Command Line Interface"\n        },\n        {\n            "id": "client/client.lit",\n            "backlinks": [\n                {\n                    "id": "index.lit",\n                    "url": "index.html",\n                    "title": ".lit"\n                }\n            ],\n            "exists": true,\n            "title": "Client"\n        },\n        {\n            "id": "components/components.lit",\n            "backlinks": [\n                {\n                    "id": "index.lit",\n                    "url": "index.html",\n                    "title": ".lit"\n                }\n            ],\n            "exists": true,\n            "title": "Components"\n        },\n        {\n            "id": "dummy/🔥.lit",\n            "backlinks": [\n                {\n                    "id": "scratch_pad.lit",\n                    "url": "scratch_pad.html",\n                    "title": "🔥 Scratch ⚠️ Pad 🔬"\n                }\n            ],\n            "exists": true,\n            "title": "Title TBD (dummy/🔥.lit)"\n        },\n        {\n            "id": "execute_code_cells.lit",\n            "backlinks": [\n                {\n                    "id": "index.lit",\n                    "url": "index.html",\n                    "title": ".lit"\n                },\n                {\n                    "id": "repl/index.lit",\n                    "url": "repl/index.html",\n                    "title": "REPL"\n                },\n                {\n                    "id": "scratch_pad.lit",\n                    "url": "scratch_pad.html",\n                    "title": "🔥 Scratch ⚠️ Pad 🔬"\n                }\n            ],\n            "exists": true,\n            "title": "Executing code cells"\n        },\n        {\n            "id": "functions.lit",\n            "backlinks": [],\n            "exists": true,\n            "title": "Utility functions"\n        },\n        {\n            "id": "index.lit",\n            "backlinks": [],\n            "exists": true,\n            "title": ".lit"\n        },\n        {\n            "id": "meta/files_and_links.lit",\n            "backlinks": [\n                {\n                    "id": "index.lit",\n                    "url": "index.html",\n                    "title": ".lit"\n                }\n            ],\n            "exists": true,\n            "title": "Files & Links"\n        },\n        {\n            "id": "meta/github_workflows.lit",\n            "backlinks": [\n                {\n                    "id": "index.lit",\n                    "url": "index.html",\n                    "title": ".lit"\n                },\n                {\n                    "id": "index.lit",\n                    "url": "index.html",\n                    "title": ".lit"\n                }\n            ],\n            "exists": true,\n            "title": "GitHub Workflows"\n        },\n        {\n            "id": "meta/styling_and_themes.lit",\n            "backlinks": [\n                {\n                    "id": "index.lit",\n                    "url": "index.html",\n                    "title": ".lit"\n                }\n            ],\n            "exists": true,\n            "title": "Theme Example"\n        },\n        {\n            "id": "parser/parser.lit",\n            "backlinks": [\n                {\n                    "id": "index.lit",\n                    "url": "index.html",\n                    "title": ".lit"\n                }\n            ],\n            "exists": true,\n            "title": "Parser"\n        },\n        {\n            "id": "persist_to_github.lit",\n            "backlinks": [\n                {\n                    "id": "index.lit",\n                    "url": "index.html",\n                    "title": ".lit"\n                },\n                {\n                    "id": "index.lit",\n                    "url": "index.html",\n                    "title": ".lit"\n                }\n            ],\n            "exists": true,\n            "title": "Persist to GitHub"\n        },\n        {\n            "id": "renderer/renderer.lit",\n            "backlinks": [\n                {\n                    "id": "index.lit",\n                    "url": "index.html",\n                    "title": ".lit"\n                }\n            ],\n            "exists": true,\n            "title": "Renderer"\n        },\n        {\n            "id": "renderer/viewers.lit",\n            "backlinks": [\n                {\n                    "id": "execute_code_cells.lit",\n                    "url": "execute_code_cells.html",\n                    "title": "Executing code cells"\n                },\n                {\n                    "id": "meta/styling_and_themes.lit",\n                    "url": "meta/styling_and_themes.html",\n                    "title": "Theme Example"\n                },\n                {\n                    "id": "renderer/renderer.lit",\n                    "url": "renderer/renderer.html",\n                    "title": "Renderer"\n                },\n                {\n                    "id": "scratch_pad.lit",\n                    "url": "scratch_pad.html",\n                    "title": "🔥 Scratch ⚠️ Pad 🔬"\n                }\n            ],\n            "exists": true,\n            "title": "Custom Viewers"\n        },\n        {\n            "id": "renderer/viewers/md/admonitions.lit",\n            "backlinks": [\n                {\n                    "id": "renderer/viewers.lit",\n                    "url": "renderer/viewers.html",\n                    "title": "Custom Viewers"\n                }\n            ],\n            "exists": true,\n            "title": "Admonitions"\n        },\n        {\n            "id": "repl/index.lit",\n            "backlinks": [\n                {\n                    "id": "index.lit",\n                    "url": "index.html",\n                    "title": ".lit"\n                },\n                {\n                    "id": "scratch_pad.lit",\n                    "url": "scratch_pad.html",\n                    "title": "🔥 Scratch ⚠️ Pad 🔬"\n                }\n            ],\n            "exists": true,\n            "title": "REPL"\n        },\n        {\n            "id": "scratch_pad.lit",\n            "backlinks": [\n                {\n                    "id": "index.lit",\n                    "url": "index.html",\n                    "title": ".lit"\n                },\n                {\n                    "id": "index.lit",\n                    "url": "index.html",\n                    "title": ".lit"\n                }\n            ],\n            "exists": true,\n            "title": "🔥 Scratch ⚠️ Pad 🔬"\n        },\n        {\n            "id": "testing/isomorphic_git.lit",\n            "backlinks": [\n                {\n                    "id": "execute_code_cells.lit",\n                    "url": "execute_code_cells.html",\n                    "title": "Executing code cells"\n                },\n                {\n                    "id": "index.lit",\n                    "url": "index.html",\n                    "title": ".lit"\n                }\n            ],\n            "exists": true,\n            "title": "Isomorphic Git"\n        },\n        {\n            "id": "testing/lightningfs.lit",\n            "backlinks": [\n                {\n                    "id": "index.lit",\n                    "url": "index.html",\n                    "title": ".lit"\n                },\n                {\n                    "id": "testing/isomorphic_git.lit",\n                    "url": "testing/isomorphic_git.html",\n                    "title": "Isomorphic Git"\n                },\n                {\n                    "id": "testing/local_remote_files.lit",\n                    "url": "testing/local_remote_files.html",\n                    "title": "Local and Remote files"\n                }\n            ],\n            "exists": true,\n            "title": "Lightning FS"\n        },\n        {\n            "id": "testing/local_remote_files.lit",\n            "backlinks": [\n                {\n                    "id": "index.lit",\n                    "url": "index.html",\n                    "title": ".lit"\n                },\n                {\n                    "id": "scratch_pad.lit",\n                    "url": "scratch_pad.html",\n                    "title": "🔥 Scratch ⚠️ Pad 🔬"\n                }\n            ],\n            "exists": true,\n            "title": "Local and Remote files"\n        },\n        {\n            "id": "testing/private_files.lit",\n            "backlinks": [\n                {\n                    "id": "index.lit",\n                    "url": "index.html",\n                    "title": ".lit"\n                }\n            ],\n            "exists": true,\n            "title": "🔒 Private Files"\n        },\n        {\n            "id": "testing/serviceworker.lit",\n            "backlinks": [\n                {\n                    "id": "index.lit",\n                    "url": "index.html",\n                    "title": ".lit"\n                }\n            ],\n            "exists": true,\n            "title": "Service Worker"\n        },\n        {\n            "id": "testing/web_workers.lit",\n            "backlinks": [\n                {\n                    "id": "testing/serviceworker.lit",\n                    "url": "testing/serviceworker.html",\n                    "title": "Service Worker"\n                }\n            ],\n            "exists": true,\n            "title": "Web Workers"\n        },\n        {\n            "id": "throwaway/codevaluebug.lit",\n            "backlinks": [\n                {\n                    "id": "scratch_pad.lit",\n                    "url": "scratch_pad.html",\n                    "title": "🔥 Scratch ⚠️ Pad 🔬"\n                }\n            ],\n            "exists": true,\n            "title": "throwaway/codevaluebug.lit"\n        },\n        {\n            "id": "unist-util-position-to-node.lit",\n            "backlinks": [],\n            "exists": true,\n            "title": "unist-util-position-to-node"\n        },\n        {\n            "id": "utils/github_fs_passthrough.lit",\n            "backlinks": [],\n            "exists": true,\n            "title": "GitHub fs pass through"\n        },\n        {\n            "id": "utils/momento.lit",\n            "backlinks": [],\n            "exists": true,\n            "title": "momento"\n        },\n        {\n            "id": "wiki-links.lit",\n            "backlinks": [\n                {\n                    "id": "index.lit",\n                    "url": "index.html",\n                    "title": ".lit"\n                },\n                {\n                    "id": "renderer/viewers/md/admonitions.lit",\n                    "url": "renderer/viewers/md/admonitions.html",\n                    "title": "Admonitions"\n                },\n                {\n                    "id": "scratch_pad.lit",\n                    "url": "scratch_pad.html",\n                    "title": "🔥 Scratch ⚠️ Pad 🔬"\n                }\n            ],\n            "exists": true,\n            "title": "wiki-links"\n        },\n        {\n            "id": "index.jsx",\n            "backlinks": [\n                {\n                    "id": "client/client.lit",\n                    "url": "client/client.html",\n                    "title": "Client"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "Document.jsx",\n            "backlinks": [\n                {\n                    "id": "components/components.lit",\n                    "url": "components/components.html",\n                    "title": "Components"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "Header.jsx",\n            "backlinks": [\n                {\n                    "id": "components/components.lit",\n                    "url": "components/components.html",\n                    "title": "Components"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "App.jsx",\n            "backlinks": [\n                {\n                    "id": "components/components.lit",\n                    "url": "components/components.html",\n                    "title": "Components"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "SelectionContext.jsx",\n            "backlinks": [\n                {\n                    "id": "components/components.lit",\n                    "url": "components/components.html",\n                    "title": "Components"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "Cell.jsx",\n            "backlinks": [\n                {\n                    "id": "components/components.lit",\n                    "url": "components/components.html",\n                    "title": "Components"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "CellMenu.jsx",\n            "backlinks": [\n                {\n                    "id": "components/components.lit",\n                    "url": "components/components.html",\n                    "title": "Components"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "Editor.jsx",\n            "backlinks": [\n                {\n                    "id": "components/components.lit",\n                    "url": "components/components.html",\n                    "title": "Components"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "Icons.jsx",\n            "backlinks": [\n                {\n                    "id": "components/components.lit",\n                    "url": "components/components.html",\n                    "title": "Components"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "CodeMeta.jsx",\n            "backlinks": [\n                {\n                    "id": "components/components.lit",\n                    "url": "components/components.html",\n                    "title": "Components"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "base/Codeblock.jsx",\n            "backlinks": [\n                {\n                    "id": "components/components.lit",\n                    "url": "components/components.html",\n                    "title": "Components"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "base/Link.jsx",\n            "backlinks": [\n                {\n                    "id": "components/components.lit",\n                    "url": "components/components.html",\n                    "title": "Components"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "Backlinks.jsx",\n            "backlinks": [\n                {\n                    "id": "components/components.lit",\n                    "url": "components/components.html",\n                    "title": "Components"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "transfomers.lit",\n            "backlinks": [\n                {\n                    "id": "execute_code_cells.lit",\n                    "url": "execute_code_cells.html",\n                    "title": "Executing code cells"\n                }\n            ],\n            "exists": false,\n            "type": "link"\n        },\n        {\n            "id": "test.ts",\n            "backlinks": [\n                {\n                    "id": "execute_code_cells.lit",\n                    "url": "execute_code_cells.html",\n                    "title": "Executing code cells"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "test.js",\n            "backlinks": [\n                {\n                    "id": "execute_code_cells.lit",\n                    "url": "execute_code_cells.html",\n                    "title": "Executing code cells"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "test.jsx",\n            "backlinks": [\n                {\n                    "id": "execute_code_cells.lit",\n                    "url": "execute_code_cells.html",\n                    "title": "Executing code cells"\n                },\n                {\n                    "id": "execute_code_cells.lit",\n                    "url": "execute_code_cells.html",\n                    "title": "Executing code cells"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "current_viewport",\n            "backlinks": [\n                {\n                    "id": "execute_code_cells.lit",\n                    "url": "execute_code_cells.html",\n                    "title": "Executing code cells"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "./utils/functions.js",\n            "backlinks": [\n                {\n                    "id": "functions.lit",\n                    "url": "functions.html",\n                    "title": "Utility functions"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "testing/lighting_fsbugs.lit",\n            "backlinks": [\n                {\n                    "id": "index.lit",\n                    "url": "index.html",\n                    "title": ".lit"\n                }\n            ],\n            "exists": false,\n            "type": "link"\n        },\n        {\n            "id": "gfm.lit",\n            "backlinks": [\n                {\n                    "id": "index.lit",\n                    "url": "index.html",\n                    "title": ".lit"\n                }\n            ],\n            "exists": false,\n            "type": "link"\n        },\n        {\n            "id": "../../../../../cli/cli.lit",\n            "backlinks": [\n                {\n                    "id": "index.lit",\n                    "url": "index.html",\n                    "title": ".lit"\n                }\n            ],\n            "exists": false,\n            "type": "link"\n        },\n        {\n            "id": "utils/index",\n            "backlinks": [\n                {\n                    "id": "index.lit",\n                    "url": "index.html",\n                    "title": ".lit"\n                }\n            ],\n            "exists": false,\n            "type": "link"\n        },\n        {\n            "id": "manifest.json",\n            "backlinks": [\n                {\n                    "id": "index.lit",\n                    "url": "index.html",\n                    "title": ".lit"\n                },\n                {\n                    "id": "scratch_pad.lit",\n                    "url": "scratch_pad.html",\n                    "title": "🔥 Scratch ⚠️ Pad 🔬"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "../manifest.json",\n            "backlinks": [\n                {\n                    "id": "meta/files_and_links.lit",\n                    "url": "meta/files_and_links.html",\n                    "title": "Files & Links"\n                },\n                {\n                    "id": "meta/files_and_links.lit",\n                    "url": "meta/files_and_links.html",\n                    "title": "Files & Links"\n                },\n                {\n                    "id": "renderer/viewers.lit",\n                    "url": "renderer/viewers.html",\n                    "title": "Custom Viewers"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "../.github/workflows/generate.yaml",\n            "backlinks": [\n                {\n                    "id": "meta/github_workflows.lit",\n                    "url": "meta/github_workflows.html",\n                    "title": "GitHub Workflows"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": ".github/workflows/npm-publish.yaml",\n            "backlinks": [\n                {\n                    "id": "meta/github_workflows.lit",\n                    "url": "meta/github_workflows.html",\n                    "title": "GitHub Workflows"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "../scratch_pad.lit#viewers",\n            "backlinks": [\n                {\n                    "id": "meta/styling_and_themes.lit",\n                    "url": "meta/styling_and_themes.html",\n                    "title": "Theme Example"\n                }\n            ],\n            "exists": false,\n            "type": "link"\n        },\n        {\n            "id": "../client/style.styl",\n            "backlinks": [\n                {\n                    "id": "meta/styling_and_themes.lit",\n                    "url": "meta/styling_and_themes.html",\n                    "title": "Theme Example"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "../client/styles/cell.styl",\n            "backlinks": [\n                {\n                    "id": "meta/styling_and_themes.lit",\n                    "url": "meta/styling_and_themes.html",\n                    "title": "Theme Example"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "../client/styles/codecell.styl",\n            "backlinks": [\n                {\n                    "id": "meta/styling_and_themes.lit",\n                    "url": "meta/styling_and_themes.html",\n                    "title": "Theme Example"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "../client/styles/cellmenu.styl",\n            "backlinks": [\n                {\n                    "id": "meta/styling_and_themes.lit",\n                    "url": "meta/styling_and_themes.html",\n                    "title": "Theme Example"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "../client/styles/viewers.styl",\n            "backlinks": [\n                {\n                    "id": "meta/styling_and_themes.lit",\n                    "url": "meta/styling_and_themes.html",\n                    "title": "Theme Example"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "unified.lit",\n            "backlinks": [\n                {\n                    "id": "parser/parser.lit",\n                    "url": "parser/parser.html",\n                    "title": "Parser"\n                }\n            ],\n            "exists": false,\n            "type": "link"\n        },\n        {\n            "id": "remark.lit",\n            "backlinks": [\n                {\n                    "id": "parser/parser.lit",\n                    "url": "parser/parser.html",\n                    "title": "Parser"\n                }\n            ],\n            "exists": false,\n            "type": "link"\n        },\n        {\n            "id": "markdown.lit",\n            "backlinks": [\n                {\n                    "id": "parser/parser.lit",\n                    "url": "parser/parser.html",\n                    "title": "Parser"\n                }\n            ],\n            "exists": false,\n            "type": "link"\n        },\n        {\n            "id": "./index.js",\n            "backlinks": [\n                {\n                    "id": "parser/parser.lit",\n                    "url": "parser/parser.html",\n                    "title": "Parser"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "links.js",\n            "backlinks": [\n                {\n                    "id": "parser/parser.lit",\n                    "url": "parser/parser.html",\n                    "title": "Parser"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "utils/fs-promises-gh-utils.js",\n            "backlinks": [\n                {\n                    "id": "persist_to_github.lit",\n                    "url": "persist_to_github.html",\n                    "title": "Persist to GitHub"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "components.lit",\n            "backlinks": [\n                {\n                    "id": "renderer/renderer.lit",\n                    "url": "renderer/renderer.html",\n                    "title": "Renderer"\n                }\n            ],\n            "exists": false,\n            "type": "link"\n        },\n        {\n            "id": "../components/components.lit",\n            "backlinks": [\n                {\n                    "id": "renderer/renderer.lit",\n                    "url": "renderer/renderer.html",\n                    "title": "Renderer"\n                }\n            ],\n            "exists": false,\n            "type": "link"\n        },\n        {\n            "id": "transcludeCode.js",\n            "backlinks": [\n                {\n                    "id": "renderer/renderer.lit",\n                    "url": "renderer/renderer.html",\n                    "title": "Renderer"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "viewers/md/index.jsx",\n            "backlinks": [\n                {\n                    "id": "renderer/viewers.lit",\n                    "url": "renderer/viewers.html",\n                    "title": "Custom Viewers"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "file.txt",\n            "backlinks": [\n                {\n                    "id": "renderer/viewers.lit",\n                    "url": "renderer/viewers.html",\n                    "title": "Custom Viewers"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "index.js",\n            "backlinks": [\n                {\n                    "id": "repl/index.lit",\n                    "url": "repl/index.html",\n                    "title": "REPL"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "index",\n            "backlinks": [\n                {\n                    "id": "scratch_pad.lit",\n                    "url": "scratch_pad.html",\n                    "title": "🔥 Scratch ⚠️ Pad 🔬"\n                }\n            ],\n            "exists": false,\n            "type": "link"\n        },\n        {\n            "id": "utils/fs.lit",\n            "backlinks": [\n                {\n                    "id": "scratch_pad.lit",\n                    "url": "scratch_pad.html",\n                    "title": "🔥 Scratch ⚠️ Pad 🔬"\n                }\n            ],\n            "exists": false,\n            "type": "link"\n        },\n        {\n            "id": "utils/urifragments.lit",\n            "backlinks": [\n                {\n                    "id": "scratch_pad.lit",\n                    "url": "scratch_pad.html",\n                    "title": "🔥 Scratch ⚠️ Pad 🔬"\n                }\n            ],\n            "exists": false,\n            "type": "link"\n        },\n        {\n            "id": "wikilinks.lit",\n            "backlinks": [\n                {\n                    "id": "scratch_pad.lit",\n                    "url": "scratch_pad.html",\n                    "title": "🔥 Scratch ⚠️ Pad 🔬"\n                }\n            ],\n            "exists": false,\n            "type": "link"\n        },\n        {\n            "id": "meta/styling_and_themes.lit#viewers",\n            "backlinks": [\n                {\n                    "id": "scratch_pad.lit",\n                    "url": "scratch_pad.html",\n                    "title": "🔥 Scratch ⚠️ Pad 🔬"\n                }\n            ],\n            "exists": false,\n            "type": "link"\n        },\n        {\n            "id": "dummy/example.js",\n            "backlinks": [\n                {\n                    "id": "scratch_pad.lit",\n                    "url": "scratch_pad.html",\n                    "title": "🔥 Scratch ⚠️ Pad 🔬"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "dummy/example.svg",\n            "backlinks": [\n                {\n                    "id": "scratch_pad.lit",\n                    "url": "scratch_pad.html",\n                    "title": "🔥 Scratch ⚠️ Pad 🔬"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "dummy/plain.txt",\n            "backlinks": [\n                {\n                    "id": "scratch_pad.lit",\n                    "url": "scratch_pad.html",\n                    "title": "🔥 Scratch ⚠️ Pad 🔬"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "dummy/data.csv",\n            "backlinks": [\n                {\n                    "id": "scratch_pad.lit",\n                    "url": "scratch_pad.html",\n                    "title": "🔥 Scratch ⚠️ Pad 🔬"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "../utils/git-commit-all.js",\n            "backlinks": [\n                {\n                    "id": "testing/isomorphic_git.lit",\n                    "url": "testing/isomorphic_git.html",\n                    "title": "Isomorphic Git"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "test.txt",\n            "backlinks": [\n                {\n                    "id": "testing/local_remote_files.lit",\n                    "url": "testing/local_remote_files.html",\n                    "title": "Local and Remote files"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "./getserviceworker--sw",\n            "backlinks": [\n                {\n                    "id": "testing/serviceworker.lit",\n                    "url": "testing/serviceworker.html",\n                    "title": "Service Worker"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "../serviceworker.js",\n            "backlinks": [\n                {\n                    "id": "testing/serviceworker.lit",\n                    "url": "testing/serviceworker.html",\n                    "title": "Service Worker"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "worker.js",\n            "backlinks": [\n                {\n                    "id": "testing/web_workers.lit",\n                    "url": "testing/web_workers.html",\n                    "title": "Web Workers"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "worker2.js",\n            "backlinks": [\n                {\n                    "id": "testing/web_workers.lit",\n                    "url": "testing/web_workers.html",\n                    "title": "Web Workers"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "./utils/unist-util-select-position.js",\n            "backlinks": [\n                {\n                    "id": "unist-util-position-to-node.lit",\n                    "url": "unist-util-position-to-node.html",\n                    "title": "unist-util-position-to-node"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "./utils/unist-util-position-to-node.js",\n            "backlinks": [\n                {\n                    "id": "unist-util-position-to-node.lit",\n                    "url": "unist-util-position-to-node.html",\n                    "title": "unist-util-position-to-node"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "fs-promises-gh-utils.js",\n            "backlinks": [\n                {\n                    "id": "utils/github_fs_passthrough.lit",\n                    "url": "utils/github_fs_passthrough.html",\n                    "title": "GitHub fs pass through"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        },\n        {\n            "id": "momento.js",\n            "backlinks": [\n                {\n                    "id": "utils/momento.lit",\n                    "url": "utils/momento.html",\n                    "title": "momento"\n                }\n            ],\n            "exists": true,\n            "type": "file"\n        }\n    ],\n    "links": [\n        {\n            "source": "index.lit",\n            "target": "404.lit"\n        },\n        {\n            "source": "index.lit",\n            "target": "client/client.lit"\n        },\n        {\n            "source": "index.lit",\n            "target": "components/components.lit"\n        },\n        {\n            "source": "scratch_pad.lit",\n            "target": "dummy/🔥.lit"\n        },\n        {\n            "source": "index.lit",\n            "target": "execute_code_cells.lit"\n        },\n        {\n            "source": "repl/index.lit",\n            "target": "execute_code_cells.lit"\n        },\n        {\n            "source": "scratch_pad.lit",\n            "target": "execute_code_cells.lit"\n        },\n        {\n            "source": "index.lit",\n            "target": "meta/files_and_links.lit"\n        },\n        {\n            "source": "index.lit",\n            "target": "meta/github_workflows.lit"\n        },\n        {\n            "source": "index.lit",\n            "target": "meta/github_workflows.lit"\n        },\n        {\n            "source": "index.lit",\n            "target": "meta/styling_and_themes.lit"\n        },\n        {\n            "source": "index.lit",\n            "target": "parser/parser.lit"\n        },\n        {\n            "source": "index.lit",\n            "target": "persist_to_github.lit"\n        },\n        {\n            "source": "index.lit",\n            "target": "persist_to_github.lit"\n        },\n        {\n            "source": "index.lit",\n            "target": "renderer/renderer.lit"\n        },\n        {\n            "source": "execute_code_cells.lit",\n            "target": "renderer/viewers.lit"\n        },\n        {\n            "source": "meta/styling_and_themes.lit",\n            "target": "renderer/viewers.lit"\n        },\n        {\n            "source": "renderer/renderer.lit",\n            "target": "renderer/viewers.lit"\n        },\n        {\n            "source": "scratch_pad.lit",\n            "target": "renderer/viewers.lit"\n        },\n        {\n            "source": "renderer/viewers.lit",\n            "target": "renderer/viewers/md/admonitions.lit"\n        },\n        {\n            "source": "index.lit",\n            "target": "repl/index.lit"\n        },\n        {\n            "source": "scratch_pad.lit",\n            "target": "repl/index.lit"\n        },\n        {\n            "source": "index.lit",\n            "target": "scratch_pad.lit"\n        },\n        {\n            "source": "index.lit",\n            "target": "scratch_pad.lit"\n        },\n        {\n            "source": "execute_code_cells.lit",\n            "target": "testing/isomorphic_git.lit"\n        },\n        {\n            "source": "index.lit",\n            "target": "testing/isomorphic_git.lit"\n        },\n        {\n            "source": "index.lit",\n            "target": "testing/lightningfs.lit"\n        },\n        {\n            "source": "testing/isomorphic_git.lit",\n            "target": "testing/lightningfs.lit"\n        },\n        {\n            "source": "testing/local_remote_files.lit",\n            "target": "testing/lightningfs.lit"\n        },\n        {\n            "source": "index.lit",\n            "target": "testing/local_remote_files.lit"\n        },\n        {\n            "source": "scratch_pad.lit",\n            "target": "testing/local_remote_files.lit"\n        },\n        {\n            "source": "index.lit",\n            "target": "testing/private_files.lit"\n        },\n        {\n            "source": "index.lit",\n            "target": "testing/serviceworker.lit"\n        },\n        {\n            "source": "testing/serviceworker.lit",\n            "target": "testing/web_workers.lit"\n        },\n        {\n            "source": "scratch_pad.lit",\n            "target": "throwaway/codevaluebug.lit"\n        },\n        {\n            "source": "index.lit",\n            "target": "wiki-links.lit"\n        },\n        {\n            "source": "renderer/viewers/md/admonitions.lit",\n            "target": "wiki-links.lit"\n        },\n        {\n            "source": "scratch_pad.lit",\n            "target": "wiki-links.lit"\n        },\n        {\n            "source": "client/client.lit",\n            "target": "index.jsx"\n        },\n        {\n            "source": "components/components.lit",\n            "target": "Document.jsx"\n        },\n        {\n            "source": "components/components.lit",\n            "target": "Header.jsx"\n        },\n        {\n            "source": "components/components.lit",\n            "target": "App.jsx"\n        },\n        {\n            "source": "components/components.lit",\n            "target": "SelectionContext.jsx"\n        },\n        {\n            "source": "components/components.lit",\n            "target": "Cell.jsx"\n        },\n        {\n            "source": "components/components.lit",\n            "target": "CellMenu.jsx"\n        },\n        {\n            "source": "components/components.lit",\n            "target": "Editor.jsx"\n        },\n        {\n            "source": "components/components.lit",\n            "target": "Icons.jsx"\n        },\n        {\n            "source": "components/components.lit",\n            "target": "CodeMeta.jsx"\n        },\n        {\n            "source": "components/components.lit",\n            "target": "base/Codeblock.jsx"\n        },\n        {\n            "source": "components/components.lit",\n            "target": "base/Link.jsx"\n        },\n        {\n            "source": "components/components.lit",\n            "target": "Backlinks.jsx"\n        },\n        {\n            "source": "execute_code_cells.lit",\n            "target": "transfomers.lit"\n        },\n        {\n            "source": "execute_code_cells.lit",\n            "target": "test.ts"\n        },\n        {\n            "source": "execute_code_cells.lit",\n            "target": "test.js"\n        },\n        {\n            "source": "execute_code_cells.lit",\n            "target": "test.jsx"\n        },\n        {\n            "source": "execute_code_cells.lit",\n            "target": "test.jsx"\n        },\n        {\n            "source": "execute_code_cells.lit",\n            "target": "current_viewport"\n        },\n        {\n            "source": "functions.lit",\n            "target": "./utils/functions.js"\n        },\n        {\n            "source": "index.lit",\n            "target": "testing/lighting_fsbugs.lit"\n        },\n        {\n            "source": "index.lit",\n            "target": "gfm.lit"\n        },\n        {\n            "source": "index.lit",\n            "target": "../../../../../cli/cli.lit"\n        },\n        {\n            "source": "index.lit",\n            "target": "utils/index"\n        },\n        {\n            "source": "index.lit",\n            "target": "manifest.json"\n        },\n        {\n            "source": "scratch_pad.lit",\n            "target": "manifest.json"\n        },\n        {\n            "source": "meta/files_and_links.lit",\n            "target": "../manifest.json"\n        },\n        {\n            "source": "meta/files_and_links.lit",\n            "target": "../manifest.json"\n        },\n        {\n            "source": "renderer/viewers.lit",\n            "target": "../manifest.json"\n        },\n        {\n            "source": "meta/github_workflows.lit",\n            "target": "../.github/workflows/generate.yaml"\n        },\n        {\n            "source": "meta/github_workflows.lit",\n            "target": ".github/workflows/npm-publish.yaml"\n        },\n        {\n            "source": "meta/styling_and_themes.lit",\n            "target": "../scratch_pad.lit#viewers"\n        },\n        {\n            "source": "meta/styling_and_themes.lit",\n            "target": "../client/style.styl"\n        },\n        {\n            "source": "meta/styling_and_themes.lit",\n            "target": "../client/styles/cell.styl"\n        },\n        {\n            "source": "meta/styling_and_themes.lit",\n            "target": "../client/styles/codecell.styl"\n        },\n        {\n            "source": "meta/styling_and_themes.lit",\n            "target": "../client/styles/cellmenu.styl"\n        },\n        {\n            "source": "meta/styling_and_themes.lit",\n            "target": "../client/styles/viewers.styl"\n        },\n        {\n            "source": "parser/parser.lit",\n            "target": "unified.lit"\n        },\n        {\n            "source": "parser/parser.lit",\n            "target": "remark.lit"\n        },\n        {\n            "source": "parser/parser.lit",\n            "target": "markdown.lit"\n        },\n        {\n            "source": "parser/parser.lit",\n            "target": "./index.js"\n        },\n        {\n            "source": "parser/parser.lit",\n            "target": "links.js"\n        },\n        {\n            "source": "persist_to_github.lit",\n            "target": "utils/fs-promises-gh-utils.js"\n        },\n        {\n            "source": "renderer/renderer.lit",\n            "target": "components.lit"\n        },\n        {\n            "source": "renderer/renderer.lit",\n            "target": "../components/components.lit"\n        },\n        {\n            "source": "renderer/renderer.lit",\n            "target": "transcludeCode.js"\n        },\n        {\n            "source": "renderer/viewers.lit",\n            "target": "viewers/md/index.jsx"\n        },\n        {\n            "source": "renderer/viewers.lit",\n            "target": "file.txt"\n        },\n        {\n            "source": "repl/index.lit",\n            "target": "index.js"\n        },\n        {\n            "source": "scratch_pad.lit",\n            "target": "index"\n        },\n        {\n            "source": "scratch_pad.lit",\n            "target": "utils/fs.lit"\n        },\n        {\n            "source": "scratch_pad.lit",\n            "target": "utils/urifragments.lit"\n        },\n        {\n            "source": "scratch_pad.lit",\n            "target": "wikilinks.lit"\n        },\n        {\n            "source": "scratch_pad.lit",\n            "target": "meta/styling_and_themes.lit#viewers"\n        },\n        {\n            "source": "scratch_pad.lit",\n            "target": "dummy/example.js"\n        },\n        {\n            "source": "scratch_pad.lit",\n            "target": "dummy/example.svg"\n        },\n        {\n            "source": "scratch_pad.lit",\n            "target": "dummy/plain.txt"\n        },\n        {\n            "source": "scratch_pad.lit",\n            "target": "dummy/data.csv"\n        },\n        {\n            "source": "testing/isomorphic_git.lit",\n            "target": "../utils/git-commit-all.js"\n        },\n        {\n            "source": "testing/local_remote_files.lit",\n            "target": "test.txt"\n        },\n        {\n            "source": "testing/serviceworker.lit",\n            "target": "./getserviceworker--sw"\n        },\n        {\n            "source": "testing/serviceworker.lit",\n            "target": "../serviceworker.js"\n        },\n        {\n            "source": "testing/web_workers.lit",\n            "target": "worker.js"\n        },\n        {\n            "source": "testing/web_workers.lit",\n            "target": "worker2.js"\n        },\n        {\n            "source": "unist-util-position-to-node.lit",\n            "target": "./utils/unist-util-select-position.js"\n        },\n        {\n            "source": "unist-util-position-to-node.lit",\n            "target": "./utils/unist-util-position-to-node.js"\n        },\n        {\n            "source": "utils/github_fs_passthrough.lit",\n            "target": "fs-promises-gh-utils.js"\n        },\n        {\n            "source": "utils/momento.lit",\n            "target": "momento.js"\n        }\n    ]\n}' },
+  remote: { stat: undefined, value: undefined } }
+```
+```js > json !collapse
+return lit.fs
+          .readStat('/manifest.json')
+          .then(stat => [!!stat.local.value, !!stat.remote.value])
+```
+```>json !collapse attached=true updated=1619878321018
+[ true, false ]
+```
+```js > json !collapse
+return lit.fs
+          .stat('/notfound')
+          .catch(s => "404 Not Found")
+```
+```>json !collapse attached=true updated=1621124612430
+404 Not Found
+```
+```js > json !collapse
+return lit.fs
+          .stat('/index.lit')
+          .then(stat => stat)
+```
+```>json !collapse attached=true updated=1619878403441
+{ type: 'file',
+  mode: 438,
+  size: 4589,
+  ino: 6,
+  mtimeMs: 1619686223652,
+  ctimeMs: 1619686223652,
+  uid: 1,
+  gid: 1,
+  dev: 1 }
+```
+```js > diff !collapse
+// https://github.com/kpdecker/jsdiff
+const {root,src} = lit.location
+const {join} = lit.utils.path
+const filename = join(root,src)
+
+const withStats = async stats => {
+  const cp = lit.utils.diff.createPatch
+  // const f = 
+  const local = stats.local.value
+  const remote = stats.remote.value
+  const patch = cp(filename, local, remote)
+  console.log(patch.split('\n').map(l=>'    '+l).join('\n'))
+  return "logged patch"
+}
+
+const stats = lit.fs.readStat(filename, {encoding: 'utf8'})
+return stats.then(withStats)
+```
+```>diff !collapse attached=true updated=1620338765234
+    Index: /testing/lightningfs.lit
+    ===================================================================
+    --- /testing/lightningfs.lit
+    +++ /testing/lightningfs.lit
+    @@ -1697,13 +1697,57 @@
+     
+     const stats = lit.fs.readStat(filename, {encoding: 'utf8'})
+     return stats.then(withStats)
+     ```
+    -```>diff !collapse attached=true updated=1620338750310
+    +```>diff !collapse attached=true updated=1620338108145
+         Index: /testing/lightningfs.lit
+         ===================================================================
+         --- /testing/lightningfs.lit
+         +++ /testing/lightningfs.lit
+    +    @@ -1680,34 +1680,31 @@
+    +       dev: 1 }
+    +     ```
+    +     ```js > diff !collapse
+    +     // https://github.com/kpdecker/jsdiff
+    +    -const {root,src} = lit.location
+    +    -const {join} = lit.utils.path
+    +    -const filename = join(root,src)
+    +    +const filename = '/index.lit'
+    +     
+    +     const withStats = async stats => {
+    +       const cp = lit.utils.diff.createPatch
+    +    -  // const f = 
+    +    +  // const f = lit.location.src
+    +       const local = stats.local.value
+    +       const remote = stats.remote.value
+    +       const patch = cp(filename, local, remote)
+    +    -  console.log(patch.split('\n').map(l=>'    '+l).join('\n'))
+    +    +  // console.log(patch)
+    +       return "logged patch"
+    +     }
+    +     
+    +     const stats = lit.fs.readStat(filename, {encoding: 'utf8'})
+    +     return stats.then(withStats)
+    +     ```
+    +    -```>diff !collapse attached=true updated=1620337567383
+    +    -Index: /testing/lightningfs.lit
+    +    +```>text !collapse attached=true updated=1620336678219
+    +    +Index: /index.lit
+    +     ===================================================================
+    +    ---- /testing/lightningfs.lit
+    +    -+++ /testing/lightningfs.lit
+    +    -@@ -1680,26 +1680,24 @@
+    +    -   dev: 1 }
+    +    - ```
+    +    +--- /index.lit
+    +    ++++ /index.lit
+    +     
+    +    +logged patch
+    +    +```
+    +     
+    +     
+    +     ```>fs ls=/
+    +     
+         
+     logged patch
+     ```
+     
+    
+logged patch
+```
+
+
+
+```js #delete !localonly
+const path = "/rendere/viewers"
+console.log(ast)
+return lit.fs.unlink(path)
+```
+```>txt attached=true updated=1621123644778
+{ type: 'element',
+  tagName: 'cell',
+  properties: { class: 'cell' },
+  children: 
+   [ { type: 'element',
+       tagName: 'pre',
+       properties: {},
+       children: [Object],
+       position: [Object] },
+     { type: 'element',
+       tagName: 'pre',
+       properties: {},
+       children: [Object],
+       position: [Object] } ],
+  position: 
+   { start: { line: 1761, column: 1, offset: 96951 },
+     end: { line: 1780, column: 4, offset: 97441 } } }
+422
+```
+
+## Plugins 
+
+### `fs` plugin
+
+```jsx fsviewer.jsx babel=true !plugin of=fs !collapse
+export const viewer = ({node, React}) => {
+  const {useState, useEffect} = React
+  const join = lit.utils.path.join
+
+  const Stat = (props) => {
+    const stat = props?.stat || {}
+    if (stat.message) return <div>{stat.message}</div>
+    return <div>
+      <div onClick={ev=>props.select(src.split('/').slice(0,-1).join('/') || '/')}>{src}</div>
+      Type: <span>{stat.type}</span> mtime: <span>{stat.mtimeMs}</span>
+      {stat.contents && stat.contents.map( l => {
+
+      const name = join(props.src,l[0])
+      const type = l[1].type
+      const style = type === 'dir'
+                    ? {color: "red"}
+                    : null
+      return <div onClick={ev=> props.select(name)} style={style}>{name}</div>
+     })}
+    </div>
+  }
+
+  const [content, setContent] = useState(<span>loading...</span>)
+  const [stat, setStat] = useState(undefined)
+  const [src, setSrc] = useState(node?.data?.value?.trim())
+  const meta = node?.properties?.meta || {}
+
+  useEffect(async fn => {
+    let stat
+    try {
+      stat = await lit.fs.stat(src)
+      if (stat.type === 'dir') {
+          const list = await lit.fs.readdir(src)
+          const withStats = list.map( async l => [l,await lit.fs.stat(join(src,l))])
+          stat.contents = await Promise.all(withStats)
+      }
+      setStat(stat)
+    } catch(err) {
+      setStat(err)
+    }
+  }, [src])
+
+  return <div>
+     <input value={src} onChange={ev=>setSrc(ev.target.value)}/>
+     <Stat src={src} stat={stat} select={setSrc}/>
+     {!stat && content}
+     {stat && <button onClick={ev=> confirm("Are you sure you want to delete " + src) && lit.fs.unlink(src)}>Delete</button>}
+     {stat && <button>Reset</button>}
+     {stat && <button>Diff</button>}
+    </div>
+}
+```
+
+```>fs
+/
+```
+
+### Finder (local fs)
+
+```js !collapse > json !collapse
+const path = lit.utils.path
+const visit = async (root) => {
+  const list = await lit.fs.readdir(root)
+  return Promise.all(list.map( async key => {
+    const pathname = path.join(root,key)
+    const stat = await lit.fs.stat(pathname)
+    let contents
+    if (key === '.git') {
+      return {pathname, type: stat.type}
+    }
+    else if (stat.type === 'dir') contents = await visit(pathname)
+    else contents = (await lit.fs.readFile(pathname, {encoding: 'utf8'})).slice(0,10) + "..."
+    return {pathname, type: stat.type, contents}
+  }))
+}
+
+return (async fn => JSON.stringify(await visit('/'), null, 2))()
+```
+```>json !collapse attached=true updated=1621118521378
+[
+  {
+    "pathname": "/testing",
+    "type": "dir",
+    "contents": [
+      {
+        "pathname": "/testing/isomorphic_git.lit",
+        "type": "file",
+        "contents": "# Isomorph..."
+      },
+      {
+        "pathname": "/testing/serviceworker.lit",
+        "type": "file",
+        "contents": "# Service ..."
+      },
+      {
+        "pathname": "/testing/log",
+        "type": "dir",
+        "contents": [
+          {
+            "pathname": "/testing/log/2021-05-09.lit",
+            "type": "file",
+            "contents": "# 2021-05-..."
+          },
+          {
+            "pathname": "/testing/log/checkforinput.js",
+            "type": "file",
+            "contents": "const date..."
+          },
+          {
+            "pathname": "/testing/log/2021-05-11.lit",
+            "type": "file",
+            "contents": "# 2021-05-..."
+          },
+          {
+            "pathname": "/testing/log/2021-05-12.lit",
+            "type": "file",
+            "contents": "# 2021-05-..."
+          },
+          {
+            "pathname": "/testing/log/today.js",
+            "type": "file",
+            "contents": "const date..."
+          },
+          {
+            "pathname": "/testing/log/2021-05-13.lit",
+            "type": "file",
+            "contents": "# 2021-05-..."
+          },
+          {
+            "pathname": "/testing/log/2021-w20.lit",
+            "type": "file",
+            "contents": "# 2021 wee..."
+          },
+          {
+            "pathname": "/testing/log/2021-05-15.lit",
+            "type": "file",
+            "contents": "# 2021-05-..."
+          }
+        ]
+      },
+      {
+        "pathname": "/testing/input_buffer.lit",
+        "type": "file",
+        "contents": "# Input Bu..."
+      },
+      {
+        "pathname": "/testing/runkit.lit",
+        "type": "file",
+        "contents": "# testing/..."
+      },
+      {
+        "pathname": "/testing/runkit-repl-endpoint.js",
+        "type": "file",
+        "contents": "const util..."
+      },
+      {
+        "pathname": "/testing/lightningfs.lit",
+        "type": "file",
+        "contents": "# Lightnin..."
+      }
+    ]
+  },
+  {
+    "pathname": "/.git",
+    "type": "dir"
+  },
+  {
+    "pathname": "/index.lit",
+    "type": "file",
+    "contents": "<!-- data\n..."
+  },
+  {
+    "pathname": "/scratch_pad.lit",
+    "type": "file",
+    "contents": "# 🔥 Scrat..."
+  },
+  {
+    "pathname": "/plugin_system.lit",
+    "type": "file",
+    "contents": "# 🔌 Plugi..."
+  },
+  {
+    "pathname": "/parser",
+    "type": "dir",
+    "contents": [
+      {
+        "pathname": "/parser/parser.lit",
+        "type": "file",
+        "contents": "# Parser\n\n..."
+      }
+    ]
+  },
+  {
+    "pathname": "/meta",
+    "type": "dir",
+    "contents": [
+      {
+        "pathname": "/meta/settings.lit",
+        "type": "file",
+        "contents": "# `.lit` S..."
+      }
+    ]
+  },
+  {
+    "pathname": "/renderer",
+    "type": "dir",
+    "contents": [
+      {
+        "pathname": "/renderer/viewers",
+        "type": "file",
+        "contents": "<html data..."
+      },
+      {
+        "pathname": "/renderer/renderer.lit",
+        "type": "file",
+        "contents": "<!--\ntitle..."
+      }
+    ]
+  },
+  {
+    "pathname": "/log",
+    "type": "dir",
+    "contents": [
+      {
+        "pathname": "/log/2021-05-11.lit",
+        "type": "file",
+        "contents": "# 2021-05-..."
+      }
+    ]
+  },
+  {
+    "pathname": "/execute_code_cells.lit",
+    "type": "file",
+    "contents": "# Executin..."
+  },
+  {
+    "pathname": "/articles",
+    "type": "dir",
+    "contents": [
+      {
+        "pathname": "/articles/ideas_for.lit",
+        "type": "file",
+        "contents": "# Ideas 💡..."
+      }
+    ]
+  },
+  {
+    "pathname": "/utils",
+    "type": "dir",
+    "contents": [
+      {
+        "pathname": "/utils/momento.lit",
+        "type": "file",
+        "contents": "# momento\n..."
+      }
+    ]
+  },
+  {
+    "pathname": "/repls.lit",
+    "type": "file",
+    "contents": "# REPLs\n\nS..."
+  }
+]
+```
+
+### Finder (from manifest)
+
+
+```js !plugin type=viewer !collapse of=search
+
+const sortBy = keys => (a, b) => {
+  for (const key of keys) {
+     if (a[key] !== b[key]) break;
+     else return (a[key] > b[key]) ? 1 : -1
+  }
+}
+
+const itemBuilder = (React) => item => {
+  const rc = React.createElement
+  return rc('li', {className: 'item'}, rc('a', {href: lit.href || (lit.location.root + item.id)}, item.title || item.id))
+}
+
+export const viewer = ({node, React}) => {
+  const rc = React.createElement
+  const {useState, useEffect} = React
+  const meta = node.properties 
+               && node.properties.meta
+  const [src,setSrc] = useState(meta.search || node.data.value.trim())
+  const [content, setContent] = useState('Loading...')
+  const item = itemBuilder(React)
+  
+  useEffect(async () => {
+    const resp = await fetch("/manifest.json")
+    const json = await resp.json()
+    let regex
+    try {regex = new RegExp(src,'i')} catch(err){}
+    const res = json.nodes
+        .map(x => x)
+        .filter(x => {
+           return x.id.indexOf(src) >= 0
+              || (regex && regex.test(x.id)) || (x.title && (x.title.indexOf(src) >= 0
+              || (regex && regex.test(x.title))))
+
+        })
+        .sort()
+        .map(x => item(x))
+        //.join("\n")
+    setContent(rc('ol', null, res))
+  },[src])
+
+  return rc('div', {
+    className: 'custom-react-view',
+  }, [rc('input',{style:{width:'100%', fontSize: '1.2em'},value:src, onChange: e => setSrc(e.target.value)}), content])
+}
+```
+```>search
+G.*hUb
+```
+## Sync `local|remote|origin`
+
+
+```js #sync !collapse
+// fetch all remote files and store
+// locally if they don't already exist 
+return (async fn => {
+  const t = Date.now()
+  const p = lit.utils.path
+  const writePLocal = async (...args) => {
+    
+  }
+
+  const m = await fetch('/manifest.json')
+                  .then(res => res.json())
+                  .catch(e=>({nodes:[]}))
+
+  const duds = []
+  const synced = []
+  const errors = []
+  const res = await Promise.all(m.nodes.map( async n => {
+    try {
+    n.stats = await lit.fs.readStat(n.id)
+      .then(x=>x)
+      .catch(err=>{
+          duds.push(n.id)
+          return {local: {}, remote: {}}
+      })
+
+    if (!n.stats.local.stat && n.stats.remote.stat) {
+        // use raw lfs to prevent passThrough back to remote.
+        // await lit.fs.writeFile(n.id, n.stats.remote.value, {encoding: 'utf8'})
+        synced.push(n)
+    }
+    
+    return n
+    } catch(err) {errors.push(n.id + " : " + err.message)} 
+  } ))
+  console.log(`Synced ${synced.length}/${m.nodes.length} files in ${(Date.now() - t)/1000} seconds. Duds: ${duds.length} Errors: ${errors.length}`)
+  return {duds, errors}
+})()
+
+```
+```>txt attached=true updated=1621206043476
+Synced 99/139 files in 1.157 seconds. Duds: 31 Errors: 0
+{ duds: 
+   [ 'index.lit',
+     'transfomers.lit',
+     'unified.lit',
+     'markdown.lit',
+     'renderer/file.txt',
+     'remark.lit',
+     '.github/workflows/generate.yaml',
+     'viewers/meta.js',
+     '../../../../../testing/log/2021-05',
+     'litconfig.lit',
+     'log/checkforinput.js',
+     'fsviewer.jsx',
+     'log/today.js',
+     '../../../../../testing/log/2021',
+     'wikilinks.lit',
+     'rk.jsx',
+     'viewers.lit',
+     './runkit-repl-endpoint.js',
+     'worker.js',
+     '../../../../../testing/log/2021.lit',
+     'components.lit',
+     'worker2.js',
+     'meta/.github/workflows/npm-publish.yaml',
+     'utils/fs.lit',
+     'articles/ideas.lit',
+     'utils/urifragments.lit',
+     'executing_code_cells.lit',
+     '../../../../../testing/log/2021-05.lit',
+     'filename',
+     '../../../../../testing/log/year.lit',
+     'testing/getserviceworker--sw' ],
+  errors: [] }
+```
+
+## Emergency wipe ⚠️
+
+```>md !warn
+Clicking log he following link will prompt you to confirm you want to wipe the local file system!
+```
+
+[WIPE ⚠️](?__lfs_wipe=true)
+

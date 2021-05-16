@@ -1,0 +1,175 @@
+# Input Buffer
+
+```js !collapse exec=onload !hidemeta < log/checkforinput.js > md !info
+// See implementation below for details
+```
+```>md !warn attached=true updated=1620722266322
+👀 *Checking for input...*
+```
+
+```js exec=onload !collapse !hidemeta < log/today.js > md !bigger
+// See implementation below for details
+```
+```>md !bigger attached=true updated=1620860665698
+*Today* is [**2021-05-12**](/testing/log/2021-05-12.lit), a log exists: *true*; See [week](/testing/log/2021-w20.lit), [month](/testing/log/2021-05.lit) or [year](/testing/log/year.lit).
+```
+
+## Table of Contents
+
+## About
+
+*Inspired by [mymind](https://twitter.com/mymind) iOS app, [Blackbox](https://twitter.com/BlackboxPuzzles) iOS game and terrible iOS clipboards.*
+
+**aka:** [Peripheral](https://en.m.wikipedia.org/wiki/Peripheral), Input, AUX (Auxiliary)
+
+[![logo](https://www.electronics-tutorials.ws/wp-content/uploads/2013/08/log35.gif?fit=161%2C59)](https://www.electronics-tutorials.ws/logic/logic_9.html)
+
+> A peripheral or peripheral device is  an auxiliary device used to put information into and get information out of the computer.
+
+> peripheria, from Ancient Greek περιφέρεια (periphéreia, “the line around the circle, circumference, part of a circle, an arc, the outer surface”)
+
+Universal ios sharesheet ~~app~~webapp, anything shared to the app is stored, catelogued, linked and editable, sortable, searchable and explorable offline in the app.
+
+> I'm prepared to wait as long as needed for Elon Musks NeuraLink to reach primetime but, We cant afford to sit around till then, we need incremental improvements of our Peripherals, over the Keyboard, Mouse and Touch Screens we have today.
+### Bookmarklet
+
+
+
+```js !inline viewer=bookmarklet id=Input !hidemeta
+window.location.href = "https://dotlit.org/testing/input_buffer.html?input=" + encodeURIComponent("- [ ] ["+document.title+"]("+location.href+")")
+```
+### iOS shortcut
+
+[Lit 🔥 Input](https://www.icloud.com/shortcuts/7c5e088085e34d7d981aace463dcba51) an iOS shortcut which enables sending stuff from anywhere the iOS sharesheet is available, including highlighted text snippets etc, to this (your) Input Buffer.
+
+
+## Implementation
+
+### Bugs and Todos
+
+- [ ] `exec=onload` output is *still* buggy.
+- [ ] Search 🔍
+```js !collapse #mockinput > md
+const qs = location.search.slice(1)
+return `Here's a [Mock Input](?${qs + (qs ? '&' : '')}input=${encodeURIComponent("- [ ] some **Input** " + new Date())}) to test input capture.`
+```
+```>md attached=true updated=1621167143944
+Here's a [Mock Input](?file=testing/input_buffer.lit&input=-%20%5B%20%5D%20some%20**Input**%20Sun%20May%2016%202021%2013%3A12%3A23%20GMT%2B0100%20(BST)) to test input capture.
+```
+
+### Core
+
+
+```>js log/checkforinput.js !collapse
+const date = new Date()
+const isoDate = date.toISOString().split("T")[0]
+const today = isoDate
+const year = date.getFullYear()
+const month = isoDate.split('-')[1]
+
+const firstDayOfYear = new Date(year, 0, 1);
+const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
+const week = Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+
+const filename = t => `testing/log/${t}.lit`
+
+const checkForInput = async () => {
+  const insp = lit.utils.inspect
+  const qs = lit.utils.querystring
+
+  const search = location.search
+  const query = search
+              && qs.parse(search.slice(1))
+
+  if (query?.input) {
+    const input = query.input
+    delete query.input
+    const qsWoInput = qs.stringify(query)
+    window.history.replaceState(null,null,'?' + qsWoInput)
+
+    let stat = {local:{},remote:{}} 
+    try { stat = await lit.fs.readStat(`/${filename(today)}`, {encoding: 'utf8'}) } catch(err) {}
+    const newContent = ((stat.local.stat && stat.local.value) || stat.remote.value || `# ${today}
+
+See [week ${week}](/${filename(year + "-w" + week)}), [month ${month}](/${filename(year+"-"+month)}) or [year ${year}](/${filename(year)})
+`) + ("\n" + input)
+    await lit.fs.writeFile(`/${filename(today)}`, newContent)
+    return `***Captured Input (below) to [${today}](/${filename(today)})***
+
+${input}`
+    } else {
+      return "*No input detected.*"
+  }
+}
+return checkForInput()
+```
+
+
+
+```>js log/today.js !collapse
+const date = new Date()
+const isoDate = date.toISOString().split("T")[0]
+const today = isoDate
+const year = date.getFullYear()
+const month = isoDate.split('-').slice(0,-1).join('-')
+
+const firstDayOfYear = new Date(year, 0, 1);
+const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
+const week = [year, 'w'+ Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7)].join('-')
+
+const prefix = `/testing/log/`
+const pathFor = log => `${prefix}${log}.lit`
+
+const checkForTodayFile = async () => { 
+  let stat
+  try {
+  stat = await lit.fs.readStat(pathFor(today))
+  } catch(err) {}
+  return `*Today* is [**${today}**](${pathFor(today)}), a log exists: *${!!stat && !!(stat.local.stat || stat.remote.stat)}*; See [week](${pathFor(week)}), [month](${pathFor(month)}) or [year](${pathFor(year)}).`
+}
+
+return checkForTodayFile()
+```
+
+```>html !below !collapse #styling
+<style>
+.dir-bigger {
+  font-size: 1.2em;
+}
+</style>
+```
+
+
+```lit !collapse #template < log/day.lit
+
+```
+```js !plugin !collapse type=viewer of=bookmarklet
+export const viewer = ({node, React}) => {
+  const rc = React.createElement
+  const meta = node.properties.meta
+  const href = `javascript:(function(){${node.data.value}})()`
+  return rc('span', null, ['Bookmarklet: ', rc('a', {href: href}, `Run ${meta && meta.id ? meta.id: "bookmarklet"}` ), " href: ", rc('pre', null, rc('code', null, href))])
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

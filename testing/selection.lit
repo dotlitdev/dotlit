@@ -1,0 +1,66 @@
+# More powerful selection
+
+Ie multi cell and section selection.
+## Experiments
+
+```js !plugin type=data id=fakePos
+export const data = {
+  start: {
+    line: 1,
+    column: 1,
+    offset: 0
+  },
+  end: {
+    line: 99,
+    column: 99,
+    offset: 999999
+  }
+}
+```
+
+```js !plugin id=selection type=menu
+
+export const menu = (ctx, {React, Menu}) => {
+  const pos = lit.file.data.plugins.data.fakePos
+  const {filter, select, selectPosition} = lit.utils.unist
+  const rc = React.createElement
+
+  const secFromCell = (pos) => {
+    const secs = selectPosition.selectAll('section', ctx.selectedCell, lit.ast)
+   const last = secs.slice(-1)[0]
+   console.log("Sections", secs, last)
+   return last.position 
+  }
+
+  const selectAll = rc('span', {onClick: () => ctx.setSelectedCell(lit.ast.position)}, 'Select All')
+
+  const selectSec = rc('span', {onClick: () => {
+ctx.setSelectedCell(
+secFromCell(ctx.selectedCell)
+)
+}}, 'Select Section')
+
+  return rc( Menu, {
+    title:"Selection",
+    disabled: false,
+  }, [selectAll, selectSec])
+}
+```
+
+```js
+const {filter, select, selectPosition} = lit.utils.unist
+const is = t => node => {
+  console.log(node.type)
+  return node.type === t
+}
+
+// return lit.ast
+// return filter.toString()
+// filter(lit.ast, {cascade: false } , is('heading'))
+return selectPosition
+```
+```>txt attached=true updated=1620346584679
+{ atPos: [Getter], selectAll: [Getter] }
+```
+
+

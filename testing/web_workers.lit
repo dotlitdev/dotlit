@@ -1,0 +1,158 @@
+# Web Workers
+
+## Table of Contents 
+
+## References 
+[Using Web Workers on MDN](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
+
+## Support
+
+
+
+```js
+return `Worker supported: ${!!window.Worker}`
+```
+```>txt attached=true updated=1619650950719
+Worker supported: true
+```
+
+## Implementation
+```>js worker.js #implementation
+// gross hack around one of @codemirror/view bugs
+let document = { documentElement: { style: {} } }
+postMessage("Version: 2")
+postMessage("Location: " +  typeof location + JSON.stringify(location))
+importScripts('../web.bundle.js')
+postMessage("dotlit: " + typeof dotlit)
+postMessage("lit" + JSON.stringify(dotlit.lit.location))
+
+const getFsTest = async (filepath) => {
+    postMessage(`Getting ${filepath} from local fs.`)
+    try {
+        const file = await dotlit.lit.fs.readFile(filepath)
+        postMessage("length+" + file.length)
+        postMessage('done')
+    } catch(err) {
+        postMessage("error:" + err.toString())
+        postMessage('done')
+    }
+}
+
+getFsTest('/index.lit')
+```
+```>js worker2.js #implementation
+postMessage("hi")
+console.log("anyone here?")
+```
+Check if web server has up to date content yet? This delay is really why we need a service worker in the first place.
+
+```js > text !collapse
+return (async fn => {
+  const resp = await fetch('./worker.js')
+  return resp.status + "\n" + (await resp.text())
+})()
+```
+```>text !collapse attached=true updated=1619870030601
+404
+<html data-reactroot=""><head><title>Not yet found</title><meta name="litsrc" value="404.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="3:55-73"><cell startpos="1:1-0" endpos="3:55-73"><div class="cell-content"><h1 id="not-yet-found">Not <em>yet</em> found</h1><p>The file was not found, edit this page to change that.</p></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
+```
+### Testing
+
+~Current REPL results in script execution from cross-origin? Due to data:uri~ was resolving the raw event from postMessage not `ev.data` which is necessary.
+
+```js
+return new Promise((resolve,reject) => {
+  let myWorker;
+  try {
+    myWorker = new Worker('worker.js')
+    myWorker.onmessage = (ev) => {
+      if (ev.data === 'done') resolve(ev.data)
+      else console.log(ev.data)
+    }
+    myWorker.onerror = (err) => {
+      resolve({msg: "worker.onerror: " + err.message + " (" + err.filename + ":" + err.lineno + ")", err, err},)
+    }
+  } catch(err) {
+    resolve({msg: "Caught err", err})
+  }
+  
+})
+```
+```>txt attached=true updated=1620077776501
+Location: object{}
+dotlit: object
+lit{"src":"","root":"/","base":"https://dotlit.org/","query":{}}
+Getting /index.lit from local fs.
+length+4798
+done
+```
+```js
+return new Promise((resolve,reject) => {
+  let myWorker;
+  try {
+    myWorker = new Worker('/web.bundle.js')
+    myWorker.onmessage = (ev) => {
+      if (ev.data === 'done') resolve(ev.data)
+      else console.log(ev.data)
+    }
+    myWorker.onerror = (err) => {
+      resolve({msg: "worker.onerror: " + err.message + " (" + err.filename + ":" + err.lineno + ")", err})
+    }
+  } catch(err) {
+    resolve({msg: "Caught err", err})
+  }
+  
+})
+```
+```>txt attached=true updated=1619869954340
+{ msg: 'worker.onerror: ReferenceError: Can\'t find variable: document (https://dotlit.org/web.bundle.js:68421)',
+  err: { isTrusted: [Getter] } }
+```
+
+```js #largefilelineno #tool !collapse > text #output !collapse
+return (async fn =>{
+   const url = "https://dotlit.org/web.bundle.js"
+   const lineno = 177281
+   const spread = 10
+
+   const resp = await fetch(url)
+   console.log(resp.status)
+   const val = await resp.text()
+   const lines = val.split("\n")
+   console.log(lines.length, "lines")
+
+   
+   return lines.map((l,i) => {
+           if (i ===lineno-1) return ">>>" + l
+           else return "" + i + " " + l
+           }).slice(lineno - spread, lineno + spread).join("\n")
+})()
+
+```
+```>text #output !collapse attached=true updated=1619798690210
+200
+227913,lines
+177271 // "Software"), to deal in the Software without restriction, including
+177272 // without limitation the rights to use, copy, modify, merge, publish,
+177273 // distribute, sublicense, and/or sell copies of the Software, and to permit
+177274 // persons to whom the Software is furnished to do so, subject to the
+177275 // following conditions:
+177276 //
+177277 // The above copyright notice and this permission notice shall be included
+177278 // in all copies or substantial portions of the Software.
+177279 //
+>>>// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+177281 // OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+177282 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+177283 // NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+177284 // DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+177285 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+177286 // USE OR OTHER DEALINGS IN THE SOFTWARE.
+177287 
+177288 
+177289 
+177290 function assertPath(path) {
+```
+
+
+

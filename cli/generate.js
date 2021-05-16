@@ -198,7 +198,7 @@ export function generate(cmd) {
                 let ast_files_prelinks = await Promise.all(src_files.map( async file => {
                     try {
                         const fetchedFile = await file
-                        // await fs.writeFile(fetchedFile.path, fetchedFile.contents)
+                        await fs.writeFile(fetchedFile.path, fetchedFile.contents)
                         const renderedFile = await renderProcessor({fs}).process(fetchedFile)
                        
                         return renderedFile
