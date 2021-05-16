@@ -188,26 +188,26 @@ export function generate(cmd) {
                 console.log(`Detected ${litFiles.length} .lit file(s) ${matches.length} total.`)
                 const failures = {}
 
-                const src_files = litFiles.map( async filepath => {
+                const src_files = await Promise.all(litFiles.map( async filepath => {
                     try {
-                    const sources = await vfile.read({
+                    const source = await vfile.read({
                         path: filepath,
                         cwd: cmd.path
                     })
-                    return sources
+                    return source
                     } catch(err) {
                         failures[filepath] = failures[filepath] || []
                         failures[filepath].push("Failed read source due to: " + err.message)
                     }
-                })
+                }))
 
                 let ast_files_prelinks = await Promise.all(src_files.map( async file => {
                     let wroteSource;
                     try {
-                        const fetchedFile = await file
-                        await fs.writeFile(fetchedFile.path, fetchedFile.contents)
+                       
+                        await fs.writeFile(file.path, file.contents)
                         wroteSource = true
-                        return await renderProcessor({fs}).process(fetchedFile)
+                        return await renderProcessor({fs}).process(file)
                       
                     } catch (err) {
                         failures[file.path] = failures[file.path] || []
@@ -216,7 +216,9 @@ export function generate(cmd) {
                         console.error(`Failed to process ${file.path}`, err)
                     }
                 }))
+
                 const [ast_files, manifest, meta] = generateBacklinks(ast_files_prelinks, cmd.output)
+
                 const html_files = await Promise.all(ast_files.map( async file => {
                     try {
                         if(file?.data?.frontmatter?.private) {
