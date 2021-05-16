@@ -515,6 +515,7 @@ return (async fn => {
                   .then(res => res.json())
                   .catch(e=>({nodes:[]}))
 
+  const duds = []
   const synced = []
   const errors = []
   const res = await Promise.all(m.nodes.map( async n => {
@@ -522,7 +523,7 @@ return (async fn => {
     n.stats = await lit.fs.readStat(n.id)
       .then(x=>x)
       .catch(x=>{
-          errors.push(err)
+          duds.push(err)
           return {local: {}, remote: {}}
       })
 
@@ -536,7 +537,7 @@ return (async fn => {
     } catch(err) {errors.push(n.id + " : " + err.message)} 
   } ))
   console.log(`Synced ${synced.length}/${m.nodes.length} files in ${(Date.now() - t)/1000} seconds`)
-  return {errors}
+  return {duds, errors}
 })()
 
 ```
