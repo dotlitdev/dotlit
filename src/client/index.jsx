@@ -176,7 +176,7 @@ export const init = async () => {
     file.data.times = times
     
     const processedFile = await renderer.processor({fs,litroot}).process(file)
-    console.log("Processed client", processedFile)
+    console.log("Processed clientside ", file.path)
     window.lit.ast = processedFile.data.ast
     window.lit.file = processedFile
     window.lit.settings = settings
