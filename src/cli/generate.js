@@ -286,7 +286,7 @@ File: ${file.path}
                 await fs.writeFile('manifest.json', JSON.stringify(graph, null, 4))
                 meta.failures2 = failures 
                 meta.litFiles = litFiles.length
-                meta.nonLitFiles = nknLitFiles.length
+                meta.nonLitFiles = nonLitFiles.length
                 await fs.writeFile('meta.json', JSON.stringify(meta, null, 4))
                 console.log(`Wrote ${html_files.filter(Identity).length}/${html_files.length} .lit file(s) to disk`)
 
