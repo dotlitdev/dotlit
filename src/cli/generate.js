@@ -77,13 +77,14 @@ function generateBacklinks(files, root) {
 
     const console = getConsoleForNamespace('Backlinks')
     let manifest = {}
+    let meta = {}
     console.log(`For (${files.length}) files, in ${root}`)
-    manifest.totalSourceFiles = files.length
+    meta.totalSourceFiles = files.length
     files = files.filter(Identity)
 
-    manifest.totalUsableSourceFiles = files.length
+    meta.totalUsableSourceFiles = files.length
     console.log(`Only (${files.length}) files, actually usable`)
-    manifest.failures = {}
+    meta.failures = {}
     
     files.forEach( file => {
         if (!file) { console.error('Cannot get links for file.'); return;}
@@ -100,8 +101,8 @@ function generateBacklinks(files, root) {
             size: file.contents.toString().length,
         }
         } catch(err) {
-            manifest.failures[file.path] = manifest.failures[file.path] || []
-            manifest.failures[file.path].push("genBackLinks1: " + err.message)
+            meta.failures[file.path] = meta.failures[file.path] || []
+            meta.failures[file.path].push("genBackLinks1: " + err.message)
         }
     })
     files.forEach( file => {
@@ -139,8 +140,8 @@ function generateBacklinks(files, root) {
             }
         })
         } catch(err) {
-            manifest.failures[file.path] = manifest.failures[file.path] || []
-            manifest.failures[file.path].push("genBackLinks2: " + err.message)
+            meta.failures[file.path] = meta.failures[file.path] || []
+            meta.failures[file.path].push("genBackLinks2: " + err.message)
         }
     })
 
@@ -149,7 +150,7 @@ function generateBacklinks(files, root) {
             // console.log(file.path, index, manifest[file.path])
             file.data.backlinks = manifest[file.path].backlinks
             return file
-        }), manifest]
+        }), manifest, meta]
 }
 
 export function server(cmd) {
@@ -207,7 +208,7 @@ export function generate(cmd) {
                         console.error(`Failed to process ${file.path}`, err)
                     }
                 }))
-                const [ast_files, manifest] = generateBacklinks(ast_files_prelinks, cmd.output)
+                const [ast_files, manifest, meta] = generateBacklinks(ast_files_prelinks, cmd.output)
                 const html_files = await Promise.all(ast_files.map( async file => {
                     try {
                         if(file?.data?.frontmatter?.private) {
@@ -261,7 +262,7 @@ File: ${file.path}
                     }
                 }))
 
-                const graph = {nodes: [], links: []}
+                const graph = {meta, nodes: [], links: []}
                 Object.keys(manifest).forEach( key => {
                     const node = manifest[key]
                     graph.nodes.push({ id: key, ...node})
@@ -271,7 +272,8 @@ File: ${file.path}
                 })
                 
                 await fs.writeFile('manifest.json', JSON.stringify(graph, null, 4))
-                await fs.writeFile('failures.json', JSON.stringify(failures, null, 4))
+                meta.failures2 = failures 
+                await fs.writeFile('meta.json', JSON.stringify(meta, null, 4))
                 console.log(`Wrote ${html_files.filter(Identity).length}/${html_files.length} .lit file(s) to disk`)
 
                 if (global.litenv) {
