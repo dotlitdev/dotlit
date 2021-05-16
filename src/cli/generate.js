@@ -78,15 +78,18 @@ function generateBacklinks(files, root) {
     const console = getConsoleForNamespace('Backlinks')
     let manifest = {}
     console.log(`For (${files.length}) files, in ${root}`)
-
+    manifest.totalSourceFiles = files.length
     files = files.filter(Identity)
 
+    manifest.totalUsableSourceFiles = files.length
     console.log(`Only (${files.length}) files, actually usable`)
+    manifest.failures = {}
     
     files.forEach( file => {
         if (!file) { console.error('Cannot get links for file.'); return;}
+        try {
         const fileLink = decorateLinkNode({ url: file.path })
-        const title = file.data.frontmatter.title || `Title TBD (${fileLink.data.canonical})`
+        const title = file?.data?.frontmatter?.title || `Title TBD (${fileLink.data.canonical})`
         console.log(`[${title}] Adding "${file.path}" as "${fileLink.data.canonical} to manifest."`)
         const links = getLinks(file, root)
         manifest[fileLink.data.canonical] = manifest[fileLink.data.canonical] || {
@@ -96,11 +99,16 @@ function generateBacklinks(files, root) {
             links: links.length,
             size: file.contents.toString().length,
         }
+        } catch(err) {
+            manifest.failures[file.path] = manifest.failures[file.path] || []
+            manifest.failures[file.path].push("genBackLinks1: " + err.message)
+        }
     })
     files.forEach( file => {
         if (!file) return
+        try {
         const fileLink = decorateLinkNode({ url: file.path })
-        const title = file.data.frontmatter.title || path.basename(file.path, path.extname(file.path))
+        const title = file?.data?.frontmatter?.title || path.basename(file.path, path.extname(file.path))
         console.log(`About to get links for file: ${title} (${file.path})`)
         
         const links = getLinks(file, root)
@@ -130,6 +138,10 @@ function generateBacklinks(files, root) {
                 console.log(`[${title}][${i}] Other:`, link.data.canonical)
             }
         })
+        } catch(err) {
+            manifest.failures[file.path] = manifest.failures[file.path] || []
+            manifest.failures[file.path].push("genBackLinks2: " + err.message)
+        }
     })
 
     return [files.map( (file, index) => {
