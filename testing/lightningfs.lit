@@ -16,7 +16,7 @@ return lit.fs.readdir('/testing/log')
 [ '2021-05-09.lit', 'checkforinput.js', '2021-05-11.lit' ]
 ```
 ```js > json !collapse
-return lit.fs.readFile('/manifest.json')
+return lit.lfs.writeFike('/testing/data.json', "{}")
 ```
 
 ```js > json !collapse
@@ -514,7 +514,7 @@ return (async fn => {
     try {
     n.stats = await lit.fs.readStat(n.id).then(x=>x).catch(x=>({local: {}, remote: {}}))
     if (!n.stats.local.stat && n.stats.remote.stat) {
-        await lit.fs.writeFile(n.id, n.stats.remote.value, {encoding: 'utf8'})
+        await lit.lfs.writeFile(n.id, n.stats.remote.value, {encoding: 'utf8'})
         synced.push(n)
     }
     return n
@@ -523,10 +523,7 @@ return (async fn => {
   console.log(`Synced ${synced.length}/${m.nodes.length} files in ${(Date.now() - t)/1000} seconds`)
   return {errors}
 })()
-```
-```>txt attached=true updated=1621172721774
-Synced 0/127 files in 1.022 seconds
-{ errors: [ '../../../../../meta/settings.lit#plantuml-viewer--repl : Unable to normalize path - traverses above root directory' ] }
+
 ```
 
 ## Emergency wipe ⚠️
