@@ -173,6 +173,7 @@ export function generate(cmd) {
 
           
                 console.log(`Detected ${litFiles.length} .lit file(s) ${matches.length} total.`)
+                const failures = {}
 
                 const src_files = litFiles.map( async filepath => {
                     return vfile.read({
@@ -189,6 +190,8 @@ export function generate(cmd) {
                        
                         return renderedFile
                     } catch (err) {
+                        failures[file.path] = failures[file.path] || []
+                        failures[file.path].push(err.message)
                         console.error(`Failed to process ${file.path}`, err)
                     }
                 }))
@@ -226,7 +229,10 @@ The contents of this file are private. Only visible by the author.
                             }
                         }
                         return html_file;
-                    } catch (err) { 
+                    } catch (err) {
+                        failures[file.path] = failures[file.path] || []
+                        failures[file.path].push(err.message)
+
                         console.error(`Failed to process ${file.path}`, err) 
                         file.contents = `# ⚠️ Failed to process file
 File: ${file.path}
@@ -253,6 +259,7 @@ File: ${file.path}
                 })
                 
                 await fs.writeFile('manifest.json', JSON.stringify(graph, null, 4))
+                await fs.writeFile('failures.json', JSON.stringify(failures, null, 4))
                 console.log(`Wrote ${html_files.filter(Identity).length}/${html_files.length} .lit file(s) to disk`)
 
                 if (global.litenv) {
