@@ -27,7 +27,7 @@ const Document = props => {
             <div id="backlinks"><Backlinks root={props.root} links={props.backlinks || []}/></div>
             <script src="//cdn.jsdelivr.net/npm/eruda"></script>
             <script>eruda.init();</script>
-            <script defer src={path.join(props.root, 'web.bundle.js')}/>
+            <script async src={path.join(props.root, 'web.bundle.js')}/>
         </body>
     </html>
 }
