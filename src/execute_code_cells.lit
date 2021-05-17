@@ -647,7 +647,7 @@ import prettier from "https://unpkg.com/prettier@2.3.0/esm/standalone.mjs";
 ```
 
 ```js > js #formatted
-return (async fn => {
+return (async fn => { // intentionally [sic] badly formatted 
   const {format} = (await import('https://unpkg.com/prettier@2.3.0/esm/standalone.mjs')).default
   const babelPlugin = (await import('https://unpkg.com/prettier@2.3.0/esm/parser-babel.mjs')).default
   const thisCellsSource = this.children[0].children[0].data.value
@@ -657,7 +657,7 @@ plugins: [babelPlugin],
 })
 })()
 ```
-```>js #formatted attached=true updated=1621284759849
+```>js #formatted attached=true updated=1621284983882
 return (async (fn) => {
   const { format } = (
     await import("https://unpkg.com/prettier@2.3.0/esm/standalone.mjs")
@@ -665,8 +665,8 @@ return (async (fn) => {
   const babelPlugin = (
     await import("https://unpkg.com/prettier@2.3.0/esm/parser-babel.mjs")
   ).default;
-
-  return format(this.children[0].children[0].data.value, {
+  const thisCellsSource = this.children[0].children[0].data.value;
+  return format(thisCellsSource, {
     parser: "babel",
     plugins: [babelPlugin],
   });
