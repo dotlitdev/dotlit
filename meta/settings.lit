@@ -76,11 +76,11 @@ export const viewer = ({node,React}) => {
     
 
     const reader = new FileReader();
-    reader.onload = (i=> e => {
+    reader.onload = (i=> async e => {
 
       const url = e.target.result
       const data = url.replace(/^data:image\/png;base64,/, "");
-      lit.fs.writeFile(`/testing/upload-${i+1}.png `, data, {encoding: 'base64'})
+      try{await lit.fs.writeFile(`/testing/upload-${i+1}.png `, data, {encoding: 'base64'})}catch(err) {alert(err.message)}
       setUploads([...uploads, e.target.result])
     })(i)
     reader.readAsDataURL(file);
