@@ -14,7 +14,7 @@ export const viewer = ({node, React}) => {
       const name = join(props.src,l[0])
       const type = l[1].type
       const style = type === 'dir'
-                    ? {color: "red"}
+                    ? {fontWeight: "bold"}
                     : null
       return <div onClick={ev=> props.select(name)} style={style}>{name}</div>
      })}
@@ -43,7 +43,7 @@ export const viewer = ({node, React}) => {
 
   const bigger = {fontSize: '1.2em'}
   return <div style={bigger}>
-     <input style={bigger} value={src} onChange={ev=>setSrc(ev.target.value)}/>
+     <input style={{...bigger}, fontFamily: 'monospace'} value={src} onChange={ev=>setSrc(ev.target.value)}/>
      <Stat src={src} stat={stat} select={setSrc}/>
      {!stat && content}
      {stat && <button disabled>Reset</button>}
