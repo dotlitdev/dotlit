@@ -652,23 +652,25 @@ return (async fn => {
   const babelPlugin = (await import('https://unpkg.com/prettier@2.3.0/esm/parser-babel.mjs')).default
   
   return format(this.children[0].children[0].data.value, { 
-semi: false, 
 parser: "babel",
 plugins: [babelPlugin],
 })
 })()
 ```
-```>txt attached=true updated=1621284229798
-return (async fn => {
-  const {format} = (await import('https://unpkg.com/prettier@2.3.0/esm/standalone.mjs')).default
-  const babelPlugin = (await import('https://unpkg.com/prettier@2.3.0/esm/parser-babel.mjs')).default
-  return this.children[0].children[0].data.value
-  // return Object.keys(b)
-  return format(ast.data.value, { 
-semi: false, 
-parser: "babel",
-plugins: [babelPlugin],
-})
+```>txt attached=true updated=1621284262676
+return (async (fn) => {
+  const { format } = (
+    await import("https://unpkg.com/prettier@2.3.0/esm/standalone.mjs")
+  ).default
+  const babelPlugin = (
+    await import("https://unpkg.com/prettier@2.3.0/esm/parser-babel.mjs")
+  ).default
+
+  return format(this.children[0].children[0].data.value, {
+    semi: false,
+    parser: "babel",
+    plugins: [babelPlugin],
+  })
 })()
 
 ```
