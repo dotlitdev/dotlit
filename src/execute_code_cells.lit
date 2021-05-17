@@ -650,14 +650,14 @@ import prettier from "https://unpkg.com/prettier@2.3.0/esm/standalone.mjs";
 return (async fn => {
   const {format} = (await import('https://unpkg.com/prettier@2.3.0/esm/standalone.mjs')).default
   const babelPlugin = (await import('https://unpkg.com/prettier@2.3.0/esm/parser-babel.mjs')).default
-  
-  return format(this.children[0].children[0].data.value, { 
+  const thisCellsSource = this.children[0].children[0].data.value
+  return format(thisCellsSource, { 
 parser: "babel",
 plugins: [babelPlugin],
 })
 })()
 ```
-```>js attached=true updated=1621284681656
+```>js #formatted attached=true updated=1621284759849
 return (async (fn) => {
   const { format } = (
     await import("https://unpkg.com/prettier@2.3.0/esm/standalone.mjs")
