@@ -648,10 +648,15 @@ import prettier from "https://unpkg.com/prettier@2.3.0/esm/standalone.mjs";
 
 ```js
 return (async fn => {
-  const p = await import('https://cdn.skypack.dev/prettier')
+  const p = await import('https://unpkg.com/prettier@2.3.0/esm/standalone.mjs')
+  const b = await import('https://unpkg.com/prettier@2.3.0/esm/parser-babel.mjs')
   return p.format(`
 (async fn=>{const foo,bar,bar;})()
-`, { semi: false, parser: "babel" })
+`, { 
+semi: false, 
+parser: "babel",
+plugins: [b],
+})
 })()
 ```
 ```>txt attached=true updated=1621282735309
