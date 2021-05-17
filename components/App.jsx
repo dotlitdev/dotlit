@@ -45,7 +45,7 @@ const App = ({root, file, fs, result, ssr}) => {
     const toggleViewSource = () => setViewSource(!viewSource)
     
     const setSrcWrapper = async (pos, cellSource) => {
-        console.log("<App/> Set src wrapper", pos, cellSource)
+        console.log("<App/> Set src wrapper", posstr(pos))
         const patchedSrc = patchSource(srcAndRes.src, pos, cellSource.trimEnd())
         if (patchedSrc === srcAndRes.src) {
             console.log("No Change to source of document. Not updating.")
