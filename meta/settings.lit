@@ -62,13 +62,12 @@ Included below, and therefore available in all `.lit` documents in this notebook
 ```js !plugin type=cellmenu id=outputs
 export const cellmenu = (ctx, {React, Menu}) => {
   const sel = lit.utils.unist.selectPosition.selectAll
+  const pos = ctx.selectedCell
+  const tree = lit.file.data.ast
+  const [attached] = sel('code', pos, tree)
+       .filter( code => code?.data?.meta?.attrs?.attached)
 
   const detach = ctx => del => ev => {
-    const pos = ctx.selectedCell
-    const tree = lit.file.data.ast
-    const [attached] = sel('code', pos, tree)
-       .filter( code => code?.data?.meta?.attrs?.attached)
-  
     if (del) ctx.setSrc(attached.position, "")
     else {
        const {toMarkdown, ungroupSections}
@@ -81,7 +80,7 @@ export const cellmenu = (ctx, {React, Menu}) => {
     }
   }
   
-  return <Menu title="Output">
+  return <Menu disabled={!attached} title="Output">
            <span 
             disabled={!ctx.selectedCell}
             onClick={detach(ctx)()}>
