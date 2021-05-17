@@ -69,14 +69,13 @@ export const cellmenu = (ctx, {React, Menu}) => {
     const [attached] = sel('code', pos, tree)
        .filter( code => code?.data?.meta?.attrs?.attached)
   
-    alert("found attached")
     if (del) ctx.setSrc(attached.position, "")
     else {
        const {toMarkdown, ungroupSections}
               = lit.parser.utils
        attached.meta = attached.meta.replace('\s?attached=true','')
        const root = {type: "root", children: [attached]}
-       
+       alert(JSON.stringify(root,null,2))
        const md = toMarkdown(root)
        ctx.setSrc(attached.position, md)
     }
