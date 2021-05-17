@@ -647,16 +647,17 @@ import prettier from "https://unpkg.com/prettier@2.3.0/esm/standalone.mjs";
 ```
 
 ```js
-return (async fn => {
+return (async ast => {
   const {format} = (await import('https://unpkg.com/prettier@2.3.0/esm/standalone.mjs')).default
   const babelPlugin = (await import('https://unpkg.com/prettier@2.3.0/esm/parser-babel.mjs')).default
+  return ast 
   // return Object.keys(b)
   return format(ast.data.value, { 
 semi: false, 
 parser: "babel",
 plugins: [babelPlugin],
 })
-})()
+})(this)
 ```
 ```>txt attached=true updated=1621283547450
 ;(async (fn) => {
