@@ -1,0 +1,212 @@
+<html data-reactroot=""><head><title>Client</title><meta name="litsrc" value="client/client.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="5:4-59"><cell startpos="1:1-0" endpos="1:9-8"><div class="cell-content"><h1 id="client">Client</h1></div></cell><cell startpos="3:1-10" endpos="5:4-59" class="code"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-jsx local collapsed"><span class="meta"><span class="lang">jsx</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span><span class="source">&lt; index.jsx</span></span><pre><code class="jsx">const React = require(&#x27;react&#x27;)
+const ReactDOM = require(&#x27;react-dom&#x27;)
+const vfile = require(&#x27;vfile&#x27;)
+const path = require(&#x27;path&#x27;)
+const qs = require(&#x27;querystring-es3&#x27;)
+const FS = require(&#x27;@isomorphic-git/lightning-fs&#x27;)
+const git = require(&#x27;isomorphic-git&#x27;)
+
+const select = require(&#x27;unist-util-select&#x27;)
+const source = require(&#x27;unist-util-source&#x27;)
+const filter = require(&#x27;unist-util-filter&#x27;)
+const visit = require(&#x27;unist-util-visit&#x27;)
+const patchSource = require(&#x27;../utils/unist-util-patch-source&#x27;)
+const selectPosition = require(&#x27;../utils/unist-util-select-position&#x27;)
+
+const { to_string } = require(&#x27;../parser/utils/mdast-util-to-string&#x27;)
+
+const parser = require(&#x27;../parser&#x27;)
+const renderer = require(&#x27;../renderer&#x27;)
+const { Repl } = require(&#x27;../repl&#x27;)
+
+const { Header } = require(&#x27;../components/Header&#x27;)
+const { extendFs } = require(&#x27;../utils/fs-promises-utils&#x27;)
+const momento = require(&#x27;../utils/momento&#x27;)
+const colors = require(&#x27;../utils/colors&#x27;)
+const safeEncoders = require(&#x27;../utils/safe-encoders&#x27;)
+
+const { inspect } = require(&#x27;util&#x27;)
+const diff = require(&#x27;diff&#x27;)
+const fns = require(&#x27;../utils/functions&#x27;)
+import { getConsoleForNamespace } from &#x27;../utils/console&#x27;
+
+const console = getConsoleForNamespace(&#x27;client&#x27;)
+
+const  { DatesToRelativeDelta, MsToRelative } = momento
+
+const hasLocation = typeof location !== &quot;undefined&quot;
+
+const query = hasLocation ? qs.parse(location.search.slice(1)) : {}
+const litsrcMeta = fns.getMeta(&#x27;src&#x27;, &#x27;&#x27;)
+const litsrc = (litsrcMeta === &#x27;404.lit&#x27;)
+                ? (query.file || location.pathname.replace(/\.html$/, &#x27;.lit&#x27;).slice(1))
+                : litsrcMeta
+const litroot = fns.getMeta(&#x27;root&#x27;, &#x27;/&#x27;)
+// const litbase = getMeta(&#x27;base&#x27;, &#x27;/&#x27;)
+const litbase = (!hasLocation || litroot === &#x27;/&#x27;)
+                 ? litroot 
+                 : path.join(path.dirname(location.pathname), litroot)
+const baseUrl = hasLocation &amp;&amp; `${location.protocol}//${location.host}${litbase}`
+
+const lfs = new FS(baseUrl, {
+    wipe: query.__lfs_wipe===&quot;true&quot; ? confirm(&quot;Are you sure you want to wipe the local file system: &quot; + baseUrl) : undefined,
+    url: baseUrl,
+})
+const fs = extendFs(lfs.promises, litroot, !query.__no_gh &amp;&amp; typeof localStorage !== &quot;undefined&quot; &amp;&amp; localStorage.getItem(&quot;ghToken&quot;) &amp;&amp; {
+    username: &quot;dotlitdev&quot;,
+    repository: &quot;dotlit&quot;, 
+    prefix: &quot;src&quot;,
+    token: localStorage.getItem(&quot;ghToken&quot;),
+})
+
+export const lit = {
+    location: {
+        src: litsrc,
+        root: litroot,
+        base: baseUrl,
+        query: query,
+    },
+    parser,
+    renderer,
+    Repl,
+    fs, lfs, git,
+    utils: {
+        inspect,
+        diff,
+        React,
+        unist: {
+            select,
+            source,
+            filter,
+            visit,
+            patchSource,
+            selectPosition,
+        },
+        mdast: {
+            to_string,
+        },
+        momento,
+        colors,
+        safeEncoders,
+        fns,
+        path,
+        querystring: qs,
+        vfile,
+        delete: async (fp) =&gt; {
+            const f = fp || litsrc
+            const filepath = f[0] === &#x27;/&#x27; ? f : (&#x27;/&#x27; + f)
+            console.log(`Removing local file: &quot;${filepath}&quot;`)
+            await lit.fs.unlink(filepath)
+            console.log(`Unlinked: &quot;${filepath}&quot;`)
+        },
+        read: async (fp) =&gt; {
+            const f = fp || litsrc
+            const filepath = f[0] === &#x27;/&#x27; ? f : (&#x27;/&#x27; + f)
+            const resp = await lit.fs.readStat(filepath, {encoding: &#x27;utf8&#x27;})
+            console.log(`Loaded file: ${filepath} local: ${!!resp.local.stat} remote: ${!!resp.remote.stat} resp: `, resp)
+
+            if (resp.local.stat &amp;&amp; resp.remote.stat) {
+                const ageMessage = DatesToRelativeDelta(resp.local.stat.mtimeMs, resp.remote.stat.mtimeMs)
+                console.log(`Local file is ${ageMessage} than remote file.`)
+            }
+        },
+    }
+}
+
+lit.u = lit.utils
+
+if (typeof window !== &#x27;undefined&#x27;) window.lit = lit
+
+console.log(`lit:`, lit)
+
+export const init = async () =&gt; {
+    if(query.__lit_no_client===&quot;true&quot;) return;
+
+    console.log(&#x27;.lit Notebook client initializing...&#x27;)
+
+    const App = require(&#x27;../components/App&#x27;).default
+
+    const filepath = `/${lit.location.src}`
+    console.log(`Checking local (${baseUrl}) filesystem for: ${filepath}`)
+    let contents, times = {local: null, remote: null}
+    try {
+        const resp = await lit.fs.readStat(filepath, {encoding: &#x27;utf8&#x27;})
+        console.log(`Loaded file: ${filepath} local: ${!!resp.local.stat} remote: ${!!resp.remote.stat} resp: `, resp)
+        times.local = resp.local.stat &amp;&amp; MsToRelative(resp.local.stat.mtimeMs - Date.now())
+        times.remote = resp.remote.stat &amp;&amp; MsToRelative(resp.remote.stat.mtimeMs - Date.now())
+
+        if (resp.local.stat &amp;&amp; resp.remote.stat) {
+            const ageMessage = DatesToRelativeDelta(resp.local.stat.mtimeMs, resp.remote.stat.mtimeMs)
+            times.ageMessage = ageMessage
+            console.log(`Local file is ${ageMessage} than remote file.`)
+        }
+        
+        contents = resp.local.value || resp.remote.value
+    } catch(err) {
+        console.error(`Error fetching local and remote file`, err)
+
+        
+        if (query.template) {
+            console.log(`Loading template (${query.template}) for 404 file &quot;${lit.location.src}&quot;.`)
+            try {
+                const template = await lit.fs.readStat(`/${query.template}`, {encoding: &#x27;utf8&#x27;})
+                contents = lit.utils.fns.template(template.local.value || template.remote.value, window)
+            } catch (err) {
+                console.error(`Failed to load template: ${query.template}`, err)
+            }
+        }
+        
+        console.log(`Showing 404 page`)
+        // const resp404 = await lit.fs.readStat( &#x27;/&#x27; + path.join(litroot, &quot;404.lit&quot;) )
+        // contents = resp404.value
+        const filename = lit.utils.path.basename(lit.location.src).slice(0, 0-lit.utils.path.extname(lit.location.src).length)
+        if (!contents) contents = `# ${lit.location.src}\n\nFile not *yet* found, edit this to change that.`
+    }
+    
+    let settings
+    try {
+        const settingsPath = &#x27;/meta/settings.lit&#x27;
+        const settingsFile = await vfile({ path: settingsPath, contents: await lit.fs.readFile(settingsPath, {encoding: &#x27;utf8&#x27;}) })
+        settings = await renderer.processor({fs,litroot}).process(settingsFile)
+    } catch(err) { console.log(&#x27;Failed to load settings&#x27;, err) }
+
+    const file = await vfile({path: filepath, contents})
+    file.data = file.data || {}
+    file.data.plugins = (settings &amp;&amp; settings.data &amp;&amp; settings.data.plugins) || {}
+    file.data.times = times
+    
+    const processedFile = await renderer.processor({fs,litroot}).process(file)
+    console.log(&quot;Processed clientside &quot;, file.path)
+    window.lit.ast = processedFile.data.ast
+    window.lit.file = processedFile
+    window.lit.settings = settings
+
+    try {
+        lit.notebook = &lt;App
+            root={litroot}
+            fs={lit.fs}
+            file={processedFile}
+            result={processedFile.result}
+        /&gt;
+    } catch(err) {
+        console.error(&quot;Error instantiating App&quot;, err)
+    }
+    console.log(&#x27;notebook&#x27;, window.lit.notebook)
+    
+    try {
+        ReactDOM.render(window.lit.notebook, document.getElementById(&#x27;lit-app&#x27;))
+        // ReactDOM.hydrate(window.lit.notebook, document.getElementById(&#x27;app&#x27;))
+        // ReactDOM.hydrate(&lt;Header root={litroot} /&gt;, document.getElementById(&#x27;header&#x27;))
+    } catch (err) {
+        console.error(&quot;Error hydrating App&quot;, err)
+    }
+}
+
+if (typeof WorkerGlobalScope !== &#x27;undefined&#x27;
+    &amp;&amp; self instanceof WorkerGlobalScope) {
+   // inside worker as lib, don&#x27;t init.
+} else {
+   init()
+}
+
+</code></pre></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script src="/web.bundle.js"></script></body></html>
