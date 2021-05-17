@@ -648,14 +648,15 @@ import prettier from "https://unpkg.com/prettier@2.3.0/esm/standalone.mjs";
 
 ```js
 return (async fn => {
-  const {format} = await import('https://unpkg.com/prettier@2.3.0/esm/standalone.mjs')
+  const p = await import('https://unpkg.com/prettier@2.3.0/esm/standalone.mjs')
   const b = await import('https://unpkg.com/prettier@2.3.0/esm/parser-babel.mjs')
+  return Object.keys(p)
   return format(`
 (async fn=>{const foo,bar,bar;})()
 `, { 
 semi: false, 
 parser: "babel",
-plugins: [b],
+plugins: [b.default],
 })
 })()
 ```
