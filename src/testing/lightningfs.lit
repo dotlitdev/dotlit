@@ -226,7 +226,7 @@ export const viewer = ({node, React}) => {
     let stat, size
     try {
       stat = await lit.fs.stat(src)
-      size = await lit.du(src)
+      size = await lit.fs.du(src)
       if (stat.type === 'dir') {
           const list = await lit.fs.readdir(src)
           const withStats = list.map( async l => [l,await lit.fs.stat(join(src,l))])
