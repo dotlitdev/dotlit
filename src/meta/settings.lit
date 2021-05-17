@@ -63,21 +63,31 @@ Included below, and therefore available in all `.lit` documents in this notebook
 export const cellmenu = (ctx, {React, Menu}) => {
   const sel = lit.utils.unist.selectPosition.selectAll
 
-  const detach = ctx => ev => {
+  const detach = ctx => del => ev => {
     const pos = ctx.selectedCell
     const tree = lit.file.data.ast
     const [attached] = sel('code', pos, tree)
        .filter( code => code?.data?.meta?.attrs?.attached)
-       .map( x => x.position)
+  
     alert("found attached")
-    ctx.setSrc(attached, "")
+    if (del) ctx.setSrc(attached.position, "")
+    else {
+
+    }
   }
   
-  return <span 
-          disabled={!ctx.selectedCell}
-          onClick={detach(ctx)}>
-          Detach Output
-         </span>
+  return <Menu title="Output">
+           <span 
+            disabled={!ctx.selectedCell}
+            onClick={detach(ctx)()}>
+            Detach Output
+           </span>
+          <span 
+            disabled={!ctx.selectedCell}
+            onClick={detach(ctx)(true)}>
+            Delete Output
+           </span>
+         </Menu>
 }
 ```
 
