@@ -16,7 +16,7 @@ export const viewer = ({node, React}) => {
       const style = type === 'dir'
                     ? {fontWeight: "bold"}
                     : null
-      return <div onClick={ev=> props.select(name)} style={style}>{name}</div>
+      return <div><span onClick={ev=> props.select(name)} style={style}>{name}</span></div>
      })}
     </div>
   }
