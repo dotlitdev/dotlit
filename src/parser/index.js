@@ -61,7 +61,7 @@ export const processor = ({files, fs, litroot} = {files: []}) => {
     return baseProcessor({files, litroot})
     // remark-litmd (rehype compatable)
 
-    .use(litcodeblocks)
+    .use(codeblocks)
     // Async reparse `md` codeblocks as children
     .use(mdblocks, {baseProcessor})
     .use(resolveLinks({litroot}))
