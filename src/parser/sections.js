@@ -239,4 +239,5 @@ export const ungroupSections = (options = {}) => (...args) => (tree) => {
       return [node]
     }
   })
+  return tree
 }
