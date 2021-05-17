@@ -7,7 +7,7 @@ export const viewer = ({node, React}) => {
     if (stat.message) return <div>{stat.message}</div>
     return <div>
       <div onClick={ev=>props.select(src.split('/').slice(0,-1).join('/') || '/')}>{src}</div>
-      Type: <span>{stat.type}</span> mtime: <span>{lit.utils.momento(Date.now() - stat.mtimeMs)}</span>
+      Type: <span>{stat.type}</span> mtime: <span>{lit.utils.momento.MsToRelative(Date.now() - stat.mtimeMs)}</span>
       {stat.contents && stat.contents.map( l => {
 
       const name = join(props.src,l[0])
