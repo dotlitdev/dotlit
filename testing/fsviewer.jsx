@@ -41,7 +41,7 @@ export const viewer = ({node, React}) => {
     }
   }, [src])
 
-  return <div>
+  return <div style={{fontSize: '1.2em'}}>
      <input value={src} onChange={ev=>setSrc(ev.target.value)}/>
      <Stat src={src} stat={stat} select={setSrc}/>
      {!stat && content}
