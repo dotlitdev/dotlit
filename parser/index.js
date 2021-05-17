@@ -9,6 +9,7 @@ import gfm from 'remark-gfm'
 import { wikiLinkPlugin } from 'remark-wiki-link'
 import select from 'unist-util-select'
 import { to_string } from './utils/mdast-util-to-string'
+import toMarkdown from 'mdast-util-to-markdown'
 
 import {sections, groupIntoSections, ungroupSections} from './sections'
 import codeblocks from './codeblocks'
@@ -77,6 +78,7 @@ export const utils = {
   codeblocks,
   remarkStringify,
   to_string,
+  toMarkdown,
   frontmatter,
 }
 
