@@ -1,6 +1,6 @@
 import unified from 'unified'
 import markdown from 'remark-parse'
-import tostring from 'remark-stringify'
+import remarkStringify from 'remark-stringify'
 import slug from 'remark-slug'
 import headingIds from 'remark-heading-id'
 import toc from 'remark-toc'
@@ -11,7 +11,7 @@ import select from 'unist-util-select'
 import { to_string } from './utils/mdast-util-to-string'
 
 import {sections, groupIntoSections, ungroupSections} from './sections'
-import litcodeblocks from './codeblocks'
+import codeblocks from './codeblocks'
 import frontmatter from './frontmatter'
 import {mdblocks} from './mdblocks'
 import {resolveLinks, wikiLinkOptions} from './links'
@@ -68,7 +68,17 @@ export const processor = ({files, fs, litroot} = {files: []}) => {
 
     .use(sections, {})
 
-}   
+}
+
+export const utils = {
+  mdblocks,
+  sections, ungroupSections,
+  resolveLinks,
+  codeblocks,
+  remarkStringify,
+  to_string,
+  frontmatter,
+}
 
 export async function parse(vfile, options) {
     const p = processor(options)
@@ -88,7 +98,7 @@ export const transformers = {
 export function stringify(vfile) {
     return processor()
         .use(ungroupSections())
-        .use(tostring, {
+        .use(remarkStringify, {
             bullet: '-',
             // handlers: {
             //     cell: debugAstToMarkdown,
