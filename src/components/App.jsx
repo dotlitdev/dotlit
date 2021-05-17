@@ -91,6 +91,7 @@ const App = ({root, file, fs, result, ssr}) => {
             src: patchedSrc,
             res: processedFile.result
        })
+       setSelectedCell(tmpPos)
     }
 
     const setSelectedCellWrapper = async (pos, scroll) => {
