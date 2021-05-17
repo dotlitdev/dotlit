@@ -650,6 +650,18 @@ import prettier from "https://unpkg.com/prettier@2.3.0/esm/standalone.mjs";
 return (async fn => {
   const {format} = (await import('https://unpkg.com/prettier@2.3.0/esm/standalone.mjs')).default
   const babelPlugin = (await import('https://unpkg.com/prettier@2.3.0/esm/parser-babel.mjs')).default
+  
+  return format(this.children[0].children[0].data.value, { 
+semi: false, 
+parser: "babel",
+plugins: [babelPlugin],
+})
+})()
+```
+```>txt attached=true updated=1621284229798
+return (async fn => {
+  const {format} = (await import('https://unpkg.com/prettier@2.3.0/esm/standalone.mjs')).default
+  const babelPlugin = (await import('https://unpkg.com/prettier@2.3.0/esm/parser-babel.mjs')).default
   return this.children[0].children[0].data.value
   // return Object.keys(b)
   return format(ast.data.value, { 
@@ -658,28 +670,5 @@ parser: "babel",
 plugins: [babelPlugin],
 })
 })()
-```
-```>txt attached=true updated=1621284202625
-{ type: 'element',
-  tagName: 'code',
-  properties: 
-   { className: '',
-     meta: 
-      { attrs: {},
-        lang: 'js',
-        isOutput: false,
-        output: undefined,
-        hasOutput: false,
-        hasSource: false,
-        source: undefined,
-        raw: 'js' } },
-  children: [ { type: 'text', value: '\n' } ],
-  position: 
-   { start: { line: 649, column: 1, offset: 13944 },
-     end: { line: 680, column: 4, offset: 14843 } },
-  data: 
-   { value: 'return (async fn => {\n  const {format} = (await import(\'https://unpkg.com/prettier@2.3.0/esm/standalone.mjs\')).default\n  const babelPlugin = (await import(\'https://unpkg.com/prettier@2.3.0/esm/parser-babel.mjs\')).default\n  return this.children[0].children[0]\n  // return Object.keys(b)\n  return format(ast.data.value, { \nsemi: false, \nparser: "babel",\nplugins: [babelPlugin],\n})\n})()\n',
-     meta: null,
-     __customHastCodeHandler: true },
-  value: 'return (async fn => {\n  const {format} = (await import(\'https://unpkg.com/prettier@2.3.0/esm/standalone.mjs\')).default\n  const babelPlugin = (await import(\'https://unpkg.com/prettier@2.3.0/esm/parser-babel.mjs\')).default\n  return this.children[0].children[0]\n  // return Object.keys(b)\n  return format(ast.data.value, { \nsemi: false, \nparser: "babel",\nplugins: [babelPlugin],\n})\n})()\n' }
+
 ```
