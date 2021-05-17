@@ -63,10 +63,28 @@ Ref: https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_
 
 ```js !plugin type=viewer of=upload
 export const viewer = ({node,React}) => {
-  const handleFiles = ev () => {
-     alert("files!?")
+
+  const {useState} = React
+  const [uploads, setUploads] = useState([])
+
+  const handleFiles = ev => {
+     for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+
+    if (!file.type.startsWith('image/')){ continue }
+    
+
+    const reader = new FileReader();
+    reader.onload = e => {
+      setUploads([...uploads, e.target.result])
+    }
+    reader.readAsDataURL(file);
   }
-  return <input onChange={handleFiles} type="file"/>
+  }
+  return <div>
+     <input onChange={handleFiles} type="file"/>
+     <div>{uploads.join(', ')}</div>
+    </div>
 }
 ```
 
