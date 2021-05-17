@@ -105,7 +105,7 @@ const Cell = props => {
             if (ctx) ctx.setSrc(lit.ast.position, result.resp)
         } else {
             const outputMeta = (meta.hasOutput ? meta.output : 'txt').trim() + (" attached=true updated=" + Date.now()) + (error ? ' !error' : '')
-            const output = "\n```>"+ outputMeta +"\n" + result.stdout.replace(/\n```/g, "\n\\`\\`\\`") + "\n```\n"
+            const output = "\n```>"+ outputMeta +"\n" + result.stdout.replace(/\n```/g, "\n•••") + "\n```\n"
             if (ctx) ctx.setSrc(pos, rawSource + output)
             else return rawSource + output
         }
