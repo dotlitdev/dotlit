@@ -41,8 +41,9 @@ export const viewer = ({node, React}) => {
     }
   }, [src])
 
-  return <div style={{fontSize: '1.2em'}}>
-     <input value={src} onChange={ev=>setSrc(ev.target.value)}/>
+  const bigger = {fontSize: '1.2em'}
+  return <div style={bigger}>
+     <input style={bigger} value={src} onChange={ev=>setSrc(ev.target.value)}/>
      <Stat src={src} stat={stat} select={setSrc}/>
      {!stat && content}
      {stat && <button onClick={ev=> confirm("Are you sure you want to delete " + src) && lit.fs.unlink(src)}>Delete</button>}
