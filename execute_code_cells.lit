@@ -647,21 +647,34 @@ import prettier from "https://unpkg.com/prettier@2.3.0/esm/standalone.mjs";
 ```
 
 ```js
-return (async ast => {
+return (async fn => {
   const {format} = (await import('https://unpkg.com/prettier@2.3.0/esm/standalone.mjs')).default
   const babelPlugin = (await import('https://unpkg.com/prettier@2.3.0/esm/parser-babel.mjs')).default
-  return ast 
+  return this.children[0].children[0]
   // return Object.keys(b)
   return format(ast.data.value, { 
 semi: false, 
 parser: "babel",
 plugins: [babelPlugin],
 })
-})(this)
-```
-```>txt attached=true updated=1621283547450
-;(async (fn) => {
-  var foo, bar, bar
 })()
-
+```
+```>txt attached=true updated=1621284121394
+{ type: 'element',
+  tagName: 'cell',
+  properties: { class: 'cell' },
+  children: 
+   [ { type: 'element',
+       tagName: 'pre',
+       properties: {},
+       children: [Object],
+       position: [Object] },
+     { type: 'element',
+       tagName: 'pre',
+       properties: {},
+       children: [Object],
+       position: [Object] } ],
+  position: 
+   { start: { line: 649, column: 1, offset: 13944 },
+     end: { line: 667, column: 4, offset: 14410 } } }
 ```
