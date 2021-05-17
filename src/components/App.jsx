@@ -55,7 +55,7 @@ const App = ({root, file, fs, result, ssr}) => {
         file.contents = patchedSrc
         file.messages = []
         const processedFile = await processor({fs}).process(file)
-        console.log("Processed client", processedFile)
+        console.log("Processed clientside on setSrc", file.path)
 
         await onLifecyclePlugins(processedFile, ONSAVE, patchedSrc, processedFile, processedFile.data.ast)
 
