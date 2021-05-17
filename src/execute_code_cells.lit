@@ -649,8 +649,8 @@ import prettier from "https://unpkg.com/prettier@2.3.0/esm/standalone.mjs";
 ```js
 return (async fn => {
   const p = (await import('https://unpkg.com/prettier@2.3.0/esm/standalone.mjs')).default
-  const b = await import('https://unpkg.com/prettier@2.3.0/esm/parser-babel.mjs')
-  return Object.keys(b)
+  const b = (await import('https://unpkg.com/prettier@2.3.0/esm/parser-babel.mjs')).default
+  return Object.keys(p)
   return format(`
 (async fn=>{const foo,bar,bar;})()
 `, { 
@@ -660,6 +660,6 @@ plugins: [b.default],
 })
 })()
 ```
-```>txt attached=true updated=1621283346975
+```>txt attached=true updated=1621283402242
 [ 'default' ]
 ```
