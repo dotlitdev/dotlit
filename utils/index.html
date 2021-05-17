@@ -350,7 +350,7 @@ const passThroughWrite = (fs,litroot, ghOpts) =&gt; {
   return async (...args) =&gt; {
     console.log(&#x27;fs.passThroughWrite&#x27;)
     await wf(...args);
-    if (ghOpts) {
+    if (ghOpts &amp;&amp; !(args[2] &amp;&amp; args[2].localOnly)) {
       const ghwf = ghWriteFile(ghOpts);
       try {
         const ghResp = await ghwf(...args);
