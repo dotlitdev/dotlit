@@ -102,8 +102,7 @@ const writeFileP = (fs, litroot) => {
         try {
           await fs.mkdir(subPath);
         } catch (err) {
-          console.log(`[fs.writeFileP] "${subPath}" Failed to mkdirpath `);
-         
+          // console.log(`[fs.writeFileP] "${subPath}" Failed to mkdirpath `);
         }
       }
     }
