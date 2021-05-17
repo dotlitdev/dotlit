@@ -74,9 +74,10 @@ export const cellmenu = (ctx, {React, Menu}) => {
     else {
        const {toMarkdown, ungroupSections}
               = lit.parser.utils
-       const ast = {type: "root", children: [attached]}
-       const ast.meta = ast.meta.replace('\s?attached=true','')
-       const md = toMarkdown(ast)
+       attached.meta = attached.meta.replace('\s?attached=true','')
+       const root = {type: "root", children: [attached]}
+       
+       const md = toMarkdown(root)
        ctx.setSrc(attached.position, md)
     }
   }
