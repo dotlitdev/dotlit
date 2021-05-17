@@ -45,7 +45,7 @@ export const viewer = ({node, React}) => {
      <Stat src={src} stat={stat} select={setSrc}/>
      {!stat && content}
      {stat && <button onClick={ev=> confirm("Are you sure you want to delete " + src) && lit.fs.unlink(src)}>Delete</button>}
-     {stat && <button>Reset</button>}
-     {stat && <button>Diff</button>}
+     {stat && <button disabled>Reset</button>}
+     {stat && <button disabled>Diff</button>}
     </div>
 }
