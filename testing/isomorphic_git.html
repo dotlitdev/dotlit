@@ -283,9 +283,56 @@ return (async fn =&gt;{
   return lit.git.getRemoteInfo({ http: http.default, url: &#x27;https://github.com/isomorphic-git/isomorphic-git&#x27; })
 })()
 
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">15m ago</span></span></span><output><pre><code class="txt">undefined
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">16m ago</span></span></span><output><pre><code class="txt">undefined
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="354:1-7815" endpos="412:4-9411"><cell startpos="354:1-7815" endpos="354:14-7828"><div class="cell-content"><h2 id="web-worker">Web worker</h2></div></cell><cell startpos="356:1-7830" endpos="357:4-7853" class="code output"><div class="cell-content"><codecell class="lang-js local output"><a name="gitworker.js"></a><span class="meta"><span class="lang">js</span><span class="filename">gitworker.js</span></span><output><pre><code class="js"></code></pre></output></codecell></div></cell><cell startpos="359:1-7855" endpos="412:4-9411" class="code output"><div class="cell-content"><codecell class="lang-html local output"><span class="meta"><span class="lang">html</span><span class="attribute attr-viewer" style="color:black;background-color:#cf5332">viewer=iframe</span></span><iframe srcDoc="&lt;div&gt;
+<section depth="2" class="" startpos="354:1-7815" endpos="459:4-10733"><cell startpos="354:1-7815" endpos="354:14-7828"><div class="cell-content"><h2 id="web-worker">Web worker</h2></div></cell><cell startpos="356:1-7830" endpos="404:4-9175" class="code output"><div class="cell-content"><codecell class="lang-js local output"><a name="gitworker.js"></a><span class="meta"><span class="lang">js</span><span class="filename">gitworker.js</span></span><output><pre><code class="js">/* eslint-env worker */
+/* globals LightningFS git MagicPortal GitHttp */
+importScripts(
+  &quot;https://unpkg.com/@isomorphic-git/lightning-fs&quot;,
+  &quot;https://unpkg.com/isomorphic-git@beta&quot;,
+  &quot;https://unpkg.com/isomorphic-git@beta/http/web/index.umd.js&quot;,
+  &quot;https://unpkg.com/magic-portal&quot;
+);
+
+let fs = new LightningFS(&quot;fs&quot;, { wipe: true });
+const portal = new MagicPortal(self);
+self.addEventListener(&quot;message&quot;, ({ data }) =&gt; console.log(data));
+
+(async () =&gt; {
+  let mainThread = await portal.get(&quot;mainThread&quot;);
+  let dir = &quot;/&quot;;
+  portal.set(&quot;workerThread&quot;, {
+    setDir: async _dir =&gt; {
+      dir = _dir;
+    },
+    clone: async args =&gt; {
+      fs = new LightningFS(&quot;fs&quot;, { wipe: true });
+      return git.clone({
+        ...args,
+        fs,
+        http: GitHttp,
+        dir,
+        onProgress(evt) {
+          mainThread.progress(evt);
+        },
+        onMessage(msg) {
+          mainThread.print(msg);
+        },
+        onAuth(url) {
+          console.log(url);
+          return mainThread.fill(url);
+        },
+        onAuthFailure({ url, auth }) {
+          return mainThread.rejected({ url, auth });
+        }
+      });
+    },
+    listBranches: args =&gt; git.listBranches({ ...args, fs, dir }),
+    listFiles: args =&gt; git.listFiles({ ...args, fs, dir }),
+    log: args =&gt; git.log({ ...args, fs, dir })
+  });
+})();
+</code></pre></output></codecell></div></cell><cell startpos="406:1-9177" endpos="459:4-10733" class="code output"><div class="cell-content"><codecell class="lang-html local output"><span class="meta"><span class="lang">html</span><span class="attribute attr-viewer" style="color:black;background-color:#cf5332">viewer=iframe</span></span><iframe srcDoc="&lt;div&gt;
   &lt;input
     id=&quot;repository&quot;
     type=&quot;text&quot;
