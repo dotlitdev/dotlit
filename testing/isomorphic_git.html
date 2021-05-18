@@ -150,7 +150,7 @@ return (async () =&gt; {
   .map(row =&gt; row[FILE])
   return filenames
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.5d ago</span></span></span><output><pre><code class="txt">[ &#x27;&lt;&#x27;, &#x27;renderer/viewers&#x27;, &#x27;testing/isomorphic_git.lit&#x27; ]
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.6d ago</span></span></span><output><pre><code class="txt">[ &#x27;&lt;&#x27;, &#x27;renderer/viewers&#x27;, &#x27;testing/isomorphic_git.lit&#x27; ]
 </code></pre></output></codecell></div></cell></section></section>
 <section depth="3" class="" startpos="185:1-4539" endpos="202:4-4761"><cell startpos="185:1-4539" endpos="185:8-4546"><div class="cell-content"><h3 id="add">Add</h3></div></cell><cell startpos="187:1-4548" endpos="202:4-4761" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">
 const fs = lit.lfs
@@ -163,7 +163,7 @@ return (async ()=&gt; {
     filepath: &#x27;.&#x27;
   })
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.5h ago</span></span></span><output><pre><code class="txt">undefined
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.6h ago</span></span></span><output><pre><code class="txt">undefined
 </code></pre></output></codecell></div></cell></section>
 <section depth="3" class="" startpos="206:1-4765" endpos="232:4-5168"><cell startpos="206:1-4765" endpos="206:11-4775"><div class="cell-content"><h3 id="commit">Commit</h3></div></cell><cell startpos="208:1-4777" endpos="232:4-5168" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">
 const fs = lit.lfs
@@ -283,9 +283,9 @@ return (async fn =&gt;{
   return lit.git.getRemoteInfo({ http: http.default, url: &#x27;https://github.com/isomorphic-git/isomorphic-git&#x27; })
 })()
 
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2h ago</span></span></span><output><pre><code class="txt">undefined
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.3h ago</span></span></span><output><pre><code class="txt">undefined
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="354:1-7815" endpos="566:4-13391"><cell startpos="354:1-7815" endpos="354:14-7828"><div class="cell-content"><h2 id="web-worker">Web worker</h2></div></cell><cell startpos="356:1-7830" endpos="404:4-9175" class="code output"><div class="cell-content"><codecell class="lang-js local output"><a name="gitworker.js"></a><span class="meta"><span class="lang">js</span><span class="filename">gitworker.js</span></span><output><pre><code class="js">/* eslint-env worker */
+<section depth="2" class="" startpos="354:1-7815" endpos="570:4-13488"><cell startpos="354:1-7815" endpos="354:14-7828"><div class="cell-content"><h2 id="web-worker">Web worker</h2></div></cell><cell startpos="356:1-7830" endpos="404:4-9175" class="code output"><div class="cell-content"><codecell class="lang-js local output"><a name="gitworker.js"></a><span class="meta"><span class="lang">js</span><span class="filename">gitworker.js</span></span><output><pre><code class="js">/* eslint-env worker */
 /* globals LightningFS git MagicPortal GitHttp */
 importScripts(
   &quot;https://unpkg.com/@isomorphic-git/lightning-fs&quot;,
@@ -403,7 +403,7 @@ self.addEventListener(&quot;message&quot;, ({ data }) =&gt; console.log(data));
   }
   
 })
-</code></pre></codecell></div></cell><cell startpos="487:1-11369" endpos="555:4-13188" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">  // alert(&quot;Running&quot;)
+</code></pre></codecell></div></cell><cell startpos="487:1-11369" endpos="559:4-13285" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">  // alert(&quot;Running&quot;)
   const $ = id =&gt; document.getElementById(id);
 
   let worker = new Worker(&quot;gitworker.js&quot;);
@@ -426,10 +426,14 @@ self.addEventListener(&quot;message&quot;, ({ data }) =&gt; console.log(data));
     async rejected({ url, auth }) {
       window.alert(&quot;Authentication rejected&quot;);
       return;
-    }
-  };
+    }, 
+    async failure({message}) {
+      alert(&quot;Failure: &quot;, message)
+      return
+    },
+  }
   portal.set(&quot;mainThread&quot;, mainThread, {
-    void: [&quot;print&quot;, &quot;progress&quot;, &quot;rejected&quot;]
+    void: [&quot;print&quot;, &quot;progress&quot;, &quot;rejected&quot;, &quot;failure&quot;]
   });
 
 async function doCloneAndStuff() {
@@ -467,9 +471,9 @@ async function doCloneAndStuff() {
 
     
   })();
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">23m ago</span></span></span><output><pre><code class="txt">true
-</code></pre></output></codecell></div></cell><cell startpos="557:1-13190" endpos="566:4-13391" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return workerThread.log({})
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">3m ago</span></span></span><output><pre><code class="txt">{ setDir: [Function],
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">27m ago</span></span></span><output><pre><code class="txt">true
+</code></pre></output></codecell></div></cell><cell startpos="561:1-13287" endpos="570:4-13488" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return workerThread.log({})
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">7m ago</span></span></span><output><pre><code class="txt">{ setDir: [Function],
   clone: [Function],
   listBranches: [Function],
   listFiles: [Function],
