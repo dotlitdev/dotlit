@@ -351,6 +351,63 @@ return (async fn =>{
 undefined
 ```
 
+## Web worker
+
+```>html viewer=iframe
+<div>
+  <input
+    id="repository"
+    type="text"
+    style="width: 50em"
+    title="Tip: enter a private repo URL to see the credentialManager plugin prompt for a password."
+  />
+  <button type="button" id="cloneButton">Clone</button>
+</div>
+<div>
+  <progress id="progress" value="0"></progress>
+  <span id="progress-txt" style="font-family: monospace;"></span>
+</div>
+<output id="log" style="white-space: pre; font-family: monospace;"></output>
+
+<script src="https://unpkg.com/magic-portal"></script>
+<script>
+  const $ = id => document.getElementById(id);
+
+  let worker = new Worker("./worker.js");
+  const portal = new MagicPortal(worker);
+  worker.addEventListener("message", ({ data }) => console.log(data));
+
+  const mainThread = {
+    async print(message) {
+      let text = $("log").textContent;
+      if (message.endsWith("\r")) {
+        // overwrite last line
+        text = text.trim().replace(/.+$/, "");
+      }
+      text += message + "\n";
+      $("log").textContent = text;
+    },
+    async progress(evt) {
+      $("progress-txt").textContent = evt.phase;
+      $("progress").value = evt.total ? evt.loaded / evt.total : 0.5;
+      return;
+    },
+    async fill(url) {
+      let username = window.prompt("Username:");
+      let password = window.prompt("Password:");
+      return { username, password };
+    },
+    async rejected({ url, auth }) {
+      window.alert("Authentication rejected");
+      return;
+    }
+  };
+  portal.set("mainThread", mainThread, {
+    void: ["print", "progress", "rejected"]
+  });
+
+```
+
 
 
 
