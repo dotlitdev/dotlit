@@ -1,4 +1,4 @@
-<html data-reactroot=""><head><title>Compact Manifest</title><meta name="litsrc" value="testing/compact_manifest.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="148:4-4585"><cell startpos="1:1-0" endpos="3:78-97"><div class="cell-content"><h1 id="compact-manifest">Compact Manifest</h1><p>Reducing the serialised size of a manifest of all files in a <code>.lit</code> notebook.</p></div></cell><section depth="2" class="" startpos="5:1-99" endpos="148:4-4585"><cell startpos="5:1-99" endpos="5:87-185"><div class="cell-content"><h2 id="trying-out-compact-prefix-tree">Trying out <a href="https://github.com/sidvishnoi/compact-prefix-tree">compact-prefix-tree<span class="linkIcon">↗</span></a></h2></div></cell><cell startpos="6:1-186" endpos="23:4-804" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt; {
+<html data-reactroot=""><head><title>Compact Manifest</title><meta name="litsrc" value="testing/compact_manifest.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="44:4-1407"><cell startpos="1:1-0" endpos="3:78-97"><div class="cell-content"><h1 id="compact-manifest">Compact Manifest</h1><p>Reducing the serialised size of a manifest of all files in a <code>.lit</code> notebook.</p></div></cell><section depth="2" class="" startpos="5:1-99" endpos="44:4-1407"><cell startpos="5:1-99" endpos="5:87-185"><div class="cell-content"><h2 id="trying-out-compact-prefix-tree">Trying out <a href="https://github.com/sidvishnoi/compact-prefix-tree">compact-prefix-tree<span class="linkIcon">↗</span></a></h2></div></cell><cell startpos="6:1-186" endpos="23:4-804" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt; {
   const {CompactPrefixTree} = await import(&#x27;https://cdn.skypack.dev/compact-prefix-tree&#x27;)
 
   const manifest = await fetch(&#x27;/manifest.json&#x27;).then(res =&gt; res.json())
@@ -11,120 +11,16 @@
   await lit.fs.writeFile(&#x27;/testing/compactManifest1.json&#x27;, after, &#x27;utf8&#x27;)
   return `A ${after.length/before.length*100}% reduction in size.`
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">9m ago</span></span></span><output><pre><code class="txt">A 91.78470254957507% reduction in size.
-</code></pre></output></codecell></div></cell><cell startpos="27:1-808" endpos="27:40-847"><div class="cell-content"><p>Looking up a file, check for existence:</p></div></cell><cell startpos="28:1-848" endpos="145:4-4519" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt; {
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">11m ago</span></span></span><output><pre><code class="txt">A 91.78470254957507% reduction in size.
+</code></pre></output></codecell></div></cell><cell startpos="27:1-808" endpos="27:40-847"><div class="cell-content"><p>Looking up a file, check for existence:</p></div></cell><cell startpos="28:1-848" endpos="41:4-1341" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt; {
   const {CompactPrefixTree, getWordsFromTrie} = await import(&#x27;https://cdn.skypack.dev/compact-prefix-tree&#x27;)
 
   const json = await fetch(&#x27;/testing/compactManifest1.json&#x27;).then(res =&gt; res.json())
   // return json
   const keys = getWordsFromTrie(json)
   const trie = new CompactPrefixTree(Array.from(keys))
-  return trie.prefix(&#x27;/testing/log/day.lit&#x27;)
+  return trie.prefix(&#x27;testing/log/day.lit?extranious&#x27;)
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2m ago</span></span></span><output><pre><code class="txt">{ &#x27;404.lit&#x27;: null,
-  cli: 
-   { &#x27;/cli.lit&#x27;: null,
-     &#x27;ent/&#x27;: { &#x27;client.lit&#x27;: null, &#x27;index.jsx&#x27;: null, style: [Object] } },
-  &#x27;divergence_from_markdown.lit&#x27;: null,
-  &#x27;execute_code_cells.lit&#x27;: null,
-  &#x27;functions.lit&#x27;: null,
-  &#x27;index.lit&#x27;: null,
-  meta: 
-   { &#x27;.lit&#x27;: null,
-     &#x27;/github_workflows.lit&#x27;: null,
-     &#x27;/s&#x27;: { &#x27;ettings.lit&#x27;: null, &#x27;tyling_and_themes.lit&#x27;: [Object] },
-     &#x27;/files_and_links.lit&#x27;: null,
-     &#x27;/.github/workflows/npm-publish.yaml&#x27;: null },
-  &#x27;persist_to_github.lit&#x27;: null,
-  &#x27;plugin_system.lit&#x27;: null,
-  re: 
-   { &#x27;nderer/&#x27;: 
-      { &#x27;renderer.lit&#x27;: null,
-        viewers: [Object],
-        &#x27;index.jsx&#x27;: null,
-        &#x27;extractPlugins.js&#x27;: null,
-        &#x27;transcludeCode.js&#x27;: null,
-        &#x27;file.txt&#x27;: null,
-        &#x27;difftestA.txt&#x27;: null },
-     pl: { &#x27;s.lit&#x27;: null, &#x27;/index.&#x27;: [Object] },
-     &#x27;mark.lit&#x27;: null },
-  &#x27;scratch_pad.lit&#x27;: null,
-  &#x27;throwaway/codevaluebug.lit&#x27;: null,
-  &#x27;utils/&#x27;: 
-   { &#x27;index.lit&#x27;: null,
-     fs: { &#x27;.lit&#x27;: null, &#x27;-promises-&#x27;: [Object] },
-     &#x27;urifragments.lit&#x27;: null,
-     &#x27;functions.js&#x27;: null,
-     co: { &#x27;nsole.js&#x27;: null, &#x27;lors.js&#x27;: null },
-     &#x27;safe-encoders.js&#x27;: null,
-     &#x27;unist-util-&#x27;: { &#x27;patch-source.js&#x27;: null, &#x27;select-position.js&#x27;: null },
-     &#x27;git-commit-all.js&#x27;: null,
-     &#x27;momento.&#x27;: { lit: null, js: null } },
-  &#x27;transfomers.lit&#x27;: null,
-  test: 
-   { &#x27;ing/&#x27;: 
-      { &#x27;compact_manifest.lit&#x27;: null,
-        in: [Object],
-        &#x27;isomorphic_git.lit&#x27;: null,
-        &#x27;lightningfs.lit&#x27;: null,
-        lo: [Object],
-        &#x27;private_files.lit&#x27;: null,
-        &#x27;runkit.lit&#x27;: null,
-        se: [Object],
-        &#x27;web_workers.lit&#x27;: null,
-        &#x27;test.txt&#x27;: null,
-        &#x27;getserviceworker--sw&#x27;: null },
-     &#x27;.js&#x27;: { &#x27;&#x27;: null, x: null },
-     &#x27;.ts&#x27;: null },
-  &#x27;./utils/functions.js&#x27;: null,
-  &#x27;litconfig.lit&#x27;: null,
-  &#x27;articles/ideas&#x27;: { &#x27;_for.lit&#x27;: null, &#x27;.lit&#x27;: null },
-  &#x27;.github/workflows/generate.yaml&#x27;: null,
-  &#x27;unified.lit&#x27;: null,
-  ma: { &#x27;nifest.json&#x27;: null, &#x27;rkdown.lit&#x27;: null },
-  &#x27;parser/&#x27;: 
-   { &#x27;parser.lit&#x27;: null,
-     &#x27;index.js&#x27;: null,
-     &#x27;frontmatter.js&#x27;: null,
-     &#x27;sections.js&#x27;: null,
-     &#x27;codeblocks.js&#x27;: null,
-     &#x27;mdblocks.js&#x27;: null,
-     &#x27;links.js&#x27;: null },
-  components: 
-   { &#x27;/&#x27;: 
-      { &#x27;components.lit&#x27;: null,
-        &#x27;Document.jsx&#x27;: null,
-        &#x27;Header.jsx&#x27;: null,
-        &#x27;App.jsx&#x27;: null,
-        &#x27;SelectionContext.jsx&#x27;: null,
-        Cell: [Object],
-        &#x27;Editor.jsx&#x27;: null,
-        &#x27;CodeMeta.jsx&#x27;: null,
-        &#x27;base/&#x27;: [Object],
-        &#x27;Backlinks.jsx&#x27;: null },
-     &#x27;.lit&#x27;: null },
-  &#x27;../&#x27;: 
-   { &#x27;scratch_pad.lit#viewers&#x27;: null,
-     &#x27;components/components.lit&#x27;: null,
-     &#x27;../../../../&#x27;: 
-      { &#x27;meta/settings.lit#plantuml-viewer--repl&#x27;: null,
-        &#x27;testing/log/&#x27;: [Object] },
-     &#x27;utils/git-commit-all.js&#x27;: null,
-     &#x27;serviceworker.js&#x27;: null },
-  viewers: { &#x27;.lit&#x27;: null, &#x27;/meta.js&#x27;: null },
-  index: null,
-  wiki: { &#x27;-links.lit&#x27;: null, &#x27;links.lit&#x27;: null },
-  file: { &#x27;system/index.lit&#x27;: null, name: null },
-  &#x27;dummy/&#x27;: 
-   { &#x27;🔥.lit&#x27;: null,
-     &#x27;example.svg&#x27;: null,
-     &#x27;plain.txt&#x27;: null,
-     &#x27;data.csv&#x27;: null },
-  &#x27;log/&#x27;: { &#x27;checkforinput.js&#x27;: null, &#x27;today.js&#x27;: null },
-  &#x27;gitworker.js&#x27;: null,
-  &#x27;fsviewer.jsx&#x27;: null,
-  &#x27;rk.jsx&#x27;: null,
-  &#x27;runkit-repl-endpoint.js&#x27;: null,
-  worker: { &#x27;.js&#x27;: null, &#x27;2.js&#x27;: null } }
-</code></pre></output></codecell></div></cell><cell startpos="146:1-4520" endpos="148:4-4585" class="code output"><div class="cell-content"><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">3m ago</span></span></span><output><pre><code class="txt">{ prefix: &#x27;&#x27;, isProper: false }
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1m ago</span></span></span><output><pre><code class="txt">{ prefix: &#x27;testing/log/day.lit&#x27;, isProper: true }
+</code></pre></output></codecell></div></cell><cell startpos="42:1-1342" endpos="44:4-1407" class="code output"><div class="cell-content"><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">5m ago</span></span></span><output><pre><code class="txt">{ prefix: &#x27;&#x27;, isProper: false }
 </code></pre></output></codecell></div></cell></section></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="🔬 Tests, experiments and investigations" href="/testing/index.html">🔬 Tests, experiments and investigations</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
