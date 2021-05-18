@@ -44,16 +44,16 @@ alt If Found
 else If not found
 alt If Offline
 sw -> sw : Check Cache
-c <- sw 
+c <-- sw : Response
 else If Online
 alt If UnAuthenticated Check remote webserver
   fs -> ghp
   ghp -> fs
+  c <-- fs -- : Response
 else If Authenticated with GitHub
   fs -> ghr
   ghr -> fs
-deactivate fs
-fs -> sw
+fs -> -- sw
 sw -> c -- : Response
 end
 end
