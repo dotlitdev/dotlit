@@ -214,7 +214,6 @@ export const viewer = ({node, React}) => {
     if (stat.message) return <div>{stat.message}</div>
     return <div>
       <div>Type: <span>{stat.type}</span> mtime: <span>{lit.utils.momento.MsToRelative(stat.mtimeMs - Date.now())}</span> Size: <span>{(props.size / 1024).toFixed(2)} KB</span></div>
-      <div onClick={ev=>props.select(src.split('/').slice(0,-1).join('/') || '/')}>/..</div>
       
       {stat.contents && stat.contents.map( l => {
       const name = l[0]
@@ -255,6 +254,7 @@ export const viewer = ({node, React}) => {
      <Stat src={src} stat={stat} size={size} select={setSrc}/>
      {!stat && content}
      </div>
+     <button disabled={src === '/'} onClick={ev=>  select(src.split('/').slice(0,-1).join('/') || '/')}>Back</button>
      {stat && <button disabled>Reset</button>}
      {stat && <button onClick={ev=> confirm("Are you sure you want to delete " + src) && lit.fs.unlink(src)}>Delete</button>}
      {stat && <button disabled>Diff</button>}
