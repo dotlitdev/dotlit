@@ -42,8 +42,9 @@ alt If Found
   sw <- fs
   c <-- sw : Response
 else If not found
-sw <- sw : Check Cache
-alt If UnAuthenticated Check remote webserver
+sw -> sw : Check Cache
+alt If found
+else If UnAuthenticated Check remote webserver
   fs -> ghp
   ghp -> fs
 else If Authenticated with GitHub
