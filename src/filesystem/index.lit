@@ -1,7 +1,6 @@
 # `.lit` Filesystem
 
 ```>uml
-@title: Intercepting fetch with service worker
 actor Client as c
 participant ServiceWorker as sw
 participant LightningFS as fs
@@ -11,6 +10,10 @@ participant GitHubRepository as ghr
 c-->sw : fetch()
 activate sw
 sw-->fs
+activate fs
+fs-->ghp
+ghp-->fs
+deactivate fs
 fs-->sw
 sw-->ghp
 ghp-->sw
