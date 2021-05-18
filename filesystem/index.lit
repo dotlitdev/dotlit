@@ -36,9 +36,12 @@ c -> sw : fetch()
 activate sw
 sw -> fs
 activate fs
-fs -> fs : Check local filesystem
-alt If Unauthenticated with GitHub
+fs --> fs : Check local filesystem
+alt If Found 
+c <- fs
+else : Check remote webserver
 fs -> ghp
+end
 ghp -> fs
 deactivate fs
 fs -> sw
