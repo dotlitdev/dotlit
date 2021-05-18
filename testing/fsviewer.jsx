@@ -1,10 +1,10 @@
 export const viewer = ({node, React}) => {
   const {useState, useEffect} = React
-  const {join,extname} = lit.utils.path.join
+  const {join,extname} = lit.utils.path
 
   const styles = {
     dir: {fontWeight: "bold"},
-    lit: {color: 'blue'},
+    '.lit': {color: 'blue'},
   }
   const getType = s => {
     const [filepath,stat] = s
