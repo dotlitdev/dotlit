@@ -37,20 +37,18 @@ activate sw
 sw -> fs
 activate fs
 fs --> fs : Check local filesystem
+
 alt If Found 
-c <- fs
-else : Check remote webserver
-fs -> ghp
+  sw <- fs
+else If UnAuthenticated Check remote webserver
+  fs -> ghp
+  ghp -> fs
+else If Authenticated with GitHub
+  fs -> ghr
+  ghr -> fs
 end
-ghp -> fs
 deactivate fs
 fs -> sw
-sw -> ghp
-ghp -> sw
-else If Authenticated with GitHub
-sw -> ghr : If Authenticated
-ghr -> sw
-end
-sw -> c : Response
 deactivate sw 
+sw -> c : Response
 ```
