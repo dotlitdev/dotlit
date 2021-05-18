@@ -20,6 +20,7 @@ self.addEventListener("message", ({ data }) => console.log(data));
     },
     clone: async args => {
       fs = new LightningFS("fs", { wipe: true });
+      try{
       return git.clone({
         ...args,
         fs,
@@ -39,6 +40,9 @@ self.addEventListener("message", ({ data }) => console.log(data));
           return mainThread.rejected({ url, auth });
         }
       });
+      } catch(err) {
+        mainThread.failure({message}=err)
+      }
     },
     listBranches: args => git.listBranches({ ...args, fs, dir }),
     listFiles: args => git.listFiles({ ...args, fs, dir }),

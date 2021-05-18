@@ -87,7 +87,7 @@ includes the following 2 files:
        .readFile(&#x27;/.git/HEAD&#x27;, {
           encoding: &#x27;utf8&#x27;
         })
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">4.6h ago</span></span></span><output><pre><code class="txt">ref: refs/heads/master
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">4.7h ago</span></span></span><output><pre><code class="txt">ref: refs/heads/master
 
 </code></pre></output></codecell></div></cell><cell startpos="102:1-2396" endpos="112:4-2570" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async () =&gt; {
   return await lit.git.init({
@@ -95,7 +95,7 @@ includes the following 2 files:
     dir: lit.location.root
   })
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">4.6h ago</span></span></span><output><pre><code class="txt">undefined
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">4.7h ago</span></span></span><output><pre><code class="txt">undefined
 </code></pre></output></codecell></div></cell><section depth="3" class="" startpos="113:1-2571" endpos="184:4-4538"><cell startpos="113:1-2571" endpos="113:11-2581"><div class="cell-content"><h3 id="status">Status</h3></div></cell><cell startpos="115:1-2583" endpos="126:4-2833" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async () =&gt; {
   return lit.location.src + &quot; : &quot; + await lit.git.status({
     fs: lit.lfs, 
@@ -103,7 +103,7 @@ includes the following 2 files:
     filepath: &#x27;.&#x27; 
   })
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.5h ago</span></span></span><output><pre><code class="txt">testing/isomorphic_git.lit : *added
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.6h ago</span></span></span><output><pre><code class="txt">testing/isomorphic_git.lit : *added
 </code></pre></output></codecell></div></cell><cell startpos="127:1-2834" endpos="164:4-4100" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async () =&gt; {
   return await lit.git.statusMatrix({
     fs: lit.lfs, 
@@ -285,7 +285,7 @@ return (async fn =&gt;{
 
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.3h ago</span></span></span><output><pre><code class="txt">undefined
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="354:1-7815" endpos="570:4-13488"><cell startpos="354:1-7815" endpos="354:14-7828"><div class="cell-content"><h2 id="web-worker">Web worker</h2></div></cell><cell startpos="356:1-7830" endpos="404:4-9175" class="code output"><div class="cell-content"><codecell class="lang-js local output"><a name="gitworker.js"></a><span class="meta"><span class="lang">js</span><span class="filename">gitworker.js</span></span><output><pre><code class="js">/* eslint-env worker */
+<section depth="2" class="" startpos="354:1-7815" endpos="574:4-13570"><cell startpos="354:1-7815" endpos="354:14-7828"><div class="cell-content"><h2 id="web-worker">Web worker</h2></div></cell><cell startpos="356:1-7830" endpos="408:4-9257" class="code output"><div class="cell-content"><codecell class="lang-js local output"><a name="gitworker.js"></a><span class="meta"><span class="lang">js</span><span class="filename">gitworker.js</span></span><output><pre><code class="js">/* eslint-env worker */
 /* globals LightningFS git MagicPortal GitHttp */
 importScripts(
   &quot;https://unpkg.com/@isomorphic-git/lightning-fs&quot;,
@@ -307,6 +307,7 @@ self.addEventListener(&quot;message&quot;, ({ data }) =&gt; console.log(data));
     },
     clone: async args =&gt; {
       fs = new LightningFS(&quot;fs&quot;, { wipe: true });
+      try{
       return git.clone({
         ...args,
         fs,
@@ -326,13 +327,16 @@ self.addEventListener(&quot;message&quot;, ({ data }) =&gt; console.log(data));
           return mainThread.rejected({ url, auth });
         }
       });
+      } catch(err) {
+        mainThread.failure({message}=err)
+      }
     },
     listBranches: args =&gt; git.listBranches({ ...args, fs, dir }),
     listFiles: args =&gt; git.listFiles({ ...args, fs, dir }),
     log: args =&gt; git.log({ ...args, fs, dir })
   });
 })();
-</code></pre></output></codecell></div></cell><cell startpos="406:1-9177" endpos="461:4-10825" class="code"><div class="cell-content"><codecell class="dir-collapse tag-reference lang-html local collapsed"><span class="meta"><span class="lang">html</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#c8db3f" class="tag">reference</span></span><pre><code class="html">&lt;div&gt;
+</code></pre></output></codecell></div></cell><cell startpos="410:1-9259" endpos="465:4-10907" class="code"><div class="cell-content"><codecell class="dir-collapse tag-reference lang-html local collapsed"><span class="meta"><span class="lang">html</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#c8db3f" class="tag">reference</span></span><pre><code class="html">&lt;div&gt;
   &lt;input
     id=&quot;repository&quot;
     type=&quot;text&quot;
@@ -386,8 +390,8 @@ self.addEventListener(&quot;message&quot;, ({ data }) =&gt; console.log(data));
     void: [&quot;print&quot;, &quot;progress&quot;, &quot;rejected&quot;]
   });
 
-</code></pre></codecell></div></cell><cell startpos="463:1-10827" endpos="465:4-10910" class="code output"><div class="cell-content"><codecell class="dir-below lang-script local output"><span class="meta"><span class="lang">script</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="script">https://unpkg.com/magic-portal
-</code></pre><script src="https://unpkg.com/magic-portal"></script></codecell></div></cell><cell startpos="467:1-10912" endpos="484:4-11366" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
+</code></pre></codecell></div></cell><cell startpos="467:1-10909" endpos="469:4-10992" class="code output"><div class="cell-content"><codecell class="dir-below lang-script local output"><span class="meta"><span class="lang">script</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="script">https://unpkg.com/magic-portal
+</code></pre><script src="https://unpkg.com/magic-portal"></script></codecell></div></cell><cell startpos="471:1-10994" endpos="488:4-11448" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
   let myWorker;
   try {
     myWorker = new Worker(&#x27;gitworker.js&#x27;)
@@ -403,7 +407,7 @@ self.addEventListener(&quot;message&quot;, ({ data }) =&gt; console.log(data));
   }
   
 })
-</code></pre></codecell></div></cell><cell startpos="487:1-11369" endpos="559:4-13285" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">  // alert(&quot;Running&quot;)
+</code></pre></codecell></div></cell><cell startpos="491:1-11451" endpos="563:4-13367" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">  // alert(&quot;Running&quot;)
   const $ = id =&gt; document.getElementById(id);
 
   let worker = new Worker(&quot;gitworker.js&quot;);
@@ -471,9 +475,9 @@ async function doCloneAndStuff() {
 
     
   })();
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">27m ago</span></span></span><output><pre><code class="txt">true
-</code></pre></output></codecell></div></cell><cell startpos="561:1-13287" endpos="570:4-13488" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return workerThread.log({})
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">7m ago</span></span></span><output><pre><code class="txt">{ setDir: [Function],
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">30m ago</span></span></span><output><pre><code class="txt">true
+</code></pre></output></codecell></div></cell><cell startpos="565:1-13369" endpos="574:4-13570" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return workerThread.log({})
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">10m ago</span></span></span><output><pre><code class="txt">{ setDir: [Function],
   clone: [Function],
   listBranches: [Function],
   listFiles: [Function],
