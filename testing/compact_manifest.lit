@@ -22,16 +22,19 @@ return (async fn => {
 A 91.78470254957507% reduction in size.
 ```
 
+
+
+Looking up a file, check for existence:
 ```js
 return (async fn => {
-  const {CompactPrefixTree} = await import('https://cdn.skypack.dev/compact-prefix-tree')
+  const {CompactPrefixTree, getWordsFromTrie} = await import('https://cdn.skypack.dev/compact-prefix-tree')
 
-  const manifest = await fetch('/testing/compactManifest1.json').then(res => res.json())
-  
+  const json = await fetch('/testing/compactManifest1.json').then(res => res.json())
+  const keys = getWordsFromTrie(json)
+  const trie = new CompactPrefixTree(Array.from(keys))
+  return trie.prefix('/foo')
 })()
 ```
 ```>txt attached=true updated=1621379712347
 A 91.78470254957507% reduction in size.
 ```
-
-Looking up a file, check for existence:
