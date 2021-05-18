@@ -1,6 +1,8 @@
 export const viewer = ({node, React}) => {
   const {useState, useEffect} = React
   const {join,extname} = lit.utils.path
+  const [src, setSrc] = useState(node?.data?.value?.trim())
+  const meta = node?.properties?.meta || {}
 
   const styles = {
     dir: {fontWeight: "bold"},
@@ -23,7 +25,7 @@ export const viewer = ({node, React}) => {
       
       {stat.contents && stat.contents.map( l => {
 
-      const name = join(props.src,l[0])
+      const name = l[0]
       const type = getType(l)
       const style = styles[type] || null
       return <div><span onClick={ev=> props.select(name)} style={style}>{name}</span></div>
@@ -34,8 +36,6 @@ export const viewer = ({node, React}) => {
   const [content, setContent] = useState(<span>loading...</span>)
   const [stat, setStat] = useState(undefined)
   const [size, setSize] = useState(null)
-  const [src, setSrc] = useState(node?.data?.value?.trim())
-  const meta = node?.properties?.meta || {}
 
   useEffect(async fn => {
     let stat, size
