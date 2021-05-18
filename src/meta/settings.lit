@@ -81,7 +81,7 @@ export const viewer = ({node,React}) => {
       // const url = e.target.result
       // const data = url.replace(/^data:image\/png;base64,/, "");
       try{await lit.fs.writeFile(`/testing/uploads/${file.name}`, e.target.result)}catch(err) {alert(err.message)}
-      setUploads([...uploads, e.target.result])
+      setUploads([...uploads, file.name])
     })(i, file)
     // reader.readAsDataURL(file);
     reader.readAsBinaryString(file)
@@ -89,7 +89,7 @@ export const viewer = ({node,React}) => {
   }
   return <div>
      <input onChange={handleFiles} type="file"/>
-     <div>{uploads.map(url => <img src={url}/>)}</div>
+     <div>{uploads.map(name => <span>{name}/</span>)}</div>
     </div>
 }
 ```
