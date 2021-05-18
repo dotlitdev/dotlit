@@ -71,17 +71,12 @@ export const viewer = ({node,React}) => {
      const files = ev.target.files
      for (let i = 0; i < files.length; i++) {
     const file = files[i];
-
-    if (!file.type.startsWith('image/')){ continue }
-    
-
     const reader = new FileReader();
     reader.onload = ((i,file)=> async e => {
-
-      // const url = e.target.result
-      // const data = url.replace(/^data:image\/png;base64,/, "");
-      try{await lit.fs.writeFile(`/testing/uploads/${file.name}`, e.target.result)}catch(err) {alert(err.message)}
-      setUploads([...uploads, file.name])
+      const filename = prompt(`/testing/uploads/${file.name}`)
+      const data = e.target.result
+      try{await lit.fs.writeFile(filename, data)}catch(err) {alert(err.message)}
+      setUploads([...uploads, [filename,data]])
     })(i, file)
     // reader.readAsDataURL(file);
     reader.readAsBinaryString(file)
