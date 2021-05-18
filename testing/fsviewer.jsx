@@ -1,6 +1,18 @@
 export const viewer = ({node, React}) => {
   const {useState, useEffect} = React
-  const join = lit.utils.path.join
+  const {join,extname} = lit.utils.path.join
+
+  const styles = {
+    dir: {fontWeight: "bold"},
+    lit: {color: 'blue'},
+  }
+  const getType = s => {
+    const [filepath,stat] = s
+    if (stat.type === 'file') {
+      return extname(filepath)
+    }
+    return stat.type
+  }
 
   const Stat = (props) => {
     const stat = props?.stat || {}
@@ -12,10 +24,8 @@ export const viewer = ({node, React}) => {
       {stat.contents && stat.contents.map( l => {
 
       const name = join(props.src,l[0])
-      const type = l[1].type
-      const style = type === 'dir'
-                    ? {fontWeight: "bold"}
-                    : null
+      const type = getType(l)
+      const style = styles[type] || null
       return <div><span onClick={ev=> props.select(name)} style={style}>{name}</span></div>
      })}
     </div>
