@@ -40,7 +40,8 @@ fs --> fs : Check local\nfilesystem
 
 alt If Found 
   sw <- fs
-else
+  c <-- sw : Response
+else If not found
 sw <- sw : Check Cache
 alt If UnAuthenticated Check remote webserver
   fs -> ghp
@@ -48,10 +49,9 @@ alt If UnAuthenticated Check remote webserver
 else If Authenticated with GitHub
   fs -> ghr
   ghr -> fs
-end
-end
 deactivate fs
 fs -> sw
-
 sw -> c -- : Response
+end
+end
 ```
