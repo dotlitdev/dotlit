@@ -19,28 +19,28 @@ ghr--&gt;fs
 deactivate fs
 fs--&gt;c
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="25:1-333" endpos="53:4-843"><cell startpos="25:1-333" endpos="25:19-351"><div class="cell-content"><h2 id="fetch-web-api"><code>fetch</code> Web API</h2></div></cell><cell startpos="28:1-354" endpos="53:4-843" class="code output"><div class="cell-content"><codecell class="lang-uml local output"><span class="meta"><span class="lang">uml</span></span><output><pre><code class="uml">actor Client as c
+<section depth="2" class="" startpos="25:1-333" endpos="53:4-854"><cell startpos="25:1-333" endpos="25:19-351"><div class="cell-content"><h2 id="fetch-web-api"><code>fetch</code> Web API</h2></div></cell><cell startpos="28:1-354" endpos="53:4-854" class="code output"><div class="cell-content"><codecell class="lang-uml local output"><span class="meta"><span class="lang">uml</span></span><output><pre><code class="uml">actor Client as c
 participant &quot;ServiceWorker\n(local)&quot; as sw
 participant &quot;LightningFS\n(local)&quot; as fs
 participant &quot;GitHubPages\n(remote)&quot; as ghp 
 participant &quot;GitHubRepository\n(origin)&quot; as ghr
 
-c--&gt;sw : fetch()
+c -&gt; sw : fetch()
 activate sw
-sw--&gt;fs
+sw -&gt; fs
 activate fs
-fs--&gt;fs : Check local filesystem
+fs -&gt; fs : Check local filesystem
 alt If Unauthenticated with GitHub
-fs--&gt;ghp
-ghp--&gt;fs
+fs -&gt; ghp
+ghp -&gt; fs
 deactivate fs
-fs--&gt;sw
-sw--&gt;ghp
-ghp--&gt;sw
+fs -&gt; sw
+sw -&gt; ghp
+ghp -&gt; sw
 else If Authenticated with GitHub
-sw--&gt;ghr : If Authenticated
-ghr--&gt;sw
+sw -&gt; ghr : If Authenticated
+ghr -&gt; sw
 end
-sw--&gt;c : Response
+sw -&gt; c : Response
 deactivate sw 
 </code></pre></output></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (0)</h4><ol></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
