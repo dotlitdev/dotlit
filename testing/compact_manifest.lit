@@ -7,7 +7,14 @@ Trying out [compct-prefix-tree](https://github.com/sidvishnoi/compact-prefix-tre
 ```js
 return (async fn => {
   const {CompactPrefixTree} = await import('https://cdn.skypack.dev/compact-prefix-tree')
-  return CompactPrefixTree
+
+  const manifest = await fetch('/manifest.json').then(res => res.json())
+  const keys = manifest.nodes.map(n=>n.id)
+  const trie = new CompactPrefixTree(keys)
+
+  const before = JSON.stringify(keys).length
+  const after = JSON.stringify(trie).length
+  return `A ${after/before*100}% reduction.`
 })()
 ```
 ```>txt attached=true updated=1621378532232
