@@ -24,11 +24,11 @@ export const viewer = ({node, React}) => {
       <div onClick={ev=>props.select(src.split('/').slice(0,-1).join('/') || '/')}>/..</div>
       
       {stat.contents && stat.contents.map( l => {
-
       const name = l[0]
+      const path = join(props.src,name)
       const type = getType(l)
       const style = styles[type] || null
-      return <div><span onClick={ev=> props.select(name)} style={style}>{name}</span></div>
+      return <div><span onClick={ev=> props.select(path)} style={style}>{name}</span></div>
      })}
     </div>
   }
