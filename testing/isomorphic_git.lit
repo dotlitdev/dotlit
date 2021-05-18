@@ -402,7 +402,7 @@ self.addEventListener("message", ({ data }) => console.log(data));
   });
 })();
 ```
-null
+
 ```html #reference !collapse
 <div>
   <input
@@ -460,25 +460,7 @@ null
 
 ```
 
-```html
-<div>
-  <input
-    id="repository"
-    type="text"
-    style="width: 50em"
-    title="Tip: enter a private repo URL to see the credentialManager plugin prompt for a password.",
-    value="https://github.com/isomorphic-git/isomorphic-git",
-  />
-  <button type="button" id="cloneButton">Clone</button>
-</div>
-<div>
-  <progress id="progress" value="0"></progress>
-  <span id="progress-txt" style="font-family: monospace;"></span>
-</div>
-<output id="log" style="white-space: pre; font-family: monospace;"></output>
-
-<script src="https://unpkg.com/magic-portal"></script>
-<script>
+```js
   // alert("Running")
   const $ = id => document.getElementById(id);
 
@@ -488,17 +470,10 @@ null
 
   const mainThread = {
     async print(message) {
-      let text = $("log").textContent;
-      if (message.endsWith("\r")) {
-        // overwrite last line
-        text = text.trim().replace(/.+$/, "");
-      }
-      text += message + "\n";
-      $("log").textContent = text;
+      console.log(message)
     },
     async progress(evt) {
-      $("progress-txt").textContent = evt.phase;
-      $("progress").value = evt.total ? evt.loaded / evt.total : 0.5;
+      console.log(evt.phase, evt.total ? evt.loaded / evt.total : 0.5)
       return;
     },
     async fill(url) {
@@ -514,7 +489,6 @@ null
   portal.set("mainThread", mainThread, {
     void: ["print", "progress", "rejected"]
   });
-
 ```
 
 
