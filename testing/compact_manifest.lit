@@ -30,10 +30,14 @@ return (async fn => {
   const {CompactPrefixTree, getWordsFromTrie} = await import('https://cdn.skypack.dev/compact-prefix-tree')
 
   const json = await fetch('/testing/compactManifest1.json').then(res => res.json())
+  return json
   const keys = getWordsFromTrie(json)
   const trie = new CompactPrefixTree(Array.from(keys))
   return trie.prefix('/testing/log/day.lit')
 })()
+```
+```>txt attached=true updated=1621380122756
+{ prefix: '', isProper: false }
 ```
 ```>txt updated=1621380061074
 { prefix: '', isProper: false }
