@@ -585,36 +585,7 @@ Viewer throws an Error
 
 ## Experiments
 
-```js !plugin of=plantuml2
-export const viewer = ({node, React}) => {
-  const rc = React.createElement
-  const {useState, useEffect} = React
-  const meta = node.properties 
-               && node.properties.meta
-  const [url, setUrl] = useState(null)
 
-  async function encodePlantUML(src) {
-      console.log("encoding", src)
-      const module = await import("https://cdn.skypack.dev/plantuml-encoder");
-      const encoded = module.encode(src) //.replace(/\n/g, '\\n'))
-      console.log(encoded)
-      return encoded
-  }
-
-  const src = node.value
-  useEffect(async ()=> {
-    const encoded = await encodePlantUML(node.data.value)
-    const url = "https://plantuml.com/plantuml/svg/" + encoded
-    setUrl(url)
-  },[src])
-
-  return rc('div', {
-    className: 'lit-viewer-plantuml2',
-  }, url ? rc('img', {
-    src: url,
-  }) : "Loading...")
-}
-```
 
 ```plantuml2 !inline
 @startuml
