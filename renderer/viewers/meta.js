@@ -1,3 +1,8 @@
 export const viewer = ({node,React}) => {
-  return React.createElement('pre', {style: {color: 'black'}}, lit?.utils?.inspect(node))
+  const {useEffect, useState} = React
+  const [output,setOutput] = useState("Loading...")
+  useEffect(()=>{
+    setOutput(lit.utils.inspect(node))
+  }, [node])
+  return React.createElement('pre', {style: {color: 'black'}}, output)
 }
