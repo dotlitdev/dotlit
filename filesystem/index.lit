@@ -20,24 +20,24 @@ fs-->c
 
 ```>uml
 actor Client as c
-participant "ServiceWorker (local)" as sw
-participant "LightningFS (local)" as fs
-participant "GitHubPages (remote)" as ghp 
-participant "GitHubRepository (origin)" as ghr
+participant "ServiceWorker\n(local)" as sw
+participant "LightningFS\n(local)" as fs
+participant "GitHubPages\n(remote)" as ghp 
+participant "GitHubRepository\n(origin)" as ghr
 
 c-->sw : fetch()
 activate sw
 sw-->fs
 activate fs
-fs-->fs
+fs-->fs : Check local filesystem
 fs-->ghp
 ghp-->fs
 deactivate fs
 fs-->sw
 sw-->ghp
 ghp-->sw
-sw-->ghr
+sw-->ghr : If Authenticated
 ghr-->sw
-sw-->c
+sw-->c : Response
 deactivate sw 
 ```
