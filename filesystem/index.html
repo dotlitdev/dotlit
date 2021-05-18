@@ -1,25 +1,20 @@
-<html data-reactroot=""><head><title>.lit Filesystem</title><meta name="litsrc" value="filesystem/index.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="48:4-726"><cell startpos="1:1-0" endpos="1:20-19"><div class="cell-content"><h1 id="lit-filesystem"><code>.lit</code> Filesystem</h1></div></cell><cell startpos="2:1-20" endpos="24:4-372" class="code output"><div class="cell-content"><codecell class="lang-uml local output"><span class="meta"><span class="lang">uml</span></span><output><pre><code class="uml">actor Client as c
-participant &quot;ServiceWorker ()&quot; as sw
+<html data-reactroot=""><head><title>.lit Filesystem</title><meta name="litsrc" value="filesystem/index.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="43:4-647"><cell startpos="1:1-0" endpos="1:20-19"><div class="cell-content"><h1 id="lit-filesystem"><code>.lit</code> Filesystem</h1></div></cell><cell startpos="2:1-20" endpos="19:4-293" class="code output"><div class="cell-content"><codecell class="lang-uml local output"><span class="meta"><span class="lang">uml</span></span><output><pre><code class="uml">actor Client as c
 participant &quot;LightningFS (local)&quot; as fs
 participant &quot;GitHubPages (remote)&quot; as ghp 
 participant &quot;GitHubRepository (origin)&quot; as ghr
 
-c--&gt;sw : fetch()
-activate sw
-sw--&gt;fs
+c--&gt;fs : lit.fs.*()
 activate fs
 fs--&gt;fs
 fs--&gt;ghp
 ghp--&gt;fs
+fs--&gt;c
+fs--&gt;ghp
+ghp--&gt;c
+fs--&gt;ghr
+ghr--&gt;c
 deactivate fs
-fs--&gt;sw
-sw--&gt;ghp
-ghp--&gt;sw
-sw--&gt;ghr
-ghr--&gt;sw
-sw--&gt;c
-deactivate sw 
-</code></pre></output></codecell></div></cell><cell startpos="26:1-374" endpos="48:4-726" class="code output"><div class="cell-content"><codecell class="lang-uml local output"><span class="meta"><span class="lang">uml</span></span><output><pre><code class="uml">actor Client as c
+</code></pre></output></codecell></div></cell><cell startpos="21:1-295" endpos="43:4-647" class="code output"><div class="cell-content"><codecell class="lang-uml local output"><span class="meta"><span class="lang">uml</span></span><output><pre><code class="uml">actor Client as c
 participant &quot;ServiceWorker ()&quot; as sw
 participant &quot;LightningFS (local)&quot; as fs
 participant &quot;GitHubPages (remote)&quot; as ghp 
