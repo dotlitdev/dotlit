@@ -514,6 +514,44 @@ return new Promise((resolve,reject) => {
   portal.set("mainThread", mainThread, {
     void: ["print", "progress", "rejected"]
   });
+
+async function doCloneAndStuff() {
+    console.log("CLONE");
+
+    await workerThread.setDir("/testing");
+
+    await workerThread.clone({
+      corsProxy: "https://cors.isomorphic-git.org",
+      url: $("repository").value
+    });
+
+    let branches = await workerThread.listBranches({ remote: "origin" });
+    $("log").textContent +=
+      "BRANCHES:\n" + branches.map(b => `  ${b}`).join("\n") + "\n";
+
+    let files = await workerThread.listFiles({});
+    $("log").textContent +=
+      "FILES:\n" + files.map(b => `  ${b}`).join("\n") + "\n";
+
+    let commits = await workerThread.log({});
+    $("log").textContent +=
+      "LOG:\n" +
+      commits
+        .map(c => `  ${c.oid.slice(0, 7)}: ${c.commit.message}`)
+        .join("\n") +
+      "\n";
+  }
+
+  (async () => {
+    const workerThread = await portal.get("workerThread");
+
+    console.log("ready");
+    doCloneAndStuff()
+
+    window.workerThread = workerThread;
+    window.worker = worker;
+    console.log(workerThread);
+  })();
 ```
 ```>txt attached=true updated=1621342790497
 true
