@@ -522,35 +522,32 @@ async function doCloneAndStuff() {
 
     await workerThread.clone({
       corsProxy: "https://cors.isomorphic-git.org",
-      url: $("repository").value
+      url: "https://GitHub.com/dotlitdev/dotlit"
     });
 
     let branches = await workerThread.listBranches({ remote: "origin" });
-    $("log").textContent +=
-      "BRANCHES:\n" + branches.map(b => `  ${b}`).join("\n") + "\n";
+    console.log("BRANCHES:\n" + branches.map(b => `  ${b}`).join("\n"))
 
     let files = await workerThread.listFiles({});
-    $("log").textContent +=
-      "FILES:\n" + files.map(b => `  ${b}`).join("\n") + "\n";
+    console.log("FILES:\n" + files.map(b => `  ${b}`).join("\n"))
 
     let commits = await workerThread.log({});
-    $("log").textContent +=
-      "LOG:\n" +
+    console.log("LOG:\n" +
       commits
         .map(c => `  ${c.oid.slice(0, 7)}: ${c.commit.message}`)
-        .join("\n") +
-      "\n";
+        .join("\n"))
   }
 
-  (async () => {
+  return (async () => {
     const workerThread = await portal.get("workerThread");
+    window.workerThread = workerThread
+    window.worker = worker
+    console.log(workerThread)
 
-    console.log("ready");
-    doCloneAndStuff()
+    console.log("ready")
+    await doCloneAndStuff()
 
-    window.workerThread = workerThread;
-    window.worker = worker;
-    console.log(workerThread);
+    
   })();
 ```
 ```>txt attached=true updated=1621342790497
