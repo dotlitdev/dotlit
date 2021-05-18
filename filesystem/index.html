@@ -3,7 +3,7 @@
 <li><a href="#fetch-web-api"><code>fetch</code> Web API<span class="linkIcon">§</span></a></li>
 </ul></div></cell></section></section>
 <section depth="2" class="" startpos="5:1-44" endpos="5:12-55"><cell startpos="5:1-44" endpos="5:12-55"><div class="cell-content"><h2 id="litfs"><code>lit.fs</code></h2></div></cell></section>
-<section depth="2" class="" startpos="8:1-58" endpos="47:4-794"><cell startpos="8:1-58" endpos="8:19-76"><div class="cell-content"><h2 id="fetch-web-api"><code>fetch</code> Web API</h2></div></cell><cell startpos="11:1-79" endpos="47:4-794" class="code output"><div class="cell-content"><codecell class="lang-uml local output"><span class="meta"><span class="lang">uml</span></span><output><pre><code class="uml">title .lit Web Fetch API with Service Worker
+<section depth="2" class="" startpos="8:1-58" endpos="45:4-752"><cell startpos="8:1-58" endpos="8:19-76"><div class="cell-content"><h2 id="fetch-web-api"><code>fetch</code> Web API</h2></div></cell><cell startpos="11:1-79" endpos="45:4-752" class="code output"><div class="cell-content"><codecell class="lang-uml local output"><span class="meta"><span class="lang">uml</span></span><output><pre><code class="uml">title .lit Web Fetch API with Service Worker
 actor Client as c
 participant &quot;ServiceWorker\n(local)&quot; as sw
 participant &quot;LightningFS\n(local)&quot; as fs
@@ -27,15 +27,13 @@ else If Online
 alt If UnAuthenticated Check remote webserver
   fs -&gt; ghp
   ghp -&gt; fs
-  fs --&gt; sw
-  sw --&gt; sw : Cache
-  c &lt;-- sw : Response
 else If Authenticated with GitHub
   fs -&gt; ghr
   ghr -&gt; fs
-  fs -&gt; sw --
-  sw -&gt; c -- : Response
 end
+fs -&gt; sw --
+sw --&gt; sw : Cache
+c &lt;-- sw : Response
 end
 end
 </code></pre></output></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (0)</h4><ol></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
