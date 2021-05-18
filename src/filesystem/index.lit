@@ -32,22 +32,22 @@ participant "LightningFS\n(local)" as fs
 participant "GitHubPages\n(remote)" as ghp 
 participant "GitHubRepository\n(origin)" as ghr
 
-c-->sw : fetch()
+c -> sw : fetch()
 activate sw
-sw-->fs
+sw -> fs
 activate fs
-fs-->fs : Check local filesystem
+fs -> fs : Check local filesystem
 alt If Unauthenticated with GitHub
-fs-->ghp
-ghp-->fs
+fs -> ghp
+ghp -> fs
 deactivate fs
-fs-->sw
-sw-->ghp
-ghp-->sw
+fs -> sw
+sw -> ghp
+ghp -> sw
 else If Authenticated with GitHub
-sw-->ghr : If Authenticated
-ghr-->sw
+sw -> ghr : If Authenticated
+ghr -> sw
 end
-sw-->c : Response
+sw -> c : Response
 deactivate sw 
 ```
