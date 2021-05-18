@@ -47,7 +47,7 @@ export const viewer = ({node, React}) => {
 
   const bigger = {fontSize: '1.2em'}
   return <div style={bigger}>
-     <input style={bigger} value={src} onChange={ev=>setSrc(ev.target.value)}/>
+     <input style={{}} value={src} onChange={ev=>setSrc(ev.target.value)}/>
      <div style={{fontFamily: 'monospace'}}>
      <Stat src={src} stat={stat} size={size} select={setSrc}/>
      {!stat && content}
