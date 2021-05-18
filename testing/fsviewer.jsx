@@ -20,7 +20,7 @@ export const viewer = ({node, React}) => {
     const stat = props?.stat || {}
     if (stat.message) return <div>{stat.message}</div>
     return <div>
-      <div>Type: <span>{stat.type}</span> mtime: <span>{lit.utils.momento.MsToRelative(stat.mtimeMs - Date.now())}</span> Size: <span>{(props.size / 1024).toFixed(2)} KB</span></div>
+      <div style={marginBottom: '0.4em'}>Type: <span>{stat.type}</span> mtime: <span>{lit.utils.momento.MsToRelative(stat.mtimeMs - Date.now())}</span> Size: <span>{(props.size / 1024).toFixed(2)} KB</span></div>
       
       {stat.contents && stat.contents.map( l => {
       const name = l[0]
@@ -57,7 +57,7 @@ export const viewer = ({node, React}) => {
   const bigger = {fontSize: '1em', width: '100%'}
   return <div style={bigger}>
      <input style={bigger} value={src} onChange={ev=>setSrc(ev.target.value)}/>
-     <div style={{fontFamily: 'monospace'}}>
+     <div style={{fontFamily: 'monospace', marginBottom: '0.4em'}}>
      <Stat src={src} stat={stat} size={size} select={setSrc}/>
      {!stat && content}
      </div>
