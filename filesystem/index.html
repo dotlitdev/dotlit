@@ -2,8 +2,7 @@
 <li><a href="#litfs"><code>lit.fs</code><span class="linkIcon">§</span></a></li>
 <li><a href="#fetch-web-api"><code>fetch</code> Web API<span class="linkIcon">§</span></a></li>
 </ul></div></cell></section></section>
-<section depth="2" class="" startpos="5:1-44" endpos="5:12-55"><cell startpos="5:1-44" endpos="5:12-55"><div class="cell-content"><h2 id="litfs"><code>lit.fs</code></h2></div></cell></section>
-<section depth="2" class="" startpos="7:1-57" endpos="49:4-769"><cell startpos="7:1-57" endpos="7:19-75"><div class="cell-content"><h2 id="fetch-web-api"><code>fetch</code> Web API</h2></div></cell><cell startpos="8:1-76" endpos="25:4-351" class="code output"><div class="cell-content"><codecell class="lang-uml local output"><span class="meta"><span class="lang">uml</span></span><output><pre><code class="uml">actor Client as c
+<section depth="2" class="" startpos="5:1-44" endpos="23:4-331"><cell startpos="5:1-44" endpos="5:12-55"><div class="cell-content"><h2 id="litfs"><code>lit.fs</code></h2></div></cell><cell startpos="6:1-56" endpos="23:4-331" class="code output"><div class="cell-content"><codecell class="lang-uml local output"><span class="meta"><span class="lang">uml</span></span><output><pre><code class="uml">actor Client as c
 participant &quot;LightningFS (local)&quot; as fs
 participant &quot;GitHubPages (remote)&quot; as ghp 
 participant &quot;GitHubRepository (origin)&quot; as ghr
@@ -19,7 +18,8 @@ fs--&gt;ghr
 ghr--&gt;fs
 deactivate fs
 fs--&gt;c
-</code></pre></output></codecell></div></cell><cell startpos="27:1-353" endpos="49:4-769" class="code output"><div class="cell-content"><codecell class="lang-uml local output"><span class="meta"><span class="lang">uml</span></span><output><pre><code class="uml">actor Client as c
+</code></pre></output></codecell></div></cell></section>
+<section depth="2" class="" startpos="25:1-333" endpos="53:4-843"><cell startpos="25:1-333" endpos="25:19-351"><div class="cell-content"><h2 id="fetch-web-api"><code>fetch</code> Web API</h2></div></cell><cell startpos="28:1-354" endpos="53:4-843" class="code output"><div class="cell-content"><codecell class="lang-uml local output"><span class="meta"><span class="lang">uml</span></span><output><pre><code class="uml">actor Client as c
 participant &quot;ServiceWorker\n(local)&quot; as sw
 participant &quot;LightningFS\n(local)&quot; as fs
 participant &quot;GitHubPages\n(remote)&quot; as ghp 
@@ -30,14 +30,17 @@ activate sw
 sw--&gt;fs
 activate fs
 fs--&gt;fs : Check local filesystem
+alt If Unauthenticated with GitHub
 fs--&gt;ghp
 ghp--&gt;fs
 deactivate fs
 fs--&gt;sw
 sw--&gt;ghp
 ghp--&gt;sw
+else If Authenticated with GitHub
 sw--&gt;ghr : If Authenticated
 ghr--&gt;sw
 sw--&gt;c : Response
+end
 deactivate sw 
 </code></pre></output></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (0)</h4><ol></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>

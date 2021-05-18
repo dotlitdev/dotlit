@@ -3,8 +3,6 @@
 ## Table of Contents 
 
 ## `lit.fs`
-
-## `fetch` Web API
 ```>uml
 actor Client as c
 participant "LightningFS (local)" as fs
@@ -24,6 +22,9 @@ deactivate fs
 fs-->c
 ```
 
+## `fetch` Web API
+
+
 ```>uml
 actor Client as c
 participant "ServiceWorker\n(local)" as sw
@@ -36,14 +37,17 @@ activate sw
 sw-->fs
 activate fs
 fs-->fs : Check local filesystem
+alt If Unauthenticated with GitHub
 fs-->ghp
 ghp-->fs
 deactivate fs
 fs-->sw
 sw-->ghp
 ghp-->sw
+else If Authenticated with GitHub
 sw-->ghr : If Authenticated
 ghr-->sw
 sw-->c : Response
+end
 deactivate sw 
 ```
