@@ -1,4 +1,4 @@
-<html data-reactroot=""><head><title>Compact Manifest</title><meta name="litsrc" value="testing/compact_manifest.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="23:4-704"><cell startpos="1:1-0" endpos="5:83-181"><div class="cell-content"><h1 id="compact-manifest">Compact Manifest</h1><p>Reducing the serialised size of a manifest of all files in a <code>.lit</code> notebook.</p><p>Trying out <a href="https://github.com/sidvishnoi/compact-prefix-tree">compct-prefix-tree<span class="linkIcon">↗</span></a></p></div></cell><cell startpos="7:1-183" endpos="23:4-704" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt; {
+<html data-reactroot=""><head><title>Compact Manifest</title><meta name="litsrc" value="testing/compact_manifest.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="90:4-2948"><cell startpos="1:1-0" endpos="5:83-181"><div class="cell-content"><h1 id="compact-manifest">Compact Manifest</h1><p>Reducing the serialised size of a manifest of all files in a <code>.lit</code> notebook.</p><p>Trying out <a href="https://github.com/sidvishnoi/compact-prefix-tree">compct-prefix-tree<span class="linkIcon">↗</span></a></p></div></cell><cell startpos="7:1-183" endpos="90:4-2948" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt; {
   const {CompactPrefixTree} = await import(&#x27;https://cdn.skypack.dev/compact-prefix-tree&#x27;)
 
   const manifest = await fetch(&#x27;/manifest.json&#x27;).then(res =&gt; res.json())
@@ -6,9 +6,76 @@
   const trie = new CompactPrefixTree(keys)
 
   const before = JSON.stringify(keys)
-  const after = JSON.stringify(trie)
+  const after = JSON.stringify(trie.T)
   console.log(trie)
   return `A ${after.length/before.length*100}% reduction.`
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">3m ago</span></span></span><output><pre><code class="txt">A 92.26628895184136% reduction.
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2m ago</span></span></span><output><pre><code class="txt">{ words: {},
+  T: 
+   { &#x27;404.lit&#x27;: null,
+     cli: { &#x27;/cli.lit&#x27;: null, &#x27;ent/&#x27;: [Object] },
+     &#x27;divergence_from_markdown.lit&#x27;: null,
+     &#x27;execute_code_cells.lit&#x27;: null,
+     &#x27;functions.lit&#x27;: null,
+     &#x27;index.lit&#x27;: null,
+     meta: 
+      { &#x27;.lit&#x27;: null,
+        &#x27;/github_workflows.lit&#x27;: null,
+        &#x27;/s&#x27;: [Object],
+        &#x27;/files_and_links.lit&#x27;: null,
+        &#x27;/.github/workflows/npm-publish.yaml&#x27;: null },
+     &#x27;persist_to_github.lit&#x27;: null,
+     &#x27;plugin_system.lit&#x27;: null,
+     re: { &#x27;nderer/&#x27;: [Object], pl: [Object], &#x27;mark.lit&#x27;: null },
+     &#x27;scratch_pad.lit&#x27;: null,
+     &#x27;throwaway/codevaluebug.lit&#x27;: null,
+     &#x27;utils/&#x27;: 
+      { &#x27;index.lit&#x27;: null,
+        fs: [Object],
+        &#x27;urifragments.lit&#x27;: null,
+        &#x27;functions.js&#x27;: null,
+        co: [Object],
+        &#x27;safe-encoders.js&#x27;: null,
+        &#x27;unist-util-&#x27;: [Object],
+        &#x27;git-commit-all.js&#x27;: null,
+        &#x27;momento.&#x27;: [Object] },
+     &#x27;transfomers.lit&#x27;: null,
+     test: { &#x27;ing/&#x27;: [Object], &#x27;.js&#x27;: [Object], &#x27;.ts&#x27;: null },
+     &#x27;./utils/functions.js&#x27;: null,
+     &#x27;litconfig.lit&#x27;: null,
+     &#x27;articles/ideas&#x27;: { &#x27;_for.lit&#x27;: null, &#x27;.lit&#x27;: null },
+     &#x27;.github/workflows/generate.yaml&#x27;: null,
+     &#x27;unified.lit&#x27;: null,
+     ma: { &#x27;nifest.json&#x27;: null, &#x27;rkdown.lit&#x27;: null },
+     &#x27;parser/&#x27;: 
+      { &#x27;parser.lit&#x27;: null,
+        &#x27;index.js&#x27;: null,
+        &#x27;frontmatter.js&#x27;: null,
+        &#x27;sections.js&#x27;: null,
+        &#x27;codeblocks.js&#x27;: null,
+        &#x27;mdblocks.js&#x27;: null,
+        &#x27;links.js&#x27;: null },
+     components: { &#x27;/&#x27;: [Object], &#x27;.lit&#x27;: null },
+     &#x27;../&#x27;: 
+      { &#x27;scratch_pad.lit#viewers&#x27;: null,
+        &#x27;components/components.lit&#x27;: null,
+        &#x27;../../../../&#x27;: [Object],
+        &#x27;utils/git-commit-all.js&#x27;: null,
+        &#x27;serviceworker.js&#x27;: null },
+     viewers: { &#x27;.lit&#x27;: null, &#x27;/meta.js&#x27;: null },
+     index: null,
+     wiki: { &#x27;-links.lit&#x27;: null, &#x27;links.lit&#x27;: null },
+     file: { &#x27;system/index.lit&#x27;: null, name: null },
+     &#x27;dummy/&#x27;: 
+      { &#x27;🔥.lit&#x27;: null,
+        &#x27;example.svg&#x27;: null,
+        &#x27;plain.txt&#x27;: null,
+        &#x27;data.csv&#x27;: null },
+     &#x27;log/&#x27;: { &#x27;checkforinput.js&#x27;: null, &#x27;today.js&#x27;: null },
+     &#x27;gitworker.js&#x27;: null,
+     &#x27;fsviewer.jsx&#x27;: null,
+     &#x27;rk.jsx&#x27;: null,
+     &#x27;runkit-repl-endpoint.js&#x27;: null,
+     worker: { &#x27;.js&#x27;: null, &#x27;2.js&#x27;: null } } }
+A 92.26628895184136% reduction.
 </code></pre></output></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="🔬 Tests, experiments and investigations" href="/testing/index.html">🔬 Tests, experiments and investigations</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
