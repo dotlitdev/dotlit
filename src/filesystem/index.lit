@@ -1,4 +1,27 @@
 # `.lit` Filesystem
+```>uml
+actor Client as c
+participant "ServiceWorker ()" as sw
+participant "LightningFS (local)" as fs
+participant "GitHubPages (remote)" as ghp 
+participant "GitHubRepository (origin)" as ghr
+
+c-->sw : fetch()
+activate sw
+sw-->fs
+activate fs
+fs-->fs
+fs-->ghp
+ghp-->fs
+deactivate fs
+fs-->sw
+sw-->ghp
+ghp-->sw
+sw-->ghr
+ghr-->sw
+sw-->c
+deactivate sw 
+```
 
 ```>uml
 actor Client as c
