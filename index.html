@@ -1,0 +1,105 @@
+<html data-reactroot=""><head><title>.lit</title><meta name="litsrc" value="index.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content">
+<section depth="1" class="" startpos="5:1-28" endpos="13:21-631"><cell startpos="5:1-28" endpos="11:207-609"><div class="cell-content"><h1 id="lit"><code>.lit</code></h1><p><a href="https://github.com/dotlitdev/dotlit"><img src="https://img.shields.io/badge/%F0%9F%8C%B1-Open%20Source-green" alt="Open Source"/></a>
+<a href="https://npmjs.org/@dotlit/dotlit"><img src="https://img.shields.io/npm/v/@dotlit/dotlit" alt="npm (scoped)"/></a>
+<a href="https://github.com/dotlitdev/dotlit/actions/workflows/generate.yaml"><img src="https://github.com/dotlitdev/dotlit/actions/workflows/generate.yaml/badge.svg" alt="Deploy"/></a></p><p><code>.lit</code> is a plain text document format, really it&#x27;s just <strong>Markdown</strong>. But with <em>Sections</em>, <em>Cells</em>, <!-- -->interactive<!-- --> &amp; <em>executable</em> <code>code</code> blocks and <em>meta</em> programming over its own <!-- -->AST<!-- -->.</p></div></cell><section depth="2" class="" startpos="13:1-611" endpos="13:21-631"><cell startpos="13:1-611" endpos="13:21-631"><div class="cell-content"><h2 id="table-of-contents">Table of Contents</h2><ul>
+<li>
+<p><a href="#about">About<span class="linkIcon">§</span></a></p>
+</li>
+<li>
+<p><a href="#getting-started">Getting Started<span class="linkIcon">§</span></a></p>
+<ul>
+<li><a href="#starter-template-repo">Starter template repo<span class="linkIcon">§</span></a></li>
+<li><a href="#from-the-command-line">From the command line<span class="linkIcon">§</span></a></li>
+</ul>
+</li>
+<li>
+<p><a href="#documentation">Documentation<span class="linkIcon">§</span></a></p>
+</li>
+<li>
+<p><a href="#implementation">Implementation<span class="linkIcon">§</span></a></p>
+<ul>
+<li><a href="#parser">Parser<span class="linkIcon">§</span></a></li>
+<li><a href="#renderer">Renderer<span class="linkIcon">§</span></a></li>
+<li><a href="#client">Client<span class="linkIcon">§</span></a></li>
+<li><a href="#plugins">Plugins<span class="linkIcon">§</span></a></li>
+<li><a href="#filesystem">Filesystem<span class="linkIcon">§</span></a></li>
+<li><a href="#utils">Utils<span class="linkIcon">§</span></a></li>
+</ul>
+</li>
+<li>
+<p><a href="#meta"><a href="meta.html?file=meta.lit" title="Meta" wikilink="true">Meta</a><span class="linkIcon">§</span></a></p>
+</li>
+</ul></div></cell></section></section>
+<section depth="2" class="" startpos="15:1-633" endpos="40:90-1356"><cell startpos="15:1-633" endpos="15:9-641"><div class="cell-content"><h2 id="about">About</h2></div></cell><cell startpos="17:1-643" endpos="21:4-818" class="code output"><div class="cell-content"><codecell class="dir-warn lang-md local output"><span class="meta"><span class="lang">md</span><span style="color:white;background-color:#037928" class="directive dir-warn">warn</span></span><div class="md-block dir-warn">
+<p>⚠️ <strong><code>.lit</code></strong> is still a <em>Work in progress</em>.</p>
+<p>This iteration is a from-scratch rewrite of an [initial prototype], with many features yet to be re-implemented.</p>
+</div></codecell></div></cell><cell startpos="23:1-820" endpos="23:29-848"><div class="cell-content"><p><strong>🧪 <a href="scratch_pad.html?file=scratch_pad.lit" title="Scratch ⚠️ Pad 🔬" wikilink="true">Scratch ⚠️ Pad 🔬</a></strong></p></div></cell><cell startpos="25:1-850" endpos="26:4-886" class="code"><div class="cell-content"><codecell class="dir-inline lang-graph local"><span class="meta"><span class="lang">graph</span><span style="color:black;background-color:#b96da2" class="directive dir-inline">inline</span><span class="source">&lt; manifest.json</span></span><iframe class="inline" srcDoc="&lt;!DOCTYPE html&gt;
+&lt;head&gt;
+  &lt;!-- false --&gt;
+  &lt;style&gt; body { margin: 0; } &lt;/style&gt;
+  &lt;script src=&quot;https://unpkg.com/force-graph&quot;&gt;&lt;/script&gt;
+  &lt;!-- from: https://github.com/vasturiano/force-graph --&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id=&quot;graph&quot;&gt;&lt;/div&gt;
+  &lt;script&gt;
+    const data = undefined;
+    const thisfile = window.parent.lit.location.src
+    const elem = document.getElementById(&#x27;graph&#x27;)
+    const Graph = ForceGraph()(elem)
+        .graphData(data)
+        .nodeId(&#x27;id&#x27;)
+        .nodeVal((n) =&gt; n.backlinks ? n.backlinks.length : 1)
+        .nodeLabel(&#x27;id&#x27;)
+        .nodeAutoColorBy(&#x27;type&#x27;)
+        // .linkColor(d =&gt; data.nodes[d.source].exists ? &#x27;red&#x27; : &#x27;lightblue&#x27;)
+        .linkDirectionalArrowLength(6)
+        .onNodeHover(node =&gt; elem.style.cursor = node ? &#x27;pointer&#x27; : null)
+        .onNodeClick(node =&gt; {
+          // Center/zoom on node
+          Graph.centerAt(node.x, node.y, 1000);
+          Graph.zoom(2, 2000);
+        });
+
+    setTimeout( () =&gt; {
+        const { nodes, links } = Graph.graphData()
+        const node = nodes.filter( n =&gt; n.id === thisfile)[0]
+        Graph.centerAt(node.x, node.y, 1000);
+        Graph.zoom(2, 1000);
+    }, 2000)
+  &lt;/script&gt;
+&lt;/body&gt;"></iframe></codecell></div></cell><cell startpos="28:1-888" endpos="40:90-1356"><div class="cell-content"><p><strong>☑️ To Do</strong> or <em>in progress</em></p><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->fragments in <a href="wiki-links.html?file=wiki-links.lit" title="wiki-links" wikilink="true">wiki-links</a></li>
+<li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->remove global fetch hack for nodejs and bundle properly with webpack</li>
+<li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->Experiments and <a href="testing/index.html?file=testing/index.lit" title="testing/index" wikilink="true">testing/index</a></li>
+<li class="task-list-item"><input type="checkbox" disabled=""/> <a href="meta/settings.html?file=meta/settings.lit" title="meta/Settings" wikilink="true">meta/Settings</a> -&gt; <a href="litconfig.html?file=litconfig.lit" title=".litconfig" wikilink="true">.litconfig</a></li>
+<li><a href="articles/ideas.html?file=articles/ideas.lit" title="articles/ideas" wikilink="true">articles/ideas</a></li>
+</ul><p><strong>🐜 Bugs</strong></p><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->Next/sibling sections are getting nested</li>
+<li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->Empty document fails to render</li>
+<li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->Document with No sections fails</li>
+<li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->Inline <!-- -->html<!-- --> in Markdown source not surviving to final rendered output.</li>
+</ul></div></cell></section>
+<section depth="2" class="" startpos="42:1-1358" endpos="47:229-1634"><cell startpos="42:1-1358" endpos="42:19-1376"><div class="cell-content"><h2 id="getting-started">Getting Started</h2></div></cell><section depth="3" class="" startpos="45:1-1379" endpos="47:229-1634"><cell startpos="45:1-1379" endpos="47:229-1634"><div class="cell-content"><h3 id="starter-template-repo">Starter template repo</h3><p>While <code>.lit</code> is still under active development and not quite ready for prime time, you can fork this <a href="https://github.com/dotlitdev/dotlit-starter">GitHub template repository<span class="linkIcon">↗</span></a> to deploy your own &quot;instance&quot; hosted on GitHub Pages.</p></div></cell></section></section>
+<section depth="3" class="" startpos="49:1-1636" endpos="51:86-1748"><cell startpos="49:1-1636" endpos="51:86-1748"><div class="cell-content"><h3 id="from-the-command-line">From the command line</h3><p>To use <code>.lit</code> from the command line, see usage and documentation <a href="cli/cli.html">here</a>.</p></div></cell></section>
+<section depth="2" class="" startpos="53:1-1750" endpos="61:26-1993"><cell startpos="53:1-1750" endpos="61:26-1993"><div class="cell-content"><h2 id="documentation">Documentation</h2><p>Currently my <a href="scratch_pad.html?file=scratch_pad.lit" title="Scratch ⚠️ Pad 🔬" wikilink="true">Scratch ⚠️ Pad 🔬</a> is the closest thing to documentation, start there for now.</p><ol>
+<li>A gentle introduction to Markdown</li>
+<li>Sections &amp; Cells</li>
+<li>Code Cells</li>
+<li><a href="divergence_from_markdown.html?file=divergence_from_markdown.lit" title="Divergence from Markdown" wikilink="true">Divergence from Markdown</a></li>
+<li><a href="execute_code_cells.html?file=execute_code_cells.lit" title="Execute Code Cells" wikilink="true">Execute Code Cells</a></li>
+</ol></div></cell></section>
+<section depth="2" class="" startpos="65:1-1997" endpos="69:168-2195"><cell startpos="65:1-1997" endpos="65:18-2014"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><section depth="3" class="" startpos="67:1-2016" endpos="69:168-2195"><cell startpos="67:1-2016" endpos="69:168-2195"><div class="cell-content"><h3 id="parser">Parser</h3><p>Built atop the unified ecosystem, specifically remark, which takes <code>.lit</code> Markdown source and outputs <code>.lit</code> AST (Abstract Syntax Tree). <a href="parser/parser.html">Read More</a></p></div></cell></section></section>
+<section depth="3" class="" startpos="71:1-2197" endpos="73:147-2357"><cell startpos="71:1-2197" endpos="73:147-2357"><div class="cell-content"><h3 id="renderer">Renderer</h3><p>The default render output is <code>html</code> which includes client-side <code>javascript</code> which hydrates a React application. <a href="renderer/renderer.html">Read More</a></p></div></cell></section>
+<section depth="3" class="" startpos="75:1-2359" endpos="77:273-2643"><cell startpos="75:1-2359" endpos="77:273-2643"><div class="cell-content"><h3 id="client">Client</h3><p>The static html generated by <code>.lit</code> does not <em>require</em> JavaScript to function for the reader. But by default includes a client bundle which re-hydrates the page to become fully interactive, enabling editing of the original document in place. <a href="client/client.html">Read more</a></p></div></cell></section>
+<section depth="3" class="" startpos="79:1-2645" endpos="81:137-2794"><cell startpos="79:1-2645" endpos="81:137-2794"><div class="cell-content"><h3 id="plugins">Plugins</h3><p><code>.lit</code> has a flexible <a href="plugin_system.html?file=plugin_system.lit" title="Plugin system" wikilink="true">Plugin system</a>, primarily to allow the author to create custom Viewers and REPLs but also includes other types.</p></div></cell></section>
+<section depth="3" class="" startpos="85:1-2798" endpos="87:167-2980"><cell startpos="85:1-2798" endpos="87:167-2980"><div class="cell-content"><h3 id="filesystem">Filesystem</h3><p>Implemented on top of LightningFS on the client side with pass through reads and writes to a remote backend -- currently GitHub API. <a href="filesystem/index.html">Read more</a></p></div></cell></section>
+<section depth="3" class="" startpos="89:1-2982" endpos="91:149-3141"><cell startpos="89:1-2982" endpos="91:149-3141"><div class="cell-content"><h3 id="utils">Utils</h3><p>Collection of utilities used throughout <code>.lit</code> which should probably be extracted and published as individual packages. <a href="utils/index.html">Read more</a></p></div></cell></section>
+<section depth="2" class="" startpos="95:1-3145" endpos="112:41-3506"><cell startpos="95:1-3145" endpos="95:12-3156"><div class="cell-content"><h2 id="meta"><a href="meta.html?file=meta.lit" title="Meta" wikilink="true">Meta</a></h2></div></cell><cell startpos="99:1-3160" endpos="103:4-3264" class="code"><div class="cell-content"><codecell class="dir-below tag-styling tag-tweaks lang-css local"><span class="meta"><span class="lang">css</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span><span class="attribute attr-viewer" style="color:black;background-color:#cf5332">viewer=style</span><span style="color:white;background-color:#903a92" class="tag">styling</span><span style="color:black;background-color:#ccae78" class="tag">tweaks</span></span><pre><code class="css">#lit-header {
+  box-shadow: 0 2px 0 0 rgba(0,0,0,.01);
+}
+</code></pre><style>#lit-header {
+  box-shadow: 0 2px 0 0 rgba(0,0,0,.01);
+}
+</style></codecell></div></cell><cell startpos="105:1-3266" endpos="105:107-3372"><div class="cell-content"><p>This documents <!-- -->AST<!-- -->, returned as an Output of an executable <code>code</code> cell, with a custom viewer.</p></div></cell><cell startpos="107:1-3374" endpos="109:4-3463" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; json testing/index.json viewer=json2</span></span><pre><code class="js">return JSON.stringify(lit.file.data.ast)
+</code></pre></codecell></div></cell><cell startpos="112:1-3466" endpos="112:41-3506"><div class="cell-content"></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (0)</h4><ol></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
