@@ -565,9 +565,16 @@ const Cell = props =&gt; {
 
    
 
-    const save = ctx =&gt; args =&gt; {
+    const save = ctx =&gt; async args =&gt; {
         console.log(&quot;Saving cell&quot;, pos)
-        ctx.setSrc(pos, src)
+        const transform = meta &amp;&amp; (meta.transformer || meta.lang)
+        const transformer = lit.file?.data?.plugins?.transformer?.[transform]
+        if (transformer) {
+            const newSrc = await transformer({node, src, codeSource, rawSource, originalSource})
+            ctx.setSrc(pos, newSource)
+        } else {
+            ctx.setSrc(pos, src)
+        }
         setEditing(false)
     }
 
