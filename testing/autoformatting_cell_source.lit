@@ -57,8 +57,10 @@ Implementing as a transformer `!plugin`
 
 ```js !plugin type=transformer of=prettier 
 export const transformer = ({node, src, codeSource, rawSource, originalSource}) => {
-  alert("Transformer")
-  return src
+  const lines = src.split('\n')
+  const body = lines.slice(1,-1).join('\n')
+  lines[0] += " !prettied"
+  return lines.join('\n')
 }
 ```
 
