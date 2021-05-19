@@ -1,13 +1,14 @@
-<html data-reactroot=""><head><title>Autoformatting Cell Source</title><meta name="litsrc" value="testing/autoformatting_cell_source.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="84:4-2218"><cell startpos="1:1-0" endpos="1:29-28"><div class="cell-content"><h1 id="autoformatting-cell-source">Autoformatting Cell Source</h1></div></cell><section depth="2" class="" startpos="2:1-29" endpos="84:4-2218"><cell startpos="2:1-29" endpos="4:29-79"><div class="cell-content"><h2 id="-with-prettier">... with prettier</h2><p>Homepage <a href="https://prettier.io">https://prettier.io<span class="linkIcon">↗</span></a></p></div></cell><cell startpos="6:1-81" endpos="16:4-414" class="code"><div class="cell-content"><codecell class="tag-reference lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#c8db3f" class="tag">reference</span></span><pre><code class="js">import prettier from &quot;https://unpkg.com/prettier@2.3.0/esm/standalone.mjs&quot;;
-  import parserBabel from &quot;https://unpkg.com/prettier@2.3.0/esm/parser-babel.mjs&quot;;
+<html data-reactroot=""><head><title>Autoformatting Cell Source</title><meta name="litsrc" value="testing/autoformatting_cell_source.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="85:4-2211"><cell startpos="1:1-0" endpos="1:29-28"><div class="cell-content"><h1 id="autoformatting-cell-source">Autoformatting Cell Source</h1></div></cell><section depth="2" class="" startpos="2:1-29" endpos="85:4-2211"><cell startpos="2:1-29" endpos="4:29-79"><div class="cell-content"><h2 id="-with-prettier">... with prettier</h2><p>Homepage <a href="https://prettier.io">https://prettier.io<span class="linkIcon">↗</span></a></p></div></cell><cell startpos="6:1-81" endpos="17:4-401" class="code"><div class="cell-content"><codecell class="tag-reference lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#c8db3f" class="tag">reference</span></span><pre><code class="js">import prettier from &quot;https://unpkg.com/prettier@2.3.0/esm/standalone.mjs&quot;;
+import parserBabel from &quot;https://unpkg.com/prettier@2.3.0/esm/parser-babel.mjs&quot;;
 
-  console.log(
-    prettier.format(&quot;const html=/* HTML */ `&lt;DIV&gt; &lt;/DIV&gt;`&quot;, {
-      parser: &quot;babel&quot;,
-      plugins: [parserBabel],
-    })
-  );
-</code></pre></codecell></div></cell><cell startpos="18:1-416" endpos="54:4-1432" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; js #formatted</span></span><pre><code class="js">return (async fn =&gt; { // intentionally [sic] badly formatted 
+console.log(
+  prettier.format(&quot;const html=/* HTML */ `&lt;DIV&gt; &lt;/DIV&gt;`&quot;, {
+    parser: &quot;babel&quot;,
+    plugins: [parserBabel],
+  })
+);
+
+</code></pre></codecell></div></cell><cell startpos="19:1-403" endpos="55:4-1425" class="code"><div class="cell-content"><codecell class="tag-test lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#036449" class="tag">test</span><span class="output">&gt; js #formatted</span></span><pre><code class="js">return (async fn =&gt; { // intentionally [sic] badly formatted 
 const p = await import(
 
 &#x27;https://unpkg.com/prettier@2.3.0/esm/standalone.mjs&#x27;)
@@ -40,7 +41,7 @@ return format(thisCellsSource, { parser: &quot;babel&quot;,plugins: [babelPlugin
   return format(thisCellsSource, { parser: &quot;babel&quot;, plugins: [babelPlugin] });
 })();
 
-</code></pre></output></codecell></div></cell><cell startpos="56:1-1434" endpos="56:40-1473"><div class="cell-content"><p>Implementing as a transformer <code>!plugin</code></p></div></cell><cell startpos="58:1-1475" endpos="76:4-2136" class="code output"><div class="cell-content"><codecell class="dir-plugin lang-js local output"><a name="../plugins/transformers/prettier.js"></a><span class="meta"><span class="lang">js</span><span class="filename">../plugins/transformers/prettier.js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=transformer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=prettier</span></span><output><pre><code class="js">export const transformer = async ({node, src, codeSource, rawSource, originalSource}) =&gt; {
+</code></pre></output></codecell></div></cell><cell startpos="57:1-1427" endpos="57:40-1466"><div class="cell-content"><p>Implementing as a transformer <code>!plugin</code></p></div></cell><cell startpos="59:1-1468" endpos="77:4-2129" class="code output"><div class="cell-content"><codecell class="dir-plugin lang-js local output"><a name="../plugins/transformers/prettier.js"></a><span class="meta"><span class="lang">js</span><span class="filename">../plugins/transformers/prettier.js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=transformer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=prettier</span></span><output><pre><code class="js">export const transformer = async ({node, src, codeSource, rawSource, originalSource}) =&gt; {
   const lines = src.split(&#x27;\n&#x27;)
   let [first, ...rest] = lines
   let middle = rest.slice(0,-1)
@@ -57,7 +58,7 @@ return format(thisCellsSource, { parser: &quot;babel&quot;,plugins: [babelPlugin
   return [first, format(body, { parser: &quot;babel&quot;,plugins: [babelPlugin]}), last].join(&#x27;\n&#x27;)
 
 }
-</code></pre></output></codecell></div></cell><cell startpos="78:1-2138" endpos="84:4-2218" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="attribute attr-transformer" style="color:black;background-color:#88d14d">transformer=prettier</span></span><pre><code class="js">// make me
+</code></pre></output></codecell></div></cell><cell startpos="79:1-2131" endpos="85:4-2211" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="attribute attr-transformer" style="color:black;background-color:#88d14d">transformer=prettier</span></span><pre><code class="js">// make me
 // prettier
 
 return async (fn) =&gt; {};
