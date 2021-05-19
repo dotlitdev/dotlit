@@ -1,10 +1,17 @@
-<html data-reactroot=""><head><title>PrismJs</title><meta name="litsrc" value="prismjs_and_a_simple_editor.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="65:4-1406"><cell startpos="1:1-0" endpos="1:10-9"><div class="cell-content"><h1 id="prismjs">PrismJs</h1></div></cell><cell startpos="3:1-11" endpos="65:4-1406" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">import Editor from &quot;react-simple-code-editor&quot;;
-import Highlight, { defaultProps } from &quot;prism-react-renderer&quot;;
-import theme from &quot;prism-react-renderer/themes/nightOwl&quot;;
+<html data-reactroot=""><head><title>PrismJs</title><meta name="litsrc" value="prismjs_and_a_simple_editor.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="73:4-1634"><cell startpos="1:1-0" endpos="1:10-9"><div class="cell-content"><h1 id="prismjs">PrismJs</h1></div></cell><cell startpos="3:1-11" endpos="73:4-1634" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async (fn) =&gt; {
+  const Editor = await import(
+    &quot;https://cdn.skypack.dev/react-simple-code-editor&quot;
+  );
+  const Highlight = await import(
+    &quot;https://cdn.skypack.dev/prism-react-renderer&quot;
+  );
+  const theme = await import(
+    &quot;https://cdn.skypack.dev/prism-react-renderer/themes/nightOwl&quot;
+  );
 
-const { Fragment, Component } = lit.utils.React;
+  const { Fragment, Component } = lit.utils.React;
 
-const exampleCode = `
+  const exampleCode = `
 (function someDemo() {
   var test = &quot;Hello World!&quot;;
   console.log(test);
@@ -13,50 +20,51 @@ const exampleCode = `
 return () =&gt; &lt;App /&gt;;
 `;
 
-const styles = {
-  root: {
-    boxSizing: &quot;border-box&quot;,
-    fontFamily: &#x27;&quot;Dank Mono&quot;, &quot;Fira Code&quot;, monospace&#x27;,
-    ...theme.plain,
-  },
-};
-
-class EditorExample extends Component {
-  state = { code: exampleCode };
-
-  onValueChange = (code) =&gt; {
-    this.setState({ code });
+  const styles = {
+    root: {
+      boxSizing: &quot;border-box&quot;,
+      fontFamily: &#x27;&quot;Dank Mono&quot;, &quot;Fira Code&quot;, monospace&#x27;,
+      ...theme.plain,
+    },
   };
 
-  highlight = (code) =&gt; (
-    &lt;Highlight {...defaultProps} theme={theme} code={code} language=&quot;jsx&quot;&gt;
-      {({ className, style, tokens, getLineProps, getTokenProps }) =&gt; (
-        &lt;Fragment&gt;
-          {tokens.map((line, i) =&gt; (
-            &lt;div {...getLineProps({ line, key: i })}&gt;
-              {line.map((token, key) =&gt; (
-                &lt;span {...getTokenProps({ token, key })} /&gt;
-              ))}
-            &lt;/div&gt;
-          ))}
-        &lt;/Fragment&gt;
-      )}
-    &lt;/Highlight&gt;
-  );
+  class EditorExample extends Component {
+    state = { code: exampleCode };
 
-  render() {
-    return (
-      &lt;Editor
-        value={this.state.code}
-        onValueChange={this.onValueChange}
-        highlight={this.highlight}
-        padding={10}
-        style={styles.root}
-      /&gt;
+    onValueChange = (code) =&gt; {
+      this.setState({ code });
+    };
+
+    highlight = (code) =&gt; (
+      &lt;Highlight {...defaultProps} theme={theme} code={code} language=&quot;jsx&quot;&gt;
+        {({ className, style, tokens, getLineProps, getTokenProps }) =&gt; (
+          &lt;Fragment&gt;
+            {tokens.map((line, i) =&gt; (
+              &lt;div {...getLineProps({ line, key: i })}&gt;
+                {line.map((token, key) =&gt; (
+                  &lt;span {...getTokenProps({ token, key })} /&gt;
+                ))}
+              &lt;/div&gt;
+            ))}
+          &lt;/Fragment&gt;
+        )}
+      &lt;/Highlight&gt;
     );
-  }
-}
 
-return &lt;EditorExample /&gt;;
+    render() {
+      return (
+        &lt;Editor
+          value={this.state.code}
+          onValueChange={this.onValueChange}
+          highlight={this.highlight}
+          padding={10}
+          style={styles.root}
+        /&gt;
+      );
+    }
+  }
+
+  return &lt;EditorExample /&gt;;
+})();
 
 </code></pre></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="🔬 Tests, experiments and investigations" href="/testing/index.html">🔬 Tests, experiments and investigations</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>

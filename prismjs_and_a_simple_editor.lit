@@ -1,13 +1,20 @@
 # PrismJs
 
 ```js react=true babel=true
-import Editor from "react-simple-code-editor";
-import Highlight, { defaultProps } from "prism-react-renderer";
-import theme from "prism-react-renderer/themes/nightOwl";
+return (async (fn) => {
+  const Editor = await import(
+    "https://cdn.skypack.dev/react-simple-code-editor"
+  );
+  const Highlight = await import(
+    "https://cdn.skypack.dev/prism-react-renderer"
+  );
+  const theme = await import(
+    "https://cdn.skypack.dev/prism-react-renderer/themes/nightOwl"
+  );
 
-const { Fragment, Component } = lit.utils.React;
+  const { Fragment, Component } = lit.utils.React;
 
-const exampleCode = `
+  const exampleCode = `
 (function someDemo() {
   var test = "Hello World!";
   console.log(test);
@@ -16,50 +23,51 @@ const exampleCode = `
 return () => <App />;
 `;
 
-const styles = {
-  root: {
-    boxSizing: "border-box",
-    fontFamily: '"Dank Mono", "Fira Code", monospace',
-    ...theme.plain,
-  },
-};
-
-class EditorExample extends Component {
-  state = { code: exampleCode };
-
-  onValueChange = (code) => {
-    this.setState({ code });
+  const styles = {
+    root: {
+      boxSizing: "border-box",
+      fontFamily: '"Dank Mono", "Fira Code", monospace',
+      ...theme.plain,
+    },
   };
 
-  highlight = (code) => (
-    <Highlight {...defaultProps} theme={theme} code={code} language="jsx">
-      {({ className, style, tokens, getLineProps, getTokenProps }) => (
-        <Fragment>
-          {tokens.map((line, i) => (
-            <div {...getLineProps({ line, key: i })}>
-              {line.map((token, key) => (
-                <span {...getTokenProps({ token, key })} />
-              ))}
-            </div>
-          ))}
-        </Fragment>
-      )}
-    </Highlight>
-  );
+  class EditorExample extends Component {
+    state = { code: exampleCode };
 
-  render() {
-    return (
-      <Editor
-        value={this.state.code}
-        onValueChange={this.onValueChange}
-        highlight={this.highlight}
-        padding={10}
-        style={styles.root}
-      />
+    onValueChange = (code) => {
+      this.setState({ code });
+    };
+
+    highlight = (code) => (
+      <Highlight {...defaultProps} theme={theme} code={code} language="jsx">
+        {({ className, style, tokens, getLineProps, getTokenProps }) => (
+          <Fragment>
+            {tokens.map((line, i) => (
+              <div {...getLineProps({ line, key: i })}>
+                {line.map((token, key) => (
+                  <span {...getTokenProps({ token, key })} />
+                ))}
+              </div>
+            ))}
+          </Fragment>
+        )}
+      </Highlight>
     );
-  }
-}
 
-return <EditorExample />;
+    render() {
+      return (
+        <Editor
+          value={this.state.code}
+          onValueChange={this.onValueChange}
+          highlight={this.highlight}
+          padding={10}
+          style={styles.root}
+        />
+      );
+    }
+  }
+
+  return <EditorExample />;
+})();
 
 ```
