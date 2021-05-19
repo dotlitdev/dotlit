@@ -496,99 +496,7 @@ return (async args => {
 
 ## What ifs, and experimental features
 
-### Viewer REPL
 
-What if **REPLs** were just custom viewers [[renderer/viewers]]? Implementing clientside execution via custom `!viewer`.
-
-
-
-
-
-
-
-
-
-useEffect for execution on load otherwise require button press to exec.
-
-```js !plugin of=esm
-export const viewer = ({node, React}) => {
-  const rce = React.createElement
-  const {useState, useEffect} = React
-  const [resp, setResp] = useState(null)
-  const [run, setRun] = useState(0)
-  
-  const exec = ev => {
-    ev && ev.stopPropagation()
-    setRun(run+1)
-    load(node.data.value)
-    return false
-  }
-
-  useEffect( args => {
-    if(run===0 && node.properties.meta.exec==="onload")
-       exec()
-  },[])
-
-  async function load(src) {
-    const val = `//run: ${run}\n${src}`
-    const module = await import(`data:text/javascript;base64,${ btoa(src)}`);
-    if (typeof module.returns === 'function') setResp(await module.returns(run))
-    else if (module.returns) setResp(module.returns)
-  }
-
-  const btn = rce('button', {onClick: exec}, "Run " + run)
-  const t = rce('div', null, [btn, resp])
-  return t
-}
-if(typeof module !== "undefined") module.exports.viewer = viewer
-```
-```esm !below
-function foo(baz) {
-  alert("foo II")
-  return "bar:" + baz
-}
-export const returns = foo
-```
-```js !below viewer=esm
-import confetti from 'https://cdn.skypack.dev/canvas-confetti'
-
-export const returns = run => confetti({
-  origin: {y: 0},
-  spread: 55,
-  particleCount: 100,
-  ticks: 1000,
-})
-```
-
-Setting `exec` attribute to `onload`
-
-```esm !below exec=onload
-function output(num) {
-  alert("execd onload!")
-  return "done: " + new Date()
-}
-export const returns = output()
-```
-
-
-Cannot *yet* output raw DOM nodes, due to react setup of viewers.
-
-```esm !below
-function output(num) {
-  const dom = document.createElement("pre")
-  dom.innerHTML = `Run number ${num}`
-  return dom
-}
-export const returns = output
-```
-
-So far so good, the only issue is that output is entirely ephemeral, how would we enable document modification, ie persist the output as an attached cell.
-
-```esm !below
-import git from 'https://cdn.skypack.dev/isomorphic-git'
-
-export const returns = git 
-```
 
 
 ### Module from string 🥲
@@ -666,7 +574,7 @@ const babelPlugin
 return format(thisCellsSource, { parser: "babel",plugins: [babelPlugin]})
 })()
 ```
-```>js #formatted attached=true updated=1621285936204
+```>js #formatted attached=true updated=1621285984079
 return (async (fn) => {
   // intentionally [sic] badly formatted
   const p = await import("https://unpkg.com/prettier@2.3.0/esm/standalone.mjs");
@@ -674,10 +582,8 @@ return (async (fn) => {
   const b = await import(
     "https://unpkg.com/prettier@2.3.0/esm/parser-babel.mjs"
   );
-  const format = 
-p.default.format;
-  const babelPlugin = 
-b.default;
+  const format = p.default.format;
+  const babelPlugin = b.default;
 
   const thisCellsSource = this.children[0].children[0].data.value;
 
