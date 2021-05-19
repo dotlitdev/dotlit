@@ -26,15 +26,20 @@ A 91.78470254957507% reduction in size.
 
 Looking up a file, check for existence:
 ```js
-return (async fn => {
-  const {CompactPrefixTree, getWordsFromTrie} = await import('https://cdn.skypack.dev/compact-prefix-tree')
+return (async (fn) => {
+  const { CompactPrefixTree, getWordsFromTrie } = await import(
+    "https://cdn.skypack.dev/compact-prefix-tree"
+  );
 
-  const json = await fetch('/testing/compactManifest1.json').then(res => res.json())
+  const json = await fetch("/testing/compactManifest1.json").then((res) =>
+    res.json()
+  );
   // return json
-  const keys = getWordsFromTrie(json)
-  const trie = new CompactPrefixTree(Array.from(keys))
-  return trie.prefix('testing/log/day.lit?extranious')
-})()
+  const keys = getWordsFromTrie(json);
+  const trie = new CompactPrefixTree(Array.from(keys));
+  return trie.prefix("testing/log/");
+})();
+
 ```
 ```>txt  updated=1621380328935
 { prefix: 'testing/log/day.lit', isProper: true }
