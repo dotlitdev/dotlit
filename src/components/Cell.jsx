@@ -70,7 +70,7 @@ const Cell = props => {
         const transformer = lit.file?.data?.plugins?.transformer?.[transform]
         if (transformer) {
             const newSrc = await transformer({node, src, codeSource, rawSource, originalSource})
-            ctx.setSrc(pos, newSource)
+            ctx.setSrc(pos, newSrc)
         } else {
             ctx.setSrc(pos, src)
         }
