@@ -1,6 +1,78 @@
 # PrismJs
 
-```js react=true babel=true
+```js react=true babel=true !collapse #initial
+return (async (fn) => {
+  const Editor = (
+    await import("https://cdn.skypack.dev/react-simple-code-editor")
+  ).default;
+  const Highlight = (
+    await import("https://cdn.skypack.dev/prism-react-renderer")
+  ).default;
+  const theme = (
+    await import("https://cdn.skypack.dev/prism-react-renderer/themes/nightOwl")
+  ).default;
+
+  // return { Editor, Highlight, theme };
+
+  const React = lit.utils.React;
+  const { Fragment, useState } = React;
+
+  const exampleCode = `
+(function someDemo() {
+  var test = "Hello World!";
+  console.log(test);
+})();
+
+return () => <App />;
+`;
+
+  const styles = {
+    root: {
+      boxSizing: "border-box",
+      fontFamily: '"Dank Mono", "Fira Code", monospace',
+      ...theme.plain,
+    },
+  };
+
+  const EditorExample = (props) => {
+    const [state, setState] = useState({ code: exampleCode });
+
+    const onValueChange = (code) => {
+      setState({ code });
+    };
+
+    const highlight = (code) => (
+      <Highlight {...{}} theme={theme} code={code} language="jsx">
+        {({ className, style, tokens, getLineProps, getTokenProps }) => (
+          <Fragment>
+            {tokens.map((line, i) => (
+              <div {...getLineProps({ line, key: i })}>
+                {line.map((token, key) => (
+                  <span {...getTokenProps({ token, key })} />
+                ))}
+              </div>
+            ))}
+          </Fragment>
+        )}
+      </Highlight>
+    );
+
+    return (
+      <Editor
+        value={state.code}
+        onValueChange={onValueChange}
+        highlight={highlight}
+        padding={10}
+        style={styles.root}
+      />
+    );
+  };
+
+  return <EditorExample />;
+})();
+
+```
+```js react=true babel=true !collapse #initial
 return (async (fn) => {
   const Editor = (
     await import("https://cdn.skypack.dev/react-simple-code-editor")
