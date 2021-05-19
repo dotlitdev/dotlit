@@ -56,7 +56,7 @@ return (async (fn) => {
 Implementing as a transformer `!plugin`
 
 ```js !plugin type=transformer of=prettier 
-export const transformer = ({node, src, codeSource, rawSource, originalSource}) => {
+export const transformer = async ({node, src, codeSource, rawSource, originalSource}) => {
   const lines = src.split('\n')
   let [first, ...rest] = lines
   let middle = rest.slice(0,-1)
@@ -76,9 +76,10 @@ export const transformer = ({node, src, codeSource, rawSource, originalSource}) 
 }
 ```
 
-```js transformer=prettier !prettied
-     // make me 
-  // prettier
+```js transformer=prettier !prettied !prettied
+// make me
+// prettier
 
+return async (fn) => {};
 
 ```
