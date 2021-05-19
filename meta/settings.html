@@ -31,29 +31,40 @@ Require stack:
 }
 </code></pre></codecell></div></cell><cell startpos="41:1-810" endpos="51:4-1063" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const all = lit.file.data.plugins
 return Object.keys(all).map(t=&gt;`${t} (${Object.keys(all[t]).length})`)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">14m ago</span></span></span><output><pre><code class="txt">[ &#x27;transformer (1)&#x27;,
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">23m ago</span></span></span><output><pre><code class="txt">[ &#x27;transformer (1)&#x27;,
   &#x27;viewer (3)&#x27;,
   &#x27;cellmenu (1)&#x27;,
   &#x27;sectionmenu (1)&#x27;,
   &#x27;repl (1)&#x27; ]
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="60:1-1072" endpos="70:4-1341"><cell startpos="60:1-1072" endpos="62:82-1172"><div class="cell-content"><h2 id="custom-plugins">Custom plugins</h2><p>Included below, and therefore available in all <code>.lit</code> documents in this notebook.</p></div></cell><section depth="3" class="" startpos="64:1-1174" endpos="70:4-1341"><cell startpos="64:1-1174" endpos="66:43-1247"><div class="cell-content"><h3 id="prettier-js-transformer">Prettier <code>js</code> transformer</h3><p>See <a href="testing/autoformatting_cell_source.html?file=testing/autoformatting_cell_source.lit" title="testing/Autoformatting cell source" wikilink="true">testing/Autoformatting cell source</a></p></div></cell><cell startpos="68:1-1249" endpos="70:4-1341" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=transformer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=js</span><span class="source">&lt; ../plugins/transformers/prettier.js</span></span><pre><code class="js">export const transformer = async ({node, src, codeSource, rawSource, originalSource}) =&gt; {
-  const lines = src.split(&#x27;\n&#x27;)
-  let [first, ...rest] = lines
-  let middle = rest.slice(0,-1)
-  const [last] = rest.slice(-1)
-  const body = middle.join(&#x27;\n&#x27;)
+<section depth="2" class="" startpos="60:1-1072" endpos="70:4-1341"><cell startpos="60:1-1072" endpos="62:82-1172"><div class="cell-content"><h2 id="custom-plugins">Custom plugins</h2><p>Included below, and therefore available in all <code>.lit</code> documents in this notebook.</p></div></cell><section depth="3" class="" startpos="64:1-1174" endpos="70:4-1341"><cell startpos="64:1-1174" endpos="66:43-1247"><div class="cell-content"><h3 id="prettier-js-transformer">Prettier <code>js</code> transformer</h3><p>See <a href="testing/autoformatting_cell_source.html?file=testing/autoformatting_cell_source.lit" title="testing/Autoformatting cell source" wikilink="true">testing/Autoformatting cell source</a></p></div></cell><cell startpos="68:1-1249" endpos="70:4-1341" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=transformer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=js</span><span class="source">&lt; ../plugins/transformers/prettier.js</span></span><pre><code class="js">export const transformer = async ({
+  node,
+  src,
+  codeSource,
+  rawSource,
+  originalSource,
+}) =&gt; {
+  const lines = src.split(&quot;\n&quot;);
+  let [first, ...rest] = lines;
+  let middle = rest.slice(0, -1);
+  const [last] = rest.slice(-1);
+  const body = middle.join(&quot;\n&quot;);
 
-  const p = await import(&#x27;https://unpkg.com/prettier@2.3.0/esm/standalone.mjs&#x27;)
-  const b = await import(&#x27;https://unpkg.com/prettier@2.3.0/esm/parser-babel.mjs&#x27;)
+  const p = await import(&quot;https://unpkg.com/prettier@2.3.0/esm/standalone.mjs&quot;);
+  const b = await import(
+    &quot;https://unpkg.com/prettier@2.3.0/esm/parser-babel.mjs&quot;
+  );
 
-  const format = p.default.format
-  const babelPlugin = b.default
+  const format = p.default.format;
+  const babelPlugin = b.default;
 
+  return [
+    first,
+    format(body, { parser: &quot;babel&quot;, plugins: [babelPlugin] }),
+    last,
+  ].join(&quot;\n&quot;);
+};
 
-  return [first, format(body, { parser: &quot;babel&quot;,plugins: [babelPlugin]}), last].join(&#x27;\n&#x27;)
-
-}
 </code></pre></codecell></div></cell></section></section>
 <section depth="3" class="" startpos="72:1-1343" endpos="121:4-2583"><cell startpos="72:1-1343" endpos="74:93-1452"><div class="cell-content"><h3 id="upload-file">Upload file</h3><p>Ref: <a href="https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications">https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications<span class="linkIcon">↗</span></a></p></div></cell><cell startpos="76:1-1454" endpos="117:4-2559" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=upload</span></span><pre><code class="js">export const viewer = ({ node, React }) =&gt; {
   const { useState } = React;
