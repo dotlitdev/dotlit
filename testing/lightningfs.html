@@ -138,7 +138,7 @@ return lit.fs.writeFile(path, &quot;content&quot;, {
   encoding: &#x27;utf8&#x27;,
   localOnly: true
 })
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.9d ago</span></span></span><output><pre><code class="txt">{ type: &#x27;element&#x27;,
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.0d ago</span></span></span><output><pre><code class="txt">{ type: &#x27;element&#x27;,
   tagName: &#x27;cell&#x27;,
   properties: { class: &#x27;cell&#x27; },
   children: 
@@ -158,7 +158,7 @@ return lit.fs.writeFile(path, &quot;content&quot;, {
 undefined
 </code></pre></output></codecell></div></cell></section>
 <section depth="2" class="" startpos="181:1-4748" endpos="267:4-7415"><cell startpos="181:1-4748" endpos="181:12-4759"><div class="cell-content"><h2 id="plugins">Plugins</h2></div></cell><section depth="3" class="" startpos="183:1-4761" endpos="267:4-7415"><cell startpos="183:1-4761" endpos="183:16-4776"><div class="cell-content"><h3 id="fs-plugin"><code>fs</code> plugin</h3></div></cell><cell startpos="185:1-4778" endpos="190:4-4919" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return lit.utils.momento
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.9d ago</span></span></span><output><pre><code class="txt">{ MsToRelative: [Getter], DatesToRelativeDelta: [Getter] }
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.0d ago</span></span></span><output><pre><code class="txt">{ MsToRelative: [Getter], DatesToRelativeDelta: [Getter] }
 </code></pre></output></codecell></div></cell><cell startpos="193:1-4922" endpos="263:4-7401" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-jsx local collapsed"><a name="fsviewer.jsx"></a><span class="meta"><span class="lang">jsx</span><span class="filename">fsviewer.jsx</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=fs</span></span><pre><code class="jsx">export const viewer = ({node, React}) =&gt; {
   const {useState, useEffect} = React
   const {join,extname} = lit.utils.path
@@ -247,7 +247,7 @@ const visit = async (root) =&gt; {
 }
 
 return (async fn =&gt; JSON.stringify(await visit(&#x27;/&#x27;), null, 2))()
-</code></pre></codecell><codecell class="dir-collapse lang-json local collapsed output"><span class="meta"><span class="lang">json</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="updatedAt">Updated <span class="Time relative">3.5d ago</span></span></span><output><pre><code class="json">[
+</code></pre></codecell><codecell class="dir-collapse lang-json local collapsed output"><span class="meta"><span class="lang">json</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="updatedAt">Updated <span class="Time relative">3.6d ago</span></span></span><output><pre><code class="json">[
   {
     &quot;pathname&quot;: &quot;/testing&quot;,
     &quot;type&quot;: &quot;dir&quot;,
@@ -432,53 +432,75 @@ return (async fn =&gt; JSON.stringify(await visit(&#x27;/&#x27;), null, 2))()
   }
 ]
 </code></pre></output></codecell></div></cell></section>
-<section depth="3" class="" startpos="477:1-12120" endpos="529:4-13643"><cell startpos="477:1-12120" endpos="477:27-12146"><div class="cell-content"><h3 id="finder-from-manifest">Finder (from manifest)</h3></div></cell><cell startpos="480:1-12149" endpos="526:4-13621" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=search</span></span><pre><code class="js">
-const sortBy = keys =&gt; (a, b) =&gt; {
+<section depth="3" class="" startpos="477:1-12120" endpos="551:4-13804"><cell startpos="477:1-12120" endpos="477:27-12146"><div class="cell-content"><h3 id="finder-from-manifest">Finder (from manifest)</h3></div></cell><cell startpos="480:1-12149" endpos="548:4-13782" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=search</span></span><pre><code class="js">const sortBy = (keys) =&gt; (a, b) =&gt; {
   for (const key of keys) {
-     if (a[key] !== b[key]) break;
-     else return (a[key] &gt; b[key]) ? 1 : -1
+    if (a[key] !== b[key]) break;
+    else return a[key] &gt; b[key] ? 1 : -1;
   }
-}
+};
 
-const itemBuilder = (React) =&gt; item =&gt; {
-  const rc = React.createElement
-  return rc(&#x27;li&#x27;, {className: &#x27;item&#x27;}, rc(&#x27;a&#x27;, {href: lit.href || (lit.location.root + item.id)}, item.title || item.id))
-}
+const itemBuilder = (React) =&gt; (item) =&gt; {
+  const rc = React.createElement;
+  return rc(
+    &quot;li&quot;,
+    { className: &quot;item&quot; },
+    rc(
+      &quot;a&quot;,
+      { href: lit.href || lit.location.root + item.id },
+      item.title || item.id
+    )
+  );
+};
 
-export const viewer = ({node, React}) =&gt; {
-  const rc = React.createElement
-  const {useState, useEffect} = React
-  const meta = node.properties 
-               &amp;&amp; node.properties.meta
-  const [src,setSrc] = useState(meta.search || node.data.value.trim())
-  const [content, setContent] = useState(&#x27;Loading...&#x27;)
-  const item = itemBuilder(React)
-  
+export const viewer = ({ node, React }) =&gt; {
+  const rc = React.createElement;
+  const { useState, useEffect } = React;
+  const meta = node.properties &amp;&amp; node.properties.meta;
+  const [src, setSrc] = useState(meta.search || node.data.value.trim());
+  const [content, setContent] = useState(&quot;Loading...&quot;);
+  const item = itemBuilder(React);
+
   useEffect(async () =&gt; {
-    const resp = await fetch(&quot;/manifest.json&quot;)
-    const json = await resp.json()
-    let regex
-    try {regex = new RegExp(src,&#x27;i&#x27;)} catch(err){}
+    const resp = await fetch(&quot;/manifest.json&quot;);
+    const json = await resp.json();
+    let regex;
+    try {
+      regex = new RegExp(src, &quot;i&quot;);
+    } catch (err) {}
     const res = json.nodes
-        .map(x =&gt; x)
-        .filter(x =&gt; {
-           return x.id.indexOf(src) &gt;= 0
-              || (regex &amp;&amp; regex.test(x.id)) || (x.title &amp;&amp; (x.title.indexOf(src) &gt;= 0
-              || (regex &amp;&amp; regex.test(x.title))))
+      .map((x) =&gt; x)
+      .filter((x) =&gt; {
+        return (
+          x.id.indexOf(src) &gt;= 0 ||
+          (regex &amp;&amp; regex.test(x.id)) ||
+          (x.title &amp;&amp;
+            (x.title.indexOf(src) &gt;= 0 || (regex &amp;&amp; regex.test(x.title))))
+        );
+      })
+      .sort()
+      .map((x) =&gt; item(x));
+    //.join(&quot;\n&quot;)
+    setContent(rc(&quot;ol&quot;, null, res));
+  }, [src]);
 
-        })
-        .sort()
-        .map(x =&gt; item(x))
-        //.join(&quot;\n&quot;)
-    setContent(rc(&#x27;ol&#x27;, null, res))
-  },[src])
+  return rc(
+    &quot;div&quot;,
+    {
+      className: &quot;custom-react-view&quot;,
+    },
+    [
+      rc(&quot;input&quot;, {
+        style: { width: &quot;100%&quot;, fontSize: &quot;1.2em&quot; },
+        value: src,
+        onChange: (e) =&gt; setSrc(e.target.value),
+      }),
+      content,
+    ]
+  );
+};
 
-  return rc(&#x27;div&#x27;, {
-    className: &#x27;custom-react-view&#x27;,
-  }, [rc(&#x27;input&#x27;,{style:{width:&#x27;100%&#x27;, fontSize: &#x27;1.2em&#x27;},value:src, onChange: e =&gt; setSrc(e.target.value)}), content])
-}
-</code></pre></codecell></div></cell><cell startpos="527:1-13622" endpos="529:4-13643" class="code output"><div class="cell-content"><codecell class="lang-search local output"><span class="meta"><span class="lang">search</span></span><div class="custom-react-view"><input style="width:100%;font-size:1.2em" value="G.*hUb"/>Loading...</div></codecell></div></cell></section>
-<section depth="2" class="" startpos="530:1-13644" endpos="651:4-17674"><cell startpos="530:1-13644" endpos="530:30-13673"><div class="cell-content"><h2 id="sync-localremoteorigin">Sync <code>local|remote|origin</code></h2></div></cell><cell startpos="533:1-13676" endpos="609:4-15971" class="code"><div class="cell-content"><codecell class="dir-collapse tag-sync lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#0361a9" class="tag">sync</span></span><pre><code class="js">// fetch all remote files and store
+</code></pre></codecell></div></cell><cell startpos="549:1-13783" endpos="551:4-13804" class="code output"><div class="cell-content"><codecell class="lang-search local output"><span class="meta"><span class="lang">search</span></span><div class="custom-react-view"><input style="width:100%;font-size:1.2em" value="G.*hUb"/>Loading...</div></codecell></div></cell></section>
+<section depth="2" class="" startpos="552:1-13805" endpos="673:4-17835"><cell startpos="552:1-13805" endpos="552:30-13834"><div class="cell-content"><h2 id="sync-localremoteorigin">Sync <code>local|remote|origin</code></h2></div></cell><cell startpos="555:1-13837" endpos="631:4-16132" class="code"><div class="cell-content"><codecell class="dir-collapse tag-sync lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#0361a9" class="tag">sync</span></span><pre><code class="js">// fetch all remote files and store
 // locally if they don&#x27;t already exist 
 return (async fn =&gt; {
   const t = Date.now()
@@ -515,7 +537,7 @@ return (async fn =&gt; {
   return {duds, errors}
 })()
 
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">12h ago</span></span></span><output><pre><code class="txt">Synced 7/145 files in 1.119 seconds. Duds: 31 Errors: 2
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">13.0h ago</span></span></span><output><pre><code class="txt">Synced 7/145 files in 1.119 seconds. Duds: 31 Errors: 2
 { duds: 
    [ &#x27;log/checkforinput.js&#x27;,
      &#x27;log/today.js&#x27;,
@@ -551,7 +573,7 @@ return (async fn =&gt; {
   errors: 
    [ &#x27;../scratch_pad.lit#viewers : Unable to normalize path - traverses above root directory&#x27;,
      &#x27;../../../../../meta/settings.lit#plantuml-viewer--repl : Unable to normalize path - traverses above root directory&#x27; ] }
-</code></pre></output></codecell></div></cell><cell startpos="610:1-15972" endpos="651:4-17674" class="code output"><div class="cell-content"><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.9d ago</span></span></span><output><pre><code class="txt">Synced 90/139 files in 0.616 seconds. Duds: 30 Errors: 7
+</code></pre></output></codecell></div></cell><cell startpos="632:1-16133" endpos="673:4-17835" class="code output"><div class="cell-content"><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.0d ago</span></span></span><output><pre><code class="txt">Synced 90/139 files in 0.616 seconds. Duds: 30 Errors: 7
 { duds: 
    [ &#x27;remark.lit&#x27;,
      &#x27;viewers.lit&#x27;,
@@ -592,6 +614,6 @@ return (async fn =&gt; {
      &#x27;../utils/git-commit-all.js : Unable to normalize path - traverses above root directory&#x27;,
      &#x27;../../../../../testing/log/2021-w21.lit : Unable to normalize path - traverses above root directory&#x27; ] }
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="656:1-17679" endpos="662:28-17844"><cell startpos="656:1-17679" endpos="656:21-17699"><div class="cell-content"><h2 id="emergency-wipe-️">Emergency wipe ⚠️</h2></div></cell><cell startpos="658:1-17701" endpos="660:4-17815" class="code output"><div class="cell-content"><codecell class="dir-warn lang-md local output"><span class="meta"><span class="lang">md</span><span style="color:white;background-color:#037928" class="directive dir-warn">warn</span></span><div class="md-block dir-warn">
+<section depth="2" class="" startpos="678:1-17840" endpos="684:28-18005"><cell startpos="678:1-17840" endpos="678:21-17860"><div class="cell-content"><h2 id="emergency-wipe-️">Emergency wipe ⚠️</h2></div></cell><cell startpos="680:1-17862" endpos="682:4-17976" class="code output"><div class="cell-content"><codecell class="dir-warn lang-md local output"><span class="meta"><span class="lang">md</span><span style="color:white;background-color:#037928" class="directive dir-warn">warn</span></span><div class="md-block dir-warn">
 <p>Clicking log he following link will prompt you to confirm you want to wipe the local file system!</p>
-</div></codecell></div></cell><cell startpos="662:1-17817" endpos="662:28-17844"><div class="cell-content"><p><a href="?__lfs_wipe=true">WIPE ⚠️<span class="linkIcon">§</span></a></p></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (3)</h4><ol><li><a title=".lit Filesystem" href="/filesystem/index.html">.lit Filesystem</a></li><li><a title="Isomorphic Git" href="/testing/isomorphic_git.html">Isomorphic Git</a></li><li><a title="Local and Remote files" href="/testing/local_remote_files.html">Local and Remote files</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
+</div></codecell></div></cell><cell startpos="684:1-17978" endpos="684:28-18005"><div class="cell-content"><p><a href="?__lfs_wipe=true">WIPE ⚠️<span class="linkIcon">§</span></a></p></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (3)</h4><ol><li><a title=".lit Filesystem" href="/filesystem/index.html">.lit Filesystem</a></li><li><a title="Isomorphic Git" href="/testing/isomorphic_git.html">Isomorphic Git</a></li><li><a title="Local and Remote files" href="/testing/local_remote_files.html">Local and Remote files</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
