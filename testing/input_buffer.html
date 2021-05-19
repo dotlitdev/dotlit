@@ -1,44 +1,54 @@
-<html data-reactroot=""><head><title>Input Buffer</title><meta name="litsrc" value="testing/input_buffer.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="17:21-586"><cell startpos="1:1-0" endpos="1:15-14"><div class="cell-content"><h1 id="input-buffer">Input Buffer</h1></div></cell><cell startpos="3:1-16" endpos="8:4-211" class="code"><div class="cell-content"><codecell class="dir-collapse dir-hidemeta lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#964f82" class="directive dir-hidemeta">hidemeta</span><span class="attribute attr-exec" style="color:black;background-color:#02fb89">exec=onload</span><span class="source">&lt; log/checkforinput.js</span><span class="output">&gt; md !info</span></span><pre><code class="js">const date = new Date()
-const isoDate = date.toISOString().split(&quot;T&quot;)[0]
-const today = isoDate
-const year = date.getFullYear()
-const month = isoDate.split(&#x27;-&#x27;)[1]
+<html data-reactroot=""><head><title>Input Buffer</title><meta name="litsrc" value="testing/input_buffer.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="17:21-586"><cell startpos="1:1-0" endpos="1:15-14"><div class="cell-content"><h1 id="input-buffer">Input Buffer</h1></div></cell><cell startpos="3:1-16" endpos="8:4-211" class="code"><div class="cell-content"><codecell class="dir-collapse dir-hidemeta lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#964f82" class="directive dir-hidemeta">hidemeta</span><span class="attribute attr-exec" style="color:black;background-color:#02fb89">exec=onload</span><span class="source">&lt; log/checkforinput.js</span><span class="output">&gt; md !info</span></span><pre><code class="js">const date = new Date();
+const isoDate = date.toISOString().split(&quot;T&quot;)[0];
+const today = isoDate;
+const year = date.getFullYear();
+const month = isoDate.split(&quot;-&quot;)[1];
 
 const firstDayOfYear = new Date(year, 0, 1);
 const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
 const week = Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
 
-const filename = t =&gt; `testing/log/${t}.lit`
+const filename = (t) =&gt; `testing/log/${t}.lit`;
 
 const checkForInput = async () =&gt; {
-  const insp = lit.utils.inspect
-  const qs = lit.utils.querystring
+  const insp = lit.utils.inspect;
+  const qs = lit.utils.querystring;
 
-  const search = location.search
-  const query = search
-              &amp;&amp; qs.parse(search.slice(1))
+  const search = location.search;
+  const query = search &amp;&amp; qs.parse(search.slice(1));
 
   if (query?.input) {
-    const input = query.input
-    delete query.input
-    const qsWoInput = qs.stringify(query)
-    window.history.replaceState(null,null,&#x27;?&#x27; + qsWoInput)
+    const input = query.input;
+    delete query.input;
+    const qsWoInput = qs.stringify(query);
+    window.history.replaceState(null, null, &quot;?&quot; + qsWoInput);
 
-    let stat = {local:{},remote:{}} 
-    try { stat = await lit.fs.readStat(`/${filename(today)}`, {encoding: &#x27;utf8&#x27;}) } catch(err) {}
-    const newContent = ((stat.local.stat &amp;&amp; stat.local.value) || stat.remote.value || `# ${today}
+    let stat = { local: {}, remote: {} };
+    try {
+      stat = await lit.fs.readStat(`/${filename(today)}`, { encoding: &quot;utf8&quot; });
+    } catch (err) {}
+    const newContent =
+      ((stat.local.stat &amp;&amp; stat.local.value) ||
+        stat.remote.value ||
+        `# ${today}
 
-See [week ${week}](/${filename(year + &quot;-w&quot; + week)}), [month ${month}](/${filename(year+&quot;-&quot;+month)}) or [year ${year}](/${filename(year)})
-`) + (&quot;\n&quot; + input)
-    await lit.fs.writeFile(`/${filename(today)}`, newContent)
+See [week ${week}](/${filename(
+          year + &quot;-w&quot; + week
+        )}), [month ${month}](/${filename(
+          year + &quot;-&quot; + month
+        )}) or [year ${year}](/${filename(year)})
+`) +
+      (&quot;\n&quot; + input);
+    await lit.fs.writeFile(`/${filename(today)}`, newContent);
     return `***Captured Input (below) to [${today}](/${filename(today)})***
 
-${input}`
-    } else {
-      return &quot;*No input detected.*&quot;
+${input}`;
+  } else {
+    return &quot;*No input detected.*&quot;;
   }
-}
-return checkForInput()
+};
+return checkForInput();
+
 </code></pre></codecell><codecell class="dir-warn lang-md local output"><span class="meta"><span class="lang">md</span><span style="color:white;background-color:#037928" class="directive dir-warn">warn</span><span class="updatedAt">Updated <span class="Time relative">1w ago</span></span></span><div class="md-block dir-warn">
 <p>👀 <em>Checking for input...</em></p>
 </div></codecell></div></cell><cell startpos="10:1-213" endpos="15:4-564" class="code"><div class="cell-content"><codecell class="dir-collapse dir-hidemeta lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#964f82" class="directive dir-hidemeta">hidemeta</span><span class="attribute attr-exec" style="color:black;background-color:#02fb89">exec=onload</span><span class="source">&lt; log/today.js</span><span class="output">&gt; md !bigger</span></span><pre><code class="js">const date = new Date();
