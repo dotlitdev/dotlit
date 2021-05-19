@@ -246,54 +246,59 @@ Uses [plantuml.com](https://plantuml.com) to create `svg` images from `uml` sour
 *Implementation:*
 
 ```js !plugin of=uml !collapse #viewer type=repl
-
 async function encodePlantUML(src) {
-      console.log("encoding", src)
-      const module = await import("https://cdn.skypack.dev/plantuml-encoder");
-      const encoded = module.encode(src) //.replace(/\n/g, '\\n'))
-      console.log(encoded)
-      return encoded
+  console.log("encoding", src);
+  const module = await import("https://cdn.skypack.dev/plantuml-encoder");
+  const encoded = module.encode(src); //.replace(/\n/g, '\\n'))
+  console.log(encoded);
+  return encoded;
 }
 
-const getEndpoint = (format, encoded) => `https://plantuml.com/plantuml/${format}/` + encoded
+const getEndpoint = (format, encoded) =>
+  `https://plantuml.com/plantuml/${format}/` + encoded;
 
 export const repl = async (src, meta, node) => {
-  const format = (meta && meta.format) || 'svg'
+  const format = (meta && meta.format) || "svg";
   try {
-    const encoded = await encodePlantUML(src)
-    const url = getEndpoint(format, encoded)
-    const resp = await fetch(url)
+    const encoded = await encodePlantUML(src);
+    const url = getEndpoint(format, encoded);
+    const resp = await fetch(url);
     if (meta.writefile) {
-    
     }
-    return resp.status
-  } catch(err) {
-    return "Error: " + err.message
+    return resp.status;
+  } catch (err) {
+    return "Error: " + err.message;
   }
-}
+};
 
-export const viewer = ({node, React}) => {
-  const rc = React.createElement
-  const {useState, useEffect} = React
-  const meta = node.properties 
-               && node.properties.meta
+export const viewer = ({ node, React }) => {
+  const rc = React.createElement;
+  const { useState, useEffect } = React;
+  const meta = node.properties && node.properties.meta;
 
-  const format = (meta && meta.format) || 'svg'
-  const [url, setUrl] = useState(null)
+  const format = (meta && meta.format) || "svg";
+  const [url, setUrl] = useState(null);
 
-  const src = node.value
-  useEffect(async ()=> {
-    const encoded = await encodePlantUML(node.data.value)
-    const url = getEndpoint(format, encoded)
-    setUrl(url)
-  },[src])
+  const src = node.value;
+  useEffect(async () => {
+    const encoded = await encodePlantUML(node.data.value);
+    const url = getEndpoint(format, encoded);
+    setUrl(url);
+  }, [src]);
 
-  return rc('div', {
-    className: 'lit-viewer-plantuml2',
-  }, url ? rc('img', {
-    src: url,
-  }) : "Loading...")
-}
+  return rc(
+    "div",
+    {
+      className: "lit-viewer-plantuml2",
+    },
+    url
+      ? rc("img", {
+          src: url,
+        })
+      : "Loading..."
+  );
+};
+
 ```
 
 
