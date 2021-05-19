@@ -1,4 +1,4 @@
-<html data-reactroot=""><head><title>PrismJs</title><meta name="litsrc" value="prismjs_and_a_simple_editor.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="73:4-1634"><cell startpos="1:1-0" endpos="1:10-9"><div class="cell-content"><h1 id="prismjs">PrismJs</h1></div></cell><cell startpos="3:1-11" endpos="73:4-1634" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async (fn) =&gt; {
+<html data-reactroot=""><head><title>PrismJs</title><meta name="litsrc" value="prismjs_and_a_simple_editor.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="71:4-1625"><cell startpos="1:1-0" endpos="1:10-9"><div class="cell-content"><h1 id="prismjs">PrismJs</h1></div></cell><cell startpos="3:1-11" endpos="71:4-1625" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async (fn) =&gt; {
   const Editor = await import(
     &quot;https://cdn.skypack.dev/react-simple-code-editor&quot;
   );
@@ -9,7 +9,7 @@
     &quot;https://cdn.skypack.dev/prism-react-renderer/themes/nightOwl&quot;
   );
 
-  const { Fragment, Component } = lit.utils.React;
+  const { Fragment, useState } = lit.utils.React;
 
   const exampleCode = `
 (function someDemo() {
@@ -28,14 +28,14 @@ return () =&gt; &lt;App /&gt;;
     },
   };
 
-  class EditorExample extends Component {
-    state = { code: exampleCode };
+  const EditorExample = (props) =&gt; {
+    const [state, setState] = useState({ code: exampleCode });
 
-    onValueChange = (code) =&gt; {
-      this.setState({ code });
+    const onValueChange = (code) =&gt; {
+      setState({ code });
     };
 
-    highlight = (code) =&gt; (
+    const highlight = (code) =&gt; (
       &lt;Highlight {...defaultProps} theme={theme} code={code} language=&quot;jsx&quot;&gt;
         {({ className, style, tokens, getLineProps, getTokenProps }) =&gt; (
           &lt;Fragment&gt;
@@ -51,18 +51,16 @@ return () =&gt; &lt;App /&gt;;
       &lt;/Highlight&gt;
     );
 
-    render() {
-      return (
-        &lt;Editor
-          value={this.state.code}
-          onValueChange={this.onValueChange}
-          highlight={this.highlight}
-          padding={10}
-          style={styles.root}
-        /&gt;
-      );
-    }
-  }
+    return (
+      &lt;Editor
+        value={this.state.code}
+        onValueChange={this.onValueChange}
+        highlight={this.highlight}
+        padding={10}
+        style={styles.root}
+      /&gt;
+    );
+  };
 
   return &lt;EditorExample /&gt;;
 })();
