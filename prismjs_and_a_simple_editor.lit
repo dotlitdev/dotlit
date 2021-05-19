@@ -1,16 +1,13 @@
 # PrismJs
 
 ```js react=true babel=true !collapse #initial
+const importDefault = async (src) =>
+  import("https://cdn.skypack.dev/" + src).then((m) => m.default);
+
 return (async (fn) => {
-  const Editor = await import(
-    "https://cdn.skypack.dev/react-simple-code-editor"
-  ).then((m) => m.default);
-  const Highlight = await import(
-    "https://cdn.skypack.dev/prism-react-renderer"
-  ).then((m) => m.default);
-  const theme = await import(
-    "https://cdn.skypack.dev/prism-react-renderer/themes/nightOwl"
-  ).then((m) => m.default);
+  const Editor = await importDefault("react-simple-code-editor");
+  const Highlight = await importDefault("prism-react-renderer");
+  const theme = await importDefault("prism-react-renderer/themes/nightOwl");
 
   return { Editor, Highlight, theme };
 
