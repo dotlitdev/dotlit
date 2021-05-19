@@ -12,7 +12,7 @@ return (async (fn) => {
     "https://cdn.skypack.dev/prism-react-renderer/themes/nightOwl"
   );
 
-  const { Fragment, Component } = lit.utils.React;
+  const { Fragment, useState } = lit.utils.React;
 
   const exampleCode = `
 (function someDemo() {
@@ -31,14 +31,14 @@ return () => <App />;
     },
   };
 
-  class EditorExample extends Component {
-    state = { code: exampleCode };
+  const EditorExample = (props) => {
+    const [state, setState] = useState({ code: exampleCode });
 
-    onValueChange = (code) => {
-      this.setState({ code });
+    const onValueChange = (code) => {
+      setState({ code });
     };
 
-    highlight = (code) => (
+    const highlight = (code) => (
       <Highlight {...defaultProps} theme={theme} code={code} language="jsx">
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
           <Fragment>
@@ -54,18 +54,16 @@ return () => <App />;
       </Highlight>
     );
 
-    render() {
-      return (
-        <Editor
-          value={this.state.code}
-          onValueChange={this.onValueChange}
-          highlight={this.highlight}
-          padding={10}
-          style={styles.root}
-        />
-      );
-    }
-  }
+    return (
+      <Editor
+        value={this.state.code}
+        onValueChange={this.onValueChange}
+        highlight={this.highlight}
+        padding={10}
+        style={styles.root}
+      />
+    );
+  };
 
   return <EditorExample />;
 })();
