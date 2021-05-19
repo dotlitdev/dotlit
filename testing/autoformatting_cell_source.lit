@@ -58,9 +58,20 @@ Implementing as a transformer `!plugin`
 ```js !plugin type=transformer of=prettier 
 export const transformer = ({node, src, codeSource, rawSource, originalSource}) => {
   const lines = src.split('\n')
-  const body = lines.slice(1,-1).join('\n')
-  lines[0] += " !prettied"
-  return lines.join('\n')
+  let [first, ...rest] = lines
+  let [...middle, last] = rest
+  const body = middle.join('\n')
+  first += " !prettied"
+
+  const p = await import('https://unpkg.com/prettier@2.3.0/esm/standalone.mjs')
+  const b = await import('https://unpkg.com/prettier@2.3.0/esm/parser-babel.mjs')
+
+  const format = p.default.format
+  const babelPlugin = b.default
+
+
+  return [first, format(body, { parser: "babel",plugins: [babelPlugin]}), last].join('\n')
+
 }
 ```
 
