@@ -1,12 +1,12 @@
-<html data-reactroot=""><head><title>Autoformatting Cell Source</title><meta name="litsrc" value="testing/autoformatting_cell_source.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"><div class="lit-message"><span class="message">Plugin Error (transformer): /home/runner/work/dotlit/dotlit: Rest element must be last element (4:16)
+<html data-reactroot=""><head><title>Autoformatting Cell Source</title><meta name="litsrc" value="testing/autoformatting_cell_source.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"><div class="lit-message"><span class="message">Plugin Error (transformer): /home/runner/work/dotlit/dotlit: Unexpected reserved word &#x27;await&#x27; (9:12)
 
-  2 |   const lines = src.split(&#x27;\n&#x27;)
-  3 |   let [first, ...rest] = lines
-&gt; 4 |   let [...middle, last] = rest
-    |                 ^
-  5 |   const body = middle.join(&#x27;\n&#x27;)
-  6 |   first += &quot; !prettied&quot;
-  7 |</span><span class="name">58:1-76:4</span></div></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="83:4-2148"><cell startpos="1:1-0" endpos="1:29-28"><div class="cell-content"><h1 id="autoformatting-cell-source">Autoformatting Cell Source</h1></div></cell><section depth="2" class="" startpos="2:1-29" endpos="83:4-2148"><cell startpos="2:1-29" endpos="4:29-79"><div class="cell-content"><h2 id="-with-prettier">... with prettier</h2><p>Homepage <a href="https://prettier.io">https://prettier.io<span class="linkIcon">↗</span></a></p></div></cell><cell startpos="6:1-81" endpos="16:4-403" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">import prettier from &quot;https://unpkg.com/prettier@2.3.0/esm/standalone.mjs&quot;;
+   7 |   first += &quot; !prettied&quot;
+   8 |
+&gt;  9 |   const p = await import(&#x27;https://unpkg.com/prettier@2.3.0/esm/standalone.mjs&#x27;)
+     |             ^
+  10 |   const b = await import(&#x27;https://unpkg.com/prettier@2.3.0/esm/parser-babel.mjs&#x27;)
+  11 |
+  12 |   const format = p.default.format</span><span class="name">58:1-77:4</span></div></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="84:4-2181"><cell startpos="1:1-0" endpos="1:29-28"><div class="cell-content"><h1 id="autoformatting-cell-source">Autoformatting Cell Source</h1></div></cell><section depth="2" class="" startpos="2:1-29" endpos="84:4-2181"><cell startpos="2:1-29" endpos="4:29-79"><div class="cell-content"><h2 id="-with-prettier">... with prettier</h2><p>Homepage <a href="https://prettier.io">https://prettier.io<span class="linkIcon">↗</span></a></p></div></cell><cell startpos="6:1-81" endpos="16:4-403" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">import prettier from &quot;https://unpkg.com/prettier@2.3.0/esm/standalone.mjs&quot;;
   import parserBabel from &quot;https://unpkg.com/prettier@2.3.0/esm/parser-babel.mjs&quot;;
 
   console.log(
@@ -48,10 +48,11 @@ return format(thisCellsSource, { parser: &quot;babel&quot;,plugins: [babelPlugin
   return format(thisCellsSource, { parser: &quot;babel&quot;, plugins: [babelPlugin] });
 })();
 
-</code></pre></output></codecell></div></cell><cell startpos="56:1-1423" endpos="56:40-1462"><div class="cell-content"><p>Implementing as a transformer <code>!plugin</code></p></div></cell><cell startpos="58:1-1464" endpos="76:4-2073" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=transformer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=prettier</span></span><pre><code class="js">export const transformer = ({node, src, codeSource, rawSource, originalSource}) =&gt; {
+</code></pre></output></codecell></div></cell><cell startpos="56:1-1423" endpos="56:40-1462"><div class="cell-content"><p>Implementing as a transformer <code>!plugin</code></p></div></cell><cell startpos="58:1-1464" endpos="77:4-2106" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=transformer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=prettier</span></span><pre><code class="js">export const transformer = ({node, src, codeSource, rawSource, originalSource}) =&gt; {
   const lines = src.split(&#x27;\n&#x27;)
   let [first, ...rest] = lines
-  let [...middle, last] = rest
+  let middle = rest.slice(0,-1)
+  const [last] = rest.slice(-1)
   const body = middle.join(&#x27;\n&#x27;)
   first += &quot; !prettied&quot;
 
@@ -65,7 +66,7 @@ return format(thisCellsSource, { parser: &quot;babel&quot;,plugins: [babelPlugin
   return [first, format(body, { parser: &quot;babel&quot;,plugins: [babelPlugin]}), last].join(&#x27;\n&#x27;)
 
 }
-</code></pre></codecell></div></cell><cell startpos="78:1-2075" endpos="83:4-2148" class="code"><div class="cell-content"><codecell class="dir-prettied lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#b3fc73" class="directive dir-prettied">prettied</span><span class="attribute attr-transformer" style="color:black;background-color:#88d14d">transformer=prettier</span></span><pre><code class="js">     // make me 
+</code></pre></codecell></div></cell><cell startpos="79:1-2108" endpos="84:4-2181" class="code"><div class="cell-content"><codecell class="dir-prettied lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#b3fc73" class="directive dir-prettied">prettied</span><span class="attribute attr-transformer" style="color:black;background-color:#88d14d">transformer=prettier</span></span><pre><code class="js">     // make me 
   // prettier
 
 

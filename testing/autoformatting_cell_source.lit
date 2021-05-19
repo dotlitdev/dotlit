@@ -59,7 +59,8 @@ Implementing as a transformer `!plugin`
 export const transformer = ({node, src, codeSource, rawSource, originalSource}) => {
   const lines = src.split('\n')
   let [first, ...rest] = lines
-  let [...middle, last] = rest
+  let middle = rest.slice(0,-1)
+  const [last] = rest.slice(-1)
   const body = middle.join('\n')
   first += " !prettied"
 
