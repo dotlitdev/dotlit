@@ -1,0 +1,54 @@
+# Autoformatting Cell Source
+### Autoformating with prettier
+
+Homepage https://prettier.io
+
+```js babel=true
+import prettier from "https://unpkg.com/prettier@2.3.0/esm/standalone.mjs";
+  import parserBabel from "https://unpkg.com/prettier@2.3.0/esm/parser-babel.mjs";
+
+  console.log(
+    prettier.format("const html=/* HTML */ `<DIV> </DIV>`", {
+      parser: "babel",
+      plugins: [parserBabel],
+    })
+  );
+```
+
+```js > js #formatted
+return (async fn => { // intentionally [sic] badly formatted 
+const p = await import(
+
+'https://unpkg.com/prettier@2.3.0/esm/standalone.mjs')
+           
+              const b = await 
+          import('https://unpkg.com/prettier@2.3.0/esm/parser-babel.mjs')
+const format 
+= p.default.format
+const babelPlugin 
+= b.default
+
+
+  const thisCellsSource = this.children[0].children[0].data.value
+
+
+return format(thisCellsSource, { parser: "babel",plugins: [babelPlugin]})
+})()
+```
+```>js #formatted attached=true updated=1621285984079
+return (async (fn) => {
+  // intentionally [sic] badly formatted
+  const p = await import("https://unpkg.com/prettier@2.3.0/esm/standalone.mjs");
+
+  const b = await import(
+    "https://unpkg.com/prettier@2.3.0/esm/parser-babel.mjs"
+  );
+  const format = p.default.format;
+  const babelPlugin = b.default;
+
+  const thisCellsSource = this.children[0].children[0].data.value;
+
+  return format(thisCellsSource, { parser: "babel", plugins: [babelPlugin] });
+})();
+
+```
