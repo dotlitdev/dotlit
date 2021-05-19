@@ -72,33 +72,46 @@ Included below, and therefore available in all `.lit` documents in this notebook
 Ref: https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications
 
 ```js !plugin type=viewer of=upload !collapse
-export const viewer = ({node,React}) => {
+export const viewer = ({ node, React }) => {
+  const { useState } = React;
+  const [uploads, setUploads] = useState([]);
 
-  const {useState} = React
-  const [uploads, setUploads] = useState([])
+  const handleFiles = (ev) => {
+    const files = ev.target.files;
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const reader = new FileReader();
+      reader.onload = ((i, file) => async (e) => {
+        const filename = prompt(
+          "Enter a file name and path:",
+          `/testing/uploads/${file.name}`
+        );
+        if (!filename || !filename.trim()) return;
 
-  const handleFiles = ev => {
-     const files = ev.target.files
-     for (let i = 0; i < files.length; i++) {
-    const file = files[i];
-    const reader = new FileReader();
-    reader.onload = ((i,file)=> async e => {
-      const filename = prompt("Enter a file name and path:", `/testing/uploads/${file.name}`)
-      if (!filename || !filename.trim()) return;
-
-      const data = e.target.result
-      try{await lit.fs.writeFile(filename, data)}catch(err) {alert(err.message)}
-      setUploads([...uploads, [filename,data]])
-    })(i, file)
-    // reader.readAsDataURL(file);
-    reader.readAsBinaryString(file)
-  }
-  }
-  return <div>
-     <input onChange={handleFiles} type="file"/>
-     <div>{uploads.map(upload => <span>{upload[0]}/</span>)}</div>
+        const data = e.target.result;
+        try {
+          await lit.fs.writeFile(filename, data);
+        } catch (err) {
+          alert(err.message);
+        }
+        setUploads([...uploads, [filename, data]]);
+      })(i, file);
+      // reader.readAsDataURL(file);
+      reader.readAsBinaryString(file);
+    }
+  };
+  return (
+    <div>
+      <input onChange={handleFiles} type="file" />
+      <div>
+        {uploads.map((upload) => (
+          <span>{upload[0]}/</span>
+        ))}
+      </div>
     </div>
-}
+  );
+};
+
 ```
 
 ```>upload
@@ -108,41 +121,38 @@ export const viewer = ({node,React}) => {
 ### Detach/delete attached output
 
 ```js !plugin type=cellmenu id=outputs !collapse
-export const cellmenu = (ctx, {React, Menu}) => {
-  const sel = lit.utils.unist.selectPosition.selectAll
-  const pos = ctx.selectedCell
-  const tree = lit.file.data.ast
+export const cellmenu = (ctx, { React, Menu }) => {
+  const sel = lit.utils.unist.selectPosition.selectAll;
+  const pos = ctx.selectedCell;
+  const tree = lit.file.data.ast;
   const [attached] = pos
-        ? sel('code', pos, tree)
-              .filter( code => code?.data?.meta?.attrs?.attached)
-        : []
+    ? sel("code", pos, tree).filter((code) => code?.data?.meta?.attrs?.attached)
+    : [];
 
-  const detach = ctx => del => ev => {
-    if (del) ctx.setSrc(attached.position, "")
+  const detach = (ctx) => (del) => (ev) => {
+    if (del) ctx.setSrc(attached.position, "");
     else {
-       const {toMarkdown, ungroupSections}
-              = lit.parser.utils
-       attached.meta = attached.meta.replace(/\s?attached=true/,'')
-       const root = {type: "root", children: [attached]}
+      const { toMarkdown, ungroupSections } = lit.parser.utils;
+      attached.meta = attached.meta.replace(/\s?attached=true/, "");
+      const root = { type: "root", children: [attached] };
 
-       const md = toMarkdown(root)
-       ctx.setSrc(attached.position, md)
+      const md = toMarkdown(root);
+      ctx.setSrc(attached.position, md);
     }
-  }
-  
-  return <Menu disabled={!attached} title="Output">
-           <span 
-            disabled={!ctx.selectedCell}
-            onClick={detach(ctx)()}>
-            Detach Output
-           </span>
-          <span 
-            disabled={!ctx.selectedCell}
-            onClick={detach(ctx)(true)}>
-            Delete Output
-           </span>
-         </Menu>
-}
+  };
+
+  return (
+    <Menu disabled={!attached} title="Output">
+      <span disabled={!ctx.selectedCell} onClick={detach(ctx)()}>
+        Detach Output
+      </span>
+      <span disabled={!ctx.selectedCell} onClick={detach(ctx)(true)}>
+        Delete Output
+      </span>
+    </Menu>
+  );
+};
+
 ```
 
 ### Multi select menu
