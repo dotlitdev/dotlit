@@ -20,7 +20,7 @@ const { to_string } = require('../parser/utils/mdast-util-to-string')
 
 const parser = require('../parser')
 const renderer = require('../renderer')
-const { Repl, tranform } = require('../repl')
+const { Repl, transform } = require('../repl')
 
 const { Header } = require('../components/Header')
 const { extendFs } = require('../utils/fs-promises-utils')
