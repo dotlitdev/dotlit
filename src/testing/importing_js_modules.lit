@@ -237,12 +237,13 @@ export const repl = async (src, meta) => {
   const { btoa } = lit.utils.safeEncoders;
   const { transform } = lit.utils;
   const filename = (meta && meta.filename) || "untitled.js";
+  let babel;
   try {
-    const babel = transform(filename, src);
+    babel = transform(filename, src);
   } catch (err) {
     return err.message;
   }
-  const s = babel.code;
+  const s = `/*${Date.now()}*/` + babel.code;
   const m = await import(`data:text/javascript;base64,${btoa(s)}`);
   return lit.utils.inspect(m);
 };
