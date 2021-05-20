@@ -75,8 +75,14 @@ return unpkg("canvas-confetti").then((pkg) => {
 undefined
 ```
 
-```lang
-
+```js !plugin type=repl of=module
+export const repl = async (src,meta) => {
+  const {btoa} = lit.utils.safeEncoders
+  const {transform} = lit.Repl
+  const filename = (meta && meta.filename) || 'untitled.js'
+  const babel = transform(filename, src) 
+    return await import(`data:text/javascript;base64,${ btoa(babel.code)}`)
+}
 ```
 
 
