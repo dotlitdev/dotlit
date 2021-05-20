@@ -30,15 +30,11 @@ return skypack("canvas-confetti");
 ```js #skypack
 const skypack = (pkg) => import(`https://cdn.skypack.dev/${pkg}`);
 
-// I like async await
-return (async (fn) => {
-  const { default: fire } = await skypack("canvas-confetti");
+return skypack("canvas-confetti").then((pkg) => {
+  const { default: fire } = pkg;
   return fire();
-})();
+});
 
-```
-```>txt attached=true updated=1621550862826
-undefined
 ```
 ```js #skypack
 const skypack = (pkg) => import(`https://cdn.skypack.dev/${pkg}`);
