@@ -74,6 +74,7 @@ export const lit = {
         inspect,
         diff,
         React,
+        ReactDOM,
         unist: {
             select,
             source,
