@@ -20,7 +20,7 @@ const { to_string } = require('../parser/utils/mdast-util-to-string')
 
 const parser = require('../parser')
 const renderer = require('../renderer')
-const { Repl } = require('../repl')
+const { Repl, tranform } = require('../repl')
 
 const { Header } = require('../components/Header')
 const { extendFs } = require('../utils/fs-promises-utils')
@@ -74,6 +74,7 @@ export const lit = {
     Repl,
     fs, lfs, git,
     utils: {
+        transform,
         inspect,
         diff,
         React,
