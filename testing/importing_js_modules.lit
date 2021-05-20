@@ -237,12 +237,13 @@ export const repl = async (src, meta) => {
   const { btoa } = lit.utils.safeEncoders;
   const { transform } = lit.utils;
   const filename = (meta && meta.filename) || "untitled.js";
+  let babel;
   try {
-    const babel = transform(filename, src);
+    babel = transform(filename, src);
   } catch (err) {
     return err.message;
   }
-  const s = babel.code;
+  const s = `/*${Date.now()}*/` + babel.code;
   const m = await import(`data:text/javascript;base64,${btoa(s)}`);
   return lit.utils.inspect(m);
 };
@@ -257,15 +258,10 @@ export const issue = "module caching means it only executes once"
 export default fire
 fire()
 ```
-```>txt attached=true updated=1621553788401
-/untitled.js: Unexpected token, expected "{" (4:7)
-
-  2 | export const success = "yes"
-  3 | export const issue = "module caching means it only executes once"
-> 4 | export fire
-    |        ^
-  5 | fire()
-  6 |
+```>txt attached=true updated=1621554414359
+{ default: { [Function: fire] reset: [Function], create: [Function: confettiCannon] },
+  issue: 'module caching means it only executes once',
+  success: 'yes' }
 ```
 
 
