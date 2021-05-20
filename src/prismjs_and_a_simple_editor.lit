@@ -2,7 +2,7 @@
 
 https://github.com/FormidableLabs/prism-react-renderer
 
-```js !inline react=true babel=true #initial
+```js !inline react=true babel=true
 const importDefault = async (src) =>
   import("https://cdn.skypack.dev/" + src).then((m) => m.default);
 
@@ -143,11 +143,11 @@ return () => <App />;
 ```
 
 ```esm !collapse #v2test !inline
-import Editor from "https://cdn.skypack.dev/react-simple-code-editor";
+import Editor, {defaultProps as eprops} from "https://cdn.skypack.dev/react-simple-code-editor";
 import Highlight, {
-  defaultProps,
+  defaultProps as hprops 
 } from "https://cdn.skypack.dev/prism-react-renderer";
-import theme from "https://cdn.skypack.dev/prism-react-renderer/themes/nightOwl";
+// import theme from "https://cdn.skypack.dev/prism-react-renderer/themes/nightOwl";
 
 // return { Editor, Highlight, theme };
 
@@ -167,7 +167,6 @@ const styles = {
   root: {
     boxSizing: "border-box",
     fontFamily: '"Dank Mono", "Fira Code", monospace',
-    ...theme.plain,
   },
 };
 
@@ -179,7 +178,7 @@ const EditorExample = (props) => {
   };
 
   const highlight = (code) => (
-    <Highlight {...{}} theme={theme} code={code} language="jsx">
+    <Highlight {...{hprops}} code={code} language="jsx">
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <Fragment>
           {tokens.map((line, i) => (
@@ -196,6 +195,7 @@ const EditorExample = (props) => {
 
   return (
     <Editor
+      {...eprops}
       value={state.code}
       onValueChange={onValueChange}
       highlight={highlight}
