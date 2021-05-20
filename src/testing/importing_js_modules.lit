@@ -28,13 +28,12 @@ return skypack("canvas-confetti");
   default: { [Function: fire] reset: [Function], create: [Function: confettiCannon] } }
 ```
 ```js #skypack
-const skypack = (pkg) => import(`https://cdn.skypack.dev/${pkg}`);
-return skypack("canvas-confetti");
+return (async (fn) => {
+  const skypack = (pkg) => import(`https://cdn.skypack.dev/${pkg}`);
+  const { default: fire } = await skypack("canvas-confetti");
+  return fire();
+})();
 
-```
-```>txt attached=true updated=1621550294972
-{ create: [Function: confettiCannon],
-  default: { [Function: fire] reset: [Function], create: [Function: confettiCannon] } }
 ```
 
 
