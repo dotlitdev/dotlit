@@ -4,7 +4,7 @@ let document = { documentElement: { style: {} } };
 importScripts("web.bundle.js");
 
 const state = {
-  version: "0.2.2",
+  version: "0.2.3",
   dotlit: typeof dotlit,
   root: "",
   enableCache: false,
@@ -34,7 +34,7 @@ const getMockResponse = async (event) => {
         filepath,
         stat,
       };
-      return new Response(JSON.stringify(status, null, 2));
+      return new Response(JSON.stringify(status, null, 2){headers: new Headers({'meta': state.version})});
     }
   } catch (err) {
     const status = {
