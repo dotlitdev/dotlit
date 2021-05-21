@@ -249,7 +249,10 @@ export const repl = async (src, meta) => {
     const s = `/*${Date.now()}*/` + babel.code;
     const console = "fake me";
     const m = await import(`data:text/javascript;base64,${btoa(s)}`);
-    return lit.utils.inspect(m);
+    if (typeof m.default === "function") {
+      const res = await m.default();
+      return lit.utils.inspect(res);
+    } else return lit.utils.inspect(m);
   } catch (err) {
     return err.message;
   }
@@ -319,8 +322,8 @@ const {wait} = lit.utils.fns
 console.record()
 console.recordEnd()
 ```
-```>txt attached=true updated=1621597523497
-{ src: '\'function record() {\\n    [native code]\\n}\'' }
+```>txt attached=true updated=1621597915204
+{}
 ```
 
 
