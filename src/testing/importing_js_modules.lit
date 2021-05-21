@@ -245,12 +245,13 @@ export const repl = async (src, meta) => {
   let babel;
   try {
     babel = transform(filename, src);
+
+    const s = `/*${Date.now()}*/` + babel.code;
+    const console = "fake me";
+    const m = await import(`data:text/javascript;base64,${btoa(s)}`);
   } catch (err) {
     return err.message;
   }
-  const s = `/*${Date.now()}*/` + babel.code;
-  const console = "fake me";
-  const m = await import(`data:text/javascript;base64,${btoa(s)}`);
   return lit.utils.inspect(m);
 };
 
