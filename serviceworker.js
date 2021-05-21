@@ -52,8 +52,12 @@ const localFile = async (event) => {
       .slice(dotlit.lit.location.base.length - 1, -4)
       .slice();
     await dotlit.lit.fs.stat(filepath);
+    let headers = {}
+    if ((/.*\.m?jsx?$/).test(filepath)) {
+        headers['Content-Type'] = 'text/javascript'
+    }
     const content = await dotlit.lit.fs.readFile(filepath);
-    return new Response(content);
+    return new Response(content,{headers});
   } else throw new Error("dotlit module not loaded.");
 };
 
