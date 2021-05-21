@@ -1,214 +1,250 @@
-<html data-reactroot=""><head><title>REPL</title><meta name="litsrc" value="repl/index.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="8:4-257"><cell startpos="1:1-0" endpos="5:93-208"><div class="cell-content"><h1 id="repl">REPL</h1><p>The initial implementation is copied over from the [prototype], see <a href="execute_code_cells.html?file=execute_code_cells.lit" title="Execute `code` *cells*" wikilink="true">Execute `code` *cells*</a> for usage.</p><p>Additionally through use of the <a href="plugin_system.html?file=plugin_system.lit" title="Plugin system" wikilink="true">Plugin system</a> it is possible to create custom <a href="repls.html?file=repls.lit" title="REPLs" wikilink="true">REPLs</a>.</p></div></cell><cell startpos="7:1-210" endpos="8:4-257" class="code"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span><span class="source">&lt; index.js</span></span><pre><code class="js">import util from &#x27;util&#x27;
-import {transformSync} from &#x27;@babel/core&#x27;
+<html data-reactroot=""><head><title>REPL</title><meta name="litsrc" value="repl/index.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="257:4-8062"><cell startpos="1:1-0" endpos="5:93-208"><div class="cell-content"><h1 id="repl">REPL</h1><p>The initial implementation is copied over from the [prototype], see <a href="execute_code_cells.html?file=execute_code_cells.lit" title="Execute `code` *cells*" wikilink="true">Execute `code` *cells*</a> for usage.</p><p>Additionally through use of the <a href="plugin_system.html?file=plugin_system.lit" title="Plugin system" wikilink="true">Plugin system</a> it is possible to create custom <a href="repls.html?file=repls.lit" title="REPLs" wikilink="true">REPLs</a>.</p></div></cell><cell startpos="7:1-210" endpos="257:4-8062" class="code"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed"><a name="index.js"></a><span class="meta"><span class="lang">js</span><span class="filename">index.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><pre><code class="js">import util from &quot;util&quot;;
+import { transformSync } from &quot;@babel/core&quot;;
 
-import presetReact from &quot;@babel/preset-react&quot;
-import presetTypescript from &quot;@babel/preset-typescript&quot;
-import pluginTransformModulesCommonjs from &#x27;@babel/plugin-transform-modules-commonjs&#x27;
+import presetReact from &quot;@babel/preset-react&quot;;
+import presetTypescript from &quot;@babel/preset-typescript&quot;;
+import pluginTransformModulesCommonjs from &quot;@babel/plugin-transform-modules-commonjs&quot;;
 
-const NoOp = () =&gt; {}
+const NoOp = () =&gt; {};
 
 function wrapConsole(console, stdoutUpdate) {
-    const originalConsole = console
-    let buffer = []
-    const wrapConsoleMethod = (method) =&gt; {
-        return (...args) =&gt; {
-            const pretty = args.map( a =&gt; typeof a === &#x27;string&#x27; ? a : util.inspect(a,{maxStringLength: 20} ) )
-            // pretty.unshift(`[${method}] `)
-            buffer.push(pretty);
-            stdoutUpdate(buffer.join(&#x27;\n&#x27;))
-            originalConsole.log(&#x27;vvv Wrapped console vvv&#x27;, method, pretty)
-            return originalConsole[method](...args)
-        }
-    }
+  const originalConsole = console;
+  let buffer = [];
+  const wrapConsoleMethod = (method) =&gt; {
+    return (...args) =&gt; {
+      const pretty = args.map((a) =&gt;
+        typeof a === &quot;string&quot; ? a : util.inspect(a, { maxStringLength: 20 })
+      );
+      // pretty.unshift(`[${method}] `)
+      buffer.push(pretty);
+      stdoutUpdate(buffer.join(&quot;\n&quot;));
+      originalConsole.log(&quot;vvv Wrapped console vvv&quot;, method, pretty);
+      return originalConsole[method](...args);
+    };
+  };
 
-    const fakeConsole = {};
+  const fakeConsole = {};
 
-    [&#x27;log&#x27;, &#x27;debug&#x27;, &#x27;error&#x27;, &#x27;warn&#x27;, &#x27;info&#x27;].forEach( m =&gt; {
-        fakeConsole[m] = wrapConsoleMethod(m)
-    })
-    return { console: fakeConsole, buffer }
+  [&quot;log&quot;, &quot;debug&quot;, &quot;error&quot;, &quot;warn&quot;, &quot;info&quot;].forEach((m) =&gt; {
+    fakeConsole[m] = wrapConsoleMethod(m);
+  });
+  return { console: fakeConsole, buffer };
 }
-
 
 function isPromise(obj) {
-    return obj &amp;&amp; typeof obj.then === &#x27;function&#x27;
+  return obj &amp;&amp; typeof obj.then === &quot;function&quot;;
 }
 
-export const transform = (filename, source, {type} = {}) =&gt; {
+export const transform = (filename, source, { type } = {}) =&gt; {
+  const plugins = [];
+  if (type === &quot;commonjs&quot;) plugins.push(pluginTransformModulesCommonjs);
+  const babel = transformSync(source, {
+    filename: filename,
+    sourceMaps: false,
+    parserOpts: { allowReturnOutsideFunction: true },
+    presets: [presetReact, presetTypescript],
+    plugins: plugins,
+  });
 
-    const plugins = []
-    if (type === &#x27;commonjs&#x27;) plugins.push(pluginTransformModulesCommonjs)
-    const babel = transformSync(source, { 
-        filename: filename,
-        sourceMaps: false,
-        parserOpts: { allowReturnOutsideFunction: true },
-        presets: [
-            presetReact,
-            presetTypescript
-        ],
-        plugins: plugins,
-    })
-
-    return babel
-}
+  return babel;
+};
 
 export class Repl {
-    constructor(){
-        this.executions = {}
+  constructor() {
+    this.executions = {};
 
-        window.onerror = (msg, url, lineNo, columnNo, err) =&gt; {
-            // const [, filename, line, column ] = err.stack.match(/\/([\/\w-_\.]+\.js):(\d*):(\d*)/)
-            
-            if (this.executions[url] ) {
-                console.error(&#x27;Uncaught Global error&#x27;, {err, stack: msg + `\n    ${this.executions[url].filename}[${lineNo}:${columnNo}]` })
-                this.executions[url].err = err
-                console.log(&#x27;stopping propagation of repl execution&#x27;, this.executions[url])
-                this.executions[url].cb(err)
-                return true
-            } else {
-                console.error(&#x27;Uncaught Global error&#x27;, {err, stack: msg + `\n    ${url}[${lineNo}:${columnNo}]` })
-            }
-        }
+    window.onerror = (msg, url, lineNo, columnNo, err) =&gt; {
+      // const [, filename, line, column ] = err.stack.match(/\/([\/\w-_\.]+\.js):(\d*):(\d*)/)
 
-        window.addEventListener(&quot;unhandledrejection&quot;, event =&gt; {
-            console.warn(`UNHANDLED PROMISE REJECTION: ${event.reason}`);
+      if (this.executions[url]) {
+        console.error(&quot;Uncaught Global error&quot;, {
+          err,
+          stack:
+            msg +
+            `\n    ${this.executions[url].filename}[${lineNo}:${columnNo}]`,
         });
+        this.executions[url].err = err;
+        console.log(
+          &quot;stopping propagation of repl execution&quot;,
+          this.executions[url]
+        );
+        this.executions[url].cb(err);
+        return true;
+      } else {
+        console.error(&quot;Uncaught Global error&quot;, {
+          err,
+          stack: msg + `\n    ${url}[${lineNo}:${columnNo}]`,
+        });
+      }
+    };
+
+    window.addEventListener(&quot;unhandledrejection&quot;, (event) =&gt; {
+      console.warn(`UNHANDLED PROMISE REJECTION: ${event.reason}`);
+    });
+  }
+
+  formatStack(err, src) {
+    if (!err.stack) return err.toString();
+
+    const filename = this.executions[src].filename;
+    const source = this.executions[src].source;
+    const sourceLen = source.length;
+
+    const srcRegex = new RegExp(src, &quot;g&quot;);
+    let stack = err.stack.replace(srcRegex, filename).split(&quot;\n&quot;);
+
+    if (stack[0] !== err.toString()) {
+      // Add missing error message to stack (safari)
+      stack.unshift(err.toString);
     }
 
-    formatStack(err, src) {
-        if (!err.stack) return err.toString()
-
-        const filename = this.executions[src].filename
-        const source = this.executions[src].source
-        const sourceLen = source.length
-    
-        const srcRegex = new RegExp(src, &#x27;g&#x27;)
-        let stack = err.stack
-            .replace(srcRegex, filename)
-            .split(&#x27;\n&#x27;)
-        
-        if (stack[0] !== err.toString()) {
-            // Add missing error message to stack (safari)
-            stack.unshift(err.toString)
+    return stack
+      .map((line) =&gt; {
+        const lineNoRegex = new RegExp(`(.*${filename}:)(\d+)(.*)`);
+        const match = line &amp;&amp; line.match &amp;&amp; line.match(lineNoRegex);
+        if (match) {
+          const num = parseInt(match[2]);
+          // skip first and last lines (wrapper code)
+          if (num === 1 || num &gt;= sourceLen) return &quot;&quot;;
+          else return `${(match[1], num - 1, match[3])}`;
+        } else {
+          console.log(&quot;formatStack line match fallback&quot;, typeof line, line);
+          return `${line}`;
         }
-        
-        return stack.map( line =&gt; {
-            const lineNoRegex = new RegExp(`(.*${filename}:)(\d+)(.*)`)
-            const match = line &amp;&amp; line.match &amp;&amp; line.match(lineNoRegex)
-            if (match) {
-                const num = parseInt(match[2])
-                // skip first and last lines (wrapper code)
-                if (num === 1 || num &gt;= sourceLen) return &#x27;&#x27; 
-                else return `${match[1], num - 1, match[3]}`
-            } else {
-                console.log(&quot;formatStack line match fallback&quot;, typeof line, line)
-                return `${line}`
-            }
-        }).filter(x =&gt; x).join(&#x27;\n&#x27;)
-    }
+      })
+      .filter((x) =&gt; x)
+      .join(&quot;\n&quot;);
+  }
 
-    injectScript(source, {config, filename, ast, stdoutUpdate}) {
-        const self = this
-        return new Promise((resolve, reject) =&gt; {
-    
-            const script = document.createElement(&#x27;script&#x27;);
-            const execId = `litExec_${Date.now()}`
+  injectScript(source, { config, filename, ast, stdoutUpdate }) {
+    const self = this;
+    return new Promise((resolve, reject) =&gt; {
+      const script = document.createElement(&quot;script&quot;);
+      const execId = `litExec_${Date.now()}`;
 
-            const esm = ({raw}, ...vals) =&gt; URL.createObjectURL(new Blob([String.raw({raw}, ...vals)], {type: &#x27;text/javascript&#x27;}));
-            const wrappedConsole = wrapConsole(window.console, stdoutUpdate)
+      const esm = ({ raw }, ...vals) =&gt;
+        URL.createObjectURL(
+          new Blob([String.raw({ raw }, ...vals)], { type: &quot;text/javascript&quot; })
+        );
+      const wrappedConsole = wrapConsole(window.console, stdoutUpdate);
 
-            try {
-                if(config &amp;&amp; config.babel) {
-                const babel = transform(filename, source)
-                console.log(&quot;[babel] transformed&quot;, babel)
-                source = babel.code
-                }
-            } catch (err) {
-                console.error(&quot;[babel] Transpile failed&quot;, err)
-                reject({
-                    err: err, 
-                    resp:  null, 
-                    stdout: err.toString()
-                })
-            }
+      try {
+        if (config &amp;&amp; config.babel) {
+          const babel = transform(filename, source);
+          console.log(&quot;[babel] transformed&quot;, babel);
+          source = babel.code;
+        }
+      } catch (err) {
+        console.error(&quot;[babel] Transpile failed&quot;, err);
+        reject({
+          err: err,
+          resp: null,
+          stdout: err.toString(),
+        });
+      }
 
-            const wrappedSrc = `(function(ast,console){/*${execId}*/let error; const cb = window[&#x27;${execId}&#x27;].cb; const resp = (function(){ try {
+      const wrappedSrc = `(function(ast,console){/*${execId}*/let error; const cb = window[&#x27;${execId}&#x27;].cb; const resp = (function(){ try {
                 ${source}
-                } catch(err) { error = true; cb(err) } }).call(window[&#x27;${execId}&#x27;].context.ast); if (!error) cb(null, resp);})(window[&#x27;${execId}&#x27;].context.ast, window[&#x27;${execId}&#x27;].context.console)`
-            const src = esm`${wrappedSrc}`
+                } catch(err) { error = true; cb(err) } }).call(window[&#x27;${execId}&#x27;].context.ast); if (!error) cb(null, resp);})(window[&#x27;${execId}&#x27;].context.ast, window[&#x27;${execId}&#x27;].context.console)`;
+      const src = esm`${wrappedSrc}`;
 
-            this.executions[src] = window[execId] = {
-                execId, 
-                source, 
-                filename, 
-                stdout: wrappedConsole.buffer, 
-                err: undefined, 
-                resp: undefined, 
-                cb: (err, resp) =&gt; {
-                    console.log(&quot;pJaxCallback: &quot;, err, resp)
+      this.executions[src] = window[execId] = {
+        execId,
+        source,
+        filename,
+        stdout: wrappedConsole.buffer,
+        err: undefined,
+        resp: undefined,
+        cb: (err, resp) =&gt; {
+          console.log(&quot;pJaxCallback: &quot;, err, resp);
 
-                    let error = err || (this.executions[src] &amp;&amp; this.executions[src].err)
-                    if (error) {
-                        const formattedError = this.formatStack(err, src)
-                        this.executions[src].stdout.push(formattedError)
-                        console.error(&#x27;REPL ERR: &#x27;, this.executions[src])
-                        reject({
-                            err: error, 
-                            resp:  resp, 
-                            stdout: this.executions[src].stdout.join(&#x27;\n&#x27;)
-                        })
-                    } else {
+          let error = err || (this.executions[src] &amp;&amp; this.executions[src].err);
+          if (error) {
+            const formattedError = this.formatStack(err, src);
+            this.executions[src].stdout.push(formattedError);
+            console.error(&quot;REPL ERR: &quot;, this.executions[src]);
+            reject({
+              err: error,
+              resp: resp,
+              stdout: this.executions[src].stdout.join(&quot;\n&quot;),
+            });
+          } else {
+            if (isPromise(resp)) {
+              resp.then((result) =&gt; {
+                this.executions[src].result = result;
+                const pretty =
+                  typeof result === &quot;string&quot;
+                    ? result
+                    : util.inspect(result, { depth: 2 });
+                this.executions[src].stdout.push(pretty);
+                console.log(&quot;REPL DONE: &quot;, filename, this.executions[src]);
+                resolve({
+                  err: error,
+                  resp: result,
+                  stdout: this.executions[src].stdout.join(&quot;\n&quot;),
+                });
+              });
+            } else {
+              this.executions[src].resp = resp;
+              const pretty =
+                typeof resp === &quot;string&quot;
+                  ? resp
+                  : util.inspect(resp, { depth: 2 });
+              this.executions[src].stdout.push(pretty);
+              console.log(&quot;REPL DONE: &quot;, filename, this.executions[src]);
+              resolve({
+                err: error,
+                resp: resp,
+                stdout: this.executions[src].stdout.join(&quot;\n&quot;),
+              });
+            }
+          }
+        },
+        context: { console: wrappedConsole.console, ast },
+      };
 
-                        if (isPromise(resp)) {
-                            resp.then( (result) =&gt; {
-                                this.executions[src].result = result
-                                const pretty = (typeof result === &#x27;string&#x27; ? result : util.inspect(result, {depth: 2}))
-                                this.executions[src].stdout.push(pretty)
-                                console.log(&#x27;REPL DONE: &#x27;, filename, this.executions[src])
-                                resolve({
-                                    err: error, 
-                                    resp:  result, 
-                                    stdout: this.executions[src].stdout.join(&#x27;\n&#x27;)
-                                })
-                            })
-                        } else {
-                            this.executions[src].resp = resp
-                            const pretty = (typeof resp === &#x27;string&#x27; ? resp : util.inspect(resp, {depth: 2}))
-                            this.executions[src].stdout.push(pretty)
-                            console.log(&#x27;REPL DONE: &#x27;, filename, this.executions[src])
-                            resolve({
-                                err: error, 
-                                resp:  resp, 
-                                stdout: this.executions[src].stdout.join(&#x27;\n&#x27;)
-                            })
-                        }
-                    }
-                },
-                context: { console: wrappedConsole.console, ast }
-            }            
-    
-            script.type = &#x27;module&#x27;
-            script.async = true;
-            script.crossorigin = &quot;use-credentials&quot;
-            script.src = src
-            
-            // script.addEventListener(&#x27;load&#x27;, resolve);
-            script.addEventListener(&#x27;error&#x27;, (ev) =&gt; { console.error(&#x27;script.onerror: &#x27; + ev.message + &quot; (&quot; + ev.filename + &quot;:&quot; + ev.lineno + &quot;)&quot;, ev); reject(&#x27;Error loading script.&#x27;) } );
-            script.addEventListener(&#x27;abort&#x27;, (ev) =&gt; { console.log(&#x27;script.onabort: &#x27; + ev.message + &quot; (&quot; + ev.filename + &quot;:&quot; + ev.lineno + &quot;)&quot;, ev); reject(&#x27;Script loading aborted.&#x27;) } );
-            document.head.appendChild(script);
-           
-            
-        });
-    }
+      script.type = &quot;module&quot;;
+      script.async = true;
+      script.crossorigin = &quot;use-credentials&quot;;
+      script.src = src;
 
+      // script.addEventListener(&#x27;load&#x27;, resolve);
+      script.addEventListener(&quot;error&quot;, (ev) =&gt; {
+        console.error(
+          &quot;script.onerror: &quot; +
+            ev.message +
+            &quot; (&quot; +
+            ev.filename +
+            &quot;:&quot; +
+            ev.lineno +
+            &quot;)&quot;,
+          ev
+        );
+        reject(&quot;Error loading script.&quot;);
+      });
+      script.addEventListener(&quot;abort&quot;, (ev) =&gt; {
+        console.log(
+          &quot;script.onabort: &quot; +
+            ev.message +
+            &quot; (&quot; +
+            ev.filename +
+            &quot;:&quot; +
+            ev.lineno +
+            &quot;)&quot;,
+          ev
+        );
+        reject(&quot;Script loading aborted.&quot;);
+      });
+      document.head.appendChild(script);
+    });
+  }
 
+  exec(source, config, ast, stdoutUpdate = NoOp) {
+    console.log(&quot;REPL: &quot;, config.repl);
 
-    exec(source, config, ast, stdoutUpdate = NoOp) {
-        console.log(&#x27;REPL: &#x27;, config.repl)
-
-        const filename = config.filename || (&#x27;untitled.&#x27; + config.lang)
-        return this.injectScript(source, {config, filename, ast, stdoutUpdate})
-    }
+    const filename = config.filename || &quot;untitled.&quot; + config.lang;
+    return this.injectScript(source, { config, filename, ast, stdoutUpdate });
+  }
 }
 
 </code></pre></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="🔥 Scratch ⚠️ Pad 🔬" href="/scratch_pad.html">🔥 Scratch ⚠️ Pad 🔬</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
