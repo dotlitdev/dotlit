@@ -88,12 +88,16 @@ if (typeof module !== &quot;undefined&quot;) module.exports.viewer = viewer;
 
   const format = p.default.format;
   const babelPlugin = b.default;
-
-  return [
-    first,
-    format(body, { parser: &quot;babel&quot;, plugins: [babelPlugin] }),
-    last,
-  ].join(&quot;\n&quot;);
+  try {
+    return [
+      first,
+      format(body, { parser: &quot;babel&quot;, plugins: [babelPlugin] }),
+      last,
+    ].join(&quot;\n&quot;);
+  } catch (err) {
+    lit.file.message(err.message);
+    return src;
+  }
 };
 
 </code></pre></codecell></div></cell></section></section>
