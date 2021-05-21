@@ -142,7 +142,9 @@ return () =&gt; &lt;App /&gt;;
 
     const s = `/*${Date.now()}*/` + babel.code;
     const console = &quot;fake me&quot;;
-    const m = await import(`data:text/javascript;base64,${btoa(s)}`);
+    // const url = `data:text/javascript;base64,${btoa(s)}`
+    const url = URL.createObjectURL(new Blob([s], { type: &quot;text/javascript&quot; }));
+    const m = await import(url);
     if (typeof m.default === &quot;function&quot;) {
       const res = await m.default.call({ console });
       return lit.utils.inspect(res);
