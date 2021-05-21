@@ -287,38 +287,9 @@ As opposed to viewers which change how a source file is viewed, a `transformer` 
 
 See [[execute `code` cells]] for existing `ts` and `jsx` transpilation to `js` via Babel.
 
-Mock:
+See the first working [prototype transformer](testing/autoformatting_cell_source.lit#prettier)
 
-```js !plugin type=transformer of=jsx !collapse
 
-const skyPack = async name => await import(`https://cdn.skypack.dev/${name}`)
-
-export const transformer = async (node) => {
-  const babel = await skyPack('@babel/core')
-  const presetReact = await skyPack('@babel/preset-react')
-  const src = node 
-              && node.data 
-              && node.data.value
-  const filename = node
-                   && node.meta
-                   && node.meta.filename
-
-  const res = babel.transformSync(src, { 
-                    filename: filename,
-                    sourceMaps: false,
-                    parserOpts: { allowReturnOutsideFunction: true },
-                    presets: [
-                        presetReact,
-                        // presetTypescript
-                    ],
-                    plugins: [
-                        // pluginClassProps
-                    ]
-                })
-  console.log("[babel] transformed", res)
-  return `// TODO: babelify. \n${res.code}`
-}
-```
 
 
 
