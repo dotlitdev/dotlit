@@ -77,12 +77,16 @@ export const transformer = async ({
 
   const format = p.default.format;
   const babelPlugin = b.default;
-
-  return [
-    first,
-    format(body, { parser: "babel", plugins: [babelPlugin] }),
-    last,
-  ].join("\n");
+  try {
+    return [
+      first,
+      format(body, { parser: "babel", plugins: [babelPlugin] }),
+      last,
+    ].join("\n");
+  } catch (err) {
+    lit.file.message(err.message);
+    return src;
+  }
 };
 
 ```
