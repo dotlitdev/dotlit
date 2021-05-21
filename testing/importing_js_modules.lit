@@ -250,7 +250,7 @@ export const repl = async (src, meta) => {
     const console = "fake me";
     const m = await import(`data:text/javascript;base64,${btoa(s)}`);
     if (typeof m.default === "function") {
-      const res = await m.default();
+      const res = await m.default.call({ console });
       return lit.utils.inspect(res);
     } else return lit.utils.inspect(m);
   } catch (err) {
