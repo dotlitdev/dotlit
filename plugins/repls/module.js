@@ -8,7 +8,9 @@ export const repl = async (src, meta) => {
 
     const s = `/*${Date.now()}*/` + babel.code;
     const console = "fake me";
-    const m = await import(`data:text/javascript;base64,${btoa(s)}`);
+    // const url = `data:text/javascript;base64,${btoa(s)}`
+    const url = URL.createObjectURL(new Blob([s], { type: "text/javascript" }));
+    const m = await import(url);
     if (typeof m.default === "function") {
       const res = await m.default.call({ console });
       return lit.utils.inspect(res);
