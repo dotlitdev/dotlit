@@ -104,7 +104,7 @@ export const repl = async (src, meta) => {
     const console = "fake me";
     // const url = `data:text/javascript;base64,${btoa(s)}`
     const url = URL.createObjectURL(new Blob([s], { type: "text/javascript" }));
-    const m = await import(url + "?path=" + lit.location.src);
+    const m = await import(url + "#path=" + lit.location.src);
     if (typeof m.default === "function") {
       const res = await m.default.call({ console });
       return lit.utils.inspect(res);
@@ -127,8 +127,8 @@ export const cons = typeof console !== "undefined" ? console : null;
 fire();
 
 ```
-```>txt attached=true updated=1621636574738
-{ url: 'blob:https://dotlit.org/a73a557f-870a-4c7e-a8de-9839024987b8' }
+```>txt attached=true updated=1621686854909
+Importing a module script failed.
 ```
 
 
