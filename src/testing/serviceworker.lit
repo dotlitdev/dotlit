@@ -185,7 +185,7 @@ const localFile = async (event) => {
         jsFile = true
     }
     const content = await dotlit.lit.fs.readFile(filepath);
-    return new Response(content,{headers: {'meta': state.version, 'jsFile': jsFile}});
+    return new Response(content,{headers: {'server': `dotlit.org/sw@${state.version}`, 'jsFile': jsFile, 'Content-Type': jsFile ? 'text/javascript' : 'text/plain' }});
   } else throw new Error("dotlit module not loaded.");
 };
 
