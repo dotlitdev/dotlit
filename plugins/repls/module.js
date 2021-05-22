@@ -6,11 +6,16 @@ export const repl = async (src, meta) => {
   try {
     babel = transform(filename, src);
 
-    const s = `/*${Date.now()}*/` + babel.code;
+    const s =
+      `/*${Date.now()}*/` +
+      babel.code.replace(
+        "HORRIBLE_HACK",
+        new URL("..", location.href).toString()
+      );
     const console = "fake me";
     // const url = `data:text/javascript;base64,${btoa(s)}`
     const url = URL.createObjectURL(new Blob([s], { type: "text/javascript" }));
-    const m = await import(url + "#path=" + lit.location.src);
+    const m = await import(url + "#location=" + location.href);
     if (typeof m.default === "function") {
       const res = await m.default.call({ console });
       return lit.utils.inspect(res);
