@@ -144,25 +144,39 @@ export default async (fn) =&gt; {
 
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1d ago</span></span></span><output><pre><code class="txt">&#x27;function recordEnd() {\n    [native code]\n}&#x27;
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="213:1-5282" endpos="294:4-7618"><cell startpos="213:1-5282" endpos="215:165-5464"><div class="cell-content"><h2 id="local-modules">Local modules</h2><p>This assumes you have the <em>experimental</em> service worker (<a href="testing/serviceworker.html?file=testing/serviceworker.lit" title="testing/ServiceWorker" wikilink="true">testing/ServiceWorker</a>) (version 0.2.1) enabled to vend files in the local filesystem via Web fetch API.</p></div></cell><cell startpos="217:1-5466" endpos="220:4-5536" class="code output"><div class="cell-content"><codecell class="lang-js local output"><a name="custom-module.mjs"></a><span class="meta"><span class="lang">js</span><span class="filename">custom-module.mjs</span></span><output><pre><code class="js">export default (fn) =&gt; &quot;Great Success!&quot;;
+<section depth="2" class="" startpos="213:1-5282" endpos="308:4-8039"><cell startpos="213:1-5282" endpos="215:165-5464"><div class="cell-content"><h2 id="local-modules">Local modules</h2><p>This assumes you have the <em>experimental</em> service worker (<a href="testing/serviceworker.html?file=testing/serviceworker.lit" title="testing/ServiceWorker" wikilink="true">testing/ServiceWorker</a>) (version 0.2.1) enabled to vend files in the local filesystem via Web fetch API.</p></div></cell><cell startpos="217:1-5466" endpos="220:4-5536" class="code output"><div class="cell-content"><codecell class="lang-js local output"><a name="custom-module.mjs"></a><span class="meta"><span class="lang">js</span><span class="filename">custom-module.mjs</span></span><output><pre><code class="js">export default (fn) =&gt; &quot;Great Success!&quot;;
 
-</code></pre></output></codecell></div></cell><cell startpos="222:1-5538" endpos="228:4-5700" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const url = new URL(&quot;./foo&quot;, lit.location.base)
-return [url.toString(), location)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2m ago</span></span></span><output><pre><code class="txt">https://dotlit.org/foo
-</code></pre></output></codecell></div></cell><cell startpos="230:1-5702" endpos="238:4-5956" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="repl">module</span></span><pre><code class="js">//import foo from &quot;./testing/custom-module.mjs&quot;;
+</code></pre></output></codecell></div></cell><cell startpos="222:1-5538" endpos="242:4-6121" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const url = new URL(&quot;./foo&quot;, location.href)
+return [url.toString(), location]
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1m ago</span></span></span><output><pre><code class="txt">[ &#x27;https://dotlit.org/foo&#x27;,
+  { href: [Getter/Setter],
+    protocol: [Getter/Setter],
+    host: [Getter/Setter],
+    hostname: [Getter/Setter],
+    port: [Getter/Setter],
+    pathname: [Getter/Setter],
+    search: [Getter/Setter],
+    hash: [Getter/Setter],
+    origin: [Getter],
+    ancestorOrigins: [Getter],
+    assign: [Function: assign],
+    replace: [Function: replace],
+    reload: [Function: reload],
+    toString: [Function: toString] } ]
+</code></pre></output></codecell></div></cell><cell startpos="244:1-6123" endpos="252:4-6377" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="repl">module</span></span><pre><code class="js">//import foo from &quot;./testing/custom-module.mjs&quot;;
 const test = new URL(&quot;./testing/custom-module.mjs&quot;);
 export default (fn) =&gt; ({ meta: import.meta, test: test.toString() });
 
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">11m ago</span></span></span><output><pre><code class="txt">Type error
-</code></pre></output></codecell></div></cell><cell startpos="239:1-5957" endpos="241:4-6067" class="code output"><div class="cell-content"><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">18m ago</span></span></span><output><pre><code class="txt">Module name, &#x27;./testing/custom-module.mjs&#x27; does not resolve to a valid URL.
-</code></pre></output></codecell></div></cell><cell startpos="242:1-6068" endpos="244:4-6212" class="code output"><div class="cell-content"><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">19m ago</span></span></span><output><pre><code class="txt">{ url: &#x27;blob:https://dotlit.org/cda4db85-6121-4041-b417-46e4de9dfe08#path=testing/importing_js_modules.lit&#x27; }
-</code></pre></output></codecell></div></cell><cell startpos="246:1-6214" endpos="251:4-6375" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return fetch(&#x27;/testing/custom-module.mjs&#x27;).then(res =&gt; res.headers.get(&#x27;Content-Type&#x27;))
+</code></pre></output></codecell></div></cell><cell startpos="253:1-6378" endpos="255:4-6488" class="code output"><div class="cell-content"><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">19m ago</span></span></span><output><pre><code class="txt">Module name, &#x27;./testing/custom-module.mjs&#x27; does not resolve to a valid URL.
+</code></pre></output></codecell></div></cell><cell startpos="256:1-6489" endpos="258:4-6633" class="code output"><div class="cell-content"><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">20m ago</span></span></span><output><pre><code class="txt">{ url: &#x27;blob:https://dotlit.org/cda4db85-6121-4041-b417-46e4de9dfe08#path=testing/importing_js_modules.lit&#x27; }
+</code></pre></output></codecell></div></cell><cell startpos="260:1-6635" endpos="265:4-6796" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return fetch(&#x27;/testing/custom-module.mjs&#x27;).then(res =&gt; res.headers.get(&#x27;Content-Type&#x27;))
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">19m ago</span></span></span><output><pre><code class="txt">text/javascript
-</code></pre></output></codecell></div></cell><cell startpos="254:1-6378" endpos="255:135-6618"><div class="cell-content"><ul class="contains-task-list">
+</code></pre></output></codecell></div></cell><cell startpos="268:1-6799" endpos="269:135-7039"><div class="cell-content"><ul class="contains-task-list">
 <li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <del>Seems like <code>0.2.2</code> is <em>Still</em> not setting headers correctly, was expecting</del> Got <code>text/javascript</code>.</li>
 <li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->fetch/sw now sends correct mime type, but still get <code>Module name, &#x27;/testing/custom-module.mjs&#x27; does not resolve to a valid URL.</code></li>
-</ul></div></cell><cell startpos="256:1-6619" endpos="278:4-7065" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return fetch(&#x27;/testing/custom-module.mjs--sw&#x27;).then(res =&gt; res.text())
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">32m ago</span></span></span><output><pre><code class="txt">{
+</ul></div></cell><cell startpos="270:1-7040" endpos="292:4-7486" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return fetch(&#x27;/testing/custom-module.mjs--sw&#x27;).then(res =&gt; res.text())
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">33m ago</span></span></span><output><pre><code class="txt">{
   &quot;version&quot;: &quot;0.2.10&quot;,
   &quot;dotlit&quot;: &quot;object&quot;,
   &quot;root&quot;: &quot;/&quot;,
@@ -180,11 +194,11 @@ export default (fn) =&gt; ({ meta: import.meta, test: test.toString() });
     &quot;dev&quot;: 1
   }
 }
-</code></pre></output></codecell></div></cell><cell startpos="279:1-7066" endpos="284:4-7226" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return fetch(&#x27;/testing/custom-module.mjs&#x27;).then(res =&gt; res.headers.get(&#x27;server&#x27;))
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">31m ago</span></span></span><output><pre><code class="txt">dotlit.org/sw@0.2.10
-</code></pre></output></codecell></div></cell><cell startpos="287:1-7229" endpos="287:216-7444"><div class="cell-content"><ul class="contains-task-list">
+</code></pre></output></codecell></div></cell><cell startpos="293:1-7487" endpos="298:4-7647" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return fetch(&#x27;/testing/custom-module.mjs&#x27;).then(res =&gt; res.headers.get(&#x27;server&#x27;))
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">32m ago</span></span></span><output><pre><code class="txt">dotlit.org/sw@0.2.10
+</code></pre></output></codecell></div></cell><cell startpos="301:1-7650" endpos="301:216-7865"><div class="cell-content"><ul class="contains-task-list">
 <li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <del>After updating the service worker to return the correct mime type</del>, I suspect it&#x27;s failing to resolve urls relative to the base64 data:uri setup. c.f. Original repl implementation which uses <code>createObjectURL</code></li>
-</ul></div></cell><cell startpos="289:1-7446" endpos="294:4-7618" class="code"><div class="cell-content"><codecell class="tag-extract lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#b232dc" class="tag">extract</span></span><pre><code class="js">const esm = ({ raw }, ...vals) =&gt;
+</ul></div></cell><cell startpos="303:1-7867" endpos="308:4-8039" class="code"><div class="cell-content"><codecell class="tag-extract lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#b232dc" class="tag">extract</span></span><pre><code class="js">const esm = ({ raw }, ...vals) =&gt;
         URL.createObjectURL(
           new Blob([String.raw({ raw }, ...vals)], { type: &quot;text/javascript&quot; })
         );
