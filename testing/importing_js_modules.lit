@@ -101,6 +101,9 @@ export const repl = async (src, meta) => {
   try {
     babel = transform(filename, src);
 
+    // So many hacks due to blob and/or data uri
+    // - cachbusting comment
+    // - rewrite imports urls to be absolute
     const s =
       `/*${Date.now()}*/` +
       babel.code.replace(

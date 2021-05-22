@@ -140,11 +140,19 @@ return () =&gt; &lt;App /&gt;;
   try {
     babel = transform(filename, src);
 
-    const s = `/*${Date.now()}*/` + babel.code;
+    // So many hacks due to blob and/or data uri
+    // - cachbusting comment
+    // - rewrite imports urls to be absolute
+    const s =
+      `/*${Date.now()}*/` +
+      babel.code.replace(
+        &quot;HORRIBLE_HACK&quot;,
+        new URL(&quot;..&quot;, location.href).toString()
+      );
     const console = &quot;fake me&quot;;
     // const url = `data:text/javascript;base64,${btoa(s)}`
     const url = URL.createObjectURL(new Blob([s], { type: &quot;text/javascript&quot; }));
-    const m = await import(url + &quot;#path=&quot; + lit.location.src);
+    const m = await import(url + &quot;#location=&quot; + location.href);
     if (typeof m.default === &quot;function&quot;) {
       const res = await m.default.call({ console });
       return lit.utils.inspect(res);
@@ -218,7 +226,7 @@ const EditorExample = (props) =&gt; {
 
 export const returns = &lt;EditorExample /&gt;;
 
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">16.5h ago</span></span></span><output><pre><code class="txt">Importing binding name &#x27;defaultProps&#x27; is not found.
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">16.6h ago</span></span></span><output><pre><code class="txt">Importing binding name &#x27;defaultProps&#x27; is not found.
 </code></pre></output></codecell></div></cell><cell startpos="219:1-5181" endpos="374:4-10339" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return lit.utils 
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.9d ago</span></span></span><output><pre><code class="txt">{ inspect: 
    { [Function: inspect]
