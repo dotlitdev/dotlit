@@ -10,7 +10,7 @@ export const repl = async (src, meta) => {
     const console = "fake me";
     // const url = `data:text/javascript;base64,${btoa(s)}`
     const url = URL.createObjectURL(new Blob([s], { type: "text/javascript" }));
-    const m = await import(url + "?path=" + lit.location.src);
+    const m = await import(url + "#path=" + lit.location.src);
     if (typeof m.default === "function") {
       const res = await m.default.call({ console });
       return lit.utils.inspect(res);
