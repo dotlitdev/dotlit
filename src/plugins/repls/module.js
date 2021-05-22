@@ -14,7 +14,7 @@ export const repl = async (src, meta) => {
       babel.code.replace(
         /HORRIBLE_HACK/g,
         //location.href
-        new URL(".", location.href).toString() + "\1"
+        new URL(".", location.href).toString() + "$1"
       );
     const console = "fake me";
     // const url = `data:text/javascript;base64,${btoa(s)}`
