@@ -4,6 +4,7 @@ import {transformSync} from '@babel/core'
 import presetReact from "@babel/preset-react"
 import presetTypescript from "@babel/preset-typescript"
 import pluginTransformModulesCommonjs from '@babel/plugin-transform-modules-commonjs'
+import pluginBareImportRewrite from 'babel-plugin-bare-import-rewrite'
 
 const NoOp = () => {}
 
@@ -38,6 +39,7 @@ export const transform = (filename, source, {type} = {}) => {
 
     const plugins = []
     if (type === 'commonjs') plugins.push(pluginTransformModulesCommonjs)
+    if (type === 'web') plugins.push(pluginBareImportRewrite)
     const babel = transformSync(source, { 
         filename: filename,
         sourceMaps: false,
