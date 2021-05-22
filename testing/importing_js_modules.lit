@@ -107,8 +107,9 @@ export const repl = async (src, meta) => {
     const s =
       `/*${Date.now()}*/` +
       babel.code.replace(
-        /HORRIBLE_HACK/g,
-        new URL("..", location.href).toString()
+        /HORRIBLE_HACK([^'"]+)/g,
+        //location.href
+        new URL(".", location.href).toString() + "$1"
       );
     const console = "fake me";
     // const url = `data:text/javascript;base64,${btoa(s)}`
@@ -236,15 +237,16 @@ https://dotlit.org/testing/foo
 ```
 
 ```js repl=module
-// import foo from "HORRIBLE_HACKcustom-module.mjs";
-export const test = "HORRIBLE_HACKfoo"
-// export const test = (new URL("HORRIBLE_HACKcustom-module.mjs")).toString()
+import foo from "HORRIBLE_HACKcustom-module.mjs";
+export const test1 = "HORRIBLE_HACKfoo"
+export const test2 = (new URL("HORRIBLE_HACKcustom-module.mjs")).toString()
 export const meta = import.meta
-// export default foo
+export default foo
 ```
-```>txt attached=true updated=1621690317303
-{ meta: { url: 'blob:https://dotlit.org/d4a8fc7c-a004-4c4b-96c9-162077a88f8a#location=https://dotlit.org/testing/importing_js_modules.html?file=testing/importing_js_modules.lit#' },
-  test: 'https://dotlit.org//foo' }
+
+The correct resolution to the above hacks https://www.npmjs.com/package/babel-plugin-bare-import-rewrite
+```>txt  updated=1621690705217
+'Great Success!'
 ```
 ```>txt  updated=1621687020245
 Module name, './testing/custom-module.mjs' does not resolve to a valid URL.

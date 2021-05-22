@@ -12,8 +12,9 @@ export const repl = async (src, meta) => {
     const s =
       `/*${Date.now()}*/` +
       babel.code.replace(
-        /HORRIBLE_HACK/g,
-        new URL("..", location.href).toString()
+        /HORRIBLE_HACK([^'"]+)/g,
+        //location.href
+        new URL(".", location.href).toString() + "$1"
       );
     const console = "fake me";
     // const url = `data:text/javascript;base64,${btoa(s)}`
