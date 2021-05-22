@@ -4,7 +4,7 @@ let document = { documentElement: { style: {} } };
 importScripts("web.bundle.js");
 
 const state = {
-  version: "0.2.8",
+  version: "0.2.9",
   dotlit: typeof dotlit,
   root: "",
   enableCache: false,
@@ -49,7 +49,7 @@ const getMockResponse = async (event) => {
 const localFile = async (event) => {
   if (typeof dotlit !== "undefined") {
     const filepath = event.request.url
-      .slice(dotlit.lit.location.base.length - 1, -4)
+      .slice(dotlit.lit.location.base.length - 1)
       .slice();
     await dotlit.lit.fs.stat(filepath);
     let jsFile;
