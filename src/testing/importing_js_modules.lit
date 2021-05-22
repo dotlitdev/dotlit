@@ -107,7 +107,7 @@ export const repl = async (src, meta) => {
     const s =
       `/*${Date.now()}*/` +
       babel.code.replace(
-        /HORRIBLE_HACK/g,
+        /HORRIBLE_HACK([^'"]+)/g,
         //location.href
         new URL(".", location.href).toString() + "$1"
       );
@@ -243,9 +243,9 @@ export const test = "HORRIBLE_HACKfoo"
 export const meta = import.meta
 // export default foo
 ```
-```>txt attached=true updated=1621690459356
-{ meta: { url: 'blob:https://dotlit.org/5111b6e6-4ec9-497d-848f-d6fe9c459644#location=https://dotlit.org/testing/importing_js_modules.html?file=testing/importing_js_modules.lit#' },
-  test: 'https://dotlit.org/testing/foo' }
+```>txt attached=true updated=1621690575215
+{ meta: { url: 'blob:https://dotlit.org/3c16d4f4-601c-4353-82df-db3ed6828609#location=https://dotlit.org/testing/importing_js_modules.html?file=testing/importing_js_modules.lit#' },
+  test: 'https://dotlit.org/testing/$1foo' }
 ```
 ```>txt  updated=1621687020245
 Module name, './testing/custom-module.mjs' does not resolve to a valid URL.
