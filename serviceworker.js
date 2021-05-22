@@ -4,7 +4,7 @@ let document = { documentElement: { style: {} } };
 importScripts("web.bundle.js");
 
 const state = {
-  version: "0.2.6",
+  version: "0.2.7",
   dotlit: typeof dotlit,
   root: "",
   enableCache: false,
