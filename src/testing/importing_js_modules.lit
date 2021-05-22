@@ -101,11 +101,16 @@ export const repl = async (src, meta) => {
   try {
     babel = transform(filename, src);
 
-    const s = `/*${Date.now()}*/` + babel.code;
+    const s =
+      `/*${Date.now()}*/` +
+      babel.code.replace(
+        "HORRIBLE_HACK",
+        new URL("..", location.href).toString()
+      );
     const console = "fake me";
     // const url = `data:text/javascript;base64,${btoa(s)}`
     const url = URL.createObjectURL(new Blob([s], { type: "text/javascript" }));
-    const m = await import(url + "#path=" + lit.location.src);
+    const m = await import(url + "#location=" + location.href);
     if (typeof m.default === "function") {
       const res = await m.default.call({ console });
       return lit.utils.inspect(res);
@@ -128,8 +133,8 @@ export const cons = typeof console !== "undefined" ? console : null;
 fire();
 
 ```
-```>txt attached=true updated=1621686929037
-{ url: 'blob:https://dotlit.org/39018327-ff2e-4f1f-82e0-11d067d40622#path=testing/importing_js_modules.lit' }
+```>txt attached=true updated=1621688470869
+{ url: 'blob:https://dotlit.org/f371b8d7-12a1-49d1-b9c6-ff6373727cf6#location=https://dotlit.org/testing/importing_js_modules.html?file=testing/importing_js_modules.lit#../plugins/repls/module.js' }
 ```
 
 
@@ -212,7 +217,7 @@ export default async (fn) => {
 
 ## Local modules
 
-This assumes you have the *experimental* service worker ([[testing/ServiceWorker]]) (version 0.2.1) enabled to vend files in the local filesystem via Web fetch API.
+This assumes you have the *experimental* service worker ([[testing/ServiceWorker]]) (version 0.2.10) enabled to vend files in the local filesystem via Web fetch API.
 
 ```>js custom-module.mjs
 export default (fn) => "Great Success!";
@@ -228,14 +233,13 @@ https://dotlit.org/testing/foo
 ```
 
 ```js repl=module
-//import foo from "./testing/custom-module.mjs";
-const test = new URL("../testing/custom-module.mjs", location.href);
-export default (fn) => ({ meta: import.meta, test: test.toString() });
-
+import foo from "HORRIBLE_HACK../testing/custom-module.mjs";
+export const test = (new URL("HORRIBLE_HACK../testing/custom-module.mjs", location.href)).toString()
+export const meta = import.meta
+export default foo
 ```
-```>txt attached=true updated=1621688162779
-{ meta: { url: 'blob:https://dotlit.org/11d055d9-eb07-4fec-8665-d2be7908a71f#path=testing/importing_js_modules.lit' },
-  test: 'https://dotlit.org/testing/testing/custom-module.mjs' }
+```>txt attached=true updated=1621689739152
+'Great Success!'
 ```
 ```>txt  updated=1621687020245
 Module name, './testing/custom-module.mjs' does not resolve to a valid URL.
