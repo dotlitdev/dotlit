@@ -13,8 +13,7 @@ export const repl = async (src, meta) => {
       `/*${Date.now()}*/` +
       babel.code.replace(
         /HORRIBLE_HACK/g,
-        location.href
-        // new URL("..", location.href).toString()
+        new URL("..", location.href).toString()
       );
     const console = "fake me";
     // const url = `data:text/javascript;base64,${btoa(s)}`
