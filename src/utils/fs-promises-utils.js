@@ -11,6 +11,7 @@ const passThroughRead = (origReadFile, litroot) => {
     try {
       return await origReadFile(...args);
     } catch (err) {
+      if (args[1] && args[1].localOnly) throw err;
       const filePath = path.join(litroot, args[0])
       console.log('fs.passThroughRead passing through to fetch', filePath)
       const resp = await fetch(filePath)
