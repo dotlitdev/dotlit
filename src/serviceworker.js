@@ -4,7 +4,7 @@ let document = { documentElement: { style: {} } };
 importScripts("web.bundle.js");
 
 const state = {
-  version: "0.2.10",
+  version: "0.2.11",
   dotlit: typeof dotlit,
   root: "",
   enableCache: false,
@@ -34,7 +34,9 @@ const getMockResponse = async (event) => {
         filepath,
         stat,
       };
-      return new Response(JSON.stringify(status, null, 2), {headers: {'meta': state.version}});
+      return new Response(JSON.stringify(status, null, 2), {
+        headers: { meta: state.version },
+      });
     }
   } catch (err) {
     const status = {
@@ -53,11 +55,17 @@ const localFile = async (event) => {
       .slice();
     await dotlit.lit.fs.stat(filepath);
     let jsFile;
-    if ((/.*\.m?jsx?$/).test(filepath)) {
-        jsFile = true
+    if (/.*\.m?jsx?$/.test(filepath)) {
+      jsFile = true;
     }
-    const content = await dotlit.lit.fs.readFile(filepath);
-    return new Response(content,{headers: {'server': `dotlit.org/sw@${state.version}`, 'jsFile': jsFile, 'Content-Type': jsFile ? 'text/javascript' : 'text/plain' }});
+    const content = await dotlit.lit.fs.readFile(filepath, { localOnly: true });
+    return new Response(content, {
+      headers: {
+        server: `dotlit.org/sw@${state.version}`,
+        jsFile: jsFile,
+        "Content-Type": jsFile ? "text/javascript" : "text/plain",
+      },
+    });
   } else throw new Error("dotlit module not loaded.");
 };
 
