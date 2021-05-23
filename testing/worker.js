@@ -1,6 +1,6 @@
 // gross hack around one of @codemirror/view bugs
 let document = { documentElement: { style: {} } };
-postMessage("Version: 3");
+postMessage("Version: 4");
 postMessage("Location: " + typeof location + JSON.stringify(location));
 importScripts("../web.bundle.js");
 postMessage("dotlit: " + typeof dotlit);
