@@ -8,7 +8,7 @@ const Link = props => {
     const title = props.node.properties.title
     const data = props.data
     const wikilink = props.wikilink ? 'true' : undefined
-    const icon = (data && data.isAbsolute) 
+    const icon = (data && data.isExternal) 
                  ? '↗'
                  : (data && data.isFragment)
                    ? '§'
