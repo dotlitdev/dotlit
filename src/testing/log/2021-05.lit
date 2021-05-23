@@ -1,20 +1,16 @@
 # 2021-05
 
 ```js
+const thisMonth = "2021-05-";
+const prefix = "/testing/log/";
 
-const thisMonth = '2021-05-'
-const prefix = '/testing/log/'
+const startsWith = (x) => x.startsWith(thisMonth);
+const addPrefix = (x) => prefix + x;
 
-const startsWith = x => x.startsWith(thisMonth)
-const addPrefix = x=>prefix+x
+const withList = async (list) => {
+  return list.filter(startsWith).map(addPrefix);
+};
 
-const withList = async list => {
-   return list.filter(startsWith)
-              .map(addPrefix)
-}
-
-return lit.fs
-          .readdir(prefix)
-          .then(withList)
+return lit.fs.readdir(prefix).then(withList);
 
 ```
