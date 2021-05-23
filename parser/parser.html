@@ -645,9 +645,9 @@ export const decorateLinkNode = (link, root = &#x27;&#x27;, filepath = &#x27;&#x
 
     // console.log(`[Links] resolving (${link.type}) [${url}] &#x27;${root}&#x27;, &quot;${filepath}&quot;`)
     const isExternal = /^(https?\:)?\/\//.test(url)
-    const isAbsolute = /^\//.test(url)
+    const isAbsolute = !isExternal &amp;&amp; /^\//.test(url)
     const isFragment = /^(\?|#)/.test(url)
-    const isRelative = url &amp;&amp; !isAbsolute &amp;&amp; !isFragment
+    const isRelative = url &amp;&amp; !isAbsolute &amp;&amp; !isFragment &amp;&amp; !isExternal
 
     let canonical = url
     let href = url
