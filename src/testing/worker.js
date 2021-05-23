@@ -9,13 +9,13 @@ postMessage("lit" + JSON.stringify(dotlit.lit.location));
 const getFsTest = async (filepath) => {
   postMessage(`Getting ${filepath} from local fs.`);
   try {
-    const path = lit.utils.path;
+    const path = dotlit.lit.utils.path;
     const visit = async (root) => {
-      const list = await lit.fs.readdir(root);
+      const list = await dotlit.lit.fs.readdir(root);
       return Promise.all(
         list.map(async (key) => {
           const pathname = path.join(root, key);
-          const stat = await lit.fs.stat(pathname);
+          const stat = await dotlit.lit.fs.stat(pathname);
           let contents;
           if (key === ".git") {
             return { pathname, type: stat.type };
@@ -23,7 +23,7 @@ const getFsTest = async (filepath) => {
           else
             contents =
               (
-                await lit.fs.readFile(pathname, {
+                await dotlit.lit.fs.readFile(pathname, {
                   encoding: "utf8",
                   localOnly: true,
                 })
@@ -33,16 +33,12 @@ const getFsTest = async (filepath) => {
       );
     };
 
-    return (async (fn) => {
-      lit.fs.writeFile(
-        "/testing/full.json",
-        JSON.stringify(await visit("/"), null, 2)
-      );
-    })();
+    await visit(filepath);
+    postMessage("done");
   } catch (err) {
     postMessage("error:" + err.toString());
     postMessage("done");
   }
 };
 
-getFsTest("/index.lit");
+getFsTest("/");
