@@ -123,7 +123,7 @@ function generateBacklinks(files, root) {
                 url: fileLink.url,
                 title: title,
             }
-            if (!link.data.isExternal || link.data.isCode) {
+            if (link.data.isRelative || link.data.isAbsolute || link.data.isCode) {
                 if (manifest[link.data.canonical] && manifest[link.data.canonical].backlinks) {
                     console.log(`[${title}][${i}] Adding link ${fileLink.data.canonical} to existing "${link.data.canonical}"`)
                     manifest[link.data.canonical].backlinks.push(linkNode)
