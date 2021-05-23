@@ -44,8 +44,9 @@ export const decorateLinkNode = (link, root = '', filepath = '') => {
     const url = linkToUrl(link, root)
 
     // console.log(`[Links] resolving (${link.type}) [${url}] '${root}', "${filepath}"`)
-    const isAbsolute = /(https?\:)?\/\//.test(url)
-    const isFragment = /^(\?|#).*/.test(url)
+    const isExternal = /^(https?\:)?\/\//.test(url)
+    const isAbsolute = /^\//.test(url)
+    const isFragment = /^(\?|#)/.test(url)
     const isRelative = url && !isAbsolute && !isFragment
 
     let canonical = url
@@ -62,6 +63,7 @@ export const decorateLinkNode = (link, root = '', filepath = '') => {
     link.url = href
     link.title = link.title || link.value
     link.data = {
+        isExternal,
         isAbsolute,
         isFragment,
         isRelative,
@@ -80,6 +82,7 @@ export const decorateLinkNode = (link, root = '', filepath = '') => {
         data: {
              base, 
              frag,
+             isExternal,
              isAbsolute,
              isFragment,
              isRelative,
