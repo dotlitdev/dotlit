@@ -274,7 +274,7 @@ File: ${file.path}
                         const html_file = await renderedVFileToDoc(await file, cmd)
                         await fs.writeFile(file.path, file.contents)
                         console.log(`Wrote  ${file.path} to "${path.join(cmd.output, file.path)}" to disk`)
-                        return html_file
+                        return false
                     }
                 }))
 
@@ -291,6 +291,7 @@ File: ${file.path}
                 meta.failures2 = failures 
                 meta.litFiles = litFiles.length
                 meta.nonLitFiles = nonLitFiles.length
+                meta.wroteHtml = html_files.filter(Identity).length
                 await fs.writeFile('meta.json', JSON.stringify(meta, null, 4))
                 console.log(`Wrote ${html_files.filter(Identity).length}/${html_files.length} .lit file(s) to disk`)
 
