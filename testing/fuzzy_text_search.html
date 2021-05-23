@@ -1,6 +1,6 @@
-<html data-reactroot=""><head><title>Fuzzy text search</title><meta name="litsrc" value="testing/fuzzy_text_search.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="63:4-1450"><cell startpos="1:1-0" endpos="5:31-60"><div class="cell-content"><h1 id="fuzzy-text-search">Fuzzy text search</h1><p>Related</p><ul>
+<html data-reactroot=""><head><title>Fuzzy text search</title><meta name="litsrc" value="testing/fuzzy_text_search.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="93:4-3142"><cell startpos="1:1-0" endpos="5:31-60"><div class="cell-content"><h1 id="fuzzy-text-search">Fuzzy text search</h1><p>Related</p><ul>
 <li><a href="testing/compact_manifest.html?file=testing/compact_manifest.lit" title="testing/compact_manifest" wikilink="true">testing/compact_manifest</a></li>
-</ul></div></cell><section depth="2" class="" startpos="7:1-62" endpos="63:4-1450"><cell startpos="7:1-62" endpos="9:19-92"><div class="cell-content"><h2 id="fusejs">Fuse.js</h2><p><a href="https://fusejs.io/">https://fusejs.io/<span class="linkIcon">↗</span></a></p></div></cell><cell startpos="11:1-94" endpos="63:4-1450" class="code"><div class="cell-content"><codecell class="dir-collapse tag-intro lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#5fb666" class="tag">intro</span></span><pre><code class="js">return (async (fn) =&gt; {
+</ul></div></cell><section depth="2" class="" startpos="7:1-62" endpos="93:4-3142"><cell startpos="7:1-62" endpos="9:19-92"><div class="cell-content"><h2 id="fusejs">Fuse.js</h2><p><a href="https://fusejs.io/">https://fusejs.io/<span class="linkIcon">↗</span></a></p></div></cell><cell startpos="11:1-94" endpos="26:4-504" class="code"><div class="cell-content"><codecell class="dir-collapse tag-intro lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#5fb666" class="tag">intro</span></span><pre><code class="js">return (async (fn) =&gt; {
   const { default: Fuse } = await import(
     &quot;https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.esm.js&quot;
   );
@@ -14,43 +14,74 @@
   return fuse.search(&quot;../../..&quot;,{limit:5});
 })();
 
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.6h ago</span></span></span><output><pre><code class="txt">[ { item: 
-     { id: &#x27;../../../../../meta/settings.lit#plantuml-viewer--repl&#x27;,
-       backlinks: [Object],
-       exists: false,
-       type: &#x27;link&#x27; },
-    refIndex: 115,
-    score: 0.001 },
-  { item: 
-     { id: &#x27;../../../../../testing/log/2021-05-23.lit&#x27;,
-       backlinks: [Object],
-       exists: false,
-       type: &#x27;link&#x27; },
-    refIndex: 131,
-    score: 0.001 },
-  { item: 
-     { id: &#x27;../../../../../testing/log/2021-w22.lit&#x27;,
-       backlinks: [Object],
-       exists: false,
-       type: &#x27;link&#x27; },
-    refIndex: 132,
-    score: 0.001 },
-  { item: 
-     { id: &#x27;../../../../../testing/log/2021-05.lit&#x27;,
-       backlinks: [Object],
-       exists: false,
-       type: &#x27;link&#x27; },
-    refIndex: 133,
-    score: 0.001 },
-  { item: 
-     { id: &#x27;../../../../../testing/log/2021.lit&#x27;,
-       backlinks: [Object],
-       exists: false,
-       type: &#x27;link&#x27; },
-    refIndex: 134,
-    score: 0.001 } ]
-</code></pre></output></codecell></div></cell></section></section>
-<section depth="2" class="" startpos="67:1-1454" endpos="84:4-1821"><cell startpos="67:1-1454" endpos="69:38-1504"><div class="cell-content"><h2 id="fuzzyset">FuzzySet</h2><p><a href="https://github.com/Glench/fuzzyset.js">https://github.com/Glench/fuzzyset.js<span class="linkIcon">↗</span></a></p></div></cell><cell startpos="71:1-1506" endpos="84:4-1821" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return import(&#x27;https://cdn.skypack.dev/fuzzyset&#x27;).then( FuzzySet =&gt; {
+</code></pre></codecell></div></cell><cell startpos="27:1-505" endpos="93:4-3142" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; md</span></span><pre><code class="js">return (async (fn) =&gt; {
+  const { default: Fuse } = await import(
+    &quot;https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.esm.js&quot;
+  );
+  const manifest = await fetch(&quot;/manifest.json&quot;).then((res) =&gt; res.json());
+
+  const fullLocal = await (async (fn) =&gt; {
+    const path = lit.utils.path;
+    const all = []
+    const visit = async (root) =&gt; {
+      const list = await lit.fs.readdir(root);
+      return Promise.all(
+        list.map(async (key) =&gt; {
+          const pathname = path.join(root, key);
+          const stat = await lit.fs.stat(pathname);
+          let contents;
+          if (key === &quot;.git&quot;) {
+            return { pathname, type: stat.type };
+          } else if (stat.type === &quot;dir&quot;) await visit(pathname);
+          else contents = (await lit.fs.readFile(pathname, { encoding: &quot;utf8&quot; }))//.slice(0,10);
+          const item = { pathname, type: stat.type, contents }
+          all.push(item);
+          return item
+        })
+      );
+    };
+
+    await visit(&quot;/&quot;)
+    return all
+  })();
+
+
+  const fuse = new Fuse(fullLocal, {
+    ignoreLocation: true,
+    includeScore: true,
+    includeMatches: true,
+    keys: [&quot;pathname&quot;, &quot;contents&quot;],
+  });
+
+
+  // 3. Now search!
+  return fuse.search(&quot;agora&quot;, { limit: 15 })
+        //.map(x=&gt;x.matches.map(x=&gt;x.indices))
+        .map(x=&gt;[x.score, x.item.pathname,x.refIndex])
+        .map(([score,pathname,index]) =&gt; `- [${pathname}](${pathname}) ${score}`)
+        .join(&#x27;\n&#x27;);
+})();
+
+</code></pre></codecell><codecell class="lang-md local output"><span class="meta"><span class="lang">md</span><span class="updatedAt">Updated <span class="Time relative">2m ago</span></span></span><div class="md-block">
+<ul>
+<li><a href="/articles/ideas_for.html">/articles/ideas_for.lit</a> 0.2114225226254923</li>
+<li><a href="/dummy/data.csv">/dummy/data.csv</a> 0.36</li>
+<li><a href="/testing/fuzzy_text_search.html">/testing/fuzzy_text_search.lit</a> 0.36995700111688923</li>
+<li><a href="/throwaway/codevaluebug.html">/throwaway/codevaluebug.lit</a> 0.4871211210686611</li>
+<li><a href="/meta/github_workflows.html">/meta/github_workflows.lit</a> 0.5105603040774547</li>
+<li><a href="/renderer/transcludeCode.js">/renderer/transcludeCode.js</a> 0.5601518178694253</li>
+<li><a href="/utils/colors.js">/utils/colors.js</a> 0.5622086325239564</li>
+<li><a href="/testing/autoformatting_cell_source.html">/testing/autoformatting_cell_source.lit</a> 0.5642729995712286</li>
+<li><a href="/testing/autoformatting_cell_source.html#prettier">/testing/autoformatting_cell_source.lit#prettier</a> 0.5642729995712286</li>
+<li><a href="/plugins/transformers/prettier.js">/plugins/transformers/prettier.js</a> 0.566057426954563</li>
+<li><a href="/testing/log/today.js">/testing/log/today.js</a> 0.5689563913593156</li>
+<li><a href="/parser/parser.html">/parser/parser.lit</a> 0.5704114362714293</li>
+<li><a href="/parser/links.js">/parser/links.js</a> 0.5705116928943912</li>
+<li><a href="/parser/mdblocks.js">/parser/mdblocks.js</a> 0.5709944956178419</li>
+<li><a href="/parser/frontmatter.js">/parser/frontmatter.js</a> 0.5715781509519569</li>
+</ul>
+</div></codecell></div></cell></section></section>
+<section depth="2" class="" startpos="98:1-3147" endpos="115:4-3514"><cell startpos="98:1-3147" endpos="100:38-3197"><div class="cell-content"><h2 id="fuzzyset">FuzzySet</h2><p><a href="https://github.com/Glench/fuzzyset.js">https://github.com/Glench/fuzzyset.js<span class="linkIcon">↗</span></a></p></div></cell><cell startpos="102:1-3199" endpos="115:4-3514" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return import(&#x27;https://cdn.skypack.dev/fuzzyset&#x27;).then( FuzzySet =&gt; {
 
   const f = new FuzzySet.default()
   f.add(&quot;the text of mine&quot;)
