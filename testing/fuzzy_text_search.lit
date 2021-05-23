@@ -5,39 +5,21 @@
 https://fusejs.io/
 
 ```js
-return (async fn=>{
-  const {default: Fuse} = await import('https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.esm.js')
-  const fuse = new Fuse(books, {
-  keys: ['title', 'author.firstName']
-})
+return (async (fn) => {
+  const { default: Fuse } = await import(
+    "https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.esm.js"
+  );
+  const manifest = await fetch("/manifest.json").then((res) => res.json());
+  const fuse = new Fuse(manifest.nodes, {
+    keys: ["title", "id", "url", "author.firstName"],
+  });
 
-// 3. Now search!
-return fuse.search('jon')
-})()
+  // 3. Now search!
+  return fuse.search("jon");
+})();
+
 ```
-```>txt attached=true updated=1621778973055
-{ [Function: Fuse]
-  version: '6.4.6',
-  createIndex: [Function: createIndex],
-  parseIndex: [Function: parseIndex],
-  config: 
-   { isCaseSensitive: false,
-     includeScore: false,
-     keys: [],
-     shouldSort: true,
-     sortFn: [Function: sortFn],
-     includeMatches: false,
-     findAllMatches: false,
-     minMatchCharLength: 1,
-     location: 0,
-     threshold: 0.6,
-     distance: 100,
-     useExtendedSearch: false,
-     getFn: [Function: get],
-     ignoreLocation: false,
-     ignoreFieldNorm: false },
-  parseQuery: [Function: parse] }
-```
+
 
 
 ## FuzzySet
