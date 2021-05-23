@@ -6,11 +6,30 @@ const prefix = "/testing/log/";
 
 const startsWith = (x) => x.startsWith(thisMonth);
 const addPrefix = (x) => prefix + x;
+const toMarkdown = (x) => `- [](${})`
 
 const withList = async (list) => {
-  return list.filter(startsWith).map(addPrefix);
+  return list
+         .filter(startsWith)
+         .map(addPrefix)
+         .map(toMarkdown)
+         .join('\n')
 };
 
 return lit.fs.readdir(prefix).then(withList);
 
+```
+```>txt attached=true updated=1621774780997
+[ '/testing/log/2021-05-09.lit',
+  '/testing/log/2021-05-11.lit',
+  '/testing/log/2021-05-12.lit',
+  '/testing/log/2021-05-13.lit',
+  '/testing/log/2021-05-15.lit',
+  '/testing/log/2021-05-16.lit',
+  '/testing/log/2021-05-17.lit',
+  '/testing/log/2021-05-18.lit',
+  '/testing/log/2021-05-19.lit',
+  '/testing/log/2021-05-20.lit',
+  '/testing/log/2021-05-21.lit',
+  '/testing/log/2021-05-23.lit' ]
 ```
