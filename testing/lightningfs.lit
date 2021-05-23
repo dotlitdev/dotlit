@@ -268,7 +268,7 @@ export const viewer = ({node, React}) => {
 
 ### Finder (local fs)
 
-```js !collapse > json !collapse
+```js !collapse > json 
 const path = lit.utils.path
 const visit = async (root) => {
   const list = await lit.fs.readdir(root)
@@ -285,7 +285,9 @@ const visit = async (root) => {
   }))
 }
 
-return (async fn => JSON.stringify(await visit('/'), null, 2))()
+return (async fn => {
+  lit.fs.writeFile('/testing/full.json', JSON.stringify(await visit('/'), null, 2))
+})()
 ```
 ```>json !collapse attached=true updated=1621118521378
 [
