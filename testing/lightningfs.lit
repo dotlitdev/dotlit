@@ -277,7 +277,7 @@ const visit = async (root) => {
       const pathname = path.join(root, key);
       const stat = await lit.fs.stat(pathname);
       let contents;
-      if (key === ".git") {
+      if (key === ".git" || !key) {
         return { pathname, type: stat.type };
       } else if (stat.type === "dir") {
         alert("Traversing " + pathname);

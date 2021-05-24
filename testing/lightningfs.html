@@ -230,7 +230,7 @@ undefined
 }
 </code></pre></codecell></div></cell><cell startpos="265:1-7403" endpos="267:4-7415" class="code output"><div class="cell-content"><codecell class="lang-fs local output"><span class="meta"><span class="lang">fs</span></span><output><pre><code class="fs">/
 </code></pre></output></codecell></div></cell></section></section>
-<section depth="3" class="" startpos="269:1-7417" endpos="309:4-8360"><cell startpos="269:1-7417" endpos="269:22-7438"><div class="cell-content"><h3 id="finder-local-fs">Finder (local fs)</h3></div></cell><cell startpos="271:1-7440" endpos="305:4-8333" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="output">&gt; json</span></span><pre><code class="js">const path = lit.utils.path;
+<section depth="3" class="" startpos="269:1-7417" endpos="309:4-8368"><cell startpos="269:1-7417" endpos="269:22-7438"><div class="cell-content"><h3 id="finder-local-fs">Finder (local fs)</h3></div></cell><cell startpos="271:1-7440" endpos="305:4-8341" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="output">&gt; json</span></span><pre><code class="js">const path = lit.utils.path;
 const visit = async (root) =&gt; {
   const list = await lit.fs.readdir(root);
   return Promise.all(
@@ -238,7 +238,7 @@ const visit = async (root) =&gt; {
       const pathname = path.join(root, key);
       const stat = await lit.fs.stat(pathname);
       let contents;
-      if (key === &quot;.git&quot;) {
+      if (key === &quot;.git&quot; || !key) {
         return { pathname, type: stat.type };
       } else if (stat.type === &quot;dir&quot;) {
         alert(&quot;Traversing &quot; + pathname);
@@ -263,8 +263,694 @@ return (async (fn) =&gt; {
   );
 })();
 
-</code></pre></codecell></div></cell><cell startpos="307:1-8335" endpos="309:4-8360" class="code"><div class="cell-content"><codecell class="lang-json2 local"><span class="meta"><span class="lang">json2</span><span class="source">&lt; full.json</span></span><pre><code class="json2"></code></pre></codecell></div></cell></section>
-<section depth="3" class="" startpos="312:1-8363" endpos="386:4-10047"><cell startpos="312:1-8363" endpos="312:27-8389"><div class="cell-content"><h3 id="finder-from-manifest">Finder (from manifest)</h3></div></cell><cell startpos="315:1-8392" endpos="383:4-10025" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=search</span></span><pre><code class="js">const sortBy = (keys) =&gt; (a, b) =&gt; {
+</code></pre></codecell></div></cell><cell startpos="307:1-8343" endpos="309:4-8368" class="code"><div class="cell-content"><codecell class="lang-json2 local"><span class="meta"><span class="lang">json2</span><span class="source">&lt; full.json</span></span><pre><code class="json2">[
+  {
+    &quot;pathname&quot;: &quot;/testing&quot;,
+    &quot;type&quot;: &quot;dir&quot;,
+    &quot;contents&quot;: [
+      {
+        &quot;pathname&quot;: &quot;/testing/lightningfs.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# Lightnin...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/testing/input_buffer.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# Input Bu...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/testing/isomorphic_git.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# Isomorph...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/testing/local_remote_files.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# Local an...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/testing/private_files.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# 🔒 Priva...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/testing/runkit.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# testing/...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/testing/selection.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# More pow...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/testing/serviceworker.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# Service ...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/testing/web_workers.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# Web Work...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/testing/test.txt&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;Q...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/testing/runkit-repl-endpoint.js&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;const util...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/testing/uploads&quot;,
+        &quot;type&quot;: &quot;dir&quot;,
+        &quot;contents&quot;: []
+      },
+      {
+        &quot;pathname&quot;: &quot;/testing/gitworker.js&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;/* eslint-...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/testing/index.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# 🔬 Tests...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/testing/compact_manifest.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# Compact ...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/testing/compactManifest1.json&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;{\&quot;404.lit\&quot;...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/testing/esm_viewer_repl.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;\n### Viewe...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/testing/autoformatting_cell_source.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# Autoform...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/testing/importing_js_modules.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# Importin...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/testing/custom-module.js&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;export def...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/testing/custom-module.mjs&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;export def...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/testing/fuzzy_text_search.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# Fuzzy te...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/testing/log&quot;,
+        &quot;type&quot;: &quot;dir&quot;,
+        &quot;contents&quot;: [
+          {
+            &quot;pathname&quot;: &quot;/testing/log/2021-05-09.lit&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;# 2021-05-...&quot;
+          },
+          {
+            &quot;pathname&quot;: &quot;/testing/log/2021.lit&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;# testing/...&quot;
+          },
+          {
+            &quot;pathname&quot;: &quot;/testing/log/2021-05-17.lit&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;# 2021-05-...&quot;
+          },
+          {
+            &quot;pathname&quot;: &quot;/testing/log/2021-05-19.lit&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;# 2021-05-...&quot;
+          },
+          {
+            &quot;pathname&quot;: &quot;/testing/log/2021-05-18.lit&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;# 2021-05-...&quot;
+          },
+          {
+            &quot;pathname&quot;: &quot;/testing/log/2021-05-23.lit&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;# 2021-05-...&quot;
+          },
+          {
+            &quot;pathname&quot;: &quot;/testing/log/2021-05-11.lit&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;# 2021-05-...&quot;
+          },
+          {
+            &quot;pathname&quot;: &quot;/testing/log/day.lit&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;# ${(new D...&quot;
+          },
+          {
+            &quot;pathname&quot;: &quot;/testing/log/checkforinput.js&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;const date...&quot;
+          },
+          {
+            &quot;pathname&quot;: &quot;/testing/log/2021-w21.lit&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;# 2021-w21...&quot;
+          },
+          {
+            &quot;pathname&quot;: &quot;/testing/log/2021-05-15.lit&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;# 2021-05-...&quot;
+          },
+          {
+            &quot;pathname&quot;: &quot;/testing/log/2021-05-20.lit&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;# 2021-05-...&quot;
+          },
+          {
+            &quot;pathname&quot;: &quot;/testing/log/2021-w20.lit&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;# 2021 wee...&quot;
+          },
+          {
+            &quot;pathname&quot;: &quot;/testing/log/today.js&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;const date...&quot;
+          },
+          {
+            &quot;pathname&quot;: &quot;/testing/log/2021-05-12.lit&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;# 2021-05-...&quot;
+          },
+          {
+            &quot;pathname&quot;: &quot;/testing/log/2021-05-21.lit&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;# 2021-05-...&quot;
+          },
+          {
+            &quot;pathname&quot;: &quot;/testing/log/2021-05-16.lit&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;# 2021-05-...&quot;
+          },
+          {
+            &quot;pathname&quot;: &quot;/testing/log/2021-05.lit&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;# 2021-05\n...&quot;
+          },
+          {
+            &quot;pathname&quot;: &quot;/testing/log/2021-05-13.lit&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;# 2021-05-...&quot;
+          }
+        ]
+      },
+      {
+        &quot;pathname&quot;: &quot;/testing/worker.js&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;// gross h...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/testing/worker2.js&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;postMessag...&quot;
+      }
+    ]
+  },
+  {
+    &quot;pathname&quot;: &quot;/index.lit&quot;,
+    &quot;type&quot;: &quot;file&quot;,
+    &quot;contents&quot;: &quot;&lt;!-- data\n...&quot;
+  },
+  {
+    &quot;pathname&quot;: &quot;/&quot;,
+    &quot;type&quot;: &quot;dir&quot;
+  },
+  {
+    &quot;pathname&quot;: &quot;/meta&quot;,
+    &quot;type&quot;: &quot;dir&quot;,
+    &quot;contents&quot;: [
+      {
+        &quot;pathname&quot;: &quot;/meta/settings.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# `.lit` S...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/meta/github_workflows.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# GitHub W...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/meta/styling_and_themes.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# 🎨 Styli...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/meta/styling_and_themes.lit#viewers&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# 🎨 Styli...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/meta/settings.lit#plantuml-viewer--repl&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# `.lit` S...&quot;
+      }
+    ]
+  },
+  {
+    &quot;pathname&quot;: &quot;/throwaway&quot;,
+    &quot;type&quot;: &quot;dir&quot;,
+    &quot;contents&quot;: [
+      {
+        &quot;pathname&quot;: &quot;/throwaway/codevaluebug.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# throwawa...&quot;
+      }
+    ]
+  },
+  {
+    &quot;pathname&quot;: &quot;/articles&quot;,
+    &quot;type&quot;: &quot;dir&quot;,
+    &quot;contents&quot;: [
+      {
+        &quot;pathname&quot;: &quot;/articles/ideas_for.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# Ideas 💡...&quot;
+      }
+    ]
+  },
+  {
+    &quot;pathname&quot;: &quot;/cli&quot;,
+    &quot;type&quot;: &quot;dir&quot;,
+    &quot;contents&quot;: [
+      {
+        &quot;pathname&quot;: &quot;/cli/cli.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# Command ...&quot;
+      }
+    ]
+  },
+  {
+    &quot;pathname&quot;: &quot;/client&quot;,
+    &quot;type&quot;: &quot;dir&quot;,
+    &quot;contents&quot;: [
+      {
+        &quot;pathname&quot;: &quot;/client/client.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# Client\nT...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/client/index.jsx&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;const Reac...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/client/style.styl&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;\nprimary-c...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/client/styles&quot;,
+        &quot;type&quot;: &quot;dir&quot;,
+        &quot;contents&quot;: [
+          {
+            &quot;pathname&quot;: &quot;/client/styles/cell.styl&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;cell\n    c...&quot;
+          },
+          {
+            &quot;pathname&quot;: &quot;/client/styles/codecell.styl&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;pre\n    wh...&quot;
+          },
+          {
+            &quot;pathname&quot;: &quot;/client/styles/cellmenu.styl&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;    &amp; &gt; me...&quot;
+          },
+          {
+            &quot;pathname&quot;: &quot;/client/styles/viewers.styl&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;\ncodecell ...&quot;
+          }
+        ]
+      }
+    ]
+  },
+  {
+    &quot;pathname&quot;: &quot;/dummy&quot;,
+    &quot;type&quot;: &quot;dir&quot;,
+    &quot;contents&quot;: [
+      {
+        &quot;pathname&quot;: &quot;/dummy/🔥.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;🔥 Emoji i...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/dummy/example.svg&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;&lt;?xml vers...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/dummy/plain.txt&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;A...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/dummy/data.csv&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;id,name,am...&quot;
+      }
+    ]
+  },
+  {
+    &quot;pathname&quot;: &quot;/renderer&quot;,
+    &quot;type&quot;: &quot;dir&quot;,
+    &quot;contents&quot;: [
+      {
+        &quot;pathname&quot;: &quot;/renderer/renderer.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;&lt;!--\ntitle...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/renderer/viewers.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# Custom V...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/renderer/viewers&quot;,
+        &quot;type&quot;: &quot;dir&quot;,
+        &quot;contents&quot;: [
+          {
+            &quot;pathname&quot;: &quot;/renderer/viewers/md&quot;,
+            &quot;type&quot;: &quot;dir&quot;,
+            &quot;contents&quot;: [
+              {
+                &quot;pathname&quot;: &quot;/renderer/viewers/md/admonitions.lit&quot;,
+                &quot;type&quot;: &quot;file&quot;,
+                &quot;contents&quot;: &quot;# Admoniti...&quot;
+              },
+              {
+                &quot;pathname&quot;: &quot;/renderer/viewers/md/index.jsx&quot;,
+                &quot;type&quot;: &quot;file&quot;,
+                &quot;contents&quot;: &quot;export con...&quot;
+              }
+            ]
+          },
+          {
+            &quot;pathname&quot;: &quot;/renderer/viewers/plantuml.lit&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;# Plant `u...&quot;
+          },
+          {
+            &quot;pathname&quot;: &quot;/renderer/viewers/meta.js&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;export con...&quot;
+          }
+        ]
+      },
+      {
+        &quot;pathname&quot;: &quot;/renderer/index.jsx&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;import pat...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/renderer/extractPlugins.js&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;import pat...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/renderer/transcludeCode.js&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;\nimport pa...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/renderer/difftestA.txt&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;Custom Con...&quot;
+      }
+    ]
+  },
+  {
+    &quot;pathname&quot;: &quot;/repl&quot;,
+    &quot;type&quot;: &quot;dir&quot;,
+    &quot;contents&quot;: [
+      {
+        &quot;pathname&quot;: &quot;/repl/index.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# REPL\n\nTh...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/repl/index.js&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;import uti...&quot;
+      }
+    ]
+  },
+  {
+    &quot;pathname&quot;: &quot;/utils&quot;,
+    &quot;type&quot;: &quot;dir&quot;,
+    &quot;contents&quot;: [
+      {
+        &quot;pathname&quot;: &quot;/utils/index.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# `.lit` U...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/utils/momento.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# momento\n...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/utils/fs-promises-gh-utils.js&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;import { b...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/utils/functions.js&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;export con...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/utils/console.js&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;import { N...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/utils/safe-encoders.js&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;var newlin...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/utils/colors.js&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;function h...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/utils/unist-util-patch-source.js&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;\nconst pat...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/utils/unist-util-select-position.js&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;import fil...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/utils/git-commit-all.js&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;\n// initia...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/utils/fs-promises-utils.js&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;import pat...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/utils/momento.js&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;export con...&quot;
+      }
+    ]
+  },
+  {
+    &quot;pathname&quot;: &quot;/404.lit&quot;,
+    &quot;type&quot;: &quot;file&quot;,
+    &quot;contents&quot;: &quot;# Not *yet...&quot;
+  },
+  {
+    &quot;pathname&quot;: &quot;/functions.lit&quot;,
+    &quot;type&quot;: &quot;file&quot;,
+    &quot;contents&quot;: &quot;# Utility ...&quot;
+  },
+  {
+    &quot;pathname&quot;: &quot;/execute_code_cells.lit&quot;,
+    &quot;type&quot;: &quot;file&quot;,
+    &quot;contents&quot;: &quot;# Executin...&quot;
+  },
+  {
+    &quot;pathname&quot;: &quot;/persist_to_github.lit&quot;,
+    &quot;type&quot;: &quot;file&quot;,
+    &quot;contents&quot;: &quot;# Persist ...&quot;
+  },
+  {
+    &quot;pathname&quot;: &quot;/plugin_system.lit&quot;,
+    &quot;type&quot;: &quot;file&quot;,
+    &quot;contents&quot;: &quot;# 🔌 Plugi...&quot;
+  },
+  {
+    &quot;pathname&quot;: &quot;/repls.lit&quot;,
+    &quot;type&quot;: &quot;file&quot;,
+    &quot;contents&quot;: &quot;# REPLs\n\nS...&quot;
+  },
+  {
+    &quot;pathname&quot;: &quot;/scratch_pad.lit&quot;,
+    &quot;type&quot;: &quot;file&quot;,
+    &quot;contents&quot;: &quot;# 🔥 Scrat...&quot;
+  },
+  {
+    &quot;pathname&quot;: &quot;/wiki-links.lit&quot;,
+    &quot;type&quot;: &quot;file&quot;,
+    &quot;contents&quot;: &quot;# wiki-lin...&quot;
+  },
+  {
+    &quot;pathname&quot;: &quot;/filesystem&quot;,
+    &quot;type&quot;: &quot;dir&quot;,
+    &quot;contents&quot;: [
+      {
+        &quot;pathname&quot;: &quot;/filesystem/index.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# `.lit` F...&quot;
+      }
+    ]
+  },
+  {
+    &quot;pathname&quot;: &quot;/divergence_from_markdown.lit&quot;,
+    &quot;type&quot;: &quot;file&quot;,
+    &quot;contents&quot;: &quot;\n# Diverge...&quot;
+  },
+  {
+    &quot;pathname&quot;: &quot;/meta.lit&quot;,
+    &quot;type&quot;: &quot;file&quot;,
+    &quot;contents&quot;: &quot;\n# Meta\n\n-...&quot;
+  },
+  {
+    &quot;pathname&quot;: &quot;/parser&quot;,
+    &quot;type&quot;: &quot;dir&quot;,
+    &quot;contents&quot;: [
+      {
+        &quot;pathname&quot;: &quot;/parser/links.js&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;import pat...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/parser/frontmatter.js&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;import vis...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/parser/parser.lit&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;# Parser\n\n...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/parser/sections.js&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;import hea...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/parser/codeblocks.js&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;import vis...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/parser/index.js&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;import uni...&quot;
+      },
+      {
+        &quot;pathname&quot;: &quot;/parser/mdblocks.js&quot;,
+        &quot;type&quot;: &quot;file&quot;,
+        &quot;contents&quot;: &quot;\nimport vi...&quot;
+      }
+    ]
+  },
+  {
+    &quot;pathname&quot;: &quot;/plugins&quot;,
+    &quot;type&quot;: &quot;dir&quot;,
+    &quot;contents&quot;: [
+      {
+        &quot;pathname&quot;: &quot;/plugins/transformers&quot;,
+        &quot;type&quot;: &quot;dir&quot;,
+        &quot;contents&quot;: [
+          {
+            &quot;pathname&quot;: &quot;/plugins/transformers/prettier.js&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;export con...&quot;
+          }
+        ]
+      },
+      {
+        &quot;pathname&quot;: &quot;/plugins/viewers&quot;,
+        &quot;type&quot;: &quot;dir&quot;,
+        &quot;contents&quot;: [
+          {
+            &quot;pathname&quot;: &quot;/plugins/viewers/esm.js&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;export con...&quot;
+          }
+        ]
+      },
+      {
+        &quot;pathname&quot;: &quot;/plugins/repls&quot;,
+        &quot;type&quot;: &quot;dir&quot;,
+        &quot;contents&quot;: [
+          {
+            &quot;pathname&quot;: &quot;/plugins/repls/module.js&quot;,
+            &quot;type&quot;: &quot;file&quot;,
+            &quot;contents&quot;: &quot;export con...&quot;
+          }
+        ]
+      }
+    ]
+  },
+  {
+    &quot;pathname&quot;: &quot;/serviceworker.js&quot;,
+    &quot;type&quot;: &quot;file&quot;,
+    &quot;contents&quot;: &quot;// gross h...&quot;
+  },
+  {
+    &quot;pathname&quot;: &quot;/prismjs_and_a_simple_editor.lit&quot;,
+    &quot;type&quot;: &quot;file&quot;,
+    &quot;contents&quot;: &quot;# PrismJs\n...&quot;
+  },
+  {
+    &quot;pathname&quot;: &quot;/index.js&quot;,
+    &quot;type&quot;: &quot;file&quot;,
+    &quot;contents&quot;: &quot;#!/usr/bin...&quot;
+  },
+  {
+    &quot;pathname&quot;: &quot;/taking_notes.lit&quot;,
+    &quot;type&quot;: &quot;file&quot;,
+    &quot;contents&quot;: &quot;# Note tak...&quot;
+  }
+]
+</code></pre></codecell></div></cell></section>
+<section depth="3" class="" startpos="312:1-8371" endpos="386:4-10055"><cell startpos="312:1-8371" endpos="312:27-8397"><div class="cell-content"><h3 id="finder-from-manifest">Finder (from manifest)</h3></div></cell><cell startpos="315:1-8400" endpos="383:4-10033" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=search</span></span><pre><code class="js">const sortBy = (keys) =&gt; (a, b) =&gt; {
   for (const key of keys) {
     if (a[key] !== b[key]) break;
     else return a[key] &gt; b[key] ? 1 : -1;
@@ -331,8 +1017,8 @@ export const viewer = ({ node, React }) =&gt; {
   );
 };
 
-</code></pre></codecell></div></cell><cell startpos="384:1-10026" endpos="386:4-10047" class="code output"><div class="cell-content"><codecell class="lang-search local output"><span class="meta"><span class="lang">search</span></span><div class="custom-react-view"><input style="width:100%;font-size:1.2em" value="G.*hUb"/>Loading...</div></codecell></div></cell></section>
-<section depth="2" class="" startpos="387:1-10048" endpos="507:4-13867"><cell startpos="387:1-10048" endpos="387:30-10077"><div class="cell-content"><h2 id="sync-localremoteorigin">Sync <code>local|remote|origin</code></h2></div></cell><cell startpos="390:1-10080" endpos="465:4-12164" class="code"><div class="cell-content"><codecell class="dir-collapse tag-sync lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#0361a9" class="tag">sync</span></span><pre><code class="js">// fetch all remote files and store
+</code></pre></codecell></div></cell><cell startpos="384:1-10034" endpos="386:4-10055" class="code output"><div class="cell-content"><codecell class="lang-search local output"><span class="meta"><span class="lang">search</span></span><div class="custom-react-view"><input style="width:100%;font-size:1.2em" value="G.*hUb"/>Loading...</div></codecell></div></cell></section>
+<section depth="2" class="" startpos="387:1-10056" endpos="507:4-13875"><cell startpos="387:1-10056" endpos="387:30-10085"><div class="cell-content"><h2 id="sync-localremoteorigin">Sync <code>local|remote|origin</code></h2></div></cell><cell startpos="390:1-10088" endpos="465:4-12172" class="code"><div class="cell-content"><codecell class="dir-collapse tag-sync lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#0361a9" class="tag">sync</span></span><pre><code class="js">// fetch all remote files and store
 // locally if they don&#x27;t already exist 
 
 
@@ -404,7 +1090,7 @@ return (async fn =&gt; {
      &#x27;markdown.lit&#x27;,
      &#x27;worker.js&#x27; ],
   errors: [ &#x27;../scratch_pad.lit#viewers : Unable to normalize path - traverses above root directory&#x27; ] }
-</code></pre></output></codecell></div></cell><cell startpos="466:1-12165" endpos="507:4-13867" class="code output"><div class="cell-content"><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">7.0d ago</span></span></span><output><pre><code class="txt">Synced 90/139 files in 0.616 seconds. Duds: 30 Errors: 7
+</code></pre></output></codecell></div></cell><cell startpos="466:1-12173" endpos="507:4-13875" class="code output"><div class="cell-content"><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">7.0d ago</span></span></span><output><pre><code class="txt">Synced 90/139 files in 0.616 seconds. Duds: 30 Errors: 7
 { duds: 
    [ &#x27;remark.lit&#x27;,
      &#x27;viewers.lit&#x27;,
@@ -445,6 +1131,6 @@ return (async fn =&gt; {
      &#x27;../utils/git-commit-all.js : Unable to normalize path - traverses above root directory&#x27;,
      &#x27;../../../../../testing/log/2021-w21.lit : Unable to normalize path - traverses above root directory&#x27; ] }
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="512:1-13872" endpos="518:28-14037"><cell startpos="512:1-13872" endpos="512:21-13892"><div class="cell-content"><h2 id="emergency-wipe-️">Emergency wipe ⚠️</h2></div></cell><cell startpos="514:1-13894" endpos="516:4-14008" class="code output"><div class="cell-content"><codecell class="dir-warn lang-md local output"><span class="meta"><span class="lang">md</span><span style="color:white;background-color:#037928" class="directive dir-warn">warn</span></span><div class="md-block dir-warn">
+<section depth="2" class="" startpos="512:1-13880" endpos="518:28-14045"><cell startpos="512:1-13880" endpos="512:21-13900"><div class="cell-content"><h2 id="emergency-wipe-️">Emergency wipe ⚠️</h2></div></cell><cell startpos="514:1-13902" endpos="516:4-14016" class="code output"><div class="cell-content"><codecell class="dir-warn lang-md local output"><span class="meta"><span class="lang">md</span><span style="color:white;background-color:#037928" class="directive dir-warn">warn</span></span><div class="md-block dir-warn">
 <p>Clicking on the following link will prompt you to confirm you want to wipe the local file system!</p>
-</div></codecell></div></cell><cell startpos="518:1-14010" endpos="518:28-14037"><div class="cell-content"><p><a href="?__lfs_wipe=true">WIPE ⚠️<span class="linkIcon">§</span></a></p></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (3)</h4><ol><li><a title=".lit Filesystem" href="/filesystem/index.html">.lit Filesystem</a></li><li><a title="Isomorphic Git" href="/testing/isomorphic_git.html">Isomorphic Git</a></li><li><a title="Local and Remote files" href="/testing/local_remote_files.html">Local and Remote files</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
+</div></codecell></div></cell><cell startpos="518:1-14018" endpos="518:28-14045"><div class="cell-content"><p><a href="?__lfs_wipe=true">WIPE ⚠️<span class="linkIcon">§</span></a></p></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (3)</h4><ol><li><a title=".lit Filesystem" href="/filesystem/index.html">.lit Filesystem</a></li><li><a title="Isomorphic Git" href="/testing/isomorphic_git.html">Isomorphic Git</a></li><li><a title="Local and Remote files" href="/testing/local_remote_files.html">Local and Remote files</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
