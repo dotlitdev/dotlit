@@ -35,6 +35,20 @@ export const repl = async (src, meta) => {
   );
   // const manifest = await fetch("/manifest.json").then((res) => res.json());
 
+  // Recursively builds JSX output adding `<mark>` tags around matches
+  const highlight = (value, indices = [], i = 1) => {
+    const pair = indices[indices.length - i];
+    return !pair ? (
+      value
+    ) : (
+      <>
+        {highlight(value.substring(0, pair[0]), indices, i + 1)}
+        <mark>{value.substring(pair[0], pair[1] + 1)}</mark>
+        {value.substring(pair[1] + 1)}
+      </>
+    );
+  };
+
   const fullLocal = await (async (fn) => {
     const path = lit.utils.path;
     const all = [];
