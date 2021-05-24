@@ -8,6 +8,8 @@ Related
 
 https://fusejs.io/
 
+https://dev.to/noclat/using-fuse-js-with-react-to-build-an-advanced-search-with-highlighting-4b93
+
 ```js !collapse #intro
 return (async (fn) => {
   const { default: Fuse } = await import(
@@ -31,38 +33,34 @@ export const repl = async (src, meta) => {
   const { default: Fuse } = await import(
     "https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.esm.js"
   );
-  const manifest = await fetch("/manifest.json").then((res) => res.json());
-
-  const formatMatch = ({ indices, value }) => {
-    return indices
-      .map(([start, end]) => value.slice(start, start - end))
-      .join(" ");
-  };
-
-  const formatMatches = (matches) => matches.map(formatMatch).join("...");
+  // const manifest = await fetch("/manifest.json").then((res) => res.json());
 
   const fullLocal = await (async (fn) => {
     const path = lit.utils.path;
     const all = [];
     const visit = async (root) => {
-      const list = await lit.fs.readdir(root);
-      return Promise.all(
-        list.map(async (key) => {
-          const pathname = path.join(root, key);
-          const stat = await lit.fs.stat(pathname);
-          let contents;
-          if (key === ".git" || !key) {
-          } else if (stat.type === "dir") await visit(pathname);
-          else if (pathname.endsWith(".lit"))
-            contents = await lit.fs.readFile(pathname, {
-              encoding: "utf8",
-              localOnly: true,
-            }); //.slice(0,10);
-          const item = { pathname, type: stat.type, contents };
-          all.push(item);
-          return item;
-        })
-      );
+      try {
+        const list = await lit.fs.readdir(root);
+        return Promise.all(
+          list.map(async (key) => {
+            const pathname = path.join(root, key);
+            const stat = await lit.fs.stat(pathname);
+            let contents;
+            if (key === ".git" || !key) {
+            } else if (stat.type === "dir") await visit(pathname);
+            else if (pathname.endsWith(".lit"))
+              contents = await lit.fs.readFile(pathname, {
+                encoding: "utf8",
+                localOnly: true,
+              }); //.slice(0,10);
+            const item = { pathname, type: stat.type, contents };
+            all.push(item);
+            return item;
+          })
+        );
+      } catch (err) {
+        alert(err.message);
+      }
     };
 
     await visit("/");
@@ -96,7 +94,7 @@ export const repl = async (src, meta) => {
         ([score, pathname, index, matches]) =>
           `1. [${pathname}](${pathname}) 
     
-      > ${formatMatches(matches)}`
+      > ${JSON.stringify(matches)}`
       )
       .join("\n")
   );
@@ -104,42 +102,20 @@ export const repl = async (src, meta) => {
 
 ```
 
-```text repl=search > md
-noteworthy
+
+
+```text repl=search
+test
 ```
-```>md attached=true updated=1621890265881
-Results for search "**noteworthy**". In **0.061** seconds.
+```>txt attached=true updated=1621891662053
+Results for search "**test**". In **0.023** seconds.
 
 1. [/testing/fuzzy_text_search.lit](/testing/fuzzy_text_search.lit) 
    �
-      > ntr the the roo roo roo onten onten onten nor nor onten noteworth noteworth onte onte onte onte notewort ooooooo oth not not ewo ewo onte ont netw tro tro onte onte onte onte onte onte thr Err ten ten rre rre netw ten netw thr onte thr onte ett ett ont onte onte onte onte onte onte onte onte onte onte onte onte onte onte err err Err err err Err one netw err one one Err one err one one onte roto rre the oth rre onte err rre onte one one one err rre ent rre one one one one NTE rre rre rrentOwn rre tor ett onte rre rre onte onte onte err err onte onte ootno ootno onte tooo onte ote rre rro ere oooooooo etwe roto ett ett ett ett ett ett ent ett ett ett ett ett ett ett ett ett ett teT ett ett ett ett one one one one NTE rre rre rrentOwn rre tor NTE one one ett ett ett ett ett ett ett ett ett ett ett ett ett ett ett ett ett ett ett ett ett ett onte onte one nywhe one onte onte onte The ery err ten nTh nTh erTh nTh nTh nTh nTh nTh ent ten nTh onte onte onte the nTh nTh onerr onerr ten nTh the nTh nTh erTh erTh erTh erTh erTh erTh erTh erTh erTh erTh erTh the eon othe
-1. [/taking_notes.lit](/taking_notes.lit) 
+      > [{"indices":[[1,4]],"value":"/testing/fuzzy_text_search.lit","key":"pathname"},{"indices":[[34,37],[2544,2547],[2641,2644],[2673,2676],[2718,2721],[2747,2750],[2827,2830],[2854,2857],[2890,2893],[2910,2913],[3246,3249],[3272,3275],[3306,3309],[3335,3338],[3372,3375],[3393,3396],[3422,3425],[3446,3449]],"value":"# Fuzzy text search\n\nRelated\n\n- [[testing/compact_manifest]]\n\n## Fuse.js\n\nhttps://fusejs.io/\n\n```js !collapse #intro\nreturn (async (fn) => {\n  const { default: Fuse } = await import(\n    \"https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.esm.js\"\n  );\n  const manifest = await fetch(\"/manifest.json\").then((res) => res.json());\n  const fuse = new Fuse(manifest.nodes, {\n    includeScore: true,\n    keys: [\"title\", \"id\"],\n  });\n\n  // 3. Now search!\n  return fuse.search(\"../../..\",{limit:5});\n})();\n\n```\n```js !plugin !collapse type=repl of=search\nexport const repl = async (src, meta) => {\n  const t = Date.now();\n\n  const { default: Fuse } = await import(\n    \"https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.esm.js\"\n  );\n  // const manifest = await fetch(\"/manifest.json\").then((res) => res.json());\n\n  const fullLocal = await (async (fn) => {\n    const path = lit.utils.path;\n    const all = [];\n    const visit = async (root) => {\n      try {\n        const list = await lit.fs.readdir(root);\n        return Promise.all(\n          list.map(async (key) => {\n            const pathname = path.join(root, key);\n            const stat = await lit.fs.stat(pathname);\n            let contents;\n            if (key === \".git\" || !key) {\n            } else if (stat.type === \"dir\") await visit(pathname);\n            else if (pathname.endsWith(\".lit\"))\n              contents = await lit.fs.readFile(pathname, {\n                encoding: \"utf8\",\n                localOnly: true,\n              }); //.slice(0,10);\n            const item = { pathname, type: stat.type, contents };\n            all.push(item);\n            return item;\n          })\n        );\n      } catch (err) {\n        alert(err.message);\n      }\n    };\n\n    await visit(\"/\");\n    return all;\n  })();\n\n  // return fullLocal\n\n  const fuse = new Fuse(fullLocal, {\n    ignoreLocation: true,\n    includeScore: true,\n    includeMatches: true,\n    ignoreFieldNorm: true,\n    minMatchCharLength: 4,\n    keys: [\"pathname\", \"contents\"],\n  });\n\n  // 3. Now search!\n  const query = src.trim();\n  const msg = `Results for search \"**${query}**\". In **${\n    (Date.now() - t) / 1000\n  }** seconds.\\n\\n`;\n\n  return (\n    msg +\n    fuse\n      .search(query, { limit: 10 })\n      //.map(x=>x.matches.map(x=>x.indices))\n      .map((x) => [x.score, x.item.pathname, x.refIndex, x.matches])\n      .map(\n        ([score, pathname, index, matches]) =>\n          `1. [${pathname}](${pathname}) \n    \n      > ${JSON.stringify(matches)}`\n      )\n      .join(\"\\n\")\n  );\n};\n\n```\n\n\n\n```text repl=search\ntest\n```\n```>md updated=1621870142091\nResults for search \"**fuzz**\". In **0.074** seconds.\n\n1. [/testing/fuzzy_text_search.lit](/testing/fuzzy_text_search.lit) 0.000001\n1. [/testing/log/2021-05-23.lit](/testing/log/2021-05-23.lit) 0.001\n1. [/functions.lit](/functions.lit) 0.25\n1. [/testing/input_buffer.lit](/testing/input_buffer.lit) 0.25\n1. [/testing/full.json](/testing/full.json) 0.5\n1. [/utils/functions.js](/utils/functions.js) 0.5\n1. [/index.lit](/index.lit) 0.5\n1. [/execute_code_cells.lit](/execute_code_cells.lit) 0.5\n1. [/plugin_system.lit](/plugin_system.lit) 0.5\n1. [/scratch_pad.lit](/scratch_pad.lit) 0.5\n1. [/prismjs_and_a_simple_editor.lit](/prismjs_and_a_simple_editor.lit) 0.5\n1. [/testing/lightningfs.lit](/testing/lightningfs.lit) 0.5\n1. [/testing/isomorphic_git.lit](/testing/isomorphic_git.lit) 0.5\n1. [/testing/runkit.lit](/testing/runkit.lit) 0.5\n1. [/testing/selection.lit](/testing/selection.lit) 0.5\n```\n\n\n\n\n\n## FuzzySet\n\nhttps://github.com/Glench/fuzzyset.js\n\n```js\nreturn import('https://cdn.skypack.dev/fuzzyset').then( FuzzySet => {\n\n  const f = new FuzzySet.default()\n  f.add(\"the text of mine\")\n  f.add(\"the text of someone else\")\n  f.add(\"other texts\")\n  return f.get(\"text of\")\n})\n\n```\n```>txt attached=true updated=1621778112764\n[ [ 0.4375, 'the text of mine' ] ]\n```","key":"contents"}]
+1. [/testing](/testing) 
    �
-      > not...Not ont
-1. [/testing/serviceworker.lit](/testing/serviceworker.lit) 
-   �
-      > ewo...the onten ere ewo eWo eWo ewo roo roo eWo ontr eWo etR ter ter non the the nyt thr netwo the the troo troo onten hee hee onten onten ewo ewo rro ent roo onten onten onten thro Erro tene roo roo the the tene rren the rren the heT heT the netwo tene the netwo the the the the thro
-1. [/testing/lightningfs.lit](/testing/lightningfs.lit) 
-   �
-      > onten orr orr the the roo roo the the roo roo the thro onten ent ToR ette ToR ette ewe ewe ontW etT ott ent ToR onten onten etT onten onten onten ott onten tto tto tto tto tto tto tto tto roo roo roo onten roo onten onten onten ewe roo ewe onten onten onten onten tor the the erro the erro Erro erro erro Erro onen two ewo ewe ewe ene netwo ere ewe erro onen onen roo tor ewe roo tor Erro ewe ene onen ewe ewe ewo ere erro ewe roo tor onen onen roo tor ewe roo tor roo tor roo tor roo tor roo tor
-1. [/index.lit](/index.lit) 
-   �
-      > ree ene ene nte onten rew rotot ent rte tor rte her rren ther ntr Tre ere ere ere ene nte tho ewe othe ent thr rren thr ewe ewe ewe
-1. [/execute_code_cells.lit](/execute_code_cells.lit) 
-   �
-      > onten onn erre the ten rren onten onen ren onen onen erro tto tto ere ewe ewe rren entH ent Whe rren roo onen onen onen onen NTER rren rren rrentOwne eRe ere rren one one ent ont ont ent tor tory teR teR ont ont ette the onten rren rren Tre onten the ter onten onten ewe erro erro
-1. [/scratch_pad.lit](/scratch_pad.lit) 
-   �
-      > onten onten nte hor ere ootnot ter ere ootnot onten toooo onten ent ont ewe ewe ewe ewe ewe ewe oten ere onn rren ent ere rror ren whe ent ewe Whe ewe ewe the how ewe ewe ewe ree ewe ewe ewe ewe eren nor ten ewe ree ewe ewe ere ewe ewe ooooooooo ewe ewe ewe etwee rotot ret hte her
-1. [/prismjs_and_a_simple_editor.lit](/prismjs_and_a_simple_editor.lit) 
-   �
-      > ere the tRe ere tRe ere roo tor etT etT roo tor the ere ere htO roo tor etT etT roo tor ere ere htO roo tor etT etT roo tor ree ree ette ette ette ette ette ette ente ette ette ette ette ette ette ette ette ette ette teTw ette ette ette ette onen onen onen onen NTER rren rren rrentOwne eRe ere rren one one ent ont ont ent tor tory teR teR ont ont NTER onen onen tre tre tRe ere ette ette ette ette ette ette ent ToR ette ToR ette ette ToH ette ette ette ette ette ette ette ette ette ette ette ette ette
-1. [/testing/input_buffer.lit](/testing/input_buffer.lit) 
-   �
-      > ont orT ont ont orT ont onten tte tte ter tro onten tro ere hee nyt tor the ree ewe onen hor hor hor nywher hee Her onen Her ont tor onten ont ont ont onten ont orT ont ont orT ewe ewe
-1. [/testing/isomorphic_git.lit](/testing/isomorphic_git.lit) 
-   �
-      > onten Ther whe roo eryt tho roo roo roo ere ere ere ewe ewo ent roo ere ewe roo roo tho roo nor TRE TRE roo tre TRE TRE erro etR two tHt tene nThr nThr erThr tHt nThr nThr nThr nThr nThr ere tor ente tto tto tto tto two tene nThr onten erw onten onten then nThr nThr yWo yWo two yWo yWo onerro onerro nen two tene nThr then nThr nThr erThr erThr erThr erThr erThr erThr erThr erThr erThr erThr erThr
+      > [{"indices":[[1,4]],"value":"/testing","key":"pathname"}]
 ```
 ```>md updated=1621870142091
 Results for search "**fuzz**". In **0.074** seconds.
