@@ -69,8 +69,13 @@ export const repl = async (src, meta) => {
               }); //.slice(0,10);
               contents
                 .split("\n")
-                .map((line) =>
-                  all.push({ pathname, type: "line", contents: line })
+                .map((line, index) =>
+                  all.push({
+                    pathname,
+                    type: "line",
+                    contents: line,
+                    lineNo: index,
+                  })
                 );
             }
             const item = { pathname, type: stat.type, contents: pathname };
@@ -110,10 +115,20 @@ export const repl = async (src, meta) => {
     fuse
       .search(query, { limit: 10 })
       //.map(x=>x.matches.map(x=>x.indices))
-      .map((x) => [x.score, x.item.pathname, x.refIndex, x.matches])
+      .map((x) => [
+        x.score,
+        x.item.pathname,
+        x.refIndex,
+        x.matches,
+        x.item.type,
+        x.item.lineNo,
+        x.item.contents,
+      ])
       .map(
-        ([score, pathname, index, matches]) =>
-          `1. [${pathname}](${pathname}) *${(1 - score).toFixed(2) * 100}*`
+        ([score, pathname, index, matches, type, lineNo, val]) =>
+          `1. [${pathname}](${pathname}) *${(1 - score).toFixed(2) * 100}*
+
+    > ${val}`
       )
       .join("\n")
   );
@@ -125,10 +140,10 @@ export const repl = async (src, meta) => {
 ```text repl=search > md
 'MIT 'garden
 ```
-```>md attached=true updated=1621897658641
-Results for search "**'MIT 'garden**". In **0.091** seconds.
+```>md attached=true updated=1621897695877
+Results for search "**'MIT 'garden**". In **0.075** seconds.
 
-
+1. [/testing/log/2021-05-12.lit](/testing/log/2021-05-12.lit) *100*
 ```
 ```>md updated=1621896023488
 Results for search "**Git**". In **0.072** seconds.
