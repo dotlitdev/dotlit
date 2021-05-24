@@ -34,7 +34,9 @@ export const repl = async (src, meta) => {
   const manifest = await fetch("/manifest.json").then((res) => res.json());
 
   const formatMatch = ({ indices, value }) => {
-    return indices.map(([start, start - end]) => value.slice(start, end)).join(" ");
+    return indices
+      .map(([start, end]) => value.slice(start, start - end))
+      .join(" ");
   };
 
   const formatMatches = (matches) => matches.map(formatMatch).join("...");
