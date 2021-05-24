@@ -82,9 +82,10 @@ export const repl = async (src, meta) => {
     fuse
       .search(query, { limit: 15 })
       //.map(x=>x.matches.map(x=>x.indices))
-      .map((x) => [x.score, x.item.pathname, x.refIndex])
+      .map((x) => [x.score, x.item.pathname, x.refIndex, x.matches])
       .map(
-        ([score, pathname, index]) => `1. [${pathname}](${pathname}) ${score}`
+        ([score, pathname, index, matches]) =>
+          `1. [${pathname}](${pathname}) ${matches.length}`
       )
       .join("\n")
   );
@@ -93,26 +94,26 @@ export const repl = async (src, meta) => {
 ```
 
 ```text repl=search > md
-React
+notes
 ```
-```>txt attached=true updated=1621871019788
-Results for search "**React**". In **0.072** seconds.
+```>md attached=true updated=1621874462517
+Results for search "**React**". In **0.076** seconds.
 
-1. [/scratch_pad.lit](/scratch_pad.lit) 0.0004
-1. [/testing/selection.lit](/testing/selection.lit) 0.0004
-1. [/execute_code_cells.lit](/execute_code_cells.lit) 0.0006
-1. [/prismjs_and_a_simple_editor.lit](/prismjs_and_a_simple_editor.lit) 0.0006
-1. [/testing/lightningfs.lit](/testing/lightningfs.lit) 0.0006
-1. [/testing/input_buffer.lit](/testing/input_buffer.lit) 0.0006
-1. [/testing/isomorphic_git.lit](/testing/isomorphic_git.lit) 0.0006
-1. [/testing/runkit.lit](/testing/runkit.lit) 0.0006
-1. [/testing/serviceworker.lit](/testing/serviceworker.lit) 0.0006
-1. [/testing/esm_viewer_repl.lit](/testing/esm_viewer_repl.lit) 0.0006
-1. [/testing/fuzzy_text_search.lit](/testing/fuzzy_text_search.lit) 0.0006
-1. [/meta/settings.lit](/meta/settings.lit) 0.0006
-1. [/renderer/renderer.lit](/renderer/renderer.lit) 0.0006
-1. [/renderer/viewers.lit](/renderer/viewers.lit) 0.0006
-1. [/repl/index.lit](/repl/index.lit) 0.0006
+1. [/scratch_pad.lit](/scratch_pad.lit) 2
+1. [/testing/selection.lit](/testing/selection.lit) 2
+1. [/execute_code_cells.lit](/execute_code_cells.lit) 2
+1. [/prismjs_and_a_simple_editor.lit](/prismjs_and_a_simple_editor.lit) 2
+1. [/testing/lightningfs.lit](/testing/lightningfs.lit) 2
+1. [/testing/input_buffer.lit](/testing/input_buffer.lit) 2
+1. [/testing/isomorphic_git.lit](/testing/isomorphic_git.lit) 2
+1. [/testing/runkit.lit](/testing/runkit.lit) 2
+1. [/testing/serviceworker.lit](/testing/serviceworker.lit) 2
+1. [/testing/esm_viewer_repl.lit](/testing/esm_viewer_repl.lit) 2
+1. [/testing/fuzzy_text_search.lit](/testing/fuzzy_text_search.lit) 2
+1. [/meta/settings.lit](/meta/settings.lit) 2
+1. [/renderer/renderer.lit](/renderer/renderer.lit) 2
+1. [/renderer/viewers.lit](/renderer/viewers.lit) 2
+1. [/repl/index.lit](/repl/index.lit) 2
 ```
 ```>md updated=1621870142091
 Results for search "**fuzz**". In **0.074** seconds.
