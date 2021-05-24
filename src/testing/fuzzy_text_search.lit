@@ -34,7 +34,7 @@ export const repl = async (src, meta) => {
   const manifest = await fetch("/manifest.json").then((res) => res.json());
 
   const formatMatch = ({ indices, value }) => {
-    return indices.map(([start, end]) => value.slice(start, end)).join(" ");
+    return indices.map(([start, start - end]) => value.slice(start, end)).join(" ");
   };
 
   const formatMatches = (matches) => matches.map(formatMatch).join("...");
@@ -105,39 +105,39 @@ export const repl = async (src, meta) => {
 ```text repl=search > md
 noteworthy
 ```
-```>md attached=true updated=1621890163744
-Results for search "**noteworthy**". In **0.065** seconds.
+```>md attached=true updated=1621890265881
+Results for search "**noteworthy**". In **0.061** seconds.
 
 1. [/testing/fuzzy_text_search.lit](/testing/fuzzy_text_search.lit) 
    �
-      > ht ntr re or ht ne the ne or No re or no or ht ne the re roo roo re th roo th onten th th onten th th onten re re re ne nor or nor No th onten No er er no re er or th or th th th noteworth ht ht rr rr rr rr rr rr rr rr rr rr rr rr ooo rr oooooooo to to to to ht ht ht re or ht the ne th th eon othe re th
+      > ntr the the roo roo roo onten onten onten nor nor onten noteworth noteworth onte onte onte onte notewort ooooooo oth not not ewo ewo onte ont netw tro tro onte onte onte onte onte onte thr Err ten ten rre rre netw ten netw thr onte thr onte ett ett ont onte onte onte onte onte onte onte onte onte onte onte onte onte onte err err Err err err Err one netw err one one Err one err one one onte roto rre the oth rre onte err rre onte one one one err rre ent rre one one one one NTE rre rre rrentOwn rre tor ett onte rre rre onte onte onte err err onte onte ootno ootno onte tooo onte ote rre rro ere oooooooo etwe roto ett ett ett ett ett ett ent ett ett ett ett ett ett ett ett ett ett teT ett ett ett ett one one one one NTE rre rre rrentOwn rre tor NTE one one ett ett ett ett ett ett ett ett ett ett ett ett ett ett ett ett ett ett ett ett ett ett onte onte one nywhe one onte onte onte The ery err ten nTh nTh erTh nTh nTh nTh nTh nTh ent ten nTh onte onte onte the nTh nTh onerr onerr ten nTh the nTh nTh erTh erTh erTh erTh erTh erTh erTh erTh erTh erTh erTh the eon othe
 1. [/taking_notes.lit](/taking_notes.lit) 
    �
-      > not...Not ont en no
+      > not...Not ont
 1. [/testing/serviceworker.lit](/testing/serviceworker.lit) 
    �
-      > ewo...Wo re er er the onten ere ht on ewo ht wo nn ht no ht hr wo ht en ht nt wo or ht Wo re to eWo to re te re to eWo te ewo roo roo re to eWo ontr wo wo No wo nr te re to eWo etR nr te re nr ter nr ter re non the re the re ne no th wo nyt thr th netwo no th re re the the troo No ye troo or onten hee hr ht hee hr ho on re hr re re re re re re onten onten no ye No ye Th no hr ne ewo en ewo en on rro en ent en or roo en tr en re ne er en er er re ne en en onten re ne onten onten thro ne Erro no Th th ne en tene en roo ne roo en the the Th en tene en rren en the he re he te he rren he the et re et heT et re et heT et the en Th th th th netwo or re th en tene en th en en en en en en the re er er netwo er re en the re re the re en the th th re en on the re er thro er re
+      > ewo...the onten ere ewo eWo eWo ewo roo roo eWo ontr eWo etR ter ter non the the nyt thr netwo the the troo troo onten hee hee onten onten ewo ewo rro ent roo onten onten onten thro Erro tene roo roo the the tene rren the rren the heT heT the netwo tene the netwo the the the the thro
 1. [/testing/lightningfs.lit](/testing/lightningfs.lit) 
    �
-      > ht ht ht onten orr orr th re re re nt re re the ot re no No No re the ht roo roo ot ot ot re re the ht ht ht re the ht ht ht ht roo roo ot ot ot re re the ht ht ht et thro re onten en er re en er re en er re re ent ToR ette ToR ette ewe or ewe er ontW etT re re re re ott ent ToR no onten onten etT re onten onten tr onten er er on re on on ott onten tto tto tto tto tto et et tto tto tto roo roo re th roo th onten re roo th er th onten th onten th re th onten re ewe or re te en re hr hr roo or ewe te en er er onten onten tr ne er te re or onten re on onten ot ot tor the re no the erro tr the er re ot ot ot re er erro er no Erro erro re erro Erro ow onen two wo no ewo ewe en ewe wo wo ene en netwo wo re ere ewe erro onen onen no roo tor ewe no roo tor Erro ewe wo ene onen en ewe ewe wo wo ewo wo re ere ow erro ewe no roo tor onen onen no roo tor et ewe no roo tor no roo tor no roo tor no roo tor no roo tor th th
+      > onten orr orr the the roo roo the the roo roo the thro onten ent ToR ette ToR ette ewe ewe ontW etT ott ent ToR onten onten etT onten onten onten ott onten tto tto tto tto tto tto tto tto roo roo roo onten roo onten onten onten ewe roo ewe onten onten onten onten tor the the erro the erro Erro erro erro Erro onen two ewo ewe ewe ene netwo ere ewe erro onen onen roo tor ewe roo tor Erro ewe ene onen ewe ewe ewo ere erro ewe roo tor onen onen roo tor ewe roo tor roo tor roo tor roo tor roo tor
 1. [/index.lit](/index.lit) 
    �
-      > ht ree ht ht ht ht wo ene ht wo ene en ow nte ow onten Wo te rew rotot ye ent en en to et et en re en ow no re er et rt rte en no tor ht rte ow th th en her en rren th en ther no en ntr ow ow en th ow yn Tre or Re ere Th re en or re ere re ere en Th ene no th en th nte th en or en en th tho ewe othe ent ht th en thr ot rren or thr or ewe tw en re rn ewe ewe re en
+      > ree ene ene nte onten rew rotot ent rte tor rte her rren ther ntr Tre ere ere ere ene nte tho ewe othe ent thr rren thr ewe ewe ewe
 1. [/execute_code_cells.lit](/execute_code_cells.lit) 
    �
-      > onten or onn en erre ht re ne re ne et ne re re ht the re re Th yn no ye no th en tt th th ten rren et ne re re th en tt ow onten onen ne th th ren th or wo wo or ht onen re re onen erro th th re tto tto re re ere ewe ewe ho on rren or en entH ent tr tr tr tr re re tr tr tr tr ow re re Whe th re en er re en er re en er re th th en ne th re th th rren en re roo ht er re en re re or or re re onen onen onen onen RE NTER NO rren he rren rrentOwne eRe ere rren one en one ent ont ont te en te ent tor tory teR teR or or en en ont ont eR eR eR eR te te ON ette no no te et et th on the th re re onten ow or tr on th th on th rren ne rren Tre re th onten en ow the tr ter en onten to to ne ne re ne th en tt onten ow or re et or ht et et re Tr or re or ht re en or ewe tr to re erro to ne re or or erro
+      > onten onn erre the ten rren onten onen ren onen onen erro tto tto ere ewe ewe rren entH ent Whe rren roo onen onen onen onen NTER rren rren rrentOwne eRe ere rren one one ent ont ont ent tor tory teR teR ont ont ette the onten rren rren Tre onten the ter onten onten ewe erro erro
 1. [/scratch_pad.lit](/scratch_pad.lit) 
    �
-      > ow en onten onten ow en ow nte ow hor ere ootnot ter ht en en en en ere ht ootnot onten toooo no on on en onten ent th yn te th th tt er ne en th th wo tt ont tt ot ht ewe tt no th tt ewe ewe ewe ot ewe ot en en en en tt ewe oten ere onn th rren ent ere nt th rror th on ht ww en en en en tr tr ren tr tr tr tr on on on on en on on ot th ot ot th th en whe ent ewe Whe th te th ewe tt ewe the th how th ewe to th ewe ewe tr ree tr ht ewe ow ewe ow ewe ewe Th th eren nor ten ewe ree ewe ow ewe re ere ewe or ewe re ooooooooo nn ewe th et ewe ewe ho ew no ho er etwee th tw th wo rotot ret no tr hte en ey th th th her th th th NO th ht on
+      > onten onten nte hor ere ootnot ter ere ootnot onten toooo onten ent ont ewe ewe ewe ewe ewe ewe oten ere onn rren ent ere rror ren whe ent ewe Whe ewe ewe the how ewe ewe ewe ree ewe ewe ewe ewe eren nor ten ewe ree ewe ewe ere ewe ewe ooooooooo ewe ewe ewe etwee rotot ret hte her
 1. [/prismjs_and_a_simple_editor.lit](/prismjs_and_a_simple_editor.lit) 
    �
-      > ht re ere or or ht the re to to to to tRe ere tRe ere re to en Wo re roo on on on tor etT en etT en re to to roo re tor or or ht the re to or to or re ere th or re ere th htO re to th en Wo re roo on on on th tor th th etT en etT en re to roo re tor or to ht to or ht re ere or th ht re ere th htO re to th en Wo re roo on on on tor etT en etT en re to roo or re tor or no re re ree en re ree en ette ette Wo ette Wo ette ette ette ente ette ette ette no ette ette ette ette ette ette ette teTw ette ette er ette er ette en re re or or re re onen onen onen onen RE NTER NO rren he rren rrentOwne eRe ere rren one en one ent ont ont te en te ent tor tory teR teR or or en en ont ont eR eR eR eR RE NTER NO en or or re re onen tN onen tN or or re tre nt on ne re tre nt on ne tRe ere ette ette ette to to te te ON ette ette ette ent ToR ette ToR ette ette ToH ette eE ette ette ette ette No ette en ette ette ette ette ette ette ette no no te er et et
+      > ere the tRe ere tRe ere roo tor etT etT roo tor the ere ere htO roo tor etT etT roo tor ere ere htO roo tor etT etT roo tor ree ree ette ette ette ette ette ette ente ette ette ette ette ette ette ette ette ette ette teTw ette ette ette ette onen onen onen onen NTER rren rren rrentOwne eRe ere rren one one ent ont ont ent tor tory teR teR ont ont NTER onen onen tre tre tRe ere ette ette ette ette ette ette ent ToR ette ToR ette ette ToH ette ette ette ette ette ette ette ette ette ette ette ette ette
 1. [/testing/input_buffer.lit](/testing/input_buffer.lit) 
    �
-      > en ne ont ne we orT tr er re ot we we ont ont re orT we ont onten ht tte ht tte ter he ht he ht ww tro to onten ht ww tro to he he nt th te he en re th th ere th te hee nyt th tor or th ne the ne en en he th ree ewe hr ht onen en hr hor ht ww hor hor nywher th hee ht en re Her onen ne Her or ne ont ne we er er er er et er er tor ot tr er ne onten ot we we we ont ont ont ne onten re re et re ne ont ne we orT tr er re ot we we ont ont re orT on ewe or ewe te en er hr re hr hr hr hr
+      > ont orT ont ont orT ont onten tte tte ter tro onten tro ere hee nyt tor the ree ewe onen hor hor hor nywher hee Her onen Her ont tor onten ont ont ont onten ont orT ont ont orT ewe ewe
 1. [/testing/isomorphic_git.lit](/testing/isomorphic_git.lit) 
    �
-      > ht th ht onten Th Ther te th on th or en er th whe th th or no ne roo WO ro re ro WO ro te ro ro eryt no th re tho re tt or te en er re tt th re te re re roo re re roo re re roo et re ere re ere re ere ewe ht ewo ent roo WO re te ro ro WO ro ro ro re re ere ewe roo re re roo re no ne no tho en re roo re en th th nor ht th th th no re TRE TRE re re roo tre TRE TRE re erro Ht en re ht or ht ht re etR ot ht ht ht wo two wo ht or tHt or ht ht ht ht ht ht or ne ht or ne or en tene nThr or nThr or wo erThr on ne ht tr re on ht tHt nThr nThr re nThr re nThr er nThr er ere tor ente th en wo ht tto tto on tto on tto on on on on ht or er en et en wo ne Wo two or ne or wo wo en tene nThr onten erw onten onten to to re er er wo wo re er wo er then re or nThr nThr ht or ht or re ne yWo tr yWo ne Wo two yWo on yWo onerro er wo onerro er er er nen er er er er er er en et en wo ne Wo two or ne or wo wo en tene nThr to to re er er wo wo re er wo er then re er re or nThr nThr on ON wo erThr wo erThr on ht ht ON wo erThr ot wo erThr wo erThr re wo erThr or wo erThr wo erThr wo erThr wo wo wo erThr on re wo erThr on
+      > onten Ther whe roo eryt tho roo roo roo ere ere ere ewe ewo ent roo ere ewe roo roo tho roo nor TRE TRE roo tre TRE TRE erro etR two tHt tene nThr nThr erThr tHt nThr nThr nThr nThr nThr ere tor ente tto tto tto tto two tene nThr onten erw onten onten then nThr nThr yWo yWo two yWo yWo onerro onerro nen two tene nThr then nThr nThr erThr erThr erThr erThr erThr erThr erThr erThr erThr erThr erThr
 ```
 ```>md updated=1621870142091
 Results for search "**fuzz**". In **0.074** seconds.
