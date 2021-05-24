@@ -34,15 +34,18 @@ export const repl = async (src, meta) => {
     "https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.esm.js"
   );
   // const manifest = await fetch("/manifest.json").then((res) => res.json());
-  
-// Recursively builds JSX output adding `<mark>` tags around matches
+  // Recursively builds JSX output adding `<mark>` tags around matches
   const highlight = (value, indices = [], i = 1) => {
     const pair = indices[indices.length - i];
-    return !pair ? (
-      value
-    ) : (
-      `${highlight(value.substring(0, pair[0]), indices, i + 1)}***${value.substring(pair[0], pair[1] + 1)}***${value.substring(pair[1] + 1)`
-    );
+    return !pair
+      ? value
+      : `${highlight(
+          value.substring(0, pair[0]),
+          indices,
+          i + 1
+        )}***${value.substring(pair[0], pair[1] + 1)}***${value.substring(
+          pair[1] + 1
+        )}`;
   };
   const fullLocal = await (async (fn) => {
     const path = lit.utils.path;
@@ -102,7 +105,9 @@ export const repl = async (src, meta) => {
       .map(
         ([score, pathname, index, matches]) => `1. [${pathname}](${pathname}) 
 
-    > ${matches.map(({indices,value})=>highlight(value,indices)).join(' ... ')}`
+    > ${matches
+      .map(({ indices, value }) => highlight(value, indices))
+      .join(" ... ")}`
       )
       .join("\n")
   );
