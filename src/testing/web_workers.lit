@@ -33,26 +33,32 @@ const getFsTest = async (filepath) => {
     const path = dotlit.lit.utils.path;
     const all = [];
     const visit = async (root) => {
-      const list = await dotlit.lit.fs.readdir(root);
-      return Promise.all(
-        list.map(async (key) => {
-          const pathname = path.join(root, key);
-          const stat = await dotlit.lit.fs.stat(pathname);
-          let contents;
-          if (key === ".git") {
-            return { pathname, type: stat.type };
-          } else if (stat.type === "dir") contents = await visit(pathname);
-          else
-            contents = await dotlit.lit.fs.readFile(pathname, {
-              encoding: "utf8",
-              localOnly: true,
-            });
-          postMessage("file: " + pathname);
-          const item = { pathname, type: stat.type, contents };
-          all.push(item);
-          return item;
-        })
-      );
+      let p;
+      try {
+        const list = await dotlit.lit.fs.readdir(root);
+        p = Promise.all(
+          list.map(async (key) => {
+            const pathname = path.join(root, key);
+            const stat = await dotlit.lit.fs.stat(pathname);
+            let contents;
+            if (key === ".git") {
+              return { pathname, type: stat.type };
+            } else if (stat.type === "dir") contents = await visit(pathname);
+            else
+              contents = await dotlit.lit.fs.readFile(pathname, {
+                encoding: "utf8",
+                localOnly: true,
+              });
+            postMessage("file: " + pathname);
+            const item = { pathname, type: stat.type, contents };
+            all.push(item);
+            return item;
+          })
+        );
+      } catch (err) {
+        postMessage("err: " + err.message);
+      }
+      return p;
     };
 
     await visit(filepath);
