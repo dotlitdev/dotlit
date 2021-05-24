@@ -1,5 +1,4 @@
-const React = lit.utils.React;
-export const repl = async (src, meta) => {
+export const viewer = async ({ node, React }) => {
   const t = Date.now();
 
   const { default: Fuse } = await import(
