@@ -29,7 +29,9 @@ return (async (fn) => {
 ```js search.jsx !plugin !collapse type=viewer Babel=true of=search
 import Fuse from "https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.esm.js";
 export const viewer = ({ node, React }) => {
-  const t = Date.now();
+
+  const {useEffect,useState} = React
+  const [msg, setMsg] = useState('Searching...')
   // const manifest = await fetch("/manifest.json").then((res) => res.json());
 
   // Recursively builds JSX output adding `<mark>` tags around matches
@@ -80,7 +82,9 @@ export const viewer = ({ node, React }) => {
 
   // return fullLocal
 
-  const fuse = new Fuse(fullLocal, {
+  useEffect(async fn => {
+     const t = Date.now();
+const fuse = new Fuse(await fullLocal(), {
     ignoreLocation: true,
     includeScore: true,
     includeMatches: true,
@@ -91,9 +95,6 @@ export const viewer = ({ node, React }) => {
 
   // 3. Now search!
   const query = node.data.value.trim();
-  const msg = `Results for search "**${query}**". In **${
-    (Date.now() - t) / 1000
-  }** seconds.\n\n`;
 
   return (
     <div>
