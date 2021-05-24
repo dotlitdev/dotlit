@@ -1,5 +1,4 @@
-
-inpory Fuse from 'https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.esm.js'
+import Fuse from "https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.esm.js";
 export const viewer = ({ node, React }) => {
   const t = Date.now();
   // const manifest = await fetch("/manifest.json").then((res) => res.json());
@@ -18,7 +17,7 @@ export const viewer = ({ node, React }) => {
     );
   };
 
-  const fullLocal = await(async (fn) => {
+  const fullLocal = async (fn) => {
     const path = lit.utils.path;
     const all = [];
     const visit = async (root) => {
@@ -48,7 +47,7 @@ export const viewer = ({ node, React }) => {
 
     await visit("/");
     return all;
-  })();
+  };
 
   // return fullLocal
 
