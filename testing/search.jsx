@@ -1,4 +1,4 @@
-export const viewer = async ({ node, React }) => {
+export const viewer = ({ node, React }) => {
   const t = Date.now();
 
   const { default: Fuse } = await import(
@@ -20,7 +20,7 @@ export const viewer = async ({ node, React }) => {
     );
   };
 
-  const fullLocal = await (async (fn) => {
+  const fullLocal = await(async (fn) => {
     const path = lit.utils.path;
     const all = [];
     const visit = async (root) => {
