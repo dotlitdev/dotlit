@@ -93,7 +93,7 @@ export const viewer = async ({ node, React }) => {
   });
 
   // 3. Now search!
-  const query = src.trim();
+  const query = node.data.value.trim();
   const msg = `Results for search "**${query}**". In **${
     (Date.now() - t) / 1000
   }** seconds.\n\n`;
@@ -109,19 +109,10 @@ export const viewer = async ({ node, React }) => {
 
 
 
-```text repl=search
+```>search
 test
 ```
-```>txt attached=true updated=1621891662053
-Results for search "**test**". In **0.023** seconds.
 
-1. [/testing/fuzzy_text_search.lit](/testing/fuzzy_text_search.lit) 
-   �
-      > [{"indices":[[1,4]],"value":"/testing/fuzzy_text_search.lit","key":"pathname"},{"indices":[[34,37],[2544,2547],[2641,2644],[2673,2676],[2718,2721],[2747,2750],[2827,2830],[2854,2857],[2890,2893],[2910,2913],[3246,3249],[3272,3275],[3306,3309],[3335,3338],[3372,3375],[3393,3396],[3422,3425],[3446,3449]],"value":"# Fuzzy text search\n\nRelated\n\n- [[testing/compact_manifest]]\n\n## Fuse.js\n\nhttps://fusejs.io/\n\n```js !collapse #intro\nreturn (async (fn) => {\n  const { default: Fuse } = await import(\n    \"https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.esm.js\"\n  );\n  const manifest = await fetch(\"/manifest.json\").then((res) => res.json());\n  const fuse = new Fuse(manifest.nodes, {\n    includeScore: true,\n    keys: [\"title\", \"id\"],\n  });\n\n  // 3. Now search!\n  return fuse.search(\"../../..\",{limit:5});\n})();\n\n```\n```js !plugin !collapse type=repl of=search\nexport const repl = async (src, meta) => {\n  const t = Date.now();\n\n  const { default: Fuse } = await import(\n    \"https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.esm.js\"\n  );\n  // const manifest = await fetch(\"/manifest.json\").then((res) => res.json());\n\n  const fullLocal = await (async (fn) => {\n    const path = lit.utils.path;\n    const all = [];\n    const visit = async (root) => {\n      try {\n        const list = await lit.fs.readdir(root);\n        return Promise.all(\n          list.map(async (key) => {\n            const pathname = path.join(root, key);\n            const stat = await lit.fs.stat(pathname);\n            let contents;\n            if (key === \".git\" || !key) {\n            } else if (stat.type === \"dir\") await visit(pathname);\n            else if (pathname.endsWith(\".lit\"))\n              contents = await lit.fs.readFile(pathname, {\n                encoding: \"utf8\",\n                localOnly: true,\n              }); //.slice(0,10);\n            const item = { pathname, type: stat.type, contents };\n            all.push(item);\n            return item;\n          })\n        );\n      } catch (err) {\n        alert(err.message);\n      }\n    };\n\n    await visit(\"/\");\n    return all;\n  })();\n\n  // return fullLocal\n\n  const fuse = new Fuse(fullLocal, {\n    ignoreLocation: true,\n    includeScore: true,\n    includeMatches: true,\n    ignoreFieldNorm: true,\n    minMatchCharLength: 4,\n    keys: [\"pathname\", \"contents\"],\n  });\n\n  // 3. Now search!\n  const query = src.trim();\n  const msg = `Results for search \"**${query}**\". In **${\n    (Date.now() - t) / 1000\n  }** seconds.\\n\\n`;\n\n  return (\n    msg +\n    fuse\n      .search(query, { limit: 10 })\n      //.map(x=>x.matches.map(x=>x.indices))\n      .map((x) => [x.score, x.item.pathname, x.refIndex, x.matches])\n      .map(\n        ([score, pathname, index, matches]) =>\n          `1. [${pathname}](${pathname}) \n    \n      > ${JSON.stringify(matches)}`\n      )\n      .join(\"\\n\")\n  );\n};\n\n```\n\n\n\n```text repl=search\ntest\n```\n```>md updated=1621870142091\nResults for search \"**fuzz**\". In **0.074** seconds.\n\n1. [/testing/fuzzy_text_search.lit](/testing/fuzzy_text_search.lit) 0.000001\n1. [/testing/log/2021-05-23.lit](/testing/log/2021-05-23.lit) 0.001\n1. [/functions.lit](/functions.lit) 0.25\n1. [/testing/input_buffer.lit](/testing/input_buffer.lit) 0.25\n1. [/testing/full.json](/testing/full.json) 0.5\n1. [/utils/functions.js](/utils/functions.js) 0.5\n1. [/index.lit](/index.lit) 0.5\n1. [/execute_code_cells.lit](/execute_code_cells.lit) 0.5\n1. [/plugin_system.lit](/plugin_system.lit) 0.5\n1. [/scratch_pad.lit](/scratch_pad.lit) 0.5\n1. [/prismjs_and_a_simple_editor.lit](/prismjs_and_a_simple_editor.lit) 0.5\n1. [/testing/lightningfs.lit](/testing/lightningfs.lit) 0.5\n1. [/testing/isomorphic_git.lit](/testing/isomorphic_git.lit) 0.5\n1. [/testing/runkit.lit](/testing/runkit.lit) 0.5\n1. [/testing/selection.lit](/testing/selection.lit) 0.5\n```\n\n\n\n\n\n## FuzzySet\n\nhttps://github.com/Glench/fuzzyset.js\n\n```js\nreturn import('https://cdn.skypack.dev/fuzzyset').then( FuzzySet => {\n\n  const f = new FuzzySet.default()\n  f.add(\"the text of mine\")\n  f.add(\"the text of someone else\")\n  f.add(\"other texts\")\n  return f.get(\"text of\")\n})\n\n```\n```>txt attached=true updated=1621778112764\n[ [ 0.4375, 'the text of mine' ] ]\n```","key":"contents"}]
-1. [/testing](/testing) 
-   �
-      > [{"indices":[[1,4]],"value":"/testing","key":"pathname"}]
-```
 ```>md updated=1621870142091
 Results for search "**fuzz**". In **0.074** seconds.
 
