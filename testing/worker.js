@@ -10,6 +10,7 @@ const getFsTest = async (filepath) => {
   postMessage(`Getting ${filepath} from local fs.`);
   try {
     const path = dotlit.lit.utils.path;
+    const all = [];
     const visit = async (root) => {
       const list = await dotlit.lit.fs.readdir(root);
       return Promise.all(
@@ -21,14 +22,14 @@ const getFsTest = async (filepath) => {
             return { pathname, type: stat.type };
           } else if (stat.type === "dir") contents = await visit(pathname);
           else
-            contents =
-              (
-                await dotlit.lit.fs.readFile(pathname, {
-                  encoding: "utf8",
-                  localOnly: true,
-                })
-              ).slice(0, 10) + "...";
-          return { pathname, type: stat.type, contents };
+            contents = await dotlit.lit.fs.readFile(pathname, {
+              encoding: "utf8",
+              localOnly: true,
+            });
+          postMessage("file: " + pathname);
+          const item = { pathname, type: stat.type, contents };
+          all.push(item);
+          return item;
         })
       );
     };
