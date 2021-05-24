@@ -70,7 +70,9 @@ const t = Date.now()
 
   // 3. Now search!
 const query = "agora"
-  return `**Results for search *"${query}"*. In ${(Date.now()-t) / 1000} seconds.**\n\n` + fuse.search(query, { limit: 15 })
+const msg = `**Results for search *"${query}"*. In ${(Date.now()-t) / 1000} seconds.**\n\n`
+
+  return msg + fuse.search(query, { limit: 15 })
         //.map(x=>x.matches.map(x=>x.indices))
         .map(x=>[x.score, x.item.pathname,x.refIndex])
         .map(([score,pathname,index]) => `1. [${pathname}](${pathname}) ${score}`)
