@@ -1,3 +1,4 @@
+const React = lit.utils.React;
 export const repl = async (src, meta) => {
   const t = Date.now();
 
