@@ -1,9 +1,7 @@
+
+inpory Fuse from 'https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.esm.js'
 export const viewer = ({ node, React }) => {
   const t = Date.now();
-
-  const { default: Fuse } = await import(
-    "https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.esm.js"
-  );
   // const manifest = await fetch("/manifest.json").then((res) => res.json());
 
   // Recursively builds JSX output adding `<mark>` tags around matches
