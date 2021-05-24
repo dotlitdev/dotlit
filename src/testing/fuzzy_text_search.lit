@@ -101,7 +101,9 @@ export const repl = async (src, meta) => {
       //.map(x=>x.matches.map(x=>x.indices))
       .map((x) => [x.score, x.item.pathname, x.refIndex, x.matches])
       .map(
-        ([score, pathname, index, matches]) => `1. [${pathname}](${pathname}) `
+        ([score, pathname, index, matches]) => `1. [${pathname}](${pathname}) 
+
+    > ${matches.map(({indicies,value})=>highlight(value,indicies)).join(' ... ')}`
       )
       .join("\n")
   );
