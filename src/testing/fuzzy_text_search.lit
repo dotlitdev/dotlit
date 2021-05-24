@@ -82,9 +82,10 @@ export const repl = async (src, meta) => {
     fuse
       .search(query, { limit: 15 })
       //.map(x=>x.matches.map(x=>x.indices))
-      .map((x) => [x.score, x.item.pathname, x.refIndex])
+      .map((x) => [x.score, x.item.pathname, x.refIndex, x.matches])
       .map(
-        ([score, pathname, index]) => `1. [${pathname}](${pathname}) ${score}`
+        ([score, pathname, index, matches]) =>
+          `1. [${pathname}](${pathname}) ${matches.length}`
       )
       .join("\n")
   );
@@ -95,8 +96,8 @@ export const repl = async (src, meta) => {
 ```text repl=search > md
 React
 ```
-```>txt attached=true updated=1621871019788
-Results for search "**React**". In **0.072** seconds.
+```>md attached=true updated=1621871043493
+Results for search "**React**". In **0.066** seconds.
 
 1. [/scratch_pad.lit](/scratch_pad.lit) 0.0004
 1. [/testing/selection.lit](/testing/selection.lit) 0.0004
