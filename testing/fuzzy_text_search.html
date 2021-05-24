@@ -1,6 +1,6 @@
-<html data-reactroot=""><head><title>Fuzzy text search</title><meta name="litsrc" value="testing/fuzzy_text_search.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="117:4-3294"><cell startpos="1:1-0" endpos="5:31-60"><div class="cell-content"><h1 id="fuzzy-text-search">Fuzzy text search</h1><p>Related</p><ul>
+<html data-reactroot=""><head><title>Fuzzy text search</title><meta name="litsrc" value="testing/fuzzy_text_search.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="117:4-3232"><cell startpos="1:1-0" endpos="5:31-60"><div class="cell-content"><h1 id="fuzzy-text-search">Fuzzy text search</h1><p>Related</p><ul>
 <li><a href="testing/compact_manifest.html?file=testing/compact_manifest.lit" title="testing/compact_manifest" wikilink="true">testing/compact_manifest</a></li>
-</ul></div></cell><section depth="2" class="" startpos="7:1-62" endpos="117:4-3294"><cell startpos="7:1-62" endpos="9:19-92"><div class="cell-content"><h2 id="fusejs">Fuse.js</h2><p><a href="https://fusejs.io/">https://fusejs.io/<span class="linkIcon">↗</span></a></p></div></cell><cell startpos="11:1-94" endpos="26:4-504" class="code"><div class="cell-content"><codecell class="dir-collapse tag-intro lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#5fb666" class="tag">intro</span></span><pre><code class="js">return (async (fn) =&gt; {
+</ul></div></cell><section depth="2" class="" startpos="7:1-62" endpos="117:4-3232"><cell startpos="7:1-62" endpos="9:19-92"><div class="cell-content"><h2 id="fusejs">Fuse.js</h2><p><a href="https://fusejs.io/">https://fusejs.io/<span class="linkIcon">↗</span></a></p></div></cell><cell startpos="11:1-94" endpos="26:4-504" class="code"><div class="cell-content"><codecell class="dir-collapse tag-intro lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#5fb666" class="tag">intro</span></span><pre><code class="js">return (async (fn) =&gt; {
   const { default: Fuse } = await import(
     &quot;https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.esm.js&quot;
   );
@@ -14,7 +14,7 @@
   return fuse.search(&quot;../../..&quot;,{limit:5});
 })();
 
-</code></pre></codecell></div></cell><cell startpos="27:1-505" endpos="93:4-2316" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=repl</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=search</span></span><pre><code class="js">export const repl = async (src, meta) =&gt; {
+</code></pre></codecell></div></cell><cell startpos="27:1-505" endpos="93:4-2323" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=repl</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=search</span></span><pre><code class="js">export const repl = async (src, meta) =&gt; {
   const t = Date.now();
 
   const { default: Fuse } = await import(
@@ -61,7 +61,7 @@
   });
 
   // 3. Now search!
-  const query = src;
+  const query = src.trim();
   const msg = `**Results for search *&quot;${query}&quot;*. In ${
     (Date.now() - t) / 1000
   } seconds.**\n\n`;
@@ -79,29 +79,29 @@
   );
 };
 
-</code></pre></codecell></div></cell><cell startpos="95:1-2318" endpos="117:4-3294" class="code"><div class="cell-content"><codecell class="lang-text local"><span class="meta"><span class="lang">text</span><span class="repl">search</span><span class="output">&gt; md</span></span><pre><code class="text">fuzz
-</code></pre></codecell><codecell class="lang-md local output"><span class="meta"><span class="lang">md</span><span class="updatedAt">Updated <span class="Time relative">10m ago</span></span></span><div class="md-block">
-<p><strong>Results for search <em>&quot;fuz
-&quot;</em>. In 0.039 seconds.</strong></p>
+</code></pre></codecell></div></cell><cell startpos="95:1-2325" endpos="117:4-3232" class="code"><div class="cell-content"><codecell class="lang-text local"><span class="meta"><span class="lang">text</span><span class="repl">search</span><span class="output">&gt; md</span></span><pre><code class="text">fuzz
+</code></pre></codecell><codecell class="lang-md local output"><span class="meta"><span class="lang">md</span><span class="updatedAt">Updated <span class="Time relative">2m ago</span></span></span><div class="md-block">
+<p><strong>Results for search <em>&quot;fuzz
+&quot;</em>. In 0.079 seconds.</strong></p>
 <ol>
-<li><a href="/testing/fuzzy_text_search.html">/testing/fuzzy_text_search.lit</a> 0.00025</li>
-<li><a href="/functions.html">/functions.lit</a> 0.25</li>
-<li><a href="/execute_code_cells.html">/execute_code_cells.lit</a> 0.25</li>
-<li><a href="/renderer/viewers.html">/renderer/viewers.lit</a> 0.25</li>
-<li><a href="/testing/log/2021-05-23.html">/testing/log/2021-05-23.lit</a> 0.25</li>
-<li><a href="/testing/full.json">/testing/full.json</a> 0.5</li>
-<li><a href="/utils/functions.js">/utils/functions.js</a> 0.5</li>
-<li><a href="/index.html">/index.lit</a> 0.5</li>
-<li><a href="/persist_to_github.html">/persist_to_github.lit</a> 0.5</li>
-<li><a href="/plugin_system.html">/plugin_system.lit</a> 0.5</li>
-<li><a href="/scratch_pad.html">/scratch_pad.lit</a> 0.5</li>
-<li><a href="/divergence_from_markdown.html">/divergence_from_markdown.lit</a> 0.5</li>
-<li><a href="/prismjs_and_a_simple_editor.html">/prismjs_and_a_simple_editor.lit</a> 0.5</li>
-<li><a href="/testing/lightningfs.html">/testing/lightningfs.lit</a> 0.5</li>
-<li><a href="/testing/input_buffer.html">/testing/input_buffer.lit</a> 0.5</li>
+<li><a href="/testing/fuzzy_text_search.html">/testing/fuzzy_text_search.lit</a> 0.0002</li>
+<li><a href="/testing/log/2021-05-23.html">/testing/log/2021-05-23.lit</a> 0.2</li>
+<li><a href="/functions.html">/functions.lit</a> 0.36</li>
+<li><a href="/execute_code_cells.html">/execute_code_cells.lit</a> 0.4</li>
+<li><a href="/testing/input_buffer.html">/testing/input_buffer.lit</a> 0.4</li>
+<li><a href="/renderer/viewers.html">/renderer/viewers.lit</a> 0.4</li>
+<li><a href="/testing/full.json">/testing/full.json</a> 0.6</li>
+<li><a href="/utils/functions.js">/utils/functions.js</a> 0.6</li>
+<li><a href="/index.html">/index.lit</a> 0.6</li>
+<li><a href="/404.html">/404.lit</a> 0.6</li>
+<li><a href="/persist_to_github.html">/persist_to_github.lit</a> 0.6</li>
+<li><a href="/plugin_system.html">/plugin_system.lit</a> 0.6</li>
+<li><a href="/scratch_pad.html">/scratch_pad.lit</a> 0.6</li>
+<li><a href="/wiki-links.html">/wiki-links.lit</a> 0.6</li>
+<li><a href="/divergence_from_markdown.html">/divergence_from_markdown.lit</a> 0.6</li>
 </ol>
 </div></codecell></div></cell></section></section>
-<section depth="2" class="" startpos="123:1-3300" endpos="140:4-3667"><cell startpos="123:1-3300" endpos="125:38-3350"><div class="cell-content"><h2 id="fuzzyset">FuzzySet</h2><p><a href="https://github.com/Glench/fuzzyset.js">https://github.com/Glench/fuzzyset.js<span class="linkIcon">↗</span></a></p></div></cell><cell startpos="127:1-3352" endpos="140:4-3667" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return import(&#x27;https://cdn.skypack.dev/fuzzyset&#x27;).then( FuzzySet =&gt; {
+<section depth="2" class="" startpos="123:1-3238" endpos="140:4-3605"><cell startpos="123:1-3238" endpos="125:38-3288"><div class="cell-content"><h2 id="fuzzyset">FuzzySet</h2><p><a href="https://github.com/Glench/fuzzyset.js">https://github.com/Glench/fuzzyset.js<span class="linkIcon">↗</span></a></p></div></cell><cell startpos="127:1-3290" endpos="140:4-3605" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return import(&#x27;https://cdn.skypack.dev/fuzzyset&#x27;).then( FuzzySet =&gt; {
 
   const f = new FuzzySet.default()
   f.add(&quot;the text of mine&quot;)
