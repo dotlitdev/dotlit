@@ -62,12 +62,18 @@ export const repl = async (src, meta) => {
             let contents;
             if (key === ".git" || !key || pathname.endsWith(lit.location.src)) {
             } else if (stat.type === "dir") await visit(pathname);
-            else if (pathname.endsWith(".lit"))
+            else if (pathname.endsWith(".lit")) {
               contents = await lit.fs.readFile(pathname, {
                 encoding: "utf8",
                 localOnly: true,
               }); //.slice(0,10);
-            const item = { pathname, type: stat.type, contents };
+              contents
+                .split("\n")
+                .map((line) =>
+                  all.push({ pathname, type: "line", conents: line })
+                );
+            }
+            const item = { pathname, type: stat.type, contents: pathname };
             all.push(item);
             return item;
           })
