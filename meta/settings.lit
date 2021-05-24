@@ -132,7 +132,9 @@ export const cellmenu = (ctx, { React, Menu }) => {
   const pos = ctx.selectedCell;
   const tree = lit.file.data.ast;
   const [attached] = pos
-    ? sel("code", pos, tree).filter((code) => code?.data?.meta?.attrs?.attached)
+    ? sel("code,mdblock", pos, tree).filter(
+        (code) => code?.data?.meta?.attrs?.attached
+      )
     : [];
 
   const detach = (ctx) => (del) => (ev) => {
