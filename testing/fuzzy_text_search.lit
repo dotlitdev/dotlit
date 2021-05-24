@@ -62,12 +62,18 @@ export const repl = async (src, meta) => {
             let contents;
             if (key === ".git" || !key || pathname.endsWith(lit.location.src)) {
             } else if (stat.type === "dir") await visit(pathname);
-            else if (pathname.endsWith(".lit"))
+            else if (pathname.endsWith(".lit")) {
               contents = await lit.fs.readFile(pathname, {
                 encoding: "utf8",
                 localOnly: true,
               }); //.slice(0,10);
-            const item = { pathname, type: stat.type, contents };
+              contents
+                .split("\n")
+                .map((line) =>
+                  all.push({ pathname, type: "line", contents: line })
+                );
+            }
+            const item = { pathname, type: stat.type, contents: pathname };
             all.push(item);
             return item;
           })
@@ -119,10 +125,10 @@ export const repl = async (src, meta) => {
 ```text repl=search > md
 'MIT 'garden
 ```
-```>md attached=true updated=1621897016731
-Results for search "**'MIT 'garden**". In **0.07** seconds.
+```>md attached=true updated=1621897658641
+Results for search "**'MIT 'garden**". In **0.091** seconds.
 
-1. [/testing/log/2021-05-12.lit](/testing/log/2021-05-12.lit) *100*
+
 ```
 ```>md updated=1621896023488
 Results for search "**Git**". In **0.072** seconds.
