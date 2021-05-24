@@ -271,7 +271,6 @@ export const viewer = ({node, React}) => {
 ```js !collapse > json 
 const path = lit.utils.path;
 const visit = async (root) => {
-  // alert("Traversing " + root);
   const list = await lit.fs.readdir(root);
   return Promise.all(
     list.map(async (key) => {
@@ -281,6 +280,7 @@ const visit = async (root) => {
       if (key === ".git") {
         return { pathname, type: stat.type };
       } else if (stat.type === "dir") {
+        alert("Traversing " + pathname);
         contents = await visit(pathname);
       } else
         contents =
