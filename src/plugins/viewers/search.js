@@ -121,7 +121,7 @@ export const viewer = ({ node, React }) => {
                 </div>
                 <span>{type}</span>
                 <span>{(1 - score) * 100}</span>
-                <blockquote>{val}</blockquote>
+                <blockquote>{highlight(val, matches[0].indices)}</blockquote>
               </div>
             );
           })}
