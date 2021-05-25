@@ -15,7 +15,7 @@ import {sections, groupIntoSections, ungroupSections} from './sections'
 import codeblocks from './codeblocks'
 import frontmatter from './frontmatter'
 import {mdblocks} from './mdblocks'
-import {resolveLinks, wikiLinkOptions} from './links'
+import {resolveLinks, wikiLinkOptions, decorateLinkNode, linkToUrl} from './links'
 import { getConsoleForNamespace} from '../utils/console'
 //import { transform as jsTransform } from './transformers/js'
 
@@ -74,7 +74,7 @@ export const processor = ({files, fs, litroot} = {files: []}) => {
 export const utils = {
   mdblocks,
   sections, ungroupSections,
-  resolveLinks,
+  resolveLinks, wikiLinkOptions, decorateLinkNode, linkToUrl,
   codeblocks,
   remarkStringify,
   to_string,
