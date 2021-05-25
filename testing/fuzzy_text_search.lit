@@ -146,7 +146,6 @@ export const viewer = ({ node, React }) => {
     <div>
       <input onChange={(ev) => search(ev.target.value, meta)} />
       <div>{results && results.msg}</div>
-      <span>{highlight("test", [2, 3])}</span>
       <div>
         {results &&
           results.results.map((res) => {
@@ -158,7 +157,7 @@ export const viewer = ({ node, React }) => {
                 </div>
                 <span>{type}</span>
                 <span>{(1 - score) * 100}</span>
-                <blockquote>{JSON.stringify(matches[0])}</blockquote>
+                <blockquote>{highlight(val, matches[0].indices)}</blockquote>
               </div>
             );
           })}
