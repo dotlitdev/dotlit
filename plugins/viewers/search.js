@@ -119,9 +119,10 @@ export const viewer = ({ node, React }) => {
                 <div>{pathname}</div>
                 <span>{(1 - score) * 100}</span>{" "}
                 <span>
-                  {matches.map(({ indices, value }) =>
-                    highlight(value, indices)
-                  )}
+                  {false &&
+                    matches.map(({ indices, value }) =>
+                      highlight(value, indices)
+                    )}
                 </span>
               </div>
             );
