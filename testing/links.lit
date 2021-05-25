@@ -18,16 +18,52 @@ const link = {
   value: example,
 };
 console.log({ root, example, resolved, link });
-let url;
-try {
-  url = linkToUrl(link, root);
-} catch (err) {
-  console.error(err.message);
-}
+const url = linkToUrl(link, root);
 
 const decorated = decorateLinkNode(link);
 return JSON.stringify(decorated, null, 2);
 
+```
+```>txt attached=true updated=1621980687462
+{ root: '/',
+  example: 'My cool 😎 link',
+  resolved: [ 'my_cool_link' ],
+  link: 
+   { type: 'wikiLink',
+     data: { permalink: 'my_cool_link' },
+     url: 'My cool 😎 link',
+     value: 'My cool 😎 link' } }
+{
+  "type": "link",
+  "data": {
+    "isExternal": false,
+    "isAbsolute": false,
+    "isFragment": false,
+    "isRelative": true,
+    "canonical": "my_cool_link.lit",
+    "wikilink": true,
+    "hProperties": {
+      "wikilink": true,
+      "data": {
+        "base": "my_cool_link.html",
+        "isExternal": false,
+        "isAbsolute": false,
+        "isFragment": false,
+        "isRelative": true,
+        "canonical": "my_cool_link.lit",
+        "wikilink": true
+      }
+    }
+  },
+  "url": "my_cool_link.html?file=my_cool_link.lit",
+  "title": "My cool 😎 link",
+  "children": [
+    {
+      "type": "text",
+      "value": "My cool 😎 link"
+    }
+  ]
+}
 ```
 ```>txt  updated=1621980516788
 { root: '/',
