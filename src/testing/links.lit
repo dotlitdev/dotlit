@@ -45,24 +45,25 @@ const resolve = (str) => {
 
   console.log(str)
 
-  const path = slug(base)
-  const section = slug(hash)
+  const path = base && slug(base)
+  const section = hash && slug(hash)
+
+  const href = path + (query ? ('?' + query):'') + (hash ? ('#' + section):'')
 
   return {title,path,hash,query,section}
 }
 const link = resolve('example/Article About stuff?query=foo#A sub section|Title')
-console.log(link)
 
-return link.path + (link.query ? ('?' + link.query):'') + (link.hash ? ('#' + link.section):'')
+return link
 ```
-```>txt attached=true updated=1621985709824
+```>txt attached=true updated=1621985745598
 example/Article About stuff?query=foo#A sub section|Title
 { title: 'Title',
-  path: 'example/article_about_stuffqueryfoo',
+  path: 'example/article_about_stuff',
   hash: 'A sub section',
   query: 'query=foo',
   section: 'a_sub_section' }
-example/article_about_stuffqueryfoo?query=foo#a_sub_section
+example/article_about_stuff?query=foo#a_sub_section
 ```
 ```js babel=true
 const { wikiLinkOptions, linkToUrl, decorateLinkNode } = lit.parser.utils;
