@@ -1,29 +1,32 @@
 # Links
 ```js babel=true
-const {wikiLinkOptions, linkToUrl, decorateLinkNode} = lit.parser.utils
+const { wikiLinkOptions, linkToUrl, decorateLinkNode } = lit.parser.utils;
 
-const resolve = wikiLinkOptions().pageResolver
+const resolve = wikiLinkOptions().pageResolver;
 
 // console.info(resolve.toString())
 // console.info(linkToUrl.toString())
 
-const root = '/'
-const type = 'wikiLink'
-const example = 'testing/Links?foo=bar#baz'
-const resolved = resolve(example)
+const root = "/";
+const type = "wikiLink";
+const example = "My cool 😎 link";
+const resolved = resolve(example);
 const link = {
   type,
-  data: {permalink: resolved[0]},
+  data: { permalink: resolved[0] },
   url: example,
   value: example,
+};
+console.log({ root, example, resolved, link });
+let url;
+try {
+  url = linkToUrl(link, root);
+} catch (err) {
+  console.error(err.message);
 }
-console.log({root,example,resolved,link})
-let url
-try { url = linkToUrl(link, root) } catch(err) {console.error(err.message)}
 
-const decorated = decorateLinkNode(link)
-return JSON.stringify(decorated, null, 2)
-
+const decorated = decorateLinkNode(link);
+return JSON.stringify(decorated, null, 2);
 
 ```
 ```>txt  updated=1621980516788
