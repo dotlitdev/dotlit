@@ -85,9 +85,12 @@ export const viewer = ({ node, React }) => {
 
     // 3. Now search!
     const query = src.trim();
-    const msg = `Results for search "**${query}**". In **${
-      (Date.now() - t) / 1000
-    }** seconds.\n\n`;
+    const msg = (
+      <div>
+        Results for <span>{query}</span>. In{" "}
+        <span>{(Date.now() - t) / 1000}</span> seconds.
+      </div>
+    );
     const res = fuse
       .search(query, { limit: 10 })
       //.map(x=>x.matches.map(x=>x.indices))
