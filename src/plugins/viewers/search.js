@@ -122,8 +122,8 @@ export const viewer = ({ node, React }) => {
             return (
               <div>
                 <div>
-                  <a href={pathname}>{pathname}</a> <span>{type}</span>
-                  <span>{(1 - score) * 100}</span>
+                  <a href={pathname}>{pathname}</a> type: <span>{type}</span>{" "}
+                  score: <span>{(1 - score) * 100}</span>
                 </div>
                 <blockquote>{highlight(val, matches[0].indices)}</blockquote>
               </div>
