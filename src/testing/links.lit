@@ -32,9 +32,15 @@ Implementation is at [[../parser/parser]]
 
 ```js #better #resolver
 const resolve = (str) => {
-  return "TODO: " + str
+  const [link,title] = str.split('|')
+  const [url, section] = link.split('#')
+  const [base, query] = url.split('?')
+  return {status: "TODO", link,title,base,query,section}
 }
 return resolve('example/item?query#section|Title')
+```
+```>txt attached=true updated=1621984923895
+TODO: example/item?query#section|Title
 ```
 ```js babel=true
 const { wikiLinkOptions, linkToUrl, decorateLinkNode } = lit.parser.utils;
