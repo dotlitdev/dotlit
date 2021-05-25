@@ -82,7 +82,7 @@ export const viewer = ({ node, React }) => {
       includeScore: true,
       includeMatches: true,
       ignoreFieldNorm: true,
-      minMatchCharLength: 4,
+      //minMatchCharLength: 4,
       useExtendedSearch: true,
       keys: ["contents"],
     });
