@@ -18,13 +18,13 @@ export const viewer = ({ node, React }) => {
       const pair = indices[indices.length - i];
       return !pair
         ? value
-        : `${highlight(
+        : <>{highlight(
             value.substring(0, pair[0]),
             indices,
             i + 1
-          )}***${value.substring(pair[0], pair[1] + 1)}***${value.substring(
+          )}<mark>{value.substring(pair[0], pair[1] + 1)}</mark>{value.substring(
             pair[1] + 1
-          )}`;
+          )}<>;
     };
     const fullLocal = await (async (fn) => {
       const path = lit.utils.path;
@@ -114,7 +114,10 @@ export const viewer = ({ node, React }) => {
         {results &&
           results.results.map((res) => {
             const [score, pathname, index, matches, type, lineNo, val] = res;
-            return <div>{pathname}</div>;
+            return <div>
+              <div>{pathname}</div>
+              <span>{(1-score)*100}</span> <span>{matches.map(({indicies,value})=>highlight(value,indicies))}</span>
+            </div>;
           })}
       </div>
     </div>
