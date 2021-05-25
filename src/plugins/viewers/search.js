@@ -109,6 +109,7 @@ export const viewer = ({ node, React }) => {
         x.item.lineNo,
         x.item.contents,
       ]);
+    console.log(msg, res);
     setResults({ msg, results: res });
   };
 
