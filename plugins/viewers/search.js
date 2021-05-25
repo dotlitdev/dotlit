@@ -117,7 +117,8 @@ export const viewer = ({ node, React }) => {
             return (
               <div>
                 <div>{pathname}</div>
-                <span>{(1 - score) * 100}</span> <span>{matches.length}</span>
+                <span>{type}</span>
+                <span>{(1 - score) * 100}</span> <span>{val}</span>
               </div>
             );
           })}
