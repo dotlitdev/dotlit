@@ -18,13 +18,13 @@ export const viewer = ({ node, React }) => {
       const pair = indices[indices.length - i];
       return !pair
         ? value
-        : <>{highlight(
+        : (<>{highlight(
             value.substring(0, pair[0]),
             indices,
             i + 1
           )}<mark>{value.substring(pair[0], pair[1] + 1)}</mark>{value.substring(
             pair[1] + 1
-          )}<>;
+          )}<>);
     };
     const fullLocal = await (async (fn) => {
       const path = lit.utils.path;
