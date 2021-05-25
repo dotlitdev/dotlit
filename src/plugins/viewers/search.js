@@ -1,4 +1,4 @@
-export const viewer = ({node,React}) = {
+export const viewer = ({node,React}) => {
 
   const search => async (src, meta) => {
   const t = Date.now();
