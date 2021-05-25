@@ -84,6 +84,7 @@ export const viewer = ({ node, React }) => {
       ignoreFieldNorm: true,
       //minMatchCharLength: 4,
       useExtendedSearch: true,
+      threshol: 0.3,
       keys: ["contents"],
     });
 
