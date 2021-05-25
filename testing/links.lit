@@ -1,32 +1,35 @@
 # Links
 ```js babel=true
-const {wikiLinkOptions, linkToUrl, decorateLinkNode} = lit.parser.utils
+const { wikiLinkOptions, linkToUrl, decorateLinkNode } = lit.parser.utils;
 
-const resolve = wikiLinkOptions().pageResolver
+const resolve = wikiLinkOptions().pageResolver;
 
 // console.info(resolve.toString())
 // console.info(linkToUrl.toString())
 
-const root = '/'
-const type = 'wikiLink'
-const example = 'testing/Links?foo=bar#baz'
-const resolved = resolve(example)
+const root = "/";
+const type = "wikiLink";
+const example = "My cool 😎 link";
+const resolved = resolve(example);
 const link = {
   type,
-  data: {permalink: resolved[0]},
+  data: { permalink: resolved[0] },
   url: example,
   value: example,
+};
+console.log({ root, example, resolved, link });
+let url;
+try {
+  url = linkToUrl(link, root);
+} catch (err) {
+  console.error(err.message);
 }
-console.log({root,example,resolved,link})
-let url
-try { url = linkToUrl(link, root) } catch(err) {console.error(err.message)}
 
-const decorated = decorateLinkNode(link)
-return JSON.stringify(decorated, null, 2)
-
+const decorated = decorateLinkNode(link);
+return JSON.stringify(decorated, null, 2);
 
 ```
-```>txt attached=true updated=1621980483746
+```>txt  updated=1621980516788
 { root: '/',
   example: 'testing/Links?foo=bar#baz',
   resolved: [ 'testing/linksfoobarbaz' ],
@@ -35,19 +38,37 @@ return JSON.stringify(decorated, null, 2)
      data: { permalink: 'testing/linksfoobarbaz' },
      url: 'testing/Links?foo=bar#baz',
      value: 'testing/Links?foo=bar#baz' } }
-{ decorated: 
-   { type: 'link',
-     data: 
-      { isExternal: false,
-        isAbsolute: false,
-        isFragment: false,
-        isRelative: true,
-        canonical: 'testing/linksfoobarbaz.lit',
-        wikilink: true,
-        hProperties: [Object] },
-     url: 'testing/linksfoobarbaz.html?file=testing/linksfoobarbaz.lit',
-     title: 'testing/Links?foo=bar#baz',
-     children: [ [Object] ] } }
+{
+  "type": "link",
+  "data": {
+    "isExternal": false,
+    "isAbsolute": false,
+    "isFragment": false,
+    "isRelative": true,
+    "canonical": "testing/linksfoobarbaz.lit",
+    "wikilink": true,
+    "hProperties": {
+      "wikilink": true,
+      "data": {
+        "base": "testing/linksfoobarbaz.html",
+        "isExternal": false,
+        "isAbsolute": false,
+        "isFragment": false,
+        "isRelative": true,
+        "canonical": "testing/linksfoobarbaz.lit",
+        "wikilink": true
+      }
+    }
+  },
+  "url": "testing/linksfoobarbaz.html?file=testing/linksfoobarbaz.lit",
+  "title": "testing/Links?foo=bar#baz",
+  "children": [
+    {
+      "type": "text",
+      "value": "testing/Links?foo=bar#baz"
+    }
+  ]
+}
 ```
 
 
