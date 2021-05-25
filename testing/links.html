@@ -10,7 +10,7 @@ much of the complexity is a result of considering the second type.</p></div></ce
 <li>[Describe Agora.org approach]</li>
 <li>behave as search links [find reference]</li>
 </ol></div></cell></section>
-<section depth="2" class="" startpos="29:1-1224" endpos="176:4-4775"><cell startpos="29:1-1224" endpos="31:42-1277"><div class="cell-content"><h2 id="testing">Testing</h2><p>Implementation is at <a href="/parser/parser.html?file=/parser/parser.lit" title="../parser/parser" wikilink="true">../parser/parser</a></p></div></cell><cell startpos="33:1-1279" endpos="66:4-2195" class="code"><div class="cell-content"><codecell class="tag-better tag-resolver lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#ad0adf" class="tag">better</span><span style="color:black;background-color:#eba7bc" class="tag">resolver</span></span><pre><code class="js">
+<section depth="2" class="" startpos="29:1-1224" endpos="177:4-4753"><cell startpos="29:1-1224" endpos="31:42-1277"><div class="cell-content"><h2 id="testing">Testing</h2><p>Implementation is at <a href="/parser/parser.html?file=/parser/parser.lit" title="../parser/parser" wikilink="true">../parser/parser</a></p></div></cell><cell startpos="33:1-1279" endpos="67:4-2173" class="code"><div class="cell-content"><codecell class="tag-better tag-resolver lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#ad0adf" class="tag">better</span><span style="color:black;background-color:#eba7bc" class="tag">resolver</span></span><pre><code class="js">
 const slug = str =&gt; str
       .replace(/[^\w\s/-]+/g, &quot;&quot;)
       .trim()
@@ -24,23 +24,24 @@ const resolve = (str) =&gt; {
 
   console.log(str)
 
-  const path = slug(base)
-  const section = slug(hash)
+  const path = base &amp;&amp; slug(base)
+  const section = hash &amp;&amp; slug(hash)
+
+  const href = path + (query ? (&#x27;?&#x27; + query):&#x27;&#x27;) + (hash ? (&#x27;#&#x27; + section):&#x27;&#x27;)
 
   return {title,path,hash,query,section}
 }
 const link = resolve(&#x27;example/Article About stuff?query=foo#A sub section|Title&#x27;)
-console.log(link)
 
-return link.path + (link.query ? (&#x27;?&#x27; + link.query):&#x27;&#x27;) + (link.hash ? (&#x27;#&#x27; + link.section):&#x27;&#x27;)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1m ago</span></span></span><output><pre><code class="txt">example/Article About stuff?query=foo#A sub section|Title
+return link
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">5m ago</span></span></span><output><pre><code class="txt">example/Article About stuff?query=foo#A sub section|Title
 { title: &#x27;Title&#x27;,
-  path: &#x27;example/article_about_stuffqueryfoo&#x27;,
+  path: &#x27;example/article_about_stuff&#x27;,
   hash: &#x27;A sub section&#x27;,
   query: &#x27;query=foo&#x27;,
   section: &#x27;a_sub_section&#x27; }
-example/article_about_stuffqueryfoo?query=foo#a_sub_section
-</code></pre></output></codecell></div></cell><cell startpos="67:1-2196" endpos="135:4-3749" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const { wikiLinkOptions, linkToUrl, decorateLinkNode } = lit.parser.utils;
+example/article_about_stuff?query=foo#a_sub_section
+</code></pre></output></codecell></div></cell><cell startpos="68:1-2174" endpos="136:4-3727" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const { wikiLinkOptions, linkToUrl, decorateLinkNode } = lit.parser.utils;
 
 const resolve = wikiLinkOptions().pageResolver;
 
@@ -65,7 +66,7 @@ console.log({ root, example, resolved, link , url});
 const decorated = decorateLinkNode(link);
 return JSON.stringify(decorated, null, 2);
 
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.3h ago</span></span></span><output><pre><code class="txt">{ root: &#x27;/&#x27;,
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.4h ago</span></span></span><output><pre><code class="txt">{ root: &#x27;/&#x27;,
   example: &#x27;My cool 😎 link&#x27;,
   resolved: [ &#x27;my_cool_link&#x27; ],
   link: 
@@ -105,7 +106,7 @@ return JSON.stringify(decorated, null, 2);
     }
   ]
 }
-</code></pre></output></codecell></div></cell><cell startpos="136:1-3750" endpos="176:4-4775" class="code output"><div class="cell-content"><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.5h ago</span></span></span><output><pre><code class="txt">{ root: &#x27;/&#x27;,
+</code></pre></output></codecell></div></cell><cell startpos="137:1-3728" endpos="177:4-4753" class="code output"><div class="cell-content"><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.5h ago</span></span></span><output><pre><code class="txt">{ root: &#x27;/&#x27;,
   example: &#x27;testing/Links?foo=bar#baz&#x27;,
   resolved: [ &#x27;testing/linksfoobarbaz&#x27; ],
   link: 
