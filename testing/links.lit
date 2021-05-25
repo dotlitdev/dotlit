@@ -43,27 +43,27 @@ const resolve = (str) => {
   const [doc, hash] = main.split('#')
   const [base, query] = doc.split('?')
 
-  console.log(str)
+  console.log("Input: ", str)
 
   const path = base && slug(base)
   const section = hash && slug(hash)
 
   const href = path + (query ? ('?' + query):'') + (hash ? ('#' + section):'')
 
-  return {title,path,hash,query,section}
+  return {title,path,hash,query,section, href}
 }
 const link = resolve('example/Article About stuff?query=foo#A sub section|Title')
 
 return link
 ```
-```>txt attached=true updated=1621985745598
+```>txt attached=true updated=1621986044970
 example/Article About stuff?query=foo#A sub section|Title
 { title: 'Title',
   path: 'example/article_about_stuff',
   hash: 'A sub section',
   query: 'query=foo',
-  section: 'a_sub_section' }
-example/article_about_stuff?query=foo#a_sub_section
+  section: 'a_sub_section',
+  href: 'example/article_about_stuff?query=foo#a_sub_section' }
 ```
 ```js babel=true
 const { wikiLinkOptions, linkToUrl, decorateLinkNode } = lit.parser.utils;
