@@ -1,5 +1,5 @@
 # Links
-```js
+```js babel=true
 const {wikiLinkOptions, linkToUrl, decorateLinkNode} = lit.parser.utils
 
 const resolve = wikiLinkOptions().pageResolver
@@ -20,24 +20,16 @@ return {example, resolved, link}
 
 
 ```
-```>txt attached=true updated=1621979503415
-function pageResolver(name) {
-      return [name.replace(/[^\w\s/-]+/g, '').trim().replace(/\s+/g, '_').toLowerCase()];
-    }
-function linkToUrl(link, root) {
-  if (link.type === 'wikiLink') {
-    var _link$data$permalink$ = link.data.permalink.split("#"),
-        _link$data$permalink$2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__.default)(_link$data$permalink$, 2),
-        base = _link$data$permalink$2[0],
-        frag = _link$data$permalink$2[1];
+```>txt attached=true updated=1621979604764 !error
+SyntaxError: /untitled.js: Unexpected token, expected "," (13:2)
 
-    return "".concat(root).concat(base, ".lit").concat(frag ? '#' + frag : '');
-  } else {
-    return link.url;
-  }
-}
-{ example: 'testing/Links?foo=bar#baz',
-  resolved: [ 'testing/linksfoobarbaz' ] }
+  11 |   wikiLink: true,
+  12 |   data: {permalink: resolved}
+> 13 |   value: example,
+     |   ^
+  14 | }
+  15 | // const url = linkToUrl(link)
+  16 |
 ```
 
 
