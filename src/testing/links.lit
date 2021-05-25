@@ -31,21 +31,30 @@ Interesting alternative solutions
 Implementation is at [[../parser/parser]]
 
 ```js #better #resolver
+
+const slug = str => str
+      .replace(/[^\w\s/-]+/g, "")
+      .trim()
+      .replace(/\s+/g, "_")
+      .toLowerCase()
+
 const resolve = (str) => {
   const [main,title] = str.split('|')
-  const [doc, section] = main.split('#')
+  const [doc, hash] = main.split('#')
   const [base, query] = doc.split('?')
 
   console.log(str)
 
-  return {status: "TODO",title,base,query,section}
+  const path = slug(doc)
+  const section = slug(hash)
+
+  return {status: "TODO",title,path,query,section}
 }
 return resolve('example/Article About stuff?query=foo#A sub section|Title')
 ```
-```>txt attached=true updated=1621985323702
+```>txt attached=true updated=1621985346767
 example/Article About stuff?query=foo#A sub section|Title
 { status: 'TODO',
-  main: 'example/Article About stuff?query=foo#A sub section',
   title: 'Title',
   base: 'example/Article About stuff',
   query: 'query=foo',
