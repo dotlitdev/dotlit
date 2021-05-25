@@ -29,7 +29,7 @@ export const wikiLinkOptions = files => ({
 //     hrefTemplate: (permalink) => `${permalink}?file=${permalink}`
 // })
 
-const linkToUrl = (link, root) => {
+export const linkToUrl = (link, root) => {
     if (link.type === 'wikiLink') {
         const [base,frag] = link.data.permalink.split("#")
         return `${root}${base}.lit${frag ? ('#' + frag) : ''}`
