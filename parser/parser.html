@@ -598,125 +598,129 @@ export const mdblocks = function ({baseProcessor}) {
     }
 }
 </code></pre></codecell></div></cell></section>
-<section depth="3" class="" startpos="60:1-954" endpos="66:4-1026"><cell startpos="60:1-954" endpos="62:17-981"><div class="cell-content"><h3 id="links">Links</h3><p><em>Implementation</em></p></div></cell><cell startpos="64:1-983" endpos="66:4-1026" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; links.js</span></span><pre><code class="js">import path from &#x27;path&#x27;
-import visit from &#x27;unist-util-visit&#x27;
-import { getConsoleForNamespace } from &#x27;../utils/console&#x27;
+<section depth="3" class="" startpos="60:1-954" endpos="184:4-4068"><cell startpos="60:1-954" endpos="62:17-981"><div class="cell-content"><h3 id="links">Links</h3><p><em>Implementation</em></p></div></cell><cell startpos="64:1-983" endpos="184:4-4068" class="code output"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed output"><a name="links.js"></a><span class="meta"><span class="lang">js</span><span class="filename">links.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><output><pre><code class="js">import path from &quot;path&quot;;
+import visit from &quot;unist-util-visit&quot;;
+import { getConsoleForNamespace } from &quot;../utils/console&quot;;
 
-const console = getConsoleForNamespace(&#x27;links&#x27;, {disabled: true})
+const console = getConsoleForNamespace(&quot;links&quot;, { disabled: true });
 
-export const resolveLinks = (options = { litroot: &#x27;&#x27;, filepath: &#x27;&#x27;}) =&gt; (...args) =&gt; tree =&gt; {
-    console.log(&#x27;[Links] Init&#x27;, options)
-    return visit(tree, isLink, transform(options))
-}
+export const resolveLinks =
+  (options = { litroot: &quot;&quot;, filepath: &quot;&quot; }) =&gt;
+  (...args) =&gt;
+  (tree) =&gt; {
+    console.log(&quot;[Links] Init&quot;, options);
+    return visit(tree, isLink, transform(options));
+  };
 
-const isLink = (node) =&gt; [&#x27;link&#x27;, &#x27;wikiLink&#x27;].indexOf(node.type) &gt;= 0
+const isLink = (node) =&gt; [&quot;link&quot;, &quot;wikiLink&quot;].indexOf(node.type) &gt;= 0;
 
-const transform = options =&gt; (node, index, parent) =&gt; {
-    return decorateLinkNode(node, options.litroot, options.filepath)
-}
+const transform = (options) =&gt; (node, index, parent) =&gt; {
+  return decorateLinkNode(node, options.litroot, options.filepath);
+};
 
-export const wikiLinkOptions = files =&gt; ({
-     pageResolver: (name) =&gt; [
-       name.replace(/[^\w\s/-]+/g,&#x27;&#x27;)
-           .trim()
-           .replace(/\s+/g, &#x27;_&#x27;)
-           .toLowerCase()
-     ],
-})
-// ({ 
+export const wikiLinkOptions = (files) =&gt; ({
+  pageResolver: (name) =&gt; [
+    name
+      .replace(/[^\w\s/-]+/g, &quot;&quot;)
+      .trim()
+      .replace(/\s+/g, &quot;_&quot;)
+      .toLowerCase(),
+  ],
+});
+// ({
 //     permalinks: files,
 //     pageResolver: nameToPermalinks,
 //     hrefTemplate: (permalink) =&gt; `${permalink}?file=${permalink}`
 // })
 
-export const linkToUrl = (link, root) =&gt; {
-    if (link.type === &#x27;wikiLink&#x27;) {
-        const [base,frag] = link.data.permalink.split(&quot;#&quot;)
-        return `${root}${base}.lit${frag ? (&#x27;#&#x27; + frag) : &#x27;&#x27;}`
-    } else {
-        return link.url
-    }
-}
+const linkToUrl = (link, root) =&gt; {
+  if (link.type === &quot;wikiLink&quot;) {
+    const [base, frag] = link.data.permalink.split(&quot;#&quot;);
+    return `${root}${base}.lit${frag ? &quot;#&quot; + frag : &quot;&quot;}`;
+  } else {
+    return link.url;
+  }
+};
 
-export const decorateLinkNode = (link, root = &#x27;&#x27;, filepath = &#x27;&#x27;) =&gt; {
-    // console.log(link)
-    const wikilink = link.type === &#x27;wikiLink&#x27;
-    const url = linkToUrl(link, root)
+export const decorateLinkNode = (link, root = &quot;&quot;, filepath = &quot;&quot;) =&gt; {
+  // console.log(link)
+  const wikilink = link.type === &quot;wikiLink&quot;;
+  const url = linkToUrl(link, root);
 
-    // console.log(`[Links] resolving (${link.type}) [${url}] &#x27;${root}&#x27;, &quot;${filepath}&quot;`)
-    const isExternal = /^(https?\:)?\/\//.test(url)
-    const isAbsolute = !isExternal &amp;&amp; /^\//.test(url)
-    const isFragment = /^(\?|#)/.test(url)
-    const isRelative = url &amp;&amp; !isAbsolute &amp;&amp; !isFragment &amp;&amp; !isExternal
+  // console.log(`[Links] resolving (${link.type}) [${url}] &#x27;${root}&#x27;, &quot;${filepath}&quot;`)
+  const isExternal = /^(https?\:)?\/\//.test(url);
+  const isAbsolute = !isExternal &amp;&amp; /^\//.test(url);
+  const isFragment = /^(\?|#)/.test(url);
+  const isRelative = url &amp;&amp; !isAbsolute &amp;&amp; !isFragment &amp;&amp; !isExternal;
 
-    let canonical = url
-    let href = url
-    let [base,frag] = url.split(/(\?|#)/)
+  let canonical = url;
+  let href = url;
+  let [base, frag] = url.split(/(\?|#)/);
 
-    if (isRelative) {
-        const abs = path.resolve(root, path.dirname(filepath), url)
-        canonical = path.relative(path.resolve(root), abs)
-        href = url.replace(/\.(md|lit)/i, &#x27;.html&#x27;)
-    } else if (isAbsolute) {
-        href = url.replace(/\.(md|lit)/i, &#x27;.html&#x27;)
-    }
+  if (isRelative) {
+    const abs = path.resolve(root, path.dirname(filepath), url);
+    canonical = path.relative(path.resolve(root), abs);
+    href = url.replace(/\.(md|lit)/i, &quot;.html&quot;);
+  } else if (isAbsolute) {
+    href = url.replace(/\.(md|lit)/i, &quot;.html&quot;);
+  }
 
-    link.type = &#x27;link&#x27;
-    link.url = href
-    link.title = link.title || link.value
-    link.data = {
-        isExternal,
-        isAbsolute,
-        isFragment,
-        isRelative,
-        canonical,
-        wikilink,
-    }
+  link.type = &quot;link&quot;;
+  link.url = href;
+  link.title = link.title || link.value;
+  link.data = {
+    isExternal,
+    isAbsolute,
+    isFragment,
+    isRelative,
+    canonical,
+    wikilink,
+  };
 
-    if (wikilink) {
-        [base,frag] = link.url.split(&quot;#&quot;)
-        link.url = base + &#x27;?file=&#x27; + canonical + (frag ? `#${frag}` : &#x27;&#x27;)
-        link.children = [{position: link.position, type: &#x27;text&#x27;, value: link.value }]
-    }
+  if (wikilink) {
+    [base, frag] = link.url.split(&quot;#&quot;);
+    link.url = base + &quot;?file=&quot; + canonical + (frag ? `#${frag}` : &quot;&quot;);
+    link.children = [
+      { position: link.position, type: &quot;text&quot;, value: link.value },
+    ];
+  }
 
-    link.data.hProperties = {
-        wikilink,
-        data: {
-             base, 
-             frag,
-             isExternal,
-             isAbsolute,
-             isFragment,
-             isRelative,
-             canonical,
-             wikilink,
-        }
-    }
-    
-    delete link.value
+  link.data.hProperties = {
+    wikilink,
+    data: {
+      base,
+      frag,
+      isExternal,
+      isAbsolute,
+      isFragment,
+      isRelative,
+      canonical,
+      wikilink,
+    },
+  };
 
-    return link
-}
+  delete link.value;
+
+  return link;
+};
 
 export const nameToPermalinks = (name) =&gt; {
-    const full = name.replace(/ /g, &#x27;_&#x27;).toLowerCase()
-    const tail = path.basename(full)
+  const full = name.replace(/ /g, &quot;_&quot;).toLowerCase();
+  const tail = path.basename(full);
 
-    return [&#x27;.lit&#x27;, &#x27;md&#x27;].flatMap( ext =&gt; [full + ext, tail + ext])
-    return [full+&#x27;.lit&#x27;, full+&#x27;.md&#x27;, tail+&#x27;.lit&#x27;, tail+&#x27;.md&#x27;]
-}
+  return [&quot;.lit&quot;, &quot;md&quot;].flatMap((ext) =&gt; [full + ext, tail + ext]);
+  return [full + &quot;.lit&quot;, full + &quot;.md&quot;, tail + &quot;.lit&quot;, tail + &quot;.md&quot;];
+};
 export const nodeMappings = (files) =&gt; {
-    const mappings = {}
-    files.forEach( (filepath) =&gt; {
+  const mappings = {};
+  files.forEach((filepath) =&gt; {});
+  return mappings;
+};
 
-    })
-    return mappings;
-}
-
-</code></pre></codecell></div></cell></section>
-<section depth="2" class="" startpos="68:1-1028" endpos="78:4-1382"><cell startpos="68:1-1028" endpos="70:162-1207"><div class="cell-content"><h2 id="ast-to-string">AST to String</h2><ul class="contains-task-list">
+</code></pre></output></codecell></div></cell></section>
+<section depth="2" class="" startpos="186:1-4070" endpos="196:4-4424"><cell startpos="186:1-4070" endpos="188:162-4249"><div class="cell-content"><h2 id="ast-to-string">AST to String</h2><ul class="contains-task-list">
 <li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->#TODO refactor save (update src) to operate on AST directly and stringify as below, instead of the cureent <a href="/utils/unist-patch-source.html?file=/utils/unist-patch-source.lit" title="../utils/unist-patch-source" wikilink="true">../utils/unist-patch-source</a> implementaction.</li>
-</ul></div></cell><cell startpos="71:1-1208" endpos="78:4-1382" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const {toMarkdown, ungroupSections}
+</ul></div></cell><cell startpos="189:1-4250" endpos="196:4-4424" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const {toMarkdown, ungroupSections}
       = lit.parser.utils
 const unGroup = ungroupSections()()
 const tree = unGroup(lit.ast)
