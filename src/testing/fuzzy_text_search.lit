@@ -30,7 +30,12 @@ return (async (fn) => {
 ```
 ```>js ../plugins/viewers/search.js !plugin !collapse type=Viewer of=search2
 export const viewer = ({ node, React }) => {
-  const search = async (src, meta) => {
+  const { useState } = React;
+  const meta = node?.properties?.meta || {};
+
+  const [results, setResults] = useState(null);
+
+  const search = async (src) => {
     const t = Date.now();
 
     const { default: Fuse } = await import(
@@ -115,29 +120,38 @@ export const viewer = ({ node, React }) => {
       (Date.now() - t) / 1000
     }** seconds.\n\n`;
 
-    return (
+    setResults(
       msg +
-      fuse
-        .search(query, { limit: 10 })
-        //.map(x=>x.matches.map(x=>x.indices))
-        .map((x) => [
-          x.score,
-          x.item.pathname,
-          x.refIndex,
-          x.matches,
-          x.item.type,
-          x.item.lineNo,
-          x.item.contents,
-        ])
-        .map(
-          ([score, pathname, index, matches, type, lineNo, val]) =>
-            `1. **[${pathname}](${pathname})** *${(1 - score).toFixed(2) * 100}*
+        fuse
+          .search(query, { limit: 10 })
+          //.map(x=>x.matches.map(x=>x.indices))
+          .map((x) => [
+            x.score,
+            x.item.pathname,
+            x.refIndex,
+            x.matches,
+            x.item.type,
+            x.item.lineNo,
+            x.item.contents,
+          ])
+          .map(
+            ([score, pathname, index, matches, type, lineNo, val]) =>
+              `1. **[${pathname}](${pathname})** *${
+                (1 - score).toFixed(2) * 100
+              }*
 
       ${type} ${lineNo} ${val}`
-        )
-        .join("\n")
+          )
+          .join("\n")
     );
   };
+
+  return (
+    <div>
+      <input onChange={(ev) => search(ev.target.value, meta)} />
+      {results}
+    </div>
+  );
 };
 
 ```
