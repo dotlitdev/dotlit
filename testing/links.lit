@@ -32,21 +32,24 @@ Implementation is at [[../parser/parser]]
 
 ```js #better #resolver
 const resolve = (str) => {
-  const [link,title] = str.split('|')
-  const [url, section] = link.split('#')
+  const [href,title] = str.split('|')
+  const [url, section] = href.split('#')
   const [base, query] = url.split('?')
-  return {status: "TODO", str,link,title,base,query,section}
+
+  console.log(str)
+
+  return {status: "TODO", href,title,base,query,section}
 }
 return resolve('example/Article About stuff?query=foo#A sub section|Title')
 ```
-```>txt attached=true updated=1621985150690
+```>txt attached=true updated=1621985197062
 { status: 'TODO',
-  str: 'example/Article About stuff?query#section|Title',
-  link: 'example/Article About stuff?query#section',
+  str: 'example/Article About stuff?query=foo#A sub section|Title',
+  link: 'example/Article About stuff?query=foo#A sub section',
   title: 'Title',
   base: 'example/Article About stuff',
-  query: 'query',
-  section: 'section' }
+  query: 'query=foo',
+  section: 'A sub section' }
 ```
 ```js babel=true
 const { wikiLinkOptions, linkToUrl, decorateLinkNode } = lit.parser.utils;
