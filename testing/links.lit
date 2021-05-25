@@ -4,8 +4,8 @@ const {wikiLinkOptions, linkToUrl, decorateLinkNode} = lit.parser.utils
 
 const resolve = wikiLinkOptions().pageResolver
 
-console.info(resolve.toString())
-console.info(linkToUrl.toString())
+// console.info(resolve.toString())
+// console.info(linkToUrl.toString())
 
 const root = '/'
 const type = 'wikiLink'
@@ -13,39 +13,25 @@ const example = 'testing/Links?foo=bar#baz'
 const resolved = resolve(example)
 const link = {
   type,
-  data: {permalink: resolved},
+  data: {permalink: resolved[0]},
   url: example,
 }
 let url
 try { url = linkToUrl(link, root) } catch(err) {console.error(err.message)}
 
-return {example, resolved, link, url}
+const decorated = decorateLinkNode(link)
+return {example, resolved, link, url, decorated}
 
 
 ```
-```>txt attached=true updated=1621979905702
-function pageResolver(name) {
-      return [name.replace(/[^\w\s/-]+/g, '').trim().replace(/\s+/g, '_').toLowerCase()];
-    }
-function linkToUrl(link, root) {
-  if (link.type === 'wikiLink') {
-    var _link$data$permalink$ = link.data.permalink.split("#"),
-        _link$data$permalink$2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__.default)(_link$data$permalink$, 2),
-        base = _link$data$permalink$2[0],
-        frag = _link$data$permalink$2[1];
-
-    return "".concat(root).concat(base, ".lit").concat(frag ? '#' + frag : '');
-  } else {
-    return link.url;
-  }
-}
+```>txt attached=true updated=1621980158812
 { example: 'testing/Links?foo=bar#baz',
   resolved: [ 'testing/linksfoobarbaz' ],
   link: 
    { type: 'wikiLink',
-     data: { permalink: [Object] },
+     data: { permalink: 'testing/linksfoobarbaz' },
      url: 'testing/Links?foo=bar#baz' },
-  url: undefined }
+  url: '/testing/linksfoobarbaz.lit' }
 ```
 
 
