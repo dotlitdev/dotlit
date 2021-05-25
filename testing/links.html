@@ -1,4 +1,4 @@
-<html data-reactroot=""><head><title>Links</title><meta name="litsrc" value="testing/links.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="49:4-1341"><cell startpos="1:1-0" endpos="1:8-7"><div class="cell-content"><h1 id="links">Links</h1></div></cell><cell startpos="2:1-8" endpos="49:4-1341" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const {wikiLinkOptions, linkToUrl, decorateLinkNode} = lit.parser.utils
+<html data-reactroot=""><head><title>Links</title><meta name="litsrc" value="testing/links.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="50:4-1518"><cell startpos="1:1-0" endpos="1:8-7"><div class="cell-content"><h1 id="links">Links</h1></div></cell><cell startpos="2:1-8" endpos="50:4-1518" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const {wikiLinkOptions, linkToUrl, decorateLinkNode} = lit.parser.utils
 
 const resolve = wikiLinkOptions().pageResolver
 
@@ -6,19 +6,21 @@ console.info(resolve.toString())
 console.info(linkToUrl.toString())
 
 const root = &#x27;/&#x27;
+const type = &#x27;wikiLink&#x27;
 const example = &#x27;testing/Links?foo=bar#baz&#x27;
 const resolved = resolve(example)
 const link = {
-  type: &#x27;wikiLink&#x27;,
-  data: {permalink: resolved},
+  type,
+  data: {permalink: resolved[0]},
   url: example,
 }
-const url = linkToUrl(link, root)
+let url
+try { url = linkToUrl(link, root) } catch(err) {console.error(err.message)}
 
 return {example, resolved, link, url}
 
 
-</code></pre></codecell><codecell class="dir-error lang-txt local output"><span class="meta"><span class="lang">txt</span><span style="color:white;background-color:red" class="directive dir-error">error</span><span class="updatedAt">Updated <span class="Time relative">2m ago</span></span></span><output><pre><code class="txt">function pageResolver(name) {
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2m ago</span></span></span><output><pre><code class="txt">function pageResolver(name) {
       return [name.replace(/[^\w\s/-]+/g, &#x27;&#x27;).trim().replace(/\s+/g, &#x27;_&#x27;).toLowerCase()];
     }
 function linkToUrl(link, root) {
@@ -33,13 +35,12 @@ function linkToUrl(link, root) {
     return link.url;
   }
 }
-function toString() {
-    [native code]
-}
-linkToUrl@https://dotlit.org/web.bundle.js:135305:58
-untitled.js:19:22
-untitled.js:26:63
-module code@untitled.js:26:139
-evaluate@[native code]
-moduleEvaluation@[native code]
+link.data.permalink.split is not a function. (In &#x27;link.data.permalink.split(&quot;#&quot;)&#x27;, &#x27;link.data.permalink.split&#x27; is undefined)
+{ example: &#x27;testing/Links?foo=bar#baz&#x27;,
+  resolved: [ &#x27;testing/linksfoobarbaz&#x27; ],
+  link: 
+   { type: &#x27;wikiLink&#x27;,
+     data: { permalink: [Object] },
+     url: &#x27;testing/Links?foo=bar#baz&#x27; },
+  url: undefined }
 </code></pre></output></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
