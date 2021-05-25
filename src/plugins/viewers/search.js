@@ -117,7 +117,7 @@ export const viewer = ({ node, React }) => {
     <div>
       <input onChange={(ev) => search(ev.target.value, meta)} />
       <div>{results && results.msg}</div>
-      {highlight("test", [2, 4])}
+      <span>{highlight("test", [2, 3])}</span>
       <div>
         {results &&
           results.results.map((res) => {
