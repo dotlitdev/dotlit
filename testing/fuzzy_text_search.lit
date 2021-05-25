@@ -35,7 +35,9 @@ export const repl = async (src, meta) => {
   const { default: Fuse } = await import(
     "https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.esm.js"
   );
-  // const manifest = await fetch("/manifest.json").then((res) => res.json());
+  const manifest = meta.manifest
+    ? await fetch("/manifest.json").then((res) => res.json())
+    : {};
   // Recursively builds JSX output adding `<mark>` tags around matches
   const highlight = (value, indices = [], i = 1) => {
     const pair = indices[indices.length - i];
@@ -86,7 +88,7 @@ export const repl = async (src, meta) => {
       }
     };
 
-    await visit("/");
+    await visit(meta.ns || "/");
     return all;
   })();
 
@@ -138,39 +140,39 @@ export const repl = async (src, meta) => {
 ```text repl=search > md
 plugin !plugins
 ```
-```>md attached=true updated=1621898760684
-Results for search "**plugin**". In **0.073** seconds.
+```>md attached=true updated=1621900017253
+Results for search "**plugin !plugins**". In **0.093** seconds.
 
-1. **[/renderer/extractPlugins.js](/renderer/extractPlugins.js)** *100*
-
-      file undefined /renderer/extractPlugins.js
-1. **[/plugins/transformers/prettier.js](/plugins/transformers/prettier.js)** *100*
-
-      file undefined /plugins/transformers/prettier.js
-1. **[/plugins/viewers/esm.js](/plugins/viewers/esm.js)** *100*
-
-      file undefined /plugins/viewers/esm.js
-1. **[/plugins/repls/module.js](/plugins/repls/module.js)** *100*
-
-      file undefined /plugins/repls/module.js
-1. **[/plugins/transformers](/plugins/transformers)** *100*
-
-      dir undefined /plugins/transformers
-1. **[/plugins/viewers](/plugins/viewers)** *100*
-
-      dir undefined /plugins/viewers
-1. **[/plugins/repls](/plugins/repls)** *100*
-
-      dir undefined /plugins/repls
-1. **[/plugins](/plugins)** *100*
-
-      dir undefined /plugins
 1. **[/scratch_pad.lit](/scratch_pad.lit)** *100*
 
       line 111 - [x] plugin 
 1. **[/scratch_pad.lit](/scratch_pad.lit)** *100*
 
       line 140 **Plugin attributes**
+1. **[/scratch_pad.lit](/scratch_pad.lit)** *100*
+
+      line 261 ```js !plugin of=foo
+1. **[/scratch_pad.lit](/scratch_pad.lit)** *100*
+
+      line 281 - [ ] UML: See [custom plugin](/meta/settings.lit#plantuml-viewer--repl)
+1. **[/plugin_system.lit](/plugin_system.lit)** *100*
+
+      line 0 # 🔌 Plugin system
+1. **[/plugin_system.lit](/plugin_system.lit)** *100*
+
+      line 2 `.lit` has a flexible Plugin system, primarily to allow the author to create custom [[Viewers]] and [[REPLs]] but also includes various other types.
+1. **[/plugin_system.lit](/plugin_system.lit)** *100*
+
+      line 6 ## Anatomy of a plugin 
+1. **[/plugin_system.lit](/plugin_system.lit)** *100*
+
+      line 10     ```js !plugin id=foo type=bar
+1. **[/plugin_system.lit](/plugin_system.lit)** *100*
+
+      line 12     export const bar = (...args) => "I'm a plugin"
+1. **[/plugin_system.lit](/plugin_system.lit)** *100*
+
+      line 15 Initially it is assumed that a plugin is implemented in `js` but due to the flexibility this likely won't remain the case for long.
 ```
 ```>md updated=1621898267030
 Results for search "**'Digital 'Gardens**". In **0.071** seconds.
