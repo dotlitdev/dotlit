@@ -45,9 +45,9 @@ export const viewer = ({ node, React }) => {
       ? await fetch("/manifest.json").then((res) => res.json())
       : {};
     // Recursively builds JSX output adding `<mark>` tags around matches
-    const highlight = (value, indices = [], i = 1) => {
-      return value;
-
+    const highlight = (value, indices, i) => {
+      indices = indices || [];
+      i = i || 1;
       try {
         const pair = indices[indices.length - i];
         return !pair ? (
