@@ -15,6 +15,8 @@ export const viewer = ({ node, React }) => {
       : {};
     // Recursively builds JSX output adding `<mark>` tags around matches
     const highlight = (value, indices = [], i = 1) => {
+      return value;
+
       try {
         const pair = indices[indices.length - i];
         return !pair ? (
