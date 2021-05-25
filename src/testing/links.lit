@@ -16,13 +16,14 @@ const link = {
   data: {permalink: resolved},
   url: example,
 }
-const url = undefined //linkToUrl(link, root)
+let url
+try { url = linkToUrl(link, root) } catch(err) {console.error(err.message)}
 
 return {example, resolved, link, url}
 
 
 ```
-```>txt attached=true updated=1621979886205 !error
+```>txt attached=true updated=1621979905702
 function pageResolver(name) {
       return [name.replace(/[^\w\s/-]+/g, '').trim().replace(/\s+/g, '_').toLowerCase()];
     }
@@ -38,15 +39,13 @@ function linkToUrl(link, root) {
     return link.url;
   }
 }
-function toString() {
-    [native code]
-}
-linkToUrl@https://dotlit.org/web.bundle.js:135305:58
-untitled.js:21:22
-untitled.js:28:63
-module code@untitled.js:28:139
-evaluate@[native code]
-moduleEvaluation@[native code]
+{ example: 'testing/Links?foo=bar#baz',
+  resolved: [ 'testing/linksfoobarbaz' ],
+  link: 
+   { type: 'wikiLink',
+     data: { permalink: [Object] },
+     url: 'testing/Links?foo=bar#baz' },
+  url: undefined }
 ```
 
 
