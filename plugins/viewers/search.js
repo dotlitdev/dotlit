@@ -88,37 +88,32 @@ export const viewer = ({ node, React }) => {
     const msg = `Results for search "**${query}**". In **${
       (Date.now() - t) / 1000
     }** seconds.\n\n`;
-
-    setResults(
-      msg +
-        fuse
-          .search(query, { limit: 10 })
-          //.map(x=>x.matches.map(x=>x.indices))
-          .map((x) => [
-            x.score,
-            x.item.pathname,
-            x.refIndex,
-            x.matches,
-            x.item.type,
-            x.item.lineNo,
-            x.item.contents,
-          ])
-          .map(
-            ([score, pathname, index, matches, type, lineNo, val]) =>
-              `1. **[${pathname}](${pathname})** *${
-                (1 - score).toFixed(2) * 100
-              }*
-
-      ${type} ${lineNo} ${val}`
-          )
-          .join("\n")
-    );
+    const res = fuse
+      .search(query, { limit: 10 })
+      //.map(x=>x.matches.map(x=>x.indices))
+      .map((x) => [
+        x.score,
+        x.item.pathname,
+        x.refIndex,
+        x.matches,
+        x.item.type,
+        x.item.lineNo,
+        x.item.contents,
+      ]);
+    setResults({ msg, results: res });
   };
 
   return (
     <div>
       <input onChange={(ev) => search(ev.target.value, meta)} />
-      {results}
+      <div>{results && results.msg}</div>
+      <div>
+        {results &&
+          results.results.map((res) => {
+            const [score, pathname, index, matches, type, lineNo, val] = res;
+            return <div>{pathname}</div>;
+          })}
+      </div>
     </div>
   );
 };
