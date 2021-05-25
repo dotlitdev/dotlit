@@ -7,6 +7,7 @@ const resolve = wikiLinkOptions().pageResolver
 console.info(resolve.toString())
 console.info(linkToUrl.toString())
 
+const root = '/'
 const example = 'testing/Links?foo=bar#baz'
 const resolved = resolve(example)
 const link = {
@@ -14,13 +15,13 @@ const link = {
   data: {permalink: resolved},
   url: example,
 }
-const url = linkToUrl(link)
+const url = linkToUrl(link, root)
 
 return {example, resolved, link, url}
 
 
 ```
-```>txt attached=true updated=1621979678221
+```>txt attached=true updated=1621979704974 !error
 function pageResolver(name) {
       return [name.replace(/[^\w\s/-]+/g, '').trim().replace(/\s+/g, '_').toLowerCase()];
     }
@@ -36,13 +37,15 @@ function linkToUrl(link, root) {
     return link.url;
   }
 }
-{ example: 'testing/Links?foo=bar#baz',
-  resolved: [ 'testing/linksfoobarbaz' ],
-  link: 
-   { wikiLink: true,
-     data: { permalink: [Object] },
-     url: 'testing/Links?foo=bar#baz' },
-  url: 'testing/Links?foo=bar#baz' }
+function toString() {
+    [native code]
+}
+linkToUrl@https://dotlit.org/web.bundle.js:135305:58
+untitled.js:19:22
+untitled.js:26:63
+module code@untitled.js:26:139
+evaluate@[native code]
+moduleEvaluation@[native code]
 ```
 
 
