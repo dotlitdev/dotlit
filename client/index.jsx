@@ -172,7 +172,7 @@ export const init = async () => {
     
     let settings
     try {
-        const settingsPath = '/meta/settings.lit'
+        const settingsPath = '/.litconfig'
         const settingsFile = await vfile({ path: settingsPath, contents: await lit.fs.readFile(settingsPath, {encoding: 'utf8'}) })
         settings = await renderer.processor({fs,litroot}).process(settingsFile)
     } catch(err) { console.log('Failed to load settings', err) }
