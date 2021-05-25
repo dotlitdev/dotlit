@@ -116,7 +116,7 @@ export const viewer = ({ node, React }) => {
             const [score, pathname, index, matches, type, lineNo, val] = res;
             return <div>
               <div>{pathname}</div>
-              <span>{(1-score)*100}</span> <span>{matches.map(({indicies,value})=>highlight(value,indicies))}</span>
+              <span>{(1-score)*100}</span> <span>{matches.map(({indices,value})=>highlight(value,indices))}</span>
             </div>;
           })}
       </div>
