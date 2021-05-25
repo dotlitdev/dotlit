@@ -1,0 +1,250 @@
+<html data-reactroot=""><head><title>.lit Settings</title><meta name="litsrc" value="config.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"><div class="lit-message"><span class="message">Plugin Error (unknown): No module.exports when loaded as commonjs</span><span class="name">64:1-66:4</span></div><div class="lit-message"><span class="message">Plugin Error (transformer): No module.exports when loaded as commonjs</span><span class="name">72:1-74:4</span></div><div class="lit-message"><span class="message">Plugin Error (viewer): Cannot find module &#x27;https://cdn.skypack.dev/react-json-view&#x27;
+Require stack:
+- </span><span class="name">210:1-225:4</span></div></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="13:21-444"><cell startpos="1:1-0" endpos="3:147-165"><div class="cell-content"><h1 id="lit-settings"><code>.lit</code> Settings</h1><p>This file is special in that it is parsed and any <code>!plugins</code> it contains are pre-populated for all other <code>.lit</code> documents in this <code>.lit</code> notebook.</p></div></cell><cell startpos="6:1-168" endpos="8:4-286" class="code output"><div class="cell-content"><codecell class="dir-info lang-md local output"><span class="meta"><span class="lang">md</span><span style="color:white;background-color:#03164a" class="directive dir-info">info</span></span><div class="md-block dir-info">
+<p>ℹ️ Move, copy or <em>transclude</em> any document specific <code>!plugin</code> here to have it apply to all documents.</p>
+</div></codecell></div></cell><cell startpos="9:1-287" endpos="11:4-422" class="code output"><div class="cell-content"><codecell class="dir-warn lang-md local output"><span class="meta"><span class="lang">md</span><span style="color:white;background-color:#037928" class="directive dir-warn">warn</span></span><div class="md-block dir-warn">
+<p>⚠️ This <em>special</em> <code>.lit</code> file, will soon be renamed from its current incarnation as <a href="meta/settings.html?file=meta/settings.lit" title="meta/settings" wikilink="true">meta/settings</a> to <code>.litconfig</code>.</p>
+</div></codecell></div></cell><section depth="2" class="" startpos="13:1-424" endpos="13:21-444"><cell startpos="13:1-424" endpos="13:21-444"><div class="cell-content"><h2 id="table-of-contents">Table of Contents</h2><ul>
+<li>
+<p><a href="#settings">Settings<span class="linkIcon">§</span></a></p>
+</li>
+<li>
+<p><a href="#custom-plugins">Custom plugins<span class="linkIcon">§</span></a></p>
+<ul>
+<li><a href="#prettier-js-transformer">Prettier <code>js</code> transformer<span class="linkIcon">§</span></a></li>
+<li><a href="#upload-file">Upload file<span class="linkIcon">§</span></a></li>
+<li><a href="#detachdelete-attached-output">Detach/delete attached output<span class="linkIcon">§</span></a></li>
+<li><a href="#multi-select-menu">Multi select menu<span class="linkIcon">§</span></a></li>
+<li><a href="#json2-viewer"><code>json2</code> viewer<span class="linkIcon">§</span></a></li>
+<li><a href="#plantuml-viewer--repl">Plant<code>uml</code> viewer &amp; repl<span class="linkIcon">§</span></a></li>
+</ul>
+</li>
+</ul></div></cell></section></section>
+<section depth="2" class="" startpos="16:1-447" endpos="51:4-1063"><cell startpos="16:1-447" endpos="18:142-602"><div class="cell-content"><h2 id="settings">Settings</h2><p>Not yet Implemented the below are mocks while we decide on the interface. Just another kind of <code>!plugin</code>? data exports could work the same...</p></div></cell><cell startpos="20:1-604" endpos="24:4-668" class="code"><div class="cell-content"><codecell class="dir-setting lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#765fe5" class="directive dir-setting">setting</span><span class="attribute attr-ns" style="color:black;background-color:#00dc50">ns=lit</span></span><pre><code class="js">export const setting = {
+  base: &#x27;/&#x27;
+}
+</code></pre></codecell></div></cell><cell startpos="28:1-672" endpos="35:4-804" class="code"><div class="cell-content"><codecell class="dir-setting lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#765fe5" class="directive dir-setting">setting</span><span class="attribute attr-ns" style="color:black;background-color:#00dc50">ns=github</span></span><pre><code class="js">export const setting = {
+  username: &#x27;dotlitdev&#x27;,
+  repo: &#x27;dotlit&#x27;,
+  branch: &#x27;main&#x27;,
+  base: &#x27;src/&#x27;,
+}
+</code></pre></codecell></div></cell><cell startpos="41:1-810" endpos="51:4-1063" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const all = lit.file.data.plugins
+return Object.keys(all).map(t=&gt;`${t} (${Object.keys(all[t]).length})`)
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">6d ago</span></span></span><output><pre><code class="txt">[ &#x27;transformer (1)&#x27;,
+  &#x27;viewer (3)&#x27;,
+  &#x27;cellmenu (1)&#x27;,
+  &#x27;sectionmenu (1)&#x27;,
+  &#x27;repl (1)&#x27; ]
+</code></pre></output></codecell></div></cell></section>
+<section depth="2" class="" startpos="60:1-1072" endpos="74:4-1407"><cell startpos="60:1-1072" endpos="62:82-1172"><div class="cell-content"><h2 id="custom-plugins">Custom plugins</h2><p>Included below, and therefore available in all <code>.lit</code> documents in this notebook.</p></div></cell><cell startpos="64:1-1174" endpos="66:4-1238" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=esm</span><span class="source">&lt; ../plugins/viewers/esm.js</span></span><pre><code class="js"></code></pre></codecell></div></cell><section depth="3" class="" startpos="68:1-1240" endpos="74:4-1407"><cell startpos="68:1-1240" endpos="70:43-1313"><div class="cell-content"><h3 id="prettier-js-transformer">Prettier <code>js</code> transformer</h3><p>See <a href="testing/autoformatting_cell_source.html?file=testing/autoformatting_cell_source.lit" title="testing/Autoformatting cell source" wikilink="true">testing/Autoformatting cell source</a></p></div></cell><cell startpos="72:1-1315" endpos="74:4-1407" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=transformer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=js</span><span class="source">&lt; ../plugins/transformers/prettier.js</span></span><pre><code class="js"></code></pre></codecell></div></cell></section></section>
+<section depth="3" class="" startpos="76:1-1409" endpos="125:4-2649"><cell startpos="76:1-1409" endpos="78:93-1518"><div class="cell-content"><h3 id="upload-file">Upload file</h3><p>Ref: <a href="https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications">https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications<span class="linkIcon">↗</span></a></p></div></cell><cell startpos="80:1-1520" endpos="121:4-2625" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=upload</span></span><pre><code class="js">export const viewer = ({ node, React }) =&gt; {
+  const { useState } = React;
+  const [uploads, setUploads] = useState([]);
+
+  const handleFiles = (ev) =&gt; {
+    const files = ev.target.files;
+    for (let i = 0; i &lt; files.length; i++) {
+      const file = files[i];
+      const reader = new FileReader();
+      reader.onload = ((i, file) =&gt; async (e) =&gt; {
+        const filename = prompt(
+          &quot;Enter a file name and path:&quot;,
+          `/testing/uploads/${file.name}`
+        );
+        if (!filename || !filename.trim()) return;
+
+        const data = e.target.result;
+        try {
+          await lit.fs.writeFile(filename, data);
+        } catch (err) {
+          alert(err.message);
+        }
+        setUploads([...uploads, [filename, data]]);
+      })(i, file);
+      // reader.readAsDataURL(file);
+      reader.readAsBinaryString(file);
+    }
+  };
+  return (
+    &lt;div&gt;
+      &lt;input onChange={handleFiles} type=&quot;file&quot; /&gt;
+      &lt;div&gt;
+        {uploads.map((upload) =&gt; (
+          &lt;span&gt;{upload[0]}/&lt;/span&gt;
+        ))}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+};
+
+</code></pre></codecell></div></cell><cell startpos="123:1-2627" endpos="125:4-2649" class="code output"><div class="cell-content"><codecell class="tag-usage lang-upload local output"><span class="meta"><span class="lang">upload</span><span style="color:white;background-color:#6a67da" class="tag">usage</span></span><div><input type="file"/><div></div></div></codecell></div></cell></section>
+<section depth="3" class="" startpos="127:1-2651" endpos="164:4-3725"><cell startpos="127:1-2651" endpos="127:34-2684"><div class="cell-content"><h3 id="detachdelete-attached-output">Detach/delete attached output</h3></div></cell><cell startpos="129:1-2686" endpos="164:4-3725" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><a name="outputs"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=cellmenu</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=outputs</span></span><pre><code class="js">export const cellmenu = (ctx, { React, Menu }) =&gt; {
+  const sel = lit.utils.unist.selectPosition.selectAll;
+  const pos = ctx.selectedCell;
+  const tree = lit.file.data.ast;
+  const [attached] = pos
+    ? sel(&quot;code,mdblock&quot;, pos, tree).filter(
+        (code) =&gt; code?.data?.meta?.attrs?.attached
+      )
+    : [];
+
+  const detach = (ctx) =&gt; (del) =&gt; (ev) =&gt; {
+    if (del) ctx.setSrc(attached.position, &quot;&quot;);
+    else {
+      const { toMarkdown, ungroupSections } = lit.parser.utils;
+      attached.meta = attached.meta.replace(/\s?attached=true/, &quot;&quot;);
+      const root = { type: &quot;root&quot;, children: [attached] };
+
+      const md = toMarkdown(root);
+      ctx.setSrc(attached.position, md);
+    }
+  };
+
+  return (
+    &lt;Menu disabled={!attached} title=&quot;Output&quot;&gt;
+      &lt;span disabled={!ctx.selectedCell} onClick={detach(ctx)()}&gt;
+        Detach Output
+      &lt;/span&gt;
+      &lt;span disabled={!ctx.selectedCell} onClick={detach(ctx)(true)}&gt;
+        Delete Output
+      &lt;/span&gt;
+    &lt;/Menu&gt;
+  );
+};
+
+</code></pre></codecell></div></cell></section>
+<section depth="3" class="" startpos="166:1-3727" endpos="205:4-4593"><cell startpos="166:1-3727" endpos="166:22-3748"><div class="cell-content"><h3 id="multi-select-menu">Multi select menu</h3></div></cell><cell startpos="167:1-3749" endpos="205:4-4593" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><a name="selection"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=selection</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=sectionmenu</span></span><pre><code class="js">export const sectionmenu = (ctx, { React, Menu }) =&gt; {
+  const rc = React.createElement;
+
+  const secFromCell = (pos) =&gt; {
+    const { filter, select, selectPosition } = lit.utils.unist;
+    const secs = selectPosition.selectAll(&quot;section&quot;, ctx.selectedCell, lit.ast);
+    const last = secs.slice(-1)[0];
+    console.log(&quot;Sections&quot;, secs, last);
+    return last.position;
+  };
+
+  const selectAll = rc(
+    &quot;span&quot;,
+    { onClick: () =&gt; ctx.setSelectedCell(lit.ast.position) },
+    &quot;Select All&quot;
+  );
+
+  const selectSec = rc(
+    &quot;span&quot;,
+    {
+      onClick: () =&gt; {
+        ctx.setSelectedCell(secFromCell(ctx.selectedCell));
+      },
+    },
+    &quot;Select Section&quot;
+  );
+
+  return rc(
+    Menu,
+    {
+      title: &quot;Selection&quot;,
+      disabled: false,
+    },
+    [selectAll, selectSec]
+  );
+};
+
+</code></pre></codecell></div></cell></section>
+<section depth="3" class="" startpos="207:1-4595" endpos="249:4-5817"><cell startpos="207:1-4595" endpos="208:18-4631"><div class="cell-content"><h3 id="json2-viewer"><code>json2</code> viewer</h3><p><em>Implementation:</em></p></div></cell><cell startpos="210:1-4633" endpos="225:4-5195" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=json2</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span></span><pre><code class="js">// see https://github.com/mac-s-g/react-json-view
+import reactJsonView from &#x27;https://cdn.skypack.dev/react-json-view&#x27;
+
+export const viewer = ({node, React}) =&gt; {
+  const rc = React.createElement
+  let obj
+  try { obj = JSON.parse(node.data.value)
+  } catch(err) {}
+  return rc( &#x27;div&#x27;, {className: &#x27;json-viewer&#x27;, onClick:ev=&gt;{ev.preventDefault(); ev.stopPropagation(); return false;}}, rc(reactJsonView, {
+    src: obj,
+    collapseStringsAfterLength: 20,
+    collapsed: node.properties.meta.collapse || 1,
+  }))
+}
+</code></pre></codecell></div></cell><cell startpos="227:1-5197" endpos="227:17-5213"><div class="cell-content"><p><em>Example usage:</em></p></div></cell><cell startpos="229:1-5215" endpos="231:4-5285" class="code"><div class="cell-content"><codecell class="dir-inline lang-json2 local"><span class="meta"><span class="lang">json2</span><span style="color:black;background-color:#b96da2" class="directive dir-inline">inline</span><span class="source">&lt; ../manifest.json</span></span><pre><code class="json2"></code></pre></codecell></div></cell><cell startpos="233:1-5287" endpos="246:4-5775" class="code"><div class="cell-content"><codecell class="dir-xplugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#913335" class="directive dir-xplugin">xplugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=json3</span></span><pre><code class="js">import reactJsonTree from &#x27;https://cdn.skypack.dev/react-json-tree&#x27;
+
+export const viewer = ({node, React}) =&gt; {
+  const rc = React.createElement
+  console.log(&#x27;reactJsonTree&#x27;, reactJsonTree)
+  let obj
+  try { obj = JSON.parse(node.data.value)
+  } catch(err) {}
+  return rc( &#x27;div&#x27;, {className: &#x27;json-viewer&#x27;,xonClick:ev=&gt;{ev.preventDefault(); ev.stopPropagation(); return false;}}, rc(reactJsonTree, {
+    data: { &quot;test&quot; : &quot;foo&quot; },
+  }))
+}
+</code></pre></codecell></div></cell><cell startpos="248:1-5777" endpos="249:4-5817" class="code output"><div class="cell-content"><codecell class="dir-inline lang-json3 local output"><span class="meta"><span class="lang">json3</span><span style="color:black;background-color:#b96da2" class="directive dir-inline">inline</span></span><output><pre><code class="json3"></code></pre></output></codecell></div></cell></section>
+<section depth="3" class="" startpos="251:1-5819" endpos="346:121-8455"><cell startpos="251:1-5819" endpos="254:18-6075"><div class="cell-content"><h3 id="plantuml-viewer--repl">Plant<code>uml</code> viewer &amp; repl</h3><p>Uses <a href="https://plantuml.com">plantuml.com<span class="linkIcon">↗</span></a> to create <code>svg</code> images from <code>uml</code> source. Not included as a default viewer due to the external dependency, but it&#x27;s great! See <a href="renderer/viewers/plantuml.html?file=renderer/viewers/plantuml.lit" title="renderer/viewers/plantuml" wikilink="true">renderer/viewers/plantuml</a> for more.</p><p><em>Implementation:</em></p></div></cell><cell startpos="256:1-6077" endpos="310:4-7454" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse tag-viewer lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=uml</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=repl</span><span style="color:black;background-color:#cf5332" class="tag">viewer</span></span><pre><code class="js">async function encodePlantUML(src) {
+  console.log(&quot;encoding&quot;, src);
+  const module = await import(&quot;https://cdn.skypack.dev/plantuml-encoder&quot;);
+  const encoded = module.encode(src); //.replace(/\n/g, &#x27;\\n&#x27;))
+  console.log(encoded);
+  return encoded;
+}
+
+const getEndpoint = (format, encoded) =&gt;
+  `https://plantuml.com/plantuml/${format}/` + encoded;
+
+export const repl = async (src, meta, node) =&gt; {
+  const format = (meta &amp;&amp; meta.format) || &quot;svg&quot;;
+  try {
+    const encoded = await encodePlantUML(src);
+    const url = getEndpoint(format, encoded);
+    const resp = await fetch(url);
+    if (meta.writefile) {
+    }
+    return resp.status;
+  } catch (err) {
+    return &quot;Error: &quot; + err.message;
+  }
+};
+
+export const viewer = ({ node, React }) =&gt; {
+  const rc = React.createElement;
+  const { useState, useEffect } = React;
+  const meta = node.properties &amp;&amp; node.properties.meta;
+
+  const format = (meta &amp;&amp; meta.format) || &quot;svg&quot;;
+  const [url, setUrl] = useState(null);
+
+  const src = node.value;
+  useEffect(async () =&gt; {
+    const encoded = await encodePlantUML(node.data.value);
+    const url = getEndpoint(format, encoded);
+    setUrl(url);
+  }, [src]);
+
+  return rc(
+    &quot;div&quot;,
+    {
+      className: &quot;lit-viewer-plantuml2&quot;,
+    },
+    url
+      ? rc(&quot;img&quot;, {
+          src: url,
+        })
+      : &quot;Loading...&quot;
+  );
+};
+
+</code></pre></codecell></div></cell><cell startpos="316:1-7460" endpos="316:17-7476"><div class="cell-content"><p><em>Example usage:</em></p></div></cell><cell startpos="318:1-7478" endpos="326:4-7646" class="code"><div class="cell-content"><codecell class="dir-below tag-viewer lang-uml local"><span class="meta"><span class="lang">uml</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span><span style="color:black;background-color:#cf5332" class="tag">viewer</span></span><pre><code class="uml">@startmindmap
+* root node
+	* some first level node
+		* second level node
+		* another second level node
+	* another first level node
+@endmindmap
+</code></pre><div class="lit-viewer-plantuml2">Loading...</div></codecell></div></cell><cell startpos="327:1-7647" endpos="338:4-8187" class="code"><div class="cell-content"><codecell class="dir-collapse lang-uml local collapsed"><span class="meta"><span class="lang">uml</span><span class="repl">uml</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="output">&gt; svg #source</span></span><pre><code class="uml">@startmindmap
+* root node
+	* some first level node
+		* second level node
+		* another second level node
+	* another first level node
+@endmindmap
+</code></pre></codecell><codecell class="tag-source lang-svg local output"><span class="meta"><span class="lang">svg</span><span style="color:black;background-color:#ca9068" class="tag">source</span><span class="updatedAt">Updated <span class="Time relative">1w ago</span></span></span><div>Error: Cross-origin redirection to http://www.plantuml.com/plantuml/svg/SoWkIImgoStCIybDBE3IKYZApozHoCjFIUNYr58epizDLKZBB2ekKSX9BKlDWKg0P5AJy_DIq4KJy_9BCbABiCaY937CSqW5MWvr0000 denied by Cross-Origin Resource Sharing policy: Origin https://dotlit.org is not allowed by Access-Control-Allow-Origin.
+</div></codecell></div></cell><cell startpos="344:1-8193" endpos="346:121-8455"><div class="cell-content"><p>Urgh, CORS... perhaps <a href="https://medium.com/@albertogasparin/manipulating-cross-origin-images-with-html-canvas-1e3e8780964c">this<span class="linkIcon">↗</span></a> will help? </p><p>So to bypass CORS we need a proxy, see <a href="testing/runkit.html?file=testing/runkit.lit" title="testing/runkit" wikilink="true">testing/runkit</a> for an example nodejs repl, which could achieve this proxying.</p></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (0)</h4><ol></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>

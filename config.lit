@@ -1,0 +1,346 @@
+# `.lit` Settings
+
+This file is special in that it is parsed and any `!plugins` it contains are pre-populated for all other `.lit` documents in this `.lit` notebook.
+
+
+```>md !info
+ℹ️ Move, copy or *transclude* any document specific `!plugin` here to have it apply to all documents.
+```
+```>md !warn
+⚠️ This *special* `.lit` file, will soon be renamed from its current incarnation as [[meta/settings]] to `.litconfig`.
+```
+
+## Table of Contents
+
+
+## Settings 
+
+Not yet Implemented the below are mocks while we decide on the interface. Just another kind of `!plugin`? data exports could work the same...
+
+```js !setting ns=lit
+export const setting = {
+  base: '/'
+}
+```
+
+
+
+```js !setting ns=github
+export const setting = {
+  username: 'dotlitdev',
+  repo: 'dotlit',
+  branch: 'main',
+  base: 'src/',
+}
+```
+
+
+
+
+
+```js
+const all = lit.file.data.plugins
+return Object.keys(all).map(t=>`${t} (${Object.keys(all[t]).length})`)
+```
+```>txt attached=true updated=1621457972267
+[ 'transformer (1)',
+  'viewer (3)',
+  'cellmenu (1)',
+  'sectionmenu (1)',
+  'repl (1)' ]
+```
+
+
+
+
+
+
+
+
+## Custom plugins
+
+Included below, and therefore available in all `.lit` documents in this notebook.
+
+```js !plugin of=esm !collapse < ../plugins/viewers/esm.js 
+
+```
+
+### Prettier `js` transformer
+
+See [[testing/Autoformatting cell source]]
+
+```js !plugin type=transformer of=js !collapse <   ../plugins/transformers/prettier.js 
+
+```
+
+### Upload file
+
+Ref: https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications
+
+```js !plugin type=viewer of=upload !collapse
+export const viewer = ({ node, React }) => {
+  const { useState } = React;
+  const [uploads, setUploads] = useState([]);
+
+  const handleFiles = (ev) => {
+    const files = ev.target.files;
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const reader = new FileReader();
+      reader.onload = ((i, file) => async (e) => {
+        const filename = prompt(
+          "Enter a file name and path:",
+          `/testing/uploads/${file.name}`
+        );
+        if (!filename || !filename.trim()) return;
+
+        const data = e.target.result;
+        try {
+          await lit.fs.writeFile(filename, data);
+        } catch (err) {
+          alert(err.message);
+        }
+        setUploads([...uploads, [filename, data]]);
+      })(i, file);
+      // reader.readAsDataURL(file);
+      reader.readAsBinaryString(file);
+    }
+  };
+  return (
+    <div>
+      <input onChange={handleFiles} type="file" />
+      <div>
+        {uploads.map((upload) => (
+          <span>{upload[0]}/</span>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+```
+
+```>upload #usage
+
+```
+
+### Detach/delete attached output
+
+```js !plugin type=cellmenu id=outputs !collapse
+export const cellmenu = (ctx, { React, Menu }) => {
+  const sel = lit.utils.unist.selectPosition.selectAll;
+  const pos = ctx.selectedCell;
+  const tree = lit.file.data.ast;
+  const [attached] = pos
+    ? sel("code,mdblock", pos, tree).filter(
+        (code) => code?.data?.meta?.attrs?.attached
+      )
+    : [];
+
+  const detach = (ctx) => (del) => (ev) => {
+    if (del) ctx.setSrc(attached.position, "");
+    else {
+      const { toMarkdown, ungroupSections } = lit.parser.utils;
+      attached.meta = attached.meta.replace(/\s?attached=true/, "");
+      const root = { type: "root", children: [attached] };
+
+      const md = toMarkdown(root);
+      ctx.setSrc(attached.position, md);
+    }
+  };
+
+  return (
+    <Menu disabled={!attached} title="Output">
+      <span disabled={!ctx.selectedCell} onClick={detach(ctx)()}>
+        Detach Output
+      </span>
+      <span disabled={!ctx.selectedCell} onClick={detach(ctx)(true)}>
+        Delete Output
+      </span>
+    </Menu>
+  );
+};
+
+```
+
+### Multi select menu
+```js !plugin !collapse id=selection type=sectionmenu
+export const sectionmenu = (ctx, { React, Menu }) => {
+  const rc = React.createElement;
+
+  const secFromCell = (pos) => {
+    const { filter, select, selectPosition } = lit.utils.unist;
+    const secs = selectPosition.selectAll("section", ctx.selectedCell, lit.ast);
+    const last = secs.slice(-1)[0];
+    console.log("Sections", secs, last);
+    return last.position;
+  };
+
+  const selectAll = rc(
+    "span",
+    { onClick: () => ctx.setSelectedCell(lit.ast.position) },
+    "Select All"
+  );
+
+  const selectSec = rc(
+    "span",
+    {
+      onClick: () => {
+        ctx.setSelectedCell(secFromCell(ctx.selectedCell));
+      },
+    },
+    "Select Section"
+  );
+
+  return rc(
+    Menu,
+    {
+      title: "Selection",
+      disabled: false,
+    },
+    [selectAll, selectSec]
+  );
+};
+
+```
+
+### `json2` viewer
+*Implementation:*
+
+```js !plugin of=json2 type=viewer !collapse
+// see https://github.com/mac-s-g/react-json-view
+import reactJsonView from 'https://cdn.skypack.dev/react-json-view'
+
+export const viewer = ({node, React}) => {
+  const rc = React.createElement
+  let obj
+  try { obj = JSON.parse(node.data.value)
+  } catch(err) {}
+  return rc( 'div', {className: 'json-viewer', onClick:ev=>{ev.preventDefault(); ev.stopPropagation(); return false;}}, rc(reactJsonView, {
+    src: obj,
+    collapseStringsAfterLength: 20,
+    collapsed: node.properties.meta.collapse || 1,
+  }))
+}
+```
+
+*Example usage:*
+
+```json2 !inline < ../manifest.json
+{"foo": ["bar", "baz", "qux"]}
+```
+
+```js !xplugin type=viewer of=json3 !collapse
+import reactJsonTree from 'https://cdn.skypack.dev/react-json-tree'
+
+export const viewer = ({node, React}) => {
+  const rc = React.createElement
+  console.log('reactJsonTree', reactJsonTree)
+  let obj
+  try { obj = JSON.parse(node.data.value)
+  } catch(err) {}
+  return rc( 'div', {className: 'json-viewer',xonClick:ev=>{ev.preventDefault(); ev.stopPropagation(); return false;}}, rc(reactJsonTree, {
+    data: { "test" : "foo" },
+  }))
+}
+```
+
+```>json3 !inline < ../manifest.json
+```
+
+### Plant`uml` viewer & repl
+Uses [plantuml.com](https://plantuml.com) to create `svg` images from `uml` source. Not included as a default viewer due to the external dependency, but it's great! See [[renderer/viewers/plantuml]] for more.
+
+*Implementation:*
+
+```js !plugin of=uml !collapse #viewer type=repl
+async function encodePlantUML(src) {
+  console.log("encoding", src);
+  const module = await import("https://cdn.skypack.dev/plantuml-encoder");
+  const encoded = module.encode(src); //.replace(/\n/g, '\\n'))
+  console.log(encoded);
+  return encoded;
+}
+
+const getEndpoint = (format, encoded) =>
+  `https://plantuml.com/plantuml/${format}/` + encoded;
+
+export const repl = async (src, meta, node) => {
+  const format = (meta && meta.format) || "svg";
+  try {
+    const encoded = await encodePlantUML(src);
+    const url = getEndpoint(format, encoded);
+    const resp = await fetch(url);
+    if (meta.writefile) {
+    }
+    return resp.status;
+  } catch (err) {
+    return "Error: " + err.message;
+  }
+};
+
+export const viewer = ({ node, React }) => {
+  const rc = React.createElement;
+  const { useState, useEffect } = React;
+  const meta = node.properties && node.properties.meta;
+
+  const format = (meta && meta.format) || "svg";
+  const [url, setUrl] = useState(null);
+
+  const src = node.value;
+  useEffect(async () => {
+    const encoded = await encodePlantUML(node.data.value);
+    const url = getEndpoint(format, encoded);
+    setUrl(url);
+  }, [src]);
+
+  return rc(
+    "div",
+    {
+      className: "lit-viewer-plantuml2",
+    },
+    url
+      ? rc("img", {
+          src: url,
+        })
+      : "Loading..."
+  );
+};
+
+```
+
+
+
+
+
+*Example usage:*
+
+```uml !below #viewer
+@startmindmap
+* root node
+	* some first level node
+		* second level node
+		* another second level node
+	* another first level node
+@endmindmap
+```
+```uml repl=uml !collapse > svg #source
+@startmindmap
+* root node
+	* some first level node
+		* second level node
+		* another second level node
+	* another first level node
+@endmindmap
+```
+```>svg #source attached=true updated=1621252423361
+Error: Cross-origin redirection to http://www.plantuml.com/plantuml/svg/SoWkIImgoStCIybDBE3IKYZApozHoCjFIUNYr58epizDLKZBB2ekKSX9BKlDWKg0P5AJy_DIq4KJy_9BCbABiCaY937CSqW5MWvr0000 denied by Cross-Origin Resource Sharing policy: Origin https://dotlit.org is not allowed by Access-Control-Allow-Origin.
+```
+
+
+
+
+
+Urgh, CORS... perhaps [this](https://medium.com/@albertogasparin/manipulating-cross-origin-images-with-html-canvas-1e3e8780964c) will help? 
+
+So to bypass CORS we need a proxy, see [[testing/runkit]] for an example nodejs repl, which could achieve this proxying.
