@@ -74,7 +74,7 @@ export const processor = ({files, fs, litroot} = {files: []}) => {
 export const utils = {
   mdblocks,
   sections, ungroupSections,
-  resolveLinks, wikiLinkOptions, decorateLinkNode, linkToUrl
+  resolveLinks, wikiLinkOptions, decorateLinkNode, linkToUrl,
   codeblocks,
   remarkStringify,
   to_string,
