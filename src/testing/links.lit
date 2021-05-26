@@ -31,30 +31,31 @@ Interesting alternative solutions
 Implementation is at [[../parser/parser]]
 
 ```js #better #resolver
-
-const slug = str => str
-      .replace(/[^\w\s/-]+/g, "")
-      .trim()
-      .replace(/\s+/g, "_")
-      .toLowerCase()
+const slug = (str) =>
+  str
+    .replace(/[^\w\s/-]+/g, "")
+    .trim()
+    .replace(/\s+/g, "_")
+    .toLowerCase();
 
 const resolve = (str) => {
-  const [main,title] = str.split('|')
-  const [doc, hash] = main.split('#')
-  const [base, query] = doc.split('?')
+  const [main, title] = str.split("|");
+  const [doc, hash] = main.split("#");
+  const [base, query] = doc.split("?");
 
-  console.log("Input: " + str)
+  console.log("Input: " + str);
 
-  const path = base && slug(base)
-  const section = hash && slug(hash)
+  const path = base && slug(base);
+  const section = hash && slug(hash);
 
-  const href = path + (query ? ('?' + query):'') + (hash ? ('#' + section):'')
+  const href = path + (query ? "?" + query : "") + (hash ? "#" + section : "");
 
-  return {title,path,hash,query,section, href}
-}
-const link = resolve('example/Article About stuff?query=foo#A sub section|Title')
+  return { title, path, hash, query, section, href };
+};
+const link = resolve("explicit.ext|Title");
 
-return link
+return link;
+
 ```
 ```>txt  updated=1621986094350
 Input: example/Article About stuff?query=foo#A sub section|Title
