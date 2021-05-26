@@ -1,12 +1,13 @@
 <html data-reactroot=""><head><title>Persist to GitHub</title><meta name="litsrc" value="persist_to_github.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="9:4-282"><cell startpos="1:1-0" endpos="5:50-212"><div class="cell-content"><h1 id="persist-to-github">Persist to GitHub</h1><p>See <a href="/config.html#github">config#github</a> to configure which respository to connect to, and provide a GitHub access token for authentication.</p><p>Then, thanks to the below, it should just-work™️.</p></div></cell><cell startpos="7:1-214" endpos="9:4-282" class="code"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span><span class="source">&lt; utils/fs-promises-gh-utils.js</span></span><pre><code class="js">import { b64EncodeUnicode, b64DecodeUnicode } from &#x27;./safe-encoders&#x27;
 import { getConsoleForNamespace } from &#x27;./console&#x27;
+import {join} from &#x27;path&#x27;
 
 const console = getConsoleForNamespace(&#x27;fs/gh&#x27;)
 
 const getEndpoint = (opts,file) =&gt; `https://api.github.com/repos/${opts.username}/${opts.repository}/contents/${file}`
 
 export const ghReadFile = opts =&gt; async (...args) =&gt; {
-    const file = (opts.prefix || &#x27;&#x27;) + args[0]
+    const file = join((opts.prefix || &#x27;&#x27;),args[0])
     const params = {
         method: &quot;GET&quot;,
         headers: {
@@ -29,8 +30,7 @@ export const ghReadFile = opts =&gt; async (...args) =&gt; {
 }
 
 export const ghWriteFile = (opts) =&gt; async (...args) =&gt; {
-   
-    const file = (opts.prefix || &#x27;&#x27;) + args[0]
+    const file = join((opts.prefix || &#x27;&#x27;),args[0])
     const content = args[1].toString()
     console.log(&quot;ghWriteFile&quot;, file)
     const endpoint = getEndpoint(opts, file)
