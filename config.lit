@@ -57,8 +57,12 @@ return (async (fn) => {
   const token = prompt(
     `Enter a GitHub access token for ${settings.username}/${settings.repository}`
   );
-  localStorage.setItem(__key, JSON.stringify({ ...settings, token }));
-  return "All set up now.";
+  if (token) {
+    localStorage.setItem(__key, JSON.stringify({ ...settings, token }));
+    return "All set up now.";
+  }
+
+  return "No token provided. Not set up.";
 })();
 
 ```
