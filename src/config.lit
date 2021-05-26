@@ -35,7 +35,32 @@ export const setting = {
 
 ```
 
-```js
+```js #connect #github
+return (async (fn) => {
+  if (typeof localStorage === "undefined") return "No localStorage available.";
+
+  const __key = "ghSettings";
+  const settings = {
+    username: "dotlitdev",
+    repository: "dotlit",
+    branch: "main",
+    prefix: "src",
+  };
+
+  const current = localStorage.getItem(__key);
+
+  if (current) {
+    let data = JSON.parse(current);
+    if (data && data.token) return "All set up already.";
+  }
+
+  const token = prompt(
+    `Enter a GitHub access token for ${settings.username}/${settings.repository}`
+  );
+  localStorage.setItem(__key, JSON.stringify({ ...settings, token }));
+  return "All set up now.";
+})();
+
 ```
 
 
