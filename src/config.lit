@@ -28,18 +28,17 @@ Set up a GitHub repository to save your updates to. *Requires a **GitHub Access 
 
 
 ```js #connect #github !collapse > md
+const settings = {
+    username: "dotlitdev",
+    repository: "dotlit",
+    branch: "main",
+    prefix: "src",
+};
 
 return (async (fn) => {
   if (typeof localStorage === "undefined") return "No localStorage available.";
 
   const __key = "ghSettings";
-  const settings = {
-    username: "dotlitdev",
-    repository: "dotlit",
-    branch: "main",
-    prefix: "src",
-  };
-
   const display = fn => {
       const redacted = Object.assign({token:'••••••••••'}, settings, {})
       return lit.utils.inspect(redacted)
@@ -58,6 +57,7 @@ return (async (fn) => {
   const token = prompt(
     `Enter a GitHub Access Token for:\n Repository: ${settings.username}/${settings.repository}`
   );
+
   if (token) {
     localStorage.setItem(__key, JSON.stringify({ ...settings, token }));
     return "All set up now.\n\n" + display();
