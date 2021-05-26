@@ -48,6 +48,11 @@ return (async (fn) => {
     prefix: "src",
   };
 
+  const display = fn => {
+      const redacted = Object.assign({token:'*****'}, settings, {})
+      return lit.utils.inspect(redacted).split('\n').map(l=>'    '+l)
+  }
+
   const current = localStorage.getItem(__key);
 
   if (current) {
@@ -56,19 +61,19 @@ return (async (fn) => {
   }
 
   const token = prompt(
-    `Enter a GitHub access token for ${settings.username}/${settings.repository}`
+    `Enter a GitHub Access Token for:\n Repositor: ${settings.username}/${settings.repository}`
   );
   if (token) {
     localStorage.setItem(__key, JSON.stringify({ ...settings, token }));
-    return "All set up now.";
+    return "All set up now.\n\n" + display();
   }
 
-  return "No **token** provided. Not set up.";
+  return "No **token** provided. Not set up.\n\n" + display();
 })();
 
 ```
-```>md attached=true updated=1622064996266
-*******
+```>md attached=true updated=1622065085342
+## GitHub Settings
 No **token** provided. Not set up.
 ```
 
