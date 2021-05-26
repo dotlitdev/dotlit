@@ -4,10 +4,10 @@ import {join} from 'path'
 
 const console = getConsoleForNamespace('fs/gh')
 
-const getEndpoint = (opts,file) => `https://api.github.com/repos/${opts.username}/${opts.repository}/contents/${file}`
+const getEndpoint = (opts,file) => `https://api.github.com/repos/${opts.username}/${opts.repository}/${join('contents', file)}`
 
 export const ghReadFile = opts => async (...args) => {
-    const file = opts.prefix ? join(opts.prefix,args[0]) : args[0]
+    const file = join(opts.prefix,args[0])
     const params = {
         method: "GET",
         headers: {
@@ -30,7 +30,7 @@ export const ghReadFile = opts => async (...args) => {
 }
 
 export const ghWriteFile = (opts) => async (...args) => {
-    const file = opts.prefix ? join(opts.prefix,args[0]) : args[0]
+    const file = join(opts.prefix,args[0])
     const content = args[1].toString()
     console.log("ghWriteFile", file)
     const endpoint = getEndpoint(opts, file)
