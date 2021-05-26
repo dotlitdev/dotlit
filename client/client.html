@@ -55,12 +55,14 @@ const lfs = new FS(baseUrl, {
     wipe: query.__lfs_wipe===&quot;true&quot; ? confirm(&quot;Are you sure you want to wipe the local file system: &quot; + baseUrl) : undefined,
     url: baseUrl,
 })
-const fs = extendFs(lfs.promises, litroot, !query.__no_gh &amp;&amp; typeof localStorage !== &quot;undefined&quot; &amp;&amp; localStorage.getItem(&quot;ghToken&quot;) &amp;&amp; {
-    username: &quot;dotlitdev&quot;,
-    repository: &quot;dotlit&quot;, 
-    prefix: &quot;src&quot;,
-    token: localStorage.getItem(&quot;ghToken&quot;),
-})
+
+let ghSettings
+if (typeof localStorage !== &#x27;undefined&#x27;) {
+  try {
+    ghSettings = JSON.parse(localStorage.getItem(&#x27;ghSettings&#x27;))
+  } catch(err) {}
+}
+const fs = extendFs(lfs.promises, litroot, !query.__no_gh &amp;&amp; ghSettings)
 
 export const lit = {
     location: {
