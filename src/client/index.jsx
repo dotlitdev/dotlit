@@ -6,9 +6,6 @@ const qs = require('querystring-es3')
 const FS = require('@isomorphic-git/lightning-fs')
 const git = require('isomorphic-git')
 
-const PrismReactRenderer = require('prism-react-renderer')
-const ReactEditor = require('react-simple-code-editor')
-
 const select = require('unist-util-select')
 const source = require('unist-util-source')
 const filter = require('unist-util-filter')
@@ -81,8 +78,6 @@ export const lit = {
         diff,
         React,
         ReactDOM,
-        PrismReactRenderer,
-        ReactEditor,
         unist: {
             select,
             source,
