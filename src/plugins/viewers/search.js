@@ -121,7 +121,7 @@ export const viewer = ({ node, React }) => {
           results.results.map((res) => {
             const [score, pathname, index, matches, type, lineNo, val] = res;
             const href = pathname.replace(
-              "/.(lit|md)$/",
+              /.(lit|md)$/,
               ".html?file=" + pathname
             );
             return (
