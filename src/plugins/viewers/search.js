@@ -120,10 +120,14 @@ export const viewer = ({ node, React }) => {
         {results &&
           results.results.map((res) => {
             const [score, pathname, index, matches, type, lineNo, val] = res;
+            const href = pathname.replace(
+              "/.(lit|md)$/",
+              ".html?file=" + pathname
+            );
             return (
               <div style={{ marginBottom: "0.6em" }}>
                 <div>
-                  <a href={pathname}>
+                  <a href={href}>
                     <strong>{pathname}</strong>
                   </a>{" "}
                   type: <span>{type}</span> score:{" "}
