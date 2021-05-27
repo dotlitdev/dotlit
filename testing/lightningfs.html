@@ -230,7 +230,7 @@ undefined
 }
 </code></pre></codecell></div></cell><cell startpos="265:1-7403" endpos="267:4-7415" class="code output"><div class="cell-content"><codecell class="lang-fs local output"><span class="meta"><span class="lang">fs</span></span><output><pre><code class="fs">/
 </code></pre></output></codecell></div></cell></section></section>
-<section depth="3" class="" startpos="269:1-7417" endpos="335:4-8854"><cell startpos="269:1-7417" endpos="269:22-7438"><div class="cell-content"><h3 id="finder-local-fs">Finder (local fs)</h3></div></cell><cell startpos="271:1-7440" endpos="308:4-8412" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="output">&gt; json</span></span><pre><code class="js">const path = lit.utils.path;
+<section depth="3" class="" startpos="269:1-7417" endpos="365:4-9495"><cell startpos="269:1-7417" endpos="269:22-7438"><div class="cell-content"><h3 id="finder-local-fs">Finder (local fs)</h3></div></cell><cell startpos="271:1-7440" endpos="308:4-8412" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="output">&gt; json</span></span><pre><code class="js">const path = lit.utils.path;
 const visit = async (root) =&gt; {
   const list = await lit.fs.readdir(root);
   return Promise.all(
@@ -1039,7 +1039,7 @@ return (async (fn) =&gt; {
     ]
   }
 ]
-</code></pre></codecell></div></cell><cell startpos="314:1-8449" endpos="335:4-8854" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="output">&gt; json</span></span><pre><code class="js">const path = lit.utils.path;
+</code></pre></codecell></div></cell><cell startpos="314:1-8449" endpos="365:4-9495" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="output">&gt; json</span></span><pre><code class="js">const path = lit.utils.path;
 const all = []
 const visit = async (root) =&gt; {
   const list = await lit.fs.readdir(root);
@@ -1047,6 +1047,8 @@ const visit = async (root) =&gt; {
     list.map(async (key) =&gt; {
       const pathname = path.join(root, key);
       all.push(pathname)
+      const stat = await lit.fs.stat(pathname);
+      if (stat.type === &#x27;dir&#x27; &amp;&amp; key &amp;&amp; key !== &#x27;.git&#x27; ) await visit(pathname)
     })
   );
 };
@@ -1056,9 +1058,37 @@ return (async (fn) =&gt; {
   return all
 })();
 
-</code></pre></codecell><codecell class="lang-json local output"><span class="meta"><span class="lang">json</span><span class="updatedAt">Updated <span class="Time relative">3.4d ago</span></span></span><output><pre><code class="json">undefined
+</code></pre></codecell><codecell class="lang-json local output"><span class="meta"><span class="lang">json</span><span class="updatedAt">Updated <span class="Time relative">1m ago</span></span></span><output><pre><code class="json">[ &#x27;/testing&#x27;,
+  &#x27;/plugins&#x27;,
+  &#x27;/meta&#x27;,
+  &#x27;/articles&#x27;,
+  &#x27;/renderer&#x27;,
+  &#x27;/filesystem&#x27;,
+  &#x27;/client&#x27;,
+  &#x27;/wiki-links.lit&#x27;,
+  &#x27;/scratch_pad.lit&#x27;,
+  &#x27;/taking_notes.lit&#x27;,
+  &#x27;/dummy&#x27;,
+  &#x27;/utils&#x27;,
+  &#x27;/divergence_from_markdown.lit&#x27;,
+  &#x27;/components&#x27;,
+  &#x27;/parser&#x27;,
+  &#x27;/repl&#x27;,
+  &#x27;/plugin_system.lit&#x27;,
+  &#x27;/repls.lit&#x27;,
+  &#x27;/index.lit&#x27;,
+  &#x27;/persist_to_github.lit&#x27;,
+  &#x27;/404.lit&#x27;,
+  &#x27;/execute_code_cells.lit&#x27;,
+  &#x27;/prismjs_and_a_simple_editor.lit&#x27;,
+  &#x27;/functions.lit&#x27;,
+  &#x27;/throwaway&#x27;,
+  &#x27;/meta.lit&#x27;,
+  &#x27;/index.js&#x27;,
+  &#x27;/cli&#x27;,
+  &#x27;/config.lit&#x27; ]
 </code></pre></output></codecell></div></cell></section>
-<section depth="3" class="" startpos="338:1-8857" endpos="412:4-10541"><cell startpos="338:1-8857" endpos="338:27-8883"><div class="cell-content"><h3 id="finder-from-manifest">Finder (from manifest)</h3></div></cell><cell startpos="341:1-8886" endpos="409:4-10519" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=search</span></span><pre><code class="js">const sortBy = (keys) =&gt; (a, b) =&gt; {
+<section depth="3" class="" startpos="368:1-9498" endpos="442:4-11182"><cell startpos="368:1-9498" endpos="368:27-9524"><div class="cell-content"><h3 id="finder-from-manifest">Finder (from manifest)</h3></div></cell><cell startpos="371:1-9527" endpos="439:4-11160" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=search</span></span><pre><code class="js">const sortBy = (keys) =&gt; (a, b) =&gt; {
   for (const key of keys) {
     if (a[key] !== b[key]) break;
     else return a[key] &gt; b[key] ? 1 : -1;
@@ -1125,8 +1155,8 @@ export const viewer = ({ node, React }) =&gt; {
   );
 };
 
-</code></pre></codecell></div></cell><cell startpos="410:1-10520" endpos="412:4-10541" class="code output"><div class="cell-content"><codecell class="lang-search local output"><span class="meta"><span class="lang">search</span></span><div class="custom-react-view"><input style="width:100%;font-size:1.2em" value="G.*hUb"/>Loading...</div></codecell></div></cell></section>
-<section depth="2" class="" startpos="413:1-10542" endpos="535:4-14452"><cell startpos="413:1-10542" endpos="413:30-10571"><div class="cell-content"><h2 id="sync-localremoteorigin">Sync <code>local|remote|origin</code></h2></div></cell><cell startpos="416:1-10574" endpos="493:4-12749" class="code"><div class="cell-content"><codecell class="dir-collapse tag-sync lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#0361a9" class="tag">sync</span></span><pre><code class="js">// fetch all remote files and store
+</code></pre></codecell></div></cell><cell startpos="440:1-11161" endpos="442:4-11182" class="code output"><div class="cell-content"><codecell class="lang-search local output"><span class="meta"><span class="lang">search</span></span><div class="custom-react-view"><input style="width:100%;font-size:1.2em" value="G.*hUb"/>Loading...</div></codecell></div></cell></section>
+<section depth="2" class="" startpos="443:1-11183" endpos="565:4-15093"><cell startpos="443:1-11183" endpos="443:30-11212"><div class="cell-content"><h2 id="sync-localremoteorigin">Sync <code>local|remote|origin</code></h2></div></cell><cell startpos="446:1-11215" endpos="523:4-13390" class="code"><div class="cell-content"><codecell class="dir-collapse tag-sync lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#0361a9" class="tag">sync</span></span><pre><code class="js">// fetch all remote files and store
 // locally if they don&#x27;t already exist 
 
 
@@ -1200,7 +1230,7 @@ return (async fn =&gt; {
   errors: 
    [ &#x27;../scratch_pad.lit#viewers : Unable to normalize path - traverses above root directory&#x27;,
      &#x27;../serviceworker.js : Unable to normalize path - traverses above root directory&#x27; ] }
-</code></pre></output></codecell></div></cell><cell startpos="494:1-12750" endpos="535:4-14452" class="code output"><div class="cell-content"><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.5w ago</span></span></span><output><pre><code class="txt">Synced 90/139 files in 0.616 seconds. Duds: 30 Errors: 7
+</code></pre></output></codecell></div></cell><cell startpos="524:1-13391" endpos="565:4-15093" class="code output"><div class="cell-content"><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.5w ago</span></span></span><output><pre><code class="txt">Synced 90/139 files in 0.616 seconds. Duds: 30 Errors: 7
 { duds: 
    [ &#x27;remark.lit&#x27;,
      &#x27;viewers.lit&#x27;,
@@ -1241,6 +1271,6 @@ return (async fn =&gt; {
      &#x27;../utils/git-commit-all.js : Unable to normalize path - traverses above root directory&#x27;,
      &#x27;../../../../../testing/log/2021-w21.lit : Unable to normalize path - traverses above root directory&#x27; ] }
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="540:1-14457" endpos="546:28-14622"><cell startpos="540:1-14457" endpos="540:21-14477"><div class="cell-content"><h2 id="emergency-wipe-️">Emergency wipe ⚠️</h2></div></cell><cell startpos="542:1-14479" endpos="544:4-14593" class="code output"><div class="cell-content"><codecell class="dir-warn lang-md local output"><span class="meta"><span class="lang">md</span><span style="color:white;background-color:#037928" class="directive dir-warn">warn</span></span><div class="md-block dir-warn">
+<section depth="2" class="" startpos="570:1-15098" endpos="576:28-15263"><cell startpos="570:1-15098" endpos="570:21-15118"><div class="cell-content"><h2 id="emergency-wipe-️">Emergency wipe ⚠️</h2></div></cell><cell startpos="572:1-15120" endpos="574:4-15234" class="code output"><div class="cell-content"><codecell class="dir-warn lang-md local output"><span class="meta"><span class="lang">md</span><span style="color:white;background-color:#037928" class="directive dir-warn">warn</span></span><div class="md-block dir-warn">
 <p>Clicking on the following link will prompt you to confirm you want to wipe the local file system!</p>
-</div></codecell></div></cell><cell startpos="546:1-14595" endpos="546:28-14622"><div class="cell-content"><p><a href="?__lfs_wipe=true">WIPE ⚠️<span class="linkIcon">§</span></a></p></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (3)</h4><ol><li><a title=".lit Filesystem" href="/filesystem/index.html">.lit Filesystem</a></li><li><a title="Isomorphic Git" href="/testing/isomorphic_git.html">Isomorphic Git</a></li><li><a title="Local and Remote files" href="/testing/local_remote_files.html">Local and Remote files</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
+</div></codecell></div></cell><cell startpos="576:1-15236" endpos="576:28-15263"><div class="cell-content"><p><a href="?__lfs_wipe=true">WIPE ⚠️<span class="linkIcon">§</span></a></p></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (3)</h4><ol><li><a title=".lit Filesystem" href="/filesystem/index.html">.lit Filesystem</a></li><li><a title="Isomorphic Git" href="/testing/isomorphic_git.html">Isomorphic Git</a></li><li><a title="Local and Remote files" href="/testing/local_remote_files.html">Local and Remote files</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>

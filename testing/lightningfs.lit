@@ -320,6 +320,8 @@ const visit = async (root) => {
     list.map(async (key) => {
       const pathname = path.join(root, key);
       all.push(pathname)
+      const stat = await lit.fs.stat(pathname);
+      if (stat.type === 'dir' && key && key !== '.git' ) await visit(pathname)
     })
   );
 };
@@ -330,8 +332,36 @@ return (async (fn) => {
 })();
 
 ```
-```>json attached=true updated=1621861533762
-undefined
+```>json attached=true updated=1622153517814
+[ '/testing',
+  '/plugins',
+  '/meta',
+  '/articles',
+  '/renderer',
+  '/filesystem',
+  '/client',
+  '/wiki-links.lit',
+  '/scratch_pad.lit',
+  '/taking_notes.lit',
+  '/dummy',
+  '/utils',
+  '/divergence_from_markdown.lit',
+  '/components',
+  '/parser',
+  '/repl',
+  '/plugin_system.lit',
+  '/repls.lit',
+  '/index.lit',
+  '/persist_to_github.lit',
+  '/404.lit',
+  '/execute_code_cells.lit',
+  '/prismjs_and_a_simple_editor.lit',
+  '/functions.lit',
+  '/throwaway',
+  '/meta.lit',
+  '/index.js',
+  '/cli',
+  '/config.lit' ]
 ```
 
 
