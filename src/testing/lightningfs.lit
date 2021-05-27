@@ -311,6 +311,44 @@ undefined
 
 
 ```
+```js !collapse > json
+const path = lit.utils.path;
+const visit = async (root) => {
+  const list = await lit.fs.readdir(root);
+  return Promise.all(
+    list.map(async (key) => {
+      const pathname = path.join(root, key);
+      const stat = await lit.fs.stat(pathname);
+      let contents;
+      if (key === ".git" || !key) {
+        return { key, root,pathname, type: stat.type };
+      } else if (stat.type === "dir") {
+        // alert("Traversing " + pathname);
+        contents = await visit(pathname);
+      } else
+        contents =
+          (
+            await lit.fs.readFile(pathname, {
+              encoding: "utf8",
+              localOnly: true,
+            })
+          ).slice(0, 10) + "...";
+      return { pathname, type: stat.type, contents };
+    })
+  );
+};
+
+return (async (fn) => {
+  lit.fs.writeFile(
+    "/testing/full.json",
+    JSON.stringify(await visit("/"), null, 2)
+  );
+})();
+
+```
+```>json attached=true updated=1621861533762
+undefined
+```
 
 
 ### Finder (from manifest)
@@ -432,47 +470,42 @@ return (async fn => {
 })()
 
 ```
-```>txt attached=true updated=1621892347917
-Synced 147/189 files in 1.115 seconds. Duds: 30 Errors: 7
+```>txt attached=true updated=1621892351482
+Synced 0/189 files in 0.407 seconds. Duds: 30 Errors: 2
 { duds: 
-   [ 'meta/.github/workflows/npm-publish.yaml',
-     'unified.lit',
-     'viewers.lit',
-     'remark.lit',
-     'markdown.lit',
-     'viewers/meta.js',
-     'wikilinks.lit',
-     'utils/fs.lit',
-     'filename',
+   [ 'transfomers.lit',
+     'custom-module.mjs',
+     'log/checkforinput.js',
+     'agora.lit',
      'components.lit',
+     'rk.jsx',
+     'viewers.lit',
      'litconfig.lit',
+     'testing/getserviceworker--sw',
+     'fsviewer.jsx',
+     'worker2.js',
+     'wikilinks.lit',
+     '.github/workflows/generate.yaml',
      'renderer/file.txt',
      'utils/urifragments.lit',
-     'gitworker.js',
-     'transfomers.lit',
-     'rk.jsx',
-     'log/checkforinput.js',
      '/testing/log/2021-w22.lit',
-     'custom-module.mjs',
-     'meta/files_and_links.lit',
-     '.github/workflows/generate.yaml',
-     'worker2.js',
      'worker.js',
-     'experimental_social_network.lit',
+     'meta/.github/workflows/npm-publish.yaml',
+     'meta/files_and_links.lit',
+     'viewers/meta.js',
+     'utils/fs.lit',
      'distributed_knowledge_graph.lit',
-     'agora.lit',
-     'testing/getserviceworker--sw',
+     'markdown.lit',
      'runkit-repl-endpoint.js',
+     'experimental_social_network.lit',
      'log/today.js',
-     'fsviewer.jsx' ],
+     'filename',
+     'remark.lit',
+     'gitworker.js',
+     'unified.lit' ],
   errors: 
-   [ '../plugins/transformers/prettier.js : Unable to normalize path - traverses above root directory',
-     '../plugins/viewers/esm.js : Unable to normalize path - traverses above root directory',
-     '../scratch_pad.lit#viewers : Unable to normalize path - traverses above root directory',
-     '../components/components.lit : Unable to normalize path - traverses above root directory',
-     '../utils/git-commit-all.js : Unable to normalize path - traverses above root directory',
-     '../serviceworker.js : Unable to normalize path - traverses above root directory',
-     '../plugins/repls/module.js : Unable to normalize path - traverses above root directory' ] }
+   [ '../scratch_pad.lit#viewers : Unable to normalize path - traverses above root directory',
+     '../serviceworker.js : Unable to normalize path - traverses above root directory' ] }
 ```
 ```>txt  updated=1621257192205
 Synced 90/139 files in 0.616 seconds. Duds: 30 Errors: 7
