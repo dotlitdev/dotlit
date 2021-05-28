@@ -1,8 +1,8 @@
 if (typeof lit !== "undefined" && !window.__runkitCORSProxyEnpoint) {
   (async (fn) => {
-    const rkEmbed = document.createElement('script')
-    const rkEmbed.onload = fn => alert('loaded')
-    const rkEmbed.settAttribute('src', 'https://embed.runkit.com')
+    const rkEmbed = document.createElement("script");
+    rkEmbed.onload = (fn) => alert("loaded");
+    rkEmbed.setAttribute("src", "https://embed.runkit.com");
     const el = document.createElement("div");
     document.body.appendChild(el);
     el.setAttribute("style", "height:0;");
