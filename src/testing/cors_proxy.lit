@@ -146,8 +146,7 @@ const proxyFetch = async (url, opts = {}) => {
   const endpoint = await lit.file.data.plugins.proxy.corsProxy();
   const [proxyUrl, target] = getAndReplaceDomain(url, endpoint);
   opts.headers = opts.headers || {};
-  opts.headers["Target-Domain"] = `${protocol}//${target}`;
-  alert(proxyUrl + target + protocol);
+  opts.headers["Target-Domain"] = target;
   return fetch(proxyUrl, opts);
 };
 
