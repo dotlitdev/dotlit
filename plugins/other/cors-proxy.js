@@ -1,22 +1,3 @@
-# CORS Proxy
-
-Creating a CORS proxy server using [[testing/RunKit]]
-
-```>js runkit-cors-proxy-endpoint.js !collapse #source
-const util = require("util");
-
-exports.endpoint = function (req, res) {
-  res.writeHead(200, {
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "*",
-  });
-
-  res.end("WIP");
-};
-
-```
-```js ../plugins/other/cors-proxy.js !plugin type=proxy !collapse
 if (typeof lit !== "undefined" && !window.__runkitCORSProxyEnpoint) {
   (async (fn) => {
     const el = document.createElement("div");
@@ -44,5 +25,3 @@ export const proxy = async (src, meta, node) => {
     return window.__runkitCORSProxyEnpoint;
   }
 };
-
-```
