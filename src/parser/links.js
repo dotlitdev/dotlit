@@ -1,16 +1,52 @@
-import path from "path";
+import {join, resolve, relative, dirname} from "path";
 import visit from "unist-util-visit";
 import { getConsoleForNamespace } from "../utils/console";
 
-const console = getConsoleForNamespace("links", { disabled: true });
+const console = getConsoleForNamespace("links");
 
 export const resolveLinks =
   (options = { litroot: "", filepath: "" }) =>
   (...args) =>
-  (tree) => {
-    console.log("[Links] Init", options);
+  (tree, file) => {
+    console.log("[Links] Init", file.path, options);
     return visit(tree, isLink, transform(options));
   };
+
+export const slug = (str) =>
+  str
+    .replace(/[^\w\s/-]+/g, "")
+    .trim()
+    .replace(/\s+/g, "_")
+    .toLowerCase();
+
+export const resolver = (str) => {
+  // console.log("Input: ", str);
+  if (!str) {
+    throw Error("No string to resolve")
+    process.exit(1)
+  }
+  let main, title, doc, hash, base, query, file, ext, _
+  try {
+    [main, title] = str.split("|");
+    [doc, hash] = main.split("#");
+    [base, query] = doc.split("?");
+    [_, file, ext = ''] = base.match(/([^\.]+)(\.[a-zA-Z0-9]+)?$/) || []
+  } catch(err) {
+    console.log({str, main, title, doc, hash, base, query, file, ext, _})
+    console.log('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<', err)
+    process.exit(1)
+  }
+  
+ 
+  const root = file && file[0] && ['/', '.'].indexOf(file[0]) >= 0 ? '' : '/'
+  const path = file && (root + slug(file))
+  const section = hash && slug(hash);
+
+  const href = path + (query ? "?" + query : "") + (hash ? "#" + section : "");
+  // console.log('Href: ', href)
+  return { title, path, ext, hash, query, section, href };
+};
+
 
 const isLink = (node) => ["link", "wikiLink"].indexOf(node.type) >= 0;
 
@@ -18,15 +54,18 @@ const transform = (options) => (node, index, parent) => {
   return decorateLinkNode(node, options.litroot, options.filepath);
 };
 
-export const wikiLinkOptions = (files) => ({
-  pageResolver: (name) => [
-    name
-      .replace(/[^\w\s/-]+/g, "")
-      .trim()
-      .replace(/\s+/g, "_")
-      .toLowerCase(),
-  ],
-});
+export const wikiLinkOptions = (files = []) => {
+  return {
+    pageResolver: (name) => {
+      const {path, ext} = resolver(name)
+      const exts = ['.lit', '.md', ext]
+      const opts = exts.map( ext => {
+        return `${path}${ext}`
+      })
+      return opts.filter(file => files.indexOf(file) >= 0)[0] || opts
+    }
+  }
+};
 // ({
 //     permalinks: files,
 //     pageResolver: nameToPermalinks,
@@ -35,8 +74,8 @@ export const wikiLinkOptions = (files) => ({
 
 const linkToUrl = (link, root) => {
   if (link.type === "wikiLink") {
-    const [base, frag] = link.data.permalink.split("#");
-    return `${root}${base}.lit${frag ? "#" + frag : ""}`;
+    // console.log(link)
+    return link.data.permalink
   } else {
     return link.url;
   }
@@ -47,7 +86,7 @@ export const decorateLinkNode = (link, root = "", filepath = "") => {
   const wikilink = link.type === "wikiLink";
   const url = linkToUrl(link, root);
 
-  // console.log(`[Links] resolving (${link.type}) [${url}] '${root}', "${filepath}"`)
+  
   const isExternal = /^(https?\:)?\/\//.test(url);
   const isAbsolute = !isExternal && /^\//.test(url);
   const isFragment = /^(\?|#)/.test(url);
@@ -58,9 +97,11 @@ export const decorateLinkNode = (link, root = "", filepath = "") => {
   let [base, frag] = url.split(/(\?|#)/);
 
   if (isRelative) {
-    const abs = path.resolve(root, path.dirname(filepath), url);
-    canonical = path.relative(path.resolve(root), abs);
-    href = url.replace(/\.(md|lit)/i, ".html");
+    const abs = resolve(root, dirname(filepath), url);
+    canonical = join('/', relative(resolve(root), abs))
+    // canonical = resolve(root, filepath, url)
+    href = canonical.replace(/\.(md|lit)/i, ".html");
+    // console.log({ root, filepath, url, canonical, href})
   } else if (isAbsolute) {
     href = url.replace(/\.(md|lit)/i, ".html");
   }
@@ -78,8 +119,8 @@ export const decorateLinkNode = (link, root = "", filepath = "") => {
   };
 
   if (wikilink) {
-    [base, frag] = link.url.split("#");
-    link.url = base + "?file=" + canonical + (frag ? `#${frag}` : "");
+    // [base, frag] = link.url.split("#");
+    // link.url = base + "?file=" + canonical + (frag ? `#${frag}` : "");
     link.children = [
       { position: link.position, type: "text", value: link.value },
     ];
@@ -100,19 +141,16 @@ export const decorateLinkNode = (link, root = "", filepath = "") => {
   };
 
   delete link.value;
+  // console.log(`[Links] resolving (${link.type}) [${url}] '${root}', "${filepath}"`, link.url)
 
   return link;
 };
 
-export const nameToPermalinks = (name) => {
-  const full = name.replace(/ /g, "_").toLowerCase();
-  const tail = path.basename(full);
 
-  return [".lit", "md"].flatMap((ext) => [full + ext, tail + ext]);
-  return [full + ".lit", full + ".md", tail + ".lit", tail + ".md"];
-};
-export const nodeMappings = (files) => {
-  const mappings = {};
-  files.forEach((filepath) => {});
-  return mappings;
-};
+export default {
+  resolveLinks,
+  wikiLinkOptions,
+  resolver,
+  linkToUrl,
+  decorateLinkNode,
+}

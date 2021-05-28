@@ -5,6 +5,7 @@ const path = require('path')
 const qs = require('querystring-es3')
 const FS = require('@isomorphic-git/lightning-fs')
 const git = require('isomorphic-git')
+const compactPrefixTree = require('compact-prefix-tree')
 
 const select = require('unist-util-select')
 const source = require('unist-util-source')
@@ -38,7 +39,7 @@ const hasLocation = typeof location !== "undefined"
 
 const query = hasLocation ? qs.parse(location.search.slice(1)) : {}
 const litsrcMeta = fns.getMeta('src', '')
-const litsrc = (litsrcMeta === '404.lit')
+const litsrc = (litsrcMeta === '/404.lit')
                 ? (query.file || location.pathname.replace(/\.html$/, '.lit').slice(1))
                 : litsrcMeta
 const litroot = fns.getMeta('root', '/')
@@ -75,6 +76,7 @@ export const lit = {
     utils: {
         transform,
         inspect,
+        compactPrefixTree,
         diff,
         React,
         ReactDOM,
@@ -130,7 +132,7 @@ export const init = async () => {
 
     const App = require('../components/App').default
 
-    const filepath = `/${lit.location.src}`
+    const filepath = lit.location.src
     console.log(`Checking local (${baseUrl}) filesystem for: ${filepath}`)
     let contents, times = {local: null, remote: null}
     try {
@@ -153,7 +155,7 @@ export const init = async () => {
         if (query.template) {
             console.log(`Loading template (${query.template}) for 404 file "${lit.location.src}".`)
             try {
-                const template = await lit.fs.readStat(`/${query.template}`, {encoding: 'utf8'})
+                const template = await lit.fs.readStat(query.template, {encoding: 'utf8'})
                 contents = lit.utils.fns.template(template.local.value || template.remote.value, window)
             } catch (err) {
                 console.error(`Failed to load template: ${query.template}`, err)

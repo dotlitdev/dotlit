@@ -4,7 +4,7 @@ import {getConsoleForNamespace} from '../utils/console'
 
 const console = getConsoleForNamespace('mdblocks')
 
-export const mdblocks = function ({baseProcessor}) {
+export const mdblocks = function ({baseProcessor, files, litroot}) {
     return async (tree, file) => {
         file.data = file.data || {}
         file.data.__mdcodeblocks = 0
@@ -16,7 +16,7 @@ export const mdblocks = function ({baseProcessor}) {
             // instead of await (why?)
             const p = new Promise(async resolve => {
                 // console.log(idx + "Node: ", node)
-                const p = baseProcessor()
+                const p = baseProcessor({files, litroot})
                 const parsed = await p.parse( node.value )
                 const ast = await p.run(parsed)
                 //  console.log(idx + " AST: ", ast)

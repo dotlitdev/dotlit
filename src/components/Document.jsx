@@ -16,7 +16,7 @@ const Document = props => {
     return <html>
         <head>
             <title>{title}</title>
-            <meta name="litsrc" value={props.file.path}/>
+            <meta name="litsrc" value={props.file.data.canonical}/>
             <meta name="litroot" value={props.root}/>
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
             <link rel="stylesheet" href={theme}/>
