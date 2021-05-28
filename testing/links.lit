@@ -107,13 +107,12 @@ const { wikiLinkOptions, linkToUrl, decorateLinkNode } = lit.parser.utils.links
 
 const resolve = wikiLinkOptions().pageResolver;
 
-console.info(resolve.toString())
-console.info(linkToUrl.toString())
+// console.info(resolve.toString())
+// console.info(linkToUrl.toString())
 
-return true
 const root = "/";
 const type = "wikiLink";
-const example = "My cool 😎 link";
+const example = "explicit.ext|Title";
 const resolved = resolve(example);
 const link = {
   type,
@@ -130,15 +129,47 @@ const decorated = decorateLinkNode(link);
 return JSON.stringify(decorated, null, 2);
 
 ```
-```>txt attached=true updated=1622227141621 !error
-function toString() {
-    [native code]
+```>txt attached=true updated=1622227561062
+{ root: '/',
+  example: 'My cool 😎 link',
+  resolved: [ '/my_cool_link.lit', '/my_cool_link.md', '/my_cool_link' ],
+  link: 
+   { type: 'wikiLink',
+     data: { permalink: '/my_cool_link.lit' },
+     url: 'My cool 😎 link',
+     value: 'My cool 😎 link' },
+  url: '/my_cool_link.lit' }
+{
+  "type": "link",
+  "data": {
+    "isExternal": false,
+    "isAbsolute": true,
+    "isFragment": false,
+    "isRelative": false,
+    "canonical": "/my_cool_link.lit",
+    "wikilink": true,
+    "hProperties": {
+      "wikilink": true,
+      "data": {
+        "base": "/my_cool_link.lit",
+        "isExternal": false,
+        "isAbsolute": true,
+        "isFragment": false,
+        "isRelative": false,
+        "canonical": "/my_cool_link.lit",
+        "wikilink": true
+      }
+    }
+  },
+  "url": "/my_cool_link.html",
+  "title": "My cool 😎 link",
+  "children": [
+    {
+      "type": "text",
+      "value": "My cool 😎 link"
+    }
+  ]
 }
-untitled.js:7:32
-untitled.js:33:63
-module code@untitled.js:33:139
-evaluate@[native code]
-moduleEvaluation@[native code]
 ```
 
 ```>txt  updated=1621980516788
