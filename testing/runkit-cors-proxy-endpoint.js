@@ -1,8 +1,3 @@
-# CORS Proxy
-
-Creating a CORS proxy server using [[testing/RunKit]]
-
-```>js runkit-cors-proxy-endpoint.js !collapse #source
 const util = require("util");
 
 exports.endpoint = function (req, res) {
@@ -14,5 +9,3 @@ exports.endpoint = function (req, res) {
 
   res.end("WIP");
 };
-
-```
