@@ -224,7 +224,7 @@ export default async (fn) => {
 This assumes you have the *experimental* service worker ([[testing/ServiceWorker]]) (version 0.2.10) enabled to vend files in the local filesystem via Web fetch API.
 
 ```>js custom-module.mjs
-export default (fn) => "Great Success!";
+export default (fn) => "Great Success!?";
 
 ```
 
@@ -275,20 +275,30 @@ text/javascript
 ```js
 return fetch('/testing/custom-module.mjs--sw').then(res => res.text())
 ```
-```>txt attached=true updated=1622206266343
+```>txt attached=true updated=1622206292081
 {
   "version": "0.2.12",
   "dotlit": "object",
   "root": "",
   "enableCache": false,
-  "url": "https://dotlit.org/testing/custom-module.mjs--sw",
-  "err": "ENOENT: /testing/custom-module.mjs"
+  "filepath": "/testing/custom-module.mjs",
+  "stat": {
+    "type": "file",
+    "mode": 438,
+    "size": 42,
+    "ino": 148,
+    "mtimeMs": 1622206284542,
+    "ctimeMs": 1622206284542,
+    "uid": 1,
+    "gid": 1,
+    "dev": 1
+  }
 }
 ```
 ```js
 return fetch('/testing/custom-module.mjs').then(res => res.headers.get('server'))
 ```
-```>txt attached=true updated=1622206176346
+```>txt  updated=1622206176346
 GitHub.com
 ```
 

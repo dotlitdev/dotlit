@@ -1,4 +1,4 @@
-<html data-reactroot=""><head><title>Parser</title><meta name="litsrc" value="parser/parser.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="5:21-185"><cell startpos="1:1-0" endpos="3:154-163"><div class="cell-content"><h1 id="parser">Parser</h1><p>Built atop the <a href="unified.html?file=unified.lit" title="unified" wikilink="true">unified</a> ecosystem, specifically <a href="remark.html?file=remark.lit" title="remark" wikilink="true">remark</a>, which takes <code>.lit</code> <a href="markdown.html?file=markdown.lit" title="Markdown" wikilink="true">Markdown</a> source and outputs <code>mdast</code> (Markdown Abstract Syntax Tree)</p></div></cell><section depth="2" class="" startpos="5:1-165" endpos="5:21-185"><cell startpos="5:1-165" endpos="5:21-185"><div class="cell-content"><h2 id="table-of-contents">Table of Contents</h2><ul>
+<html data-reactroot=""><head><title>Parser</title><meta name="litsrc" value="/parser/parser.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="5:21-185"><cell startpos="1:1-0" endpos="3:154-163"><div class="cell-content"><h1 id="parser">Parser</h1><p>Built atop the <a href="/unified.html" title="unified" wikilink="true">unified</a> ecosystem, specifically <a href="/remark.html" title="remark" wikilink="true">remark</a>, which takes <code>.lit</code> <a href="/markdown.html" title="Markdown" wikilink="true">Markdown</a> source and outputs <code>mdast</code> (Markdown Abstract Syntax Tree)</p></div></cell><section depth="2" class="" startpos="5:1-165" endpos="5:21-185"><cell startpos="5:1-165" endpos="5:21-185"><div class="cell-content"><h2 id="table-of-contents">Table of Contents</h2><ul>
 <li>
 <p><a href="#implementation-1">Implementation<span class="linkIcon">§</span></a></p>
 </li>
@@ -34,7 +34,7 @@ import {sections, groupIntoSections, ungroupSections} from &#x27;./sections&#x27
 import codeblocks from &#x27;./codeblocks&#x27;
 import frontmatter from &#x27;./frontmatter&#x27;
 import {mdblocks} from &#x27;./mdblocks&#x27;
-import linkUtils, {resolveLinks, wikiLinkOptions, decorateLinkNode, linkToUrl} from &#x27;./links&#x27;
+import links, { decorateLinkNode } from &#x27;./links&#x27;
 import { getConsoleForNamespace} from &#x27;../utils/console&#x27;
 //import { transform as jsTransform } from &#x27;./transformers/js&#x27;
 
@@ -45,7 +45,11 @@ const baseProcessor = ({litroot, files} = {}) =&gt; {
     return unified()
 
     .use((...args) =&gt; (tree, file) =&gt; {
-        console.log(&quot;Parsing file&quot;, file.path)
+        console.log(&quot;Parsing file: &quot;, file.path)
+        file.data = file.data || {}
+        if (file &amp;&amp; file.path) {
+            file.data.canonical = decorateLinkNode({url: file.path}).data.canonical
+        }
     })
 
     // remark
@@ -69,7 +73,7 @@ const baseProcessor = ({litroot, files} = {}) =&gt; {
         }
     },{})
 
-    .use(wikiLinkPlugin, wikiLinkOptions(files))
+    .use(wikiLinkPlugin, links.wikiLinkOptions(files))
     .use(slug)
     .use(toc, {})
     .use(headingIds)
@@ -83,8 +87,8 @@ export const processor = ({files, fs, litroot} = {files: []}) =&gt; {
 
     .use(codeblocks)
     // Async reparse `md` codeblocks as children
-    .use(mdblocks, {baseProcessor})
-    .use(resolveLinks({litroot}))
+    .use(mdblocks, {baseProcessor, litroot, files})
+    .use(links.resolveLinks({litroot}))
 
     .use(sections, {})
 
@@ -93,7 +97,7 @@ export const processor = ({files, fs, litroot} = {files: []}) =&gt; {
 export const utils = {
   mdblocks,
   sections, ungroupSections,
-  linkUtils, resolveLinks, wikiLinkOptions, decorateLinkNode, linkToUrl,
+  links,
   codeblocks,
   remarkStringify,
   to_string,
@@ -571,7 +575,7 @@ import {getConsoleForNamespace} from &#x27;../utils/console&#x27;
 
 const console = getConsoleForNamespace(&#x27;mdblocks&#x27;)
 
-export const mdblocks = function ({baseProcessor}) {
+export const mdblocks = function ({baseProcessor, files, litroot}) {
     return async (tree, file) =&gt; {
         file.data = file.data || {}
         file.data.__mdcodeblocks = 0
@@ -583,7 +587,7 @@ export const mdblocks = function ({baseProcessor}) {
             // instead of await (why?)
             const p = new Promise(async resolve =&gt; {
                 // console.log(idx + &quot;Node: &quot;, node)
-                const p = baseProcessor()
+                const p = baseProcessor({files, litroot})
                 const parsed = await p.parse( node.value )
                 const ast = await p.run(parsed)
                 //  console.log(idx + &quot; AST: &quot;, ast)
@@ -719,11 +723,11 @@ export const nodeMappings = (files) =&gt; {
 
 </code></pre></output></codecell></div></cell></section>
 <section depth="2" class="" startpos="186:1-4070" endpos="196:4-4424"><cell startpos="186:1-4070" endpos="188:162-4249"><div class="cell-content"><h2 id="ast-to-string">AST to String</h2><ul class="contains-task-list">
-<li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->#TODO refactor save (update src) to operate on AST directly and stringify as below, instead of the cureent <a href="/utils/unist-patch-source.html?file=/utils/unist-patch-source.lit" title="../utils/unist-patch-source" wikilink="true">../utils/unist-patch-source</a> implementaction.</li>
+<li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->#TODO refactor save (update src) to operate on AST directly and stringify as below, instead of the cureent <a href="/utils/unist-patch-source.html" title="../utils/unist-patch-source" wikilink="true">../utils/unist-patch-source</a> implementaction.</li>
 </ul></div></cell><cell startpos="189:1-4250" endpos="196:4-4424" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const {toMarkdown, ungroupSections}
       = lit.parser.utils
 const unGroup = ungroupSections()()
 const tree = unGroup(lit.ast)
 const md = toMarkdown(tree)
 return md
-</code></pre></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
+</code></pre></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (2)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li><li><a title="Links" href="/testing/links.html">Links</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>

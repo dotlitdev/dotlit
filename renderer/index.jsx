@@ -20,17 +20,19 @@ import Cell from '../components/Cell'
 import { Section } from '../components/Section'
 
 import { getConsoleForNamespace } from '../utils/console'
+import { decorateLinkNode } from '../parser/links'
 
 
 const console = getConsoleForNamespace('renderer')
 
-export function processor({fs,litroot} = {}) {
-    return parserProcessor({fs,litroot})
+export function processor({fs, litroot, files} = {}) {
+    return parserProcessor({fs, litroot, files})
    
     // hoist ast to data
     .use( (...args) => {
          return (tree,file) => {
              console.log("Hoisting AST data to file.data.ast")
+             file.data = file.data || {}
              file.data.ast = tree
          }
      })

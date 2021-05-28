@@ -6,6 +6,7 @@ import path from 'path'
 import {promises as fsPromises} from 'fs'
 import {selectAll} from 'unist-util-select'
 
+
 import {NoOp} from '../utils/functions'
 
 import { extendFs } from '../utils/fs-promises-utils'
@@ -21,7 +22,9 @@ import { Identity } from '../utils/functions'
 // import { createServer } from 'http-server'
 
 const console = getConsoleForNamespace('generate')
+
 global.fetch = require("node-fetch")
+const {CompactPrefixTree} = require('compact-prefix-tree/cjs')
 
 const copyFiles = async (fs, filepaths, input, output) => await Promise.all( filepaths.map( async filepath => {
                     const src = path.join(input, filepath)
@@ -87,9 +90,10 @@ function generateBacklinks(files, root) {
     meta.failures = {}
     
     files.forEach( file => {
+        const canonical = path.join('/', file.path)
         if (!file) { console.error('Cannot get links for file.'); return;}
         try {
-        const fileLink = decorateLinkNode({ url: file.path })
+        const fileLink = decorateLinkNode({ url: canonical })
         const title = file?.data?.frontmatter?.title || `Title TBD (${fileLink.data.canonical})`
         console.log(`[${title}] Adding "${file.path}" as "${fileLink.data.canonical} to manifest."`)
         const links = getLinks(file, root)
@@ -108,7 +112,8 @@ function generateBacklinks(files, root) {
     files.forEach( file => {
         if (!file) return
         try {
-        const fileLink = decorateLinkNode({ url: file.path })
+        const canonical = path.join('/', file.path)
+        const fileLink = decorateLinkNode({ url: canonical })
         const title = file?.data?.frontmatter?.title || path.basename(file.path, path.extname(file.path))
         console.log(`About to get links for file: ${title} (${file.path})`)
         
@@ -148,7 +153,7 @@ function generateBacklinks(files, root) {
     return [files.map( (file, index) => {
             file.data = file.data || {}
             // console.log(file.path, index, manifest[file.path])
-            file.data.backlinks = manifest[file.path].backlinks
+            file.data.backlinks = manifest[file.data.canonical].backlinks
             return file
         }), manifest, meta]
 }
@@ -179,6 +184,9 @@ export function generate(cmd) {
                 const litFiles = matches.filter( (f) => f.match(matchRegex))
                 const nonLitFiles = matches.filter( (f) => !f.match(matchRegex))
 
+                const prefixTrie = new CompactPrefixTree(matches)
+                fs.writeFile('compactManifest.json', JSON.stringify(prefixTrie.T))
+
                 try {
 
                 const copied = await copyFiles(fs, nonLitFiles, cmd.path, cmd.output)
@@ -194,6 +202,7 @@ export function generate(cmd) {
                         path: filepath,
                         cwd: cmd.path
                     })
+                    source.data = {canonical: path.join('/', source.path)}
                     return source
                     } catch(err) {
                         failures[filepath] = failures[filepath] || []
@@ -207,9 +216,10 @@ export function generate(cmd) {
                        
                         await fs.writeFile(file.path, file.contents)
                         wroteSource = true
-                        return await renderProcessor({fs}).process(file)
+                        return await renderProcessor({fs, files: matches}).process(file)
                       
                     } catch (err) {
+                        console.error(err)
                         failures[file.path] = failures[file.path] || []
                         if (wroteSource) failures[file.path].push("Failed to Process to AST (prelinks) due to: " + err.toString())
                         else failures[file.path].push("Failed to write source file due to: " + err.toString())
@@ -231,7 +241,7 @@ private: true
 The contents of this file are private. Only visible by the author.
 
 `
-                           file = await renderProcessor({fs}).process(file)
+                           file = await renderProcessor({fs, files: matches}).process(file)
 
                         }
                         // await mkdirp(path.join(cmd.output,path.dirname(file.path)))

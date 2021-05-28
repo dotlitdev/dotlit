@@ -15,7 +15,7 @@ import {sections, groupIntoSections, ungroupSections} from './sections'
 import codeblocks from './codeblocks'
 import frontmatter from './frontmatter'
 import {mdblocks} from './mdblocks'
-import linkUtils, {resolveLinks, wikiLinkOptions, decorateLinkNode, linkToUrl} from './links'
+import links, { decorateLinkNode } from './links'
 import { getConsoleForNamespace} from '../utils/console'
 //import { transform as jsTransform } from './transformers/js'
 
@@ -26,7 +26,11 @@ const baseProcessor = ({litroot, files} = {}) => {
     return unified()
 
     .use((...args) => (tree, file) => {
-        console.log("Parsing file", file.path)
+        console.log("Parsing file: ", file.path)
+        file.data = file.data || {}
+        if (file && file.path) {
+            file.data.canonical = decorateLinkNode({url: file.path}).data.canonical
+        }
     })
 
     // remark
@@ -50,7 +54,7 @@ const baseProcessor = ({litroot, files} = {}) => {
         }
     },{})
 
-    .use(wikiLinkPlugin, wikiLinkOptions(files))
+    .use(wikiLinkPlugin, links.wikiLinkOptions(files))
     .use(slug)
     .use(toc, {})
     .use(headingIds)
@@ -64,8 +68,8 @@ export const processor = ({files, fs, litroot} = {files: []}) => {
 
     .use(codeblocks)
     // Async reparse `md` codeblocks as children
-    .use(mdblocks, {baseProcessor})
-    .use(resolveLinks({litroot}))
+    .use(mdblocks, {baseProcessor, litroot, files})
+    .use(links.resolveLinks({litroot}))
 
     .use(sections, {})
 
@@ -74,7 +78,7 @@ export const processor = ({files, fs, litroot} = {files: []}) => {
 export const utils = {
   mdblocks,
   sections, ungroupSections,
-  linkUtils, resolveLinks, wikiLinkOptions, decorateLinkNode, linkToUrl,
+  links,
   codeblocks,
   remarkStringify,
   to_string,
