@@ -1,4 +1,4 @@
-<html data-reactroot=""><head><title>CORS Proxy</title><meta name="litsrc" value="/testing/cors_proxy.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="220:4-6148"><cell startpos="1:1-0" endpos="3:54-67"><div class="cell-content"><h1 id="cors-proxy">CORS Proxy</h1><p>Creating a CORS proxy server using <a href="/testing/runkit.html" title="testing/RunKit" wikilink="true">testing/RunKit</a></p></div></cell><cell startpos="5:1-69" endpos="18:4-372" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-source lang-js local collapsed output"><a name="runkit-cors-proxy-endpoint.js"></a><span class="meta"><span class="lang">js</span><span class="filename">runkit-cors-proxy-endpoint.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#ca9068" class="tag">source</span></span><output><pre><code class="js">const util = require(&quot;util&quot;);
+<html data-reactroot=""><head><title>CORS Proxy</title><meta name="litsrc" value="/testing/cors_proxy.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="148:4-4118"><cell startpos="1:1-0" endpos="3:54-67"><div class="cell-content"><h1 id="cors-proxy">CORS Proxy</h1><p>Creating a CORS proxy server using <a href="/testing/runkit.html" title="testing/RunKit" wikilink="true">testing/RunKit</a></p></div></cell><cell startpos="5:1-69" endpos="18:4-372" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-source lang-js local collapsed output"><a name="runkit-cors-proxy-endpoint.js"></a><span class="meta"><span class="lang">js</span><span class="filename">runkit-cors-proxy-endpoint.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#ca9068" class="tag">source</span></span><output><pre><code class="js">const util = require(&quot;util&quot;);
 
 exports.endpoint = function (req, res) {
   res.writeHead(200, {
@@ -73,9 +73,8 @@ export const proxy = async (src, meta, node) =&gt; {
   }
 };
 
-</code></pre></output></codecell></div></cell><cell startpos="89:1-2532" endpos="149:4-4143" class="code"><div class="cell-content"><codecell class="tag-test lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#036449" class="tag">test</span><span class="output">&gt; text !collapse</span></span><pre><code class="js">return (async (fn) =&gt; {
+</code></pre></output></codecell></div></cell><cell startpos="89:1-2532" endpos="148:4-4118" class="code"><div class="cell-content"><codecell class="tag-test lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#036449" class="tag">test</span><span class="output">&gt; text !collapse</span></span><pre><code class="js">return (async (fn) =&gt; {
   const proxyFetch = await lit.file.data.plugins.proxy.corsProxy();
-  console.log(endpoint);
   const resp = await proxyFetch(&#x27;https://example.com&#x27;)
   console.log(resp.status)
   return resp.text();
@@ -84,72 +83,6 @@ export const proxy = async (src, meta, node) =&gt; {
 </code></pre></codecell><codecell class="dir-collapse lang-text local collapsed output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="updatedAt">Updated <span class="Time relative">23m ago</span></span></span><output><pre><code class="text">https://p4adqh8w0wa6.runkit.sh
 200
 &lt;!doctype html&gt;
-&lt;html&gt;
-&lt;head&gt;
-    &lt;title&gt;Example Domain&lt;/title&gt;
-
-    &lt;meta charset=&quot;utf-8&quot; /&gt;
-    &lt;meta http-equiv=&quot;Content-type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
-    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot; /&gt;
-    &lt;style type=&quot;text/css&quot;&gt;
-    body {
-        background-color: #f0f0f2;
-        margin: 0;
-        padding: 0;
-        font-family: -apple-system, system-ui, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;
-        
-    }
-    div {
-        width: 600px;
-        margin: 5em auto;
-        padding: 2em;
-        background-color: #fdfdff;
-        border-radius: 0.5em;
-        box-shadow: 2px 3px 7px 2px rgba(0,0,0,0.02);
-    }
-    a:link, a:visited {
-        color: #38488f;
-        text-decoration: none;
-    }
-    @media (max-width: 700px) {
-        div {
-            margin: 0 auto;
-            width: auto;
-        }
-    }
-    &lt;/style&gt;    
-&lt;/head&gt;
-
-&lt;body&gt;
-&lt;div&gt;
-    &lt;h1&gt;Example Domain&lt;/h1&gt;
-    &lt;p&gt;This domain is for use in illustrative examples in documents. You may use this
-    domain in literature without prior coordination or asking for permission.&lt;/p&gt;
-    &lt;p&gt;&lt;a href=&quot;https://www.iana.org/domains/example&quot;&gt;More information...&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-
-</code></pre></output></codecell></div></cell><cell startpos="151:1-4145" endpos="220:4-6148" class="code"><div class="cell-content"><codecell class="tag-proxy tag-fetch lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#65fca6" class="tag">proxy</span><span style="color:black;background-color:#5cd6ba" class="tag">fetch</span></span><pre><code class="js">const getAndReplaceDomain = (originalUrl, newDomain) =&gt; {
-  var url = new URL(originalUrl);
-  const originalDomain = `${url.protocol}//${url.hostname}`;
-  const regExp = new RegExp(`^${originalDomain}`);
-  const str = originalUrl.replace(regExp, newDomain);
-  return [str, originalDomain];
-};
-
-const proxyFetch = async (url, opts = {}) =&gt; {
-  const endpoint = await lit.file.data.plugins.proxy.corsProxy();
-  const [proxyUrl, target] = getAndReplaceDomain(url, endpoint);
-  opts.headers = opts.headers || {};
-  opts.headers[&quot;Target-Domain&quot;] = target;
-  alert(proxyUrl);
-  return fetch(proxyUrl, opts);
-};
-
-return proxyFetch(&quot;https://example.com&quot;).then((res) =&gt; res.text());
-
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">6m ago</span></span></span><output><pre><code class="txt">&lt;!doctype html&gt;
 &lt;html&gt;
 &lt;head&gt;
     &lt;title&gt;Example Domain&lt;/title&gt;
