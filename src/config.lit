@@ -312,7 +312,8 @@ export const repl = async (src, meta, node) => {
   try {
     const encoded = await encodePlantUML(src);
     const url = getEndpoint(format, encoded);
-    const resp = await fetch(url);
+    const fetchApi = lit?.file?.data?.plugins?.proxy?.corsProxy || fetch;
+    const resp = await fetchApi(url);
     if (meta.writefile) {
     }
     return resp.status;
