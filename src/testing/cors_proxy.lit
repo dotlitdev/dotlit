@@ -17,21 +17,14 @@ exports.endpoint = function (req, res) {
 
 ```
 
-```js
+```>js runkit-express-cors-proxy.js #source
 const express = require("@runkit/runkit/express-endpoint/1.0.0");
 const request = require("request");
 
-express(exports).use("*", function (req, res) {
-  req
-    .pipe(
-      request({
-        url: "http://rest.opensubtitles.org/search" + req.url,
-        headers: {
-          "User-Agent": "TemporaryUserAgent",
-        },
-      })
-    )
-    .pipe(res);
+const app = express(exports);
+
+app.use("*", (req, res) => {
+  res.end("WIP");
 });
 
 ```
