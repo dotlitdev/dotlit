@@ -107,10 +107,9 @@ const { wikiLinkOptions, linkToUrl, decorateLinkNode } = lit.parser.utils.links
 
 const resolve = wikiLinkOptions().pageResolver;
 
-console.info(resolve.toString())
-console.info(linkToUrl.toString())
+// console.info(resolve.toString())
+// console.info(linkToUrl.toString())
 
-return true
 const root = "/";
 const type = "wikiLink";
 const example = "My cool 😎 link";
@@ -130,15 +129,29 @@ const decorated = decorateLinkNode(link);
 return JSON.stringify(decorated, null, 2);
 
 ```
-```>txt attached=true updated=1622227141621 !error
-function toString() {
-    [native code]
+```>txt attached=true updated=1622227535584
+function pageResolver(name) {
+      var _resolver = resolver(name),
+          path = _resolver.path,
+          ext = _resolver.ext;
+
+      var exts = ['.lit', '.md', ext];
+      var opts = exts.map(function (ext) {
+        return "".concat(path).concat(ext);
+      });
+      return opts.filter(function (file) {
+        return files.indexOf(file) >= 0;
+      })[0] || opts;
+    }
+function linkToUrl(link, root) {
+  if (link.type === "wikiLink") {
+    // console.log(link)
+    return link.data.permalink;
+  } else {
+    return link.url;
+  }
 }
-untitled.js:7:32
-untitled.js:33:63
-module code@untitled.js:33:139
-evaluate@[native code]
-moduleEvaluation@[native code]
+true
 ```
 
 ```>txt  updated=1621980516788
