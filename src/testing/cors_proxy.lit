@@ -80,8 +80,8 @@ return (async (fn) => {
 })();
 
 ```
-```>text !collapse attached=true updated=1622240259949
-https://mxaapgtl6b9j.runkit.sh
+```>text !collapse attached=true updated=1622241325199
+https://p4adqh8w0wa6.runkit.sh
 200
 <!doctype html>
 <html>
@@ -136,25 +136,23 @@ https://mxaapgtl6b9j.runkit.sh
 const getAndReplaceDomain = (originalUrl, newDomain) => {
   var url = new URL(originalUrl);
   const originalDomain = url.hostname;
-  url.hostname = newDomain;
-  return [url.href, originalDomain];
+  const regExp = new RegExp(`^${url.protocol}//${url.hostname}`);
+  const replacement = `${url.protocol}//${newDomain}`;
+  const str = originalUrl.replace(regExp, replacement);
+  return [str, originalDomain, url.protocol];
 };
 
-const origFetch = window.fetch;
-const fetch = async (url, opts = {}) => {
+const proxyFetch = async (url, opts = {}) => {
   const endpoint = await lit.file.data.plugins.proxy.corsProxy();
-  const [proxyUrl, target] = getAndReplaceDomain(url, endpoint);
+  const [proxyUrl, target, protocol] = getAndReplaceDomain(url, endpoint);
   opts.headers = opts.headers || {};
-  opts.headers["Target-Domain"] = target;
-  return origFetch(proxyUrl, opts);
+  opts.headers["Target-Domain"] = `${protocol}//${target}`;
+  alert(proxyUrl + target + protocol);
+  return fetch(proxyUrl, opts);
 };
 
+return proxyFetch("https://example.com").then((res) => res.text());
+
 ```
 
-```js
-const url = new URL("https://example.com")
-return Object.keys(url)
-```
-```>txt attached=true updated=1622241079374
-"https://example.com/"
-```
+
