@@ -5,6 +5,7 @@ const request = require("request");
 const app = express(exports);
 app.use(cors());
 app.use("*", (req, res) => {
-  res.end("WIP: " + req.header("Target-Domain"));
-  // req.pipe(request("http://foo.com/api" + req.url)).pipe(res);
+  const target = req.header("Target-Domain");
+  // res.end("WIP: " + target);
+  req.pipe(request(target + req.url)).pipe(res);
 });
