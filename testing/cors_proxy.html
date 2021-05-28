@@ -1,4 +1,4 @@
-<html data-reactroot=""><head><title>CORS Proxy</title><meta name="litsrc" value="/testing/cors_proxy.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="18:4-372"><cell startpos="1:1-0" endpos="3:54-67"><div class="cell-content"><h1 id="cors-proxy">CORS Proxy</h1><p>Creating a CORS proxy server using <a href="/testing/runkit.html" title="testing/RunKit" wikilink="true">testing/RunKit</a></p></div></cell><cell startpos="5:1-69" endpos="18:4-372" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-source lang-js local collapsed output"><a name="runkit-cors-proxy-endpoint.js"></a><span class="meta"><span class="lang">js</span><span class="filename">runkit-cors-proxy-endpoint.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#ca9068" class="tag">source</span></span><output><pre><code class="js">const util = require(&quot;util&quot;);
+<html data-reactroot=""><head><title>CORS Proxy</title><meta name="litsrc" value="/testing/cors_proxy.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="57:4-1408"><cell startpos="1:1-0" endpos="3:54-67"><div class="cell-content"><h1 id="cors-proxy">CORS Proxy</h1><p>Creating a CORS proxy server using <a href="/testing/runkit.html" title="testing/RunKit" wikilink="true">testing/RunKit</a></p></div></cell><cell startpos="5:1-69" endpos="18:4-372" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-source lang-js local collapsed output"><a name="runkit-cors-proxy-endpoint.js"></a><span class="meta"><span class="lang">js</span><span class="filename">runkit-cors-proxy-endpoint.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#ca9068" class="tag">source</span></span><output><pre><code class="js">const util = require(&quot;util&quot;);
 
 exports.endpoint = function (req, res) {
   res.writeHead(200, {
@@ -10,4 +10,41 @@ exports.endpoint = function (req, res) {
   res.end(&quot;WIP&quot;);
 };
 
-</code></pre></output></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="testing/runkit.lit" href="/testing/runkit.html">testing/runkit.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
+</code></pre></output></codecell></div></cell><cell startpos="19:1-373" endpos="57:4-1408" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><a name="../plugins/repls/node.js"></a><span class="meta"><span class="lang">js</span><span class="filename">../plugins/repls/node.js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=repl</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=node</span></span><pre><code class="js">if (typeof lit !== &quot;undefined&quot; &amp;&amp; !window.__runkitNodeEnpoint) {
+  (async (fn) =&gt; {
+    const el = document.createElement(&quot;div&quot;);
+    document.body.appendChild(el);
+    // el.setAttribute(&quot;style&quot;, &quot;height:0;&quot;)
+    RunKit.createNotebook({
+      element: el,
+      mode: &quot;endpoint&quot;,
+      onLoad: async (rk) =&gt; {
+        window.__runkitNodeEnpoint = await rk.getEndpointURL();
+        // document.body.removeChild(el)
+      },
+      evaluateOnLoad: true,
+      source: await lit.fs.readFile(&quot;/testing/runkit-repl-endpoint.js&quot;, {
+        encoding: &quot;utf8&quot;,
+      }),
+    });
+  })();
+}
+
+export const repl = async (src, meta, node) =&gt; {
+  if (!window.__runkitNodeEnpoint) {
+    return &quot;Still setting up repl endpoint&quot;;
+  } else {
+    try {
+      return await (
+        await fetch(window.__runkitNodeEnpoint, {
+          method: &quot;POST&quot;,
+          body: JSON.stringify({ src, meta }),
+        })
+      ).text();
+    } catch (err) {
+      return err.message;
+    }
+  }
+};
+
+</code></pre></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="testing/runkit.lit" href="/testing/runkit.html">testing/runkit.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
