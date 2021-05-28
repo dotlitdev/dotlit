@@ -1,7 +1,7 @@
 if (typeof lit !== "undefined" && !window.__runkitCORSProxyEnpoint) {
   (async (fn) => {
     const rkEmbed = document.createElement("script");
-    rkEmbed.onload = (fn) => {
+    rkEmbed.onload = async (fn) => {
       const el = document.createElement("div");
       document.body.appendChild(el);
       el.setAttribute("style", "height:0;");
