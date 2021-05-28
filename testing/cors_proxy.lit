@@ -20,11 +20,13 @@ exports.endpoint = function (req, res) {
 ```>js runkit-express-cors-proxy.js #source
 const express = require("@runkit/runkit/express-endpoint/1.0.0");
 const cors = require("cors");
+const request = require("request");
 
 const app = express(exports);
 app.use(cors());
 app.use("*", (req, res) => {
-  res.end("WIP");
+  res.end("WIP: " + req.url);
+  // req.pipe(request("http://foo.com/api" + req.url)).pipe(res);
 });
 
 ```
@@ -75,7 +77,8 @@ return (async (fn) => {
 })();
 
 ```
-```>txt attached=true updated=1622239317714
+```>txt attached=true updated=1622239487767
 https://3i4xlk21u03u.runkit.sh
+200
 WIP
 ```
