@@ -314,7 +314,7 @@ export const repl = async (src, meta, node) => {
     const url = getEndpoint(format, encoded);
     const proxy = lit?.file?.data?.plugins?.proxy?.corsProxy;
 
-    const fetchApi = proxy ? proxy() : fetch;
+    const fetchApi = proxy ? await proxy() : fetch;
 
     const resp = await fetchApi(url);
     if (meta.writefile) {
@@ -380,7 +380,7 @@ export const viewer = ({ node, React }) => {
 	* another first level node
 @endmindmap
 ```
-```>svg #source attached=true updated=1622243380200
+```>svg #source attached=true updated=1622243607880
 Error: Cross-origin redirection to http://www.plantuml.com/plantuml/svg/SoWkIImgoStCIybDBE3IKYZApozHoCjFIUNYr58epizDLKZBB2ekKSX9BKlDWKg0P5AJy_DIq4KJy_9BCbABiCaY937CSqW5MWvr0000 denied by Cross-Origin Resource Sharing policy: Origin https://dotlit.org is not allowed by Access-Control-Allow-Origin.
 ```
 
