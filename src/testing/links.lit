@@ -112,7 +112,7 @@ const resolve = wikiLinkOptions().pageResolver;
 
 const root = "/";
 const type = "wikiLink";
-const example = "My cool 😎 link";
+const example = "explicit.ext|Title";
 const resolved = resolve(example);
 const link = {
   type,
@@ -129,29 +129,47 @@ const decorated = decorateLinkNode(link);
 return JSON.stringify(decorated, null, 2);
 
 ```
-```>txt attached=true updated=1622227535584
-function pageResolver(name) {
-      var _resolver = resolver(name),
-          path = _resolver.path,
-          ext = _resolver.ext;
-
-      var exts = ['.lit', '.md', ext];
-      var opts = exts.map(function (ext) {
-        return "".concat(path).concat(ext);
-      });
-      return opts.filter(function (file) {
-        return files.indexOf(file) >= 0;
-      })[0] || opts;
+```>txt attached=true updated=1622227561062
+{ root: '/',
+  example: 'My cool 😎 link',
+  resolved: [ '/my_cool_link.lit', '/my_cool_link.md', '/my_cool_link' ],
+  link: 
+   { type: 'wikiLink',
+     data: { permalink: '/my_cool_link.lit' },
+     url: 'My cool 😎 link',
+     value: 'My cool 😎 link' },
+  url: '/my_cool_link.lit' }
+{
+  "type": "link",
+  "data": {
+    "isExternal": false,
+    "isAbsolute": true,
+    "isFragment": false,
+    "isRelative": false,
+    "canonical": "/my_cool_link.lit",
+    "wikilink": true,
+    "hProperties": {
+      "wikilink": true,
+      "data": {
+        "base": "/my_cool_link.lit",
+        "isExternal": false,
+        "isAbsolute": true,
+        "isFragment": false,
+        "isRelative": false,
+        "canonical": "/my_cool_link.lit",
+        "wikilink": true
+      }
     }
-function linkToUrl(link, root) {
-  if (link.type === "wikiLink") {
-    // console.log(link)
-    return link.data.permalink;
-  } else {
-    return link.url;
-  }
+  },
+  "url": "/my_cool_link.html",
+  "title": "My cool 😎 link",
+  "children": [
+    {
+      "type": "text",
+      "value": "My cool 😎 link"
+    }
+  ]
 }
-true
 ```
 
 ```>txt  updated=1621980516788
