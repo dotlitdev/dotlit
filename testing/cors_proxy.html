@@ -1,4 +1,4 @@
-<html data-reactroot=""><head><title>CORS Proxy</title><meta name="litsrc" value="/testing/cors_proxy.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="86:4-2235"><cell startpos="1:1-0" endpos="3:54-67"><div class="cell-content"><h1 id="cors-proxy">CORS Proxy</h1><p>Creating a CORS proxy server using <a href="/testing/runkit.html" title="testing/RunKit" wikilink="true">testing/RunKit</a></p></div></cell><cell startpos="5:1-69" endpos="18:4-372" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-source lang-js local collapsed output"><a name="runkit-cors-proxy-endpoint.js"></a><span class="meta"><span class="lang">js</span><span class="filename">runkit-cors-proxy-endpoint.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#ca9068" class="tag">source</span></span><output><pre><code class="js">const util = require(&quot;util&quot;);
+<html data-reactroot=""><head><title>CORS Proxy</title><meta name="litsrc" value="/testing/cors_proxy.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="87:4-2263"><cell startpos="1:1-0" endpos="3:54-67"><div class="cell-content"><h1 id="cors-proxy">CORS Proxy</h1><p>Creating a CORS proxy server using <a href="/testing/runkit.html" title="testing/RunKit" wikilink="true">testing/RunKit</a></p></div></cell><cell startpos="5:1-69" endpos="18:4-372" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-source lang-js local collapsed output"><a name="runkit-cors-proxy-endpoint.js"></a><span class="meta"><span class="lang">js</span><span class="filename">runkit-cors-proxy-endpoint.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#ca9068" class="tag">source</span></span><output><pre><code class="js">const util = require(&quot;util&quot;);
 
 exports.endpoint = function (req, res) {
   res.writeHead(200, {
@@ -10,18 +10,19 @@ exports.endpoint = function (req, res) {
   res.end(&quot;WIP&quot;);
 };
 
-</code></pre></output></codecell></div></cell><cell startpos="20:1-374" endpos="32:4-751" class="code output"><div class="cell-content"><codecell class="tag-source lang-js local output"><a name="runkit-express-cors-proxy.js"></a><span class="meta"><span class="lang">js</span><span class="filename">runkit-express-cors-proxy.js</span><span style="color:black;background-color:#ca9068" class="tag">source</span></span><output><pre><code class="js">const express = require(&quot;@runkit/runkit/express-endpoint/1.0.0&quot;);
+</code></pre></output></codecell></div></cell><cell startpos="20:1-374" endpos="33:4-762" class="code output"><div class="cell-content"><codecell class="tag-source lang-js local output"><a name="runkit-express-cors-proxy.js"></a><span class="meta"><span class="lang">js</span><span class="filename">runkit-express-cors-proxy.js</span><span style="color:black;background-color:#ca9068" class="tag">source</span></span><output><pre><code class="js">const express = require(&quot;@runkit/runkit/express-endpoint/1.0.0&quot;);
 const cors = require(&quot;cors&quot;);
 const request = require(&quot;request&quot;);
 
 const app = express(exports);
 app.use(cors());
 app.use(&quot;*&quot;, (req, res) =&gt; {
-  res.end(&quot;WIP: &quot; + req.header(&quot;Target-Domain&quot;));
-  // req.pipe(request(&quot;http://foo.com/api&quot; + req.url)).pipe(res);
+  const target = req.header(&quot;Target-Domain&quot;);
+  // res.end(&quot;WIP: &quot; + target);
+  req.pipe(request(target + req.url)).pipe(res);
 });
 
-</code></pre></output></codecell></div></cell><cell startpos="33:1-752" endpos="67:4-1858" class="code output"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed output"><a name="corsProxy"></a><span class="meta"><span class="lang">js</span><span class="filename">../plugins/other/cors-proxy.js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=proxy</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=corsProxy</span></span><output><pre><code class="js">if (typeof lit !== &quot;undefined&quot; &amp;&amp; !window.__runkitCORSProxyEnpoint) {
+</code></pre></output></codecell></div></cell><cell startpos="34:1-763" endpos="68:4-1869" class="code output"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed output"><a name="corsProxy"></a><span class="meta"><span class="lang">js</span><span class="filename">../plugins/other/cors-proxy.js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=proxy</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=corsProxy</span></span><output><pre><code class="js">if (typeof lit !== &quot;undefined&quot; &amp;&amp; !window.__runkitCORSProxyEnpoint) {
   (async (fn) =&gt; {
     const rkEmbed = document.createElement(&quot;script&quot;);
     rkEmbed.onload = async (fn) =&gt; {
@@ -54,7 +55,7 @@ export const proxy = async (src, meta, node) =&gt; {
   }
 };
 
-</code></pre></output></codecell></div></cell><cell startpos="70:1-1861" endpos="86:4-2235" class="code"><div class="cell-content"><codecell class="tag-test lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#036449" class="tag">test</span></span><pre><code class="js">return (async (fn) =&gt; {
+</code></pre></output></codecell></div></cell><cell startpos="71:1-1872" endpos="87:4-2263" class="code"><div class="cell-content"><codecell class="tag-test lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#036449" class="tag">test</span></span><pre><code class="js">return (async (fn) =&gt; {
   const endpoint = await lit.file.data.plugins.proxy.corsProxy();
   console.log(endpoint);
   const resp = await fetch(endpoint, {
@@ -64,7 +65,7 @@ export const proxy = async (src, meta, node) =&gt; {
   return resp.text();
 })();
 
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">4m ago</span></span></span><output><pre><code class="txt">https://54iaq1l5cuvc.runkit.sh
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2m ago</span></span></span><output><pre><code class="txt">https://93oqip8xda96.runkit.sh
 200
-WIP: /
+WIP: http://example.com
 </code></pre></output></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="testing/runkit.lit" href="/testing/runkit.html">testing/runkit.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>

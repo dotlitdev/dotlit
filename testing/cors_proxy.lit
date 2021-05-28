@@ -25,8 +25,9 @@ const request = require("request");
 const app = express(exports);
 app.use(cors());
 app.use("*", (req, res) => {
-  res.end("WIP: " + req.header("Target-Domain"));
-  // req.pipe(request("http://foo.com/api" + req.url)).pipe(res);
+  const target = req.header("Target-Domain");
+  // res.end("WIP: " + target);
+  req.pipe(request(target + req.url)).pipe(res);
 });
 
 ```
@@ -79,8 +80,8 @@ return (async (fn) => {
 })();
 
 ```
-```>txt attached=true updated=1622239897449
-https://54iaq1l5cuvc.runkit.sh
+```>txt attached=true updated=1622240107423
+https://93oqip8xda96.runkit.sh
 200
-WIP: /
+WIP: http://example.com
 ```
