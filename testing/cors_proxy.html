@@ -1,0 +1,42 @@
+<html data-reactroot=""><head><title>CORS Proxy</title><meta name="litsrc" value="/testing/cors_proxy.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="47:4-1062"><cell startpos="1:1-0" endpos="3:54-67"><div class="cell-content"><h1 id="cors-proxy">CORS Proxy</h1><p>Creating a CORS proxy server using <a href="/testing/runkit.html" title="testing/RunKit" wikilink="true">testing/RunKit</a></p></div></cell><cell startpos="5:1-69" endpos="47:4-1062" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-source lang-js local collapsed output"><a name="runkit-repl-endpoint.js"></a><span class="meta"><span class="lang">js</span><span class="filename">runkit-repl-endpoint.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#ca9068" class="tag">source</span></span><output><pre><code class="js">const util = require(&#x27;util&#x27;)
+
+function requireFromString(src, filename) {
+  var Module = module.constructor;
+  var m = new Module();
+  m._compile(src, filename);
+  return m.exports;
+}
+
+exports.endpoint = function(req,res) {
+  res.writeHead(200, {
+    &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+    &#x27;Access-Control-Allow-Origin&#x27;: &#x27;*&#x27;,
+    &#x27;Access-Control-Allow-Methods&#x27;: &#x27;*&#x27;,
+  });
+
+  let data = &#x27;&#x27;;
+  req.on(&#x27;data&#x27;, chunk =&gt; {
+    data += chunk;
+  })
+
+  req.on(&#x27;end&#x27;, async () =&gt; {
+    const payload = JSON.parse(data)
+    const exported = requireFromString(payload.src, payload.meta.filename || &quot;untitled.js&quot;)
+    let result;
+    if (typeof exported === &#x27;function&#x27;) {
+      try {
+        result = await exported(payload.meta)
+        res.end(util.inspect({
+          result
+        }))
+      } catch(error) {
+        res.end(util.inspect({error}))
+      }
+    } else {
+      res.end(util.inspect({
+        exports: exported
+      }))
+    }
+  })
+}
+</code></pre></output></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="testing/runkit.lit" href="/testing/runkit.html">testing/runkit.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
