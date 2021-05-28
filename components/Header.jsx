@@ -249,9 +249,9 @@ export const Header = (props) => {
       
       <Menu title="Help">
         <span disabled>{`v${version}`}</span>
-        <span disabled>About</span>
+        <a href="https://dotlit.org">About</a>
         <span disabled>Documentation</span>
-        <span disabled={!ghToken} onClick={setGhToken}>GitHub Token</span>
+        <a href="/config.html?file=config.lit">Config</a>
         <Menu title="Debug">
             <span onClick={setDebug}>Set Mask</span>
             <span onClick={showInspector}>Show Inspector</span>
