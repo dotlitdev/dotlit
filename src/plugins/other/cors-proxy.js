@@ -42,8 +42,9 @@ export const proxy = async (src, meta, node) => {
       const [proxyUrl, target] = getAndReplaceDomain(url, endpoint);
       opts.headers = opts.headers || {};
       opts.headers["Target-Domain"] = target;
-      alert(proxyUrl);
       return fetch(proxyUrl, opts);
     };
+
+    return proxyFetch;
   }
 };
