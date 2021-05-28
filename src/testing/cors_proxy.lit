@@ -2,32 +2,23 @@
 
 Creating a CORS proxy server using [[testing/RunKit]]
 
-```>js runkit-cors-proxy-endpoint.js !collapse #source
-const util = require("util");
 
-exports.endpoint = function (req, res) {
-  res.writeHead(200, {
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "*",
-  });
-
-  res.end("WIP");
-};
-
-```
 
 ```>js runkit-express-cors-proxy.js #source
 const express = require("@runkit/runkit/express-endpoint/1.0.0");
 const cors = require("cors");
-const request = require("request");
+const request = require("request").defaults({ maxRedirects: 100 });
 
 const app = express(exports);
 app.use(cors());
 app.use("/:path", (req, res) => {
-  const target = req.header("Target-Domain");
-  res.end("WIP: " + target + req.url);
-  // req.pipe(request(target + req.url)).pipe(res);
+  try {
+    const target = req.header("Target-Domain");
+    //res.end("WIP: " + target + req.url);
+    req.pipe(request(target + req.url)).pipe(res);
+  } catch (err) {
+    res.end(err.message);
+  }
 });
 
 ```
@@ -95,7 +86,7 @@ return (async (fn) => {
 })();
 
 ```
-```>text !collapse attached=true updated=1622245052387
+```>text !collapse attached=true updated=1622245233867
 200
 WIP: http://www.plantuml.com/svg/SoWkIImgoStCIybDBE3IKYZApozHoCjFIUNYr58epizDLKZBB2ekKSX9BKlDWKg0P5AJy_DIq4KJy_9BCbABiCaY937CSqW5MWvr0000
 ```
@@ -107,6 +98,9 @@ WIP: http://www.plantuml.com/svg/SoWkIImgoStCIybDBE3IKYZApozHoCjFIUNYr58epizDLKZ
 		* another second level node
 	* another first level node
 @endmindmap
+```
+```>svg #source attached=true updated=1622245313424
+WIP: https://plantuml.com/svg/SoWkIImgoStCIybDBE3IKYZApozHoCjFIUNYr58epizDLKZBB2ekKSX9BKlDWKg0P5AJy_DIq4KJy_9BCbABiCaY937CSqW5MWvr0000
 ```
 
 
