@@ -67,9 +67,10 @@ export const proxy = async (src, meta, node) => {
 
 ```js #test
 return (async (fn) => {
-  const endpoint = lit.file.data.plugins.proxy.corsProxy();
+  const endpoint = await lit.file.data.plugins.proxy.corsProxy();
   console.log(endpoint);
-  return fetch(endpoint).then((res) => res.text());
+  const resp = await fetch(endpoint);
+  return resp.text();
 })();
 
 ```
