@@ -16,11 +16,30 @@ exports.endpoint = function (req, res) {
 };
 
 ```
+
+```js
+const express = require("@runkit/runkit/express-endpoint/1.0.0");
+const request = require("request");
+
+express(exports).use("*", function (req, res) {
+  req
+    .pipe(
+      request({
+        url: "http://rest.opensubtitles.org/search" + req.url,
+        headers: {
+          "User-Agent": "TemporaryUserAgent",
+        },
+      })
+    )
+    .pipe(res);
+});
+
+```
 ```>js ../plugins/other/cors-proxy.js !plugin type=proxy id=corsProxy !collapse
 if (typeof lit !== "undefined" && !window.__runkitCORSProxyEnpoint) {
   (async (fn) => {
     const rkEmbed = document.createElement("script");
-    rkEmbed.onload = (fn) => {
+    rkEmbed.onload = async (fn) => {
       const el = document.createElement("div");
       document.body.appendChild(el);
       el.setAttribute("style", "height:0;");
@@ -59,6 +78,6 @@ export const proxy = async (src, meta, node) => {
 ```js
 return lit.file.data.plugins.proxy.corsProxy()
 ```
-```>txt attached=true updated=1622236541054
-Still setting up proxy endpoint
+```>txt attached=true updated=1622237986359
+https://8zhefq0kfl6s.runkit.sh
 ```
