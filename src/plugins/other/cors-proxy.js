@@ -27,8 +27,6 @@ export const proxy = async (src, meta, node) => {
   if (!window.__runkitCORSProxyEnpoint) {
     return "Still setting up proxy endpoint";
   } else {
-    window.__runkitCORSProxyEnpoint;
-
     const getAndReplaceDomain = (originalUrl, newDomain) => {
       var url = new URL(originalUrl);
       const originalDomain = `${url.protocol}//${url.hostname}`;
@@ -38,8 +36,10 @@ export const proxy = async (src, meta, node) => {
     };
 
     const proxyFetch = async (url, opts = {}) => {
-      const endpoint = await lit.file.data.plugins.proxy.corsProxy();
-      const [proxyUrl, target] = getAndReplaceDomain(url, endpoint);
+      const [proxyUrl, target] = getAndReplaceDomain(
+        url,
+        window.__runkitCORSProxyEnpoint
+      );
       opts.headers = opts.headers || {};
       opts.headers["Target-Domain"] = target;
       return fetch(proxyUrl, opts);
