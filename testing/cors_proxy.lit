@@ -140,4 +140,13 @@ const getAndReplaceDomain = (originalUrl, newDomain) => {
   return [url.href, originalDomain];
 };
 
+const origFetch = window.fetch;
+const fetch = async (url, opts = {}) => {
+  const endpoint = await lit.file.data.plugins.proxy.corsProxy();
+  const [proxyUrl, target] = getAndReplaceDomain(url, endpoint);
+  opts.headers = opts.headers || {};
+  opts.headers["Target-Domain"] = target;
+  return fetch(proxyUrl, opts);
+};
+
 ```
