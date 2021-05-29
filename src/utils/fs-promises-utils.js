@@ -30,7 +30,7 @@ const passThroughReadWithStat = (origReadFile, origStat, litroot, ghOpts, noPass
       local: { stat: undefined, value: undefined },
       remote: { stat: undefined, value: undefined },
     }
-    const filePath = args[0]
+    const filePath = args[0] = path.join(litroot, args[0])
     try {
       try {
         resp.local.stat = await origStat(...args)
@@ -58,7 +58,7 @@ const passThroughReadWithStat = (origReadFile, origStat, litroot, ghOpts, noPass
       return resp
     } else {
         console.log('fs.passThroughReadWithStat passing through to fetch', filePath)
-        remoteResp = await fetch(path.join(litroot, args[0]))
+        remoteResp = await fetch(filePath)
     }
 
     if (!remoteResp || remoteResp.status < 200 || remoteResp.status >= 400) {
@@ -90,7 +90,7 @@ const writeFileP = (fs, litroot) => {
   const wf = fs.writeFile
   return async (...args) => {
     console.log("fs.writeFileP ", args[0])
-    const filepath = args[0];
+    const filepath = (args[0] = litroot + args[0]);
     const p = path.parse(filepath);
     const parts = p.dir.split(path.sep);
     // console.log(`"Parts for "${filepath}"`, parts);
