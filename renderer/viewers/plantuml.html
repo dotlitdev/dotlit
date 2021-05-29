@@ -1,4 +1,4 @@
-<html data-reactroot=""><head><title>Plant uml</title><meta name="litsrc" value="/renderer/viewers/plantuml.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="115:4-4925"><cell startpos="1:1-0" endpos="6:40-284"><div class="cell-content"><h1 id="plant-uml">Plant <code>uml</code></h1><p>Uses <a href="https://plantuml.com">plantuml.com<span class="linkIcon">↗</span></a> to create <code>svg</code> images from <code>uml</code> source. Not included as a default viewer due to the external dependency, but it&#x27;s great! See <a href="/meta/settings.html#plantuml-viewer--repl">Implementation</a></p><p><em>Cors proxy see <a href="/testing/cors_proxy.html" title="testing/Cors proxy" wikilink="true">testing/Cors proxy</a></em></p></div></cell><cell startpos="8:1-286" endpos="10:4-374" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><a name="corsProxy"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=proxy</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=corsProxy</span></span><pre><code class="js">if (typeof lit !== &quot;undefined&quot; &amp;&amp; !window.__runkitCORSProxyEnpoint) {
+<html data-reactroot=""><head><title>Plant uml</title><meta name="litsrc" value="/renderer/viewers/plantuml.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="114:4-4909"><cell startpos="1:1-0" endpos="6:40-284"><div class="cell-content"><h1 id="plant-uml">Plant <code>uml</code></h1><p>Uses <a href="https://plantuml.com">plantuml.com<span class="linkIcon">↗</span></a> to create <code>svg</code> images from <code>uml</code> source. Not included as a default viewer due to the external dependency, but it&#x27;s great! See <a href="/meta/settings.html#plantuml-viewer--repl">Implementation</a></p><p><em>Cors proxy see <a href="/testing/cors_proxy.html" title="testing/Cors proxy" wikilink="true">testing/Cors proxy</a></em></p></div></cell><cell startpos="8:1-286" endpos="10:4-374" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><a name="corsProxy"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=proxy</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=corsProxy</span></span><pre><code class="js">if (typeof lit !== &quot;undefined&quot; &amp;&amp; !window.__runkitCORSProxyEnpoint) {
   (async (fn) =&gt; {
     const rkEmbed = document.createElement(&quot;script&quot;);
     rkEmbed.onload = async (fn) =&gt; {
@@ -70,14 +70,13 @@ Default Encoding: UTF-8
 Language: en
 Country: US
 --></g></svg>
-</div></codecell></div></cell><cell startpos="39:1-3574" endpos="47:4-3742" class="code"><div class="cell-content"><codecell class="dir-below lang-uml local"><span class="meta"><span class="lang">uml</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="uml">actor User
+</div></codecell></div></cell><cell startpos="39:1-3574" endpos="46:4-3726" class="code"><div class="cell-content"><codecell class="dir-below lang-uml local"><span class="meta"><span class="lang">uml</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="uml">actor User
 participant &quot;Third Party&quot; as 3p
 
 User -&gt; Service ++ : Uses
-Service -&gt; User : Provides service
-deactivate Service
+Service -- -&gt; User : Provides service
 Service -&gt; 3p : Leaks data
-</code></pre></codecell></div></cell><cell startpos="49:1-3744" endpos="68:4-3971" class="code"><div class="cell-content"><codecell class="dir-below lang-uml local"><span class="meta"><span class="lang">uml</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="uml">participant User
+</code></pre></codecell></div></cell><cell startpos="48:1-3728" endpos="67:4-3955" class="code"><div class="cell-content"><codecell class="dir-below lang-uml local"><span class="meta"><span class="lang">uml</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="uml">participant User
 
 User -&gt; A: DoWork
 activate A
@@ -95,7 +94,7 @@ deactivate B
 
 A -&gt; User: Done
 deactivate A
-</code></pre></codecell></div></cell><cell startpos="70:1-3973" endpos="86:4-4421" class="code"><div class="cell-content"><codecell class="dir-below lang-uml local"><span class="meta"><span class="lang">uml</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="uml">participant participant as Foo
+</code></pre></codecell></div></cell><cell startpos="69:1-3957" endpos="85:4-4405" class="code"><div class="cell-content"><codecell class="dir-below lang-uml local"><span class="meta"><span class="lang">uml</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="uml">participant participant as Foo
 actor       actor       as Foo1
 boundary    boundary    as Foo2
 control     control     as Foo3
@@ -110,7 +109,7 @@ Foo -&gt; Foo4 : To entity
 Foo -&gt; Foo5 : To database
 Foo -&gt; Foo6 : To collections
 Foo -&gt; Foo7: To queue
-</code></pre></codecell></div></cell><cell startpos="88:1-4423" endpos="103:4-4661" class="code"><div class="cell-content"><codecell class="dir-below lang-uml local"><span class="meta"><span class="lang">uml</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="uml">start
+</code></pre></codecell></div></cell><cell startpos="87:1-4407" endpos="102:4-4645" class="code"><div class="cell-content"><codecell class="dir-below lang-uml local"><span class="meta"><span class="lang">uml</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="uml">start
 if (condition A) then (yes)
   :Text 1;
 elseif (condition B) then (yes)
@@ -124,7 +123,7 @@ else (nothing)
   :Text else;
 endif
 stop
-</code></pre></codecell></div></cell><cell startpos="105:1-4663" endpos="115:4-4925" class="code"><div class="cell-content"><codecell class="dir-below lang-uml local"><span class="meta"><span class="lang">uml</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="uml">Alice -&gt; Bob: Authentication Request
+</code></pre></codecell></div></cell><cell startpos="104:1-4647" endpos="114:4-4909" class="code"><div class="cell-content"><codecell class="dir-below lang-uml local"><span class="meta"><span class="lang">uml</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="uml">Alice -&gt; Bob: Authentication Request
 Bob -&gt; Alice: Authentication Failure
 group My own label [My own label 2]
     Alice -&gt; Log : Log attack start
