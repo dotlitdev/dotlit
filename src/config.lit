@@ -309,17 +309,12 @@ const getEndpoint = (format, encoded) =>
 
 export const repl = async (src, meta, node) => {
   const format = (meta && meta.format) || "svg";
-  return JSON.stringify(meta);
   try {
     const encoded = await encodePlantUML(src);
     const url = getEndpoint(format, encoded);
     const proxy = lit?.file?.data?.plugins?.proxy?.corsProxy;
-
     const fetchApi = proxy ? await proxy() : fetch;
-
     const resp = await fetchApi(url);
-    if (meta.writefile) {
-    }
     return await resp.text();
   } catch (err) {
     return "Error: " + err.message;
@@ -380,8 +375,8 @@ export const viewer = ({ node, React }) => {
 	* another first level node
 @endmindmap
 ```
-```>svg #source attached=true updated=1622319606782
-{"attrs":{"repl":"uml"},"lang":"uml","repl":"uml","directives":["collapse"],"isOutput":false,"output":"svg #source","hasOutput":true,"hasSource":false,"raw":"uml repl=uml !collapse > svg #source"}
+```>svg /testing/repl-output.svg attached=true updated=1622320657325
+{"attrs":{"repl":"uml"},"lang":"uml","repl":"uml","directives":["collapse"],"isOutput":false,"output":{"attrs":{},"lang":"svg","filename":"/testing/repl-output.svg","isOutput":false,"hasOutput":false,"hasSource":false,"raw":"svg /testing/repl-output.svg"},"hasOutput":true,"hasSource":false,"raw":"uml repl=uml !collapse > svg /testing/repl-output.svg"}
 ```
 
 
