@@ -20,7 +20,7 @@
 <li><a href="https://stackoverflow.com/questions/44424709/passing-state-info-into-a-service-worker-before-install">https://stackoverflow.com/questions/44424709/passing-state-info-into-a-service-worker-before-install<span class="linkIcon">↗</span></a></li>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch">https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch<span class="linkIcon">↗</span></a></li>
 </ul><p>See <a href="/testing/web_workers.html" title="testing/Web Workers" wikilink="true">testing/Web Workers</a> for related investigation.</p></div></cell></section>
-<section depth="2" class="" startpos="26:1-802" endpos="121:4-2767"><cell startpos="26:1-802" endpos="26:15-816"><div class="cell-content"><h2 id="exploration">Exploration</h2></div></cell><cell startpos="27:1-817" endpos="32:4-894" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return navigator
+<section depth="2" class="" startpos="26:1-802" endpos="131:4-2857"><cell startpos="26:1-802" endpos="26:15-816"><div class="cell-content"><h2 id="exploration">Exploration</h2></div></cell><cell startpos="27:1-817" endpos="32:4-894" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return navigator
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">4w ago</span></span></span><output><pre><code class="txt">{}
 </code></pre></output></codecell></div></cell><cell startpos="34:1-896" endpos="41:4-1010" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">if (&#x27;serviceWorker&#x27; in navigator) {
   return true
@@ -54,21 +54,31 @@ Unregistered 1 regisration(s)
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">4.0w ago</span></span></span><output><pre><code class="txt">200
 </code></pre></output></codecell></div></cell><cell startpos="92:1-2037" endpos="97:4-2138" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (new Response(&#x27;hello&#x27;)).text()
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">4.6w ago</span></span></span><output><pre><code class="txt">hello
-</code></pre></output></codecell></div></cell><cell startpos="99:1-2140" endpos="99:195-2334"><div class="cell-content"><p>As of now, the service worker doesn&#x27;t cache anything and just passes through to the network as normal. Except if the <code>request.url</code> ends with <code>--sw</code> in which case it returns a mock/info response.</p></div></cell><cell startpos="100:1-2335" endpos="116:4-2726" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return fetch(&#x27;/--sw&#x27;)
+</code></pre></output></codecell></div></cell><cell startpos="99:1-2140" endpos="99:195-2334"><div class="cell-content"><p>As of now, the service worker doesn&#x27;t cache anything and just passes through to the network as normal. Except if the <code>request.url</code> ends with <code>--sw</code> in which case it returns a mock/info response.</p></div></cell><cell startpos="100:1-2335" endpos="126:4-2816" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return fetch(&#x27;/--sw&#x27;)
        .then(resp =&gt; resp.text()
                           .then( text =&gt; `${resp.status}\n${text}`)
        )
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.7d ago</span></span></span><output><pre><code class="txt">200
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">56s ago</span></span></span><output><pre><code class="txt">200
 {
   &quot;version&quot;: &quot;0.2.12&quot;,
   &quot;dotlit&quot;: &quot;object&quot;,
   &quot;root&quot;: &quot;&quot;,
   &quot;enableCache&quot;: false,
-  &quot;url&quot;: &quot;https://dotlit.org/testing/serviceworker.html?--sw&quot;,
-  &quot;err&quot;: &quot;ENOENT: /testing/serviceworker.html?&quot;
+  &quot;filepath&quot;: &quot;/&quot;,
+  &quot;stat&quot;: {
+    &quot;type&quot;: &quot;dir&quot;,
+    &quot;mode&quot;: 511,
+    &quot;size&quot;: 0,
+    &quot;ino&quot;: 0,
+    &quot;mtimeMs&quot;: 1621892330665,
+    &quot;ctimeMs&quot;: 1621892330665,
+    &quot;uid&quot;: 1,
+    &quot;gid&quot;: 1,
+    &quot;dev&quot;: 1
+  }
 }
-</code></pre></output></codecell></div></cell><cell startpos="119:1-2729" endpos="121:4-2767" class="code"><div class="cell-content"><codecell class="lang-text local"><span class="meta"><span class="lang">text</span><span class="source">&lt; ./getserviceworker--sw</span></span><pre><code class="text"></code></pre></codecell></div></cell></section>
-<section depth="2" class="" startpos="123:1-2769" endpos="275:4-7217"><cell startpos="123:1-2769" endpos="123:18-2786"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="125:1-2788" endpos="275:4-7217" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><a name="../serviceworker.js"></a><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">// gross hack around one of @codemirror/view bugs
+</code></pre></output></codecell></div></cell><cell startpos="129:1-2819" endpos="131:4-2857" class="code"><div class="cell-content"><codecell class="lang-text local"><span class="meta"><span class="lang">text</span><span class="source">&lt; ./getserviceworker--sw</span></span><pre><code class="text"></code></pre></codecell></div></cell></section>
+<section depth="2" class="" startpos="133:1-2859" endpos="285:4-7307"><cell startpos="133:1-2859" endpos="133:18-2876"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="135:1-2878" endpos="285:4-7307" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><a name="../serviceworker.js"></a><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">// gross hack around one of @codemirror/view bugs
 let document = { documentElement: { style: {} } };
 
 importScripts(&quot;web.bundle.js&quot;);
