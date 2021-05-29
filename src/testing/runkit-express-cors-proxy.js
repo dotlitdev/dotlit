@@ -7,8 +7,8 @@ app.use(cors());
 app.use("/:path", (req, res) => {
   try {
     const target = req.header("Target-Domain");
-    //res.end("WIP: " + target + req.url);
-    req.pipe(request(target + req.url)).pipe(res);
+    res.end("WIP: " + target + req.url);
+    // req.pipe(request(target + req.url)).pipe(res);
   } catch (err) {
     res.end(err.message);
   }
