@@ -100,7 +100,7 @@ export const decorateLinkNode = (link, root = "", filepath = "") => {
     const abs = resolve(root, dirname(filepath), url);
     canonical = join('/', relative(resolve(root), abs))
     // canonical = resolve(root, filepath, url)
-    href = canonical.replace(/\.(md|lit)/i, ".html");
+    href = url.replace(/\.(md|lit)/i, ".html");
     // console.log({ root, filepath, url, canonical, href})
   } else if (isAbsolute) {
     href = url.replace(/\.(md|lit)/i, ".html");
