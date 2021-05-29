@@ -103,7 +103,8 @@ export const decorateLinkNode = (link, root = "", filepath = "") => {
     href = url.replace(/\.(md|lit)/i, ".html");
     // console.log({ root, filepath, url, canonical, href})
   } else if (isAbsolute) {
-    href = url.replace(/\.(md|lit)/i, ".html");
+    const rel = relative(dirname(filepath), url)
+    href = rel.replace(/\.(md|lit)/i, ".html");
   }
 
   link.type = "link";
