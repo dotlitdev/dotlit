@@ -4,7 +4,7 @@ let document = { documentElement: { style: {} } };
 importScripts("web.bundle.js");
 
 const state = {
-  version: "0.2.12",
+  version: "0.2.13",
   dotlit: typeof dotlit,
   root: "",
   enableCache: false,
@@ -63,7 +63,9 @@ const localFile = async (event) => {
       headers: {
         server: `dotlit.org/sw@${state.version}`,
         jsFile: jsFile,
-        "Content-Type": jsFile ? "text/javascript" : "text/plain",
+        "Content-Type": jsFile
+          ? "text/javascript"
+          : mime.contentType(filepath) || "text/plain",
       },
     });
   } else throw new Error("dotlit module not loaded.");

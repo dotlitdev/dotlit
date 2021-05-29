@@ -58,7 +58,7 @@ Unregistered 1 regisration(s)
        .then(resp =&gt; resp.text()
                           .then( text =&gt; `${resp.status}\n${text}`)
        )
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">6.8h ago</span></span></span><output><pre><code class="txt">200
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">6.9h ago</span></span></span><output><pre><code class="txt">200
 {
   &quot;version&quot;: &quot;0.2.12&quot;,
   &quot;dotlit&quot;: &quot;object&quot;,
@@ -78,13 +78,13 @@ Unregistered 1 regisration(s)
   }
 }
 </code></pre></output></codecell></div></cell><cell startpos="129:1-2819" endpos="131:4-2857" class="code"><div class="cell-content"><codecell class="lang-text local"><span class="meta"><span class="lang">text</span></span><pre><code class="text"></code></pre></codecell></div></cell></section>
-<section depth="2" class="" startpos="133:1-2859" endpos="285:4-7307"><cell startpos="133:1-2859" endpos="133:18-2876"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="135:1-2878" endpos="285:4-7307" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><a name="../serviceworker.js"></a><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">// gross hack around one of @codemirror/view bugs
+<section depth="2" class="" startpos="133:1-2859" endpos="287:4-7357"><cell startpos="133:1-2859" endpos="133:18-2876"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="135:1-2878" endpos="287:4-7357" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><a name="../serviceworker.js"></a><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">// gross hack around one of @codemirror/view bugs
 let document = { documentElement: { style: {} } };
 
 importScripts(&quot;web.bundle.js&quot;);
 
 const state = {
-  version: &quot;0.2.12&quot;,
+  version: &quot;0.2.13&quot;,
   dotlit: typeof dotlit,
   root: &quot;&quot;,
   enableCache: false,
@@ -143,7 +143,9 @@ const localFile = async (event) =&gt; {
       headers: {
         server: `dotlit.org/sw@${state.version}`,
         jsFile: jsFile,
-        &quot;Content-Type&quot;: jsFile ? &quot;text/javascript&quot; : &quot;text/plain&quot;,
+        &quot;Content-Type&quot;: jsFile
+          ? &quot;text/javascript&quot;
+          : mime.contentType(filepath) || &quot;text/plain&quot;,
       },
     });
   } else throw new Error(&quot;dotlit module not loaded.&quot;);
