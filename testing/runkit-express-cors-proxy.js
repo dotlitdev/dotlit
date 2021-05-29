@@ -4,7 +4,7 @@ const request = require("request").defaults({ maxRedirects: 100 });
 
 const app = express(exports);
 app.use(cors());
-app.use("/:path", (req, res) => {
+app.use("/", (req, res) => {
   try {
     const target = req.header("Target-Domain");
     res.end(
