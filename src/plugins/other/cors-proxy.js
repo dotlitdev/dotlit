@@ -4,13 +4,13 @@ if (typeof lit !== "undefined" && !window.__runkitCORSProxyEnpoint) {
     rkEmbed.onload = async (fn) => {
       const el = document.createElement("div");
       document.body.appendChild(el);
-      // el.setAttribute("style", "height:0;");
+      el.setAttribute("style", "height:0;");
       RunKit.createNotebook({
         element: el,
         mode: "endpoint",
         onLoad: async (rk) => {
           window.__runkitCORSProxyEnpoint = await rk.getEndpointURL();
-          // document.body.removeChild(el);
+          document.body.removeChild(el);
         },
         evaluateOnLoad: true,
         source: await lit.fs.readFile("/testing/runkit-express-cors-proxy.js", {
