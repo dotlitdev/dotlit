@@ -105,7 +105,7 @@ cors_proxy.createServer({
     console.log(&#x27;Running CORS Anywhere on &#x27; + host + &#x27;:&#x27; + port);
 });
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="145:1-3935" endpos="248:4-6853"><cell startpos="145:1-3935" endpos="147:97-4056"><div class="cell-content"><h2 id="repl-implementation">REPL Implementation</h2><p>Split out the endpoint source to its own <code>.lit</code> cell for legibility instead of an inline string.</p></div></cell><cell startpos="149:1-4058" endpos="191:4-5051" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-source lang-js local collapsed output"><a name="runkit-repl-endpoint.js"></a><span class="meta"><span class="lang">js</span><span class="filename">runkit-repl-endpoint.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#ca9068" class="tag">source</span></span><output><pre><code class="js">const util = require(&#x27;util&#x27;)
+<section depth="2" class="" startpos="145:1-3935" endpos="248:4-6849"><cell startpos="145:1-3935" endpos="147:97-4056"><div class="cell-content"><h2 id="repl-implementation">REPL Implementation</h2><p>Split out the endpoint source to its own <code>.lit</code> cell for legibility instead of an inline string.</p></div></cell><cell startpos="149:1-4058" endpos="191:4-5051" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-source lang-js local collapsed output"><a name="runkit-repl-endpoint.js"></a><span class="meta"><span class="lang">js</span><span class="filename">runkit-repl-endpoint.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#ca9068" class="tag">source</span></span><output><pre><code class="js">const util = require(&#x27;util&#x27;)
 
 function requireFromString(src, filename) {
   var Module = module.constructor;
@@ -146,17 +146,17 @@ exports.endpoint = function(req,res) {
     }
   })
 }
-</code></pre></output></codecell></div></cell><cell startpos="193:1-5053" endpos="193:109-5161"><div class="cell-content"><p>On load the following <code>repl</code> <code>!plugin</code> creates a RunKit endpoint if it doesn&#x27;t exist using the above source.</p></div></cell><cell startpos="195:1-5163" endpos="233:4-6198" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><a name="../plugins/repls/node.js"></a><span class="meta"><span class="lang">js</span><span class="filename">../plugins/repls/node.js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=repl</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=node</span></span><pre><code class="js">if (typeof lit !== &quot;undefined&quot; &amp;&amp; !window.__runkitNodeEnpoint) {
+</code></pre></output></codecell></div></cell><cell startpos="193:1-5053" endpos="193:109-5161"><div class="cell-content"><p>On load the following <code>repl</code> <code>!plugin</code> creates a RunKit endpoint if it doesn&#x27;t exist using the above source.</p></div></cell><cell startpos="195:1-5163" endpos="233:4-6194" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><a name="../plugins/repls/node.js"></a><span class="meta"><span class="lang">js</span><span class="filename">../plugins/repls/node.js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=repl</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=node</span></span><pre><code class="js">if (typeof lit !== &quot;undefined&quot; &amp;&amp; !window.__runkitNodeEnpoint) {
   (async (fn) =&gt; {
     const el = document.createElement(&quot;div&quot;);
     document.body.appendChild(el);
-    // el.setAttribute(&quot;style&quot;, &quot;height:0;&quot;)
+    el.setAttribute(&quot;style&quot;, &quot;height:0;&quot;);
     RunKit.createNotebook({
       element: el,
       mode: &quot;endpoint&quot;,
       onLoad: async (rk) =&gt; {
         window.__runkitNodeEnpoint = await rk.getEndpointURL();
-        // document.body.removeChild(el)
+        document.body.removeChild(el);
       },
       evaluateOnLoad: true,
       source: await lit.fs.readFile(&quot;/testing/runkit-repl-endpoint.js&quot;, {
@@ -183,15 +183,15 @@ export const repl = async (src, meta, node) =&gt; {
   }
 };
 
-</code></pre></codecell></div></cell><cell startpos="235:1-6200" endpos="235:9-6208"><div class="cell-content"><p><em>Usage:</em></p></div></cell><cell startpos="236:1-6209" endpos="244:4-6663" class="code"><div class="cell-content"><codecell class="tag-usage lang-js local"><a name="example"></a><span class="meta"><span class="lang">js</span><span class="repl">node</span><span class="filename">test.js</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=example</span><span style="color:white;background-color:#6a67da" class="tag">usage</span></span><pre><code class="js">module.exports = async (meta) =&gt; {
+</code></pre></codecell></div></cell><cell startpos="235:1-6196" endpos="235:9-6204"><div class="cell-content"><p><em>Usage:</em></p></div></cell><cell startpos="236:1-6205" endpos="244:4-6659" class="code"><div class="cell-content"><codecell class="tag-usage lang-js local"><a name="example"></a><span class="meta"><span class="lang">js</span><span class="repl">node</span><span class="filename">test.js</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=example</span><span style="color:white;background-color:#6a67da" class="tag">usage</span></span><pre><code class="js">module.exports = async (meta) =&gt; {
   return `Hello world! From .lit (${meta.id}) and Nodejs ${process.env.NODE_VERSION} (${process.platform} ${process.arch}) thanks to RunKit. At ${new Date()}`
 }
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">3.4h ago</span></span></span><output><pre><code class="txt">{ result:
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">3.5h ago</span></span></span><output><pre><code class="txt">{ result:
    &#x27;Hello world! From .lit (example) and Nodejs 10.24.1 (linux x64) thanks to RunKit. At Fri May 28 2021 20:59:32 GMT+0000 (Coordinated Universal Time)&#x27; }
-</code></pre></output></codecell></div></cell><cell startpos="245:1-6664" endpos="248:4-6853" class="code output"><div class="cell-content"><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.9w ago</span></span></span><output><pre><code class="txt">{ result:
+</code></pre></output></codecell></div></cell><cell startpos="245:1-6660" endpos="248:4-6849" class="code output"><div class="cell-content"><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.9w ago</span></span></span><output><pre><code class="txt">{ result:
    &#x27;Hello world! From .lit and Nodejs 10.24.1 (linux x64) thanks to RunKit. At Sat May 15 2021 13:56:05 GMT+0000 (Coordinated Universal Time)&#x27; }
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="250:1-6855" endpos="254:38-7121"><cell startpos="250:1-6855" endpos="254:38-7121"><div class="cell-content"><h2 id="next-steps-and-improvements">Next steps and improvements</h2><ul class="contains-task-list">
+<section depth="2" class="" startpos="250:1-6851" endpos="254:38-7117"><cell startpos="250:1-6851" endpos="254:38-7117"><div class="cell-content"><h2 id="next-steps-and-improvements">Next steps and improvements</h2><ul class="contains-task-list">
 <li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->Don&#x27;t start the endpoint on every page load, and instead lazily setup just before first execution.</li>
 <li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->Don&#x27;t use require module from string hack, and instead use a proper <code>vm</code> and context.</li>
 <li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <!-- -->Create a <a href="/testing/cors_proxy.html" title="testing/CORS Proxy" wikilink="true">testing/CORS Proxy</a></li>
