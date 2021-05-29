@@ -301,39 +301,39 @@ export const repl = async (src, meta) => {
 ```text repl=search > md
 CORS
 ```
-```>md attached=true updated=1622205623592
-Results for search "**plugin !plugins**". In **0.112** seconds.
+```>md attached=true updated=1622278241494
+Results for search "**CORS**". In **0.434** seconds.
 
-1. **[/scratch_pad.lit](/scratch_pad.lit)** *100*
+1. **[/testing/runkit-cors-proxy-endpoint.js](/testing/runkit-cors-proxy-endpoint.js)** *100*
 
-      line 111 - [x] plugin 
-1. **[/scratch_pad.lit](/scratch_pad.lit)** *100*
+      file undefined /testing/runkit-cors-proxy-endpoint.js
+1. **[/testing/runkit-express-cors-proxy.js](/testing/runkit-express-cors-proxy.js)** *100*
 
-      line 140 **Plugin attributes**
-1. **[/scratch_pad.lit](/scratch_pad.lit)** *100*
+      file undefined /testing/runkit-express-cors-proxy.js
+1. **[/plugins/other/cors-proxy.js](/plugins/other/cors-proxy.js)** *100*
 
-      line 261 ```js !plugin of=foo
-1. **[/scratch_pad.lit](/scratch_pad.lit)** *100*
+      file undefined /plugins/other/cors-proxy.js
+1. **[/config.lit](/config.lit)** *100*
 
-      line 281 - [ ] UML: See [custom plugin](/meta/settings.lit#plantuml-viewer--repl)
-1. **[/plugin_system.lit](/plugin_system.lit)** *100*
+      line 314     const proxy = lit?.file?.data?.plugins?.proxy?.corsProxy;
+1. **[/config.lit](/config.lit)** *100*
 
-      line 0 # 🔌 Plugin system
-1. **[/plugin_system.lit](/plugin_system.lit)** *100*
+      line 389 Urgh, CORS...
+1. **[/config.lit](/config.lit)** *100*
 
-      line 2 `.lit` has a flexible Plugin system, primarily to allow the author to create custom [[Viewers]] and [[REPLs]] but also includes various other types.
-1. **[/plugin_system.lit](/plugin_system.lit)** *100*
+      line 391 So to bypass CORS we need a proxy, see [[testing/runkit]] for an example nodejs repl, which could achieve this proxying.
+1. **[/config.lit](/config.lit)** *100*
 
-      line 6 ## Anatomy of a plugin 
-1. **[/plugin_system.lit](/plugin_system.lit)** *100*
+      line 393 Fixed see [[testing/Cors Proxy]] for example
+1. **[/testing/isomorphic_git.lit](/testing/isomorphic_git.lit)** *100*
 
-      line 10     ```js !plugin id=foo type=bar
-1. **[/plugin_system.lit](/plugin_system.lit)** *100*
+      line 530       corsProxy: "https://cors.isomorphic-git.org",
+1. **[/testing/runkit.lit](/testing/runkit.lit)** *100*
 
-      line 12     export const bar = (...args) => "I'm a plugin"
-1. **[/plugin_system.lit](/plugin_system.lit)** *100*
+      line 236 - [x] Create a [[testing/CORS Proxy]]
+1. **[/testing/cors_proxy.lit](/testing/cors_proxy.lit)** *100*
 
-      line 15 Initially it is assumed that a plugin is implemented in `js` but due to the flexibility this likely won't remain the case for long.
+      line 0 # CORS Proxy
 ```
 
 
@@ -376,157 +376,7 @@ return (async (fn) => {
 
 ### Implementations
 
-#### Viewer
-```>js ../plugins/viewers/search.js !plugin !collapse type=Viewer of=search2
-export const viewer = ({ node, React }) => {
-  const { useState } = React;
-  const meta = node?.properties?.meta || {};
 
-  const [results, setResults] = useState(null);
-  // Recursively builds JSX output adding `<mark>` tags around matches
-  const highlight = (value, indices = [], i = 1) => {
-    try {
-      const pair = indices[indices.length - i];
-      return !pair ? (
-        value
-      ) : (
-        <>
-          {highlight(value.substring(0, pair[0]), indices, i + 1)}
-          <mark>{value.substring(pair[0], pair[1] + 1)}</mark>
-          {value.substring(pair[1] + 1)}
-        </>
-      );
-    } catch (err) {
-      return err.message;
-    }
-  };
-  const search = async (src) => {
-    const t = Date.now();
-
-    const { default: Fuse } = await import(
-      "https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.esm.js"
-    );
-    const manifest = meta.manifest
-      ? await fetch("/manifest.json").then((res) => res.json())
-      : {};
-
-    const fullLocal = await (async (fn) => {
-      const path = lit.utils.path;
-      const all = [];
-      const visit = async (root) => {
-        try {
-          const list = await lit.fs.readdir(root);
-          return Promise.all(
-            list.map(async (key) => {
-              const pathname = path.join(root, key);
-              const stat = await lit.fs.stat(pathname);
-              let contents;
-              if (
-                key === ".git" ||
-                !key ||
-                pathname.endsWith(lit.location.src)
-              ) {
-              } else if (stat.type === "dir") await visit(pathname);
-              else if (pathname.endsWith(".lit")) {
-                contents = await lit.fs.readFile(pathname, {
-                  encoding: "utf8",
-                  localOnly: true,
-                }); //.slice(0,10);
-                contents.split("\n").map((line, index) =>
-                  all.push({
-                    pathname,
-                    type: "line",
-                    contents: line,
-                    lineNo: index,
-                  })
-                );
-              }
-              const item = { pathname, type: stat.type, contents: pathname };
-              all.push(item);
-              return item;
-            })
-          );
-        } catch (err) {
-          alert(err.message);
-        }
-      };
-
-      await visit(meta.ns || "/");
-      return all;
-    })();
-
-    // return fullLocal
-
-    const fuse = new Fuse(fullLocal, {
-      ignoreLocation: true,
-      includeScore: true,
-      includeMatches: true,
-      ignoreFieldNorm: true,
-      minMatchCharLength: 3,
-      useExtendedSearch: true,
-      threshol: 0.3,
-      keys: ["contents"],
-    });
-
-    // 3. Now search!
-    const query = src.trim();
-    const msg = (
-      <div>
-        Results for <span>{query}</span>. In{" "}
-        <span>{(Date.now() - t) / 1000}</span> seconds.
-      </div>
-    );
-    const res = fuse
-      .search(query, { limit: 10 })
-      //.map(x=>x.matches.map(x=>x.indices))
-      .map((x) => [
-        x.score,
-        x.item.pathname,
-        x.refIndex,
-        x.matches,
-        x.item.type,
-        x.item.lineNo,
-        x.item.contents,
-      ]);
-    console.log(msg, res);
-    setResults({ msg, results: res });
-  };
-
-  return (
-    <div>
-      <input onChange={(ev) => search(ev.target.value, meta)} />
-      <div>{results && results.msg}</div>
-      <div>
-        {results &&
-          results.results.map((res) => {
-            const [score, pathname, index, matches, type, lineNo, val] = res;
-            const href = pathname.replace(
-              /.(lit|md)$/,
-              ".html?file=" + pathname
-            );
-            return (
-              <div style={{ marginBottom: "0.6em" }}>
-                <div>
-                  <a href={href}>
-                    <strong>{pathname}</strong>
-                  </a>{" "}
-                  type: <span>{type}</span> score:{" "}
-                  <span>{(1 - score) * 100}</span>
-                </div>
-                <blockquote>{highlight(val, matches[0].indices)}</blockquote>
-              </div>
-            );
-          })}
-      </div>
-    </div>
-  );
-};
-
-```
-
-```>search2 ns=/
-
-```
 
 #### Repl
 ```>js ../plugins/repls/search.js !plugin !collapse type=repl of=search
