@@ -11,7 +11,7 @@ return lit.location
 ```
 
 ```js
-const {join, relative, resolve, normalize} = lit.utils.path
+const {join, dirname, relative, resolve, normalize} = lit.utils.path
 const {src,base,root} = lit.location
 
 const full = join(base, root, src)
@@ -34,18 +34,13 @@ const test = {
   link: '../another/file.lit',
 }
 
-const link = join(test.root, test.src, test.link)
+const link = join(test.root, dirname(test.src), test.link)
 
 
 return {full, gh, link}
 ```
-```>txt attached=true updated=1622292930091 !error
-function toString() {
-    [native code]
-}
-untitled.js:14:16
-untitled.js:30:63
-module code@untitled.js:30:139
-evaluate@[native code]
-moduleEvaluation@[native code]
+```>txt attached=true updated=1622292958572
+{ full: 'https:/dotlit.org/testing/paths.lit',
+  gh: '/testing/paths.lit',
+  link: '/not-at-root/my/nested/another/file.lit' }
 ```
