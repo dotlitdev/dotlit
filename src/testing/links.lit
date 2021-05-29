@@ -33,45 +33,16 @@ Interesting alternative solutions
 1. [Describe Agora.org approach]
 2. behave as search links [find reference]
 
+- [x] with slashes: [[utils/fs]] 
+- [ ] with fragments: [[utils/uri#fragments]]
+  - [ ] only fragments like [[#Wikilinks]]
+  - [ ] Hoist fragment
+
 ## Testing
 
 Implementation is at [[../parser/parser]]
 
 ```js #better #resolver
-const slug = (str) =>
-  str
-    .replace(/[^\w\s/-]+/g, "")
-    .trim()
-    .replace(/\s+/g, "_")
-    .toLowerCase();
-
-const resolve = (str) => {
-  const [main, title] = str.split("|");
-  const [doc, hash] = main.split("#");
-  const [base, query] = doc.split("?");
-
-  console.log("Input: " + str);
-
-  const path = base && slug(base);
-  const section = hash && slug(hash);
-
-  const href = path + (query ? "?" + query : "") + (hash ? "#" + section : "");
-
-  return { title, path, hash, query, section, href };
-};
-const link = resolve("explicit.ext|Title");
-
-return link;
-
-```
-```>txt attached=true updated=1622017565466
-Input: explicit.ext|Title
-{ title: 'Title',
-  path: 'explicitext',
-  hash: undefined,
-  query: undefined,
-  section: undefined,
-  href: 'explicitext' }
 ```
 
 ```js
