@@ -4,7 +4,7 @@ let document = { documentElement: { style: {} } };
 importScripts("web.bundle.js");
 
 const state = {
-  version: "0.2.14",
+  version: "0.2.15",
   dotlit: typeof dotlit,
   root: "",
   enableCache: false,
@@ -55,17 +55,14 @@ const localFile = async (event) => {
       .slice();
     await dotlit.lit.fs.stat(filepath);
     let jsFile;
-    if (/.*\.m?jsx?$/.test(filepath)) {
-      jsFile = true;
-    }
     const content = await dotlit.lit.fs.readFile(filepath, { localOnly: true });
     return new Response(content, {
       headers: {
         server: `dotlit.org/sw@${state.version}`,
-        jsFile: jsFile,
-        "Content-Type": jsFile
-          ? "text/javascript"
-          : dotlit.lit.utils.mime.contentType(filepath) || "text/plain",
+        "Content-Type":
+          dotlit.lit.utils.mime.contentType(
+            dotlit.lit.utils.path.extname(filepath)
+          ) || "text/plain",
       },
     });
   } else throw new Error("dotlit module not loaded.");
