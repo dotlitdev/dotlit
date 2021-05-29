@@ -56,7 +56,6 @@ function parseMeta (node) {
 
       if (hasSource) {
         [input,source] = input.split('<').map( x => x.trim() )
-        source = getSource(source)
       }
     }
 
@@ -67,20 +66,14 @@ function parseMeta (node) {
         .reduce(reduceParts, {})
     
     meta.isOutput = isOutput
-    meta.output = output
+    meta.output = output && parseMeta({ meta: output })
     meta.hasOutput = !!output
     meta.hasSource = !!source
-    meta.source = source
+    meta.source = source && parseMeta({ lang: 'txt', meta: source })
     meta.raw = raw
     if (source) meta.fromSource = source.filename || source.uri
 
     return meta
-}
-
-function getSource(source) {
-    if (source) {
-        return parseMeta({ lang: 'txt', meta: source })
-    }
 }
 
 function isUri(str) {
