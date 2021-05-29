@@ -60,7 +60,7 @@ export const ghWriteFile = (opts) => async (...args) => {
 }
 
 export const ghDeleteFile = opts => async (...args) => {
-    const file = (opts.prefix || '') + args[0]
+    const file = join(opts.prefix,args[0])
     console.log("ghDeleteFile", file)
     const endpoint = getEndpoint(opts, file)
     const resp1 = await fetch(endpoint)
