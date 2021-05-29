@@ -35,7 +35,7 @@
 </ul></div></cell><cell startpos="55:1-1253" endpos="62:4-1459" class="code"><div class="cell-content"><codecell class="tag-status lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#cacdcf" class="tag">status</span></span><pre><code class="js">return navigator.serviceWorker.controller
          ? &quot;Service worker active.&quot;
          : &quot;Service worker Not active.&quot;
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">5.3d ago</span></span></span><output><pre><code class="txt">Service worker active.
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">5.4d ago</span></span></span><output><pre><code class="txt">Service worker active.
 </code></pre></output></codecell></div></cell><cell startpos="64:1-1461" endpos="79:4-1850" class="code"><div class="cell-content"><codecell class="tag-unregister lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#31d494" class="tag">unregister</span></span><pre><code class="js">return (async fn =&gt; {
   const regs = await navigator
                      .serviceWorker
@@ -60,7 +60,7 @@ Unregistered 1 regisration(s)
        .then(resp =&gt; resp.text()
                           .then( text =&gt; `${resp.status}\n${text}`)
        )
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">7h ago</span></span></span><output><pre><code class="txt">200
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">7.3h ago</span></span></span><output><pre><code class="txt">200
 {
   &quot;version&quot;: &quot;0.2.12&quot;,
   &quot;dotlit&quot;: &quot;object&quot;,
@@ -80,13 +80,13 @@ Unregistered 1 regisration(s)
   }
 }
 </code></pre></output></codecell></div></cell><cell startpos="131:1-2880" endpos="133:4-2918" class="code"><div class="cell-content"><codecell class="lang-text local"><span class="meta"><span class="lang">text</span></span><pre><code class="text"></code></pre></codecell></div></cell></section>
-<section depth="2" class="" startpos="135:1-2920" endpos="289:4-7435"><cell startpos="135:1-2920" endpos="135:18-2937"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="137:1-2939" endpos="289:4-7435" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><a name="../serviceworker.js"></a><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">// gross hack around one of @codemirror/view bugs
+<section depth="2" class="" startpos="135:1-2920" endpos="286:4-7360"><cell startpos="135:1-2920" endpos="135:18-2937"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="137:1-2939" endpos="286:4-7360" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><a name="../serviceworker.js"></a><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">// gross hack around one of @codemirror/view bugs
 let document = { documentElement: { style: {} } };
 
 importScripts(&quot;web.bundle.js&quot;);
 
 const state = {
-  version: &quot;0.2.14&quot;,
+  version: &quot;0.2.15&quot;,
   dotlit: typeof dotlit,
   root: &quot;&quot;,
   enableCache: false,
@@ -137,17 +137,14 @@ const localFile = async (event) =&gt; {
       .slice();
     await dotlit.lit.fs.stat(filepath);
     let jsFile;
-    if (/.*\.m?jsx?$/.test(filepath)) {
-      jsFile = true;
-    }
     const content = await dotlit.lit.fs.readFile(filepath, { localOnly: true });
     return new Response(content, {
       headers: {
         server: `dotlit.org/sw@${state.version}`,
-        jsFile: jsFile,
-        &quot;Content-Type&quot;: jsFile
-          ? &quot;text/javascript&quot;
-          : dotlit.lit.utils.mime.contentType(filepath) || &quot;text/plain&quot;,
+        &quot;Content-Type&quot;:
+          dotlit.lit.utils.mime.contentType(
+            dotlit.lit.utils.path.extname(filepath)
+          ) || &quot;text/plain&quot;,
       },
     });
   } else throw new Error(&quot;dotlit module not loaded.&quot;);
