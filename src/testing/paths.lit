@@ -49,12 +49,12 @@ const sourceGH = relative(dirname('/meta/test.lit'), '../../escape.json')
 
 return {full, gh, link, linkCanonical, rel, sourceGH}
 ```
-```>txt attached=true updated=1622299398174
+```>txt attached=true updated=1622299456799
 { full: 'https:/dotlit.org/testing/paths.lit',
   gh: '/testing/paths.lit',
   link: '/not-at-root/my/another/file.lit',
   linkCanonical: '/my/another/file.lit',
-  rel: '../../my/nested/file.lit',
+  rel: '../my/nested/file.lit',
   sourceGH: '../escape.json' }
 ```
 
@@ -64,7 +64,9 @@ const srcToGH = (src, prefix) => join(prefix, src);
 
 const linkToSrc = (loc, link) => resolve(dirname(loc), link);
 
-return { srcToGH, linkToSrc };
+const relativeSrc = (src1, src2) => relative(dirname(src1), src2)
+
+return { srcToGH, linkToSrc, relativeSrc };
 
 ```
 ```>txt attached=true updated=1622295187455
