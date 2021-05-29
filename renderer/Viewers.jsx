@@ -19,6 +19,12 @@ const viewers = {
   },
   html: ({node}) => <div dangerouslySetInnerHTML={{__html: node.value}}></div>,
   svg: ({node}) => <div dangerouslySetInnerHTML={{__html: node.value}}></div>,
+  img: ({node}) => {
+    const path = node?.properties?.meta?.uri || node?.properties?.meta?.filename
+    return path 
+      ? <img src={path} {...node?.properties?.meta?.attr}/>
+      : <div {...node?.properties?.meta?.attr} dangerouslySetInnerHTML={{__html: node.value}}></div>
+  },
   uri: ({node}) => <iframe src={node.value}></iframe>,
   iframe0: ({node}) => <iframe src={"data:text/html;base64," + btoa(node.value)}></iframe>,
   iframe: ({node}) => {
