@@ -14,10 +14,8 @@ app.use(cors());
 app.use("/", (req, res) => {
   try {
     const target = req.header("Target-Domain");
-    res.end(
-      JSON.stringify({ target, url: req.url, params: req.params }, null, 2)
-    );
-    // req.pipe(request(target + req.url)).pipe(res);
+    // res.end(JSON.stringify({ target, url: req.url, params: req.params }, null, 2));
+    req.pipe(request(target + req.url)).pipe(res);
   } catch (err) {
     res.end(err.message);
   }
@@ -88,14 +86,12 @@ return (async (fn) => {
 })();
 
 ```
-```>text !collapse attached=true updated=1622246985643
+```>text !collapse attached=true updated=1622247030063
 200
 {
   "target": "http://www.plantuml.com",
-  "url": "/svg/SoWkIImgoStCIybDBE3IKYZApozHoCjFIUNYr58epizDLKZBB2ekKSX9BKlDWKg0P5AJy_DIq4KJy_9BCbABiCaY937CSqW5MWvr0000",
-  "params": {
-    "path": "plantuml"
-  }
+  "url": "/plantuml/svg/SoWkIImgoStCIybDBE3IKYZApozHoCjFIUNYr58epizDLKZBB2ekKSX9BKlDWKg0P5AJy_DIq4KJy_9BCbABiCaY937CSqW5MWvr0000",
+  "params": {}
 }
 ```
 ```uml repl=uml !collapse > svg #source
