@@ -6,6 +6,7 @@ const qs = require('querystring-es3')
 const FS = require('@isomorphic-git/lightning-fs')
 const git = require('isomorphic-git')
 const compactPrefixTree = require('compact-prefix-tree')
+const mime = require('mime-types')
 
 const select = require('unist-util-select')
 const source = require('unist-util-source')
@@ -78,6 +79,7 @@ export const lit = {
         inspect,
         compactPrefixTree,
         diff,
+        mime,
         React,
         ReactDOM,
         unist: {
