@@ -1,0 +1,244 @@
+# Web Workers
+
+## Table of Contents 
+
+## References 
+[Using Web Workers on MDN](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
+
+## Support
+
+
+
+```js
+return `Worker supported: ${!!window.Worker}`
+```
+```>txt attached=true updated=1619650950719
+Worker supported: true
+```
+
+## Implementation
+```>js worker.js #implementation
+// gross hack around one of @codemirror/view bugs
+let document = { documentElement: { style: {} } };
+
+postMessage("Version: 0.0.6");
+postMessage("Location: " + typeof location + JSON.stringify(location));
+importScripts("../web.bundle.js");
+postMessage("dotlit: " + typeof dotlit);
+postMessage("lit" + JSON.stringify(dotlit.lit.location));
+
+const getFsTest = async (filepath) => {
+  postMessage(`Getting ${filepath} from local fs.`);
+  try {
+    const path = dotlit.lit.utils.path;
+    const all = [];
+    const visit = async (root) => {
+      let p;
+      try {
+        const list = await dotlit.lit.fs.readdir(root);
+        p = Promise.all(
+          list.map(async (key) => {
+            const pathname = path.join(root, key);
+            const stat = await dotlit.lit.fs.stat(pathname);
+            let contents;
+            if (key === ".git" || !key) {
+              return { pathname, type: stat.type };
+            } else if (stat.type === "dir") contents = await visit(pathname);
+            else
+              contents = await dotlit.lit.fs.readFile(pathname, {
+                encoding: "utf8",
+                localOnly: true,
+              });
+            postMessage("file: " + pathname);
+            const item = { pathname, type: stat.type, contents };
+            all.push(item);
+            return item;
+          })
+        );
+      } catch (err) {
+        postMessage("err: " + err.message);
+      }
+      return p;
+    };
+
+    await visit(filepath);
+    postMessage("done");
+  } catch (err) {
+    postMessage("error:" + err.toString());
+    postMessage("done");
+  }
+};
+
+getFsTest("/");
+
+```
+
+```>js worker2.js #implementation
+postMessage("hi")
+console.log("anyone here?")
+```
+Check if web server has up to date content yet? This delay is really why we need a service worker in the first place.
+
+```js > text !collapse
+return (async fn => {
+  const resp = await fetch('./worker.js')
+  return resp.status + "\n" + (await resp.text())
+})()
+```
+```>text !collapse attached=true updated=1621861826315
+200
+// gross hack around one of @codemirror/view bugs
+let document = { documentElement: { style: {} } };
+
+postMessage("Version: 4");
+postMessage("Location: " + typeof location + JSON.stringify(location));
+importScripts("../web.bundle.js");
+postMessage("dotlit: " + typeof dotlit);
+postMessage("lit" + JSON.stringify(dotlit.lit.location));
+
+const getFsTest = async (filepath) => {
+  postMessage(`Getting ${filepath} from local fs.`);
+  try {
+    const path = dotlit.lit.utils.path;
+    const all = [];
+    const visit = async (root) => {
+      let p;
+      try {
+        const list = await dotlit.lit.fs.readdir(root);
+        p = Promise.all(
+          list.map(async (key) => {
+            const pathname = path.join(root, key);
+            const stat = await dotlit.lit.fs.stat(pathname);
+            let contents;
+            if (key === ".git") {
+              return { pathname, type: stat.type };
+            } else if (stat.type === "dir") contents = await visit(pathname);
+            else
+              contents = await dotlit.lit.fs.readFile(pathname, {
+                encoding: "utf8",
+                localOnly: true,
+              });
+            postMessage("file: " + pathname);
+            const item = { pathname, type: stat.type, contents };
+            all.push(item);
+            return item;
+          })
+        );
+      } catch (err) {
+        postMessage("err: " + err.message);
+      }
+      return p;
+    };
+
+    await visit(filepath);
+    postMessage("done");
+  } catch (err) {
+    postMessage("error:" + err.toString());
+    postMessage("done");
+  }
+};
+
+getFsTest("/");
+
+```
+### Testing
+
+~Current REPL results in script execution from cross-origin? Due to data:uri~ was resolving the raw event from postMessage not `ev.data` which is necessary.
+
+```js
+return new Promise((resolve,reject) => {
+  let myWorker;
+  try {
+    myWorker = new Worker('worker.js')
+    myWorker.onmessage = (ev) => {
+      if (ev.data === 'done') resolve(ev.data)
+      else console.log(ev.data)
+    }
+    myWorker.onerror = (err) => {
+      resolve({msg: "worker.onerror: " + err.message + " (" + err.filename + ":" + err.lineno + ")", err, err},)
+    }
+  } catch(err) {
+    resolve({msg: "Caught err", err})
+  }
+  
+})
+```
+```>txt attached=true updated=1621813918571
+Version: 2
+Location: object{}
+dotlit: object
+lit{"src":"","root":"/","base":"https://dotlit.org/","query":{}}
+Getting /index.lit from local fs.
+length+3551
+done
+```
+```js
+return new Promise((resolve,reject) => {
+  let myWorker;
+  try {
+    myWorker = new Worker('/web.bundle.js')
+    myWorker.onmessage = (ev) => {
+      if (ev.data === 'done') resolve(ev.data)
+      else console.log(ev.data)
+    }
+    myWorker.onerror = (err) => {
+      resolve({msg: "worker.onerror: " + err.message + " (" + err.filename + ":" + err.lineno + ")", err})
+    }
+  } catch(err) {
+    resolve({msg: "Caught err", err})
+  }
+  
+})
+```
+```>txt attached=true updated=1621813395952
+{ msg: 'worker.onerror: ReferenceError: Can\'t find variable: document (https://dotlit.org/web.bundle.js:112608)',
+  err: { isTrusted: [Getter] } }
+```
+
+```js #largefilelineno #tool !collapse > text #output !collapse
+return (async fn =>{
+   const url = "https://dotlit.org/web.bundle.js"
+   const lineno = 177281
+   const spread = 10
+
+   const resp = await fetch(url)
+   console.log(resp.status)
+   const val = await resp.text()
+   const lines = val.split("\n")
+   console.log(lines.length, "lines")
+
+   
+   return lines.map((l,i) => {
+           if (i ===lineno-1) return ">>>" + l
+           else return "" + i + " " + l
+           }).slice(lineno - spread, lineno + spread).join("\n")
+})()
+
+```
+```>text #output !collapse attached=true updated=1619798690210
+200
+227913,lines
+177271 // "Software"), to deal in the Software without restriction, including
+177272 // without limitation the rights to use, copy, modify, merge, publish,
+177273 // distribute, sublicense, and/or sell copies of the Software, and to permit
+177274 // persons to whom the Software is furnished to do so, subject to the
+177275 // following conditions:
+177276 //
+177277 // The above copyright notice and this permission notice shall be included
+177278 // in all copies or substantial portions of the Software.
+177279 //
+>>>// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+177281 // OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+177282 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+177283 // NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+177284 // DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+177285 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+177286 // USE OR OTHER DEALINGS IN THE SOFTWARE.
+177287 
+177288 
+177289 
+177290 function assertPath(path) {
+```
+
+
+

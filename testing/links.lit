@@ -1,0 +1,143 @@
+# Links
+
+Links in `.lit` are comprised of two main types **Standard** and **wiki-links**.
+much of the complexity is a result of considering the second type.
+
+[Standard](/index.lit) and [Anchored/Section](#standard_links), [[wiki-links]], inline [references] and [undefined refs], footnotes[^1] and [external](https://exqmple.com) links
+
+
+[references]: https://example.com "Example"
+[^1]: footnote 
+    With multi line `content`
+
+## Standard links 
+
+Should for the most part behave as expected, with the recommendation being that you should link to the source for other `.lit`/Mardown documents and the resultant `html` should convert to `.html` extention automatically for you.
+
+For most sub types (I.e relative links, fragments, and external links) this introduces no additional complexity but for absolute links an assumption has to be made that either a. the file is served from the root of the host domain ie `/example/absolute.md` or b. that the rendered page includes a `baseUrl` mechanism.
+
+## WikiLinks
+
+These are a [convention introduced by Wiki](https://en.m.wikipedia.org/wiki/Help:Link) and rely on a few assumptions.
+
+1. There is a canonical item to link to
+2. Or a system for handling disambiguation
+
+Many Markdown implementations tackle this by either
+
+1. assuming an entirely Flat directory structure 
+2. or providing a set of known permalinks to the resolver 
+
+Interesting alternative solutions
+
+1. [Describe Agora.org approach]
+2. behave as search links [find reference]
+
+- [x] with slashes: [[utils/fs]] 
+- [ ] with fragments: [[utils/uri#fragments]]
+  - [ ] only fragments like [[#Wikilinks]]
+  - [ ] Hoist fragment
+
+## Testing
+
+Implementation is at [[../parser/parser]]
+
+
+
+```js
+const { wikiLinkOptions, linkToUrl, decorateLinkNode } = lit.parser.utils.links;
+
+const resolver = wikiLinkOptions().pageResolver;
+return {resolver, linkToUrl, decorateLinkNode}
+```
+```>txt attached=true updated=1622294061184
+{ mdblocks: [Function: mdblocks],
+  sections: [Function: sections],
+  ungroupSections: [Function: ungroupSections],
+  links: 
+   { resolveLinks: [Function: resolveLinks],
+     wikiLinkOptions: [Function: wikiLinkOptions],
+     resolver: [Function: resolver],
+     linkToUrl: [Function: linkToUrl],
+     decorateLinkNode: [Function: decorateLinkNode] },
+  codeblocks: [Function: __WEBPACK_DEFAULT_EXPORT__],
+  remarkStringify: [Function: stringify],
+  to_string: [Function: to_string],
+  toMarkdown: [Function: toMarkdown],
+  frontmatter: [Function: __WEBPACK_DEFAULT_EXPORT__] }
+```
+
+```js babel=true
+const { wikiLinkOptions, linkToUrl, decorateLinkNode } = lit.parser.utils.links
+
+const resolve = wikiLinkOptions().pageResolver;
+
+// console.info(resolve.toString())
+// console.info(linkToUrl.toString())
+
+const root = "/";
+const type = "wikiLink";
+const example = "testing/Links?foo=bar#baz|Title";
+const resolved = resolve(example);
+const link = {
+  type,
+  data: { permalink: resolved[0] },
+  url: example,
+  value: example,
+};
+
+const url = linkToUrl(link, root);
+
+console.log({ root, example, resolved, link , url});
+
+const decorated = decorateLinkNode(link);
+return JSON.stringify(decorated, null, 2);
+
+```
+```>txt attached=true updated=1622294172479
+{ root: '/',
+  example: 'testing/Links?foo=bar#baz|Title',
+  resolved: [ '/testing/links.lit', '/testing/links.md', '/testing/links' ],
+  link: 
+   { type: 'wikiLink',
+     data: { permalink: '/testing/links.lit' },
+     url: 'testing/Links?foo=bar#baz|Title',
+     value: 'testing/Links?foo=bar#baz|Title' },
+  url: '/testing/links.lit' }
+{
+  "type": "link",
+  "data": {
+    "isExternal": false,
+    "isAbsolute": true,
+    "isFragment": false,
+    "isRelative": false,
+    "canonical": "/testing/links.lit",
+    "wikilink": true,
+    "hProperties": {
+      "wikilink": true,
+      "data": {
+        "base": "/testing/links.lit",
+        "isExternal": false,
+        "isAbsolute": true,
+        "isFragment": false,
+        "isRelative": false,
+        "canonical": "/testing/links.lit",
+        "wikilink": true
+      }
+    }
+  },
+  "url": "/testing/links.html",
+  "title": "testing/Links?foo=bar#baz|Title",
+  "children": [
+    {
+      "type": "text",
+      "value": "testing/Links?foo=bar#baz|Title"
+    }
+  ]
+}
+```
+
+
+
+
+

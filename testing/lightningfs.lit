@@ -1,0 +1,707 @@
+# Lightning FS
+
+https://github.com/isomorphic-git/lightning-fs
+
+## Table of Contents
+
+## Bugs 🐜
+
+- [x] wikiLinks and 404 behaviour results in incorrect/dangling lfs due to incorrect baseUrl.
+
+## Tour of the API
+```js
+return lit.fs.readdir('/testing/log')
+```
+
+```js > json !collapse
+return lit.lfs.promises.writeFile('/testing/data.json', "{}", {encoding: 'utf8'})
+```
+```>json !collapse attached=true updated=1621193177415
+null
+```
+
+```js > json !collapse
+return lit.fs.readFile('/doesntexist.json')
+```
+```js > json !collapse
+return lit.fs.readStat('/manifest.json')
+```
+
+```js > json !collapse
+return lit.fs
+          .readStat('/manifest.json')
+          .then(stat => [!!stat.local.value, !!stat.remote.value])
+```
+```>json !collapse attached=true updated=1619878321018
+[ true, false ]
+```
+```js > json !collapse
+return lit.fs
+          .stat('/notfound')
+          .catch(s => "404 Not Found")
+```
+```>json !collapse attached=true updated=1621124612430
+404 Not Found
+```
+```js > json !collapse
+return lit.fs
+          .stat('/index.lit')
+          .then(stat => stat)
+```
+```>json !collapse attached=true updated=1619878403441
+{ type: 'file',
+  mode: 438,
+  size: 4589,
+  ino: 6,
+  mtimeMs: 1619686223652,
+  ctimeMs: 1619686223652,
+  uid: 1,
+  gid: 1,
+  dev: 1 }
+```
+```js > diff !collapse
+// https://github.com/kpdecker/jsdiff
+const {root,src} = lit.location
+const {join} = lit.utils.path
+const filename = join(root,src)
+
+const withStats = async stats => {
+  const cp = lit.utils.diff.createPatch
+  // const f = 
+  const local = stats.local.value
+  const remote = stats.remote.value
+  const patch = cp(filename, local, remote)
+  console.log(patch.split('\n').map(l=>'    '+l).join('\n'))
+  return "logged patch"
+}
+
+const stats = lit.fs.readStat(filename, {encoding: 'utf8'})
+return stats.then(withStats)
+```
+```>diff !collapse attached=true updated=1620338765234
+    Index: /testing/lightningfs.lit
+    ===================================================================
+    --- /testing/lightningfs.lit
+    +++ /testing/lightningfs.lit
+    @@ -1697,13 +1697,57 @@
+     
+     const stats = lit.fs.readStat(filename, {encoding: 'utf8'})
+     return stats.then(withStats)
+     ```
+    -```>diff !collapse attached=true updated=1620338750310
+    +```>diff !collapse attached=true updated=1620338108145
+         Index: /testing/lightningfs.lit
+         ===================================================================
+         --- /testing/lightningfs.lit
+         +++ /testing/lightningfs.lit
+    +    @@ -1680,34 +1680,31 @@
+    +       dev: 1 }
+    +     ```
+    +     ```js > diff !collapse
+    +     // https://github.com/kpdecker/jsdiff
+    +    -const {root,src} = lit.location
+    +    -const {join} = lit.utils.path
+    +    -const filename = join(root,src)
+    +    +const filename = '/index.lit'
+    +     
+    +     const withStats = async stats => {
+    +       const cp = lit.utils.diff.createPatch
+    +    -  // const f = 
+    +    +  // const f = lit.location.src
+    +       const local = stats.local.value
+    +       const remote = stats.remote.value
+    +       const patch = cp(filename, local, remote)
+    +    -  console.log(patch.split('\n').map(l=>'    '+l).join('\n'))
+    +    +  // console.log(patch)
+    +       return "logged patch"
+    +     }
+    +     
+    +     const stats = lit.fs.readStat(filename, {encoding: 'utf8'})
+    +     return stats.then(withStats)
+    +     ```
+    +    -```>diff !collapse attached=true updated=1620337567383
+    +    -Index: /testing/lightningfs.lit
+    +    +```>text !collapse attached=true updated=1620336678219
+    +    +Index: /index.lit
+    +     ===================================================================
+    +    ---- /testing/lightningfs.lit
+    +    -+++ /testing/lightningfs.lit
+    +    -@@ -1680,26 +1680,24 @@
+    +    -   dev: 1 }
+    +    - ```
+    +    +--- /index.lit
+    +    ++++ /index.lit
+    +     
+    +    +logged patch
+    +    +```
+    +     
+    +     
+    +     ```>fs ls=/
+    +     
+         
+     logged patch
+     ```
+     
+    
+logged patch
+```
+```js #delete !localonly
+const path = "/throwaway/test.txt"
+console.log(ast)
+return lit.fs.writeFile(path, "content", {
+  encoding: 'utf8',
+  localOnly: true
+})
+```
+```>txt attached=true updated=1621257066210
+{ type: 'element',
+  tagName: 'cell',
+  properties: { class: 'cell' },
+  children: 
+   [ { type: 'element',
+       tagName: 'pre',
+       properties: {},
+       children: [Object],
+       position: [Object] },
+     { type: 'element',
+       tagName: 'pre',
+       properties: {},
+       children: [Object],
+       position: [Object] } ],
+  position: 
+   { start: { line: 155, column: 1, offset: 51462 },
+     end: { line: 177, column: 4, offset: 52007 } } }
+undefined
+```
+
+
+
+
+
+## Plugins 
+
+### `fs` plugin
+
+```js
+return lit.utils.momento
+```
+```>txt attached=true updated=1621257612846
+{ MsToRelative: [Getter], DatesToRelativeDelta: [Getter] }
+```
+
+
+```jsx fsviewer.jsx babel=true !plugin of=fs !collapse
+export const viewer = ({node, React}) => {
+  const {useState, useEffect} = React
+  const {join,extname} = lit.utils.path
+  const [src, setSrc] = useState(node?.data?.value?.trim())
+  const meta = node?.properties?.meta || {}
+
+  const styles = {
+    dir: {fontWeight: "bold"},
+    '.lit': {color: 'blue'},
+  }
+  const getType = s => {
+    const [filepath,stat] = s
+    if (stat.type === 'file') {
+      return extname(filepath)
+    }
+    return stat.type
+  }
+
+  const Stat = (props) => {
+    const stat = props?.stat || {}
+    if (stat.message) return <div>{stat.message}</div>
+    return <div>
+      <div style={{marginBottom: '0.4em'}}>Type: <span>{stat.type}</span> mtime: <span>{lit.utils.momento.MsToRelative(stat.mtimeMs - Date.now())}</span> Size: <span>{(props.size / 1024).toFixed(2)} KB</span></div>
+      
+      {stat.contents && stat.contents.map( l => {
+      const name = l[0]
+      const path = join(props.src,name)
+      const type = getType(l)
+      const style = styles[type] || null
+      return <div><span onClick={ev=> props.select(path)} style={style}>{name}</span></div>
+     })}
+    </div>
+  }
+
+  const [content, setContent] = useState(<span>loading...</span>)
+  const [stat, setStat] = useState(undefined)
+  const [size, setSize] = useState(null)
+
+  useEffect(async fn => {
+    let stat, size
+    try {
+      stat = await lit.fs.stat(src)
+      size = await lit.fs.du(src)
+      if (stat.type === 'dir') {
+          const list = await lit.fs.readdir(src)
+          const withStats = list.map( async l => [l,await lit.fs.stat(join(src,l))])
+          stat.contents = await Promise.all(withStats)
+      }
+      setStat(stat)
+      setSize(size)
+    } catch(err) {
+      setStat(err)
+      setSize(null)
+    }
+  }, [src])
+
+  const bigger = {fontSize: '1em', width: '100%'}
+  return <div style={bigger}>
+     <input style={bigger} value={src} onChange={ev=>setSrc(ev.target.value)}/>
+     <div style={{fontFamily: 'monospace', marginBottom: '0.4em'}}>
+     <Stat src={src} stat={stat} size={size} select={setSrc}/>
+     {!stat && content}
+     </div>
+     <button disabled={src === '/'} onClick={ev=>  setSrc(src.split('/').slice(0,-1).join('/') || '/')}>Back</button>
+     {stat && <button disabled>Reset</button>}
+     {stat && <button onClick={ev=> confirm("Are you sure you want to delete " + src) && lit.fs.unlink(src)}>Delete</button>}
+     {stat && <button disabled>Diff</button>}
+    </div>
+}
+```
+
+```>fs
+/
+```
+
+### Finder (local fs)
+
+```js !collapse > json
+const path = lit.utils.path;
+const visit = async (root) => {
+  const list = await lit.fs.readdir(root);
+  return Promise.all(
+    list.map(async (key) => {
+      const pathname = path.join(root, key);
+      const stat = await lit.fs.stat(pathname);
+      let contents;
+      if (key === ".git" || !key) {
+        return { key, root,pathname, type: stat.type };
+      } else if (stat.type === "dir") {
+        // alert("Traversing " + pathname);
+        contents = await visit(pathname);
+      } else
+        contents =
+          (
+            await lit.fs.readFile(pathname, {
+              encoding: "utf8",
+              localOnly: true,
+            })
+          ).slice(0, 10) + "...";
+      return { pathname, type: stat.type, contents };
+    })
+  );
+};
+
+return (async (fn) => {
+  lit.fs.writeFile(
+    "/testing/full.json",
+    JSON.stringify(await visit("/"), null, 2)
+  );
+})();
+
+```
+```>json attached=true updated=1621861533762
+undefined
+```
+
+```json2 !inline < full.json
+
+
+```
+```js !collapse > json
+const path = lit.utils.path;
+const all = []
+const visit = async (root) => {
+  const list = await lit.fs.readdir(root);
+  return Promise.all(
+    list.map(async (key) => {
+      const pathname = path.join(root, key);
+      all.push(pathname)
+      const stat = await lit.fs.stat(pathname);
+      if (stat.type === 'dir' && key && key !== '.git' ) await visit(pathname)
+    })
+  );
+};
+
+return (async (fn) => {
+  await visit('/')
+  return all
+})();
+
+```
+```>json attached=true updated=1622320970598
+[ '/testing',
+  '/plugins',
+  '/meta',
+  '/articles',
+  '/renderer',
+  '/filesystem',
+  '/wiki-links.lit',
+  '/scratch_pad.lit',
+  '/taking_notes.lit',
+  '/dummy',
+  '/utils',
+  '/divergence_from_markdown.lit',
+  '/components',
+  '/parser',
+  '/repl',
+  '/plugin_system.lit',
+  '/repls.lit',
+  '/index.lit',
+  '/persist_to_github.lit',
+  '/404.lit',
+  '/execute_code_cells.lit',
+  '/prismjs_and_a_simple_editor.lit',
+  '/functions.lit',
+  '/throwaway',
+  '/meta.lit',
+  '/index.js',
+  '/cli',
+  '/config.lit',
+  '/client',
+  '/config.lit#github',
+  '/scratch_pad.lit#viewers',
+  '/testing/lightningfs.lit',
+  '/testing/full.json',
+  '/testing/isomorphic_git.lit',
+  '/testing/serviceworker.lit',
+  '/testing/log',
+  '/testing/private_files.lit',
+  '/testing/esm_viewer_repl.lit',
+  '/testing/importing_js_modules.lit',
+  '/testing/input_buffer.lit',
+  '/testing/autoformatting_cell_source.lit#prettier',
+  '/testing/local_remote_files.lit',
+  '/testing/selection.lit',
+  '/testing/autoformatting_cell_source.lit',
+  '/testing/runkit.lit',
+  '/testing/compact_manifest.lit',
+  '/testing/web_workers.lit',
+  '/testing/test.txt',
+  '/testing/index.lit',
+  '/testing/links.lit',
+  '/testing/custom-module.mjs',
+  '/testing/cors_proxy.lit',
+  '/testing/runkit-repl-endpoint.js',
+  '/testing/runkit-cors-proxy-endpoint.js',
+  '/testing/runkit-express-cors-proxy.js',
+  '/testing/fuzzy_text_search.lit',
+  '/testing/paths.lit',
+  '/testing/repl-output.svg',
+  '/plugins/transformers',
+  '/plugins/viewers',
+  '/plugins/repls',
+  '/plugins/other',
+  '/meta/settings.lit',
+  '/meta/github_workflows.lit',
+  '/meta/settings.lit#plantuml-viewer--repl',
+  '/meta/styling_and_themes.lit#viewers',
+  '/meta/styling_and_themes.lit',
+  '/meta/the_bazaar.lit',
+  '/articles/ideas_for.lit',
+  '/renderer/renderer.lit',
+  '/renderer/viewers',
+  '/renderer/viewers.lit',
+  '/renderer/index.jsx',
+  '/renderer/extractPlugins.js',
+  '/renderer/transcludeCode.js',
+  '/renderer/difftestA.txt',
+  '/filesystem/index.lit',
+  '/dummy/🔥.lit',
+  '/dummy/data.csv',
+  '/dummy/plain.txt',
+  '/dummy/example.svg',
+  '/utils/index.lit',
+  '/utils/git-commit-all.js',
+  '/utils/functions.js',
+  '/utils/momento.lit',
+  '/utils/fs-promises-gh-utils.js',
+  '/utils/unist-util-select-position.js',
+  '/utils/colors.js',
+  '/utils/console.js',
+  '/utils/momento.js',
+  '/utils/fs-promises-utils.js',
+  '/utils/safe-encoders.js',
+  '/utils/unist-util-patch-source.js',
+  '/components/App.jsx',
+  '/components/components.lit',
+  '/components/Backlinks.jsx',
+  '/components/Document.jsx',
+  '/components/CellMenu.jsx',
+  '/components/Editor.jsx',
+  '/components/CodeMeta.jsx',
+  '/components/base',
+  '/components/SelectionContext.jsx',
+  '/components/Cell.jsx',
+  '/components/Header.jsx',
+  '/parser/parser.lit',
+  '/parser/index.js',
+  '/parser/links.js',
+  '/parser/frontmatter.js',
+  '/parser/mdblocks.js',
+  '/parser/codeblocks.js',
+  '/parser/sections.js',
+  '/repl/index.lit',
+  '/throwaway/codevaluebug.lit',
+  '/cli/cli.lit',
+  '/client/styles',
+  '/client/style.styl',
+  '/client/index.jsx',
+  '/client/client.lit',
+  '/testing/log/2021-05.lit',
+  '/testing/log/2021-w21.lit',
+  '/testing/log/2021-05-15.lit',
+  '/testing/log/2021-05-23.lit',
+  '/testing/log/2021-05-11.lit',
+  '/testing/log/2021-05-16.lit',
+  '/testing/log/2021.lit',
+  '/testing/log/2021-05-09.lit',
+  '/testing/log/2021-w20.lit',
+  '/testing/log/2021-05-13.lit',
+  '/testing/log/2021-05-17.lit',
+  '/testing/log/2021-05-18.lit',
+  '/testing/log/2021-05-21.lit',
+  '/testing/log/2021-05-19.lit',
+  '/testing/log/2021-05-12.lit',
+  '/testing/log/2021-05-20.lit',
+  '/testing/log/today.js',
+  '/testing/log/day.lit',
+  '/testing/log/checkforinput.js',
+  '/testing/log/2021-05-25.lit',
+  '/testing/log/2021-05-27.lit',
+  '/testing/log/2021-05-29.lit',
+  '/plugins/transformers/prettier.js',
+  '/plugins/viewers/esm.js',
+  '/plugins/viewers/search.js',
+  '/plugins/viewers/search2.js',
+  '/plugins/viewers/meta.js',
+  '/plugins/repls/module.js',
+  '/plugins/repls/search.js',
+  '/plugins/other/cors-proxy.js',
+  '/renderer/viewers/md',
+  '/renderer/viewers/plantuml.lit',
+  '/renderer/viewers/meta.js',
+  '/components/base/Codeblock.jsx',
+  '/components/base/Link.jsx',
+  '/client/styles/cellmenu.styl',
+  '/client/styles/cell.styl',
+  '/client/styles/viewers.styl',
+  '/client/styles/codecell.styl',
+  '/renderer/viewers/md/admonitions.lit',
+  '/renderer/viewers/md/index.jsx' ]
+```
+
+
+### Finder (from manifest)
+
+
+```js !plugin type=viewer !collapse of=search
+const sortBy = (keys) => (a, b) => {
+  for (const key of keys) {
+    if (a[key] !== b[key]) break;
+    else return a[key] > b[key] ? 1 : -1;
+  }
+};
+
+const itemBuilder = (React) => (item) => {
+  const rc = React.createElement;
+  return rc(
+    "li",
+    { className: "item" },
+    rc(
+      "a",
+      { href: lit.href || lit.location.root + item.id },
+      item.title || item.id
+    )
+  );
+};
+
+export const viewer = ({ node, React }) => {
+  const rc = React.createElement;
+  const { useState, useEffect } = React;
+  const meta = node.properties && node.properties.meta;
+  const [src, setSrc] = useState(meta.search || node.data.value.trim());
+  const [content, setContent] = useState("Loading...");
+  const item = itemBuilder(React);
+
+  useEffect(async () => {
+    const resp = await fetch("/manifest.json");
+    const json = await resp.json();
+    let regex;
+    try {
+      regex = new RegExp(src, "i");
+    } catch (err) {}
+    const res = json.nodes
+      .map((x) => x)
+      .filter((x) => {
+        return (
+          x.id.indexOf(src) >= 0 ||
+          (regex && regex.test(x.id)) ||
+          (x.title &&
+            (x.title.indexOf(src) >= 0 || (regex && regex.test(x.title))))
+        );
+      })
+      .sort()
+      .map((x) => item(x));
+    //.join("\n")
+    setContent(rc("ol", null, res));
+  }, [src]);
+
+  return rc(
+    "div",
+    {
+      className: "custom-react-view",
+    },
+    [
+      rc("input", {
+        style: { width: "100%", fontSize: "1.2em" },
+        value: src,
+        onChange: (e) => setSrc(e.target.value),
+      }),
+      content,
+    ]
+  );
+};
+
+```
+```>search
+G.*hUb
+```
+## Sync `local|remote|origin`
+
+
+```js #sync !collapse
+// fetch all remote files and store
+// locally if they don't already exist 
+
+
+return (async fn => {
+  const t = Date.now()
+  const p = lit.utils.path
+  const writePLocal = async (...args) => {
+    
+  }
+
+  const m = await fetch('/manifest.json')
+                  .then(res => res.json())
+                  .catch(e=>({nodes:[]}))
+
+  const duds = []
+  const synced = []
+  const errors = []
+  const res = await Promise.all(m.nodes.map( async n => {
+    try {
+    n.stats = await lit.fs.readStat(n.id)
+      .then(x=>x)
+      .catch(err=>{
+          duds.push(n.id)
+          return {local: {}, remote: {}}
+      })
+
+    if (!n.stats.local.stat && n.stats.remote.stat) {
+        await lit.fs.writeFile(n.id, n.stats.remote.value, {localOnly: true, encoding: 'utf8'})
+        synced.push(n)
+    }
+    
+    return n
+    } catch(err) {errors.push(n.id + " : " + err.message)} 
+  } ))
+  console.log(`Synced ${synced.length}/${m.nodes.length} files in ${(Date.now() - t)/1000} seconds. Duds: ${duds.length} Errors: ${errors.length}`)
+  return {duds, errors}
+})()
+
+```
+```>txt attached=true updated=1622320934287
+Synced 9/173 files in 1.789 seconds. Duds: 32 Errors: 1
+{ duds: 
+   [ 'links.js',
+     '/testing/log/2021-w22.lit',
+     '/utils/unist-patch-source.lit',
+     '/distributed_knowledge_graph.lit',
+     '/transfomers.lit',
+     '/testing/log/2021-w23.lit',
+     '/meta/files_and_links.lit',
+     'runkit-express-cors-proxy.js',
+     '/experimental_social_network.lit',
+     '/agora.lit',
+     '/viewers.lit',
+     'meta/.github/workflows/npm-publish.yaml',
+     'viewers/meta.js',
+     '/unified.lit',
+     '/undefined.lit',
+     'filename',
+     'runkit-repl-endpoint.js',
+     'log/checkforinput.js',
+     'worker2.js',
+     '/markdown.lit',
+     'renderer/file.txt',
+     'rk.jsx',
+     'worker.js',
+     '/utils/fs.lit',
+     '/remark.lit',
+     'gitworker.js',
+     '/utils/uri.lit',
+     'fsviewer.jsx',
+     '../.github/workflows/generate.yaml',
+     'log/today.js',
+     'custom-module.mjs',
+     '/components.lit' ],
+  errors: [ '../serviceworker.js : Unable to normalize path - traverses above root directory' ] }
+```
+```>txt  updated=1621257192205
+Synced 90/139 files in 0.616 seconds. Duds: 30 Errors: 7
+{ duds: 
+   [ 'remark.lit',
+     'viewers.lit',
+     '.github/workflows/generate.yaml',
+     'components.lit',
+     'utils/urifragments.lit',
+     'articles/ideas.lit',
+     'executing_code_cells.lit',
+     './runkit-repl-endpoint.js',
+     'transfomers.lit',
+     'fsviewer.jsx',
+     'viewers/meta.js',
+     'filename',
+     'worker.js',
+     'worker2.js',
+     '../../../../../testing/log/2021-05.lit',
+     'utils/fs.lit',
+     '../../../../../testing/log/2021.lit',
+     'rk.jsx',
+     '../../../../../testing/log/2021-05',
+     'wikilinks.lit',
+     'unified.lit',
+     'testing/getserviceworker--sw',
+     'meta/.github/workflows/npm-publish.yaml',
+     'renderer/file.txt',
+     'markdown.lit',
+     '../../../../../testing/log/year.lit',
+     'log/today.js',
+     'log/checkforinput.js',
+     'litconfig.lit',
+     '../../../../../testing/log/2021' ],
+  errors: 
+   [ '../scratch_pad.lit#viewers : Unable to normalize path - traverses above root directory',
+     '../components/components.lit : Unable to normalize path - traverses above root directory',
+     '../../../../../meta/settings.lit#plantuml-viewer--repl : Unable to normalize path - traverses above root directory',
+     '../../../../../testing/log/2021-w20.lit : Unable to normalize path - traverses above root directory',
+     '../../../../../testing/log/2021-05-12.lit : Unable to normalize path - traverses above root directory',
+     '../utils/git-commit-all.js : Unable to normalize path - traverses above root directory',
+     '../../../../../testing/log/2021-w21.lit : Unable to normalize path - traverses above root directory' ] }
+```
+
+
+
+
+## Emergency wipe ⚠️
+
+```>md !warn
+Clicking on the following link will prompt you to confirm you want to wipe the local file system!
+```
+
+[WIPE ⚠️](?__lfs_wipe=true)
+

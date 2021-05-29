@@ -1,0 +1,49 @@
+# Compact Manifest
+
+Reducing the serialised size of a manifest of all files in a `.lit` notebook.
+
+## Trying out [compact-prefix-tree](https://github.com/sidvishnoi/compact-prefix-tree)
+```js
+return (async fn => {
+  const {CompactPrefixTree} = await import('https://cdn.skypack.dev/compact-prefix-tree')
+
+  const manifest = await fetch('/manifest.json').then(res => res.json())
+  const keys = manifest.nodes.map(n=>n.id)
+  const trie = new CompactPrefixTree(keys)
+
+  const before = JSON.stringify(keys)
+  const after = JSON.stringify(trie.T)
+  // console.log(trie.T)
+  await lit.fs.writeFile('/testing/compactManifest1.json', after, 'utf8')
+  return `A ${after.length/before.length*100}% reduction in size.`
+})()
+```
+```>txt attached=true updated=1621379712347
+A 91.78470254957507% reduction in size.
+```
+
+
+
+Looking up a file, check for existence:
+```js
+return (async (fn) => {
+  const { CompactPrefixTree, getWordsFromTrie } = await import(
+    "https://cdn.skypack.dev/compact-prefix-tree"
+  );
+
+  const json = await fetch("/testing/compactManifest1.json").then((res) =>
+    res.json()
+  );
+  // return json
+  const keys = getWordsFromTrie(json);
+  const trie = new CompactPrefixTree(Array.from(keys));
+  return trie.prefix("testing/log/");
+})();
+
+```
+```>txt  updated=1621380328935
+{ prefix: 'testing/log/day.lit', isProper: true }
+```
+```>txt updated=1621380061074
+{ prefix: '', isProper: false }
+```
