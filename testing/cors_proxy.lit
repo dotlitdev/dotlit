@@ -14,7 +14,7 @@ app.use(cors());
 app.use("/:path", (req, res) => {
   try {
     const target = req.header("Target-Domain");
-    res.end("WIP: " + target + req.url);
+    res.end(JSON.stringify({ target, url: req.url }, null, 2));
     // req.pipe(request(target + req.url)).pipe(res);
   } catch (err) {
     res.end(err.message);
@@ -29,13 +29,13 @@ if (typeof lit !== "undefined" && !window.__runkitCORSProxyEnpoint) {
     rkEmbed.onload = async (fn) => {
       const el = document.createElement("div");
       document.body.appendChild(el);
-      // el.setAttribute("style", "height:0;");
+      el.setAttribute("style", "height:0;");
       RunKit.createNotebook({
         element: el,
         mode: "endpoint",
         onLoad: async (rk) => {
           window.__runkitCORSProxyEnpoint = await rk.getEndpointURL();
-          // document.body.removeChild(el);
+          document.body.removeChild(el);
         },
         evaluateOnLoad: true,
         source: await lit.fs.readFile("/testing/runkit-express-cors-proxy.js", {
@@ -86,7 +86,7 @@ return (async (fn) => {
 })();
 
 ```
-```>text !collapse attached=true updated=1622245233867
+```>text !collapse attached=true updated=1622246730203
 200
 WIP: http://www.plantuml.com/svg/SoWkIImgoStCIybDBE3IKYZApozHoCjFIUNYr58epizDLKZBB2ekKSX9BKlDWKg0P5AJy_DIq4KJy_9BCbABiCaY937CSqW5MWvr0000
 ```

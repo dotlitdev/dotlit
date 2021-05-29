@@ -1,4 +1,4 @@
-<html data-reactroot=""><head><title>CORS Proxy</title><meta name="litsrc" value="/testing/cors_proxy.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="104:4-3219"><cell startpos="1:1-0" endpos="3:54-67"><div class="cell-content"><h1 id="cors-proxy">CORS Proxy</h1><p>Creating a CORS proxy server using <a href="/testing/runkit.html" title="testing/RunKit" wikilink="true">testing/RunKit</a></p></div></cell><cell startpos="7:1-71" endpos="24:4-568" class="code output"><div class="cell-content"><codecell class="tag-source lang-js local output"><a name="runkit-express-cors-proxy.js"></a><span class="meta"><span class="lang">js</span><span class="filename">runkit-express-cors-proxy.js</span><span style="color:black;background-color:#ca9068" class="tag">source</span></span><output><pre><code class="js">const express = require(&quot;@runkit/runkit/express-endpoint/1.0.0&quot;);
+<html data-reactroot=""><head><title>CORS Proxy</title><meta name="litsrc" value="/testing/cors_proxy.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/railscasts.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="104:4-3236"><cell startpos="1:1-0" endpos="3:54-67"><div class="cell-content"><h1 id="cors-proxy">CORS Proxy</h1><p>Creating a CORS proxy server using <a href="/testing/runkit.html" title="testing/RunKit" wikilink="true">testing/RunKit</a></p></div></cell><cell startpos="7:1-71" endpos="24:4-591" class="code output"><div class="cell-content"><codecell class="tag-source lang-js local output"><a name="runkit-express-cors-proxy.js"></a><span class="meta"><span class="lang">js</span><span class="filename">runkit-express-cors-proxy.js</span><span style="color:black;background-color:#ca9068" class="tag">source</span></span><output><pre><code class="js">const express = require(&quot;@runkit/runkit/express-endpoint/1.0.0&quot;);
 const cors = require(&quot;cors&quot;);
 const request = require(&quot;request&quot;).defaults({ maxRedirects: 100 });
 
@@ -7,26 +7,26 @@ app.use(cors());
 app.use(&quot;/:path&quot;, (req, res) =&gt; {
   try {
     const target = req.header(&quot;Target-Domain&quot;);
-    res.end(&quot;WIP: &quot; + target + req.url);
+    res.end(JSON.stringify({ target, url: req.url }, null, 2));
     // req.pipe(request(target + req.url)).pipe(res);
   } catch (err) {
     res.end(err.message);
   }
 });
 
-</code></pre></output></codecell></div></cell><cell startpos="25:1-569" endpos="77:4-2280" class="code output"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed output"><a name="corsProxy"></a><span class="meta"><span class="lang">js</span><span class="filename">../plugins/other/cors-proxy.js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=proxy</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=corsProxy</span></span><output><pre><code class="js">if (typeof lit !== &quot;undefined&quot; &amp;&amp; !window.__runkitCORSProxyEnpoint) {
+</code></pre></output></codecell></div></cell><cell startpos="25:1-592" endpos="77:4-2297" class="code output"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed output"><a name="corsProxy"></a><span class="meta"><span class="lang">js</span><span class="filename">../plugins/other/cors-proxy.js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=proxy</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=corsProxy</span></span><output><pre><code class="js">if (typeof lit !== &quot;undefined&quot; &amp;&amp; !window.__runkitCORSProxyEnpoint) {
   (async (fn) =&gt; {
     const rkEmbed = document.createElement(&quot;script&quot;);
     rkEmbed.onload = async (fn) =&gt; {
       const el = document.createElement(&quot;div&quot;);
       document.body.appendChild(el);
-      // el.setAttribute(&quot;style&quot;, &quot;height:0;&quot;);
+      el.setAttribute(&quot;style&quot;, &quot;height:0;&quot;);
       RunKit.createNotebook({
         element: el,
         mode: &quot;endpoint&quot;,
         onLoad: async (rk) =&gt; {
           window.__runkitCORSProxyEnpoint = await rk.getEndpointURL();
-          // document.body.removeChild(el);
+          document.body.removeChild(el);
         },
         evaluateOnLoad: true,
         source: await lit.fs.readFile(&quot;/testing/runkit-express-cors-proxy.js&quot;, {
@@ -65,21 +65,21 @@ export const proxy = async (src, meta, node) =&gt; {
   }
 };
 
-</code></pre></output></codecell></div></cell><cell startpos="80:1-2283" endpos="92:4-2841" class="code"><div class="cell-content"><codecell class="tag-test lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#036449" class="tag">test</span><span class="output">&gt; text !collapse</span></span><pre><code class="js">return (async (fn) =&gt; {
+</code></pre></output></codecell></div></cell><cell startpos="80:1-2300" endpos="92:4-2858" class="code"><div class="cell-content"><codecell class="tag-test lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#036449" class="tag">test</span><span class="output">&gt; text !collapse</span></span><pre><code class="js">return (async (fn) =&gt; {
   const proxyFetch = await lit.file.data.plugins.proxy.corsProxy();
   const resp = await proxyFetch(&#x27;http://www.plantuml.com/plantuml/svg/SoWkIImgoStCIybDBE3IKYZApozHoCjFIUNYr58epizDLKZBB2ekKSX9BKlDWKg0P5AJy_DIq4KJy_9BCbABiCaY937CSqW5MWvr0000&#x27;)
   console.log(resp.status)
   return resp.text();
 })();
 
-</code></pre></codecell><codecell class="dir-collapse lang-text local collapsed output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="updatedAt">Updated <span class="Time relative">25m ago</span></span></span><output><pre><code class="text">200
+</code></pre></codecell><codecell class="dir-collapse lang-text local collapsed output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="updatedAt">Updated <span class="Time relative">3m ago</span></span></span><output><pre><code class="text">200
 WIP: http://www.plantuml.com/svg/SoWkIImgoStCIybDBE3IKYZApozHoCjFIUNYr58epizDLKZBB2ekKSX9BKlDWKg0P5AJy_DIq4KJy_9BCbABiCaY937CSqW5MWvr0000
-</code></pre></output></codecell></div></cell><cell startpos="93:1-2842" endpos="104:4-3219" class="code"><div class="cell-content"><codecell class="dir-collapse lang-uml local collapsed"><span class="meta"><span class="lang">uml</span><span class="repl">uml</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="output">&gt; svg #source</span></span><pre><code class="uml">@startmindmap
+</code></pre></output></codecell></div></cell><cell startpos="93:1-2859" endpos="104:4-3236" class="code"><div class="cell-content"><codecell class="dir-collapse lang-uml local collapsed"><span class="meta"><span class="lang">uml</span><span class="repl">uml</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="output">&gt; svg #source</span></span><pre><code class="uml">@startmindmap
 * root node
 	* some first level node
 		* second level node
 		* another second level node
 	* another first level node
 @endmindmap
-</code></pre></codecell><codecell class="tag-source lang-svg local output"><span class="meta"><span class="lang">svg</span><span style="color:black;background-color:#ca9068" class="tag">source</span><span class="updatedAt">Updated <span class="Time relative">24m ago</span></span></span><div>WIP: https://plantuml.com/svg/SoWkIImgoStCIybDBE3IKYZApozHoCjFIUNYr58epizDLKZBB2ekKSX9BKlDWKg0P5AJy_DIq4KJy_9BCbABiCaY937CSqW5MWvr0000
+</code></pre></codecell><codecell class="tag-source lang-svg local output"><span class="meta"><span class="lang">svg</span><span style="color:black;background-color:#ca9068" class="tag">source</span><span class="updatedAt">Updated <span class="Time relative">26m ago</span></span></span><div>WIP: https://plantuml.com/svg/SoWkIImgoStCIybDBE3IKYZApozHoCjFIUNYr58epizDLKZBB2ekKSX9BKlDWKg0P5AJy_DIq4KJy_9BCbABiCaY937CSqW5MWvr0000
 </div></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (2)</h4><ol><li><a title=".lit Settings" href="/config.html">.lit Settings</a></li><li><a title="testing/runkit.lit" href="/testing/runkit.html">testing/runkit.lit</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
