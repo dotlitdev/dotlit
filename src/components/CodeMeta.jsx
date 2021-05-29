@@ -35,8 +35,8 @@ export const CodeMeta = ({meta, toggleFullscreen, toggleLocalRemote, toggleColla
                 return <span className={`attribute attr-${attr}`} key={attr} style={colorStyle(attr)}>{`${attr}=${val}`}</span>
             })}
             {meta.tags && meta.tags.map( (tag, i) => <span key={tag+i} style={colorStyle(tag)} className="tag">{tag}</span>)}
-            {meta.fromSource && <span onClick={toggleLocalRemote} className="source">{'< ' + meta.fromSource}</span> }
-            {meta.hasOutput && <span className="output">{'> ' + meta.output}</span> }
+            {meta.fromSource && <span onClick={toggleLocalRemote} className="source">{'< ' + meta.source.raw }</span> }
+            {meta.hasOutput && <span className="output">{'> ' + meta.output.raw}</span> }
             {meta.updated && <span className="updatedAt">Updated <Time ms={parseInt(meta.updated)} /></span> }
         </span>
 }
