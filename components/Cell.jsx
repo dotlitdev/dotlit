@@ -111,7 +111,7 @@ const Cell = props => {
             // so re-render from that
             if (ctx) ctx.setSrc(lit.ast.position, result.resp)
         } else {
-            const outputMeta = (meta.hasOutput ? meta.output : 'txt').trim() + (" attached=true updated=" + Date.now()) + (error ? ' !error' : '')
+            const outputMeta = (meta.hasOutput ? meta.output.raw : 'txt').trim() + (" attached=true updated=" + Date.now()) + (error ? ' !error' : '')
             const output = "\n```>"+ outputMeta +"\n" + result.stdout.replace(/\n```/g, "\n•••") + "\n```\n"
             if (ctx) ctx.setSrc(pos, rawSource + output)
             else return rawSource + output
