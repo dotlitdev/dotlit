@@ -22,7 +22,8 @@ const Link = props => {
                         && props.node.children[0].tagName === 'img'
 
     return <a className={props.className}
-        {...props.node.properties}>
+        {...props.node.properties}
+        wikilink={wikilink}>
             {props.children}
             {icon && !imgOnlyLink && <span className="linkIcon">{icon}</span> }
         </a>
