@@ -148,6 +148,7 @@ export const init = async () => {
             const ageMessage = DatesToRelativeDelta(resp.local.stat.mtimeMs, resp.remote.stat.mtimeMs)
             times.ageMessage = ageMessage
             stats = {local: resp.local.stat, remote: resp.remote.stat, msg: ageMessage}
+            window.lit.stats = resp
             console.log(`Local file is ${ageMessage} than remote file.`)
         }
         
