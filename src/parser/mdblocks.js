@@ -20,7 +20,7 @@ export const mdblocks = function ({baseProcessor, files, litroot}) {
                 const p = baseProcessor({files, litroot})
                 const parsed = await p.parse( mdfile )
                 const ast = await p.run(parsed, mdfile)
-                console.log(idx + "MD AST: ", ast)
+                console.log(idx + "MD AST: ", file.data.canonical, ast)
                 node.children = ast.children
                 resolve()
             });
