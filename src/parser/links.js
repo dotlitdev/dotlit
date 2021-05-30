@@ -91,6 +91,11 @@ export const decorateLinkNode = (link, root = "", filepath = "") => {
   const isAbsolute = !isExternal && /^\//.test(url);
   const isFragment = /^(\?|#)/.test(url);
   const isRelative = url && !isAbsolute && !isFragment && !isExternal;
+  const {join, dirname, relative, resolve, normalize} = lit.utils.path
+  
+  const srcToGH = (src, prefix) => join(prefix, src);
+  const relToCanonical = (src, link) => resolve(dirname(src), link);
+  const canonicalToRel = (src1, src2) => relative(dirname(src1), src2)
 
   let canonical = url;
   let href = url;
@@ -129,6 +134,8 @@ export const decorateLinkNode = (link, root = "", filepath = "") => {
 
   link.data.hProperties = {
     wikilink,
+    filepath,
+    root,
     data: {
       base,
       frag,
