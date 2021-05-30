@@ -8,6 +8,7 @@ export const mdblocks = function ({baseProcessor, files, litroot}) {
     return async (tree, file) => {
         file.data = file.data || {}
         file.data.__mdcodeblocks = 0
+        const filepath = file?.data?.canonical || 'inexplicable.ext'
         const promises = [];
         visit(tree, 'code', (node,index,parent) => {
             if (!node.data || !node.data.meta || node.data.meta.lang !== 'md') return;
@@ -16,7 +17,7 @@ export const mdblocks = function ({baseProcessor, files, litroot}) {
             // instead of await (why?)
             const p = new Promise(async resolve => {
                 // console.log(idx + "Node: ", node)
-                const mdfile = await vfile({path: file.data.canonical, contents: node.value})
+                const mdfile = await vfile({path: filepath, contents: node.value})
                 const p = baseProcessor({files, litroot})
                 const parsed = await p.parse( mdfile )
                 const ast = await p.run(parsed, mdfile)
