@@ -16,7 +16,7 @@ export const mdblocks = function ({baseProcessor, files, litroot}) {
             // instead of await (why?)
             const p = new Promise(async resolve => {
                 // console.log(idx + "Node: ", node)
-                const mdfile = vfile({path: file.data.canonical, value: node.value})
+                const mdfile = await vfile({path: file.data.canonical, contents: node.value})
                 const p = baseProcessor({files, litroot})
                 const parsed = await p.parse( mdfile )
                 const ast = await p.run(parsed, mdfile)
