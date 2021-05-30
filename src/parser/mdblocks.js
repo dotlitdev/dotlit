@@ -1,6 +1,6 @@
 import visit from 'unist-util-visit'
 import {getConsoleForNamespace} from '../utils/console'
-import {vfile} from 'vfile'
+import vfile from 'vfile'
 
 const console = getConsoleForNamespace('mdblocks')
 
