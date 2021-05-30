@@ -136,7 +136,8 @@ export const init = async () => {
 
     const filepath = lit.location.src
     console.log(`Checking local (${baseUrl}) filesystem for: ${filepath}`)
-    let contents, times = {local: null, remote: null}
+    let contents, stats;
+    let times = {local: null, remote: null}
     try {
         const resp = await lit.fs.readStat(filepath, {encoding: 'utf8'})
         console.log(`Loaded file: ${filepath} local: ${!!resp.local.stat} remote: ${!!resp.remote.stat} resp: `, resp)
@@ -146,6 +147,7 @@ export const init = async () => {
         if (resp.local.stat && resp.remote.stat) {
             const ageMessage = DatesToRelativeDelta(resp.local.stat.mtimeMs, resp.remote.stat.mtimeMs)
             times.ageMessage = ageMessage
+            stats = {local: resp.local.stat, remote: resp.remote.stat, msg: ageMessage}
             console.log(`Local file is ${ageMessage} than remote file.`)
         }
         
@@ -184,6 +186,8 @@ export const init = async () => {
     file.data.times = times
     
     const processedFile = await renderer.processor({fs,litroot}).process(file)
+    if (stats) processedFile.message(stats.msg)
+
     console.log("Processed clientside ", file.path)
     window.lit.ast = processedFile.data.ast
     window.lit.file = processedFile
