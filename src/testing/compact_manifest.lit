@@ -71,4 +71,82 @@ return (async (fn) => {
 ```
 
 - [ ] Use the above to sync local file system instead of manifest.
+```js #sync !collapse
+// fetch all remote files and store
+// locally if they don't already exist 
+
+
+return (async fn => {
+  const t = Date.now()
+  const p = lit.utils.path
+  const writePLocal = async (...args) => {
+    
+  }
+
+  const m = await fetch('/manifest.json')
+                  .then(res => res.json())
+                  .catch(e=>({nodes:[]}))
+
+  const duds = []
+  const synced = []
+  const errors = []
+  const res = await Promise.all(m.nodes.map( async n => {
+    try {
+    n.stats = await lit.fs.readStat(n.id)
+      .then(x=>x)
+      .catch(err=>{
+          duds.push(n.id)
+          return {local: {}, remote: {}}
+      })
+
+    if (!n.stats.local.stat && n.stats.remote.stat) {
+        await lit.fs.writeFile(n.id, n.stats.remote.value, {localOnly: true, encoding: 'utf8'})
+        synced.push(n)
+    }
+    
+    return n
+    } catch(err) {errors.push(n.id + " : " + err.message)} 
+  } ))
+  console.log(`Synced ${synced.length}/${m.nodes.length} files in ${(Date.now() - t)/1000} seconds. Duds: ${duds.length} Errors: ${errors.length}`)
+  return {duds, errors}
+})()
+
+```
+```>txt attached=true updated=1622320934287
+Synced 9/173 files in 1.789 seconds. Duds: 32 Errors: 1
+{ duds: 
+   [ 'links.js',
+     '/testing/log/2021-w22.lit',
+     '/utils/unist-patch-source.lit',
+     '/distributed_knowledge_graph.lit',
+     '/transfomers.lit',
+     '/testing/log/2021-w23.lit',
+     '/meta/files_and_links.lit',
+     'runkit-express-cors-proxy.js',
+     '/experimental_social_network.lit',
+     '/agora.lit',
+     '/viewers.lit',
+     'meta/.github/workflows/npm-publish.yaml',
+     'viewers/meta.js',
+     '/unified.lit',
+     '/undefined.lit',
+     'filename',
+     'runkit-repl-endpoint.js',
+     'log/checkforinput.js',
+     'worker2.js',
+     '/markdown.lit',
+     'renderer/file.txt',
+     'rk.jsx',
+     'worker.js',
+     '/utils/fs.lit',
+     '/remark.lit',
+     'gitworker.js',
+     '/utils/uri.lit',
+     'fsviewer.jsx',
+     '../.github/workflows/generate.yaml',
+     'log/today.js',
+     'custom-module.mjs',
+     '/components.lit' ],
+  errors: [ '../serviceworker.js : Unable to normalize path - traverses above root directory' ] }
+```
 
