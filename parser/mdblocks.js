@@ -18,9 +18,9 @@ export const mdblocks = function ({baseProcessor, files, litroot}) {
                 // console.log(idx + "Node: ", node)
                 const mdfile = vfile({path: file.data.canonical, value: node.value})
                 const p = baseProcessor({files, litroot})
-                const parsed = await p.parse( node.value )
+                const parsed = await p.parse( mdfile )
                 const ast = await p.run(parsed, mdfile)
-                //  console.log(idx + " AST: ", ast)
+                console.log(idx + "MD AST: ", ast)
                 node.children = ast.children
                 resolve()
             });
