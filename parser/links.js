@@ -91,7 +91,6 @@ export const decorateLinkNode = (link, root = "", filepath = "") => {
   const isAbsolute = !isExternal && /^\//.test(url);
   const isFragment = /^(\?|#)/.test(url);
   const isRelative = url && !isAbsolute && !isFragment && !isExternal;
-  const {join, dirname, relative, resolve, normalize} = lit.utils.path
   
   const srcToGH = (src, prefix) => join(prefix, src);
   const relToCanonical = (src, link) => resolve(dirname(src), link);
