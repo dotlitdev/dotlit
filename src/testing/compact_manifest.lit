@@ -57,9 +57,9 @@ return (async (fn) => {
   const { CompactPrefixTree, getWordsFromTrie } = lit.utils.compactPrefixTree;
 
   const resp = await fetch("/compactManifest.json");
-  const data = resp.json();
+  const data = await resp.json();
   const keys = getWordsFromTrie(data);
-  return keys.contains('index.lit')
+  return Array.from(keys).length
 })();
 
 ```
