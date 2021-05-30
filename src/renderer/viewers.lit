@@ -260,6 +260,61 @@ initially created as a txt file output
 flipped to transclude and modified cell
 giving a node with data.value and data.properties.data.originalSource 
 ```
+```js !plugin of=diff !collapse
+import diff from 'https://cdn.skypack.dev/react-diff-viewer'
+export const viewer = ({node,React}) => {
+  const rc = React.createElement
+ const {useState, useEffect} = React
+  const meta = node.properties 
+               && node.properties.meta
+  const [content, setContent] = useState('Loading...')
+  const src = node.data.value
+  useEffect(async () => {
+
+  const styles = {
+    lineNumber: {
+      fontWeight: 'bold'
+    },
+    gutter: {
+      minWidth: '0.6em',
+      padding: '0 0.2em',
+    },
+    marker: {
+      width: 'auto',
+      padding: '0 0.2em'
+    },
+    contentText: {
+      lineHeight: '1em !important',
+      wordBreak: 'break-all',
+    },
+    content: {
+      width: 'auto',
+      padding: 0,
+    }
+  }
+
+  const view = rc(diff, {
+    newValue: node.properties.data.originalSource,
+    rightTitle: 'local',
+    oldValue: src,
+    leftTitle: 'remote',
+    splitView: meta && meta.split === 'true',
+    styles,
+    compareMethod: diff[(meta && meta.method && meta.method.toUpperCase()) || 'CHARS']
+  })
+
+
+    setContent(view)
+  },[src])
+
+  
+
+  return rc('div', {
+    className: 'custom-diff-view',
+  }, content)
+
+}
+```
 
 ### Example: `graph` viewer
 
