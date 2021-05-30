@@ -102,14 +102,11 @@ export const decorateLinkNode = (link, root = "", filepath = "") => {
   let [base, frag] = url.split(/(\?|#)/);
 
   if (isRelative) {
-    const abs = resolve(root, dirname(filepath), url);
-    canonical = join('/', relative(resolve(root), abs))
-    // canonical = resolve(root, filepath, url)
-    href = url.replace(/\.(md|lit)/i, ".html");
-    // console.log({ root, filepath, url, canonical, href})
+    canonical = relToCanonical(filepath, base)
+    href = url.replace(/\.(md|lit)/i, ".html") ;
   } else if (isAbsolute) {
-    const rel = relative(dirname(filepath), url)
-    href = url.replace(/\.(md|lit)/i, ".html");
+    const rel = canonicalToRel(filepath, url);
+    href = rel.replace(/\.(md|lit)/i, ".html");
   }
 
   link.type = "link";
