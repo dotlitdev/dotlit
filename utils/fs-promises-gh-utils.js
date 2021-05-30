@@ -45,7 +45,7 @@ export const ghWriteFile = (opts) => async (...args) => {
         },
         body: JSON.stringify({
             sha: json1.sha,
-            message: opts.commitMessage || `Updated ${file}`,
+            message: opts.commitMessage || `Edited ${file}`,
             content: b64EncodeUnicode(content)
         })
     }
