@@ -21,7 +21,30 @@ Q
 return lit.fs.readFile('/manifest.json')
 ```
 
-```lang
-
+```js
+return lit.stats
+```
+```>txt attached=true updated=1622417486586
+{ local: 
+   { stat: 
+      { type: 'file',
+        mode: 438,
+        size: 1166,
+        ino: 66,
+        mtimeMs: 1621892347587,
+        ctimeMs: 1621892347587,
+        uid: 1,
+        gid: 1,
+        dev: 1 },
+     value: '# Local and Remote files\n\nOn load `.lit` determines the `src` and `root` and checks both local file system ([[testing/LightningFS]]) and the remote host (ie GitHub pages, or local/remote server) and compares `last-updated` (or Stat `mtimeMs` in the case of local filesystem)\n\nThe problem is, that deployment to GitHub pages results in a remote file that *seems* newer than the local file that created it.\n\n## Potential solutions\n\n- Disable (appropriately) GitHub Pages cache\n\n  https://stackoverflow.com/questions/12556593/determining-a-page-is-outdated-on-github-pages\n- Read from api instead of pages static file server when Authenticated\n  - Potentially read and write to `gh-pages` directly, eschewing Actions deployment entirely.\n  - [x] Currently reading and writing to GitHub api when token is available. **Breaks reading generated files like : manifest.json**\n- Compare hashes of the content [stackoverflow crypto](https://stackoverflow.com/questions/18338890/are-there-any-sha-256-javascript-implementations-that-are-generally-considered-t/48161723#48161723)\n\n```txt test.txt remote=true < test.txt\nQ\n```\n```js\nreturn lit.fs.readFile(\'/manifest.json\')\n```\n\n' },
+  remote: 
+   { stat: 
+      { dev: 1,
+        gid: 1,
+        ino: 1,
+        uid: 1,
+        mtimeMs: 1622417164000,
+        size: null },
+     value: '# Local and Remote files\n\nOn load `.lit` determines the `src` and `root` and checks both local file system ([[testing/LightningFS]]) and the remote host (ie GitHub pages, or local/remote server) and compares `last-updated` (or Stat `mtimeMs` in the case of local filesystem)\n\nThe problem is, that deployment to GitHub pages results in a remote file that *seems* newer than the local file that created it.\n\n## Potential solutions\n\n- Disable (appropriately) GitHub Pages cache\n\n  https://stackoverflow.com/questions/12556593/determining-a-page-is-outdated-on-github-pages\n- Read from api instead of pages static file server when Authenticated\n  - Potentially read and write to `gh-pages` directly, eschewing Actions deployment entirely.\n  - [x] Currently reading and writing to GitHub api when token is available. **Breaks reading generated files like : manifest.json**\n- Compare hashes of the content [stackoverflow crypto](https://stackoverflow.com/questions/18338890/are-there-any-sha-256-javascript-implementations-that-are-generally-considered-t/48161723#48161723)\n\n```txt test.txt remote=true < test.txt\nQ\n```\n```js\nreturn lit.fs.readFile(\'/manifest.json\')\n```\n\n' } }
 ```
 
