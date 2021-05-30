@@ -595,19 +595,55 @@ export const mdblocks = function ({baseProcessor, files, litroot}) {
     }
 }
 </code></pre></codecell></div></cell></section>
-<section depth="3" class="" startpos="60:1-954" endpos="184:4-4068"><cell startpos="60:1-954" endpos="62:17-981"><div class="cell-content"><h3 id="links">Links</h3><p><em>Implementation</em></p></div></cell><cell startpos="64:1-983" endpos="184:4-4068" class="code output"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed output"><a name="links.js"></a><span class="meta"><span class="lang">js</span><span class="filename">links.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><output><pre><code class="js">import path from &quot;path&quot;;
+<section depth="3" class="" startpos="60:1-954" endpos="184:4-4069"><cell startpos="60:1-954" endpos="62:17-981"><div class="cell-content"><h3 id="links">Links</h3><p><em>Implementation</em></p></div></cell><cell startpos="64:1-983" endpos="184:4-4069" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; txt links.js</span></span><pre><code class="js">import {join, resolve, relative, dirname} from &quot;path&quot;;
 import visit from &quot;unist-util-visit&quot;;
 import { getConsoleForNamespace } from &quot;../utils/console&quot;;
 
-const console = getConsoleForNamespace(&quot;links&quot;, { disabled: true });
+const console = getConsoleForNamespace(&quot;links&quot;);
 
 export const resolveLinks =
   (options = { litroot: &quot;&quot;, filepath: &quot;&quot; }) =&gt;
   (...args) =&gt;
-  (tree) =&gt; {
-    console.log(&quot;[Links] Init&quot;, options);
+  (tree, file) =&gt; {
+    console.log(&quot;[Links] Init&quot;, file.path, options);
     return visit(tree, isLink, transform(options));
   };
+
+export const slug = (str) =&gt;
+  str
+    .replace(/[^\w\s/-]+/g, &quot;&quot;)
+    .trim()
+    .replace(/\s+/g, &quot;_&quot;)
+    .toLowerCase();
+
+export const resolver = (str) =&gt; {
+  // console.log(&quot;Input: &quot;, str);
+  if (!str) {
+    throw Error(&quot;No string to resolve&quot;)
+    process.exit(1)
+  }
+  let main, title, doc, hash, base, query, file, ext, _
+  try {
+    [main, title] = str.split(&quot;|&quot;);
+    [doc, hash] = main.split(&quot;#&quot;);
+    [base, query] = doc.split(&quot;?&quot;);
+    [_, file, ext = &#x27;&#x27;] = base.match(/([^\.]+)(\.[a-zA-Z0-9]+)?$/) || []
+  } catch(err) {
+    console.log({str, main, title, doc, hash, base, query, file, ext, _})
+    console.log(&#x27;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&#x27;, err)
+    process.exit(1)
+  }
+  
+ 
+  const root = file &amp;&amp; file[0] &amp;&amp; [&#x27;/&#x27;, &#x27;.&#x27;].indexOf(file[0]) &gt;= 0 ? &#x27;&#x27; : &#x27;/&#x27;
+  const path = file &amp;&amp; (root + slug(file))
+  const section = hash &amp;&amp; slug(hash);
+
+  const href = path + (query ? &quot;?&quot; + query : &quot;&quot;) + (hash ? &quot;#&quot; + section : &quot;&quot;);
+  // console.log(&#x27;Href: &#x27;, href)
+  return { title, path, ext, hash, query, section, href };
+};
+
 
 const isLink = (node) =&gt; [&quot;link&quot;, &quot;wikiLink&quot;].indexOf(node.type) &gt;= 0;
 
@@ -615,15 +651,18 @@ const transform = (options) =&gt; (node, index, parent) =&gt; {
   return decorateLinkNode(node, options.litroot, options.filepath);
 };
 
-export const wikiLinkOptions = (files) =&gt; ({
-  pageResolver: (name) =&gt; [
-    name
-      .replace(/[^\w\s/-]+/g, &quot;&quot;)
-      .trim()
-      .replace(/\s+/g, &quot;_&quot;)
-      .toLowerCase(),
-  ],
-});
+export const wikiLinkOptions = (files = []) =&gt; {
+  return {
+    pageResolver: (name) =&gt; {
+      const {path, ext} = resolver(name)
+      const exts = [&#x27;.lit&#x27;, &#x27;.md&#x27;, ext]
+      const opts = exts.map( ext =&gt; {
+        return `${path}${ext}`
+      })
+      return opts.filter(file =&gt; files.indexOf(file) &gt;= 0)[0] || opts
+    }
+  }
+};
 // ({
 //     permalinks: files,
 //     pageResolver: nameToPermalinks,
@@ -632,8 +671,8 @@ export const wikiLinkOptions = (files) =&gt; ({
 
 const linkToUrl = (link, root) =&gt; {
   if (link.type === &quot;wikiLink&quot;) {
-    const [base, frag] = link.data.permalink.split(&quot;#&quot;);
-    return `${root}${base}.lit${frag ? &quot;#&quot; + frag : &quot;&quot;}`;
+    // console.log(link)
+    return link.data.permalink
   } else {
     return link.url;
   }
@@ -644,7 +683,7 @@ export const decorateLinkNode = (link, root = &quot;&quot;, filepath = &quot;&qu
   const wikilink = link.type === &quot;wikiLink&quot;;
   const url = linkToUrl(link, root);
 
-  // console.log(`[Links] resolving (${link.type}) [${url}] &#x27;${root}&#x27;, &quot;${filepath}&quot;`)
+  
   const isExternal = /^(https?\:)?\/\//.test(url);
   const isAbsolute = !isExternal &amp;&amp; /^\//.test(url);
   const isFragment = /^(\?|#)/.test(url);
@@ -655,10 +694,13 @@ export const decorateLinkNode = (link, root = &quot;&quot;, filepath = &quot;&qu
   let [base, frag] = url.split(/(\?|#)/);
 
   if (isRelative) {
-    const abs = path.resolve(root, path.dirname(filepath), url);
-    canonical = path.relative(path.resolve(root), abs);
+    const abs = resolve(root, dirname(filepath), url);
+    canonical = join(&#x27;/&#x27;, relative(resolve(root), abs))
+    // canonical = resolve(root, filepath, url)
     href = url.replace(/\.(md|lit)/i, &quot;.html&quot;);
+    // console.log({ root, filepath, url, canonical, href})
   } else if (isAbsolute) {
+    const rel = relative(dirname(filepath), url)
     href = url.replace(/\.(md|lit)/i, &quot;.html&quot;);
   }
 
@@ -675,8 +717,8 @@ export const decorateLinkNode = (link, root = &quot;&quot;, filepath = &quot;&qu
   };
 
   if (wikilink) {
-    [base, frag] = link.url.split(&quot;#&quot;);
-    link.url = base + &quot;?file=&quot; + canonical + (frag ? `#${frag}` : &quot;&quot;);
+    // [base, frag] = link.url.split(&quot;#&quot;);
+    // link.url = base + &quot;?file=&quot; + canonical + (frag ? `#${frag}` : &quot;&quot;);
     link.children = [
       { position: link.position, type: &quot;text&quot;, value: link.value },
     ];
@@ -697,27 +739,24 @@ export const decorateLinkNode = (link, root = &quot;&quot;, filepath = &quot;&qu
   };
 
   delete link.value;
+  // console.log(`[Links] resolving (${link.type}) [${url}] &#x27;${root}&#x27;, &quot;${filepath}&quot;`, link.url)
 
   return link;
 };
 
-export const nameToPermalinks = (name) =&gt; {
-  const full = name.replace(/ /g, &quot;_&quot;).toLowerCase();
-  const tail = path.basename(full);
 
-  return [&quot;.lit&quot;, &quot;md&quot;].flatMap((ext) =&gt; [full + ext, tail + ext]);
-  return [full + &quot;.lit&quot;, full + &quot;.md&quot;, tail + &quot;.lit&quot;, tail + &quot;.md&quot;];
-};
-export const nodeMappings = (files) =&gt; {
-  const mappings = {};
-  files.forEach((filepath) =&gt; {});
-  return mappings;
-};
+export default {
+  resolveLinks,
+  wikiLinkOptions,
+  resolver,
+  linkToUrl,
+  decorateLinkNode,
+}
 
-</code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="186:1-4070" endpos="196:4-4424"><cell startpos="186:1-4070" endpos="188:162-4249"><div class="cell-content"><h2 id="ast-to-string">AST to String</h2><ul class="contains-task-list">
+</code></pre></codecell></div></cell></section>
+<section depth="2" class="" startpos="186:1-4071" endpos="196:4-4425"><cell startpos="186:1-4071" endpos="188:162-4250"><div class="cell-content"><h2 id="ast-to-string">AST to String</h2><ul class="contains-task-list">
 <li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->#TODO refactor save (update src) to operate on AST directly and stringify as below, instead of the cureent <a href="/utils/unist-patch-source.html" title="../utils/unist-patch-source" wikilink="true">../utils/unist-patch-source</a> implementaction.</li>
-</ul></div></cell><cell startpos="189:1-4250" endpos="196:4-4424" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const {toMarkdown, ungroupSections}
+</ul></div></cell><cell startpos="189:1-4251" endpos="196:4-4425" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const {toMarkdown, ungroupSections}
       = lit.parser.utils
 const unGroup = ungroupSections()()
 const tree = unGroup(lit.ast)
