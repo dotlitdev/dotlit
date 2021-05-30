@@ -291,6 +291,11 @@ export const viewer = ({ node, React }) => {
       },
     };
 
+    if (lit.stats.local.value === lit.stats.remote.value) {
+      setContent("Local and Remote match. (No Diff)");
+      return;
+    }
+
     const view = rc(diff, {
       newValue: lit.stats.local.value,
       rightTitle: "local",
