@@ -9,6 +9,7 @@ export const resolveLinks =
   (...args) =>
   (tree, file) => {
     console.log("[Links] Init", file.path, options);
+    options.filepath = options.filepath || file?.data?.canonical || file.path
     return visit(tree, isLink, transform(options));
   };
 
