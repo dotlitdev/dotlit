@@ -152,7 +152,7 @@ function generateBacklinks(files, root) {
 
     return [files.map( (file, index) => {
             file.data = file.data || {}
-            // console.log(file.path, index, manifest[file.path])
+            console.log(file.path, index, file.data.canonical, manifest[file.data.canonical])
             file.data.backlinks = manifest[file.data.canonical].backlinks
             return file
         }), manifest, meta]
