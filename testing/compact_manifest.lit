@@ -92,6 +92,7 @@ return (async (fn) => {
 
   const list = await getList();
 
+  const existed = []
   const duds = [];
   const synced = [];
   const errors = [];
@@ -105,8 +106,10 @@ return (async (fn) => {
             duds.push(n);
             return { local: {}, remote: {} };
           });
-
-        if (!stats.local.stat && stats.remote.stat) {
+        if (stats.local.stat) {
+          existed.push(n)
+        }
+        else if (stats.remote.stat) {
           await lit.fs.writeFile(n, stats.remote.value, {
             localOnly: true,
             encoding: "utf8",
@@ -121,13 +124,17 @@ return (async (fn) => {
     })
   );
   console.log(
-    `Synced ${synced.length}/${list.length} files in ${
+    `Synced ${synced.length + existed.length}/${list.length} files in ${
       (Date.now() - t) / 1000
-    } seconds. Duds: ${duds.length} Errors: ${errors.length}`
+    } seconds. Fetched: ${synced.length} Duds: ${duds.length} Errors: ${errors.length} Skipped: ${existed.length}`
   );
   return { duds, errors };
 })();
 
+```
+```>txt attached=true updated=1622379765281
+Synced 22/159 files in 1.766 seconds. Duds: 0 Errors: 0
+{ duds: [], errors: [] }
 ```
 
 
