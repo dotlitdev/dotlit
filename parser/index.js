@@ -29,7 +29,7 @@ const baseProcessor = ({litroot, files} = {}) => {
         console.log("Parsing file: ", file.path)
         file.data = file.data || {}
         if (file && file.path) {
-            file.data.canonical = decorateLinkNode({url: file.path}).data.canonical
+            file.data.canonical = decorateLinkNode({url: file.path}, '', '/').data.canonical
         }
     })
 
