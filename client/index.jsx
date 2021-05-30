@@ -189,7 +189,7 @@ export const init = async () => {
     if (stats) {
        if (stats.local.mtimeMs < stats.remote.mtimeMs) {
            const delta = DatesToRelativeDelta(stats.local.mtimeMs, stats.remote.mtimeMs) 
-           processedFile.message(`Local file is ${delta} than Remote file.`)
+           if (delta !== 'now') processedFile.message(`Local file is ${delta} than Remote file.`)
        }
     }
 
