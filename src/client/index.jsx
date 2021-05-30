@@ -186,7 +186,12 @@ export const init = async () => {
     file.data.times = times
     
     const processedFile = await renderer.processor({fs,litroot}).process(file)
-    if (stats) processedFile.message(stats.msg)
+    if (stats) {
+       if (stats.local.stat.mtimeMs < stats.remote.stat.mtimeMs) {
+           const delta = DatesToRelativeDelta(stats.local.stat.mtimeMs, stats.remote.stat.mtimeMs) 
+           processedFile.message(`Local file is ${delta} than Remote file.`)
+       }
+    }
 
     console.log("Processed clientside ", file.path)
     window.lit.ast = processedFile.data.ast
