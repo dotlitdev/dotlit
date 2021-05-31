@@ -19,8 +19,6 @@ import { decorateLinkNode } from '../parser/links'
 import { getConsoleForNamespace } from '../utils/console'
 import { Identity } from '../utils/functions'
 
-// import { createServer } from 'http-server'
-
 const console = getConsoleForNamespace('generate')
 
 global.fetch = require("node-fetch")
@@ -93,12 +91,13 @@ function generateBacklinks(files, root) {
         const canonical = path.join('/', file.path)
         if (!file) { console.error('Cannot get links for file.'); return;}
         try {
-        const fileLink = decorateLinkNode({ url: canonical })
+        const fileLink = decorateLinkNode({ url: canonical }, '/')
         const title = file?.data?.frontmatter?.title || `Title TBD (${fileLink.data.canonical})`
         console.log(`[${title}] Adding "${file.path}" as "${fileLink.data.canonical} to manifest."`)
         const links = getLinks(file, root)
         manifest[fileLink.data.canonical] = manifest[fileLink.data.canonical] || {
             backlinks: [],
+            url: fileLink.url,
             exists: true,
             title: title,
             links: links.length,
@@ -113,7 +112,7 @@ function generateBacklinks(files, root) {
         if (!file) return
         try {
         const canonical = path.join('/', file.path)
-        const fileLink = decorateLinkNode({ url: canonical })
+        const fileLink = decorateLinkNode({ url: canonical }, '/')
         const title = file?.data?.frontmatter?.title || path.basename(file.path, path.extname(file.path))
         console.log(`About to get links for file: ${title} (${file.path})`)
         
@@ -136,6 +135,7 @@ function generateBacklinks(files, root) {
                     console.log(`[${title}][${i}] Adding link ${fileLink.data.canonical} to "${link.data.canonical}"`)
                     manifest[link.data.canonical] = {
                         backlinks: [linkNode], 
+                        url: link.url,
                         exists: link.exists || false,
                         type: link.type
                     }
@@ -156,13 +156,6 @@ function generateBacklinks(files, root) {
             file.data.backlinks = manifest[file.data.canonical].backlinks
             return file
         }), manifest, meta]
-}
-
-export function server(cmd) {
-    // return createServer({
-    //     root: cmd.output,
-    //     showDotfiles: false,
-    // })
 }
 
 export function generate(cmd) {

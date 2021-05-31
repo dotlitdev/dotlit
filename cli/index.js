@@ -8,7 +8,7 @@ import {NoOp, Identity, AsInt} from '../utils/functions'
 import {getConsoleForNamespace} from '../utils/console'
 
 import {parse} from '../parser'
-import {generate, server} from './generate'
+import {generate} from './generate'
 
 const console = getConsoleForNamespace('cli')
 
@@ -33,7 +33,7 @@ program
     .usage(betterDescription({
         usage: "[global options] command",
         description: "Literate programming ...",
-        examples: ["lit notebook --open"]
+        examples: ["dotlit generate ./my-notes -o ./output"]
     }))
     .option('-d, --debug Mask', 'Output debugging information', Identity, "")
     .helpOption('-h, --help', 'Output usage information')
@@ -43,12 +43,12 @@ program
     .description('Generate output for all .lit files in a folder')
     .usage(betterDescription({
         usage: "[options] <path>",
-        examples: ["lit generate ./my-notes/ "]
+        examples: ["dotlit generate ./my-notes/ "]
     }))
     .option('-o, --output <path>', 'Output location')
     .option('-b, --base <path>', 'Base path (output prefix)')
     .option('-w, --watch', 'Watch for changes and regenerate')
-    .option('-s, --serve', 'Start and http server for output at port', Identity, 8080)
+    // .option('-s, --serve', 'Start and http server for output at port', Identity, 8080)
     .action((path, cmd)=>{
         cmd.cwd = process.cwd()
         cmd.path = path
@@ -56,13 +56,6 @@ program
         console.log("cmd: generate", path, cmd.base, cmd.cwd, cmd.debug, cmd.output)
         process.env.DEBUG = cmd.debug
         generate(cmd)
-
-        if (cmd.serve) {
-            const s = server(cmd)
-            s.listen( cmd.serve, (...args) => {
-                console.log('HTTP server listening at', cmd.serve)
-            })
-        }
     })
 
 program

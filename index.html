@@ -41,11 +41,29 @@
   &lt;!-- from: https://github.com/vasturiano/force-graph --&gt;
 &lt;/head&gt;
 &lt;body&gt;
+  &lt;div id=&quot;info&quot;&gt;
+    &lt;button id=&quot;fit&quot;&gt;Fit All&lt;/button&gt; &lt;button id=&quot;zoom&quot;&gt;Zoom&lt;/button&gt; &lt;button id=&quot;reheat&quot;&gt;Reheat&lt;/button&gt;
+    &lt;div id=&quot;node-info&quot;&gt;
+      path: &lt;span id=&quot;path&quot;&gt;&lt;/span&gt; title: &lt;span id=&quot;title&quot;&gt;&lt;/span&gt; link: &lt;a id=&quot;link&quot;&gt;Open&lt;/a&gt;
+    &lt;/div&gt; 
+  &lt;/div&gt;
   &lt;div id=&quot;graph&quot;&gt;&lt;/div&gt;
   &lt;script&gt;
     const data = undefined;
     const thisfile = window.parent.lit.location.src
     const elem = document.getElementById(&#x27;graph&#x27;)
+    const info = document.getElementById(&#x27;info&#x27;)
+    const nodeinfo = document.getElementById(&#x27;node-info&#x27;)
+    const path = document.getElementById(&#x27;path&#x27;)
+    const title = document.getElementById(&#x27;title&#x27;)
+    const link = document.getElementById(&#x27;link&#x27;)
+
+    const fit = document.getElementById(&#x27;fit&#x27;)
+    const zoom = document.getElementById(&#x27;zoom&#x27;)
+    const reheat = document.getElementById(&#x27;reheat&#x27;)
+
+    let selected = thisfile
+
     const Graph = ForceGraph()(elem)
         .graphData(data)
         .nodeId(&#x27;id&#x27;)
@@ -54,12 +72,38 @@
         .nodeAutoColorBy(&#x27;type&#x27;)
         // .linkColor(d =&gt; data.nodes[d.source].exists ? &#x27;red&#x27; : &#x27;lightblue&#x27;)
         .linkDirectionalArrowLength(6)
+        .warmupTicks(1000)
+        .d3AlphaMin(0.0001)
+        .d3AlphaDecay(0.01)
+        .d3VelocityDecay(0.01)
+        .linkLabel( link =&gt; link.name)
         .onNodeHover(node =&gt; elem.style.cursor = node ? &#x27;pointer&#x27; : null)
         .onNodeClick(node =&gt; {
           // Center/zoom on node
+          selected = node.id
+          nodeinfo.classList.add(&#x27;show&#x27;)
+          title.innerHTML = node.title
+          path.innerHTML = node.id
+          link.href = node.id
+          link.target = &#x27;__parent&#x27;
           Graph.centerAt(node.x, node.y, 1000);
           Graph.zoom(2, 2000);
         });
+
+    fit.onclick = function() {
+      Graph.zoomToFit(1000, 10, node =&gt; true)
+    }
+
+    zoom.onclick = function() {
+      const { nodes, links } = Graph.graphData()
+      const node = nodes.filter( n =&gt; n.id === selected)[0]
+      Graph.centerAt(node.x, node.y, 1000);
+      Graph.zoom(2, 1000);
+    }
+
+    reheat.onclick = function() {
+      Graph.d3ReheatSimulation()
+    }
 
     setTimeout( () =&gt; {
         const { nodes, links } = Graph.graphData()
@@ -67,7 +111,30 @@
         Graph.centerAt(node.x, node.y, 1000);
         Graph.zoom(2, 1000);
     }, 2000)
+
+
   &lt;/script&gt;
+  &lt;style&gt;
+  #info {
+    padding: 0.4em;
+    background-color: rgba(255,255,255,0.5);
+    position: absolute;
+    top: 0;
+    z-index: 999;
+  }
+
+  #node-info { 
+    display: none;
+  }
+  #node-info.show {
+    display: block;
+  }
+
+  #graph {
+    position: absolute;
+    top: 0px;
+  }
+  &lt;/style&gt;
 &lt;/body&gt;"></iframe></codecell></div></cell><cell startpos="28:1-888" endpos="39:90-1351"><div class="cell-content"><p><strong>☑️ To Do</strong> or <em>in progress</em></p><ul class="contains-task-list">
 <li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->Fragments in <a href="wiki-links.html" title="wiki-links" wikilink="true" filepath="/index.lit" root="" data="[object Object]">wiki-links</a> <a href="testing/links.html" title="testing/Links" wikilink="true" filepath="/index.lit" root="" data="[object Object]">testing/Links</a></li>
 <li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->Remove global fetch hack for nodejs and bundle properly with webpack</li>
