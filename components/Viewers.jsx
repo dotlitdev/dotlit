@@ -2,8 +2,8 @@ import React, {useEffect} from 'react'
 import { getConsoleForNamespace } from '../utils/console'
 import {btoa} from '../utils/safe-encoders'
 
-import {viewer as mdViewer} from './viewers/md'
-import {viewer as graphViewer} from './viewers/graph'
+import {viewer as mdViewer} from '../plugins/viewers/md'
+import {viewer as graphViewer} from '../plugins/viewers/graph'
 
 const console = getConsoleForNamespace('Viewers')
 

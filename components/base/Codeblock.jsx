@@ -4,7 +4,7 @@ import { getConsoleForNamespace } from '../../utils/console'
 import { DatesToRelativeDelta } from '../../utils/momento'
 import Highlight from 'react-highlight.js'
 import SelectionContext from '../SelectionContext'
-import {getViewer} from '../../renderer/Viewers'
+import {getViewer} from '../Viewers'
 import {CodeMeta} from '../CodeMeta'
 
 import { Identity } from '../../utils/functions'
