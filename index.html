@@ -30,10 +30,61 @@
 <p><a href="#meta" filepath="/index.lit" root="" data="[object Object]"><a href="meta.html" title="Meta" wikilink="true" filepath="/index.lit" root="" data="[object Object]">Meta</a><span class="linkIcon">§</span></a></p>
 </li>
 </ul></div></cell></section></section>
-<section depth="2" class="" startpos="15:1-633" endpos="59:90-1708"><cell startpos="15:1-633" endpos="15:9-641"><div class="cell-content"><h2 id="about">About</h2></div></cell><cell startpos="17:1-643" endpos="21:4-818" class="code output"><div class="cell-content"><codecell class="dir-warn lang-md local output"><span class="meta"><span class="lang">md</span><span style="color:white;background-color:#037928" class="directive dir-warn">warn</span></span><div class="md-block dir-warn">
+<section depth="2" class="" startpos="15:1-633" endpos="92:90-10263"><cell startpos="15:1-633" endpos="15:9-641"><div class="cell-content"><h2 id="about">About</h2></div></cell><cell startpos="17:1-643" endpos="21:4-818" class="code output"><div class="cell-content"><codecell class="dir-warn lang-md local output"><span class="meta"><span class="lang">md</span><span style="color:white;background-color:#037928" class="directive dir-warn">warn</span></span><div class="md-block dir-warn">
 <p>⚠️ <strong><code>.lit</code></strong> is still a <em>Work in progress</em>.</p>
 <p>This iteration is a from-scratch rewrite of an [initial prototype], with many features yet to be re-implemented.</p>
-</div></codecell></div></cell><cell startpos="22:1-819" endpos="41:4-1203" class="code"><div class="cell-content"><codecell class="tag-influences lang-uml local"><span class="meta"><span class="lang">uml</span><span class="repl">uml</span><span style="color:black;background-color:#69c9c0" class="tag">influences</span><span class="output">&gt; svg influences.svg</span></span><pre><code class="uml">@startmindmap
+</div></codecell></div></cell><cell startpos="22:1-819" endpos="24:4-903" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><a name="corsProxy"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=proxy</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=corsProxy</span><span class="source">&lt; ./plugins/other/cors-proxy.js</span></span><pre><code class="js">if (typeof lit !== &quot;undefined&quot; &amp;&amp; !window.__runkitCORSProxyEnpoint) {
+  (async (fn) =&gt; {
+    const rkEmbed = document.createElement(&quot;script&quot;);
+    rkEmbed.onload = async (fn) =&gt; {
+      const el = document.createElement(&quot;div&quot;);
+      document.body.appendChild(el);
+      el.setAttribute(&quot;style&quot;, &quot;height:0;&quot;);
+      RunKit.createNotebook({
+        element: el,
+        mode: &quot;endpoint&quot;,
+        onLoad: async (rk) =&gt; {
+          window.__runkitCORSProxyEnpoint = await rk.getEndpointURL();
+          document.body.removeChild(el);
+        },
+        evaluateOnLoad: true,
+        source: await lit.fs.readFile(&quot;/testing/runkit-express-cors-proxy.js&quot;, {
+          encoding: &quot;utf8&quot;,
+        }),
+      });
+    };
+    rkEmbed.setAttribute(&quot;src&quot;, &quot;https://embed.runkit.com&quot;);
+    document.body.appendChild(rkEmbed);
+  })();
+}
+
+export const proxy = async (src, meta, node) =&gt; {
+  if (!window.__runkitCORSProxyEnpoint) {
+    return &quot;Still setting up proxy endpoint&quot;;
+  } else {
+    const getAndReplaceDomain = (originalUrl, newDomain) =&gt; {
+      var url = new URL(originalUrl);
+      const originalDomain = `${url.protocol}//${url.hostname}`;
+      const regExp = new RegExp(`^${originalDomain}`);
+      const str = originalUrl.replace(regExp, newDomain);
+      return [str, originalDomain];
+    };
+
+    const proxyFetch = async (url, opts = {}) =&gt; {
+      const [proxyUrl, target] = getAndReplaceDomain(
+        url,
+        window.__runkitCORSProxyEnpoint
+      );
+      opts.headers = opts.headers || {};
+      opts.headers[&quot;Target-Domain&quot;] = target;
+      return fetch(proxyUrl, opts);
+    };
+
+    return proxyFetch;
+  }
+};
+
+</code></pre></codecell></div></cell><cell startpos="25:1-904" endpos="74:4-9758" class="code"><div class="cell-content"><codecell class="tag-influences lang-uml local"><span class="meta"><span class="lang">uml</span><span class="repl">uml</span><span style="color:black;background-color:#69c9c0" class="tag">influences</span><span class="output">&gt; svg influences.svg</span></span><pre><code class="uml">@startmindmap
 * .lit
 	* Digital Gardens
 		* Tools for Thought
@@ -51,7 +102,35 @@
 				* More Code	
 	* Rapid Prototyping
 @endmindmap
-</code></pre></codecell></div></cell><cell startpos="45:1-1207" endpos="46:4-1243" class="code"><div class="cell-content"><codecell class="dir-inline lang-graph local"><span class="meta"><span class="lang">graph</span><span style="color:black;background-color:#b96da2" class="directive dir-inline">inline</span><span class="source">&lt; manifest.json</span></span><iframe class="inline" srcDoc="&lt;!DOCTYPE html&gt;
+</code></pre></codecell><codecell class="lang-svg local output"><a name="influences.svg"></a><span class="meta"><span class="lang">svg</span><span class="filename">influences.svg</span><span class="updatedAt">Updated <span class="Time relative">2m ago</span></span></span><div><?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="528px" preserveAspectRatio="none" style="width:690px;height:528px;background:#FFFFFF;" version="1.1" viewBox="0 0 690 528" width="690px" zoomAndPan="magnify"><defs><filter height="300%" id="f1bel4rybbcjsm" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><rect fill="#FEFECE" filter="url(#f1bel4rybbcjsm)" height="36.2969" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1.5;" width="40" x="10" y="245.1875"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="20" x="20" y="268.1826">.lit</text><rect fill="#FEFECE" filter="url(#f1bel4rybbcjsm)" height="36.2969" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1.5;" width="130" x="100" y="76.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="110" x="110" y="99.292">Digital Gardens</text><rect fill="#FEFECE" filter="url(#f1bel4rybbcjsm)" height="36.2969" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1.5;" width="147" x="280" y="20"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="127" x="290" y="42.9951">Tools for Thought</text><path d="M230,94.4453 L240,94.4453 C255,94.4453 255,38.1484 270,38.1484 L280,38.1484 " fill="none" style="stroke:#A80036;stroke-width:1.0;"/><rect fill="#FEFECE" filter="url(#f1bel4rybbcjsm)" height="36.2969" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1.5;" width="146" x="280" y="76.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="126" x="290" y="99.292">Learning in Public</text><rect fill="#FEFECE" filter="url(#f1bel4rybbcjsm)" height="36.2969" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1.5;" width="146" x="476" y="76.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="126" x="486" y="99.292">Thinking in Public</text><path d="M426,94.4453 L436,94.4453 C451,94.4453 451,94.4453 466,94.4453 L476,94.4453 " fill="none" style="stroke:#A80036;stroke-width:1.0;"/><path d="M230,94.4453 L240,94.4453 C255,94.4453 255,94.4453 270,94.4453 L280,94.4453 " fill="none" style="stroke:#A80036;stroke-width:1.0;"/><rect fill="#FEFECE" filter="url(#f1bel4rybbcjsm)" height="36.2969" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1.5;" width="147" x="280" y="132.5938"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="127" x="290" y="155.5889">Knowledge Graph</text><path d="M230,94.4453 L240,94.4453 C255,94.4453 255,150.7422 270,150.7422 L280,150.7422 " fill="none" style="stroke:#A80036;stroke-width:1.0;"/><path d="M50,263.3359 L60,263.3359 C75,263.3359 75,94.4453 90,94.4453 L100,94.4453 " fill="none" style="stroke:#A80036;stroke-width:1.0;"/><rect fill="#FEFECE" filter="url(#f1bel4rybbcjsm)" height="36.2969" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1.5;" width="179" x="100" y="245.1875"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="159" x="110" y="268.1826">Literate Programming</text><rect fill="#FEFECE" filter="url(#f1bel4rybbcjsm)" height="36.2969" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1.5;" width="168" x="329" y="188.8906"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="148" x="339" y="211.8857">Read Eval Print Loop</text><path d="M279,263.3359 L289,263.3359 C304,263.3359 304,207.0391 319,207.0391 L329,207.0391 " fill="none" style="stroke:#A80036;stroke-width:1.0;"/><rect fill="#FEFECE" filter="url(#f1bel4rybbcjsm)" height="36.2969" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1.5;" width="91" x="329" y="245.1875"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="71" x="339" y="268.1826">Runbooks</text><path d="M279,263.3359 L289,263.3359 C304,263.3359 304,263.3359 319,263.3359 L329,263.3359 " fill="none" style="stroke:#A80036;stroke-width:1.0;"/><rect fill="#FEFECE" filter="url(#f1bel4rybbcjsm)" height="36.2969" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1.5;" width="182" x="329" y="301.4844"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="162" x="339" y="324.4795">Interactive Notebooks</text><path d="M279,263.3359 L289,263.3359 C304,263.3359 304,319.6328 319,319.6328 L329,319.6328 " fill="none" style="stroke:#A80036;stroke-width:1.0;"/><path d="M50,263.3359 L60,263.3359 C75,263.3359 75,263.3359 90,263.3359 L100,263.3359 " fill="none" style="stroke:#A80036;stroke-width:1.0;"/><rect fill="#FEFECE" filter="url(#f1bel4rybbcjsm)" height="36.2969" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1.5;" width="136" x="100" y="385.9297"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="116" x="110" y="408.9248">Guided Learning</text><rect fill="#FEFECE" filter="url(#f1bel4rybbcjsm)" height="36.2969" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1.5;" width="130" x="286" y="357.7813"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="110" x="296" y="380.7764">Show don't Tell</text><path d="M236,404.0781 L246,404.0781 C261,404.0781 261,375.9297 276,375.9297 L286,375.9297 " fill="none" style="stroke:#A80036;stroke-width:1.0;"/><rect fill="#FEFECE" filter="url(#f1bel4rybbcjsm)" height="36.2969" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1.5;" width="80" x="286" y="414.0781"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="60" x="296" y="437.0732">No Code</text><rect fill="#FEFECE" filter="url(#f1bel4rybbcjsm)" height="36.2969" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1.5;" width="89" x="416" y="414.0781"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="69" x="426" y="437.0732">Low Code</text><rect fill="#FEFECE" filter="url(#f1bel4rybbcjsm)" height="36.2969" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1.5;" width="116" x="555" y="414.0781"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="77" x="565" y="437.0732">More Code</text><path d="M505,432.2266 L515,432.2266 C530,432.2266 530,432.2266 545,432.2266 L555,432.2266 " fill="none" style="stroke:#A80036;stroke-width:1.0;"/><path d="M366,432.2266 L376,432.2266 C391,432.2266 391,432.2266 406,432.2266 L416,432.2266 " fill="none" style="stroke:#A80036;stroke-width:1.0;"/><path d="M236,404.0781 L246,404.0781 C261,404.0781 261,432.2266 276,432.2266 L286,432.2266 " fill="none" style="stroke:#A80036;stroke-width:1.0;"/><path d="M50,263.3359 L60,263.3359 C75,263.3359 75,404.0781 90,404.0781 L100,404.0781 " fill="none" style="stroke:#A80036;stroke-width:1.0;"/><rect fill="#FEFECE" filter="url(#f1bel4rybbcjsm)" height="36.2969" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1.5;" width="152" x="100" y="470.375"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="132" x="110" y="493.3701">Rapid Prototyping</text><path d="M50,263.3359 L60,263.3359 C75,263.3359 75,488.5234 90,488.5234 L100,488.5234 " fill="none" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[060c2d28908fe0d007103fa1f718d95a]
+@startmindmap
+* .lit
+	* Digital Gardens
+		* Tools for Thought
+		* Learning in Public
+			* Thinking in Public
+		* Knowledge Graph
+	* Literate Programming
+		* Read Eval Print Loop
+		* Runbooks
+		* Interactive Notebooks
+	* Guided Learning
+		* Show don't Tell
+		* No Code
+			* Low Code
+				* More Code	
+	* Rapid Prototyping
+@endmindmap
+
+PlantUML version 1.2021.7(Sun May 23 12:40:07 UTC 2021)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>
+</div></codecell></div></cell><cell startpos="78:1-9762" endpos="79:4-9798" class="code"><div class="cell-content"><codecell class="dir-inline lang-graph local"><span class="meta"><span class="lang">graph</span><span style="color:black;background-color:#b96da2" class="directive dir-inline">inline</span><span class="source">&lt; manifest.json</span></span><iframe class="inline" srcDoc="&lt;!DOCTYPE html&gt;
 &lt;head&gt;
   &lt;!-- false --&gt;
   &lt;style&gt; body { margin: 0; } &lt;/style&gt;
@@ -153,7 +232,7 @@
     top: 0px;
   }
   &lt;/style&gt;
-&lt;/body&gt;"></iframe></codecell></div></cell><cell startpos="48:1-1245" endpos="59:90-1708"><div class="cell-content"><p><strong>☑️ To Do</strong> or <em>in progress</em></p><ul class="contains-task-list">
+&lt;/body&gt;"></iframe></codecell></div></cell><cell startpos="81:1-9800" endpos="92:90-10263"><div class="cell-content"><p><strong>☑️ To Do</strong> or <em>in progress</em></p><ul class="contains-task-list">
 <li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->Fragments in <a href="wiki-links.html" title="wiki-links" wikilink="true" filepath="/index.lit" root="" data="[object Object]">wiki-links</a> <a href="testing/links.html" title="testing/Links" wikilink="true" filepath="/index.lit" root="" data="[object Object]">testing/Links</a></li>
 <li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->Remove global fetch hack for nodejs and bundle properly with webpack</li>
 <li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->Experiments and <a href="testing/index.html" title="testing/index|Investigations" wikilink="true" filepath="/index.lit" root="" data="[object Object]">testing/index|Investigations</a></li>
@@ -164,9 +243,9 @@
 <li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->Document with No sections fails</li>
 <li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->Inline <!-- -->html<!-- --> in Markdown source not surviving to final rendered output.</li>
 </ul></div></cell></section>
-<section depth="2" class="" startpos="61:1-1710" endpos="66:229-1986"><cell startpos="61:1-1710" endpos="61:19-1728"><div class="cell-content"><h2 id="getting-started">Getting Started</h2></div></cell><section depth="3" class="" startpos="64:1-1731" endpos="66:229-1986"><cell startpos="64:1-1731" endpos="66:229-1986"><div class="cell-content"><h3 id="starter-template-repo">Starter template repo</h3><p>While <code>.lit</code> is still under active development and not quite ready for prime time, you can fork this <a href="https://github.com/dotlitdev/dotlit-starter" filepath="/index.lit" root="" data="[object Object]">GitHub template repository<span class="linkIcon">↗</span></a> to deploy your own &quot;instance&quot; hosted on GitHub Pages.</p></div></cell></section></section>
-<section depth="3" class="" startpos="68:1-1988" endpos="70:86-2100"><cell startpos="68:1-1988" endpos="70:86-2100"><div class="cell-content"><h3 id="from-the-command-line">From the command line</h3><p>To use <code>.lit</code> from the command line, see usage and documentation <a href="cli/cli.html" filepath="/index.lit" root="" data="[object Object]">here</a>.</p></div></cell></section>
-<section depth="2" class="" startpos="72:1-2102" endpos="81:20-2352"><cell startpos="72:1-2102" endpos="81:20-2352"><div class="cell-content"><h2 id="documentation">Documentation</h2><p>Currently my <a href="scratch_pad.html" title="Scratch ⚠️ Pad 🔬" wikilink="true" filepath="/index.lit" root="" data="[object Object]">Scratch ⚠️ Pad 🔬</a> is the closest thing to documentation, start there for now.</p><ol>
+<section depth="2" class="" startpos="94:1-10265" endpos="99:229-10541"><cell startpos="94:1-10265" endpos="94:19-10283"><div class="cell-content"><h2 id="getting-started">Getting Started</h2></div></cell><section depth="3" class="" startpos="97:1-10286" endpos="99:229-10541"><cell startpos="97:1-10286" endpos="99:229-10541"><div class="cell-content"><h3 id="starter-template-repo">Starter template repo</h3><p>While <code>.lit</code> is still under active development and not quite ready for prime time, you can fork this <a href="https://github.com/dotlitdev/dotlit-starter" filepath="/index.lit" root="" data="[object Object]">GitHub template repository<span class="linkIcon">↗</span></a> to deploy your own &quot;instance&quot; hosted on GitHub Pages.</p></div></cell></section></section>
+<section depth="3" class="" startpos="101:1-10543" endpos="103:86-10655"><cell startpos="101:1-10543" endpos="103:86-10655"><div class="cell-content"><h3 id="from-the-command-line">From the command line</h3><p>To use <code>.lit</code> from the command line, see usage and documentation <a href="cli/cli.html" filepath="/index.lit" root="" data="[object Object]">here</a>.</p></div></cell></section>
+<section depth="2" class="" startpos="105:1-10657" endpos="114:20-10907"><cell startpos="105:1-10657" endpos="114:20-10907"><div class="cell-content"><h2 id="documentation">Documentation</h2><p>Currently my <a href="scratch_pad.html" title="Scratch ⚠️ Pad 🔬" wikilink="true" filepath="/index.lit" root="" data="[object Object]">Scratch ⚠️ Pad 🔬</a> is the closest thing to documentation, start there for now.</p><ol>
 <li>A gentle introduction to Markdown</li>
 <li>Sections &amp; Cells</li>
 <li>Code Cells<!-- -->
@@ -177,13 +256,13 @@
 </ol>
 </li>
 </ol></div></cell></section>
-<section depth="2" class="" startpos="85:1-2356" endpos="89:168-2554"><cell startpos="85:1-2356" endpos="85:18-2373"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><section depth="3" class="" startpos="87:1-2375" endpos="89:168-2554"><cell startpos="87:1-2375" endpos="89:168-2554"><div class="cell-content"><h3 id="parser">Parser</h3><p>Built atop the unified ecosystem, specifically remark, which takes <code>.lit</code> Markdown source and outputs <code>.lit</code> AST (Abstract Syntax Tree). <a href="parser/parser.html" filepath="/index.lit" root="" data="[object Object]">Read More</a></p></div></cell></section></section>
-<section depth="3" class="" startpos="91:1-2556" endpos="93:147-2716"><cell startpos="91:1-2556" endpos="93:147-2716"><div class="cell-content"><h3 id="renderer">Renderer</h3><p>The default render output is <code>html</code> which includes client-side <code>javascript</code> which hydrates a React application. <a href="renderer/renderer.html" filepath="/index.lit" root="" data="[object Object]">Read More</a></p></div></cell></section>
-<section depth="3" class="" startpos="95:1-2718" endpos="97:273-3002"><cell startpos="95:1-2718" endpos="97:273-3002"><div class="cell-content"><h3 id="client">Client</h3><p>The static html generated by <code>.lit</code> does not <em>require</em> JavaScript to function for the reader. But by default includes a client bundle which re-hydrates the page to become fully interactive, enabling editing of the original document in place. <a href="client/client.html" filepath="/index.lit" root="" data="[object Object]">Read more</a></p></div></cell></section>
-<section depth="3" class="" startpos="99:1-3004" endpos="101:137-3153"><cell startpos="99:1-3004" endpos="101:137-3153"><div class="cell-content"><h3 id="plugins">Plugins</h3><p><code>.lit</code> has a flexible <a href="plugin_system.html" title="Plugin system" wikilink="true" filepath="/index.lit" root="" data="[object Object]">Plugin system</a>, primarily to allow the author to create custom Viewers and REPLs but also includes other types.</p></div></cell></section>
-<section depth="3" class="" startpos="105:1-3157" endpos="107:167-3339"><cell startpos="105:1-3157" endpos="107:167-3339"><div class="cell-content"><h3 id="filesystem">Filesystem</h3><p>Implemented on top of LightningFS on the client side with pass through reads and writes to a remote backend -- currently GitHub API. <a href="filesystem/index.html" filepath="/index.lit" root="" data="[object Object]">Read more</a></p></div></cell></section>
-<section depth="3" class="" startpos="109:1-3341" endpos="111:149-3500"><cell startpos="109:1-3341" endpos="111:149-3500"><div class="cell-content"><h3 id="utils">Utils</h3><p>Collection of utilities used throughout <code>.lit</code> which should probably be extracted and published as individual packages. <a href="utils/index.html" filepath="/index.lit" root="" data="[object Object]">Read more</a></p></div></cell></section>
-<section depth="2" class="" startpos="115:1-3504" endpos="123:4-3623"><cell startpos="115:1-3504" endpos="115:12-3515"><div class="cell-content"><h2 id="meta"><a href="meta.html" title="Meta" wikilink="true" filepath="/index.lit" root="" data="[object Object]">Meta</a></h2></div></cell><cell startpos="119:1-3519" endpos="123:4-3623" class="code"><div class="cell-content"><codecell class="dir-below tag-styling tag-tweaks lang-css local"><span class="meta"><span class="lang">css</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span><span class="attribute attr-viewer" style="color:black;background-color:#cf5332">viewer=style</span><span style="color:white;background-color:#903a92" class="tag">styling</span><span style="color:black;background-color:#ccae78" class="tag">tweaks</span></span><pre><code class="css">#lit-header {
+<section depth="2" class="" startpos="118:1-10911" endpos="122:168-11109"><cell startpos="118:1-10911" endpos="118:18-10928"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><section depth="3" class="" startpos="120:1-10930" endpos="122:168-11109"><cell startpos="120:1-10930" endpos="122:168-11109"><div class="cell-content"><h3 id="parser">Parser</h3><p>Built atop the unified ecosystem, specifically remark, which takes <code>.lit</code> Markdown source and outputs <code>.lit</code> AST (Abstract Syntax Tree). <a href="parser/parser.html" filepath="/index.lit" root="" data="[object Object]">Read More</a></p></div></cell></section></section>
+<section depth="3" class="" startpos="124:1-11111" endpos="126:147-11271"><cell startpos="124:1-11111" endpos="126:147-11271"><div class="cell-content"><h3 id="renderer">Renderer</h3><p>The default render output is <code>html</code> which includes client-side <code>javascript</code> which hydrates a React application. <a href="renderer/renderer.html" filepath="/index.lit" root="" data="[object Object]">Read More</a></p></div></cell></section>
+<section depth="3" class="" startpos="128:1-11273" endpos="130:273-11557"><cell startpos="128:1-11273" endpos="130:273-11557"><div class="cell-content"><h3 id="client">Client</h3><p>The static html generated by <code>.lit</code> does not <em>require</em> JavaScript to function for the reader. But by default includes a client bundle which re-hydrates the page to become fully interactive, enabling editing of the original document in place. <a href="client/client.html" filepath="/index.lit" root="" data="[object Object]">Read more</a></p></div></cell></section>
+<section depth="3" class="" startpos="132:1-11559" endpos="134:137-11708"><cell startpos="132:1-11559" endpos="134:137-11708"><div class="cell-content"><h3 id="plugins">Plugins</h3><p><code>.lit</code> has a flexible <a href="plugin_system.html" title="Plugin system" wikilink="true" filepath="/index.lit" root="" data="[object Object]">Plugin system</a>, primarily to allow the author to create custom Viewers and REPLs but also includes other types.</p></div></cell></section>
+<section depth="3" class="" startpos="138:1-11712" endpos="140:167-11894"><cell startpos="138:1-11712" endpos="140:167-11894"><div class="cell-content"><h3 id="filesystem">Filesystem</h3><p>Implemented on top of LightningFS on the client side with pass through reads and writes to a remote backend -- currently GitHub API. <a href="filesystem/index.html" filepath="/index.lit" root="" data="[object Object]">Read more</a></p></div></cell></section>
+<section depth="3" class="" startpos="142:1-11896" endpos="144:149-12055"><cell startpos="142:1-11896" endpos="144:149-12055"><div class="cell-content"><h3 id="utils">Utils</h3><p>Collection of utilities used throughout <code>.lit</code> which should probably be extracted and published as individual packages. <a href="utils/index.html" filepath="/index.lit" root="" data="[object Object]">Read more</a></p></div></cell></section>
+<section depth="2" class="" startpos="148:1-12059" endpos="156:4-12178"><cell startpos="148:1-12059" endpos="148:12-12070"><div class="cell-content"><h2 id="meta"><a href="meta.html" title="Meta" wikilink="true" filepath="/index.lit" root="" data="[object Object]">Meta</a></h2></div></cell><cell startpos="152:1-12074" endpos="156:4-12178" class="code"><div class="cell-content"><codecell class="dir-below tag-styling tag-tweaks lang-css local"><span class="meta"><span class="lang">css</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span><span class="attribute attr-viewer" style="color:black;background-color:#cf5332">viewer=style</span><span style="color:white;background-color:#903a92" class="tag">styling</span><span style="color:black;background-color:#ccae78" class="tag">tweaks</span></span><pre><code class="css">#lit-header {
   box-shadow: 0 2px 0 0 rgba(0,0,0,.01);
 }
 </code></pre><style>#lit-header {
