@@ -1,6 +1,6 @@
 # 🎨 Styling & Themes
 
-You can add custom styles using the `css` viewer, see [[renderer/viewers]] but you can also add a `theme` property to a documents frontmatter like so:
+You can add custom styles using the `css` viewer, see [[Viewers]] but you can also add a `theme` property to a documents frontmatter like so:
 
 <!-- data
 title: 🎨 Styling & Themes
@@ -12,6 +12,30 @@ theme: https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/solariz
     theme: https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/solarized-light.min.css
     -->
 
+```js !plugin type=viewer of=codetheme !collapse
+const themes = ["a11y-dark", "a11y-light", "agate", "an-old-hope", "androidstudio", "arduino-light", "arta", "ascetic", "atom-one-dark", "atom-one-dark-reasonable", "atom-one-light", "brown-paper", "codepen-embed", "color-brewer", "dark", "default", "devibeans", "docco", "far", "foundation", "github", "github-dark", "github-dark-dimmed", "gml", "googlecode", "gradient-dark", "gradient-light", "grayscale", "hybrid", "idea", "ir-black", "isbl-editor-dark", "isbl-editor-light", "kimbie-dark", "kimbie-light", "lightfair", "lioshi", "magula", "mono-blue", "monokai", "monokai-sublime", "night-owl", "nnfx-dark", "nnfx-light", "nord", "obsidian", "paraiso-dark", "paraiso-light", "pojoaque", "purebasic", "qtcreator-dark", "qtcreator-light", "rainbow", "routeros", "school-book", "shades-of-purple", "srcery", "stackoverflow-dark", "stackoverflow-light", "sunburst", "tomorrow-night-blue", "tomorrow-night-bright", "vs", "vs2015", "xcode", "xt256"]
+
+const endpoint = theme => `//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/${theme}.min.css`
+
+export const viewer = ({node, React}) => {
+    const {useState} = React
+    const [theme,setTheme] = useState('default')
+    const change = ev => setTheme(ev.target.value)
+    return <div>
+        <select onChange={change}>
+            {themes.map( t => {
+                return <option key={t} value={t}>{t}</option>
+            })}
+        </select>
+        <link rel="stylesheet" href={endpoint(theme)} />
+    </div>
+}
+```
+
+```>codetheme
+Pick a code theme.
+```
+
 ```styl !collapse < ../client/style.styl
 
 ```
@@ -20,56 +44,7 @@ theme: https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/solariz
 
 ```
 
-```styl ../client/styles/codecell.styl !collapse remote=true < ../client/styles/codecell.styl
-codecell
-    code-cell-spacing = 0.4em
-
-    & > .meta
-        font-family monospace
-
-        .lang
-            font-weight bold
-            margin-right code-cell-spacing
-        
-        .repl
-            font-style: italic
-            color: tint(black, 60%)
-            margin-right code-cell-spacing
-
-        .filename
-            color: tint(black, 60%)
-            margin-right code-cell-spacing
-        
-        ul, ol
-            display inline-flex
-            margin 0
-            padding 0
-            list-style none
-            float right
-            
-            li 
-                padding 0 (code-cell-spacing / 2)
-                margin 0 (code-cell-spacing / 2)
-                border-radius 2px
-                background-color: tint(black, 90%)
-        .tag
-            &:before
-                content '#'
-        .directive
-            &:before
-                content '!'
-    & pre
-        margin: 0
-        padding: code-cell-spacing
-        min-height: 1em
-        xbackground-color: darkslategrey
-        xcolor: white
-        white-space: pre-wrap
-    
-    & > output > pre
-        background-color: white
-        color: black
-
+```styl < ../client/styles/codecell.styl
 ```
 
 ```styl !collapse < ../client/styles/cellmenu.styl
