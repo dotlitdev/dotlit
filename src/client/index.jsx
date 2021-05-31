@@ -147,8 +147,7 @@ export const init = async () => {
         if (resp.local.stat && resp.remote.stat) {
             const ageMessage = DatesToRelativeDelta(resp.local.stat.mtimeMs, resp.remote.stat.mtimeMs)
             times.ageMessage = ageMessage
-            stats = {local: resp.local.stat, remote: resp.remote.stat, msg: ageMessage}
-            window.lit.stats = resp
+            stats = window.lit.stats = resp
             console.log(`Local file is ${ageMessage} than remote file.`)
         }
         
@@ -188,10 +187,12 @@ export const init = async () => {
     
     const processedFile = await renderer.processor({fs,litroot}).process(file)
     if (stats) {
-       if (stats.local.mtimeMs < stats.remote.mtimeMs) {
-           const delta = DatesToRelativeDelta(stats.local.mtimeMs, stats.remote.mtimeMs) 
-           if (delta !== 'now') processedFile.message(`Local file is ${delta} than Remote file.`)
-       }
+        const remoteNewer = stats.local.stat.mtimeMs < stats.remote.stat.mtimeMs
+        const hasDiff = stats.local.value !== stats.remote.value
+        if (remoteNewer && hasDiff) {
+           const delta = DatesToRelativeDelta(stats.local.stat.mtimeMs, stats.remote.stat.mtimeMs) 
+           if (delta !== 'now') processedFile.message(`Local file is ${delta} than Remote file. (has Diff)`)
+        }
     }
 
     console.log("Processed clientside ", file.path)
