@@ -451,46 +451,7 @@ export const repl = (src) => {
 
 
 
-### Multi select menu
-```js !plugin !collapse id=selection type=sectionmenu
-export const sectionmenu = (ctx, { React, Menu }) => {
-  const rc = React.createElement;
 
-  const secFromCell = (pos) => {
-    const { filter, select, selectPosition } = lit.utils.unist;
-    const secs = selectPosition.selectAll("section", ctx.selectedCell, lit.ast);
-    const last = secs.slice(-1)[0];
-    console.log("Sections", secs, last);
-    return last.position;
-  };
-
-  const selectAll = rc(
-    "span",
-    { onClick: () => ctx.setSelectedCell(lit.ast.position) },
-    "Select All"
-  );
-
-  const selectSec = rc(
-    "span",
-    {
-      onClick: () => {
-        ctx.setSelectedCell(secFromCell(ctx.selectedCell));
-      },
-    },
-    "Select Section"
-  );
-
-  return rc(
-    Menu,
-    {
-      title: "Selection",
-      disabled: false,
-    },
-    [selectAll, selectSec]
-  );
-};
-
-```
 
 ### `json2` viewer
 *Implementation:*
