@@ -290,16 +290,16 @@ export const viewer = ({ node, React }) => {
         padding: 0,
       },
     };
-
-    if (lit.stats.local.value === lit.stats.remote.value) {
+    const stats = lit.fs.readStat(src);
+    if (stats.local.value === stats.remote.value) {
       setContent("Local and Remote match. (No Diff)");
       return;
     }
 
     const view = rc(diff, {
-      newValue: lit.stats.local.value,
+      newValue: stats.local.value,
       rightTitle: "local",
-      oldValue: lit.stats.remote.value,
+      oldValue: stats.remote.value,
       leftTitle: "remote",
       splitView: meta && meta.split === "true",
       styles,
