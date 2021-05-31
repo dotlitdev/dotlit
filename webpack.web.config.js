@@ -1,10 +1,11 @@
 const path = require('path')
 const webpack = require('webpack')
 // const nodeExternals = require('webpack-node-externals')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const { spawn } = require('child_process')
 const distDir = path.resolve(__dirname, './dist')
-const stage = "development"
+const stage = "production"
 
 module.exports = {
   mode: stage,
@@ -89,6 +90,9 @@ module.exports = {
     new webpack.ProvidePlugin({
       Buffer: ['buffer', 'Buffer'],
     }),
+    // new BundleAnalyzerPlugin({
+    //   analyzerMode: 'static',
+    // }),
   ],
   devtool: 'cheap-source-map',
   devServer: {
