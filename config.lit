@@ -419,6 +419,438 @@ So to bypass CORS we need a proxy, see [[testing/runkit]] for an example nodejs 
 Fixed see [[testing/Cors Proxy]] for example
 
 ```js !plugin id=2tabs
+export const transformer = ({ src }) => {
+  return src.replace(/^\s/g, "\t");
+};
+
+```
+```js !plugin id=echo
+export const repl = (src) => {
+  return src;
+};
+
+```
+# `.lit` Settings
+
+This file is special in that it is parsed and any `!plugins` it contains are pre-populated for all other `.lit` documents in this `.lit` notebook.
+
+
+
+
+
+## Table of Contents
+
+
+## Settings 
+
+Not yet Implemented the below are mocks while we decide on the interface. Just another kind of `!plugin`? data exports could work the same...
+### GitHub 
+
+Set up a GitHub repository to save your updates to. Just run the *Cell* below. *Requires a [GitHub Access Token](https://github.com/settings/tokens)*.
+
+
+
+
+
+
+
+
+
+```js #connect #github !collapse > md
+const settings = {
+    username: "dotlitdev",
+    repository: "dotlit",
+    branch: "main",
+    prefix: "src",
+};
+
+return (async (fn) => {
+  if (typeof localStorage === "undefined") return "No localStorage available.";
+
+  const __key = "ghSettings";
+  const display = fn => {
+      const redacted = Object.assign({token:'••••••••••'}, settings, {})
+      return ("`"+lit.utils.inspect(redacted)+"`")
+             .split('\n')
+             .map(l=>'> '+l)
+             .join('\n')
+  }
+
+  const current = localStorage.getItem(__key);
+
+  if (current) {
+    let data = JSON.parse(current);
+    if (data && data.token) return "Already set up.\n\n" + display();
+  }
+
+  const token = prompt(
+    `Enter a GitHub Access Token for:\n Repository: ${settings.username}/${settings.repository}`
+  );
+
+  if (token) {
+    localStorage.setItem(__key, JSON.stringify({ ...settings, token }));
+    return "All set up.\n\n" + display();
+  }
+
+  return "No **token** provided. Not set up.\n\n" + display();
+})();
+
+```
+```>md attached=true updated=1622326385039
+All set up.
+
+> `{ token: '••••••••••',
+>   username: 'dotlitdev',
+>   repository: 'dotlit',
+>   branch: 'main',
+>   prefix: 'src' }`
+```
+
+
+
+
+
+```js
+const all = lit.file.data.plugins
+return Object.keys(all).map(t=>`${t} (${Object.keys(all[t]).length})`)
+```
+```>txt attached=true updated=1622067614673
+[ 'unknown (0)',
+  'viewer (4)',
+  'transformer (1)',
+  'cellmenu (1)',
+  'sectionmenu (1)',
+  'repl (1)' ]
+```
+
+
+
+
+
+
+
+
+## Custom plugins
+
+```>md !info
+ℹ️ Move, copy or *transclude* any document specific `!plugin` here to have it apply to all documents.
+```
+
+```js !plugin of=esm !collapse < ../plugins/viewers/esm.js 
+
+```
+
+### Prettier `js` transformer
+
+See [[testing/Autoformatting cell source]]
+
+```js !plugin type=transformer of=js !collapse <   ../plugins/transformers/prettier.js 
+
+```
+
+### Upload file
+
+Ref: https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications
+
+```js !plugin type=viewer of=upload !collapse
+export const viewer = ({ node, React }) => {
+  const { useState } = React;
+  const [uploads, setUploads] = useState([]);
+
+  const handleFiles = (ev) => {
+    const files = ev.target.files;
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const reader = new FileReader();
+      reader.onload = ((i, file) => async (e) => {
+        const filename = prompt(
+          "Enter a file name and path:",
+          `/testing/uploads/${file.name}`
+        );
+        if (!filename || !filename.trim()) return;
+
+        const data = e.target.result;
+        try {
+          await lit.fs.writeFile(filename, data);
+        } catch (err) {
+          alert(err.message);
+        }
+        setUploads([...uploads, [filename, data]]);
+      })(i, file);
+      // reader.readAsDataURL(file);
+      reader.readAsBinaryString(file);
+    }
+  };
+  return (
+    <div>
+      <input onChange={handleFiles} type="file" />
+      <div>
+        {uploads.map((upload) => (
+          <span>{upload[0]}/</span>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+```
+
+```>upload #usage
+
+```
+
+### Detach/delete attached output
+
+```js !plugin type=cellmenu id=outputs !collapse
+export const cellmenu = (ctx, { React, Menu }) => {
+  const sel = lit.utils.unist.selectPosition.selectAll;
+  const pos = ctx.selectedCell;
+  const tree = lit.file.data.ast;
+  const [attached] = pos
+    ? sel("code,mdblock", pos, tree).filter(
+        (code) => code?.data?.meta?.attrs?.attached
+      )
+    : [];
+
+  const detach = (ctx) => (del) => (ev) => {
+    if (del) ctx.setSrc(attached.position, "");
+    else {
+      const { toMarkdown, ungroupSections } = lit.parser.utils;
+      attached.meta = attached.meta.replace(/\s?attached=true/, "");
+      const root = { type: "root", children: [attached] };
+
+      const md = toMarkdown(root);
+      ctx.setSrc(attached.position, md);
+    }
+  };
+
+  return (
+    <Menu disabled={!attached} title="Output">
+      <span disabled={!ctx.selectedCell} onClick={detach(ctx)()}>
+        Detach Output
+      </span>
+      <span disabled={!ctx.selectedCell} onClick={detach(ctx)(true)}>
+        Delete Output
+      </span>
+    </Menu>
+  );
+};
+
+```
+
+### Multi select menu
+```js !plugin !collapse id=selection type=sectionmenu
+export const sectionmenu = (ctx, { React, Menu }) => {
+  const rc = React.createElement;
+
+  const secFromCell = (pos) => {
+    const { filter, select, selectPosition } = lit.utils.unist;
+    const secs = selectPosition.selectAll("section", ctx.selectedCell, lit.ast);
+    const last = secs.slice(-1)[0];
+    console.log("Sections", secs, last);
+    return last.position;
+  };
+
+  const selectAll = rc(
+    "span",
+    { onClick: () => ctx.setSelectedCell(lit.ast.position) },
+    "Select All"
+  );
+
+  const selectSec = rc(
+    "span",
+    {
+      onClick: () => {
+        ctx.setSelectedCell(secFromCell(ctx.selectedCell));
+      },
+    },
+    "Select Section"
+  );
+
+  return rc(
+    Menu,
+    {
+      title: "Selection",
+      disabled: false,
+    },
+    [selectAll, selectSec]
+  );
+};
+
+```
+
+### `json2` viewer
+*Implementation:*
+
+```js !plugin of=json2 type=viewer !collapse
+// see https://github.com/mac-s-g/react-json-view
+import reactJsonView from 'https://cdn.skypack.dev/react-json-view'
+
+export const viewer = ({node, React}) => {
+  const rc = React.createElement
+  let obj
+  try { obj = JSON.parse(node.data.value)
+  } catch(err) {}
+  return rc( 'div', {className: 'json-viewer', onClick:ev=>{ev.preventDefault(); ev.stopPropagation(); return false;}}, rc(reactJsonView, {
+    src: obj,
+    collapseStringsAfterLength: 20,
+    collapsed: node.properties.meta.collapse || 1,
+  }))
+}
+```
+
+*Example usage:*
+
+```json2 !inline < ../manifest.json
+{"foo": ["bar", "baz", "qux"]}
+```
+
+```js !xplugin type=viewer of=json3 !collapse
+import reactJsonTree from 'https://cdn.skypack.dev/react-json-tree'
+
+export const viewer = ({node, React}) => {
+  const rc = React.createElement
+  console.log('reactJsonTree', reactJsonTree)
+  let obj
+  try { obj = JSON.parse(node.data.value)
+  } catch(err) {}
+  return rc( 'div', {className: 'json-viewer',xonClick:ev=>{ev.preventDefault(); ev.stopPropagation(); return false;}}, rc(reactJsonTree, {
+    data: { "test" : "foo" },
+  }))
+}
+```
+
+```>json3 !inline < ../manifest.json
+```
+
+### CORS Proxy
+
+*Cors proxy see [[testing/Cors proxy]]*
+
+```js !xplugin type=proxy id=corsProxy !collapse < ./plugins/other/cors-proxy.js
+
+```
+
+### Plant`uml` viewer & repl
+Uses [plantuml.com](https://plantuml.com) to create `svg` images from `uml` source. Not included as a default viewer due to the external dependency, but it's great! See [[plugins/viewers/plantuml]] for more.
+
+*Implementation:*
+
+```js !plugin of=uml !collapse #viewer type=repl
+async function encodePlantUML(src) {
+  console.log("encoding", src);
+  const module = await import("https://cdn.skypack.dev/plantuml-encoder");
+  const encoded = module.encode(src); //.replace(/\n/g, '\\n'))
+  console.log(encoded);
+  return encoded;
+}
+
+const getEndpoint = (format, encoded) =>
+  `https://plantuml.com/plantuml/${format}/` + encoded;
+
+export const repl = async (src, meta, node) => {
+  const format = (meta && meta.format) || "svg";
+  try {
+    const encoded = await encodePlantUML(src);
+    const url = getEndpoint(format, encoded);
+    const proxy = lit?.file?.data?.plugins?.proxy?.corsProxy;
+    const fetchApi = proxy ? await proxy() : fetch;
+    const resp = await fetchApi(url);
+    return await resp.text();
+  } catch (err) {
+    return "Error: " + err.message;
+  }
+};
+
+export const viewer = ({ node, React }) => {
+  const rc = React.createElement;
+  const { useState, useEffect } = React;
+  const meta = node.properties && node.properties.meta;
+
+  const format = (meta && meta.format) || "svg";
+  const [url, setUrl] = useState(null);
+
+  const src = node.value;
+  useEffect(async () => {
+    const encoded = await encodePlantUML(node.data.value);
+    const url = getEndpoint(format, encoded);
+    setUrl(url);
+  }, [src]);
+
+  return rc(
+    "div",
+    {
+      className: "lit-viewer-plantuml2",
+    },
+    url
+      ? rc("img", {
+          src: url,
+        })
+      : "Loading..."
+  );
+};
+
+```
+
+
+
+
+
+*Example usage:*
+
+```uml !below #viewer
+@startmindmap
+* .lit
+	* Digital Gardens
+ 		* Tools for Thought
+		* Learning in Public
+		* Knowledge Graph
+	* Literate Programming
+		* Read Eval Print Loop
+		* Runbooks
+	* Rapid Prototyping
+@endmindmap
+```
+```uml repl=uml !collapse > img testing/repl-output.svg
+@startmindmap
+* root node
+	* some first level node
+		* second level node
+		* another second level node
+	* another first level node
+@endmindmap
+```
+```>img testing/repl-output.svg attached=true updated=1622329663486
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="190px" preserveAspectRatio="none" style="width:601px;height:190px;background:#FFFFFF;" version="1.1" viewBox="0 0 601 190" width="601px" zoomAndPan="magnify"><defs><filter height="300%" id="fb0mcnsy1mih" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><rect fill="#FEFECE" filter="url(#fb0mcnsy1mih)" height="36.2969" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1.5;" width="91" x="10" y="76.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="71" x="20" y="99.292">root node</text><rect fill="#FEFECE" filter="url(#fb0mcnsy1mih)" height="36.2969" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1.5;" width="171" x="151" y="48.1484"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="151" x="161" y="71.1436">some first level node</text><rect fill="#FEFECE" filter="url(#fb0mcnsy1mih)" height="36.2969" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1.5;" width="149" x="372" y="20"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="129" x="382" y="42.9951">second level node</text><path d="M322,66.2969 L332,66.2969 C347,66.2969 347,38.1484 362,38.1484 L372,38.1484 " fill="none" style="stroke:#A80036;stroke-width:1.0;"/><rect fill="#FEFECE" filter="url(#fb0mcnsy1mih)" height="36.2969" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1.5;" width="210" x="372" y="76.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="190" x="382" y="99.292">another second level node</text><path d="M322,66.2969 L332,66.2969 C347,66.2969 347,94.4453 362,94.4453 L372,94.4453 " fill="none" style="stroke:#A80036;stroke-width:1.0;"/><path d="M101,94.4453 L111,94.4453 C126,94.4453 126,66.2969 141,66.2969 L151,66.2969 " fill="none" style="stroke:#A80036;stroke-width:1.0;"/><rect fill="#FEFECE" filter="url(#fb0mcnsy1mih)" height="36.2969" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1.5;" width="189" x="151" y="132.5938"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="169" x="161" y="155.5889">another first level node</text><path d="M101,94.4453 L111,94.4453 C126,94.4453 126,150.7422 141,150.7422 L151,150.7422 " fill="none" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[8c1f1039f1f6300557f480a2340cac76]
+@startmindmap
+* root node
+	* some first level node
+		* second level node
+		* another second level node
+	* another first level node
+@endmindmap
+
+PlantUML version 1.2021.7(Sun May 23 12:40:07 UTC 2021)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>
+```
+
+
+
+
+
+Urgh, CORS...
+
+So to bypass CORS we need a proxy, see [[testing/runkit]] for an example nodejs repl, which could achieve this proxying.
+
+Fixed see [[testing/Cors Proxy]] for example
+
+```js !plugin id=2tabs
 export const transformer = ({ codeSource }) => {
   return codeSource.replace(/\s/g, "\t");
 };
