@@ -87,7 +87,7 @@ const endpoint = (theme) =>
 
 export const viewer = ({ node, React }) => {
   const { useState } = React;
-  const [theme, setTheme] = useState("default");
+  const [theme, setTheme] = useState(null);
   const change = (ev) => setTheme(ev.target.value);
   return (
     <div>
@@ -100,7 +100,7 @@ export const viewer = ({ node, React }) => {
           );
         })}
       </select>
-      <link rel="stylesheet" href={endpoint(theme)} />
+      {theme && <link rel="stylesheet" href={endpoint(theme)} />}
     </div>
   );
 };
