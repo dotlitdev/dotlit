@@ -27,7 +27,7 @@ export const viewer = ({ node, React }) => {
         padding: 0,
       },
     };
-    const stats = lit.fs.readStat(src);
+    const stats = await lit.fs.readStat(src);
     if (stats.local.value === stats.remote.value) {
       setContent("Local and Remote match. (No Diff)");
       return;
