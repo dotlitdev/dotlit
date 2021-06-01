@@ -123,13 +123,13 @@ const App = ({root, file, fs, result, ssr}) => {
 
     return <SelectionContext.Provider value={state}>
         <ErrorBoundary>{ <Header root={root} toggleViewSource={toggleViewSource} ssr={ssr}/> }</ErrorBoundary>
+        {themes && themes.map( theme => <link key={theme.id} rel="stylesheet" href={theme.url}/>)}
         <div id="content">
           { viewSource 
             // ? <Editor src={srcAndRes.src} update={()=>{}} />
             ? <ErrorBoundary><Highlight language="md">{srcAndRes.src}</Highlight></ErrorBoundary>
             : <ErrorBoundary>{srcAndRes.res}</ErrorBoundary> }
         </div>
-        {themes && themes.map( theme => <link key={theme.id} rel="stylesheet" href={theme.url}/>)}
     </SelectionContext.Provider>
 }
 
