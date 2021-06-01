@@ -10,8 +10,7 @@ const Document = props => {
 
     const result = props.file.result
     const title = props.file.data.frontmatter.title || props.file.stem
-    const theme = props.file.data.frontmatter.theme 
-                  || "https://highlightjs.org/static/demo/styles/railscasts.css"
+    const theme = props.file.data.frontmatter.theme
 
     return <html>
         <head>
@@ -19,7 +18,7 @@ const Document = props => {
             <meta name="litsrc" value={props.file.data.canonical}/>
             <meta name="litroot" value={props.root}/>
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-            <link rel="stylesheet" href={theme}/>
+            {theme && <link rel="stylesheet" href={theme}/>}
             <link rel="stylesheet" href={path.join(props.root, 'style.css')}/>
         </head>
         <body>
