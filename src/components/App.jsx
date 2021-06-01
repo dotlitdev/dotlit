@@ -124,7 +124,7 @@ const App = ({root, file, fs, result, ssr}) => {
     return <SelectionContext.Provider value={state}>
         <ErrorBoundary>{ <Header root={root} toggleViewSource={toggleViewSource} ssr={ssr}/> }</ErrorBoundary>
         {themes && themes.map( theme => {
-           theme.url 
+           return theme.url 
                ? <link key={theme.id} rel="stylesheet" href={theme.url}/>)
                : <style key={theme.id} dangerouslySetInnerHTML={{__html: theme.value}}></style>
         }}
