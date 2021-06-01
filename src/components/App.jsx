@@ -125,9 +125,9 @@ const App = ({root, file, fs, result, ssr}) => {
         <ErrorBoundary>{ <Header root={root} toggleViewSource={toggleViewSource} ssr={ssr}/> }</ErrorBoundary>
         {themes && themes.map( theme => {
            return theme.url 
-               ? <link key={theme.id} rel="stylesheet" href={theme.url}/>)
+               ? <link key={theme.id} rel="stylesheet" href={theme.url}/>
                : <style key={theme.id} dangerouslySetInnerHTML={{__html: theme.value}}></style>
-        }}
+        })}
         <div id="content">
           { viewSource 
             // ? <Editor src={srcAndRes.src} update={()=>{}} />
