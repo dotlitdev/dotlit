@@ -43,6 +43,9 @@ const App = ({root, file, fs, result, ssr}) => {
     const [selectedCell, setSelectedCell] = useState(null)
     const [viewSource, setViewSource] = useState(false)
     const toggleViewSource = () => setViewSource(!viewSource)
+
+    const themePlugins = file?.data?.plugins?.theme
+    const themes = themePlugins && Object.keys(themePlugins).map(t=>({id: t, ...themePlugins[t]}))
     
     const setSrcWrapper = async (pos, cellSource) => {
         console.log("<App/> Set src wrapper", posstr(pos))
@@ -126,6 +129,7 @@ const App = ({root, file, fs, result, ssr}) => {
             ? <ErrorBoundary><Highlight language="md">{srcAndRes.src}</Highlight></ErrorBoundary>
             : <ErrorBoundary>{srcAndRes.res}</ErrorBoundary> }
         </div>
+        {themes && themes.map( theme => <link key={theme.id} rel="stylesheet" href={theme.url}/>)}
     </SelectionContext.Provider>
 }
 
