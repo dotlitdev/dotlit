@@ -88,14 +88,18 @@ const endpoint = (theme) =>
 
 export const viewer = ({ node, React }) => {
   const { useState } = React;
-  const [theme, setTheme] = useState(null);
+  const [theme, setTheme] = useState(node.data.value);
   const change = (ev) => setTheme(ev.target.value);
   return (
     <div>
       <select onChange={change}>
         {themes.map((t) => {
           return (
-            <option selected={theme === t} key={t} value={t}>
+            <option
+              selected={theme === t ? "selected" : false}
+              key={t}
+              value={t}
+            >
               {t || "Select Theme"}
             </option>
           );
