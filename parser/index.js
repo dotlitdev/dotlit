@@ -12,7 +12,7 @@ import { to_string } from './utils/mdast-util-to-string'
 import toMarkdown from 'mdast-util-to-markdown'
 
 import {sections, groupIntoSections, ungroupSections} from './sections'
-import codeblocks from './codeblocks'
+import codeblocks, {parseMeta} from './codeblocks'
 import frontmatter from './frontmatter'
 import {mdblocks} from './mdblocks'
 import links, { decorateLinkNode } from './links'
@@ -79,7 +79,7 @@ export const utils = {
   mdblocks,
   sections, ungroupSections,
   links,
-  codeblocks,
+  codeblocks, parseMeta,
   remarkStringify,
   to_string,
   toMarkdown,
