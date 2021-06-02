@@ -53,18 +53,45 @@ They can be collapse/folded (tbd)
 
 ```js #meta #tostring
 const meta = this.children[0].children[0].properties.meta
+
+const prefix = p => str => p + str
+const tag = prefix("#")
+const dir = prefix("!")
+const attr = (key,value) => `${key}=${value}`
+
 const metaToString = (meta) => {
   const parts = [];
   parts.push(meta.isOutput && ">");
   parts.push(meta.lang);
   parts.push(meta.filename || meta.uri);
+  (meta.tags || []).forEach( t => parts.push(tag(t)))
+  (meta.directives || []).forEach( d => parts.push(dir(d)))
+  Object.entries(meta.attrs || {}).forEach( ([k,v]) => parts.push(attr(k,v)))
   return parts.filter((x) => x).join(" ");
 };
+console.log(meta)
 return metaToString(meta)
 
 ```
-```>txt attached=true updated=1622671270821
-js
+```>txt attached=true updated=1622671730711 !error
+{ attrs: {},
+  lang: 'js',
+  tags: [ 'meta', 'tostring' ],
+  isOutput: false,
+  output: undefined,
+  hasOutput: false,
+  hasSource: false,
+  source: undefined,
+  raw: 'js #meta #tostring' }
+function toString() {
+    [native code]
+}
+metaToString@untitled.js:14:54
+untitled.js:20:20
+untitled.js:23:63
+module code@untitled.js:23:139
+evaluate@[native code]
+moduleEvaluation@[native code]
 ```
 ### Markdown blocks
 
