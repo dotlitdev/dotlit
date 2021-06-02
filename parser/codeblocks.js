@@ -35,7 +35,7 @@ function transform (node, index, parent) {
 }
 
 
-function parseMeta (node) {
+export const parseMeta = function parseMeta (node) {
     const raw = `${node.lang || ''} ${node.meta || ''}`.trim()
     console.log(`[CodeBlocks] lang: "${node.lang}" meta: "${node.meta}", raw: "${raw}"`)
 
