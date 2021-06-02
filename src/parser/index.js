@@ -79,7 +79,7 @@ export const utils = {
   mdblocks,
   sections, ungroupSections,
   links,
-  codeblocks,
+  codeblocks, parseMeta,
   remarkStringify,
   to_string,
   toMarkdown,
