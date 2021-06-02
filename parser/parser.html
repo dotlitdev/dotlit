@@ -565,7 +565,7 @@ function ident (x, i) {
 
 const prefix = p =&gt; str =&gt; p + str
 const tag = prefix(&quot;#&quot;)
-const dir = prefix(&quot;!&quot;)
+const dirs = prefix(&quot;!&quot;)
 const attr = ([key,value]) =&gt; `${key}=${value}`
 
 const metaToString = (meta) =&gt; {
@@ -574,7 +574,7 @@ const metaToString = (meta) =&gt; {
   parts.push(meta.lang);
   parts.push(meta.filename || meta.uri);
   (meta.tags || []).forEach( t =&gt; parts.push(tag(t)))
-  //(meta.directives || []).forEach( d =&gt; parts.push(dir(d)))
+  (meta.directives || []).forEach( d =&gt; parts.push(dirs(d)))
   //Object.entries(meta.attrs || {}).forEach( (e) =&gt; parts.push(attr(e)))
   return parts.filter((x) =&gt; x).join(&quot; &quot;);
 };

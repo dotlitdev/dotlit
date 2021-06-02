@@ -56,7 +56,7 @@ const meta = this.children[0].children[0].properties.meta
 
 const prefix = p => str => p + str
 const tag = prefix("#")
-const dir = prefix("!")
+const dirs = prefix("!")
 const attr = ([key,value]) => `${key}=${value}`
 
 const metaToString = (meta) => {
@@ -65,7 +65,7 @@ const metaToString = (meta) => {
   parts.push(meta.lang);
   parts.push(meta.filename || meta.uri);
   (meta.tags || []).forEach( t => parts.push(tag(t)))
-  //(meta.directives || []).forEach( d => parts.push(dir(d)))
+  (meta.directives || []).forEach( d => parts.push(dirs(d)))
   //Object.entries(meta.attrs || {}).forEach( (e) => parts.push(attr(e)))
   return parts.filter((x) => x).join(" ");
 };
@@ -73,7 +73,7 @@ console.log(meta)
 return metaToString(meta)
 
 ```
-```>txt attached=true updated=1622672038228 !error
+```>txt attached=true updated=1622672158157 !error
 { attrs: {},
   lang: 'js',
   tags: [ 'meta', 'tostring' ],
