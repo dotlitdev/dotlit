@@ -72,13 +72,24 @@ const metaToString = (meta) => {
   dirs.forEach( d => parts.push(dir(d)))
   Object.entries(attrs).forEach( (e) => parts.push(attr(e)))
   tags.forEach( t => parts.push(tag(t)))
+
+  if (meta.source) {
+    parts.push("<")
+    parts.push(metaToString(meta.source))
+  }
+
+  if (meta.output) {
+    parts.push(">")
+    parts.push(metaToString(meta.output))
+  }
+
   return parts.filter((x) => x).join(" ");
 };
 console.log(meta)
 return metaToString(meta)
 
 ```
-```>txt attached=true updated=1622672772800
+```>txt attached=true updated=1622672804240
 { attrs: { test: 'foo' },
   lang: 'js',
   tags: [ 'meta', 'tostring' ],
@@ -90,7 +101,7 @@ return metaToString(meta)
   hasSource: false,
   source: undefined,
   raw: 'js #meta #tostring !test test=foo' }
-js #meta #tostring !test test=foo
+js !test test=foo #meta #tostring
 ```
 ### Markdown blocks
 
