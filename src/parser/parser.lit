@@ -65,7 +65,7 @@ const metaToString = (meta) => {
   parts.push(meta.lang);
   parts.push(meta.filename || meta.uri);
   (meta.tags || []).forEach( t => parts.push(tag(t)))
-  (meta.directives || []).forEach( d => parts.push(dirs(d)))
+  (meta.directives || []).forEach( x => console.log(x))
   Object.entries(meta.attrs || {}).forEach( (e) => parts.push(attr(e)))
   return parts.filter((x) => x).join(" ");
 };
@@ -73,7 +73,7 @@ console.log(meta)
 return metaToString(meta)
 
 ```
-```>txt attached=true updated=1622672323704
+```>txt attached=true updated=1622672349308 !error
 { attrs: { test: 'foo' },
   lang: 'js',
   tags: [ 'meta', 'tostring' ],
@@ -85,7 +85,15 @@ return metaToString(meta)
   hasSource: false,
   source: undefined,
   raw: 'js #meta #tostring !test test=foo' }
-js #meta #tostring test=foo
+function toString() {
+    [native code]
+}
+metaToString@untitled.js:14:54
+untitled.js:20:20
+untitled.js:23:63
+module code@untitled.js:23:139
+evaluate@[native code]
+moduleEvaluation@[native code]
 ```
 ### Markdown blocks
 
