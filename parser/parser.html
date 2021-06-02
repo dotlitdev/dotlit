@@ -419,7 +419,7 @@ export const ungroupSections = (options = {}) =&gt; (...args) =&gt; (tree) =&gt;
 
 </code></pre></codecell></div></cell></section>
 <section depth="3" class="" startpos="43:1-737" endpos="45:60-807"><cell startpos="43:1-737" endpos="45:60-807"><div class="cell-content"><h3 id="cells">Cells</h3><p><em>Currently implemented as part of <strong>Sections</strong>, see above.</em></p></div></cell></section>
-<section depth="3" class="" startpos="47:1-809" endpos="94:4-1946"><cell startpos="47:1-809" endpos="49:17-841"><div class="cell-content"><h3 id="codeblocks">Codeblocks</h3><p><em>Implementation</em></p></div></cell><cell startpos="51:1-843" endpos="52:4-878" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; codeblocks.js</span></span><pre><code class="js">import visit from &#x27;unist-util-visit&#x27;
+<section depth="3" class="" startpos="47:1-809" endpos="105:4-2123"><cell startpos="47:1-809" endpos="49:17-841"><div class="cell-content"><h3 id="codeblocks">Codeblocks</h3><p><em>Implementation</em></p></div></cell><cell startpos="51:1-843" endpos="52:4-878" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; codeblocks.js</span></span><pre><code class="js">import visit from &#x27;unist-util-visit&#x27;
 import { getConsoleForNamespace } from &#x27;../utils/console&#x27;
 
 const console = getConsoleForNamespace(&#x27;codeblocks&#x27;)
@@ -561,7 +561,7 @@ function ident (x, i) {
   
 
 
-</code></pre></codecell></div></cell><cell startpos="54:1-880" endpos="94:4-1946" class="code"><div class="cell-content"><codecell class="dir-test tag-meta tag-tostring lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#036449" class="directive dir-test">test</span><span class="attribute attr-test" style="color:white;background-color:#036449">test=foo</span><span style="color:white;background-color:#033165" class="tag">meta</span><span style="color:black;background-color:#ccb166" class="tag">tostring</span></span><pre><code class="js">const meta = this.children[0].children[0].properties.meta
+</code></pre></codecell></div></cell><cell startpos="54:1-880" endpos="105:4-2123" class="code"><div class="cell-content"><codecell class="dir-test tag-meta tag-tostring lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#036449" class="directive dir-test">test</span><span class="attribute attr-test" style="color:white;background-color:#036449">test=foo</span><span style="color:white;background-color:#033165" class="tag">meta</span><span style="color:black;background-color:#ccb166" class="tag">tostring</span></span><pre><code class="js">const meta = this.children[0].children[0].properties.meta
 
 const prefix = p =&gt; str =&gt; p + str
 const tag = prefix(&quot;#&quot;)
@@ -581,12 +581,23 @@ const metaToString = (meta) =&gt; {
   dirs.forEach( d =&gt; parts.push(dir(d)))
   Object.entries(attrs).forEach( (e) =&gt; parts.push(attr(e)))
   tags.forEach( t =&gt; parts.push(tag(t)))
+
+  if (meta.source) {
+    parts.push(&quot;&lt;&quot;)
+    parts.push(metaToString(meta.source))
+  }
+
+  if (meta.output) {
+    parts.push(&quot;&gt;&quot;)
+    parts.push(metaToString(meta.output))
+  }
+
   return parts.filter((x) =&gt; x).join(&quot; &quot;);
 };
 console.log(meta)
 return metaToString(meta)
 
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2m ago</span></span></span><output><pre><code class="txt">{ attrs: { test: &#x27;foo&#x27; },
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">4m ago</span></span></span><output><pre><code class="txt">{ attrs: { test: &#x27;foo&#x27; },
   lang: &#x27;js&#x27;,
   tags: [ &#x27;meta&#x27;, &#x27;tostring&#x27; ],
   directives: [ &#x27;test&#x27; ],
@@ -597,9 +608,9 @@ return metaToString(meta)
   hasSource: false,
   source: undefined,
   raw: &#x27;js #meta #tostring !test test=foo&#x27; }
-js #meta #tostring !test test=foo
+js !test test=foo #meta #tostring
 </code></pre></output></codecell></div></cell></section>
-<section depth="3" class="" startpos="95:1-1947" endpos="100:4-2019"><cell startpos="95:1-1947" endpos="97:17-1984"><div class="cell-content"><h3 id="markdown-blocks">Markdown blocks</h3><p><em>Implementation</em></p></div></cell><cell startpos="99:1-1986" endpos="100:4-2019" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; mdblocks.js</span></span><pre><code class="js">import visit from &#x27;unist-util-visit&#x27;
+<section depth="3" class="" startpos="106:1-2124" endpos="111:4-2196"><cell startpos="106:1-2124" endpos="108:17-2161"><div class="cell-content"><h3 id="markdown-blocks">Markdown blocks</h3><p><em>Implementation</em></p></div></cell><cell startpos="110:1-2163" endpos="111:4-2196" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; mdblocks.js</span></span><pre><code class="js">import visit from &#x27;unist-util-visit&#x27;
 import {getConsoleForNamespace} from &#x27;../utils/console&#x27;
 import vfile from &#x27;vfile&#x27;
 
@@ -635,7 +646,7 @@ export const mdblocks = function ({baseProcessor, files, litroot}) {
 }
 
 </code></pre></codecell></div></cell></section>
-<section depth="3" class="" startpos="102:1-2022" endpos="107:4-2081"><cell startpos="102:1-2022" endpos="104:17-2049"><div class="cell-content"><h3 id="links">Links</h3><p><em>Implementation</em></p></div></cell><cell startpos="106:1-2051" endpos="107:4-2081" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; links.js</span></span><pre><code class="js">import {join, resolve, relative, dirname} from &quot;path&quot;;
+<section depth="3" class="" startpos="113:1-2199" endpos="118:4-2258"><cell startpos="113:1-2199" endpos="115:17-2226"><div class="cell-content"><h3 id="links">Links</h3><p><em>Implementation</em></p></div></cell><cell startpos="117:1-2228" endpos="118:4-2258" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; links.js</span></span><pre><code class="js">import {join, resolve, relative, dirname} from &quot;path&quot;;
 import visit from &quot;unist-util-visit&quot;;
 import { getConsoleForNamespace } from &quot;../utils/console&quot;;
 
@@ -798,9 +809,9 @@ export default {
 }
 
 </code></pre></codecell></div></cell></section>
-<section depth="2" class="" startpos="109:1-2083" endpos="119:4-2437"><cell startpos="109:1-2083" endpos="111:162-2262"><div class="cell-content"><h2 id="ast-to-string">AST to String</h2><ul class="contains-task-list">
+<section depth="2" class="" startpos="120:1-2260" endpos="130:4-2614"><cell startpos="120:1-2260" endpos="122:162-2439"><div class="cell-content"><h2 id="ast-to-string">AST to String</h2><ul class="contains-task-list">
 <li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->#TODO refactor save (update src) to operate on AST directly and stringify as below, instead of the cureent <a href="../utils/unist-patch-source.html" title="../utils/unist-patch-source" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]">../utils/unist-patch-source</a> implementaction.</li>
-</ul></div></cell><cell startpos="112:1-2263" endpos="119:4-2437" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const {toMarkdown, ungroupSections}
+</ul></div></cell><cell startpos="123:1-2440" endpos="130:4-2614" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const {toMarkdown, ungroupSections}
       = lit.parser.utils
 const unGroup = ungroupSections()()
 const tree = unGroup(lit.ast)
