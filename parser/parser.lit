@@ -51,58 +51,7 @@ They can be collapse/folded (tbd)
 ```js !collapse < codeblocks.js
 ```
 
-```js #meta #tostring !test test=foo
-const meta = this.children[0].children[0].properties.meta
 
-const prefix = p => str => p + str
-const tag = prefix("#")
-const dir = prefix("!")
-const attr = ([key,value]) => `${key}=${value}`
-
-const metaToString = (meta) => {
-  const parts = [];
-  const dirs = meta.directives || []
-  const tags = meta.tags || []
-  const attrs = meta.attrs || {}
-
-  parts.push(meta.isOutput && ">");
-  parts.push(meta.lang);
-  parts.push(meta.filename || meta.uri);
-  
-  dirs.forEach( d => parts.push(dir(d)))
-  Object.entries(attrs).forEach( (e) => parts.push(attr(e)))
-  tags.forEach( t => parts.push(tag(t)))
-
-  if (meta.source) {
-    parts.push("<")
-    parts.push(metaToString(meta.source))
-  }
-
-  if (meta.output) {
-    parts.push(">")
-    parts.push(metaToString(meta.output))
-  }
-
-  return parts.filter((x) => x).join(" ");
-};
-console.log(meta)
-return metaToString(meta)
-
-```
-```>txt attached=true updated=1622672804240
-{ attrs: { test: 'foo' },
-  lang: 'js',
-  tags: [ 'meta', 'tostring' ],
-  directives: [ 'test' ],
-  test: 'foo',
-  isOutput: false,
-  output: undefined,
-  hasOutput: false,
-  hasSource: false,
-  source: undefined,
-  raw: 'js #meta #tostring !test test=foo' }
-js !test test=foo #meta #tostring
-```
 ### Markdown blocks
 
 *Implementation*
