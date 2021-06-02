@@ -47,10 +47,12 @@ Implementation is at [[../parser/parser]]
 ```js
 return lit.parser.utils.links;
 ```
-```>txt attached=true updated=1622294316030
-{ resolver: [Function: pageResolver],
-  linkToUrl: [Function: linkToUrl],
-  decorateLinkNode: [Function: decorateLinkNode] }
+```>txt attached=true updated=1622634801996
+{ resolveLinks: [Function: resolveLinks],
+  wikiLinkOptions: [Function: wikiLinkOptions],
+  resolver: [Function: p],
+  linkToUrl: [Function: h],
+  decorateLinkNode: [Function: m] }
 ```
 
 ```js babel=true
@@ -79,6 +81,50 @@ console.log({ root, example, resolved, link , url});
 const decorated = decorateLinkNode(link);
 return JSON.stringify(decorated, null, 2);
 
+```
+```>txt attached=true updated=1622634838851
+{ root: '/',
+  example: 'testing/Links?foo=bar#baz|Title',
+  resolved: [ '/testing/links.lit', '/testing/links.md', '/testing/links' ],
+  link: 
+   { type: 'wikiLink',
+     data: { permalink: '/testing/links.lit' },
+     url: 'testing/Links?foo=bar#baz|Title',
+     value: 'testing/Links?foo=bar#baz|Title' },
+  url: '/testing/links.lit' }
+{
+  "type": "link",
+  "data": {
+    "isExternal": false,
+    "isAbsolute": true,
+    "isFragment": false,
+    "isRelative": false,
+    "canonical": "/testing/links.lit",
+    "wikilink": true,
+    "hProperties": {
+      "wikilink": true,
+      "filepath": "",
+      "root": "",
+      "data": {
+        "base": "/testing/links.lit",
+        "isExternal": false,
+        "isAbsolute": true,
+        "isFragment": false,
+        "isRelative": false,
+        "canonical": "/testing/links.lit",
+        "wikilink": true
+      }
+    }
+  },
+  "url": "testing/links.html",
+  "title": "testing/Links?foo=bar#baz|Title",
+  "children": [
+    {
+      "type": "text",
+      "value": "testing/Links?foo=bar#baz|Title"
+    }
+  ]
+}
 ```
 
 
