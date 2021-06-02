@@ -85,28 +85,27 @@ const metaToString = (meta) => {
   return parts.filter((x) => x).join(" ");
 };
 
-const input = ">js index.jsx !foo #bar baz=qux > json output.json #faz !raz < source.jsx "
+const input = "js index.jsx !foo #bar baz=qux < source.jsx > json output.json #faz !raz"
 const meta = lit.parser.utils.parseMeta({meta: input})
 console.log(input)
 console.log(meta)
 return metaToString(meta)
 return lit.parser.utils 
 ```
-```>txt attached=true updated=1622674137435
->js index.jsx !foo #bar baz=qux < source.jsx > json output.json #faz !raz 
+```>txt attached=true updated=1622674206646
+>js index.jsx !foo #bar baz=qux > json output.json #faz !raz < source.jsx 
 { attrs: { baz: 'qux' },
   lang: 'js',
   filename: 'index.jsx',
   directives: [ 'foo' ],
   tags: [ 'bar' ],
   baz: 'qux',
-  unknowns: [ '<', 'source.jsx' ],
   isOutput: true,
   output: undefined,
   hasOutput: false,
   hasSource: false,
   source: undefined,
-  raw: '>js index.jsx !foo #bar baz=qux < source.jsx > json output.json #faz !raz' }
+  raw: '>js index.jsx !foo #bar baz=qux > json output.json #faz !raz < source.jsx' }
 > js index.jsx !foo baz=qux #bar
 ```
 
