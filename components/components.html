@@ -539,7 +539,7 @@ const Cell = props =&gt; {
     const pos = node.position
 
     const [src, setSrc] = useState(&#x27;&#x27;)
-    const [content, setContent] = useState(null)
+    const [content, setContent] = useState(props.children)
     // const content = props.children
     const [editing, setEditing] = useState(false)
     const [executing, setExecuting] = useState(false)
@@ -620,6 +620,11 @@ const Cell = props =&gt; {
             // so re-render from that
             if (ctx) ctx.setSrc(lit.ast.position, result.resp)
         } else {
+
+            if (meta?.output?.filename) {
+                console.log(&quot;TODO: write repl output to file system &quot;)
+                // lit.fs.writeFile(join(dirname(), meta?.output?.filename), result.stdout)
+            }
             const outputMeta = (meta.hasOutput ? meta.output.raw : &#x27;txt&#x27;).trim() + (&quot; attached=true updated=&quot; + Date.now()) + (error ? &#x27; !error&#x27; : &#x27;&#x27;)
             const output = &quot;\n```&gt;&quot;+ outputMeta +&quot;\n&quot; + result.stdout.replace(/\n```/g, &quot;\n•••&quot;) + &quot;\n```\n&quot;
             if (ctx) ctx.setSrc(pos, rawSource + output)
@@ -657,7 +662,7 @@ const Cell = props =&gt; {
                 startpos={posstr(pos.start)}
                 endpos={posstr(pos.end)}
                 className={getClasses(ctx)}&gt;
-                    { editing ? &lt;Editor src={src} update={setSrc}/&gt; : &lt;div className=&quot;cell-content&quot;&gt;{content || props.children}&lt;/div&gt; }
+                    { editing ? &lt;Editor src={src} update={setSrc}/&gt; : &lt;div className=&quot;cell-content&quot;&gt;{content}&lt;/div&gt; }
                     { isSelected(ctx) &amp;&amp; &lt;CellMenu meta={meta} editing={editing} toggleEditing={toggleEditing} save={save(ctx)} exec={exec(ctx)}/&gt;}
             &lt;/cell&gt;
         }}

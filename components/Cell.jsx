@@ -30,7 +30,7 @@ const Cell = props => {
     const pos = node.position
 
     const [src, setSrc] = useState('')
-    const [content, setContent] = useState(null)
+    const [content, setContent] = useState(props.children)
     // const content = props.children
     const [editing, setEditing] = useState(false)
     const [executing, setExecuting] = useState(false)
@@ -111,6 +111,11 @@ const Cell = props => {
             // so re-render from that
             if (ctx) ctx.setSrc(lit.ast.position, result.resp)
         } else {
+
+            if (meta?.output?.filename) {
+                console.log("TODO: write repl output to file system ")
+                // lit.fs.writeFile(join(dirname(), meta?.output?.filename), result.stdout)
+            }
             const outputMeta = (meta.hasOutput ? meta.output.raw : 'txt').trim() + (" attached=true updated=" + Date.now()) + (error ? ' !error' : '')
             const output = "\n```>"+ outputMeta +"\n" + result.stdout.replace(/\n```/g, "\n•••") + "\n```\n"
             if (ctx) ctx.setSrc(pos, rawSource + output)
@@ -148,7 +153,7 @@ const Cell = props => {
                 startpos={posstr(pos.start)}
                 endpos={posstr(pos.end)}
                 className={getClasses(ctx)}>
-                    { editing ? <Editor src={src} update={setSrc}/> : <div className="cell-content">{content || props.children}</div> }
+                    { editing ? <Editor src={src} update={setSrc}/> : <div className="cell-content">{content}</div> }
                     { isSelected(ctx) && <CellMenu meta={meta} editing={editing} toggleEditing={toggleEditing} save={save(ctx)} exec={exec(ctx)}/>}
             </cell>
         }}
