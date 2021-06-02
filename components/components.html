@@ -539,7 +539,7 @@ const Cell = props =&gt; {
     const pos = node.position
 
     const [src, setSrc] = useState(&#x27;&#x27;)
-    const [content, setContent] = useState(props.children)
+    const [content, setContent] = useState(null)
     // const content = props.children
     const [editing, setEditing] = useState(false)
     const [executing, setExecuting] = useState(false)
@@ -662,7 +662,7 @@ const Cell = props =&gt; {
                 startpos={posstr(pos.start)}
                 endpos={posstr(pos.end)}
                 className={getClasses(ctx)}&gt;
-                    { editing ? &lt;Editor src={src} update={setSrc}/&gt; : &lt;div className=&quot;cell-content&quot;&gt;{content}&lt;/div&gt; }
+                    { editing ? &lt;Editor src={src} update={setSrc}/&gt; : &lt;div className=&quot;cell-content&quot;&gt;{content || props.children}&lt;/div&gt; }
                     { isSelected(ctx) &amp;&amp; &lt;CellMenu meta={meta} editing={editing} toggleEditing={toggleEditing} save={save(ctx)} exec={exec(ctx)}/&gt;}
             &lt;/cell&gt;
         }}
