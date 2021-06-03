@@ -34,7 +34,13 @@ export const ghWriteFile = (opts) => async (...args) => {
     const content = args[1].toString()
     console.log("ghWriteFile", file)
     const endpoint = getEndpoint(opts, file)
-    const resp1 = await fetch(endpoint)
+    const resp1 = await fetch(endpoint, {
+        method: "GET",
+        headers: {
+            "Authorization": `token ${opts.token}`,
+            'Content-Type': 'application/json'
+        }
+    })
     const json1 = await resp1.json()
     console.log(endpoint, json1.sha ? "Exists, updating...":"Dosn't exist, creating...")
     const params = {
