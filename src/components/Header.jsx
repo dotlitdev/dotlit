@@ -249,15 +249,12 @@ export const Header = (props) => {
       { !menuPlugins ? null : menuPlugins && Object.keys(menuPlugins).map( key => <ErrorBoundary>{menuPlugins[key](ctx, {React, Menu})}</ErrorBoundary>) }
       
       <Menu title="Help">
-        <span disabled>{`v${version}`}</span>
-        <a href="https://dotlit.org">About</a>
-        <span disabled>Documentation</span>
+        { !helpMenuPlugins ? null : helpMenuPlugins && Object.keys(helpMenuPlugins).map( key => <ErrorBoundary>{helpMenuPlugins[key](ctx, {React, Menu})}</ErrorBoundary>) }
         <a href="/config.html?file=config.lit">Config</a>
         <Menu title="Debug">
             <span onClick={setDebug}>Set Mask</span>
             <span onClick={showInspector}>Show Inspector</span>
         </Menu>
-                { !helpMenuPlugins ? null : helpMenuPlugins && Object.keys(helpMenuPlugins).map( key => <ErrorBoundary>{helpMenuPlugins[key](ctx, {React, Menu})}</ErrorBoundary>) }
       </Menu>
       <Menu right title={<Status local={local} remote={remote} />}>
         {ctx.file && <span disabled>{`File: ${ctx.file.path}`}</span>}
