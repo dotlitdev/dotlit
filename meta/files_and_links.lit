@@ -3,10 +3,13 @@
 ## Unlinked files
 
 ```js
+const noBacklinks = n => n.backlinks || !n.backlinks.length
+const getTitle = n => n.title || n.id 
+
 return fetch('/manifest.json').then(res => res.json().then(json => {
   return json.nodes
-         .filter(n => !n.backlinks || !n.backlinks.length)
-         .map(n => n.title || n.id ))
+         .filter(noBacklinks)
+         .map(getTitle)
 })
 ```
 ```>txt attached=true updated=1622720899141
