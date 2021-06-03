@@ -2,15 +2,16 @@
 
 ## Unlinked files
 
-```js
+```js > md
 const noBacklinks = (n) => !n.backlinks || !n.backlinks.length;
-const getTitle = (n) => n.title || n.id;
+const toMd = (n) => `- ${n.title || n.id}`
 
 return fetch("/manifest.json").then((res) =>
   res.json().then((json) => {
     return json.nodes
                .filter(noBacklinks)
-               .map(getTitle);
+               .map(toMd)
+               .join('\n');
   })
 );
 
