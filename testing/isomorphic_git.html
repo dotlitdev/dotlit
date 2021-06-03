@@ -83,11 +83,11 @@ includes the following 2 files:
 - testing/isomorphic_git.lit
 - utils/git-commit-all.js
 </code></pre></codecell></div></cell></section>
-<section depth="2" class="" startpos="89:1-2206" endpos="184:4-4544"><cell startpos="89:1-2206" endpos="89:21-2226"><div class="cell-content"><h2 id="investigating-api">Investigating API</h2></div></cell><cell startpos="92:1-2229" endpos="101:4-2395" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return lit.fs
+<section depth="2" class="" startpos="89:1-2206" endpos="388:4-10980"><cell startpos="89:1-2206" endpos="89:21-2226"><div class="cell-content"><h2 id="investigating-api">Investigating API</h2></div></cell><cell startpos="92:1-2229" endpos="101:4-2395" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return lit.fs
        .readFile(&#x27;/.git/HEAD&#x27;, {
           encoding: &#x27;utf8&#x27;
         })
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.3w ago</span></span></span><output><pre><code class="txt">ref: refs/heads/master
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">3m ago</span></span></span><output><pre><code class="txt">ref: refs/heads/master
 
 </code></pre></output></codecell></div></cell><cell startpos="102:1-2396" endpos="112:4-2576" class="code"><div class="cell-content"><codecell class="tag-init lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#031651" class="tag">init</span></span><pre><code class="js">return (async () =&gt; {
   return await lit.git.init({
@@ -95,8 +95,8 @@ includes the following 2 files:
     dir: lit.location.root
   })
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.3w ago</span></span></span><output><pre><code class="txt">undefined
-</code></pre></output></codecell></div></cell><section depth="3" class="" startpos="113:1-2577" endpos="184:4-4544"><cell startpos="113:1-2577" endpos="113:11-2587"><div class="cell-content"><h3 id="status">Status</h3></div></cell><cell startpos="115:1-2589" endpos="126:4-2839" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async () =&gt; {
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">3m ago</span></span></span><output><pre><code class="txt">undefined
+</code></pre></output></codecell></div></cell><section depth="3" class="" startpos="113:1-2577" endpos="388:4-10980"><cell startpos="113:1-2577" endpos="113:11-2587"><div class="cell-content"><h3 id="status">Status</h3></div></cell><cell startpos="115:1-2589" endpos="126:4-2839" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async () =&gt; {
   return lit.location.src + &quot; : &quot; + await lit.git.status({
     fs: lit.lfs, 
     dir: lit.location.root, 
@@ -104,41 +104,72 @@ includes the following 2 files:
   })
 })()
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.3w ago</span></span></span><output><pre><code class="txt">testing/isomorphic_git.lit : *added
-</code></pre></output></codecell></div></cell><cell startpos="127:1-2840" endpos="164:4-4106" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async () =&gt; {
+</code></pre></output></codecell></div></cell><cell startpos="127:1-2840" endpos="195:4-5593" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async () =&gt; {
   return await lit.git.statusMatrix({
     fs: lit.lfs, 
     dir: lit.location.root, 
     filepaths: [&#x27;testing/&#x27;]
   })
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.6w ago</span></span></span><output><pre><code class="txt">[ [ &#x27;&lt;&#x27;, 1, 0, 1 ],
-  [ &#x27;articles/ideas_for.lit&#x27;, 1, 1, 1 ],
-  [ &#x27;execute_code_cells.lit&#x27;, 1, 1, 1 ],
-  [ &#x27;index.lit&#x27;, 1, 1, 1 ],
-  [ &#x27;log/2021-05-11.lit&#x27;, 1, 1, 1 ],
-  [ &#x27;meta/settings.lit&#x27;, 1, 1, 1 ],
-  [ &#x27;parser/parser.lit&#x27;, 1, 1, 1 ],
-  [ &#x27;plugin_system.lit&#x27;, 1, 1, 1 ],
-  [ &#x27;renderer/renderer.lit&#x27;, 1, 1, 1 ],
-  [ &#x27;renderer/viewers&#x27;, 1, 0, 1 ],
-  [ &#x27;repls.lit&#x27;, 1, 1, 1 ],
-  [ &#x27;scratch_pad.lit&#x27;, 1, 1, 1 ],
-  [ &#x27;testing/input_buffer.lit&#x27;, 1, 1, 1 ],
-  [ &#x27;testing/isomorphic_git.lit&#x27;, 1, 1, 1 ],
-  [ &#x27;testing/lightningfs.lit&#x27;, 1, 1, 1 ],
-  [ &#x27;testing/log/2021-05-09.lit&#x27;, 1, 1, 1 ],
-  [ &#x27;testing/log/2021-05-11.lit&#x27;, 1, 1, 1 ],
-  [ &#x27;testing/log/2021-05-12.lit&#x27;, 1, 1, 1 ],
-  [ &#x27;testing/log/2021-05-13.lit&#x27;, 1, 1, 1 ],
-  [ &#x27;testing/log/2021-05-15.lit&#x27;, 1, 1, 1 ],
-  [ &#x27;testing/log/2021-w20.lit&#x27;, 1, 1, 1 ],
-  [ &#x27;testing/log/checkforinput.js&#x27;, 1, 1, 1 ],
-  [ &#x27;testing/log/today.js&#x27;, 1, 1, 1 ],
-  [ &#x27;testing/runkit-repl-endpoint.js&#x27;, 1, 1, 1 ],
-  [ &#x27;testing/runkit.lit&#x27;, 1, 1, 1 ],
-  [ &#x27;testing/serviceworker.lit&#x27;, 1, 1, 1 ],
-  [ &#x27;utils/momento.lit&#x27;, 1, 1, 1 ] ]
-</code></pre></output></codecell></div></cell><cell startpos="168:1-4110" endpos="184:4-4544" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const fs = lit.lfs 
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2m ago</span></span></span><output><pre><code class="txt">[ [ &#x27;testing/&lt;&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/autoformatting_cell_source.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/autoformatting_cell_source.lit#prettier&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/compactManifest1.json&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/compact_manifest.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/cors_proxy.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/custom-module.js&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/custom-module.mjs&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/esm_viewer_repl.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/full.json&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/fuzzy_text_search.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/gitworker.js&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/importing_js_modules.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/index.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/input_buffer.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/isomorphic_git.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/lightningfs.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/links.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/local_remote_files.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/log/2021-05-09.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/log/2021-05-11.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/log/2021-05-12.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/log/2021-05-13.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/log/2021-05-15.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/log/2021-05-16.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/log/2021-05-17.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/log/2021-05-18.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/log/2021-05-19.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/log/2021-05-20.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/log/2021-05-21.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/log/2021-05-23.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/log/2021-05-25.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/log/2021-05-27.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/log/2021-05-29.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/log/2021-05-30.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/log/2021-05.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/log/2021-06-01.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/log/2021-06-02.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/log/2021-w20.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/log/2021-w21.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/log/2021.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/log/checkforinput.js&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/log/day.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/log/today.js&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/paths.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/private_files.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/repl-output.svg&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/runkit-cors-proxy-endpoint.js&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/runkit-express-cors-proxy.js&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/runkit-repl-endpoint.js&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/runkit.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/selection.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/serviceworker.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/test.txt&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/testing/repl-output.svg&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/web_workers.lit&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/worker.js&#x27;, 0, 2, 0 ],
+  [ &#x27;testing/worker2.js&#x27;, 0, 2, 0 ] ]
+</code></pre></output></codecell></div></cell><cell startpos="199:1-5597" endpos="388:4-10980" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const fs = lit.lfs 
 const dir = lit.location.root
 const git = lit.git
 const FILE = 0, WORKDIR = 2, STAGE = 3
@@ -150,9 +181,182 @@ return (async () =&gt; {
   .map(row =&gt; row[FILE])
   return filenames
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.6w ago</span></span></span><output><pre><code class="txt">[ &#x27;&lt;&#x27;, &#x27;renderer/viewers&#x27;, &#x27;testing/isomorphic_git.lit&#x27; ]
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2m ago</span></span></span><output><pre><code class="txt">[ &#x27;404.lit&#x27;,
+  &#x27;articles/ideas_for.lit&#x27;,
+  &#x27;cli/cli.lit&#x27;,
+  &#x27;cli/generate.js&#x27;,
+  &#x27;cli/index.js&#x27;,
+  &#x27;client/client.lit&#x27;,
+  &#x27;client/index.jsx&#x27;,
+  &#x27;client/style.styl&#x27;,
+  &#x27;client/styles/cell.styl&#x27;,
+  &#x27;client/styles/cellmenu.styl&#x27;,
+  &#x27;client/styles/codecell.styl&#x27;,
+  &#x27;client/styles/header.styl&#x27;,
+  &#x27;client/styles/viewers.styl&#x27;,
+  &#x27;components/App.jsx&#x27;,
+  &#x27;components/Backlinks.jsx&#x27;,
+  &#x27;components/Cell.jsx&#x27;,
+  &#x27;components/CellMenu.jsx&#x27;,
+  &#x27;components/CodeMeta.jsx&#x27;,
+  &#x27;components/Document.jsx&#x27;,
+  &#x27;components/Editor.jsx&#x27;,
+  &#x27;components/ErrorBoundry.jsx&#x27;,
+  &#x27;components/Header.jsx&#x27;,
+  &#x27;components/Icons.jsx&#x27;,
+  &#x27;components/Section.jsx&#x27;,
+  &#x27;components/SelectionContext.jsx&#x27;,
+  &#x27;components/Time.jsx&#x27;,
+  &#x27;components/base/Codeblock.jsx&#x27;,
+  &#x27;components/base/Link.jsx&#x27;,
+  &#x27;components/base/Paragraph.jsx&#x27;,
+  &#x27;components/components.lit&#x27;,
+  &#x27;components/utils/CodeMirrorSetup.js&#x27;,
+  &#x27;config.lit&#x27;,
+  &#x27;config.lit#github&#x27;,
+  &#x27;divergence_from_markdown.lit&#x27;,
+  &#x27;dummy/data.csv&#x27;,
+  &#x27;dummy/example.js&#x27;,
+  &#x27;dummy/example.svg&#x27;,
+  &#x27;dummy/plain.txt&#x27;,
+  &#x27;dummy/🔥.lit&#x27;,
+  &#x27;execute_code_cells.lit&#x27;,
+  &#x27;filesystem/index.lit&#x27;,
+  &#x27;filesystem/overview.svg&#x27;,
+  &#x27;functions.lit&#x27;,
+  &#x27;index.js&#x27;,
+  &#x27;index.lit&#x27;,
+  &#x27;influences.svg&#x27;,
+  &#x27;meta/files_and_links.lit&#x27;,
+  &#x27;meta/github_workflows.lit&#x27;,
+  &#x27;meta/settings.lit&#x27;,
+  &#x27;meta/settings.lit#plantuml-viewer--repl&#x27;,
+  &#x27;meta/styling_and_themes.lit&#x27;,
+  &#x27;meta/styling_and_themes.lit#viewers&#x27;,
+  &#x27;meta/the_bazaar.lit&#x27;,
+  &#x27;meta.lit&#x27;,
+  &#x27;package.js&#x27;,
+  &#x27;parser/codeblocks.js&#x27;,
+  &#x27;parser/frontmatter.js&#x27;,
+  &#x27;parser/index.js&#x27;,
+  &#x27;parser/links.js&#x27;,
+  &#x27;parser/mdblocks.js&#x27;,
+  &#x27;parser/parser.lit&#x27;,
+  &#x27;parser/sections.js&#x27;,
+  &#x27;parser/transformers/js.js&#x27;,
+  &#x27;parser/utils/mdast-util-to-string.js&#x27;,
+  &#x27;persist_to_github.lit&#x27;,
+  &#x27;plugin_system.lit&#x27;,
+  &#x27;plugins/other/cors-proxy.js&#x27;,
+  &#x27;plugins/repls/module.js&#x27;,
+  &#x27;plugins/repls/search.js&#x27;,
+  &#x27;plugins/transformers/prettier.js&#x27;,
+  &#x27;plugins/viewers/diff.js&#x27;,
+  &#x27;plugins/viewers/esm.js&#x27;,
+  &#x27;plugins/viewers/md/admonitions.lit&#x27;,
+  &#x27;plugins/viewers/md/index.jsx&#x27;,
+  &#x27;plugins/viewers/meta.js&#x27;,
+  &#x27;plugins/viewers/plantuml/plantuml.lit&#x27;,
+  &#x27;plugins/viewers/search.js&#x27;,
+  &#x27;plugins/viewers/search2.js&#x27;,
+  &#x27;plugins/viewres/esm.js&#x27;,
+  &#x27;prismjs_and_a_simple_editor.lit&#x27;,
+  &#x27;renderer/Viewers.jsx&#x27;,
+  &#x27;renderer/difftestA.txt&#x27;,
+  &#x27;renderer/extractPlugins.js&#x27;,
+  &#x27;renderer/index.jsx&#x27;,
+  &#x27;renderer/plugins/viewers/diff.js&#x27;,
+  &#x27;renderer/renderer.lit&#x27;,
+  &#x27;renderer/transcludeCode.js&#x27;,
+  &#x27;renderer/utils/hast-util-code-handler.js&#x27;,
+  &#x27;renderer/viewers/graph/index.jsx&#x27;,
+  &#x27;renderer/viewers/md/admonitions.lit&#x27;,
+  &#x27;renderer/viewers/md/index.jsx&#x27;,
+  &#x27;renderer/viewers/meta.js&#x27;,
+  &#x27;renderer/viewers/plantuml.lit&#x27;,
+  &#x27;renderer/viewers.lit&#x27;,
+  &#x27;repl/index.js&#x27;,
+  &#x27;repl/index.lit&#x27;,
+  &#x27;repls.lit&#x27;,
+  &#x27;scratch_pad.lit&#x27;,
+  &#x27;scratch_pad.lit#viewers&#x27;,
+  &#x27;serviceworker.js&#x27;,
+  &#x27;taking_notes.lit&#x27;,
+  &#x27;testing/&lt;&#x27;,
+  &#x27;testing/autoformatting_cell_source.lit&#x27;,
+  &#x27;testing/autoformatting_cell_source.lit#prettier&#x27;,
+  &#x27;testing/compactManifest1.json&#x27;,
+  &#x27;testing/compact_manifest.lit&#x27;,
+  &#x27;testing/cors_proxy.lit&#x27;,
+  &#x27;testing/custom-module.js&#x27;,
+  &#x27;testing/custom-module.mjs&#x27;,
+  &#x27;testing/esm_viewer_repl.lit&#x27;,
+  &#x27;testing/full.json&#x27;,
+  &#x27;testing/fuzzy_text_search.lit&#x27;,
+  &#x27;testing/gitworker.js&#x27;,
+  &#x27;testing/importing_js_modules.lit&#x27;,
+  &#x27;testing/index.lit&#x27;,
+  &#x27;testing/input_buffer.lit&#x27;,
+  &#x27;testing/isomorphic_git.lit&#x27;,
+  &#x27;testing/lightningfs.lit&#x27;,
+  &#x27;testing/links.lit&#x27;,
+  &#x27;testing/local_remote_files.lit&#x27;,
+  &#x27;testing/log/2021-05-09.lit&#x27;,
+  &#x27;testing/log/2021-05-11.lit&#x27;,
+  &#x27;testing/log/2021-05-12.lit&#x27;,
+  &#x27;testing/log/2021-05-13.lit&#x27;,
+  &#x27;testing/log/2021-05-15.lit&#x27;,
+  &#x27;testing/log/2021-05-16.lit&#x27;,
+  &#x27;testing/log/2021-05-17.lit&#x27;,
+  &#x27;testing/log/2021-05-18.lit&#x27;,
+  &#x27;testing/log/2021-05-19.lit&#x27;,
+  &#x27;testing/log/2021-05-20.lit&#x27;,
+  &#x27;testing/log/2021-05-21.lit&#x27;,
+  &#x27;testing/log/2021-05-23.lit&#x27;,
+  &#x27;testing/log/2021-05-25.lit&#x27;,
+  &#x27;testing/log/2021-05-27.lit&#x27;,
+  &#x27;testing/log/2021-05-29.lit&#x27;,
+  &#x27;testing/log/2021-05-30.lit&#x27;,
+  &#x27;testing/log/2021-05.lit&#x27;,
+  &#x27;testing/log/2021-06-01.lit&#x27;,
+  &#x27;testing/log/2021-06-02.lit&#x27;,
+  &#x27;testing/log/2021-w20.lit&#x27;,
+  &#x27;testing/log/2021-w21.lit&#x27;,
+  &#x27;testing/log/2021.lit&#x27;,
+  &#x27;testing/log/checkforinput.js&#x27;,
+  &#x27;testing/log/day.lit&#x27;,
+  &#x27;testing/log/today.js&#x27;,
+  &#x27;testing/paths.lit&#x27;,
+  &#x27;testing/private_files.lit&#x27;,
+  &#x27;testing/repl-output.svg&#x27;,
+  &#x27;testing/runkit-cors-proxy-endpoint.js&#x27;,
+  &#x27;testing/runkit-express-cors-proxy.js&#x27;,
+  &#x27;testing/runkit-repl-endpoint.js&#x27;,
+  &#x27;testing/runkit.lit&#x27;,
+  &#x27;testing/selection.lit&#x27;,
+  &#x27;testing/serviceworker.lit&#x27;,
+  &#x27;testing/test.txt&#x27;,
+  &#x27;testing/testing/repl-output.svg&#x27;,
+  &#x27;testing/web_workers.lit&#x27;,
+  &#x27;testing/worker.js&#x27;,
+  &#x27;testing/worker2.js&#x27;,
+  &#x27;throwaway/codevaluebug.lit&#x27;,
+  &#x27;utils/colors.js&#x27;,
+  &#x27;utils/console.js&#x27;,
+  &#x27;utils/fs-promises-gh-utils.js&#x27;,
+  &#x27;utils/fs-promises-utils.js&#x27;,
+  &#x27;utils/functions.js&#x27;,
+  &#x27;utils/git-commit-all.js&#x27;,
+  &#x27;utils/index.lit&#x27;,
+  &#x27;utils/momento.js&#x27;,
+  &#x27;utils/momento.lit&#x27;,
+  &#x27;utils/safe-encoders.js&#x27;,
+  &#x27;utils/unist-util-patch-source.js&#x27;,
+  &#x27;utils/unist-util-select-position.js&#x27;,
+  &#x27;viewers.lit&#x27;,
+  &#x27;wiki-links.lit&#x27; ]
 </code></pre></output></codecell></div></cell></section></section>
-<section depth="3" class="" startpos="185:1-4545" endpos="202:4-4767"><cell startpos="185:1-4545" endpos="185:8-4552"><div class="cell-content"><h3 id="add">Add</h3></div></cell><cell startpos="187:1-4554" endpos="202:4-4767" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">
+<section depth="3" class="" startpos="389:1-10981" endpos="406:4-11203"><cell startpos="389:1-10981" endpos="389:8-10988"><div class="cell-content"><h3 id="add">Add</h3></div></cell><cell startpos="391:1-10990" endpos="406:4-11203" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">
 const fs = lit.lfs
 const dir = lit.location.root
 
@@ -163,9 +367,9 @@ return (async ()=&gt; {
     filepath: &#x27;.&#x27;
   })
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.3w ago</span></span></span><output><pre><code class="txt">undefined
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2m ago</span></span></span><output><pre><code class="txt">undefined
 </code></pre></output></codecell></div></cell></section>
-<section depth="3" class="" startpos="206:1-4771" endpos="232:4-5174"><cell startpos="206:1-4771" endpos="206:11-4781"><div class="cell-content"><h3 id="commit">Commit</h3></div></cell><cell startpos="208:1-4783" endpos="232:4-5174" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">
+<section depth="3" class="" startpos="410:1-11207" endpos="436:4-11610"><cell startpos="410:1-11207" endpos="410:11-11217"><div class="cell-content"><h3 id="commit">Commit</h3></div></cell><cell startpos="412:1-11219" endpos="436:4-11610" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">
 const fs = lit.lfs
 const dir = lit.location.root
 
@@ -184,10 +388,10 @@ let sha = await lit.git.commit({
 console.log(sha)
 
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">5.5w ago</span></span></span><output><pre><code class="txt">2c1dcf840173cd7c36aa1e5b96bc0922006de579
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2m ago</span></span></span><output><pre><code class="txt">46ceec21a687227f28f6f1ca3139b6a0cd37fad5
 undefined
 </code></pre></output></codecell></div></cell></section>
-<section depth="3" class="" startpos="234:1-5176" endpos="311:4-6890"><cell startpos="234:1-5176" endpos="234:8-5183"><div class="cell-content"><h3 id="log">Log</h3></div></cell><cell startpos="236:1-5185" endpos="311:4-6890" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; text !collapse</span></span><pre><code class="js">const indentLines = str =&gt; str.split(&#x27;\n&#x27;).map( line =&gt; `      ${line}`).join(&#x27;\n&#x27;)
+<section depth="3" class="" startpos="438:1-11612" endpos="515:4-13326"><cell startpos="438:1-11612" endpos="438:8-11619"><div class="cell-content"><h3 id="log">Log</h3></div></cell><cell startpos="440:1-11621" endpos="515:4-13326" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; text !collapse</span></span><pre><code class="js">const indentLines = str =&gt; str.split(&#x27;\n&#x27;).map( line =&gt; `      ${line}`).join(&#x27;\n&#x27;)
 
 return (async ()=&gt; {
   let commits = await lit.git.log({
@@ -260,10 +464,10 @@ ${indentLines(x.commit.message)}`).join(&#x27;\n&#x27;)
       Commit All!!!
       
 </code></pre></output></codecell></div></cell></section>
-<section depth="3" class="" startpos="313:1-6892" endpos="338:4-7512"><cell startpos="313:1-6892" endpos="313:9-6900"><div class="cell-content"><h3 id="diff">Diff</h3></div></cell><cell startpos="315:1-6902" endpos="321:4-7049" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const {git, lfs} = lit
+<section depth="3" class="" startpos="517:1-13328" endpos="542:4-13948"><cell startpos="517:1-13328" endpos="517:9-13336"><div class="cell-content"><h3 id="diff">Diff</h3></div></cell><cell startpos="519:1-13338" endpos="525:4-13485" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const {git, lfs} = lit
 return [git.walk, git.TREE]
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">3.8w ago</span></span></span><output><pre><code class="txt">[ [Function: walk], [Function: TREE] ]
-</code></pre></output></codecell></div></cell><cell startpos="322:1-7050" endpos="338:4-7512" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><pre><code class="js">return lit.git
+</code></pre></output></codecell></div></cell><cell startpos="526:1-13486" endpos="542:4-13948" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><pre><code class="js">return lit.git
   const commitHash1 = &#x27;0c40ed746ebe53cf744d78191d0bbc2941537280&#x27;
   const commitHash2 = &#x27;b081f51cd27f54cf58915512006838d4eb67716b&#x27;
   const git = lit.git
@@ -277,7 +481,7 @@ return [git.walk, git.TREE]
   )}
 </code></pre></codecell><codecell class="dir-error lang-txt local output"><span class="meta"><span class="lang">txt</span><span style="color:white;background-color:red" class="directive dir-error">error</span><span class="updatedAt">Updated <span class="Time relative">3.8w ago</span></span></span><output><pre><code class="txt">undefined
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="340:1-7514" endpos="352:4-7819"><cell startpos="340:1-7514" endpos="340:15-7528"><div class="cell-content"><h2 id="http-client">Http client</h2></div></cell><cell startpos="342:1-7530" endpos="352:4-7819" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">
+<section depth="2" class="" startpos="544:1-13950" endpos="556:4-14255"><cell startpos="544:1-13950" endpos="544:15-13964"><div class="cell-content"><h2 id="http-client">Http client</h2></div></cell><cell startpos="546:1-13966" endpos="556:4-14255" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">
 return (async fn =&gt;{
   const http = await import(&#x27;https://unpkg.com/isomorphic-git/http/web/index.js&#x27;)
   return lit.git.getRemoteInfo({ http: http.default, url: &#x27;https://github.com/isomorphic-git/isomorphic-git&#x27; })
@@ -285,7 +489,7 @@ return (async fn =&gt;{
 
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.3w ago</span></span></span><output><pre><code class="txt">undefined
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="354:1-7821" endpos="574:4-13576"><cell startpos="354:1-7821" endpos="354:14-7834"><div class="cell-content"><h2 id="web-worker">Web worker</h2></div></cell><cell startpos="356:1-7836" endpos="408:4-9263" class="code output"><div class="cell-content"><codecell class="lang-js local output"><a name="gitworker.js"></a><span class="meta"><span class="lang">js</span><span class="filename">gitworker.js</span></span><output><pre><code class="js">/* eslint-env worker */
+<section depth="2" class="" startpos="558:1-14257" endpos="778:4-20012"><cell startpos="558:1-14257" endpos="558:14-14270"><div class="cell-content"><h2 id="web-worker">Web worker</h2></div></cell><cell startpos="560:1-14272" endpos="612:4-15699" class="code output"><div class="cell-content"><codecell class="lang-js local output"><a name="gitworker.js"></a><span class="meta"><span class="lang">js</span><span class="filename">gitworker.js</span></span><output><pre><code class="js">/* eslint-env worker */
 /* globals LightningFS git MagicPortal GitHttp */
 importScripts(
   &quot;https://unpkg.com/@isomorphic-git/lightning-fs&quot;,
@@ -336,7 +540,7 @@ self.addEventListener(&quot;message&quot;, ({ data }) =&gt; console.log(data));
     log: args =&gt; git.log({ ...args, fs, dir })
   });
 })();
-</code></pre></output></codecell></div></cell><cell startpos="410:1-9265" endpos="465:4-10913" class="code"><div class="cell-content"><codecell class="dir-collapse tag-reference lang-html local collapsed"><span class="meta"><span class="lang">html</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#c8db3f" class="tag">reference</span></span><pre><code class="html">&lt;div&gt;
+</code></pre></output></codecell></div></cell><cell startpos="614:1-15701" endpos="669:4-17349" class="code"><div class="cell-content"><codecell class="dir-collapse tag-reference lang-html local collapsed"><span class="meta"><span class="lang">html</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#c8db3f" class="tag">reference</span></span><pre><code class="html">&lt;div&gt;
   &lt;input
     id=&quot;repository&quot;
     type=&quot;text&quot;
@@ -390,8 +594,8 @@ self.addEventListener(&quot;message&quot;, ({ data }) =&gt; console.log(data));
     void: [&quot;print&quot;, &quot;progress&quot;, &quot;rejected&quot;]
   });
 
-</code></pre></codecell></div></cell><cell startpos="467:1-10915" endpos="469:4-10998" class="code output"><div class="cell-content"><codecell class="dir-below lang-script local output"><span class="meta"><span class="lang">script</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="script">https://unpkg.com/magic-portal
-</code></pre><script src="https://unpkg.com/magic-portal"></script></codecell></div></cell><cell startpos="471:1-11000" endpos="488:4-11454" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
+</code></pre></codecell></div></cell><cell startpos="671:1-17351" endpos="673:4-17434" class="code output"><div class="cell-content"><codecell class="dir-below lang-script local output"><span class="meta"><span class="lang">script</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="script">https://unpkg.com/magic-portal
+</code></pre><script src="https://unpkg.com/magic-portal"></script></codecell></div></cell><cell startpos="675:1-17436" endpos="692:4-17890" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
   let myWorker;
   try {
     myWorker = new Worker(&#x27;gitworker.js&#x27;)
@@ -407,7 +611,7 @@ self.addEventListener(&quot;message&quot;, ({ data }) =&gt; console.log(data));
   }
   
 })
-</code></pre></codecell></div></cell><cell startpos="491:1-11457" endpos="563:4-13373" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">  // alert(&quot;Running&quot;)
+</code></pre></codecell></div></cell><cell startpos="695:1-17893" endpos="767:4-19809" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">  // alert(&quot;Running&quot;)
   const $ = id =&gt; document.getElementById(id);
 
   let worker = new Worker(&quot;gitworker.js&quot;);
@@ -476,7 +680,7 @@ async function doCloneAndStuff() {
     
   })();
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.3w ago</span></span></span><output><pre><code class="txt">true
-</code></pre></output></codecell></div></cell><cell startpos="565:1-13375" endpos="574:4-13576" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return workerThread.log({})
+</code></pre></output></codecell></div></cell><cell startpos="769:1-19811" endpos="778:4-20012" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return workerThread.log({})
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.3w ago</span></span></span><output><pre><code class="txt">{ setDir: [Function],
   clone: [Function],
   listBranches: [Function],
