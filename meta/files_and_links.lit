@@ -3,7 +3,11 @@
 ## Unlinked files
 
 ```js
-return fetch('/manifest.json').then(res => res.json().then(json => json.nodes.filter(n => !n.backlinks || !n.backlinks.length).map(n => n.title || n.id )))
+return fetch('/manifest.json').then(res => res.json().then(json => {
+  return json.nodes
+         .filter(n => !n.backlinks || !n.backlinks.length)
+         .map(n => n.title || n.id ))
+})
 ```
 ```>txt attached=true updated=1622720899141
 [ 'Divergence from Markdown',
