@@ -321,15 +321,12 @@ export const Header = (props) =&gt; {
       { !menuPlugins ? null : menuPlugins &amp;&amp; Object.keys(menuPlugins).map( key =&gt; &lt;ErrorBoundary&gt;{menuPlugins[key](ctx, {React, Menu})}&lt;/ErrorBoundary&gt;) }
       
       &lt;Menu title=&quot;Help&quot;&gt;
-        &lt;span disabled&gt;{`v${version}`}&lt;/span&gt;
-        &lt;a href=&quot;https://dotlit.org&quot;&gt;About&lt;/a&gt;
-        &lt;span disabled&gt;Documentation&lt;/span&gt;
+        { !helpMenuPlugins ? null : helpMenuPlugins &amp;&amp; Object.keys(helpMenuPlugins).map( key =&gt; &lt;ErrorBoundary&gt;{helpMenuPlugins[key](ctx, {React, Menu})}&lt;/ErrorBoundary&gt;) }
         &lt;a href=&quot;/config.html?file=config.lit&quot;&gt;Config&lt;/a&gt;
         &lt;Menu title=&quot;Debug&quot;&gt;
             &lt;span onClick={setDebug}&gt;Set Mask&lt;/span&gt;
             &lt;span onClick={showInspector}&gt;Show Inspector&lt;/span&gt;
         &lt;/Menu&gt;
-                { !helpMenuPlugins ? null : helpMenuPlugins &amp;&amp; Object.keys(helpMenuPlugins).map( key =&gt; &lt;ErrorBoundary&gt;{helpMenuPlugins[key](ctx, {React, Menu})}&lt;/ErrorBoundary&gt;) }
       &lt;/Menu&gt;
       &lt;Menu right title={&lt;Status local={local} remote={remote} /&gt;}&gt;
         {ctx.file &amp;&amp; &lt;span disabled&gt;{`File: ${ctx.file.path}`}&lt;/span&gt;}
