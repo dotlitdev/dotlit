@@ -7,9 +7,13 @@ Creating a CORS proxy server using [[testing/RunKit]]
 ## Problem
 ```js #test #before > text !collapse
 return (async (fn) => {
-  const resp = await fetch("https://example.com");
-  console.log(resp.status);
-  return resp.text();
+  try {
+    const resp = await fetch("https://example.com");
+    console.log(resp.status);
+    return resp.text();
+  } catch (err) {
+    return err.message;
+  }
 })();
 
 ```
