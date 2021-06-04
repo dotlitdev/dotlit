@@ -12,3 +12,14 @@ app.use("/", (req, res) => {
     res.end(err.message);
   }
 });
+
+```
+```>txt attached=true updated=1622842925256 !error
+function toString() {
+    [native code]
+}
+runkit-express-cors-proxy.js:2:40
+runkit-express-cors-proxy.js:18:63
+module code@runkit-express-cors-proxy.js:18:139
+evaluate@[native code]
+moduleEvaluation@[native code]
