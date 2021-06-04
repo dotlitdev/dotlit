@@ -59,7 +59,7 @@ export const wikiLinkOptions = (files = []) => {
   return {
     pageResolver: (name) => {
       const {path, ext} = resolver(name)
-      const exts = ['.lit', '.md', ext]
+      const exts = ['.lit', '/index.lit', '.md', ext]
       const opts = exts.map( ext => {
         return `${path}${ext}`
       })
