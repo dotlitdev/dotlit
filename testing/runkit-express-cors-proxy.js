@@ -1,6 +1,6 @@
 const express = require("@runkit/runkit/express-endpoint/1.0.0");
 const cors = require("cors");
-const request = require("request").defaults({ maxRedirects: 100 });
+const request = require("request");
 
 const app = express(exports);
 app.use(cors());
