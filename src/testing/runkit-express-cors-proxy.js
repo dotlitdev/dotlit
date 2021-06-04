@@ -12,7 +12,3 @@ app.use("/", (req, res) => {
     res.end(err.message);
   }
 });
-
-```
-```>txt attached=true updated=1622843142447
-Still setting up repl endpoint
