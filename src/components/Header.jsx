@@ -119,7 +119,7 @@ export const Header = (props) => {
   const { root, toggleViewSource, ssr } = props
 
   const resetFile = (ctx, localOnly) => async ev => {
-    const filepath = '/' + ctx.file.path
+    const filepath = ctx.file.path
     console.log("Reset File:", filepath)
     const qualifier = localOnly ? "local" : "local And remote"
     if (confirm(`Are you sure you want to delete the ${qualifier} copy of "${filepath}"`)) {
