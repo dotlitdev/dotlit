@@ -23,6 +23,7 @@ const Link = props => {
 
     return <a className={props.className}
         {...props.node.properties}
+        {...props.node.properties.data}
         wikilink={wikilink}>
             {props.children}
             {icon && !imgOnlyLink && <span className="linkIcon">{icon}</span> }
