@@ -29,7 +29,7 @@ export const repl = async (src, meta) => {
         return Promise.all(
           list.map(async (key) => {
             const pathname = path.join(root, key);
-            const stat = await lit.fs.stat(pathname);
+            const stat = await lit.fs.stat(pathname).catch((e) => {});
             let contents;
             if (key === ".git" || !key || pathname.endsWith(lit.location.src)) {
             } else if (stat.type === "dir") await visit(pathname);
