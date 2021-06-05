@@ -57,13 +57,14 @@ const transform = (options) => (node, index, parent) => {
 
 export const wikiLinkOptions = (files = []) => {
   return {
+    permalinks: files,
     pageResolver: (name) => {
       const {path, ext} = resolver(name)
       const exts = ['.lit', '/index.lit', '.md', ext]
       const opts = exts.map( ext => {
         return `${path}${ext}`
       })
-      return opts.filter(file => files.indexOf(file) >= 0)[0] || opts
+      return opts //.filter(file => files.indexOf(file) >= 0)[0] || opts
     }
   }
 };

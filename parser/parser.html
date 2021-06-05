@@ -732,13 +732,14 @@ const transform = (options) =&gt; (node, index, parent) =&gt; {
 
 export const wikiLinkOptions = (files = []) =&gt; {
   return {
+    permalinks: files,
     pageResolver: (name) =&gt; {
       const {path, ext} = resolver(name)
       const exts = [&#x27;.lit&#x27;, &#x27;/index.lit&#x27;, &#x27;.md&#x27;, ext]
       const opts = exts.map( ext =&gt; {
         return `${path}${ext}`
       })
-      return opts.filter(file =&gt; files.indexOf(file) &gt;= 0)[0] || opts
+      return opts //.filter(file =&gt; files.indexOf(file) &gt;= 0)[0] || opts
     }
   }
 };
