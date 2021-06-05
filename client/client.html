@@ -184,8 +184,14 @@ export const init = async () =&gt; {
     file.data = file.data || {}
     file.data.plugins = (settings &amp;&amp; settings.data &amp;&amp; settings.data.plugins) || {}
     file.data.times = times
+
+    window.lit.manifest = await fetch(&#x27;compactManifest.json&#x27;)
+                          .catch(err=&gt;([]))
+                          .then(res =&gt; res.json().then( data =&gt; {
+                              return Array.from(lit.utils.compactPrefixTree.getWordsFromTrie(data))
+                          }))
     
-    const processedFile = await renderer.processor({fs,litroot}).process(file)
+    const processedFile = await renderer.processor({fs,litroot, files: lit.manifest}).process(file)
     if (stats) {
         const remoteNewer = stats.local.stat.mtimeMs &lt; stats.remote.stat.mtimeMs
         const hasDiff = stats.local.value !== stats.remote.value
@@ -199,11 +205,6 @@ export const init = async () =&gt; {
     window.lit.ast = processedFile.data.ast
     window.lit.file = processedFile
     window.lit.settings = settings
-    window.lit.manifest = await fetch(&#x27;compactManifest.json&#x27;)
-                          .catch(err=&gt;([]))
-                          .then(res =&gt; res.json().then( data =&gt; {
-                              return Array.from(lit.utils.compactPrefixTree.getWordsFromTrie(data))
-                          }))
 
     try {
         lit.notebook = &lt;App
