@@ -62,7 +62,7 @@ export const viewer = ({ node, React }) => {
                   })
                 );
               }
-              const item = { pathname, type: stat.type, contents: pathname };
+              const item = { pathname, type: stat?.type, contents: pathname };
               all.push(item);
               return item;
             })
