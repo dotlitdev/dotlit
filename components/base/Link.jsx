@@ -7,11 +7,11 @@ const console = getConsoleForNamespace('Link')
 const Link = props => {
     const title = props.node.properties.title
     const href = props.node.properties.href
-    const data = props.data
+    const data = props.data || {}
     const wikilink = props.wikilink ? 'true' : undefined
-    const icon = (data && data.isExternal) 
+    const icon = data.isExternal
                  ? '↗'
-                 : (data && data.isFragment)
+                 : data.isFragment
                    ? '§'
                    : null
 
