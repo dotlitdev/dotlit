@@ -16,10 +16,12 @@ const Link = props => {
                    : null
 
     console.log("<Link/>", title, href)
-
+    
+    const local = !data.isFragment && !data.isExternal
     const classNames = [
         props.className,
         data.exists && 'exists',
+        local && 'local',
         data.isExternal && 'external',
         data.isFragment && 'fragment',
     ].filter(x=>x).join(' ')
