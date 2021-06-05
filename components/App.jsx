@@ -32,7 +32,7 @@ const onLifecyclePlugins = async (file, type, ...args) => {
     }
 }
 
-const App = ({root, file, fs, result, ssr}) => {
+const App = ({root, file, fs, result, files, ssr}) => {
 
     const [srcAndRes, setSrcAndRes] = useState({
         src: file.contents.toString(),
@@ -57,7 +57,7 @@ const App = ({root, file, fs, result, ssr}) => {
         
         file.contents = patchedSrc
         file.messages = []
-        const processedFile = await processor({fs}).process(file)
+        const processedFile = await processor({fs, files}).process(file)
         console.log("Processed clientside on setSrc", file.path)
 
         await onLifecyclePlugins(processedFile, ONSAVE, patchedSrc, processedFile, processedFile.data.ast)
