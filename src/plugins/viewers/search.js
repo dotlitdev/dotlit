@@ -42,6 +42,7 @@ export const viewer = ({ node, React }) => {
               const stat = await lit.fs.stat(pathname).catch((e) => {});
               let contents;
               if (
+                !stat ||
                 key === ".git" ||
                 !key ||
                 pathname.endsWith(lit.location.src)
