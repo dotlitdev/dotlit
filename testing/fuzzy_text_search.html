@@ -185,7 +185,7 @@
 };
 
 </code></pre></output></codecell></div></cell><cell startpos="187:1-4972" endpos="189:4-4993" class="code output"><div class="cell-content"><codecell class="lang-search2 local output"><span class="meta"><span class="lang">search2</span><span class="attribute attr-ns" style="color:black;background-color:#00dc50">ns=/</span></span><div><input/><div></div><div></div></div></codecell></div></cell></section></section>
-<section depth="4" class="" startpos="191:1-4995" endpos="337:4-9441"><cell startpos="191:1-4995" endpos="191:10-5004"><div class="cell-content"><h4 id="repl">Repl</h4></div></cell><cell startpos="192:1-5005" endpos="298:4-7983" class="code output"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed output"><a name="../plugins/repls/search.js"></a><span class="meta"><span class="lang">js</span><span class="filename">../plugins/repls/search.js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=repl</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=search</span></span><output><pre><code class="js">export const repl = async (src, meta) =&gt; {
+<section depth="4" class="" startpos="191:1-4995" endpos="303:4-8041"><cell startpos="191:1-4995" endpos="191:10-5004"><div class="cell-content"><h4 id="repl">Repl</h4></div></cell><cell startpos="192:1-5005" endpos="298:4-8000" class="code output"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed output"><a name="../plugins/repls/search.js"></a><span class="meta"><span class="lang">js</span><span class="filename">../plugins/repls/search.js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=repl</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=search</span></span><output><pre><code class="js">export const repl = async (src, meta) =&gt; {
   const t = Date.now();
 
   const { default: Fuse } = await import(
@@ -216,7 +216,7 @@
         return Promise.all(
           list.map(async (key) =&gt; {
             const pathname = path.join(root, key);
-            const stat = await lit.fs.stat(pathname);
+            const stat = await lit.fs.stat(pathname).catch((e) =&gt; {});
             let contents;
             if (key === &quot;.git&quot; || !key || pathname.endsWith(lit.location.src)) {
             } else if (stat.type === &quot;dir&quot;) await visit(pathname);
@@ -290,53 +290,9 @@
   );
 };
 
-</code></pre></output></codecell></div></cell><cell startpos="301:1-7986" endpos="303:4-8024" class="code"><div class="cell-content"><codecell class="lang-text local"><span class="meta"><span class="lang">text</span><span class="repl">search</span><span class="output">&gt; md</span></span><pre><code class="text">type=prox
-</code></pre></codecell></div></cell><cell startpos="304:1-8025" endpos="337:4-9441" class="code output"><div class="cell-content"><codecell class="lang-md local output"><span class="meta"><span class="lang">md</span><span class="updatedAt">Updated <span class="Time relative">7.0d ago</span></span></span><div class="md-block">
-<p>Results for search &quot;<strong>type=prox</strong>&quot;. In <strong>0.375</strong> seconds.</p>
-<ol>
-<li>
-<p><strong><a href="cors_proxy.html" filepath="/testing/fuzzy_text_search.lit" root="" data="[object Object]" base="/testing/cors_proxy.lit" canonical="/testing/cors_proxy.lit">/testing/cors_proxy.lit</a></strong> <em>100</em></p>
-<p>line 24 ```&gt;js ../plugins/other/cors-proxy.js !plugin type=proxy id=corsProxy !collapse</p>
-</li>
-<li>
-<p><strong><a href="../plugin_system.html" filepath="/testing/fuzzy_text_search.lit" root="" data="[object Object]" base="/plugin_system.lit" canonical="/plugin_system.lit">/plugin_system.lit</a></strong> <em>67</em></p>
-<p>line 106 ```js !plugin of=lang #implementation type=repl</p>
-</li>
-<li>
-<p><strong><a href="../plugin_system.html" filepath="/testing/fuzzy_text_search.lit" root="" data="[object Object]" base="/plugin_system.lit" canonical="/plugin_system.lit">/plugin_system.lit</a></strong> <em>67</em></p>
-<p>line 162 ```js !plugin id=example-onload type=onload</p>
-</li>
-<li>
-<p><strong><a href="../plugin_system.html" filepath="/testing/fuzzy_text_search.lit" root="" data="[object Object]" base="/plugin_system.lit" canonical="/plugin_system.lit">/plugin_system.lit</a></strong> <em>67</em></p>
-<p>line 167 ```js !plugin id=example-onselect type=onselect</p>
-</li>
-<li>
-<p><strong><a href="../plugin_system.html" filepath="/testing/fuzzy_text_search.lit" root="" data="[object Object]" base="/plugin_system.lit" canonical="/plugin_system.lit">/plugin_system.lit</a></strong> <em>67</em></p>
-<p>line 172 ```js !plugin id=example-onsave type=onsave</p>
-</li>
-<li>
-<p><strong><a href="../prismjs_and_a_simple_editor.html" filepath="/testing/fuzzy_text_search.lit" root="" data="[object Object]" base="/prismjs_and_a_simple_editor.lit" canonical="/prismjs_and_a_simple_editor.lit">/prismjs_and_a_simple_editor.lit</a></strong> <em>67</em></p>
-<p>line 144 ```js !plugin type=repl of=module !collapse &lt; ./plugins/repls/module.js</p>
-</li>
-<li>
-<p><strong><a href="../config.html" filepath="/testing/fuzzy_text_search.lit" root="" data="[object Object]" base="/config.lit" canonical="/config.lit">/config.lit</a></strong> <em>67</em></p>
-<p>line 113 ```js !plugin type=transformer of=js !collapse &lt;   ../plugins/transformers/prettier.js</p>
-</li>
-<li>
-<p><strong><a href="../config.html" filepath="/testing/fuzzy_text_search.lit" root="" data="[object Object]" base="/config.lit" canonical="/config.lit">/config.lit</a></strong> <em>67</em></p>
-<p>line 297 ```js !plugin of=uml !collapse #viewer type=repl</p>
-</li>
-<li>
-<p><strong><a href="isomorphic_git.html" filepath="/testing/fuzzy_text_search.lit" root="" data="[object Object]" base="/testing/isomorphic_git.lit" canonical="/testing/isomorphic_git.lit">/testing/isomorphic_git.lit</a></strong> <em>67</em></p>
-<p>line 413     type=&quot;text&quot;</p>
-</li>
-<li>
-<p><strong><a href="importing_js_modules.html" filepath="/testing/fuzzy_text_search.lit" root="" data="[object Object]" base="/testing/importing_js_modules.lit" canonical="/testing/importing_js_modules.lit">/testing/importing_js_modules.lit</a></strong> <em>67</em></p>
-<p>line 94 ```&gt;js ../plugins/repls/module.js !plugin type=repl of=module !collapse</p>
-</li>
-</ol>
-</div></codecell></div></cell></section>
-<section depth="2" class="" startpos="340:1-9444" endpos="357:4-9811"><cell startpos="340:1-9444" endpos="342:38-9494"><div class="cell-content"><h2 id="fuzzyset">FuzzySet</h2><p><a href="https://github.com/Glench/fuzzyset.js" filepath="/testing/fuzzy_text_search.lit" root="" data="[object Object]" base="https://github.com/Glench/fuzzyset.js" canonical="https://github.com/Glench/fuzzyset.js">https://github.com/Glench/fuzzyset.js<span class="linkIcon">↗</span></a></p></div></cell><cell startpos="344:1-9496" endpos="357:4-9811" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return import(&#x27;https://cdn.skypack.dev/fuzzyset&#x27;).then( FuzzySet =&gt; {
+</code></pre></output></codecell></div></cell><cell startpos="301:1-8003" endpos="303:4-8041" class="code"><div class="cell-content"><codecell class="lang-text local"><span class="meta"><span class="lang">text</span><span class="repl">search</span><span class="output">&gt; md</span></span><pre><code class="text">type=prox
+</code></pre></codecell></div></cell></section>
+<section depth="2" class="" startpos="307:1-8045" endpos="324:4-8412"><cell startpos="307:1-8045" endpos="309:38-8095"><div class="cell-content"><h2 id="fuzzyset">FuzzySet</h2><p><a href="https://github.com/Glench/fuzzyset.js" filepath="/testing/fuzzy_text_search.lit" root="" data="[object Object]" base="https://github.com/Glench/fuzzyset.js" canonical="https://github.com/Glench/fuzzyset.js">https://github.com/Glench/fuzzyset.js<span class="linkIcon">↗</span></a></p></div></cell><cell startpos="311:1-8097" endpos="324:4-8412" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return import(&#x27;https://cdn.skypack.dev/fuzzyset&#x27;).then( FuzzySet =&gt; {
 
   const f = new FuzzySet.default()
   f.add(&quot;the text of mine&quot;)
