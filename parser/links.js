@@ -123,7 +123,7 @@ export const decorateLinkNode = (link, root = "", filepath = "", files = []) => 
     wikilink,
     exists: files.indexOf(canonical) >= 0,
   };
-  link.data = data
+  link.data = Object.assign({},data,{})
 
   if (wikilink) {
     link.children = [

@@ -1,20 +1,20 @@
-<html data-reactroot=""><head><title>Parser</title><meta name="litsrc" value="/parser/parser.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="5:21-185"><cell startpos="1:1-0" endpos="3:154-163"><div class="cell-content"><h1 id="parser">Parser</h1><p>Built atop the <a href="../unified.html" title="unified" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="/unified.lit" hProperties="[object Object]">unified</a> ecosystem, specifically <a href="../remark.html" title="remark" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="/remark.lit" hProperties="[object Object]">remark</a>, which takes <code>.lit</code> <a href="../markdown.html" title="Markdown" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="/markdown.lit" hProperties="[object Object]">Markdown</a> source and outputs <code>mdast</code> (Markdown Abstract Syntax Tree)</p></div></cell><section depth="2" class="" startpos="5:1-165" endpos="5:21-185"><cell startpos="5:1-165" endpos="5:21-185"><div class="cell-content"><h2 id="table-of-contents">Table of Contents</h2><ul>
+<html data-reactroot=""><head><title>Parser</title><meta name="litsrc" value="/parser/parser.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="5:21-185"><cell startpos="1:1-0" endpos="3:154-163"><div class="cell-content"><h1 id="parser">Parser</h1><p>Built atop the <a href="../unified.html" title="unified" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="/unified.lit">unified</a> ecosystem, specifically <a href="../remark.html" title="remark" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="/remark.lit">remark</a>, which takes <code>.lit</code> <a href="../markdown.html" title="Markdown" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="/markdown.lit">Markdown</a> source and outputs <code>mdast</code> (Markdown Abstract Syntax Tree)</p></div></cell><section depth="2" class="" startpos="5:1-165" endpos="5:21-185"><cell startpos="5:1-165" endpos="5:21-185"><div class="cell-content"><h2 id="table-of-contents">Table of Contents</h2><ul>
 <li>
-<p><a href="#implementation-1" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="#implementation-1" hProperties="[object Object]">Implementation<span class="linkIcon">§</span></a></p>
+<p><a href="#implementation-1" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="#implementation-1">Implementation<span class="linkIcon">§</span></a></p>
 </li>
 <li>
-<p><a href="#extensions" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="#extensions" hProperties="[object Object]">Extensions<span class="linkIcon">§</span></a></p>
+<p><a href="#extensions" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="#extensions">Extensions<span class="linkIcon">§</span></a></p>
 <ul>
-<li><a href="#frontmatter" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="#frontmatter" hProperties="[object Object]">Frontmatter<span class="linkIcon">§</span></a></li>
-<li><a href="#sections" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="#sections" hProperties="[object Object]">Sections<span class="linkIcon">§</span></a></li>
-<li><a href="#cells" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="#cells" hProperties="[object Object]">Cells<span class="linkIcon">§</span></a></li>
-<li><a href="#codeblocks" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="#codeblocks" hProperties="[object Object]">Codeblocks<span class="linkIcon">§</span></a></li>
-<li><a href="#markdown-blocks" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="#markdown-blocks" hProperties="[object Object]">Markdown blocks<span class="linkIcon">§</span></a></li>
-<li><a href="#links" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="#links" hProperties="[object Object]">Links<span class="linkIcon">§</span></a></li>
+<li><a href="#frontmatter" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="#frontmatter">Frontmatter<span class="linkIcon">§</span></a></li>
+<li><a href="#sections" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="#sections">Sections<span class="linkIcon">§</span></a></li>
+<li><a href="#cells" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="#cells">Cells<span class="linkIcon">§</span></a></li>
+<li><a href="#codeblocks" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="#codeblocks">Codeblocks<span class="linkIcon">§</span></a></li>
+<li><a href="#markdown-blocks" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="#markdown-blocks">Markdown blocks<span class="linkIcon">§</span></a></li>
+<li><a href="#links" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="#links">Links<span class="linkIcon">§</span></a></li>
 </ul>
 </li>
 <li>
-<p><a href="#ast-to-string" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="#ast-to-string" hProperties="[object Object]">AST to String<span class="linkIcon">§</span></a></p>
+<p><a href="#ast-to-string" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="#ast-to-string">AST to String<span class="linkIcon">§</span></a></p>
 </li>
 </ul></div></cell></section></section>
 <section depth="2" class="" startpos="13:1-312" endpos="16:4-374"><cell startpos="13:1-312" endpos="13:19-330"><div class="cell-content"><h2 id="implementation-1">Implementation</h2></div></cell><cell startpos="15:1-332" endpos="16:4-374" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; index.js</span></span><pre><code class="js">import unified from &#x27;unified&#x27;
@@ -798,7 +798,7 @@ export const decorateLinkNode = (link, root = &quot;&quot;, filepath = &quot;&qu
     wikilink,
     exists: files.indexOf(canonical) &gt;= 0,
   };
-  link.data = data
+  link.data = Object.assign({},data,{})
 
   if (wikilink) {
     link.children = [
@@ -831,7 +831,7 @@ export default {
 </code></pre></codecell></div></cell></section>
 <section depth="2" class="" startpos="148:1-3123" endpos="160:4-3646"><cell startpos="148:1-3123" endpos="152:168-3471"><div class="cell-content"><h2 id="ast-to-string">AST to String</h2><ul class="contains-task-list">
 <li class="task-list-item">
-<p><input type="checkbox" disabled=""/> <!-- -->#TODO refactor save (update src) to operate on AST directly and stringify as below, instead of the cureent <a href="../utils/unist-patch-source.html" title="../utils/unist-patch-source" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="/utils/unist-patch-source.lit" hProperties="[object Object]">../utils/unist-patch-source</a> implementaction.</p>
+<p><input type="checkbox" disabled=""/> <!-- -->#TODO refactor save (update src) to operate on AST directly and stringify as below, instead of the cureent <a href="../utils/unist-patch-source.html" title="../utils/unist-patch-source" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="/utils/unist-patch-source.lit">../utils/unist-patch-source</a> implementaction.</p>
 <p>This is complicated by the fact that new cell source can in effect result in previous and next cell semantic/structure changes, hence the patch source implementation</p>
 </li>
 </ul></div></cell><cell startpos="153:1-3472" endpos="160:4-3646" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const {toMarkdown, ungroupSections}
