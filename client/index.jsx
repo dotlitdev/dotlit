@@ -188,7 +188,7 @@ export const init = async () => {
     window.lit.manifest = await fetch(lit.location.base + 'compactManifest.json')
                           .catch(err=>([]))
                           .then(res => res.json().then( data => {
-                              return Array.from(lit.utils.compactPrefixTree.getWordsFromTrie(data))
+                              return Array.from(lit.utils.compactPrefixTree.getWordsFromTrie(data)).map(x=>'/'+x)
                           }))
     
     const processedFile = await renderer.processor({fs,litroot, files: lit.manifest}).process(file)
