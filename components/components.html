@@ -993,10 +993,18 @@ import path from &#x27;path&#x27;
 
 export default class Backlinks extends React.Component {
     render() {
+
+        const included = {}
+        const deduped = this.props.links.filter( l =&gt; {
+          if (!included[l.url]) {
+             included[l.url] = true
+             return true
+          }
+        })
         return &lt;&gt;
             &lt;h4&gt;{`Backlinks (${this.props.links.length})`}&lt;/h4&gt;
             &lt;ol&gt;
-                {this.props.links.map( (link) =&gt; {
+                {deduped.map( (link) =&gt; {
                     return  &lt;li key={link.url}&gt;&lt;a title={link.title} href={path.join(this.props.root, link.url)}&gt;{link.title}&lt;/a&gt;&lt;/li&gt;
                 })}
             &lt;/ol&gt;
