@@ -17,11 +17,16 @@ const Link = props => {
 
     console.log("<Link/>", title, href)
 
+    const classNames = [
+        props.className,
+        data.exists && 'exists',
+    ].filter(x=>x).join(' ')
+
     const imgOnlyLink = props.node.children
                         && props.node.children.length === 1
                         && props.node.children[0].tagName === 'img'
 
-    return <a className={props.className}
+    return <a className={classNames}
         {...props.node.properties}
         {...props.node.properties.data}
         wikilink={wikilink}>
