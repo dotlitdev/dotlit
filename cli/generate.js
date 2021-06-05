@@ -234,7 +234,7 @@ private: true
 The contents of this file are private. Only visible by the author.
 
 `
-                           file = await renderProcessor({fs, files: matches}).process(file)
+                           file = await renderProcessor({fs, files: matches.map(x=>'/'+x)}).process(file)
 
                         }
                         // await mkdirp(path.join(cmd.output,path.dirname(file.path)))
