@@ -69,7 +69,7 @@ export const processor = ({files, fs, litroot} = {files: []}) => {
     .use(codeblocks)
     // Async reparse `md` codeblocks as children
     .use(mdblocks, {baseProcessor, litroot, files})
-    .use(links.resolveLinks({litroot}))
+    .use(links.resolveLinks({litroot, files}))
 
     .use(sections, {})
 
