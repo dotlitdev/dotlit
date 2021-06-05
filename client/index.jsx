@@ -185,7 +185,7 @@ export const init = async () => {
     file.data.plugins = (settings && settings.data && settings.data.plugins) || {}
     file.data.times = times
 
-    window.lit.manifest = await fetch('compactManifest.json')
+    window.lit.manifest = await fetch(lit.location.base + 'compactManifest.json')
                           .catch(err=>([]))
                           .then(res => res.json().then( data => {
                               return Array.from(lit.utils.compactPrefixTree.getWordsFromTrie(data))
