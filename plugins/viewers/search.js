@@ -39,7 +39,7 @@ export const viewer = ({ node, React }) => {
           return Promise.all(
             list.map(async (key) => {
               const pathname = path.join(root, key);
-              const stat = await lit.fs.stat(pathname);
+              const stat = await lit.fs.stat(pathname).catch((e) => {});
               let contents;
               if (
                 key === ".git" ||
