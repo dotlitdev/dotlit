@@ -5,7 +5,7 @@ import { getConsoleForNamespace } from "../utils/console";
 const console = getConsoleForNamespace("links");
 
 export const resolveLinks =
-  (options = { litroot: "", filepath: "" }) =>
+  (options = { litroot: "", filepath: "", files: []}) =>
   (...args) =>
   (tree, file) => {
     console.log("[Links] Init", file.path, options);
@@ -52,7 +52,7 @@ export const resolver = (str) => {
 const isLink = (node) => ["link", "wikiLink"].indexOf(node.type) >= 0;
 
 const transform = (options) => (node, index, parent) => {
-  return decorateLinkNode(node, options.litroot, options.filepath);
+  return decorateLinkNode(node, options.litroot, options.filepath, options.files);
 };
 
 export const wikiLinkOptions = (files = []) => {
@@ -83,7 +83,7 @@ const linkToUrl = (link, root) => {
   }
 };
 
-export const decorateLinkNode = (link, root = "", filepath = "") => {
+export const decorateLinkNode = (link, root = "", filepath = "", files = []) => {
   // console.log(link)
   const wikilink = link.type === "wikiLink";
   const url = linkToUrl(link, root);
@@ -113,18 +113,19 @@ export const decorateLinkNode = (link, root = "", filepath = "") => {
   link.type = "link";
   link.url = href;
   link.title = link.title || link.value;
-  link.data = {
+
+  const data = {
     isExternal,
     isAbsolute,
     isFragment,
     isRelative,
     canonical,
     wikilink,
+    exists: files.indexOf(canonical) >= 0,
   };
+  link.data = data
 
   if (wikilink) {
-    // [base, frag] = link.url.split("#");
-    // link.url = base + "?file=" + canonical + (frag ? `#${frag}` : "");
     link.children = [
       { position: link.position, type: "text", value: link.value },
     ];
@@ -134,16 +135,7 @@ export const decorateLinkNode = (link, root = "", filepath = "") => {
     wikilink,
     filepath,
     root,
-    data: {
-      base,
-      frag,
-      isExternal,
-      isAbsolute,
-      isFragment,
-      isRelative,
-      canonical,
-      wikilink,
-    },
+    data,
   };
 
   delete link.value;
