@@ -199,10 +199,10 @@ export const init = async () => {
     window.lit.ast = processedFile.data.ast
     window.lit.file = processedFile
     window.lit.settings = settings
-    window.lit.manifest = fetch('compactManifest.json')
+    window.lit.manifest = await fetch('compactManifest.json')
                           .catch(err=>([]))
                           .then(res => res.json().then( data => {
-                              return lit.utils.compactPrefixTree.getWordsFromTrie(data)
+                              return Array.from(lit.utils.compactPrefixTree.getWordsFromTrie(data))
                           }))
 
     try {
@@ -211,6 +211,7 @@ export const init = async () => {
             fs={lit.fs}
             file={processedFile}
             result={processedFile.result}
+            files={lit.manifest}
         />
     } catch(err) {
         console.error("Error instantiating App", err)
