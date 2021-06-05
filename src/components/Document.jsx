@@ -8,6 +8,7 @@ const console = getConsoleForNamespace('Document')
 
 const Document = props => {
 
+    const files = props.files || []
     const result = props.file.result
     const title = props.file.data.frontmatter.title || props.file.stem
     const theme = props.file.data.frontmatter.theme
@@ -22,7 +23,7 @@ const Document = props => {
             <link rel="stylesheet" href={path.join(props.root, 'style.css')}/>
         </head>
         <body>
-            <div id="lit-app"><App root={props.root} file={props.file} fs={props.fs} result={result} ssr={true}/></div>
+            <div id="lit-app"><App root={props.root} file={props.file} fs={props.fs} result={result} files={files} ssr={true}/></div>
             <div id="backlinks"><Backlinks root={props.root} links={props.backlinks || []}/></div>
             <script src="//cdn.jsdelivr.net/npm/eruda"></script>
             <script>eruda.init();</script>
