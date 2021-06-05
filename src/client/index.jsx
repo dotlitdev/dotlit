@@ -199,6 +199,11 @@ export const init = async () => {
     window.lit.ast = processedFile.data.ast
     window.lit.file = processedFile
     window.lit.settings = settings
+    window.lit.manifest = fetch('compactManifest.json')
+                          .catch(err=>([]))
+                          .then(res => res.json().then( data => {
+                              return lit.utils.compactPrefixTree.getWordsFromTrie(data)
+                          }))
 
     try {
         lit.notebook = <App
