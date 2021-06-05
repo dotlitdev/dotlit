@@ -20,6 +20,8 @@ const Link = props => {
     const classNames = [
         props.className,
         data.exists && 'exists',
+        data.isExternal && 'external',
+        data.isFragment && 'fragment',
     ].filter(x=>x).join(' ')
 
     const imgOnlyLink = props.node.children
