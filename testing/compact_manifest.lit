@@ -13,7 +13,7 @@ return (async fn => {
   const keys = manifest.nodes.map(n=>n.id)
   const trie = new CompactPrefixTree(keys)
 
-  const before = JSON.stringify(manifest.nodes.reduce((m,n)=>{m[n.canonical] = null; return m }, {}))
+  const before = JSON.stringify(manifest.nodes.reduce((m,n)=>{m[n.id] = null; return m }, {}))
   console.log(before)
   const after = JSON.stringify(trie.T)
   // console.log(trie.T)
@@ -21,9 +21,9 @@ return (async fn => {
   return `${before.length}->${after.length}. A ${100-(after.length/before.length*100)}% reduction in size.`
 })()
 ```
-```>txt attached=true updated=1622980098932
-{"id":"plugins/viewers/diff.js","backlinks":[{"id":"/viewers.lit","url":"../../../../../viewers.html","title":"Custom Viewers"}],"url":"plugins/viewers/diff.js","exists":true,"type":"source","undefined":null}
-208->4663. A -2141.826923076923% reduction in size.
+```>txt attached=true updated=1622980157921
+{"undefined":null}
+18->4663. A -25805.555555555555% reduction in size.
 ```
 
 
