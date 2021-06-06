@@ -87,7 +87,7 @@ includes the following 2 files:
        .readFile(&#x27;/.git/HEAD&#x27;, {
           encoding: &#x27;utf8&#x27;
         })
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.9d ago</span></span></span><output><pre><code class="txt">ref: refs/heads/master
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">3.0d ago</span></span></span><output><pre><code class="txt">ref: refs/heads/master
 
 </code></pre></output></codecell></div></cell><cell startpos="102:1-2396" endpos="111:4-2593" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return lit.fs
        .readFile(&#x27;/.git/refs/heads/master&#x27;, {
@@ -101,7 +101,7 @@ includes the following 2 files:
     dir: lit.location.root
   })
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.9d ago</span></span></span><output><pre><code class="txt">undefined
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">3.0d ago</span></span></span><output><pre><code class="txt">undefined
 </code></pre></output></codecell></div></cell><section depth="3" class="" startpos="123:1-2775" endpos="225:4-6204"><cell startpos="123:1-2775" endpos="123:11-2785"><div class="cell-content"><h3 id="status">Status</h3></div></cell><cell startpos="125:1-2787" endpos="136:4-3037" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async () =&gt; {
   return lit.location.src + &quot; : &quot; + await lit.git.status({
     fs: lit.lfs, 
@@ -270,7 +270,58 @@ return [git.walk, git.TREE]
   )}
 </code></pre></codecell><codecell class="dir-error lang-txt local output"><span class="meta"><span class="lang">txt</span><span style="color:white;background-color:red" class="directive dir-error">error</span><span class="updatedAt">Updated <span class="Time relative">4.3w ago</span></span></span><output><pre><code class="txt">undefined
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="333:1-8116" endpos="345:4-8421"><cell startpos="333:1-8116" endpos="333:15-8130"><div class="cell-content"><h2 id="http-client">Http client</h2></div></cell><cell startpos="335:1-8132" endpos="345:4-8421" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">
+<section depth="2" class="" startpos="333:1-8116" endpos="350:4-8531"><cell startpos="333:1-8116" endpos="335:23-8154"><div class="cell-content"><h2 id="http-client">Http client</h2><p>Requires a CORS Proxy!</p></div></cell><cell startpos="337:1-8156" endpos="338:4-8240" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><a name="corsProxy"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=proxy</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=corsProxy</span><span class="source">&lt; ../plugins/other/cors-proxy.js</span></span><pre><code class="js">if (typeof lit !== &quot;undefined&quot; &amp;&amp; !window.__runkitCORSProxyEnpoint) {
+  (async (fn) =&gt; {
+    const rkEmbed = document.createElement(&quot;script&quot;);
+    rkEmbed.onload = async (fn) =&gt; {
+      const el = document.createElement(&quot;div&quot;);
+      document.body.appendChild(el);
+      el.setAttribute(&quot;style&quot;, &quot;height:0;&quot;);
+      RunKit.createNotebook({
+        element: el,
+        mode: &quot;endpoint&quot;,
+        onLoad: async (rk) =&gt; {
+          window.__runkitCORSProxyEnpoint = await rk.getEndpointURL();
+          document.body.removeChild(el);
+        },
+        evaluateOnLoad: true,
+        source: await lit.fs.readFile(&quot;/testing/runkit-express-cors-proxy.js&quot;, {
+          encoding: &quot;utf8&quot;,
+        }),
+      });
+    };
+    rkEmbed.setAttribute(&quot;src&quot;, &quot;https://embed.runkit.com&quot;);
+    document.body.appendChild(rkEmbed);
+  })();
+}
+
+export const proxy = async (src, meta, node) =&gt; {
+  if (!window.__runkitCORSProxyEnpoint) {
+    return &quot;Still setting up proxy endpoint&quot;;
+  } else {
+    const getAndReplaceDomain = (originalUrl, newDomain) =&gt; {
+      var url = new URL(originalUrl);
+      const originalDomain = `${url.protocol}//${url.hostname}`;
+      const regExp = new RegExp(`^${originalDomain}`);
+      const str = originalUrl.replace(regExp, newDomain);
+      return [str, originalDomain];
+    };
+
+    const proxyFetch = async (url, opts = {}) =&gt; {
+      const [proxyUrl, target] = getAndReplaceDomain(
+        url,
+        window.__runkitCORSProxyEnpoint
+      );
+      opts.headers = opts.headers || {};
+      opts.headers[&quot;Target-Domain&quot;] = target;
+      return fetch(proxyUrl, opts);
+    };
+
+    return proxyFetch;
+  }
+};
+
+</code></pre></codecell></div></cell><cell startpos="340:1-8242" endpos="350:4-8531" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">
 return (async fn =&gt;{
   const http = await import(&#x27;https://unpkg.com/isomorphic-git/http/web/index.js&#x27;)
   return lit.git.getRemoteInfo({ http: http.default, url: &#x27;https://github.com/isomorphic-git/isomorphic-git&#x27; })
@@ -278,7 +329,7 @@ return (async fn =&gt;{
 
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.7w ago</span></span></span><output><pre><code class="txt">undefined
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="347:1-8423" endpos="567:4-14178"><cell startpos="347:1-8423" endpos="347:14-8436"><div class="cell-content"><h2 id="web-worker">Web worker</h2></div></cell><cell startpos="349:1-8438" endpos="401:4-9865" class="code output"><div class="cell-content"><codecell class="lang-js local output"><a name="gitworker.js"></a><span class="meta"><span class="lang">js</span><span class="filename">gitworker.js</span></span><output><pre><code class="js">/* eslint-env worker */
+<section depth="2" class="" startpos="352:1-8533" endpos="572:4-14288"><cell startpos="352:1-8533" endpos="352:14-8546"><div class="cell-content"><h2 id="web-worker">Web worker</h2></div></cell><cell startpos="354:1-8548" endpos="406:4-9975" class="code output"><div class="cell-content"><codecell class="lang-js local output"><a name="gitworker.js"></a><span class="meta"><span class="lang">js</span><span class="filename">gitworker.js</span></span><output><pre><code class="js">/* eslint-env worker */
 /* globals LightningFS git MagicPortal GitHttp */
 importScripts(
   &quot;https://unpkg.com/@isomorphic-git/lightning-fs&quot;,
@@ -329,7 +380,7 @@ self.addEventListener(&quot;message&quot;, ({ data }) =&gt; console.log(data));
     log: args =&gt; git.log({ ...args, fs, dir })
   });
 })();
-</code></pre></output></codecell></div></cell><cell startpos="403:1-9867" endpos="458:4-11515" class="code"><div class="cell-content"><codecell class="dir-collapse tag-reference lang-html local collapsed"><span class="meta"><span class="lang">html</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#c8db3f" class="tag">reference</span></span><pre><code class="html">&lt;div&gt;
+</code></pre></output></codecell></div></cell><cell startpos="408:1-9977" endpos="463:4-11625" class="code"><div class="cell-content"><codecell class="dir-collapse tag-reference lang-html local collapsed"><span class="meta"><span class="lang">html</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#c8db3f" class="tag">reference</span></span><pre><code class="html">&lt;div&gt;
   &lt;input
     id=&quot;repository&quot;
     type=&quot;text&quot;
@@ -383,8 +434,8 @@ self.addEventListener(&quot;message&quot;, ({ data }) =&gt; console.log(data));
     void: [&quot;print&quot;, &quot;progress&quot;, &quot;rejected&quot;]
   });
 
-</code></pre></codecell></div></cell><cell startpos="460:1-11517" endpos="462:4-11600" class="code output"><div class="cell-content"><codecell class="dir-below lang-script local output"><span class="meta"><span class="lang">script</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="script">https://unpkg.com/magic-portal
-</code></pre><script src="https://unpkg.com/magic-portal"></script></codecell></div></cell><cell startpos="464:1-11602" endpos="481:4-12056" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
+</code></pre></codecell></div></cell><cell startpos="465:1-11627" endpos="467:4-11710" class="code output"><div class="cell-content"><codecell class="dir-below lang-script local output"><span class="meta"><span class="lang">script</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="script">https://unpkg.com/magic-portal
+</code></pre><script src="https://unpkg.com/magic-portal"></script></codecell></div></cell><cell startpos="469:1-11712" endpos="486:4-12166" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
   let myWorker;
   try {
     myWorker = new Worker(&#x27;gitworker.js&#x27;)
@@ -400,7 +451,7 @@ self.addEventListener(&quot;message&quot;, ({ data }) =&gt; console.log(data));
   }
   
 })
-</code></pre></codecell></div></cell><cell startpos="484:1-12059" endpos="556:4-13975" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">  // alert(&quot;Running&quot;)
+</code></pre></codecell></div></cell><cell startpos="489:1-12169" endpos="561:4-14085" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">  // alert(&quot;Running&quot;)
   const $ = id =&gt; document.getElementById(id);
 
   let worker = new Worker(&quot;gitworker.js&quot;);
@@ -469,7 +520,7 @@ async function doCloneAndStuff() {
     
   })();
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.7w ago</span></span></span><output><pre><code class="txt">true
-</code></pre></output></codecell></div></cell><cell startpos="558:1-13977" endpos="567:4-14178" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return workerThread.log({})
+</code></pre></output></codecell></div></cell><cell startpos="563:1-14087" endpos="572:4-14288" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return workerThread.log({})
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.7w ago</span></span></span><output><pre><code class="txt">{ setDir: [Function],
   clone: [Function],
   listBranches: [Function],
