@@ -84,7 +84,7 @@ export const proxy = async (returnEndpoint) => {
     }
   };
 
-  const endpoint = await setup;
+  const endpoint = await new Promise(setup).then((e) => e);
   if (false && !window.__runkitCORSProxyEnpoint) {
     return "Still setting up proxy endpoint";
   } else {
@@ -116,8 +116,8 @@ return (async (fn) => {
 })();
 
 ```
-```>txt attached=true updated=1622983132253
-Still setting up proxy endpoint
+```>txt attached=true updated=1622983421480
+[Function: setup]
 ```
 ```js #test #after > text !collapse
 return (async (fn) => {

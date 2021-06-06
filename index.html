@@ -34,7 +34,7 @@
 <p>⚠️ <strong><code>.lit</code></strong> is <em>still a Work in progress</em>.</p>
 <p>This iteration is a from-scratch rewrite of an [initial prototype], with many features yet to be re-implemented.</p>
 </div></codecell></div></cell><cell startpos="23:1-820" endpos="25:284-1253"><div class="cell-content"><p><code>.lit</code> is the culmination of a few seemingly disperate ideas: <a class="exists local" href="literate_programming.html" title="Literate Programming" wikilink="true" filepath="/index.lit" root="" data="[object Object]" canonical="/literate_programming.lit">Literate Programming</a>, <a class="local" href="interactive_notebooks.html" title="Interactive Notebooks" wikilink="true" filepath="/index.lit" root="" data="[object Object]" canonical="/interactive_notebooks.lit">Interactive Notebooks</a>, <a class="exists local" href="digital_gardens.html" title="Digital Gardens" wikilink="true" filepath="/index.lit" root="" data="[object Object]" canonical="/digital_gardens.lit">Digital Gardens</a> and <a class="local" href="wiki.html" title="Wiki" wikilink="true" filepath="/index.lit" root="" data="[object Object]" canonical="/wiki.lit">Wiki</a>.</p><p>Meant to enable <a class="local" href="guided_learning.html" title="Guided Learning" wikilink="true" filepath="/index.lit" root="" data="[object Object]" canonical="/guided_learning.lit">Guided Learning</a> — where the author shows the reader by <em>tactile</em> example; and exploration or <a class="local" href="rapid_prototyping.html" title="Rapid Prototyping" wikilink="true" filepath="/index.lit" root="" data="[object Object]" canonical="/rapid_prototyping.lit">Rapid Prototyping</a> while trying not to be a separate system from which a student or project <em>graduates</em> but which is itself <em><a class="exists local" href="an_acceptable_development_evironment.html" title="an acceptable development evironment" wikilink="true" filepath="/index.lit" root="" data="[object Object]" canonical="/an_acceptable_development_evironment.lit">an acceptable development evironment</a></em>.</p></div></cell><cell startpos="26:1-1254" endpos="28:4-1338" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><a name="corsProxy"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=proxy</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=corsProxy</span><span class="source">&lt; ./plugins/other/cors-proxy.js</span></span><pre><code class="js">export const proxy = async (returnEndpoint) =&gt; {
-  const setup = new Promise((resolve, reject) =&gt; {
+  const setup = (resolve, reject) =&gt; {
     if (typeof lit === &quot;undefined&quot;) reject(&quot;No lit&quot;);
     else if (!window.__runkitCORSProxyEnpoint) {
       (async (fn) =&gt; {
@@ -66,9 +66,9 @@
     } else {
       resolve(window.__runkitCORSProxyEnpoint);
     }
-  });
+  };
 
-  const endpoint = await setup;
+  const endpoint = await new Promise(setup).then((e) =&gt; e);
   if (false &amp;&amp; !window.__runkitCORSProxyEnpoint) {
     return &quot;Still setting up proxy endpoint&quot;;
   } else {
