@@ -13,15 +13,15 @@ return (async fn => {
   const keys = manifest.nodes.map(n=>n.id)
   const trie = new CompactPrefixTree(keys)
 
-  const before = JSON.stringify(keys)
+  const before = JSON.stringify(manifest.nodes.map(n=>null))
   const after = JSON.stringify(trie.T)
   // console.log(trie.T)
   await lit.fs.writeFile('/testing/compactManifest1.json', after, 'utf8')
   return `${before.length}->${after.length}. A ${100-(after.length/before.length*100)}% reduction in size.`
 })()
 ```
-```>txt attached=true updated=1622979446468
-4973->4663. A 93.76633822642269% reduction in size.
+```>txt attached=true updated=1622979669286
+1006->4663. A -363.5188866799205% reduction in size.
 ```
 
 
