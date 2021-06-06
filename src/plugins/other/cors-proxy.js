@@ -23,19 +23,19 @@ if (typeof lit !== "undefined" && !window.__runkitCORSProxyEnpoint) {
   })();
 }
 
-export const proxy = async (src, meta, node) => {
+export const proxy = async (returnEndpoint) => {
   if (!window.__runkitCORSProxyEnpoint) {
     return "Still setting up proxy endpoint";
   } else {
+    const endpoint = window.__runkitCORSProxyEnpoint;
+    if (returnEndpoint) return endpoint;
+
     const getAndReplaceDomain = (originalUrl, newDomain) => {
       return newDomain + originalUrl.replace(/^https?:\/\//, "/");
     };
 
     const proxyFetch = async (url, opts = {}) => {
-      const proxyUrl = getAndReplaceDomain(
-        url,
-        window.__runkitCORSProxyEnpoint
-      );
+      const proxyUrl = getAndReplaceDomain(url, endpoint);
       return fetch(proxyUrl, opts);
     };
 
