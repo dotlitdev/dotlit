@@ -295,19 +295,19 @@ return [git.walk, git.TREE]
   })();
 }
 
-export const proxy = async (src, meta, node) =&gt; {
+export const proxy = async (returnEndpoint) =&gt; {
   if (!window.__runkitCORSProxyEnpoint) {
     return &quot;Still setting up proxy endpoint&quot;;
   } else {
+    const endpoint = window.__runkitCORSProxyEnpoint;
+    if (returnEndpoint) return endpoint;
+
     const getAndReplaceDomain = (originalUrl, newDomain) =&gt; {
       return newDomain + originalUrl.replace(/^https?:\/\//, &quot;/&quot;);
     };
 
     const proxyFetch = async (url, opts = {}) =&gt; {
-      const proxyUrl = getAndReplaceDomain(
-        url,
-        window.__runkitCORSProxyEnpoint
-      );
+      const proxyUrl = getAndReplaceDomain(url, endpoint);
       return fetch(proxyUrl, opts);
     };
 
