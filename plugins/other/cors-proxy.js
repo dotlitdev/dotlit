@@ -1,5 +1,6 @@
 const setup = new Promise((resolve, reject) => {
-  if (typeof lit !== "undefined" && !window.__runkitCORSProxyEnpoint) {
+  if (typeof lit !== "undefined") reject("No lit");
+  else if (!window.__runkitCORSProxyEnpoint) {
     (async (fn) => {
       const rkEmbed = document.createElement("script");
       rkEmbed.onload = async (fn) => {
@@ -10,7 +11,8 @@ const setup = new Promise((resolve, reject) => {
           element: el,
           mode: "endpoint",
           onLoad: async (rk) => {
-            window.__runkitCORSProxyEnpoint = await rk.getEndpointURL();
+            const endpoint = await rk.getEndpointURL();
+            window.__runkitCORSProxyEnpoint = endpoint;
             document.body.removeChild(el);
           },
           evaluateOnLoad: true,
@@ -25,6 +27,8 @@ const setup = new Promise((resolve, reject) => {
       rkEmbed.setAttribute("src", "https://embed.runkit.com");
       document.body.appendChild(rkEmbed);
     })();
+  } else {
+    resolve(window.__runkitCORSProxyEnpoint);
   }
 });
 
@@ -32,7 +36,7 @@ export const proxy = async (returnEndpoint) => {
   if (!window.__runkitCORSProxyEnpoint) {
     return "Still setting up proxy endpoint";
   } else {
-    const endpoint = window.__runkitCORSProxyEnpoint;
+    const endpoint = await setup();
     if (returnEndpoint) return endpoint;
 
     const getAndReplaceDomain = (originalUrl, newDomain) => {
