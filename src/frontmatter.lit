@@ -8,7 +8,11 @@ Author: An Utopian
 
 ```js !plugin type=viewer of=matter
 export const viewer = ({ node, React }) => {
-  const matter = lit.file.data.frontmatter;
+  const matter = node.properties?.meta?.raw
+    ? lit.file.data.frontmatter
+    : {
+        times: lit.utils.inspect(lit.file.times),
+      };
   const keys = Object.keys(matter);
 
   const styles = {
