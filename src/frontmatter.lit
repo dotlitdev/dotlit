@@ -10,24 +10,30 @@ Author: An Utopian
 ```js !plugin type=viewer of=matter
 const styles = {
   root: {
-    display: 'flex',
-    gap: '0.6em'
-  }
-}
+    display: "flex",
+    gap: "0.6em",
+  },
+};
 
-export const viewer = ({node,React}) => {
-  const matter = lit.file.data.frontmatter
-  const keys = Object.keys(matter)
+export const viewer = ({ node, React }) => {
+  const matter = lit.file.data.frontmatter;
+  const keys = Object.keys(matter);
 
-const Item = ({key, value}) => <span key={key}>
-<span>{key}</span>: <span>{value}</span>
-</span>
+  const Item = ({ id, value }) => (
+    <span key={id}>
+      <span>{id}</span>: <span>{value}</span>
+    </span>
+  );
 
+  return (
+    <div style={styles.root}>
+      {keys.map((key) => (
+        <Item id={key} value={matter[key]} />
+      ))}
+    </div>
+  );
+};
 
-  return <div style={styles.root}>
-     {keys.map(key => <Item key={key} value={matter[key]}/>)}
-  </div>
-}
 ```
 
 ```>matter
