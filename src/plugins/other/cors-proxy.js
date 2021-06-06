@@ -28,7 +28,7 @@ export const proxy = async (src, meta, node) => {
     return "Still setting up proxy endpoint";
   } else {
     const getAndReplaceDomain = (originalUrl, newDomain) => {
-      return newDomain + originalUrl.replace(/^https?:\/\//, "");
+      return newDomain + originalUrl.replace(/^https?:\/\//, "/");
     };
 
     const proxyFetch = async (url, opts = {}) => {
