@@ -1,3 +1,5 @@
+
+const setup() {
 if (typeof lit !== "undefined" && !window.__runkitCORSProxyEnpoint) {
   (async (fn) => {
     const rkEmbed = document.createElement("script");
@@ -21,6 +23,8 @@ if (typeof lit !== "undefined" && !window.__runkitCORSProxyEnpoint) {
     rkEmbed.setAttribute("src", "https://embed.runkit.com");
     document.body.appendChild(rkEmbed);
   })();
+}
+
 }
 
 export const proxy = async (returnEndpoint) => {
