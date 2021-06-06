@@ -1,5 +1,5 @@
 export const proxy = async (returnEndpoint) => {
-  const setup = new Promise((resolve, reject) => {
+  const setup = (resolve, reject) => {
     if (typeof lit === "undefined") reject("No lit");
     else if (!window.__runkitCORSProxyEnpoint) {
       (async (fn) => {
@@ -31,7 +31,7 @@ export const proxy = async (returnEndpoint) => {
     } else {
       resolve(window.__runkitCORSProxyEnpoint);
     }
-  });
+  };
 
   const endpoint = await setup;
   if (false && !window.__runkitCORSProxyEnpoint) {
