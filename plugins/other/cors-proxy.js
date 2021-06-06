@@ -1,5 +1,5 @@
 const setup = new Promise((resolve, reject) => {
-  if (typeof lit !== "undefined") reject("No lit");
+  if (typeof lit === "undefined") reject("No lit");
   else if (!window.__runkitCORSProxyEnpoint) {
     (async (fn) => {
       const rkEmbed = document.createElement("script");
