@@ -348,11 +348,16 @@ https://1njdpunvtrky.runkit.sh
 ```
 
 ```js
-
-return (async fn =>{
-  const http = await import('https://unpkg.com/isomorphic-git/http/web/index.js')
-  return lit.git.getRemoteInfo({ http: http.default, corsProxy: 'https://1njdpunvtrky.runkit.sh',url: 'https://github.com/dotlitdev/dotlit' })
-})()
+return (async (fn) => {
+  const http = await import(
+    "https://unpkg.com/isomorphic-git/http/web/index.js"
+  );
+  return lit.git.getRemoteInfo({
+    http: http.default,
+    corsProxy: await lit.file.data.plugins.proxy.corsProxy(true),
+    url: "https://github.com/dotlitdev/dotlit",
+  });
+})();
 
 ```
 
