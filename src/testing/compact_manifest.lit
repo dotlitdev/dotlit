@@ -13,7 +13,7 @@ return (async fn => {
   const keys = manifest.nodes.map(n=>n.id)
   const trie = new CompactPrefixTree(keys)
 
-  const before = JSON.stringify(manifest.nodes.map(n=>null))
+  const before = JSON.stringify(manifest.nodes.reduce((n,m)=>(m[n.id] = null) ||| m ), {})
   const after = JSON.stringify(trie.T)
   // console.log(trie.T)
   await lit.fs.writeFile('/testing/compactManifest1.json', after, 'utf8')
