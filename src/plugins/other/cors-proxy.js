@@ -36,7 +36,7 @@ export const proxy = async (returnEndpoint) => {
   if (!window.__runkitCORSProxyEnpoint) {
     return "Still setting up proxy endpoint";
   } else {
-    const endpoint = await setup();
+    const endpoint = await setup;
     if (returnEndpoint) return endpoint;
 
     const getAndReplaceDomain = (originalUrl, newDomain) => {
