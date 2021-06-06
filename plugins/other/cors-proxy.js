@@ -28,11 +28,7 @@ export const proxy = async (src, meta, node) => {
     return "Still setting up proxy endpoint";
   } else {
     const getAndReplaceDomain = (originalUrl, newDomain) => {
-      var url = new URL(originalUrl);
-      const originalDomain = `${url.protocol}//${url.hostname}`;
-      const regExp = new RegExp(`^${originalDomain}`);
-      const str = originalUrl.replace(regExp, newDomain);
-      return [str, originalDomain];
+      return newDomain + originalDomain.replace(/^https?:\/\//, "");
     };
 
     const proxyFetch = async (url, opts = {}) => {
@@ -40,8 +36,6 @@ export const proxy = async (src, meta, node) => {
         url,
         window.__runkitCORSProxyEnpoint
       );
-      opts.headers = opts.headers || {};
-      opts.headers["Target-Domain"] = target;
       return fetch(proxyUrl, opts);
     };
 
