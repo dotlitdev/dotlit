@@ -5,15 +5,15 @@
   const keys = manifest.nodes.map(n=&gt;n.id)
   const trie = new CompactPrefixTree(keys)
 
-  const before = JSON.stringify(manifest.nodes.reduce((n,m)=&gt;{m[n.id] = null; return m }, {}))
+  const before = JSON.stringify(manifest.nodes.reduce((n,m)=&gt;{m[n.canonical] = null; return m }, {}))
   console.log(before)
   const after = JSON.stringify(trie.T)
   // console.log(trie.T)
   await lit.fs.writeFile(&#x27;/testing/compactManifest1.json&#x27;, after, &#x27;utf8&#x27;)
   return `${before.length}-&gt;${after.length}. A ${100-(after.length/before.length*100)}% reduction in size.`
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1m ago</span></span></span><output><pre><code class="txt">{&quot;id&quot;:&quot;plugins/viewers/diff.js&quot;,&quot;backlinks&quot;:[{&quot;id&quot;:&quot;/viewers.lit&quot;,&quot;url&quot;:&quot;../../../../../viewers.html&quot;,&quot;title&quot;:&quot;Custom Viewers&quot;}],&quot;url&quot;:&quot;plugins/viewers/diff.js&quot;,&quot;exists&quot;:true,&quot;type&quot;:&quot;source&quot;,&quot;viewers/meta.js&quot;:null}
-214-&gt;4663. A -2078.9719626168226% reduction in size.
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1m ago</span></span></span><output><pre><code class="txt">{&quot;id&quot;:&quot;plugins/viewers/diff.js&quot;,&quot;backlinks&quot;:[{&quot;id&quot;:&quot;/viewers.lit&quot;,&quot;url&quot;:&quot;../../../../../viewers.html&quot;,&quot;title&quot;:&quot;Custom Viewers&quot;}],&quot;url&quot;:&quot;plugins/viewers/diff.js&quot;,&quot;exists&quot;:true,&quot;type&quot;:&quot;source&quot;,&quot;undefined&quot;:null}
+208-&gt;4663. A -2141.826923076923% reduction in size.
 </code></pre></output></codecell></div></cell><cell startpos="31:1-1167" endpos="31:40-1206"><div class="cell-content"><p>Looking up a file, check for existence:</p></div></cell><cell startpos="32:1-1207" endpos="47:4-1612" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async (fn) =&gt; {
   const { CompactPrefixTree, getWordsFromTrie } = await import(
     &quot;https://cdn.skypack.dev/compact-prefix-tree&quot;
