@@ -32,7 +32,7 @@ export const proxy = async (src, meta, node) => {
     };
 
     const proxyFetch = async (url, opts = {}) => {
-      const [proxyUrl, target] = getAndReplaceDomain(
+      const proxyUrl = getAndReplaceDomain(
         url,
         window.__runkitCORSProxyEnpoint
       );
