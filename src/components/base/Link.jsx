@@ -15,7 +15,7 @@ const Link = props => {
                    ? '§'
                    : null
 
-    console.log("<Link/>", title, href)
+    // console.log("<Link/>", data.exists)
     
     const local = !data.isFragment && !data.isExternal
     const classNames = [
