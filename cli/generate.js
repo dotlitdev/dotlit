@@ -82,6 +82,7 @@ function generateBacklinks(files, root) {
     console.log(`For (${files.length}) files, in ${root}`)
     meta.totalSourceFiles = files.length
     files = files.filter(Identity)
+    const file_paths = files.map( f=>'/' + f.path)
 
     meta.totalUsableSourceFiles = files.length
     console.log(`Only (${files.length}) files, actually usable`)
@@ -91,7 +92,7 @@ function generateBacklinks(files, root) {
         const canonical = path.join('/', file.path)
         if (!file) { console.error('Cannot get links for file.'); return;}
         try {
-        const fileLink = decorateLinkNode({ url: canonical }, '/')
+        const fileLink = decorateLinkNode({ url: canonical }, '/', '', file_paths)
         const title = file?.data?.frontmatter?.title || `Title TBD (${fileLink.data.canonical})`
         console.log(`[${title}] Adding "${file.path}" as "${fileLink.data.canonical} to manifest."`)
         const links = getLinks(file, root)
@@ -112,7 +113,7 @@ function generateBacklinks(files, root) {
         if (!file) return
         try {
         const canonical = path.join('/', file.path)
-        const fileLink = decorateLinkNode({ url: canonical }, '/')
+        const fileLink = decorateLinkNode({ url: canonical }, '/', '', file_paths)
         const title = file?.data?.frontmatter?.title || path.basename(file.path, path.extname(file.path))
         console.log(`About to get links for file: ${title} (${file.path})`)
         

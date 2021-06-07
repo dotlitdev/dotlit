@@ -48,7 +48,7 @@ const baseProcessor = ({litroot, files} = {}) =&gt; {
         console.log(&quot;Parsing file: &quot;, file.path)
         file.data = file.data || {}
         if (file &amp;&amp; file.path) {
-            file.data.canonical = decorateLinkNode({url: file.path}, &#x27;&#x27;, &#x27;/&#x27;).data.canonical
+            file.data.canonical = decorateLinkNode({url: file.path}, &#x27;&#x27;, &#x27;/&#x27;, files).data.canonical
         }
     })
 
@@ -601,7 +601,7 @@ console.log(input)
 console.log(meta)
 return metaToString(meta)
 return lit.parser.utils 
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">4.4d ago</span></span></span><output><pre><code class="txt">js index.jsx !foo #bar baz=qux\ zig &lt; source.jsx &gt; json output.json #faz !raz
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">4.5d ago</span></span></span><output><pre><code class="txt">js index.jsx !foo #bar baz=qux\ zig &lt; source.jsx &gt; json output.json #faz !raz
 { attrs: { baz: &#x27;qux\\ zig&#x27; },
   lang: &#x27;js&#x27;,
   filename: &#x27;index.jsx&#x27;,
@@ -683,7 +683,7 @@ export const resolveLinks =
   (options = { litroot: &quot;&quot;, filepath: &quot;&quot;, files: []}) =&gt;
   (...args) =&gt;
   (tree, file) =&gt; {
-    console.log(&quot;[Links] Init&quot;, file.path, options);
+    // console.log(&quot;[Links] Init&quot;, file.path, options);
     options.filepath = options.filepath || file?.data?.canonical || file.path
     return visit(tree, isLink, transform(options));
   };
@@ -734,11 +734,13 @@ export const wikiLinkOptions = (files = []) =&gt; {
   return {
     permalinks: files,
     pageResolver: (name) =&gt; {
+      // console.log(&#x27;Resolving&#x27;, name)
       const {path, ext} = resolver(name)
       const exts = [&#x27;.lit&#x27;, &#x27;/index.lit&#x27;, &#x27;.md&#x27;, ext]
       const opts = exts.map( ext =&gt; {
         return `${path}${ext}`
       })
+      // console.log(opts)
       return opts //.filter(file =&gt; files.indexOf(file) &gt;= 0)[0] || opts
     }
   }
@@ -788,6 +790,7 @@ export const decorateLinkNode = (link, root = &quot;&quot;, filepath = &quot;&qu
   link.type = &quot;link&quot;;
   link.url = href;
   link.title = link.title || link.value;
+  const exists = files.indexOf(canonical) &gt;= 0
 
   const data = {
     isExternal,
@@ -796,7 +799,7 @@ export const decorateLinkNode = (link, root = &quot;&quot;, filepath = &quot;&qu
     isRelative,
     canonical,
     wikilink,
-    exists: files.indexOf(canonical) &gt;= 0,
+    exists,
   };
   link.data = Object.assign({},data,{})
 
@@ -814,7 +817,7 @@ export const decorateLinkNode = (link, root = &quot;&quot;, filepath = &quot;&qu
   };
 
   delete link.value;
-  // console.log(`[Links] resolving (${link.type}) [${url}] &#x27;${root}&#x27;, &quot;${filepath}&quot;`, link.url)
+  console.log(`[${filepath}] resolving (${link.type}) [${canonical}] exists: ${exists}`, link.url)
 
   return link;
 };

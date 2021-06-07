@@ -31,7 +31,7 @@ export function processor({fs, litroot, files} = {}) {
     // hoist ast to data
     .use( (...args) => {
          return (tree,file) => {
-             console.log("Hoisting AST data to file.data.ast")
+             console.log(`[${file.path}] Hoisting AST data to file.data.ast`)
              file.data = file.data || {}
              file.data.ast = tree
          }
@@ -47,7 +47,7 @@ export function processor({fs, litroot, files} = {}) {
     // extract files to data
     .use( (...args) => {
          return (tree,file) => {
-             console.log("Extact codeblocks to file.data.files")
+             console.log(`[${file.path}] Extact codeblocks to file.data.files`)
              file.data.files = selectAll("code", tree)
          }
      })
@@ -57,7 +57,7 @@ export function processor({fs, litroot, files} = {}) {
     .use( (...args) => {
          return (tree,file) => {
 
-             console.log("Hoist mdast data (disabled)")
+             console.log(`[${file.path}] Hoist mdast data (disabled)`)
              for (const code of selectAll("code", tree)) {
                  if (false && code.data) {
                      code.data.hProperties = code.data.hProperties || {}
@@ -71,9 +71,9 @@ export function processor({fs, litroot, files} = {}) {
     .use( (...args) => {
         return async (tree, file) => {
             const rendererPlugins = Object.keys(file?.data?.plugins?.renderer || {})
-            console.log("Looking for renderer plugins ",  )
+            console.log(`[${file.path}] Looking for renderer plugins `)
             for (const plugin in rendererPlugins) {
-                console.log("Render Plugin", plugin)
+                console.log(`[${file.path}] Render Plugin`, plugin)
                 // await plugin(...args)(tree, file)
             }
         }

@@ -8,7 +8,7 @@ export const resolveLinks =
   (options = { litroot: "", filepath: "", files: []}) =>
   (...args) =>
   (tree, file) => {
-    console.log("[Links] Init", file.path, options);
+    // console.log("[Links] Init", file.path, options);
     options.filepath = options.filepath || file?.data?.canonical || file.path
     return visit(tree, isLink, transform(options));
   };
@@ -59,11 +59,13 @@ export const wikiLinkOptions = (files = []) => {
   return {
     permalinks: files,
     pageResolver: (name) => {
+      // console.log('Resolving', name)
       const {path, ext} = resolver(name)
       const exts = ['.lit', '/index.lit', '.md', ext]
       const opts = exts.map( ext => {
         return `${path}${ext}`
       })
+      // console.log(opts)
       return opts //.filter(file => files.indexOf(file) >= 0)[0] || opts
     }
   }
@@ -113,6 +115,7 @@ export const decorateLinkNode = (link, root = "", filepath = "", files = []) => 
   link.type = "link";
   link.url = href;
   link.title = link.title || link.value;
+  const exists = files.indexOf(canonical) >= 0
 
   const data = {
     isExternal,
@@ -121,7 +124,7 @@ export const decorateLinkNode = (link, root = "", filepath = "", files = []) => 
     isRelative,
     canonical,
     wikilink,
-    exists: files.indexOf(canonical) >= 0,
+    exists,
   };
   link.data = Object.assign({},data,{})
 
@@ -139,7 +142,7 @@ export const decorateLinkNode = (link, root = "", filepath = "", files = []) => 
   };
 
   delete link.value;
-  // console.log(`[Links] resolving (${link.type}) [${url}] '${root}', "${filepath}"`, link.url)
+  console.log(`[${filepath}] resolving (${link.type}) [${canonical}] exists: ${exists}`, link.url)
 
   return link;
 };
