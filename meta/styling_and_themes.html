@@ -1,4 +1,4 @@
-<html data-reactroot=""><head><title>🎨 Styling &amp; Themes</title><meta name="litsrc" value="/meta/styling_and_themes.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/monokai.min.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="152:4-2953"><cell startpos="1:1-0" endpos="8:4-295"><div class="cell-content"><h1 id="-styling--themes">🎨 Styling &amp; Themes</h1><p>You can add custom styles using the <code>css</code> viewer, see <a class="exists local" href="../viewers.html" title="Viewers" wikilink="true" filepath="/meta/styling_and_themes.lit" root="" data="[object Object]" canonical="/viewers.lit">Viewers</a> but you can also add a <code>theme</code> property to a documents frontmatter like so:</p></div></cell><cell startpos="10:1-297" endpos="13:8-450" class="code"><div class="cell-content"><codecell class="lang- local"><span class="meta"><span class="lang"></span></span><pre><code class="plaintext">&lt;!-- data
+<html data-reactroot=""><head><title>🎨 Styling &amp; Themes</title><meta name="litsrc" value="/meta/styling_and_themes.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/monokai.min.css"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="152:4-2951"><cell startpos="1:1-0" endpos="8:4-295"><div class="cell-content"><h1 id="-styling--themes">🎨 Styling &amp; Themes</h1><p>You can add custom styles using the <code>css</code> viewer, see <a class="exists local" href="../viewers.html" title="Viewers" wikilink="true" filepath="/meta/styling_and_themes.lit" root="" data="[object Object]" canonical="/viewers.lit">Viewers</a> but you can also add a <code>theme</code> property to a documents frontmatter like so:</p></div></cell><cell startpos="10:1-297" endpos="13:8-450" class="code"><div class="cell-content"><codecell class="lang- local"><span class="meta"><span class="lang"></span></span><pre><code class="plaintext">&lt;!-- data
 title: 🎨 Styling &amp; Themes
 theme: https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/solarized-light.min.css
 --&gt;
@@ -474,49 +474,139 @@ codecell.dir-error pre
                 color: var(--bg);
                 line-height: 1;
 
-</code></pre></codecell></div></cell><cell startpos="142:1-2785" endpos="144:4-2840" class="code"><div class="cell-content"><codecell class="dir-collapse lang-styl local collapsed"><span class="meta"><span class="lang">styl</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; ../client/styles/cellmenu.styl</span></span><pre><code class="styl">    &amp; &gt; menu
-        margin: 0;
-        padding: 0;
-        z-index: 99999;
-        position: absolute;
-        top: 0.5em;
-        left: 0;
-        right: 0;
-        bottom: 0.5em;
-        display: flex;
-        place-items: flex-end;
-        pointer-events: none;
+</code></pre></codecell></div></cell><cell startpos="142:1-2785" endpos="144:4-2838" class="code"><div class="cell-content"><codecell class="dir-collapse lang-styl local collapsed"><span class="meta"><span class="lang">styl</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; ../client/styles/header.styl</span></span><pre><code class="styl">#lit-header
+    top: 0
+    position: sticky
+    background-color: var(--bg)
+    z-index: 99999
 
-        .menu__items
+    *[disabled] 
+        opacity: 0.5
+        font-style: italic
+        cursor: default
+
+    .lit-message
+        background-color: #ff0000b3
+        border-bottom: 1px solid #c32d2d
+        color: white
+        padding: 0.4em
+    
+        .message
+            overflow: hidden
+            flex: 1
+
+        &amp;:not(.showall)
+            display: flex
+            .message
+                white-space: nowrap
+                text-overflow: ellipsis
+
+        .name
+            cursor: pointer
+            margin-left: 0.4em
+            text-decoration: underline
+
+    menu
+        margin: 0
+        padding: 0
+        display: flex
+        flex-direction: row
+        position relative
+        white-space: nowrap
+
+        &amp;.right
+            margin-left: auto
+            &amp; &gt; .MenuItems
+                right: 0
+                left: auto
+
+        .MenuTitle
             list-style: none
-            margin: 0
-            padding: 0;
-            pointer-events: none;
-            position: sticky;
-            bottom: 50%;
-            display: flex;
-            justify-content: flex-end;
-            width: 100%;
-            flex-direction: row;
-            gap: 0.5em;
-            padding-right: 0.5em;
+            cursor: pointer
+            display: flex
+            padding-right: 0.6em
 
-            li 
-                background-color: var(--text-primary-color);
-                width: 2em;
-                height: 2em;
-                border-radius: 1em;
-                overflow: hidden;
-                margin: 0 .25em;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                pointer-events: all;
-                color: var(--bg);
-                line-height: 1;
+        .MenuItems
+            list-style: none
+            cursor: pointer
+            display: flex
+            flex-direction: column
+            flex-grow: 1;
 
-</code></pre></codecell></div></cell><section depth="3" class="" startpos="146:1-2842" endpos="152:4-2953"><cell startpos="146:1-2842" endpos="148:43-2897"><div class="cell-content"><h3 id="viewers">Viewers</h3><p><a class="exists local" href="../scratch_pad.html#viewers" filepath="/meta/styling_and_themes.lit" root="" data="[object Object]" canonical="/scratch_pad.lit">see examples</a></p></div></cell><cell startpos="150:1-2899" endpos="152:4-2953" class="code"><div class="cell-content"><codecell class="dir-collapse lang-styl local collapsed"><span class="meta"><span class="lang">styl</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; ../client/styles/viewers.styl</span></span><pre><code class="styl">
+            .meta
+                font-size: 0.6em
+                font-style: normal
+
+        &amp;.open &gt; .MenuTitle
+            // font-weight: bold
+        
+        &amp;:not(.horizontal) &gt; .MenuItems 
+            &amp; &gt; * 
+                padding-top: 0.4em
+                &amp;:first-child 
+                    padding-top: 0
+
+            &amp; &gt; menu
+                display: flex
+                flex-direction: column
+
+                &amp; &gt; .MenuTitle:after
+                    padding: 0 .4em
+                    content: &#x27;\203A&#x27;
+
+                &amp;.open &gt; .MenuTitle:after
+                    transform: rotate(90deg)
+
+                &amp; &gt; .MenuItems
+                    position: static
+                    padding-top: 0.4em
+
+                    &amp; &gt; *
+                        padding-left: 0.4em
+                        border-left: primary-border
+
+        &amp;.open:not(.horizontal)
+
+            &amp; &gt; .MenuItems
+                position: absolute
+                top: 1.6em
+                background-color: var(--bg)
+                padding: 0.6em
+                margin: 0 -0.6em
+                box-shadow: 0 3px 3px rgba(0,0,0,0.2)
+                min-width: 100%
+                padding-top: 0;
+
+        &amp;.horizontal
+            display: flex
+            flex-direction: row
+            padding: 0.6em
+            border-bottom: 1px solid #efefef
+
+            &amp; &gt; li 
+                flex-direction: row
+
+.led 
+    display: inline-block
+    width: 0.6em
+    height: 0.6em
+    border-radius: 0.6em
+    margin-top: 0.4em
+    background-color: #cccccc
+
+.led-green
+    background-color: #33cc33
+
+.led-orange
+    background-color: orange
+
+.led-blue
+    background-color: primary-color
+
+.led-red
+    background-color: red
+
+</code></pre></codecell></div></cell><section depth="3" class="" startpos="146:1-2840" endpos="152:4-2951"><cell startpos="146:1-2840" endpos="148:43-2895"><div class="cell-content"><h3 id="viewers">Viewers</h3><p><a class="exists local" href="../scratch_pad.html#viewers" filepath="/meta/styling_and_themes.lit" root="" data="[object Object]" canonical="/scratch_pad.lit">see examples</a></p></div></cell><cell startpos="150:1-2897" endpos="152:4-2951" class="code"><div class="cell-content"><codecell class="dir-collapse lang-styl local collapsed"><span class="meta"><span class="lang">styl</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; ../client/styles/viewers.styl</span></span><pre><code class="styl">
 codecell &gt; iframe 
   display: block
   width: 100%
