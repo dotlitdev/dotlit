@@ -44,6 +44,7 @@ export const extractPlugins = ({fs} = {}) => {
             if (block.data 
                 && block.data.meta 
                 && block.data.meta.directives
+                && block.data.meta.directives.indexOf('disable') === -1
                 && block.data.meta.directives.indexOf('plugin') >= 0) {
                 
                 const meta = block.data.meta
