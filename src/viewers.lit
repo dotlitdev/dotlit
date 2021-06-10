@@ -260,10 +260,10 @@ initially created as a txt file output
 flipped to transclude and modified cell
 giving a node with data.value and data.properties.data.originalSource 
 ```
-```>js plugins/modal/diff.js !plugin type=menu id=diff !collapse
+```>js plugins/modal/diff.js !plugin type=filemenu id=diff !collapse
 import diff from "https://cdn.skypack.dev/react-diff-viewer";
 
-export const menu = (ctx, { React, Menu, toggleModal }) => {
+export const filemenu = (ctx, { React, Menu, toggleModal }) => {
   const rc = React.createElement;
 
   const showDiff = async () => {
@@ -295,9 +295,6 @@ export const menu = (ctx, { React, Menu, toggleModal }) => {
       toggleModal(rc("div", {}, [close, "Local and Remote match. (No Diff)"]));
       return;
     }
-
-    alert(typeof stats.local?.value);
-    alert(typeof stats.remote?.value);
 
     const view = rc(diff, {
       newValue: stats.local.value,
