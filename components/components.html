@@ -189,7 +189,7 @@ const Message = ({message, setSelectedCell}) =&gt; {
 
 export const Header = (props) =&gt; {
   console.log(&#x27;&lt;Header/&gt;&#x27;, props)
-  const { root, toggleViewSource, ssr } = props
+  const { root, toggleViewSource, toggleModal, ssr } = props
 
   const resetFile = (ctx, localOnly) =&gt; async ev =&gt; {
     const filepath = ctx.file.path
@@ -285,7 +285,7 @@ export const Header = (props) =&gt; {
         &lt;span onClick={resetFile(ctx, true)}&gt;Reset&lt;/span&gt;
         &lt;span onClick={resetFile(ctx)}&gt;Delete&lt;/span&gt;
 
-        { !fileMenuPlugins ? null : fileMenuPlugins &amp;&amp; Object.keys(fileMenuPlugins).map( key =&gt; &lt;ErrorBoundary&gt;{fileMenuPlugins[key](ctx, {React, Menu})}&lt;/ErrorBoundary&gt;) }
+        { !fileMenuPlugins ? null : fileMenuPlugins &amp;&amp; Object.keys(fileMenuPlugins).map( key =&gt; &lt;ErrorBoundary&gt;{fileMenuPlugins[key](ctx, {React, Menu, toggleModal})}&lt;/ErrorBoundary&gt;) }
 
       &lt;/Menu&gt;
       &lt;Menu title=&quot;Cell&quot; disabled={!cellSelected}&gt;
@@ -305,7 +305,7 @@ export const Header = (props) =&gt; {
         &lt;span disabled={!cellSelected} onClick={cutCell(ctx)}&gt;Cut&lt;/span&gt;
         &lt;span disabled={!cellSelected} onClick={pasteAfterCell(ctx)}&gt;Paste After&lt;/span&gt;
 
-        { !cellMenuPlugins ? null : cellMenuPlugins &amp;&amp; Object.keys(cellMenuPlugins).map( key =&gt; &lt;ErrorBoundary&gt;{cellMenuPlugins[key](ctx, {React, Menu})}&lt;/ErrorBoundary&gt;) }
+        { !cellMenuPlugins ? null : cellMenuPlugins &amp;&amp; Object.keys(cellMenuPlugins).map( key =&gt; &lt;ErrorBoundary&gt;{cellMenuPlugins[key](ctx, {React, Menu , toggleModal})}&lt;/ErrorBoundary&gt;) }
       &lt;/Menu&gt;
       &lt;Menu title=&quot;Section&quot; disabled={!cellSelected}&gt;
         &lt;span disabled&gt;Collapse&lt;/span&gt;
@@ -315,14 +315,14 @@ export const Header = (props) =&gt; {
           &lt;span disabled&gt;Down&lt;/span&gt;
         &lt;/Menu&gt;
 
-        { !sectionMenuPlugins ? null : sectionMenuPlugins &amp;&amp; Object.keys(sectionMenuPlugins).map( key =&gt; &lt;ErrorBoundary&gt;{sectionMenuPlugins[key](ctx, {React, Menu})}&lt;/ErrorBoundary&gt;) }
+        { !sectionMenuPlugins ? null : sectionMenuPlugins &amp;&amp; Object.keys(sectionMenuPlugins).map( key =&gt; &lt;ErrorBoundary&gt;{sectionMenuPlugins[key](ctx, {React, Menu, toggleModal})}&lt;/ErrorBoundary&gt;) }
 
       &lt;/Menu&gt;
       
-      { !menuPlugins ? null : menuPlugins &amp;&amp; Object.keys(menuPlugins).map( key =&gt; &lt;ErrorBoundary&gt;{menuPlugins[key](ctx, {React, Menu})}&lt;/ErrorBoundary&gt;) }
+      { !menuPlugins ? null : menuPlugins &amp;&amp; Object.keys(menuPlugins).map( key =&gt; &lt;ErrorBoundary&gt;{menuPlugins[key](ctx, {React, Menu, toggleModal})}&lt;/ErrorBoundary&gt;) }
       
       &lt;Menu title=&quot;Help&quot;&gt;
-        { !helpMenuPlugins ? null : helpMenuPlugins &amp;&amp; Object.keys(helpMenuPlugins).map( key =&gt; &lt;ErrorBoundary&gt;{helpMenuPlugins[key](ctx, {React, Menu})}&lt;/ErrorBoundary&gt;) }
+        { !helpMenuPlugins ? null : helpMenuPlugins &amp;&amp; Object.keys(helpMenuPlugins).map( key =&gt; &lt;ErrorBoundary&gt;{helpMenuPlugins[key](ctx, {React, Menu, toggleModal})}&lt;/ErrorBoundary&gt;) }
         &lt;a href=&quot;/config.html?file=config.lit&quot;&gt;Config&lt;/a&gt;
         &lt;Menu title=&quot;Debug&quot;&gt;
             &lt;span onClick={setDebug}&gt;Set Mask&lt;/span&gt;
