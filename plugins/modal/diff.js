@@ -37,9 +37,9 @@ export const menu = (ctx, { React, Menu, toggleModal }) => {
     console.log(stats.local.value);
 
     const view = rc(diff, {
-      newValue: stats.local.value,
+      newValue: stats.local.value.toString(),
       rightTitle: "local",
-      oldValue: stats.remote.value,
+      oldValue: stats.remote.value.toString(),
       leftTitle: "remote",
       splitView: false,
       styles,
