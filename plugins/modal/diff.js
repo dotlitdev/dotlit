@@ -47,6 +47,5 @@ export const filemenu = (ctx, { React, Menu, toggleModal }) => {
     toggleModal(modal);
   };
 
-  return rc("span", { onClick: showDiff }, "Show Diff")
-  );
+  return rc("span", { onClick: showDiff }, "Show Diff");
 };
