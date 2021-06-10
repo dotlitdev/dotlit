@@ -290,19 +290,19 @@ export const menu = (ctx, { React, Menu, toggleModal }) => {
         padding: 0,
       },
     };
-    const stats = await lit.fs.readStat(lit.location.src);
+    const stats = await lit.fs.readStat(lit.location.src, { encoding: "utf8" });
     if (stats.local.value === stats.remote.value) {
       toggleModal(rc("div", {}, [close, "Local and Remote match. (No Diff)"]));
       return;
     }
 
-    alert(typeof stats.local.value);
-    console.log(stats.local.value);
+    alert(typeof stats.local?.value);
+    alert(typeof stats.remote?.value);
 
     const view = rc(diff, {
-      newValue: stats.local.value.toString(),
+      newValue: stats.local.value,
       rightTitle: "local",
-      oldValue: stats.remote.value.toString(),
+      oldValue: stats.remote.value,
       leftTitle: "remote",
       splitView: false,
       styles,
