@@ -92,33 +92,46 @@ return Object.keys(all).map(
   }
 }
 </code></pre></codecell></div></cell></section>
-<section depth="3" class="" startpos="150:1-4050" endpos="160:4-4330"><cell startpos="150:1-4050" endpos="150:9-4058"><div class="cell-content"><h3 id="menu">Menu</h3></div></cell><cell startpos="152:1-4060" endpos="160:4-4330" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><a name="example-menu"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=example-menu</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=menu</span></span><pre><code class="js">export const menu = (ctx, {React, Menu}) =&gt; {
+<section depth="3" class="" startpos="150:1-4050" endpos="175:4-4712"><cell startpos="150:1-4050" endpos="150:9-4058"><div class="cell-content"><h3 id="menu">Menu</h3></div></cell><cell startpos="152:1-4060" endpos="160:4-4330" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><a name="example-menu"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=example-menu</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=menu</span></span><pre><code class="js">export const menu = (ctx, {React, Menu}) =&gt; {
   const rc = React.createElement
   return rc( Menu, {
     title:&quot;Example&quot;,
     disabled: false,
   }, [rc(&#x27;span&#x27;, {onClick: () =&gt; alert(&quot;Hi From example plugin!&quot;)}, &#x27;Menu Item&#x27;)])
 }
+</code></pre></codecell></div></cell><cell startpos="161:1-4331" endpos="175:4-4712" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><a name="example-menu"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=example-menu</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=menu</span></span><pre><code class="js">export const menu = (ctx, { React, Menu, toggleModal }) =&gt; {
+  const rc = React.createElement;
+  const modal = rc(&quot;button&quot;, { onClick: () =&gt; toggleModal() }, [&quot;Close modal&quot;]);
+  return rc(
+    Menu,
+    {
+      title: &quot;Example&quot;,
+      disabled: false,
+    },
+    [rc(&quot;span&quot;, { onClick: () =&gt; toggleModal(modal) }, &quot;Show Modal&quot;)]
+  );
+};
+
 </code></pre></codecell></div></cell></section>
-<section depth="3" class="" startpos="161:1-4331" endpos="182:4-5021"><cell startpos="161:1-4331" endpos="165:83-4592"><div class="cell-content"><h3 id="on-lifecycle-plugins">On Lifecycle plugins</h3><ul class="contains-task-list">
+<section depth="3" class="" startpos="176:1-4713" endpos="197:4-5403"><cell startpos="176:1-4713" endpos="180:83-4974"><div class="cell-content"><h3 id="on-lifecycle-plugins">On Lifecycle plugins</h3><ul class="contains-task-list">
 <li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <code>onload</code>: Executed once on initial load of the document.</li>
 <li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <code>onselect</code>: Executed on every cell selection, includes deselection, <code>pos</code> is null.</li>
 <li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <code>onsave</code>: Executed on save (edit) but before filesystem or state is updated.</li>
-</ul></div></cell><cell startpos="168:1-4595" endpos="172:4-4732" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><a name="example-onload"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=example-onload</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=onload</span></span><pre><code class="js">export const onload  = (...args) =&gt; {
+</ul></div></cell><cell startpos="183:1-4977" endpos="187:4-5114" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><a name="example-onload"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=example-onload</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=onload</span></span><pre><code class="js">export const onload  = (...args) =&gt; {
   alert(&quot;Custom Onload plugin executed&quot;, ...args)
 }
-</code></pre></codecell></div></cell><cell startpos="173:1-4733" endpos="177:4-4884" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><a name="example-onselect"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=example-onselect</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=onselect</span></span><pre><code class="js">export const onselect = (...args) =&gt; {
+</code></pre></codecell></div></cell><cell startpos="188:1-5115" endpos="192:4-5266" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><a name="example-onselect"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=example-onselect</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=onselect</span></span><pre><code class="js">export const onselect = (...args) =&gt; {
   console.info(&quot;Custom onselect plugin executed&quot;, ...args)
 }
-</code></pre></codecell></div></cell><cell startpos="178:1-4885" endpos="182:4-5021" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><a name="example-onsave"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=example-onsave</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=onsave</span></span><pre><code class="js">export const onsave = (...args) =&gt; {
+</code></pre></codecell></div></cell><cell startpos="193:1-5267" endpos="197:4-5403" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><a name="example-onsave"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=example-onsave</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=onsave</span></span><pre><code class="js">export const onsave = (...args) =&gt; {
   alert(&quot;Custom onsave plugin executed&quot;, ...args)
 }
 </code></pre></codecell></div></cell></section>
-<section depth="3" class="" startpos="185:1-5024" endpos="202:4-5571"><cell startpos="185:1-5024" endpos="187:199-5234"><div class="cell-content"><h3 id="custom">Custom</h3><p>Since all plugins are extracted (to the global <code>lit</code> object) during parsing, regardless of implementation status, you can define your own. A good example is exporting data to be used in other cells.</p></div></cell><cell startpos="189:1-5236" endpos="194:4-5328" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><a name="mydata"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=data</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=mydata</span></span><pre><code class="js">export const data = {
+<section depth="3" class="" startpos="200:1-5406" endpos="217:4-5953"><cell startpos="200:1-5406" endpos="202:199-5616"><div class="cell-content"><h3 id="custom">Custom</h3><p>Since all plugins are extracted (to the global <code>lit</code> object) during parsing, regardless of implementation status, you can define your own. A good example is exporting data to be used in other cells.</p></div></cell><cell startpos="204:1-5618" endpos="209:4-5710" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><a name="mydata"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=data</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=mydata</span></span><pre><code class="js">export const data = {
   type: &quot;beer&quot;,
   bottles: 99,
 }
-</code></pre></codecell></div></cell><cell startpos="196:1-5330" endpos="202:4-5571" class="code"><div class="cell-content"><codecell class="tag-usage lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#6a67da" class="tag">usage</span><span class="output">&gt; md</span></span><pre><code class="js">const data = lit.file.data.plugins.data.mydata
+</code></pre></codecell></div></cell><cell startpos="211:1-5712" endpos="217:4-5953" class="code"><div class="cell-content"><codecell class="tag-usage lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#6a67da" class="tag">usage</span><span class="output">&gt; md</span></span><pre><code class="js">const data = lit.file.data.plugins.data.mydata
 return `There are **${data.bottles}** bottles of *${data.type}* on the wall.`
 </code></pre></codecell><codecell class="lang-md local output"><span class="meta"><span class="lang">md</span><span class="updatedAt">Updated <span class="Time relative">3.8w ago</span></span></span><div class="md-block">
 <p>There are <strong>99</strong> bottles of <em>beer</em> on the wall.</p>

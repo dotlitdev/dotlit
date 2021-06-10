@@ -158,6 +158,21 @@ export const menu = (ctx, {React, Menu}) => {
   }, [rc('span', {onClick: () => alert("Hi From example plugin!")}, 'Menu Item')])
 }
 ```
+```js !plugin id=example-menu type=menu
+export const menu = (ctx, { React, Menu, toggleModal }) => {
+  const rc = React.createElement;
+  const modal = rc("button", { onClick: () => toggleModal() }, ["Close modal"]);
+  return rc(
+    Menu,
+    {
+      title: "Example",
+      disabled: false,
+    },
+    [rc("span", { onClick: () => toggleModal(modal) }, "Show Modal")]
+  );
+};
+
+```
 ### On Lifecycle plugins
 
 - [x] `onload`: Executed once on initial load of the document. 
