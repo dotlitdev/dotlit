@@ -4,10 +4,11 @@ let document = { documentElement: { style: {} } };
 importScripts("web.bundle.js");
 
 const state = {
-  version: "0.2.15",
+  version: "0.2.16",
   dotlit: typeof dotlit,
   root: "",
   enableCache: false,
+  count: 0,
 };
 
 const PRECACHE = "precache-v1";
@@ -23,6 +24,7 @@ const PRECACHE_URLS = [
 ];
 
 const getMockResponse = async (event) => {
+  state.count += 1;
   try {
     if (typeof dotlit !== "undefined") {
       const filepath = event.request.url
@@ -56,6 +58,7 @@ const localFile = async (event) => {
     await dotlit.lit.fs.stat(filepath);
     let jsFile;
     const content = await dotlit.lit.fs.readFile(filepath, { localOnly: true });
+    state.count += 1;
     return new Response(content, {
       headers: {
         server: `dotlit.org/sw@${state.version}`,
