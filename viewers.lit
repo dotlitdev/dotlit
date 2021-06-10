@@ -260,15 +260,15 @@ initially created as a txt file output
 flipped to transclude and modified cell
 giving a node with data.value and data.properties.data.originalSource 
 ```
-```>js plugins/viewers/diff.js !plugin of=diff2 !collapse
+```>js plugins/modal/diff.js !plugin type=menu id=diff !collapse
 import diff from "https://cdn.skypack.dev/react-diff-viewer";
-export const viewer = ({ node, React }) => {
+
+export const menu = (ctx, { React, Menu, toggleModal }) => {
   const rc = React.createElement;
-  const { useState, useEffect } = React;
-  const meta = node.properties && node.properties.meta;
-  const [content, setContent] = useState("Loading...");
-  const src = node.data.value;
-  useEffect(async () => {
+
+  const showDiff = () => {
+    const close = rc("button", { onClick: () => toggleModal() }, ["Close"]);
+
     const styles = {
       lineNumber: {
         fontWeight: "bold",
@@ -301,21 +301,22 @@ export const viewer = ({ node, React }) => {
       rightTitle: "local",
       oldValue: stats.remote.value,
       leftTitle: "remote",
-      splitView: meta && meta.split === "true",
+      splitView: false,
       styles,
-      compareMethod:
-        diff[(meta && meta.method && meta.method.toUpperCase()) || "CHARS"],
+      compareMethod: diff["CHARS"],
     });
 
-    setContent(view);
-  }, [src]);
+    const modal = rc("div", {}, [close, view]);
+    toggleModal(modal);
+  };
 
   return rc(
-    "div",
+    Menu,
     {
-      className: "custom-diff-view",
+      title: "Diff",
+      disabled: false,
     },
-    content
+    [rc("span", { onClick: showDiff }, "Show Diff")]
   );
 };
 
