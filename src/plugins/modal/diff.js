@@ -29,7 +29,7 @@ export const menu = (ctx, { React, Menu, toggleModal }) => {
     };
     const stats = await lit.fs.readStat(lit.location.src);
     if (stats.local.value === stats.remote.value) {
-      setContent("Local and Remote match. (No Diff)");
+      toggleModal(rc("div", {}, [close, "Local and Remote match. (No Diff)"]));
       return;
     }
 
