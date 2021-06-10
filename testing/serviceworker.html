@@ -6,6 +6,7 @@
 <li><a class="fragment" href="#references" filepath="/testing/serviceworker.lit" root="" data="[object Object]" canonical="#references">References<span class="linkIcon">§</span></a></li>
 <li><a class="fragment" href="#exploration" filepath="/testing/serviceworker.lit" root="" data="[object Object]" canonical="#exploration">Exploration<span class="linkIcon">§</span></a></li>
 <li><a class="fragment" href="#implementation" filepath="/testing/serviceworker.lit" root="" data="[object Object]" canonical="#implementation">Implementation<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#to-do" filepath="/testing/serviceworker.lit" root="" data="[object Object]" canonical="#to-do">To do<span class="linkIcon">§</span></a></li>
 </ul></div></cell></section></section>
 <section depth="2" class="" startpos="12:1-156" endpos="24:55-800"><cell startpos="12:1-156" endpos="24:55-800"><div class="cell-content"><h2 id="references">References</h2><ul>
 <li><a class="external" href="https://ponyfoo.com/articles/serviceworker-revolution" filepath="/testing/serviceworker.lit" root="" data="[object Object]" canonical="https://ponyfoo.com/articles/serviceworker-revolution">https://ponyfoo.com/articles/serviceworker-revolution<span class="linkIcon">↗</span></a></li>
@@ -20,7 +21,7 @@
 <li><a class="external" href="https://stackoverflow.com/questions/44424709/passing-state-info-into-a-service-worker-before-install" filepath="/testing/serviceworker.lit" root="" data="[object Object]" canonical="https://stackoverflow.com/questions/44424709/passing-state-info-into-a-service-worker-before-install">https://stackoverflow.com/questions/44424709/passing-state-info-into-a-service-worker-before-install<span class="linkIcon">↗</span></a></li>
 <li><a class="external" href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch" filepath="/testing/serviceworker.lit" root="" data="[object Object]" canonical="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch">https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch<span class="linkIcon">↗</span></a></li>
 </ul><p>See <a class="exists local" href="web_workers.html" title="testing/Web Workers" wikilink="true" filepath="/testing/serviceworker.lit" root="" data="[object Object]" canonical="/testing/web_workers.lit">testing/Web Workers</a> for related investigation.</p></div></cell></section>
-<section depth="2" class="" startpos="26:1-802" endpos="133:4-2922"><cell startpos="26:1-802" endpos="26:15-816"><div class="cell-content"><h2 id="exploration">Exploration</h2></div></cell><cell startpos="27:1-817" endpos="32:4-894" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return navigator
+<section depth="2" class="" startpos="26:1-802" endpos="133:4-2923"><cell startpos="26:1-802" endpos="26:15-816"><div class="cell-content"><h2 id="exploration">Exploration</h2></div></cell><cell startpos="27:1-817" endpos="32:4-894" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return navigator
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">5.8w ago</span></span></span><output><pre><code class="txt">{}
 </code></pre></output></codecell></div></cell><cell startpos="34:1-896" endpos="41:4-1010" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">if (&#x27;serviceWorker&#x27; in navigator) {
   return true
@@ -29,13 +30,13 @@
 </code></pre></output></codecell></div></cell><cell startpos="44:1-1013" endpos="51:4-1190" class="code"><div class="cell-content"><codecell class="tag-register lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#d6dc2e" class="tag">register</span></span><pre><code class="js">return navigator
           .serviceWorker
           .register(&#x27;/serviceworker.js?root=&#x27;+lit.location.root)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">15m ago</span></span></span><output><pre><code class="txt">{}
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">18m ago</span></span></span><output><pre><code class="txt">{}
 </code></pre></output></codecell></div></cell><cell startpos="53:1-1192" endpos="53:60-1251"><div class="cell-content"><ul class="contains-task-list">
 <li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->To do, handle register for non-root hosted notebooks.</li>
 </ul></div></cell><cell startpos="55:1-1253" endpos="62:4-1463" class="code"><div class="cell-content"><codecell class="tag-status lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#cacdcf" class="tag">status</span></span><pre><code class="js">return navigator.serviceWorker.controller
          ? &quot;Service worker active.&quot;
          : &quot;Service worker Not active.&quot;
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">25m ago</span></span></span><output><pre><code class="txt">Service worker Not active.
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">27m ago</span></span></span><output><pre><code class="txt">Service worker Not active.
 </code></pre></output></codecell></div></cell><cell startpos="64:1-1465" endpos="79:4-1854" class="code"><div class="cell-content"><codecell class="tag-unregister lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#31d494" class="tag">unregister</span></span><pre><code class="js">return (async fn =&gt; {
   const regs = await navigator
                      .serviceWorker
@@ -56,15 +57,15 @@ Unregistered 1 regisration(s)
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">5.8w ago</span></span></span><output><pre><code class="txt">200
 </code></pre></output></codecell></div></cell><cell startpos="94:1-2102" endpos="99:4-2203" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (new Response(&#x27;hello&#x27;)).text()
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">6.3w ago</span></span></span><output><pre><code class="txt">hello
-</code></pre></output></codecell></div></cell><cell startpos="101:1-2205" endpos="101:195-2399"><div class="cell-content"><p>As of now, the service worker doesn&#x27;t cache anything and just passes through to the network as normal. Except if the <code>request.url</code> ends with <code>--sw</code> in which case it returns a mock/info response.</p></div></cell><cell startpos="102:1-2400" endpos="128:4-2881" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return fetch(&#x27;/--sw&#x27;)
+</code></pre></output></codecell></div></cell><cell startpos="101:1-2205" endpos="101:195-2399"><div class="cell-content"><p>As of now, the service worker doesn&#x27;t cache anything and just passes through to the network as normal. Except if the <code>request.url</code> ends with <code>--sw</code> in which case it returns a mock/info response.</p></div></cell><cell startpos="102:1-2400" endpos="128:4-2882" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return fetch(&#x27;/--sw&#x27;)
        .then(resp =&gt; resp.text()
                           .then( text =&gt; `${resp.status}\n${text}`)
        )
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1.8w ago</span></span></span><output><pre><code class="txt">200
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">4m ago</span></span></span><output><pre><code class="txt">200
 {
-  &quot;version&quot;: &quot;0.2.12&quot;,
+  &quot;version&quot;: &quot;0.2.15&quot;,
   &quot;dotlit&quot;: &quot;object&quot;,
-  &quot;root&quot;: &quot;&quot;,
+  &quot;root&quot;: &quot;/&quot;,
   &quot;enableCache&quot;: false,
   &quot;filepath&quot;: &quot;/&quot;,
   &quot;stat&quot;: {
@@ -79,8 +80,8 @@ Unregistered 1 regisration(s)
     &quot;dev&quot;: 1
   }
 }
-</code></pre></output></codecell></div></cell><cell startpos="131:1-2884" endpos="133:4-2922" class="code"><div class="cell-content"><codecell class="lang-text local"><span class="meta"><span class="lang">text</span><span class="source">&lt; ./getserviceworker--sw</span></span><pre><code class="text"></code></pre></codecell></div></cell></section>
-<section depth="2" class="" startpos="135:1-2924" endpos="289:4-7418"><cell startpos="135:1-2924" endpos="135:18-2941"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="137:1-2943" endpos="289:4-7418" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><a name="../serviceworker.js"></a><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">// gross hack around one of @codemirror/view bugs
+</code></pre></output></codecell></div></cell><cell startpos="131:1-2885" endpos="133:4-2923" class="code"><div class="cell-content"><codecell class="lang-text local"><span class="meta"><span class="lang">text</span><span class="source">&lt; ./getserviceworker--sw</span></span><pre><code class="text"></code></pre></codecell></div></cell></section>
+<section depth="2" class="" startpos="135:1-2925" endpos="289:4-7419"><cell startpos="135:1-2925" endpos="135:18-2942"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="137:1-2944" endpos="289:4-7419" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><a name="../serviceworker.js"></a><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">// gross hack around one of @codemirror/view bugs
 let document = { documentElement: { style: {} } };
 
 importScripts(&quot;web.bundle.js&quot;);
@@ -231,4 +232,7 @@ self.addEventListener(&quot;fetch&quot;, (event) =&gt; {
   }
 });
 
-</code></pre></output></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (2)</h4><ol><li><a title="Importing JS Modules" href="/testing/importing_js_modules.html">Importing JS Modules</a></li><li><a title="🔬 Tests, experiments and investigations" href="/testing/index.html">🔬 Tests, experiments and investigations</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
+</code></pre></output></codecell></div></cell></section>
+<section depth="2" class="" startpos="291:1-7421" endpos="293:6-7436"><cell startpos="291:1-7421" endpos="293:6-7436"><div class="cell-content"><h2 id="to-do">To do</h2><ul>
+<li>[ ]</li>
+</ul></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (2)</h4><ol><li><a title="Importing JS Modules" href="/testing/importing_js_modules.html">Importing JS Modules</a></li><li><a title="🔬 Tests, experiments and investigations" href="/testing/index.html">🔬 Tests, experiments and investigations</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
