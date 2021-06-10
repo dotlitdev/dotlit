@@ -1,6 +1,6 @@
 import diff from "https://cdn.skypack.dev/react-diff-viewer";
 
-export const menu = (ctx, { React, Menu, toggleModal }) => {
+export const filemenu = (ctx, { React, Menu, toggleModal }) => {
   const rc = React.createElement;
 
   const showDiff = async () => {
@@ -32,9 +32,6 @@ export const menu = (ctx, { React, Menu, toggleModal }) => {
       toggleModal(rc("div", {}, [close, "Local and Remote match. (No Diff)"]));
       return;
     }
-
-    alert(typeof stats.local?.value);
-    alert(typeof stats.remote?.value);
 
     const view = rc(diff, {
       newValue: stats.local.value,
