@@ -391,8 +391,13 @@ const App = ({root, file, fs, result, files, ssr}) =&gt; {
 
     const [res, setResult] = useState(result)
     const [selectedCell, setSelectedCell] = useState(null)
+    
     const [viewSource, setViewSource] = useState(false)
     const toggleViewSource = () =&gt; setViewSource(!viewSource)
+
+    const [modal, setModal] = useState(false)
+    const toggleModal = (val) =&gt; setModal(val)
+
 
     const themePlugins = file?.data?.plugins?.theme
     const themes = themePlugins &amp;&amp; Object.keys(themePlugins).map(t=&gt;({id: t, ...themePlugins[t]}))
@@ -472,17 +477,18 @@ const App = ({root, file, fs, result, files, ssr}) =&gt; {
     console.log(`Render &quot;${file.path}&quot; (selected: ${selectedCell} `)
 
     return &lt;SelectionContext.Provider value={state}&gt;
-        &lt;ErrorBoundary&gt;{ &lt;Header root={root} toggleViewSource={toggleViewSource} ssr={ssr}/&gt; }&lt;/ErrorBoundary&gt;
+        &lt;ErrorBoundary&gt;{ &lt;Header root={root} toggleViewSource={toggleViewSource} toggleModal={toggleModal} ssr={ssr}/&gt; }&lt;/ErrorBoundary&gt;
         {themes &amp;&amp; themes.map( theme =&gt; {
            return theme.url 
                ? &lt;link key={theme.id} rel=&quot;stylesheet&quot; href={theme.url}/&gt;
                : &lt;style key={theme.id} dangerouslySetInnerHTML={{__html: theme.value}}&gt;&lt;/style&gt;
         })}
         &lt;div id=&quot;content&quot;&gt;
-          { viewSource 
-            // ? &lt;Editor src={srcAndRes.src} update={()=&gt;{}} /&gt;
-            ? &lt;ErrorBoundary&gt;&lt;Highlight language=&quot;md&quot;&gt;{srcAndRes.src}&lt;/Highlight&gt;&lt;/ErrorBoundary&gt;
-            : &lt;ErrorBoundary&gt;{srcAndRes.res}&lt;/ErrorBoundary&gt; }
+          { modal
+            ? &lt;ErrorBoundary&gt;{modal}&lt;/ErrorBoundary&gt;
+            : viewSource 
+              ? &lt;ErrorBoundary&gt;&lt;Highlight language=&quot;md&quot;&gt;{srcAndRes.src}&lt;/Highlight&gt;&lt;/ErrorBoundary&gt;
+              : &lt;ErrorBoundary&gt;{srcAndRes.res}&lt;/ErrorBoundary&gt; }
         &lt;/div&gt;
     &lt;/SelectionContext.Provider&gt;
 }
