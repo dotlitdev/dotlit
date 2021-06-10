@@ -41,8 +41,13 @@ const App = ({root, file, fs, result, files, ssr}) => {
 
     const [res, setResult] = useState(result)
     const [selectedCell, setSelectedCell] = useState(null)
+    
     const [viewSource, setViewSource] = useState(false)
     const toggleViewSource = () => setViewSource(!viewSource)
+
+    const [modal, setModal] = useState(false)
+    const toggleModal = (val) => setModal(val)
+
 
     const themePlugins = file?.data?.plugins?.theme
     const themes = themePlugins && Object.keys(themePlugins).map(t=>({id: t, ...themePlugins[t]}))
@@ -122,17 +127,18 @@ const App = ({root, file, fs, result, files, ssr}) => {
     console.log(`Render "${file.path}" (selected: ${selectedCell} `)
 
     return <SelectionContext.Provider value={state}>
-        <ErrorBoundary>{ <Header root={root} toggleViewSource={toggleViewSource} ssr={ssr}/> }</ErrorBoundary>
+        <ErrorBoundary>{ <Header root={root} toggleViewSource={toggleViewSource} toggleModal={toggleModal} ssr={ssr}/> }</ErrorBoundary>
         {themes && themes.map( theme => {
            return theme.url 
                ? <link key={theme.id} rel="stylesheet" href={theme.url}/>
                : <style key={theme.id} dangerouslySetInnerHTML={{__html: theme.value}}></style>
         })}
         <div id="content">
-          { viewSource 
-            // ? <Editor src={srcAndRes.src} update={()=>{}} />
-            ? <ErrorBoundary><Highlight language="md">{srcAndRes.src}</Highlight></ErrorBoundary>
-            : <ErrorBoundary>{srcAndRes.res}</ErrorBoundary> }
+          { modal
+            ? <ErrorBoundary>{modal}</ErrorBoundary>
+            : viewSource 
+              ? <ErrorBoundary><Highlight language="md">{srcAndRes.src}</Highlight></ErrorBoundary>
+              : <ErrorBoundary>{srcAndRes.res}</ErrorBoundary> }
         </div>
     </SelectionContext.Provider>
 }
