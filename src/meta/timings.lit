@@ -2,10 +2,15 @@
 
 ```js
 const raw = localStorage.getItem('litTimings')
+const events = {}
 const logs = raw.split('\n').map(l => {
-    try { return JSON.parse(l) }
-    catch (err) { }
+    try {
+       const data = JSON.parse(l)
+       events[data.marker] = events[data.marker] || []
+       events[data.marker].push(data.took)
+    } catch (err) { }
 }).filter(x=>x)
+return events
 return logs
 return raw
 ```
