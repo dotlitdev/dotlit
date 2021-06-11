@@ -1,16 +1,16 @@
-const times = {}
+const timings = {}
 const time = (ns, marker) => {
     const now = Date.now()
-    times[ns] = times[ns] || {
+    timings[ns] = timings[ns] || {
         start: now,
         marks: [],
         timeTo: {},
     }
-    times[ns].marks.push({marker,time: now})
+    timings[ns].marks.push({marker,time: now})
     if (marker) {
-        const took = now - times[ns].start 
-        times[ns].timeTo[marker] = took
-        console.log(`[${ns}] "start" to "${marker}" took ${took}ms`)
+        const took = now - timings[ns].start 
+        timings[ns].timeTo[marker] = took
+        console.log(`[timings][${ns}] "start" to "${marker}" took ${took}ms`)
     }
     
 }
@@ -91,6 +91,7 @@ export const lit = {
         base: baseUrl,
         query: query,
     },
+    timings,
     parser,
     renderer,
     Repl,
