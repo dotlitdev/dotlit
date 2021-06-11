@@ -1,3 +1,4 @@
+console.time('client')
 const React = require('react')
 const ReactDOM = require('react-dom')
 const vfile = require('vfile')
@@ -36,6 +37,8 @@ const console = getConsoleForNamespace('client')
 
 const  { DatesToRelativeDelta, MsToRelative } = momento
 
+console.timeLog('client')
+
 const hasLocation = typeof location !== "undefined"
 
 const query = hasLocation ? qs.parse(location.search.slice(1)) : {}
@@ -62,6 +65,8 @@ if (typeof localStorage !== 'undefined') {
   } catch(err) {}
 }
 const fs = extendFs(lfs.promises, litroot, !query.__no_gh && ghSettings)
+
+console.timeLog('client')
 
 export const lit = {
     location: {
@@ -127,10 +132,13 @@ if (typeof window !== 'undefined') window.lit = lit
 
 console.log(`lit:`, lit)
 
+console.timeLog('client')
+
 export const init = async () => {
     if(query.__lit_no_client==="true") return;
 
     console.log('.lit Notebook client initializing...')
+    console.timeLog('client')
 
     const App = require('../components/App').default
 
@@ -205,7 +213,7 @@ export const init = async () => {
     window.lit.ast = processedFile.data.ast
     window.lit.file = processedFile
     window.lit.settings = settings
-
+    console.timeLog('client')
     try {
         lit.notebook = <App
             root={litroot}
@@ -226,6 +234,7 @@ export const init = async () => {
     } catch (err) {
         console.error("Error hydrating App", err)
     }
+    console.timeEnd('client')
 }
 
 if (typeof WorkerGlobalScope !== 'undefined'
