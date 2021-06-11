@@ -2,7 +2,10 @@
 
 ```js
 const raw = localStorage.getItem('litTimings')
-const logs = raw.split('\n').map(l => JSON.parse(l))
+const logs = raw.split('\n').map(l => {
+    try { return JSON.parse(l) }
+    catch (err) { console.log("Failed"); return undefined }
+})
 return logs
 return raw
 ```
