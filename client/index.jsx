@@ -1,4 +1,20 @@
-console.time('client')
+const times = {}
+const time = (ns, marker) => {
+    const now = Date.now()
+    times[ns] = times[ns] || {
+        start: now,
+        marks: [],
+        timeTo: {},
+    }
+    times[ns].marks.push({marker,time: now})
+    if (marker) {
+        const took = now - times[ns].start 
+        times[ns].timeTo[marker] = took
+        console.log(`[${ns}] "start" to "${marker}" took ${took}ms`)
+    }
+    
+}
+time('client')
 const React = require('react')
 const ReactDOM = require('react-dom')
 const vfile = require('vfile')
@@ -37,7 +53,7 @@ const console = getConsoleForNamespace('client')
 
 const  { DatesToRelativeDelta, MsToRelative } = momento
 
-console.timeLog('client')
+time('client', 'importsComplete')
 
 const hasLocation = typeof location !== "undefined"
 
@@ -66,7 +82,7 @@ if (typeof localStorage !== 'undefined') {
 }
 const fs = extendFs(lfs.promises, litroot, !query.__no_gh && ghSettings)
 
-console.timeLog('client')
+time('client', 'fsSetup')
 
 export const lit = {
     location: {
@@ -132,13 +148,13 @@ if (typeof window !== 'undefined') window.lit = lit
 
 console.log(`lit:`, lit)
 
-console.timeLog('client')
+time('client', 'litObj')
 
 export const init = async () => {
     if(query.__lit_no_client==="true") return;
 
     console.log('.lit Notebook client initializing...')
-    console.timeLog('client')
+    time('client', 'initStart')
 
     const App = require('../components/App').default
 
@@ -180,6 +196,8 @@ export const init = async () => {
         const filename = lit.utils.path.basename(lit.location.src).slice(0, 0-lit.utils.path.extname(lit.location.src).length)
         if (!contents) contents = `# ${lit.location.src}\n\nFile not *yet* found, edit this to change that.`
     }
+ 
+    time('client', 'readFile')
     
     let settings
     try {
@@ -193,12 +211,14 @@ export const init = async () => {
     file.data.plugins = (settings && settings.data && settings.data.plugins) || {}
     file.data.times = times
 
+    time('client', 'settingsLoaded')
+
     window.lit.manifest = await fetch(lit.location.base + 'compactManifest.json')
                           .catch(err=>([]))
                           .then(res => res.json().then( data => {
                               return Array.from(lit.utils.compactPrefixTree.getWordsFromTrie(data)).map(x=>'/'+x)
                           }))
-    
+    time('client', 'manifestLoaded')
     const processedFile = await renderer.processor({fs,litroot, files: lit.manifest}).process(file)
     if (stats) {
         const remoteNewer = stats.local.stat.mtimeMs < stats.remote.stat.mtimeMs
@@ -213,7 +233,7 @@ export const init = async () => {
     window.lit.ast = processedFile.data.ast
     window.lit.file = processedFile
     window.lit.settings = settings
-    console.timeLog('client')
+    time('client', 'processedFile')
     try {
         lit.notebook = <App
             root={litroot}
@@ -234,7 +254,7 @@ export const init = async () => {
     } catch (err) {
         console.error("Error hydrating App", err)
     }
-    console.timeEnd('client')
+    time('client', 'rendered')
 }
 
 if (typeof WorkerGlobalScope !== 'undefined'
