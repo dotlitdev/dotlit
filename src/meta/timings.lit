@@ -11,9 +11,10 @@ const logs = raw.split('\n').map(l => {
     } catch (err) { }
 }).filter(x=>x)
 
-const aggregates = Object.keys(events).map(event=> {
+const aggregates = {}
+Object.keys(events).map(event=> {
   const ev = events[event]
-  return {event, min: Math.min(...ev), max: Math.max(...ev)}
+  aggregates[event] = {min: Math.min(...ev), max: Math.max(...ev)}
 })
 return aggregates
 return events
