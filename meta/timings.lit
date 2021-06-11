@@ -11,24 +11,26 @@ const logs = raw.split('\n').map(l => {
     } catch (err) { }
 }).filter(x=>x)
 
+const avg = arr => arr.reduce((a, x) => a + x, 0) / arr.length
+
 const aggregates = {}
 Object.keys(events).map(event=> {
   const ev = events[event]
-  aggregates[event] = {min: Math.min(...ev), max: Math.max(...ev)}
+  aggregates[event] = {min: Math.min(...ev), max: Math.max(...ev), mean: avg(ev), n: ev.length}
 })
 return aggregates
 return events
 return logs
 return raw
 ```
-```>txt attached=true updated=1623452120236
-{ importsComplete: { min: 33, max: 83 },
-  fsSetup: { min: 33, max: 84 },
-  litObj: { min: 33, max: 84 },
-  initStart: { min: 33, max: 84 },
-  readFile: { min: 346, max: 849 },
-  settingsLoaded: { min: 1913, max: 4466 },
-  manifestLoaded: { min: 1916, max: 4525 },
-  processedFile: { min: 1933, max: 4853 },
-  rendered: { min: 2057, max: 5023 } }
+```>txt attached=true updated=1623452885716
+{ importsComplete: { min: 33, max: 212, mean: 76.6470588235294, n: 34 },
+  fsSetup: { min: 33, max: 213, mean: 77.1470588235294, n: 34 },
+  litObj: { min: 33, max: 213, mean: 77.20588235294117, n: 34 },
+  initStart: { min: 33, max: 215, mean: 77.55882352941177, n: 34 },
+  readFile: { min: 43, max: 69015, mean: 3572.5416666666665, n: 24 },
+  settingsLoaded: { min: 222, max: 73567, mean: 5679.583333333333, n: 24 },
+  manifestLoaded: { min: 1368, max: 73575, mean: 6552.05, n: 20 },
+  processedFile: { min: 1373, max: 73583, mean: 6660.55, n: 20 },
+  rendered: { min: 1536, max: 73941, mean: 6886.5, n: 20 } }
 ```
