@@ -11,23 +11,23 @@ const logs = raw.split('\n').map(l => {
     } catch (err) { }
 }).filter(x=>x)
 
-const aggregates = Object.keys(events).map(e => {
-  const ev = events[e]
-  return {min: Math.min(ev), max: Math.max(ev)}
+const aggregates = Object.keys(events).map(event=> {
+  const ev = events[event]
+  return {event, min: Math.min(...ev), max: Math.max(...ev)}
 })
 return aggregates
 return events
 return logs
 return raw
 ```
-```>txt attached=true updated=1623452000228
-[ { min: NaN, max: NaN },
-  { min: NaN, max: NaN },
-  { min: NaN, max: NaN },
-  { min: NaN, max: NaN },
-  { min: NaN, max: NaN },
-  { min: NaN, max: NaN },
-  { min: NaN, max: NaN },
-  { min: NaN, max: NaN },
-  { min: NaN, max: NaN } ]
+```>txt attached=true updated=1623452062309
+[ { event: 'importsComplete', min: 33, max: 83 },
+  { event: 'fsSetup', min: 33, max: 84 },
+  { event: 'litObj', min: 33, max: 84 },
+  { event: 'initStart', min: 33, max: 84 },
+  { event: 'readFile', min: 346, max: 849 },
+  { event: 'settingsLoaded', min: 1913, max: 4466 },
+  { event: 'manifestLoaded', min: 1916, max: 4525 },
+  { event: 'processedFile', min: 1933, max: 4853 },
+  { event: 'rendered', min: 2057, max: 5023 } ]
 ```
