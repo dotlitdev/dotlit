@@ -1,29 +1,38 @@
 # Timings
 
-```js > text #sw-connected #gh-connected
-const raw = localStorage.getItem('litTimings')
-const events = {}
-const logs = raw.split('\n').map(l => {
+```js > text #sw-connected #gh-connected #offline
+const raw = localStorage.getItem("litTimings");
+const events = {};
+const logs = raw
+  .split("\n")
+  .map((l) => {
     try {
-       const data = JSON.parse(l)
-       events[data.marker] = events[data.marker] || []
-       events[data.marker].push(data.took)
-    } catch (err) { }
-}).filter(x=>x)
+      const data = JSON.parse(l);
+      events[data.marker] = events[data.marker] || [];
+      events[data.marker].push(data.took);
+    } catch (err) {}
+  })
+  .filter((x) => x);
 
-const avg = arr => arr.reduce((a, x) => a + x, 0) / arr.length
+const avg = (arr) => arr.reduce((a, x) => a + x, 0) / arr.length;
 
-const aggregates = {}
-Object.keys(events).map(event=> {
-  const ev = events[event]
-  aggregates[event] = {min: Math.min(...ev), max: Math.max(...ev), mean: avg(ev), n: ev.length}
-})
-return aggregates
-return events
-return logs
-return raw
+const aggregates = {};
+Object.keys(events).map((event) => {
+  const ev = events[event];
+  aggregates[event] = {
+    min: Math.min(...ev),
+    max: Math.max(...ev),
+    mean: avg(ev),
+    n: ev.length,
+  };
+});
+return aggregates;
+return events;
+return logs;
+return raw;
+
 ```
-```>text #sw-connected #gh-connected attached=true updated=1623454494037
+```>text #sw-connected #gh-connected updated=1623454494037
 { importsComplete: { min: 71, max: 196, mean: 86.66666666666667, n: 15 },
   fsSetup: { min: 72, max: 197, mean: 87.33333333333333, n: 15 },
   litObj: { min: 72, max: 197, mean: 87.4, n: 15 },
