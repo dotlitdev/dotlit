@@ -29,6 +29,7 @@ const FS = require('@isomorphic-git/lightning-fs')
 const git = require('isomorphic-git')
 const compactPrefixTree = require('compact-prefix-tree')
 const mime = require('mime-types')
+const pkg = require('../package.json')
 
 const select = require('unist-util-select')
 const source = require('unist-util-source')
@@ -90,6 +91,7 @@ const fs = extendFs(lfs.promises, litroot, !query.__no_gh && ghSettings)
 time('client', 'fsSetup')
 
 export const lit = {
+    version: pkg.version,
     location: {
         src: litsrc,
         root: litroot,
