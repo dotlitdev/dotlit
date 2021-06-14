@@ -33,8 +33,8 @@ export const extractPlugins = ({fs} = {}) => {
         console.log("Checking for plugins")
         file.data = file.data || {}
         // file.data.plugins = {}
-
-        await Promise.all(selectAll("code", tree).map(async block => {
+        const blocks = selectAll("code", tree)
+        if (blocks?.length) await Promise.all(blocks.map(async block => {
 
             const filename = (block.data
                              && block.data.meta
