@@ -210,7 +210,7 @@ export function generate(cmd) {
                        
                         await fs.writeFile(file.path, file.contents)
                         wroteSource = true
-                        return await renderProcessor({fs, files: matches.map(x=>'/'+x)}).process(file)
+                        return await renderProcessor({fs, cwd: cmd.path, files: matches.map(x=>'/'+x)}).process(file)
                       
                     } catch (err) {
                         console.error(err)

@@ -48,6 +48,7 @@ program
     .option('-o, --output <path>', 'Output location')
     .option('-b, --base <path>', 'Base path (output prefix)')
     .option('-w, --watch', 'Watch for changes and regenerate')
+    .option('-c, --config <path>', 'Default config to include for all files')
     // .option('-s, --serve', 'Start and http server for output at port', Identity, 8080)
     .action((path, cmd)=>{
         cmd.cwd = process.cwd()

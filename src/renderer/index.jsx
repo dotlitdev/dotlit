@@ -2,6 +2,7 @@ import path from 'path'
 import remark2rehype from 'remark-rehype'
 import rehype2react from 'rehype-react'
 import {selectAll} from 'unist-util-select'
+import vfile from 'vfile'
 
 import hastCodeHandler from './utils/hast-util-code-handler'
 
@@ -25,8 +26,36 @@ import { decorateLinkNode } from '../parser/links'
 
 const console = getConsoleForNamespace('renderer')
 
-export function processor({fs, litroot, files} = {}) {
-    return parserProcessor({fs, litroot, files})
+export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
+    return parserProcessor({fs, litroot, files, cwd})
+
+    // includes and config
+    .use( ({fs, cwd, skipIncludes}) => {
+        return async (tree,file) => {
+            const includes = file?.data?.frontmatter?.includes || ['/config.lit']
+            if (skipIncludes) return
+            for (const include of includes) {
+                const filepath = path.join(path.dirname(file.path), include)
+                const readPath = path.join(cwd || '', (include?.[0] === '/' ?  path.dirname(file.path) : ''), include)
+                console.log(`[${file.path}] [Include] Found include: "${include}" loading as: (${readPath})`)
+                // if (file.path === readPath) return
+                try {
+                    const includeFile = await vfile({ path: filepath, contents: await fs.readFile(readPath, {encoding: 'utf8'}) })
+                    const p = processor({fs, cwd, litroot, files, skipIncludes: true})
+                    console.log(`[${file.path}] [Include] Constructed processor`)
+                    const included = await p.process(includeFile)
+                    console.log(`[${file.path}] [Include] Processed include: ${filepath}`)
+                    file.data = file.data || {}
+                    file.data.plugins = Object.assign(file.data.plugins || {}, included.data.plugins || {})
+                } catch(err) {
+                    console.log(`[${file.path}] Failed to load include: ${include}`, err)
+                    process.exit(1)
+                }
+                
+            }
+            console.log(`[${file.path}] Found ${includes.length} includes.`)
+        }
+    }, {fs, cwd, skipIncludes})
    
     // hoist ast to data
     .use( (...args) => {
@@ -47,13 +76,13 @@ export function processor({fs, litroot, files} = {}) {
     // extract files to data
     .use( (...args) => {
          return (tree,file) => {
-             console.log(`[${file.path}] Extact codeblocks to file.data.files`)
+             console.log(`[${file.path}] Extract codeblocks to file.data.files`)
              file.data.files = selectAll("code", tree)
          }
      })
 
     // hoist mdast data to hast data
-    // Dosabled as failed to process due to JSON stringify error
+    // Disabled as failed to process due to JSON stringify error
     .use( (...args) => {
          return (tree,file) => {
 
@@ -74,7 +103,7 @@ export function processor({fs, litroot, files} = {}) {
             console.log(`[${file.path}] Looking for renderer plugins `)
             for (const plugin in rendererPlugins) {
                 console.log(`[${file.path}] Render Plugin`, plugin)
-                // await plugin(...args)(tree, file)
+                await plugin(...args)(tree, file)
             }
         }
     })
