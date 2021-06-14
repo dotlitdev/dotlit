@@ -27,6 +27,7 @@ import { decorateLinkNode } from '../parser/links'
 const console = getConsoleForNamespace('renderer')
 
 export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
+    console.log("Renderer: cwd", cwd)
     return parserProcessor({fs, litroot, files, cwd})
 
     // includes and config
@@ -36,7 +37,8 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
             if (skipIncludes) return
             for (const include of includes) {
                 const filepath = path.join(path.dirname(file.path), include)
-                const readPath = path.join(cwd || '', (include?.[0] === '/' ?  path.dirname(file.path) : ''), include)
+                const readPath = path.join(cwd || '', (include?.[0] !== '/' ?  path.dirname(file.path) : ''), include)
+                console.trace('here')
                 console.log(`[${file.path}] [Include] Found include: "${include}" loading as: (${readPath})`)
                 // if (file.path === readPath) return
                 try {
@@ -60,7 +62,7 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
     // hoist ast to data
     .use( (...args) => {
          return (tree,file) => {
-             console.log(`[${file.path}] Hoisting AST data to file.data.ast`)
+            //  console.log(`[${file.path}] Hoisting AST data to file.data.ast`)
              file.data = file.data || {}
              file.data.ast = tree
          }
@@ -76,7 +78,7 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
     // extract files to data
     .use( (...args) => {
          return (tree,file) => {
-             console.log(`[${file.path}] Extract codeblocks to file.data.files`)
+            //  console.log(`[${file.path}] Extract codeblocks to file.data.files`)
              file.data.files = selectAll("code", tree)
          }
      })
@@ -86,7 +88,7 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
     .use( (...args) => {
          return (tree,file) => {
 
-             console.log(`[${file.path}] Hoist mdast data (disabled)`)
+            //  console.log(`[${file.path}] Hoist mdast data (disabled)`)
              for (const code of selectAll("code", tree)) {
                  if (false && code.data) {
                      code.data.hProperties = code.data.hProperties || {}
@@ -100,7 +102,7 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
     .use( (...args) => {
         return async (tree, file) => {
             const rendererPlugins = Object.keys(file?.data?.plugins?.renderer || {})
-            console.log(`[${file.path}] Looking for renderer plugins `)
+            // console.log(`[${file.path}] Looking for renderer plugins `)
             for (const plugin in rendererPlugins) {
                 console.log(`[${file.path}] Render Plugin`, plugin)
                 await plugin(...args)(tree, file)
@@ -135,7 +137,7 @@ export async function renderedVFileToDoc(vfile, cmd) {
     const dir = path.dirname( path.join(root, vfile.path) )
     const relroot = path.relative(dir, root) || '.'
 
-    console.log('Render to document vFile', vfile.path)
+    // console.log('Render to document vFile', vfile.path)
 
     const notebook = <Document
         file={vfile}

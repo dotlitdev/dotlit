@@ -104,7 +104,7 @@ export const Codeblock = props => {
             { Viewer 
               ? <ErrorBoundary>
                   { below && highlighted }
-                  <Viewer children={props.children} node={codeNode} React={React} fullscreen={fullScreen}/>
+                  <Viewer children={props.children} node={codeNode} React={React} fullscreen={fullScreen} lit={(typeof lit !== 'undefined' ? lit : {})}/>
                 </ErrorBoundary>
               : meta && meta.isOutput
                 ? <output>
