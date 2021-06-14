@@ -34,7 +34,7 @@ export const extractPlugins = ({fs} = {}) => {
         file.data = file.data || {}
         // file.data.plugins = {}
 
-        for (const block of selectAll("code", tree)) {
+        await Promise.all(selectAll("code", tree).map(async block => {
 
             const filename = (block.data
                              && block.data.meta
@@ -100,6 +100,6 @@ export const extractPlugins = ({fs} = {}) => {
                     file.message(msg, block)
                 }
             }
-        }
+        }))
     }
 }
