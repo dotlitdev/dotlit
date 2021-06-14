@@ -12,7 +12,8 @@ export const transcludeCode = ({fs}) => {
             // return;
         };
         console.log("Checking for files to transclude")
-        for (const block of selectAll("code", tree)) {
+        const blocks = selectAll("code", tree)
+        if (blocks?.length) Promise.all(blocks.map( async block => {
             const source = block?.data?.meta?.source
             if (source) {
                 console.log("Found source to be transcluded", block.data.meta.raw)
@@ -45,6 +46,6 @@ export const transcludeCode = ({fs}) => {
                    }
                }
             }
-        }
+        }))
     }
 }

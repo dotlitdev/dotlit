@@ -235,7 +235,7 @@ private: true
 The contents of this file are private. Only visible by the author.
 
 `
-                           file = await renderProcessor({fs, files: matches.map(x=>'/'+x)}).process(file)
+                           file = await renderProcessor({fs, cwd: cmd.path, files: matches.map(x=>'/'+x)}).process(file)
 
                         }
                         // await mkdirp(path.join(cmd.output,path.dirname(file.path)))
@@ -271,7 +271,7 @@ The contents of this file are private. Only visible by the author.
 File: ${file.path}
     ${err.toString()}
 `
-                        file = await renderProcessor({fs}).process(file)
+                        file = await renderProcessor({fs, cwd: cmd.path}).process(file)
                         // await mkdirp(path.join(cmd.output,path.dirname(file.path)))
                         // await fs.writeFile(file.path, file.contents)
                         // await fs.writeFile(file.path + '.json', JSON.stringify(file.data.ast, null, 4))

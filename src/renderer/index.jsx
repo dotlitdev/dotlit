@@ -34,11 +34,11 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
     .use( ({fs, cwd, skipIncludes}) => {
         return async (tree,file) => {
             const includes = file?.data?.frontmatter?.includes || ['/config.lit']
+            let loaded = 0
             if (skipIncludes) return
             for (const include of includes) {
                 const filepath = path.join(path.dirname(file.path), include)
                 const readPath = path.join(cwd || '', (include?.[0] !== '/' ?  path.dirname(file.path) : ''), include)
-                console.trace('here')
                 console.log(`[${file.path}] [Include] Found include: "${include}" loading as: (${readPath})`)
                 // if (file.path === readPath) return
                 try {
@@ -49,13 +49,14 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
                     console.log(`[${file.path}] [Include] Processed include: ${filepath}`)
                     file.data = file.data || {}
                     file.data.plugins = Object.assign(file.data.plugins || {}, included.data.plugins || {})
+                    loaded += 1
                 } catch(err) {
-                    console.log(`[${file.path}] Failed to load include: ${include}`, err)
-                    process.exit(1)
+                    console.error(`[${file.path}] Failed to load include: ${include}`, err)
+                    
                 }
                 
             }
-            console.log(`[${file.path}] Found ${includes.length} includes.`)
+            console.log(`[${file.path}] Loaded  ${loaded}/${includes.length} includes.`)
         }
     }, {fs, cwd, skipIncludes})
    
@@ -105,7 +106,7 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
             // console.log(`[${file.path}] Looking for renderer plugins `)
             for (const plugin in rendererPlugins) {
                 console.log(`[${file.path}] Render Plugin`, plugin)
-                await plugin(...args)(tree, file)
+                // await plugin(...args)(tree, file)
             }
         }
     })

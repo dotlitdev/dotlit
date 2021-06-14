@@ -25,8 +25,13 @@ const Document = props => {
         <body>
             <div id="lit-app"><App root={props.root} file={props.file} fs={props.fs} result={result} files={files} ssr={true}/></div>
             <div id="backlinks"><Backlinks root={props.root} links={props.backlinks || []}/></div>
-            <script src="//cdn.jsdelivr.net/npm/eruda"></script>
-            <script>eruda.init();</script>
+            <script dangerouslySetInnerHTML={{__html: `;(function () {
+                var src = '//cdn.jsdelivr.net/npm/eruda';
+                if (!/eruda=true/.test(window.location) && localStorage.getItem('active-eruda') != 'true') return;
+                document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
+                document.write('<scr' + 'ipt>eruda.init();</scr' + 'ipt>');
+            })();`}}>
+            </script>
             <script async src={path.join(props.root, 'web.bundle.js')}/>
         </body>
     </html>

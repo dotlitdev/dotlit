@@ -5,7 +5,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 const { spawn } = require('child_process')
 const distDir = path.resolve(__dirname, './dist')
-const stage = "production"
+const stage = "development"
 
 module.exports = {
   mode: stage,
