@@ -61,7 +61,7 @@ export const extractPlugins = ({fs} = {}) => {
                      const len = Object.keys(file.data.plugins[type]).length
                      const id = meta.of || meta.id || meta.filename || len
                      file.data.plugins[type][id] = {value: block.value}
-                     continue;
+                     return;
                 }
                 
                 try {
