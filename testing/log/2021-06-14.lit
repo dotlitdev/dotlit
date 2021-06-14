@@ -55,6 +55,8 @@ const s = Math.pow(2, x)
 const dLon = mLon / s
 const dLat = mLat / s
 
+const binToHex = (str) => parseInt(str,2).toString(16)
+
 const geo = (lat,lon) => {
   const bins = [[],[]]
   let [a,b] = [lat / dLat, lon / dLon]
@@ -64,12 +66,11 @@ const geo = (lat,lon) => {
     bins[0].push((a < S) ? "0" : "1")
     bins[1].push((b < S) ? "0" : "1")
   }
-  return bins.map( bin => bin.join(''))
+  return bins.map( bin => binToHex(bin.join('')))
 }
 
 return geo(30,30)
 ```
-```>txt attached=true updated=1623713796284
-[ '0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1',
-  '0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1' ]
+```>txt attached=true updated=1623713811890
+[ '0000000000000000000011111', '0000000000000000000011111' ]
 ```
