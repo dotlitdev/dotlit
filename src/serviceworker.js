@@ -4,7 +4,7 @@ let document = { documentElement: { style: {} } };
 importScripts("web.bundle.js");
 
 const state = {
-  version: "0.2.16",
+  version: "0.2.17",
   dotlit: typeof dotlit,
   root: "",
   enableCache: false,
@@ -109,7 +109,7 @@ self.addEventListener("activate", (event) => {
 // from the network before returning it to the page.
 self.addEventListener("fetch", (event) => {
   // Skip cross-origin requests, like those for Google Analytics. And add mock response
-  if (event.request.url.startsWith(self.location.origin)) {
+  if (true || event.request.url.startsWith(self.location.origin)) {
     if (event.request.url.endsWith("--sw")) {
       console.log("Mock/Info request");
       event.respondWith(getMockResponse(event));
