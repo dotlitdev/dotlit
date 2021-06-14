@@ -57,65 +57,26 @@ const dLat = mLat / s
 
 const geo = (lat,lon) => {
   const bins = [[],[]]
-  const [a,b] = [lat / dLat, lon / dLon]
+  let [a,b] = [lat / dLat, lon / dLon]
+  let S = s
   for (var I=0;I<x;I++) {
-    bins[0].push((a < s/2) ? "0" : "1")
-    bins[1].push((b < s/2) ? "0" : "1")
+    S = S / 2
+    bins[0].push((a < S) ? "0" : "1")
+    bins[1].push((b < S) ? "0" : "1")
   }
-  return bins
+  return bins.map( bin = bin.join())
 }
 
 return geo(30,30)
 ```
-```>txt attached=true updated=1623713630732
-[ [ '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0' ],
-  [ '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0',
-    '0' ] ]
+```>txt attached=true updated=1623713765416 !error
+function toString() {
+    [native code]
+}
+geo@untitled.js:18:29
+untitled.js:21:11
+untitled.js:23:63
+module code@untitled.js:23:139
+evaluate@[native code]
+moduleEvaluation@[native code]
 ```
