@@ -157,8 +157,8 @@ export const extractPlugins = ({fs} = {}) =&gt; {
         console.log(&quot;Checking for plugins&quot;)
         file.data = file.data || {}
         // file.data.plugins = {}
-
-        for (const block of selectAll(&quot;code&quot;, tree)) {
+        const blocks = selectAll(&quot;code&quot;, tree)
+        if (blocks?.length) await Promise.all(blocks.map(async block =&gt; {
 
             const filename = (block.data
                              &amp;&amp; block.data.meta
@@ -185,7 +185,7 @@ export const extractPlugins = ({fs} = {}) =&gt; {
                      const len = Object.keys(file.data.plugins[type]).length
                      const id = meta.of || meta.id || meta.filename || len
                      file.data.plugins[type][id] = {value: block.value}
-                     continue;
+                     return;
                 }
                 
                 try {
@@ -224,7 +224,7 @@ export const extractPlugins = ({fs} = {}) =&gt; {
                     file.message(msg, block)
                 }
             }
-        }
+        }))
     }
 }
 
