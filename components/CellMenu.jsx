@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import { MenuIcon, EditIcon, ExecIcon, CloseIcon, SaveIcon } from './Icons'
+import { MenuIcon, EditIcon, ExecIcon, CloseIcon, SaveIcon, TrashIcon } from './Icons'
 import { getConsoleForNamespace } from '../utils/console'
 
 const console = getConsoleForNamespace('CellMenu')
@@ -38,7 +38,7 @@ const CellMenu = ({meta, editing, toggleEditing, save, exec} = {}) => {
         <ul className="menu__items">
             { open && isExecutable(meta) && <CellMenuItem title="Execute" icon={ExecIcon} handler={exec}/>}
             { open && !editing && <CellMenuItem title="Edit" icon={EditIcon} handler={toggleEditing}/>}
-            { open && editing && <CellMenuItem title="Cancel" icon={CloseIcon} handler={toggleEditing}/>}
+            { open && editing && <CellMenuItem title="Cancel" icon={TrashIcon} handler={toggleEditing}/>}
             { open && editing && <CellMenuItem title="Save" icon={SaveIcon} handler={save}/>}
             { !open 
                 ? <CellMenuItem title="Open" icon={MenuIcon} handler={toggleOpen} />

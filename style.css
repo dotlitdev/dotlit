@@ -12,6 +12,7 @@ body {
   --medium-space: 0.4em;
   --code-bg-color: #000;
   --code-text-color: #fff;
+  --box-bg-opacity: 0.05;
   color: var(--text-color);
   background-color: var(--bg);
 }
@@ -78,12 +79,14 @@ li > p:first-child {
   font-family: monospace;
   color: #fff;
   padding: 0.4em;
+  overflow: scroll;
 }
 .lit-message .message {
   overflow: hidden;
   flex: 1;
-  white-space: pre;
+  white-space: pre-wrap;
   cursor: pointer;
+  display: block;
 }
 .lit-message:not(.showall) {
   display: flex;
@@ -96,6 +99,10 @@ li > p:first-child {
   cursor: pointer;
   margin-left: 0.4em;
   text-decoration: underline;
+}
+.lit-message .close {
+  padding: 0 var(--medium-space);
+  cursor: pointer;
 }
 #lit-header {
   top: 0;
@@ -509,7 +516,7 @@ cell:not(.selected) codecell iframe {
 }
 codecell > table {
   border-collapse: collapse;
-  border: 1px solid #ccc;
+  border: 1px solid var(--divider-subtle);
 }
 codecell > table td {
   padding: 0.4em;
@@ -520,11 +527,27 @@ codecell > table td {
 .md-block.dir-box,
 .md-block.dir-success,
 .md-block.dir-error {
-  color: #666;
-  padding: 0.4em;
-  border: 1px solid #ccc;
-  background-color: rgba(0,0,0,0.01);
+  position: relative;
+  color: var(--text-color);
+  padding: var(--medium-space);
+  border: 1px solid var(--divider-subtle);
   border-radius: 2px;
+}
+.md-block.dir-note:before,
+.md-block.dir-info:before,
+.md-block.dir-warn:before,
+.md-block.dir-box:before,
+.md-block.dir-success:before,
+.md-block.dir-error:before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  background-color: var(--bg);
+  opacity: var(--box-bg-opacity, 0.15);
+  top: 0;
+  z-index: -1;
 }
 .md-block > *:first-child {
   margin-top: 0;
@@ -532,22 +555,33 @@ codecell > table td {
 .md-block > *:last-child {
   margin-bottom: 0;
 }
+.md-block.dir-note:before {
+  background-color: #ff0;
+}
 .md-block.dir-error {
   color: #f00;
   border-color: #f00;
-  background-color: rgba(255,0,0,0.05);
+}
+.md-block.dir-error:before {
+  background-color: #f00;
 }
 .md-block.dir-warn {
   border-color: #ffa500;
-  background-color: rgba(255,0,0,0.05);
+}
+.md-block.dir-warn:before {
+  background-color: #ffa500;
 }
 .md-block.dir-info {
   border-color: #00f;
-  background-color: rgba(0,0,255,0.05);
+}
+.md-block.dir-info:before {
+  background-color: #00f;
 }
 .md-block.dir-success {
   border-color: #008000;
-  background-color: rgba(0,255,0,0.05);
+}
+.md-block.dir-success:before {
+  background-color: #008000;
 }
 #backlinks,
 .footnotes {
