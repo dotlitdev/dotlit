@@ -30,7 +30,7 @@
 </code></pre></output></codecell></div></cell><cell startpos="44:1-1013" endpos="51:4-1190" class="code"><div class="cell-content"><codecell class="tag-register lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#d6dc2e" class="tag">register</span></span><pre><code class="js">return navigator
           .serviceWorker
           .register(&#x27;/serviceworker.js?root=&#x27;+lit.location.root)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.5d ago</span></span></span><output><pre><code class="txt">{}
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.6d ago</span></span></span><output><pre><code class="txt">{}
 </code></pre></output></codecell></div></cell><cell startpos="53:1-1192" endpos="53:60-1251"><div class="cell-content"><ul class="contains-task-list">
 <li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->To do, handle register for non-root hosted notebooks.</li>
 </ul></div></cell><cell startpos="55:1-1253" endpos="62:4-1463" class="code"><div class="cell-content"><codecell class="tag-status lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#cacdcf" class="tag">status</span></span><pre><code class="js">return navigator.serviceWorker.controller
@@ -82,13 +82,13 @@ Unregistered 1 regisration(s)
   }
 }
 </code></pre></output></codecell></div></cell><cell startpos="132:1-2900" endpos="134:4-2938" class="code"><div class="cell-content"><codecell class="lang-text local"><span class="meta"><span class="lang">text</span><span class="source">&lt; ./getserviceworker--sw</span></span><pre><code class="text"></code></pre></codecell></div></cell></section>
-<section depth="2" class="" startpos="136:1-2940" endpos="290:4-7434"><cell startpos="136:1-2940" endpos="136:18-2957"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="138:1-2959" endpos="290:4-7434" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><a name="../serviceworker.js"></a><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">// gross hack around one of @codemirror/view bugs
+<section depth="2" class="" startpos="136:1-2940" endpos="290:4-7442"><cell startpos="136:1-2940" endpos="136:18-2957"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="138:1-2959" endpos="290:4-7442" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><a name="../serviceworker.js"></a><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">// gross hack around one of @codemirror/view bugs
 let document = { documentElement: { style: {} } };
 
 importScripts(&quot;web.bundle.js&quot;);
 
 const state = {
-  version: &quot;0.2.16&quot;,
+  version: &quot;0.2.17&quot;,
   dotlit: typeof dotlit,
   root: &quot;&quot;,
   enableCache: false,
@@ -193,7 +193,7 @@ self.addEventListener(&quot;activate&quot;, (event) =&gt; {
 // from the network before returning it to the page.
 self.addEventListener(&quot;fetch&quot;, (event) =&gt; {
   // Skip cross-origin requests, like those for Google Analytics. And add mock response
-  if (event.request.url.startsWith(self.location.origin)) {
+  if (true || event.request.url.startsWith(self.location.origin)) {
     if (event.request.url.endsWith(&quot;--sw&quot;)) {
       console.log(&quot;Mock/Info request&quot;);
       event.respondWith(getMockResponse(event));
@@ -234,6 +234,6 @@ self.addEventListener(&quot;fetch&quot;, (event) =&gt; {
 });
 
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="292:1-7436" endpos="294:80-7525"><cell startpos="292:1-7436" endpos="294:80-7525"><div class="cell-content"><h2 id="to-do">To do</h2><ul class="contains-task-list">
+<section depth="2" class="" startpos="292:1-7444" endpos="294:80-7533"><cell startpos="292:1-7444" endpos="294:80-7533"><div class="cell-content"><h2 id="to-do">To do</h2><ul class="contains-task-list">
 <li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->Add responses not on host domain to <code>RUNTIME</code> cache for offline usage...?</li>
 </ul></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (2)</h4><ol><li><a title="Importing JS Modules" href="/testing/importing_js_modules.html">Importing JS Modules</a></li><li><a title="🔬 Tests, experiments and investigations" href="/testing/index.html">🔬 Tests, experiments and investigations</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
