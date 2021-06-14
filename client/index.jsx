@@ -202,7 +202,6 @@ export const init = async () => {
         const filename = lit.utils.path.basename(lit.location.src).slice(0, 0-lit.utils.path.extname(lit.location.src).length)
         if (!contents) contents = `# ${lit.location.src}\n\nFile not *yet* found, edit this to change that.`
     }
- 
     time('client', 'readFile')
     
     let settings
@@ -215,7 +214,6 @@ export const init = async () => {
    
     const file = await vfile({path: filepath, contents})
     file.data = file.data || {}
-    file.data.plugins = (settings && settings.data && settings.data.plugins) || {}
     file.data.times = times
 
     time('client', 'settingsLoaded')
@@ -239,7 +237,7 @@ export const init = async () => {
     console.log("Processed clientside ", file.path)
     window.lit.ast = processedFile.data.ast
     window.lit.file = processedFile
-    window.lit.settings = settings
+
     time('client', 'processedFile')
     try {
         lit.notebook = <App

@@ -114,9 +114,8 @@ const Message = ({message, setSelectedCell}) => {
   </div>
 }
 
-export const Header = (props) => {
-  console.log('<Header/>', props)
-  const { root, toggleViewSource, toggleModal, ssr } = props
+export const Header = ({ root, toggleViewSource, toggleModal, ssr }) => {
+  console.log('<Header/>')
 
   const resetFile = (ctx, localOnly) => async ev => {
     const filepath = ctx.file.path
@@ -200,7 +199,7 @@ export const Header = (props) => {
 
     console.log('<Header/> plugins?', menuPlugins)
 
-    return <div id="lit-header">
+    return ssr ? null : <div id="lit-header">
       <Menu title="Home" horizontal href={root}>
       <Menu title="File">
         <span disabled className="meta">{ageMessage}</span>

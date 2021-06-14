@@ -1,54 +1,10 @@
-<html data-reactroot=""><head><title>Input Buffer</title><meta name="litsrc" value="/testing/input_buffer.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children"><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children"><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu><div class="lit-messages"></div></div><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="46:21-1420"><cell startpos="1:1-0" endpos="1:15-14"><div class="cell-content"><h1 id="input-buffer">Input Buffer</h1></div></cell><cell startpos="3:1-16" endpos="8:4-211" class="code"><div class="cell-content"><codecell class="dir-collapse dir-hidemeta lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#964f82" class="directive dir-hidemeta">hidemeta</span><span class="attribute attr-exec" style="color:black;background-color:#02fb89">exec=onload</span><span class="source">&lt; log/checkforinput.js</span><span class="output">&gt; md !info</span></span><pre><code class="js">const date = new Date();
-const isoDate = date.toISOString().split(&quot;T&quot;)[0];
-const today = isoDate;
-const year = date.getFullYear();
-const month = isoDate.split(&quot;-&quot;)[1];
-
-const firstDayOfYear = new Date(year, 0, 1);
-const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
-const week = Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
-
-const filename = (t) =&gt; `testing/log/${t}.lit`;
-
-const checkForInput = async () =&gt; {
-  const insp = lit.utils.inspect;
-  const qs = lit.utils.querystring;
-
-  const search = location.search;
-  const query = search &amp;&amp; qs.parse(search.slice(1));
-
-  if (query?.input) {
-    const input = query.input;
-    delete query.input;
-    const qsWoInput = qs.stringify(query);
-    window.history.replaceState(null, null, &quot;?&quot; + qsWoInput);
-
-    let stat = { local: {}, remote: {} };
-    try {
-      stat = await lit.fs.readStat(`/${filename(today)}`, { encoding: &quot;utf8&quot; });
-    } catch (err) {}
-    const newContent =
-      ((stat.local.stat &amp;&amp; stat.local.value) ||
-        stat.remote.value ||
-        `# ${today}
-
-See [week ${week}](/${filename(
-          year + &quot;-w&quot; + week
-        )}), [month ${month}](/${filename(
-          year + &quot;-&quot; + month
-        )}) or [year ${year}](/${filename(year)})
-`) +
-      (&quot;\n&quot; + input);
-    await lit.fs.writeFile(`/${filename(today)}`, newContent);
-    return `***Captured Input (below) to [${today}](/${filename(today)})***
-
-${input}`;
-  } else {
-    return &quot;*No input detected.*&quot;;
-  }
-};
-return checkForInput();
-
+<html data-reactroot=""><head><title>Input Buffer</title><meta name="litsrc" value="/testing/input_buffer.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><style>body {
+  --bg: #000000;
+  --text-color: lightgrey;
+  --text-primary-color: orange;
+  --text-secondary-color: #666;
+  --divider-subtle: #333333;
+}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="46:21-1420"><cell startpos="1:1-0" endpos="1:15-14"><div class="cell-content"><h1 id="input-buffer">Input Buffer</h1></div></cell><cell startpos="3:1-16" endpos="8:4-211" class="code"><div class="cell-content"><codecell class="dir-collapse dir-hidemeta lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#964f82" class="directive dir-hidemeta">hidemeta</span><span class="attribute attr-exec" style="color:black;background-color:#02fb89">exec=onload</span><span class="source">&lt; log/checkforinput.js</span><span class="output">&gt; md !info</span></span><pre><code class="js">// See implementation below for details
 </code></pre></codecell><codecell class="dir-warn lang-md local output"><span class="meta"><span class="lang">md</span><span style="color:white;background-color:#037928" class="directive dir-warn">warn</span><span class="updatedAt">Updated <span class="Time relative">4.9w ago</span></span></span><div class="md-block dir-warn">
 <p>👀 <em>Checking for input...</em></p>
 </div></codecell></div></cell><cell startpos="10:1-213" endpos="44:4-1398" class="code"><div class="cell-content"><codecell class="dir-collapse dir-hidemeta lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#964f82" class="directive dir-hidemeta">hidemeta</span><span class="attribute attr-exec" style="color:black;background-color:#02fb89">exec=onload</span><span class="source">&lt; log/today.js</span><span class="output">&gt; md !bigger</span></span><pre><code class="js">const date = new Date();
@@ -204,14 +160,7 @@ return checkForTodayFile();
 </code></pre><style>.dir-bigger {
   font-size: 1.2em;
 }
-</style></codecell></div></cell><cell startpos="188:1-6076" endpos="190:4-6121" class="code"><div class="cell-content"><codecell class="dir-collapse tag-template lang-lit local collapsed"><span class="meta"><span class="lang">lit</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#b13acc" class="tag">template</span><span class="source">&lt; log/day.lit</span></span><pre><code class="lit"># ${(new Date()).toISOString().split(&quot;T&quot;)[0]}
-
-- created from template 
-
-```
-${new Date()}
-```
-</code></pre></codecell></div></cell><cell startpos="191:1-6122" endpos="204:4-6556" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=bookmarklet</span></span><pre><code class="js">export const viewer = ({ node, React }) =&gt; {
+</style></codecell></div></cell><cell startpos="188:1-6076" endpos="190:4-6121" class="code"><div class="cell-content"><codecell class="dir-collapse tag-template lang-lit local collapsed"><span class="meta"><span class="lang">lit</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#b13acc" class="tag">template</span><span class="source">&lt; log/day.lit</span></span><pre><code class="lit"></code></pre></codecell></div></cell><cell startpos="191:1-6122" endpos="204:4-6556" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=bookmarklet</span></span><pre><code class="js">export const viewer = ({ node, React }) =&gt; {
   const rc = React.createElement;
   const meta = node.properties.meta;
   const href = `javascript:(function(){${node.data.value}})()`;
@@ -223,4 +172,9 @@ ${new Date()}
   ]);
 };
 
-</code></pre></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="🔬 Tests, experiments and investigations" href="/testing/index.html">🔬 Tests, experiments and investigations</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
+</code></pre></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="🔬 Tests, experiments and investigations" href="/testing/index.html">🔬 Tests, experiments and investigations</a></li></ol></div><script>;(function () {
+                var src = '//cdn.jsdelivr.net/npm/eruda';
+                if (!/eruda=true/.test(window.location) && localStorage.getItem('active-eruda') != 'true') return;
+                document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
+                document.write('<scr' + 'ipt>eruda.init();</scr' + 'ipt>');
+            })();</script><script async="" src="/web.bundle.js"></script></body></html>
