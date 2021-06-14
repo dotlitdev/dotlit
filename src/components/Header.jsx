@@ -4,6 +4,7 @@ import source from 'unist-util-source'
 import SelectionContext from './SelectionContext'
 import { Identity } from '../utils/functions'
 import { getConsoleForNamespace } from '../utils/console'
+import { CloseIcon } from './Icons'
 import { ErrorBoundary } from './ErrorBoundry'
 import {version} from '../../package.json'
 
@@ -94,7 +95,8 @@ const Message = ({message, setSelectedCell}) => {
     setSelectedCell(message.location, true) 
     return false
   }
-
+  const [hide, setHide] = useState(false);
+  const dismiss = () => setHide(true)
   const [showAll, setShowAll] = useState(false)
   const toggleShowAll = ev => {
     setShowAll(!showAll)
@@ -106,11 +108,12 @@ const Message = ({message, setSelectedCell}) => {
     showAll && 'showall',
   ].filter(Identity).join(' ')
 
-  return <div className={classes}>
+  return hide ? null : <div className={classes}>
     <span className="message" onClick={toggleShowAll}>{message.message}</span>
     <span className="name" onClick={scroll}>
       {message.name.split(':').slice(1).join(':')}
     </span>
+    <span className="close"><CloseIcon onClick={dismiss}/></span>
   </div>
 }
 
@@ -199,8 +202,9 @@ export const Header = ({ root, toggleViewSource, toggleModal, ssr }) => {
 
     console.log('<Header/> plugins?', menuPlugins)
 
-    return ssr ? null : <div id="lit-header">
-      <Menu title="Home" horizontal href={root}>
+    return <div id="lit-header">
+      <div>{ssr ? <Menu title="Home" horizontal href={root}/> :
+    <Menu title="Home" horizontal href={root}>
       <Menu title="File">
         <span disabled className="meta">{ageMessage}</span>
         <span disabled>New</span>
@@ -262,7 +266,7 @@ export const Header = ({ root, toggleViewSource, toggleModal, ssr }) => {
         {ageMessage && <span disabled>{`Local is ${ageMessage} than remote.`}</span> }
         {cellSelected && <span disabled>{`Lines ${ctx.selectedCell.start.line}-${ctx.selectedCell.end.line}`}</span> }
       </Menu>
-    </Menu>
+    </Menu> }</div>
     <div className="lit-messages">
     { ctx.file.messages.map( m => {
         return <Message key={m.name} message={m} setSelectedCell={ctx.setSelectedCell} />
