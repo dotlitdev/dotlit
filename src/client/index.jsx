@@ -211,7 +211,7 @@ export const init = async () => {
         const settingsFile = await vfile({ path: settingsPath, contents: await lit.fs.readFile(settingsPath, {encoding: 'utf8'}) })
         settings = await renderer.processor({fs,litroot}).process(settingsFile)
     } catch(err) { console.log('Failed to load settings', err) }
-
+    time('client', 'settingsFetched')
     const file = await vfile({path: filepath, contents})
     file.data = file.data || {}
     file.data.plugins = (settings && settings.data && settings.data.plugins) || {}
