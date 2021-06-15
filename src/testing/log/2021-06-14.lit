@@ -194,21 +194,21 @@ return 40075017 / Math.pow(2,5) / 1000
 This was an intermediary implementation which naively converts to a hex hash and does not divide progressively as above.
 
 ```js
-const x = 25
-const n = Math.pow(2, x)
-const dLon = 360 / n
-const dLat = 180 / n
-const mLon = 40075017
-const mLat = 40007863
-
 const geo2hash = (lat,lon) => {
+  const x = 25
+  const n = Math.pow(2, x)
+  const dLon = 360 / n
+  const dLat = 180 / n
   const nLat = Math.floor((lat+90)/dLat)
   const nLon = Math.floor((lon+180)/dLon)
   const hash = `${nLat.toString(16)}x${nLon.toString(16)}`
   //console.log({hash,nLat,nLon})
   return hash
 }
-const hash2geo = hash => {
+const hash2geo = (hash, x = 25) => {
+  const n = Math.pow(2, x)
+  const dLon = 360 / n
+  const dLat = 180 / n
   const [hLat,hLon] = hash.split('x').map(x=>parseInt(x,16))
   const lat = (hLat * dLat) - 90
   const lon = (hLon * dLon) - 180
