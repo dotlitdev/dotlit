@@ -246,13 +246,13 @@ const hash2geo = hash => {
   const hexs = hash.split('x')
   const ints = hexs.map(h => parseInt(h,16))
   const bins = ints.map( i => i.toString(2)).map(b => blank.slice(0, 0-b.length) + b)
-  let S = n
+  
   let [minLat,maxLat] = [0, 180]
   let [minLon,maxLon] = [0, 360]
   for (var I=0;I<x;I++) {
     const a = parseInt(bins[0][I])
     const b = parseInt(bins[1][I])
-    S = S / 2
+
     if (a) minLat = (minLat + ((maxLat-minLat)/2))
     else maxLat = (maxLat - (maxLat-minLat)/2)
     if (b) minLon = (minLon + ((maxLon-minLon)/2))
