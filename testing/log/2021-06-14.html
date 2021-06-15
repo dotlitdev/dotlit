@@ -1,4 +1,4 @@
-<html data-reactroot=""><head><title>2021-06-14</title><meta name="litsrc" value="/testing/log/2021-06-14.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><div><menu class="horizontal open"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"></li></menu></div><div class="lit-messages"></div></div><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="371:4-8938"><cell startpos="1:1-0" endpos="1:13-12"><div class="cell-content"><h1 id="2021-06-14">2021-06-14</h1></div></cell><section depth="2" class="" startpos="3:1-14" endpos="371:4-8938"><cell startpos="3:1-14" endpos="6:73-300"><div class="cell-content"><h2 id="a-geo-hash">A Geo Hash</h2><blockquote>
+<html data-reactroot=""><head><title>2021-06-14</title><meta name="litsrc" value="/testing/log/2021-06-14.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><div><menu class="horizontal open"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"></li></menu></div><div class="lit-messages"></div></div><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="371:4-8992"><cell startpos="1:1-0" endpos="1:13-12"><div class="cell-content"><h1 id="2021-06-14">2021-06-14</h1></div></cell><section depth="2" class="" startpos="3:1-14" endpos="371:4-8992"><cell startpos="3:1-14" endpos="6:73-300"><div class="cell-content"><h2 id="a-geo-hash">A Geo Hash</h2><blockquote>
 <p>Earth&#x27;s circumference is the distance around Earth. Measured around the Equator, it is 40,075.017 km (24,901.461 mi). Measured around the poles, the circumference is 40,007.863 km (24,859.734 mi).
 — <a class="external" href="https://en.m.wikipedia.org/wiki/Earth%27s_circumference" filepath="/testing/log/2021-06-14.lit" root="" data="[object Object]" canonical="https://en.m.wikipedia.org/wiki/Earth%27s_circumference">Wikipedia<span class="linkIcon">↗</span></a></p>
 </blockquote></div></cell><cell startpos="8:1-302" endpos="13:4-411" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return 40075017 / Math.pow(2,25)
@@ -58,7 +58,7 @@ const geo2hash = (lat,lon) =&gt; {
 }
 
 return geo2hash(30,30)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.8h ago</span></span></span><output><pre><code class="txt">{ I: 0,
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2.9h ago</span></span></span><output><pre><code class="txt">{ I: 0,
   S: 16777216,
   a: 100.64351200162828,
   b: 175.831010127831,
@@ -226,7 +226,7 @@ const hash2geo = hash =&gt; {
   return {ints,hexs,bins, minLat,maxLat,minLon,maxLon}
 }
 return hash2geo(&quot;7fxff&quot;)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">3.3h ago</span></span></span><output><pre><code class="txt">{ I: 0, d: [ 0, 90, 0, 180 ] }
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">3.4h ago</span></span></span><output><pre><code class="txt">{ I: 0, d: [ 0, 90, 0, 180 ] }
 { I: 1, d: [ 0, 45, 0, 90 ] }
 { I: 2, d: [ 0, 22.5, 0, 45 ] }
 { I: 3, d: [ 0, 11.25, 0, 22.5 ] }
@@ -294,7 +294,7 @@ return hash2geo(&quot;7fxff&quot;)
   maxLat: 0.0006866455078125,
   minLon: 0.0027358531951904297,
   maxLon: 0.00274658203125 }
-</code></pre></output></codecell></div></cell><cell startpos="341:1-8196" endpos="371:4-8938" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const x = 25
+</code></pre></output></codecell></div></cell><cell startpos="341:1-8196" endpos="371:4-8992" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const x = 25
 const n = Math.pow(2, x)
 const dLon = 360 / n
 const dLat = 180 / n
@@ -306,8 +306,8 @@ const geo2hash = (lat,lon) =&gt; {
 }
 const hash2geo = hash =&gt; {
   const [hLat,hLon] = hash.split(&#x27;x&#x27;)
-  const lat = (parseInt(hLat,16)) - 90
-  const lon = (parseInt(hLon,16)) - 180 
+  const lat = (parseInt(hLat,16) - 90) * dLat
+  const lon = (parseInt(hLon,16) - 180) * dLon
   return {mLon, mLat, x, n, dLon, dLat, lat, lon}
 }
 
@@ -319,8 +319,8 @@ return [geo2hash(30,30), hash2geo(&#x27;64xaf&#x27;)]
     n: 33554432,
     dLon: 0.000010728836059570312,
     dLat: 0.000005364418029785156,
-    lat: 10,
-    lon: -5 } ]
+    lat: 0.00005364418029785156,
+    lon: -0.00005364418029785156 } ]
 </code></pre></output></codecell></div></cell></section></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="meta/files_and_links.lit" href="/meta/files_and_links.html">meta/files_and_links.lit</a></li></ol></div><script>;(function () {
                 var src = '//cdn.jsdelivr.net/npm/eruda';
                 if (!/eruda=true/.test(window.location) && localStorage.getItem('active-eruda') != 'true') return;
