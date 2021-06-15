@@ -58,7 +58,7 @@ const geo2hash = (lat,lon) =&gt; {
 }
 
 return geo2hash(30,30)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">36m ago</span></span></span><output><pre><code class="txt">{ normalised: [ 120, 210 ] }
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">41m ago</span></span></span><output><pre><code class="txt">{ normalised: [ 120, 210 ] }
 { lat: 30,
   lon: 30,
   dLon: 0.000010728836059570312,
@@ -115,7 +115,7 @@ return [
    &quot;To within a meter (25 divisions)&quot;,hash2geo(&quot;1555555x12aaaaa&quot;), 
    &quot;Only 5 divisions (tbd precision)&quot;,hash2geo(&quot;1555555x12aaaaa&quot;, 5)
 ]
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">31m ago</span></span></span><output><pre><code class="txt">[ &#x27;To within a meter (25 divisions)&#x27;,
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">36m ago</span></span></span><output><pre><code class="txt">[ &#x27;To within a meter (25 divisions)&#x27;,
   { x: 25,
     hash: &#x27;1555555x12aaaaa&#x27;,
     ints: [ 22369621, 19573418 ],
@@ -137,9 +137,9 @@ return [
     maxLon: 33.75 } ]
 </code></pre></output></codecell></div></cell><cell startpos="181:1-4739" endpos="187:4-4919" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">// what precision is 5 divisions (at the equator in longitude, in km)
 return 40075017 / Math.pow(2,5) / 1000
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">28m ago</span></span></span><output><pre><code class="txt">1252.34428125
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">33m ago</span></span></span><output><pre><code class="txt">1252.34428125
 </code></pre></output></codecell></div></cell></section></section>
-<section depth="2" class="" startpos="192:1-4924" endpos="234:4-6241"><cell startpos="192:1-4924" endpos="194:121-5141"><div class="cell-content"><h2 id="ignore-but-but-but-we-get-the-same-hash-is-the-above-just-a-rubegoldberg-machine"><del>Ignore</del> But, but, but... we get the same hash... is the above just a rubegoldberg machine!?</h2><p>This was an intermediary implementation which naively converts to a hex hash and does not divide progressively as above.</p></div></cell><cell startpos="196:1-5143" endpos="234:4-6241" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const geo2hash = (lat,lon, x = 25) =&gt; {
+<section depth="2" class="" startpos="192:1-4924" endpos="238:194-6475"><cell startpos="192:1-4924" endpos="194:121-5141"><div class="cell-content"><h2 id="ignore-but-but-but-we-get-the-same-hash-is-the-above-just-a-rubegoldberg-machine"><del>Ignore</del> But, but, but... we get the same hash... is the above just a rubegoldberg machine!?</h2><p>This was an intermediary implementation which naively converts to a hex hash and does not divide progressively as above.</p></div></cell><cell startpos="196:1-5143" endpos="234:4-6241" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const geo2hash = (lat,lon, x = 25) =&gt; {
   const n = Math.pow(2, x)
   const dLon = 360 / n
   const dLat = 180 / n
@@ -166,7 +166,7 @@ const geo25 = hash2geo(hash)
 const hash5 = geo2hash(lat,lon,5)
 const geo5 = hash2geo(hash5, 5)
 return {lat,lon,hash,geo25,hash5,geo5}
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">4m ago</span></span></span><output><pre><code class="txt">{ lat: 30,
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">9m ago</span></span></span><output><pre><code class="txt">{ lat: 30,
   lon: 30,
   hash: &#x27;1555555x12aaaaa&#x27;,
   geo25: 
@@ -174,7 +174,7 @@ return {lat,lon,hash,geo25,hash5,geo5}
      lon: [ 29.999992847442627, 30.000003576278687 ] },
   hash5: &#x27;15x12&#x27;,
   geo5: { lat: [ 28.125, 33.75 ], lon: [ 22.5, 33.75 ] } }
-</code></pre></output></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="meta/files_and_links.lit" href="/meta/files_and_links.html">meta/files_and_links.lit</a></li></ol></div><script>;(function () {
+</code></pre></output></codecell></div></cell><cell startpos="236:1-6243" endpos="238:194-6475"><div class="cell-content"><p>... so far, I&#x27;m thinking <em><strong>yes</strong></em> 😞</p><p>it&#x27;s worth noting though that in its current form you would need to have gotten the hash at the desired precision before storing as a hash25 cant be decoded to a geo5 (in its current state) ...</p></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="meta/files_and_links.lit" href="/meta/files_and_links.html">meta/files_and_links.lit</a></li></ol></div><script>;(function () {
                 var src = '//cdn.jsdelivr.net/npm/eruda';
                 if (!/eruda=true/.test(window.location) && localStorage.getItem('active-eruda') != 'true') return;
                 document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
