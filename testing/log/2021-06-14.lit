@@ -69,20 +69,23 @@ const geo2hash = (lat,lon) => {
     bins[0] += ((a < S) ? "0" : "1")
     bins[1] += ((b < S) ? "0" : "1")
   }
-  console.log({bins})
-  return {hash: bins.map( bin => binToHex(bin)), bins}
+  const hexs = bins.map( bin => binToHex(bin))
+  console.log({hexs, bins})
+  return hexs.join('x')
 }
 
-return geo2hash(30,30).join('x')
+return geo2hash(30,30)
 ```
-```>txt attached=true updated=1623755708476 !error
-{ bins: [ '0000000000000000001111111', '0000000000000000011111111' ] }
+```>txt attached=true updated=1623755805869 !error
+{ hexs: [ '7f', 'ff' ],
+  bins: [ '0000000000000000001111111', '0000000000000000011111111' ] }
 function toString() {
     [native code]
 }
-untitled.js:27:28
-untitled.js:29:63
-module code@untitled.js:29:139
+geo2hash@untitled.js:25:14
+untitled.js:28:16
+untitled.js:30:63
+module code@untitled.js:30:139
 evaluate@[native code]
 moduleEvaluation@[native code]
 ```
