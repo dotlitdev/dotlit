@@ -339,20 +339,20 @@ return hash2geo("7fxff")
 ```
 
 ```js
-const mLon = 40075017
-const mLat = 40007863
 const x = 25
 const n = Math.pow(2, x)
 const dLon = 360 / n
 const dLat = 180 / n
+const mLon = 40075017
+const mLat = 40007863
 
 const geo2hash = (lat,lon) => {
   return `${Math.floor((lat+90)/dLat).toString(16)}x${Math.floor((lon+180)/dLon).toString(16)}`
 }
 const hash2geo = hash => {
   const [hLat,hLon] = hash.split('x')
-  const lat = (parseInt(hLat,16) * dLat) - 90
-  const lon = (parseInt(hLon,16) * dLon) - 180 
+  const lat = (parseInt(hLat,16)) - 90
+  const lon = (parseInt(hLon,16)) - 180 
   return {mLon, mLat, x, n, dLon, dLat, lat, lon}
 }
 
