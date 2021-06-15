@@ -69,12 +69,14 @@ const geo = (lat,lon) => {
     bins[0] += ((a < S) ? "0" : "1")
     bins[1] += ((b < S) ? "0" : "1")
   }
+  console.log({bins})
   return bins.map( bin => binToHex(bin))
 }
 
 return geo(30,30).join('x')
 ```
-```>txt attached=true updated=1623746888173
+```>txt attached=true updated=1623755616600
+{ bins: [ '0000000000000000001111111', '0000000000000000011111111' ] }
 7fxff
 ```
 
@@ -89,21 +91,13 @@ const dLat = mLat / n
 const hash2geo = hash => {
   const blank = Array(x).fill("0").join('')
   const hexs = hash.split('x')
-  const ints = hex.map(h => parseInt(h,16))
+  const ints = hexs.map(h => parseInt(h,16))
   const bins = ints.map( i => i.toString(2))
   
   return {hexs,bins}
 }
 return hash2geo("7fxff")
 ```
-```>txt attached=true updated=1623755555601 !error
-function toString() {
-    [native code]
-}
-hash2geo@untitled.js:12:19
-untitled.js:17:16
-untitled.js:19:63
-module code@untitled.js:19:139
-evaluate@[native code]
-moduleEvaluation@[native code]
+```>txt attached=true updated=1623755585376
+{ hexs: [ '7f', 'ff' ], bins: [ '1111111', '11111111' ] }
 ```
