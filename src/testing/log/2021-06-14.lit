@@ -64,10 +64,10 @@ const normLon = lon => lon + 180
 const geo2hash = (lat,lon) => {
   const bins = ['','']
   let [a,b] = [normLat(lat), normLon(lon)]
-  let S = n
+  console.log({normalised: [a,b]})
   let [minLatS,maxLatS,minLonS,maxLonS] = [0,180,0,360]
   for (var I=0;I<x;I++) {
-    S = S / 2
+    
     if (a < maxLatS/2){
       maxLatS = maxLatS - ((maxLatS-minLatS)/2)
       bins[0] += "0"
@@ -82,7 +82,7 @@ const geo2hash = (lat,lon) => {
       minLonS = minLonS + ((maxLonS-minLonS)/2)
       bins[1] += "1"
     }
-    console.log({I, a, b, d: [minLatS,maxLatS,minLonS,maxLonS]})
+    console.log({I, d: [minLatS,maxLatS,minLonS,maxLonS]})
   }
   const ints = bins.map( bin => binToInt(bin))
   const hexs = ints.map( i => intToHex(i))
