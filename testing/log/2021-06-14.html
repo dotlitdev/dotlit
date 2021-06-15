@@ -58,7 +58,7 @@ const geo2hash = (lat,lon) =&gt; {
 }
 
 return geo2hash(30,30)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">14m ago</span></span></span><output><pre><code class="txt">{ normalised: [ 120, 210 ] }
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">15m ago</span></span></span><output><pre><code class="txt">{ normalised: [ 120, 210 ] }
 { lat: 30,
   lon: 30,
   dLon: 0.000010728836059570312,
@@ -115,7 +115,7 @@ return [
    &quot;To within a meter (25 divisions)&quot;,hash2geo(&quot;1555555x12aaaaa&quot;), 
    &quot;Only 5 divisions (tbd precision)&quot;,hash2geo(&quot;1555555x12aaaaa&quot;, 5)
 ]
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">8m ago</span></span></span><output><pre><code class="txt">[ &#x27;To within a meter (25 divisions)&#x27;,
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">10m ago</span></span></span><output><pre><code class="txt">[ &#x27;To within a meter (25 divisions)&#x27;,
   { x: 25,
     hash: &#x27;1555555x12aaaaa&#x27;,
     ints: [ 22369621, 19573418 ],
@@ -137,9 +137,9 @@ return [
     maxLon: 33.75 } ]
 </code></pre></output></codecell></div></cell><cell startpos="181:1-4739" endpos="187:4-4919" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">// what precision is 5 divisions (at the equator in longitude, in km)
 return 40075017 / Math.pow(2,5) / 1000
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">5m ago</span></span></span><output><pre><code class="txt">1252.34428125
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">7m ago</span></span></span><output><pre><code class="txt">1252.34428125
 </code></pre></output></codecell></div></cell></section></section>
-<section depth="2" class="" startpos="192:1-4924" endpos="223:4-5819"><cell startpos="192:1-4924" endpos="194:120-5055"><div class="cell-content"><h2 id="ignore">Ignore</h2><p>This was an intermediary implementation which naively convers to a hex hash and does not divide progressively as above.</p></div></cell><cell startpos="196:1-5057" endpos="223:4-5819" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const x = 25
+<section depth="2" class="" startpos="192:1-4924" endpos="224:4-5870"><cell startpos="192:1-4924" endpos="194:121-5056"><div class="cell-content"><h2 id="ignore">Ignore</h2><p>This was an intermediary implementation which naively converts to a hex hash and does not divide progressively as above.</p></div></cell><cell startpos="196:1-5058" endpos="224:4-5870" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const x = 25
 const n = Math.pow(2, x)
 const dLon = 360 / n
 const dLat = 180 / n
@@ -149,8 +149,9 @@ const mLat = 40007863
 const geo2hash = (lat,lon) =&gt; {
   const nLat = Math.floor((lat+90)/dLat)
   const nLon = Math.floor((lon+180)/dLon)
-  console.log({nLat,nLon})
-  return `${nLat.toString(16)}x${nLon.toString(16)}`
+  const hash = `${nLat.toString(16)}x${nLon.toString(16)}`
+  console.log({hash,nLat,nLon})
+  return hash
 }
 const hash2geo = hash =&gt; {
   const [hLat,hLon] = hash.split(&#x27;x&#x27;).map(x=&gt;parseInt(x,16))
@@ -160,7 +161,7 @@ const hash2geo = hash =&gt; {
 }
 
 return hash2geo(geo2hash(30,30))
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">7.6h ago</span></span></span><output><pre><code class="txt">{ nLat: 22369621, nLon: 19573418 }
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">54s ago</span></span></span><output><pre><code class="txt">{ hash: &#x27;1555555x12aaaaa&#x27;, nLat: 22369621, nLon: 19573418 }
 { lat: [ 29.999998211860657, 30.000003576278687 ],
   lon: [ 29.999992847442627, 30.000003576278687 ] }
 </code></pre></output></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="meta/files_and_links.lit" href="/meta/files_and_links.html">meta/files_and_links.lit</a></li></ol></div><script>;(function () {
