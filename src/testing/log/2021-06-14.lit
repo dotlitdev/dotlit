@@ -57,9 +57,12 @@ const dLat = mLat / n
 
 const binToHex = (str) => parseInt(str,2).toString(16)
 
+const normLat = lat => lat + 90
+const normLon = lon => lon + 180
+
 const geo = (lat,lon) => {
   const bins = ['','']
-  let [a,b] = [(lat + 90) / dLat, (lon + 180) / dLon]
+  let [a,b] = [normLat(lat) / dLat, normLon(lon) / dLon]
   let S = n
   for (var I=0;I<x;I++) {
     S = S / 2
