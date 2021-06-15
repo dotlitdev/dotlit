@@ -94,12 +94,13 @@ const hash2geo = hash => {
   const blank = Array(x).fill("0").join('')
   const hexs = hash.split('x')
   const ints = hexs.map(h => parseInt(h,16))
-  const bins = ints.map( i => i.toString(2)).map(b => blank.slice(0, b.length) + b)
+  const bins = ints.map( i => i.toString(2)).map(b => blank.slice(0, 0-b.length) + b)
   
   return {hexs,bins}
 }
 return hash2geo("7fxff")
 ```
-```>txt attached=true updated=1623755585376
-{ hexs: [ '7f', 'ff' ], bins: [ '1111111', '11111111' ] }
+```>txt attached=true updated=1623755950888
+{ hexs: [ '7f', 'ff' ],
+  bins: [ '0000000000000000001111111', '0000000000000000011111111' ] }
 ```
