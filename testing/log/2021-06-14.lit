@@ -356,12 +356,12 @@ const hash2geo = hash => {
   const [hLat,hLon] = hash.split('x').map(x=>parseInt(x,16))
   const lat = (hLat * dLat) - 90
   const lon = (hLon * dLon) - 180
-  return {mLon, mLat, x, n, dLon, dLat, lat, lon, hLat, hLon}
+  return {mLon, mLat, x, n, dLon, dLat, lat: [lat, lat+dLat], lon: [lon,lon+dLon], hLat, hLon}
 }
 
 return [geo2hash(30,30), hash2geo('1555555x12aaaaa')]
 ```
-```>txt attached=true updated=1623771240235
+```>txt attached=true updated=1623771347271
 { nLat: 22369621, nLon: 19573418 }
 [ '1555555x12aaaaa',
   { mLon: 40075017,
@@ -370,8 +370,8 @@ return [geo2hash(30,30), hash2geo('1555555x12aaaaa')]
     n: 33554432,
     dLon: 0.000010728836059570312,
     dLat: 0.000005364418029785156,
-    lat: 29.999998211860657,
-    lon: 29.999992847442627,
+    lat: [ 29.999998211860657, 30.000003576278687 ],
+    lon: [ 29.999992847442627, 30.000003576278687 ],
     hLat: 22369621,
     hLon: 19573418 } ]
 ```
