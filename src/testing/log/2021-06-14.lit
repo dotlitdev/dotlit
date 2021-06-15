@@ -91,6 +91,7 @@ const dLon = mLon / n
 const dLat = mLat / n
 const blank = Array(x).fill("0").join('')
 
+const denorm (v,d) => v-d
 const hash2geo = hash => {
   const hexs = hash.split('x')
   const ints = hexs.map(h => parseInt(h,16))
@@ -107,6 +108,9 @@ const hash2geo = hash => {
     if (b) minLon = (minLon + ((maxLon-minLon)/2))
     else maxLon = (maxLon - (maxLon-minLon)/2)
   }
+
+  [minLat,maxLat] = [minLat,maxLat].map(y=>denorm(y,90))
+  [minLon,maxLon] = [minLon,maxLon].map(y=>denorm(y,180))
   
   return {hexs,bins, minLat,maxLat,minLon,maxLon}
 }
