@@ -117,7 +117,7 @@ const dLon = 360 / n
 const dLat = 180 / n
 const blank = Array(x).fill("0").join('')
 
-const hash2geo = hash => {
+const hash2geo = (hash, x = 25) => {
   const hexs = hash.split('x')
   const ints = hexs.map(h => parseInt(h,16))
   const bins = ints.map( i => i.toString(2)).map(b => blank.slice(0, 0-b.length) + b)
@@ -139,7 +139,7 @@ const hash2geo = hash => {
        maxLon = (maxLon - (maxLon-minLon)/2)
     }
   }
-  console.log({d: [minLat,maxLat,minLon,maxLon]})
+  // console.log({d: [minLat,maxLat,minLon,maxLon]})
   // console.log(minLat-90, maxLat-90, minLon-180,maxLon-180)
   minLat = minLat - 90
   maxLat = maxLat - 90
@@ -150,22 +150,16 @@ const hash2geo = hash => {
 }
 return hash2geo("1555555x12aaaaa")
 ```
-```>txt attached=true updated=1623797297325 !error
-{ d: 
-   [ 119.99999821186066,
-     120.00000357627869,
-     209.99999284744263,
-     210.0000035762787 ] }
-29.999998211860657,30.000003576278687,29.999992847442627,30.000003576278687
-function toString() {
-    [native code]
-}
-hash2geo@untitled.js:33:59
-untitled.js:39:16
-untitled.js:41:63
-module code@untitled.js:41:139
-evaluate@[native code]
-moduleEvaluation@[native code]
+```>txt attached=true updated=1623797516560
+{ x: 25,
+  hash: '1555555x12aaaaa',
+  ints: [ 22369621, 19573418 ],
+  hexs: [ '1555555', '12aaaaa' ],
+  bins: [ '1010101010101010101010101', '1001010101010101010101010' ],
+  minLat: 29.999998211860657,
+  maxLat: 30.000003576278687,
+  minLon: 29.999992847442627,
+  maxLon: 30.000003576278687 }
 ```
 
 ```js
