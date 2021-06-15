@@ -76,18 +76,10 @@ const geo2hash = (lat,lon) => {
 
 return geo2hash(30,30)
 ```
-```>txt attached=true updated=1623755805869 !error
+```>txt attached=true updated=1623755823882
 { hexs: [ '7f', 'ff' ],
   bins: [ '0000000000000000001111111', '0000000000000000011111111' ] }
-function toString() {
-    [native code]
-}
-geo2hash@untitled.js:25:14
-untitled.js:28:16
-untitled.js:30:63
-module code@untitled.js:30:139
-evaluate@[native code]
-moduleEvaluation@[native code]
+7fxff
 ```
 
 ```js
@@ -102,7 +94,7 @@ const hash2geo = hash => {
   const blank = Array(x).fill("0").join('')
   const hexs = hash.split('x')
   const ints = hexs.map(h => parseInt(h,16))
-  const bins = ints.map( i => i.toString(2))
+  const bins = ints.map( i => i.toString(2)).map(b => blank.slice(0, b.length) + b)
   
   return {hexs,bins}
 }
