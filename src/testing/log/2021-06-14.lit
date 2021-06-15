@@ -65,8 +65,16 @@ const geo2hash = (lat,lon) => {
   const bins = ['','']
   let [a,b] = [normLat(lat) / dLat, normLon(lon) / dLon]
   let S = n
+  let [minLatS,maxLatS,minLonS,maxLonS] = [0,n,0,n]
   for (var I=0;I<x;I++) {
     S = S / 2
+    if (a < maxLatS/2){
+      maxLatS = maxLatS - ((maxLatS-minLatS)/2)
+      // bin[0] += "0"
+    } else {
+      minLatS = minLatS + ((maxLatS-minLatS)/2)
+      // bin[0] += "1"
+    }
     console.log({I, S, a, b})
     bins[0] += ((a < S) ? "0" : "1")
     bins[1] += ((b < S) ? "0" : "1")
