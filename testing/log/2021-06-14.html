@@ -2,7 +2,7 @@
 <p>Earth&#x27;s circumference is the distance around Earth. Measured around the Equator, it is 40,075.017 km (24,901.461 mi). Measured around the poles, the circumference is 40,007.863 km (24,859.734 mi).
 — <a class="external" href="https://en.m.wikipedia.org/wiki/Earth%27s_circumference" filepath="/testing/log/2021-06-14.lit" root="" data="[object Object]" canonical="https://en.m.wikipedia.org/wiki/Earth%27s_circumference">Wikipedia<span class="linkIcon">↗</span></a></p>
 </blockquote></div></cell><cell startpos="8:1-302" endpos="13:4-411" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return 40075017 / Math.pow(2,25)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">14.9h ago</span></span></span><output><pre><code class="txt">1.1943285763263702
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">15.0h ago</span></span></span><output><pre><code class="txt">1.1943285763263702
 </code></pre></output></codecell></div></cell><cell startpos="15:1-413" endpos="15:132-544"><div class="cell-content"><p>The circumference <code>c</code> of the earth at the equator in meters, divided by two, twenty five times is roughly one point two meters <code>s</code>.</p></div></cell><cell startpos="17:1-546" endpos="26:4-803" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const c = 40075017
 const s = 1.1943285763263702
 const n = c / s
@@ -58,7 +58,7 @@ const geo2hash = (lat,lon) =&gt; {
 }
 
 return geo2hash(30,30)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">30m ago</span></span></span><output><pre><code class="txt">{ normalised: [ 120, 210 ] }
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">31m ago</span></span></span><output><pre><code class="txt">{ normalised: [ 120, 210 ] }
 { lat: 30,
   lon: 30,
   dLon: 0.000010728836059570312,
@@ -115,7 +115,7 @@ return [
    &quot;To within a meter (25 divisions)&quot;,hash2geo(&quot;1555555x12aaaaa&quot;), 
    &quot;Only 5 divisions (tbd precision)&quot;,hash2geo(&quot;1555555x12aaaaa&quot;, 5)
 ]
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">25m ago</span></span></span><output><pre><code class="txt">[ &#x27;To within a meter (25 divisions)&#x27;,
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">26m ago</span></span></span><output><pre><code class="txt">[ &#x27;To within a meter (25 divisions)&#x27;,
   { x: 25,
     hash: &#x27;1555555x12aaaaa&#x27;,
     ints: [ 22369621, 19573418 ],
@@ -137,9 +137,9 @@ return [
     maxLon: 33.75 } ]
 </code></pre></output></codecell></div></cell><cell startpos="181:1-4739" endpos="187:4-4919" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">// what precision is 5 divisions (at the equator in longitude, in km)
 return 40075017 / Math.pow(2,5) / 1000
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">22m ago</span></span></span><output><pre><code class="txt">1252.34428125
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">23m ago</span></span></span><output><pre><code class="txt">1252.34428125
 </code></pre></output></codecell></div></cell></section></section>
-<section depth="2" class="" startpos="192:1-4924" endpos="231:4-6083"><cell startpos="192:1-4924" endpos="194:121-5128"><div class="cell-content"><h2 id="ignore-but-we-get-the-same-hash-is-the-above-just-a-rubegoldberg-machine"><del>Ignore</del> But we get the same hash... is the above just a rubegoldberg machine!?</h2><p>This was an intermediary implementation which naively converts to a hex hash and does not divide progressively as above.</p></div></cell><cell startpos="196:1-5130" endpos="231:4-6083" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const geo2hash = (lat,lon) =&gt; {
+<section depth="2" class="" startpos="192:1-4924" endpos="232:4-6114"><cell startpos="192:1-4924" endpos="194:121-5128"><div class="cell-content"><h2 id="ignore-but-we-get-the-same-hash-is-the-above-just-a-rubegoldberg-machine"><del>Ignore</del> But we get the same hash... is the above just a rubegoldberg machine!?</h2><p>This was an intermediary implementation which naively converts to a hex hash and does not divide progressively as above.</p></div></cell><cell startpos="196:1-5130" endpos="232:4-6114" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const geo2hash = (lat,lon) =&gt; {
   const x = 25
   const n = Math.pow(2, x)
   const dLon = 360 / n
@@ -164,8 +164,9 @@ const lat = 30
 const lon = 30
 const hash = geo2hash(lat,lon)
 const geo25 = hash2geo(hash)
+const geo5 = hash2geo(hash, 5)
 return {lat,lon,hash, geo25}
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">3m ago</span></span></span><output><pre><code class="txt">{ lat: 30,
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2m ago</span></span></span><output><pre><code class="txt">{ lat: 30,
   lon: 30,
   hash: &#x27;1555555x12aaaaa&#x27;,
   geo25: 
