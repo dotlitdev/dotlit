@@ -110,8 +110,8 @@ const mLon = 40075017
 const mLat = 40007863
 const x = 25
 const n = Math.pow(2, x)
-const dLon = mLon / n
-const dLat = mLat / n
+const dLon = 360 / n
+const dLat = 180 / n
 const blank = Array(x).fill("0").join('')
 
 const hash2geo = hash => {
@@ -132,21 +132,21 @@ const hash2geo = hash => {
     // console.log({I,d: [minLat,maxLat,minLon,maxLon]})
   }
 
-  // [minLat,maxLat] = [minLat,maxLat].map(y=>(y*dLat)-90)
-  // [minLon,maxLon] = [minLon,maxLon].map(y=>(y*dLon)-180)
+  [minLat,maxLat] = [minLat,maxLat].map(y=>(y*dLat)-90)
+  [minLon,maxLon] = [minLon,maxLon].map(y=>(y*dLon)-180)
   
   return {x,hash,ints,hexs,bins, minLat,maxLat,minLon,maxLon}
 }
 return hash2geo("1ffffffx1ffffff")
 ```
-```>txt attached=true updated=1623794162056
+```>txt attached=true updated=1623794208607
 { x: 25,
   hash: '1ffffffx1ffffff',
   ints: [ 33554431, 33554431 ],
   hexs: [ '1ffffff', '1ffffff' ],
   bins: [ '1111111111111111111111111', '1111111111111111111111111' ],
-  minLat: 33554431,
-  maxLat: 33554432,
+  minLat: 179.99998927116394,
+  maxLat: 180,
   minLon: 33554431,
   maxLon: 33554432 }
 ```
