@@ -124,19 +124,21 @@ const hash2geo = (hash, x = 25) => {
   
   let [minLat,maxLat] = [0, 180]
   let [minLon,maxLon] = [0, 360]
+  const latDiv = minLat + (maxLat-minLat)/2
+  const lonDiv = minLon + (maxLon-minLon)/2
   for (var I=0;I<x;I++) {
     const a = parseInt(bins[0][I])
     const b = parseInt(bins[1][I])
     //console.log({I,a,b,d: [minLat,maxLat,minLon,maxLon]})
     if (a) {
-       minLat = (minLat + ((maxLat-minLat)/2))
+       minLat = latDiv
     } else {
-       maxLat = (maxLat - (maxLat-minLat)/2)
+       maxLat = latDiv
     }
     if (b) {
-       minLon = (minLon + ((maxLon-minLon)/2))
+       minLon = lonDiv
     } else {
-       maxLon = (maxLon - (maxLon-minLon)/2)
+       maxLon = lonDiv
     }
   }
   // console.log({d: [minLat,maxLat,minLon,maxLon]})

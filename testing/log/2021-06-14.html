@@ -1,4 +1,4 @@
-<html data-reactroot=""><head><title>2021-06-14</title><meta name="litsrc" value="/testing/log/2021-06-14.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><div><menu class="horizontal open"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"></li></menu></div><div class="lit-messages"></div></div><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="207:4-5380"><cell startpos="1:1-0" endpos="1:13-12"><div class="cell-content"><h1 id="2021-06-14">2021-06-14</h1></div></cell><section depth="2" class="" startpos="3:1-14" endpos="207:4-5380"><cell startpos="3:1-14" endpos="6:73-300"><div class="cell-content"><h2 id="a-geo-hash">A Geo Hash</h2><blockquote>
+<html data-reactroot=""><head><title>2021-06-14</title><meta name="litsrc" value="/testing/log/2021-06-14.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><div><menu class="horizontal open"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"></li></menu></div><div class="lit-messages"></div></div><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="209:4-5376"><cell startpos="1:1-0" endpos="1:13-12"><div class="cell-content"><h1 id="2021-06-14">2021-06-14</h1></div></cell><section depth="2" class="" startpos="3:1-14" endpos="209:4-5376"><cell startpos="3:1-14" endpos="6:73-300"><div class="cell-content"><h2 id="a-geo-hash">A Geo Hash</h2><blockquote>
 <p>Earth&#x27;s circumference is the distance around Earth. Measured around the Equator, it is 40,075.017 km (24,901.461 mi). Measured around the poles, the circumference is 40,007.863 km (24,859.734 mi).
 — <a class="external" href="https://en.m.wikipedia.org/wiki/Earth%27s_circumference" filepath="/testing/log/2021-06-14.lit" root="" data="[object Object]" canonical="https://en.m.wikipedia.org/wiki/Earth%27s_circumference">Wikipedia<span class="linkIcon">↗</span></a></p>
 </blockquote></div></cell><cell startpos="8:1-302" endpos="13:4-411" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return 40075017 / Math.pow(2,25)
@@ -58,7 +58,7 @@ const geo2hash = (lat,lon) =&gt; {
 }
 
 return geo2hash(30,30)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1m ago</span></span></span><output><pre><code class="txt">{ normalised: [ 120, 210 ] }
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">3m ago</span></span></span><output><pre><code class="txt">{ normalised: [ 120, 210 ] }
 { lat: 30,
   lon: 30,
   dLon: 0.000010728836059570312,
@@ -69,7 +69,7 @@ return geo2hash(30,30)
   hexs: [ &#x27;1555555&#x27;, &#x27;12aaaaa&#x27; ],
   bins: [ &#x27;1010101010101010101010101&#x27;, &#x27;1001010101010101010101010&#x27; ] }
 1555555x12aaaaa
-</code></pre></output></codecell></div></cell><cell startpos="111:1-2758" endpos="175:4-4613" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const mLon = 40075017
+</code></pre></output></codecell></div></cell><cell startpos="111:1-2758" endpos="177:4-4609" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const mLon = 40075017
 const mLat = 40007863
 const x = 25
 const n = Math.pow(2, x)
@@ -84,19 +84,21 @@ const hash2geo = (hash, x = 25) =&gt; {
   
   let [minLat,maxLat] = [0, 180]
   let [minLon,maxLon] = [0, 360]
+  const latDiv = minLat + (maxLat-minLat)/2
+  const lonDiv = minLon + (maxLon-minLon)/2
   for (var I=0;I&lt;x;I++) {
     const a = parseInt(bins[0][I])
     const b = parseInt(bins[1][I])
     //console.log({I,a,b,d: [minLat,maxLat,minLon,maxLon]})
     if (a) {
-       minLat = (minLat + ((maxLat-minLat)/2))
+       minLat = latDiv
     } else {
-       maxLat = (maxLat - (maxLat-minLat)/2)
+       maxLat = latDiv
     }
     if (b) {
-       minLon = (minLon + ((maxLon-minLon)/2))
+       minLon = lonDiv
     } else {
-       maxLon = (maxLon - (maxLon-minLon)/2)
+       maxLon = lonDiv
     }
   }
   // console.log({d: [minLat,maxLat,minLon,maxLon]})
@@ -112,7 +114,7 @@ return [
    hash2geo(&quot;1555555x12aaaaa&quot;), 
    hash2geo(&quot;1555555x12aaaaa&quot;, 10)
 ]
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">8m ago</span></span></span><output><pre><code class="txt">[ { x: 25,
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">10m ago</span></span></span><output><pre><code class="txt">[ { x: 25,
     hash: &#x27;1555555x12aaaaa&#x27;,
     ints: [ 22369621, 19573418 ],
     hexs: [ &#x27;1555555&#x27;, &#x27;12aaaaa&#x27; ],
@@ -130,7 +132,7 @@ return [
     maxLat: 30.05859375,
     minLon: 29.8828125,
     maxLon: 30.234375 } ]
-</code></pre></output></codecell></div></cell><cell startpos="180:1-4618" endpos="207:4-5380" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const x = 25
+</code></pre></output></codecell></div></cell><cell startpos="182:1-4614" endpos="209:4-5376" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const x = 25
 const n = Math.pow(2, x)
 const dLon = 360 / n
 const dLat = 180 / n
