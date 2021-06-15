@@ -258,8 +258,8 @@ const hash2geo = hash => {
   const ints = hexs.map(h => parseInt(h,16))
   const bins = ints.map( i => i.toString(2)).map(b => blank.slice(0, 0-b.length) + b)
   
-  let [minLat,maxLat] = [0, n]
-  let [minLon,maxLon] = [0, n]
+  let [minLat,maxLat] = [0, 180]
+  let [minLon,maxLon] = [0, 360]
   for (var I=0;I<x;I++) {
     const a = parseInt(bins[0][I])
     const b = parseInt(bins[1][I])
@@ -277,8 +277,8 @@ const hash2geo = hash => {
     console.log({I,d: [minLat,maxLat,minLon,maxLon]})
   }
 
-  [minLat,maxLat] = [minLat,maxLat].map(y=>(y*dLat)-90)
-  [minLon,maxLon] = [minLon,maxLon].map(y=>(y*dLon)-180)
+  [minLat,maxLat] = [minLat,maxLat].map(y=>(y)-90)
+  [minLon,maxLon] = [minLon,maxLon].map(y=>(y)-180)
   
   return {x,hash,ints,hexs,bins, minLat,maxLat,minLon,maxLon}
 }
