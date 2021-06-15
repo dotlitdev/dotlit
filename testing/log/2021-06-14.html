@@ -1,4 +1,4 @@
-<html data-reactroot=""><head><title>2021-06-14</title><meta name="litsrc" value="/testing/log/2021-06-14.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><div><menu class="horizontal open"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"></li></menu></div><div class="lit-messages"></div></div><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="239:4-7311"><cell startpos="1:1-0" endpos="1:13-12"><div class="cell-content"><h1 id="2021-06-14">2021-06-14</h1></div></cell><section depth="2" class="" startpos="3:1-14" endpos="239:4-7311"><cell startpos="3:1-14" endpos="6:73-300"><div class="cell-content"><h2 id="a-geo-hash">A Geo Hash</h2><blockquote>
+<html data-reactroot=""><head><title>2021-06-14</title><meta name="litsrc" value="/testing/log/2021-06-14.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><div><menu class="horizontal open"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"></li></menu></div><div class="lit-messages"></div></div><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="339:4-8198"><cell startpos="1:1-0" endpos="1:13-12"><div class="cell-content"><h1 id="2021-06-14">2021-06-14</h1></div></cell><section depth="2" class="" startpos="3:1-14" endpos="339:4-8198"><cell startpos="3:1-14" endpos="6:73-300"><div class="cell-content"><h2 id="a-geo-hash">A Geo Hash</h2><blockquote>
 <p>Earth&#x27;s circumference is the distance around Earth. Measured around the Equator, it is 40,075.017 km (24,901.461 mi). Measured around the poles, the circumference is 40,007.863 km (24,859.734 mi).
 — <a class="external" href="https://en.m.wikipedia.org/wiki/Earth%27s_circumference" filepath="/testing/log/2021-06-14.lit" root="" data="[object Object]" canonical="https://en.m.wikipedia.org/wiki/Earth%27s_circumference">Wikipedia<span class="linkIcon">↗</span></a></p>
 </blockquote></div></cell><cell startpos="8:1-302" endpos="13:4-411" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return 40075017 / Math.pow(2,25)
@@ -13,7 +13,7 @@ return `${n} segments of ${dlon} degrees longitude`
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">14.2h ago</span></span></span><output><pre><code class="txt">16777215
 </code></pre></output></codecell></div></cell><cell startpos="39:1-1109" endpos="39:52-1160"><div class="cell-content"><p>Coincidentally the max hex representation. is then:</p></div></cell><cell startpos="41:1-1162" endpos="46:4-1257" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (16777215).toString(16)
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">13.9h ago</span></span></span><output><pre><code class="txt">ffffff
-</code></pre></output></codecell></div></cell><cell startpos="50:1-1261" endpos="133:4-4305" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const mLon = 40075017
+</code></pre></output></codecell></div></cell><cell startpos="50:1-1261" endpos="233:4-5192" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const mLon = 40075017
 const mLat = 40007863
 const x = 25
 const n = Math.pow(2, x)
@@ -35,17 +35,17 @@ const geo2hash = (lat,lon) =&gt; {
     S = S / 2
     if (a &lt; maxLatS/2){
       maxLatS = maxLatS - ((maxLatS-minLatS)/2)
-      bin[0] += &quot;0&quot;
+      bins[0] += &quot;0&quot;
     } else {
       minLatS = minLatS + ((maxLatS-minLatS)/2)
-      bin[0] += &quot;1&quot;
+      bins[0] += &quot;1&quot;
     }
     if (b &lt; maxLonS/2){
       maxLonS = maxLonS - ((maxLonS-minLonS)/2)
-      bin[1] += &quot;0&quot;
+      bins[1] += &quot;0&quot;
     } else {
       minLonS = minLonS + ((maxLonS-minLonS)/2)
-      bin[1] += &quot;1&quot;
+      bins[1] += &quot;1&quot;
     }
     console.log({I, S, a, b, d: [minLatS,maxLatS,minLonS,maxLonS]})
     //bins[0] += ((a &lt; S) ? &quot;0&quot; : &quot;1&quot;)
@@ -58,31 +58,131 @@ const geo2hash = (lat,lon) =&gt; {
 }
 
 return geo2hash(30,30)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">19m ago</span></span></span><output><pre><code class="txt">{ I: 0, S: 16777216, a: 100.64351200162828, b: 175.831010127831 }
-{ I: 1, S: 8388608, a: 100.64351200162828, b: 175.831010127831 }
-{ I: 2, S: 4194304, a: 100.64351200162828, b: 175.831010127831 }
-{ I: 3, S: 2097152, a: 100.64351200162828, b: 175.831010127831 }
-{ I: 4, S: 1048576, a: 100.64351200162828, b: 175.831010127831 }
-{ I: 5, S: 524288, a: 100.64351200162828, b: 175.831010127831 }
-{ I: 6, S: 262144, a: 100.64351200162828, b: 175.831010127831 }
-{ I: 7, S: 131072, a: 100.64351200162828, b: 175.831010127831 }
-{ I: 8, S: 65536, a: 100.64351200162828, b: 175.831010127831 }
-{ I: 9, S: 32768, a: 100.64351200162828, b: 175.831010127831 }
-{ I: 10, S: 16384, a: 100.64351200162828, b: 175.831010127831 }
-{ I: 11, S: 8192, a: 100.64351200162828, b: 175.831010127831 }
-{ I: 12, S: 4096, a: 100.64351200162828, b: 175.831010127831 }
-{ I: 13, S: 2048, a: 100.64351200162828, b: 175.831010127831 }
-{ I: 14, S: 1024, a: 100.64351200162828, b: 175.831010127831 }
-{ I: 15, S: 512, a: 100.64351200162828, b: 175.831010127831 }
-{ I: 16, S: 256, a: 100.64351200162828, b: 175.831010127831 }
-{ I: 17, S: 128, a: 100.64351200162828, b: 175.831010127831 }
-{ I: 18, S: 64, a: 100.64351200162828, b: 175.831010127831 }
-{ I: 19, S: 32, a: 100.64351200162828, b: 175.831010127831 }
-{ I: 20, S: 16, a: 100.64351200162828, b: 175.831010127831 }
-{ I: 21, S: 8, a: 100.64351200162828, b: 175.831010127831 }
-{ I: 22, S: 4, a: 100.64351200162828, b: 175.831010127831 }
-{ I: 23, S: 2, a: 100.64351200162828, b: 175.831010127831 }
-{ I: 24, S: 1, a: 100.64351200162828, b: 175.831010127831 }
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1m ago</span></span></span><output><pre><code class="txt">{ I: 0,
+  S: 16777216,
+  a: 100.64351200162828,
+  b: 175.831010127831,
+  d: [ 0, 16777216, 0, 16777216 ] }
+{ I: 1,
+  S: 8388608,
+  a: 100.64351200162828,
+  b: 175.831010127831,
+  d: [ 0, 8388608, 0, 8388608 ] }
+{ I: 2,
+  S: 4194304,
+  a: 100.64351200162828,
+  b: 175.831010127831,
+  d: [ 0, 4194304, 0, 4194304 ] }
+{ I: 3,
+  S: 2097152,
+  a: 100.64351200162828,
+  b: 175.831010127831,
+  d: [ 0, 2097152, 0, 2097152 ] }
+{ I: 4,
+  S: 1048576,
+  a: 100.64351200162828,
+  b: 175.831010127831,
+  d: [ 0, 1048576, 0, 1048576 ] }
+{ I: 5,
+  S: 524288,
+  a: 100.64351200162828,
+  b: 175.831010127831,
+  d: [ 0, 524288, 0, 524288 ] }
+{ I: 6,
+  S: 262144,
+  a: 100.64351200162828,
+  b: 175.831010127831,
+  d: [ 0, 262144, 0, 262144 ] }
+{ I: 7,
+  S: 131072,
+  a: 100.64351200162828,
+  b: 175.831010127831,
+  d: [ 0, 131072, 0, 131072 ] }
+{ I: 8,
+  S: 65536,
+  a: 100.64351200162828,
+  b: 175.831010127831,
+  d: [ 0, 65536, 0, 65536 ] }
+{ I: 9,
+  S: 32768,
+  a: 100.64351200162828,
+  b: 175.831010127831,
+  d: [ 0, 32768, 0, 32768 ] }
+{ I: 10,
+  S: 16384,
+  a: 100.64351200162828,
+  b: 175.831010127831,
+  d: [ 0, 16384, 0, 16384 ] }
+{ I: 11,
+  S: 8192,
+  a: 100.64351200162828,
+  b: 175.831010127831,
+  d: [ 0, 8192, 0, 8192 ] }
+{ I: 12,
+  S: 4096,
+  a: 100.64351200162828,
+  b: 175.831010127831,
+  d: [ 0, 4096, 0, 4096 ] }
+{ I: 13,
+  S: 2048,
+  a: 100.64351200162828,
+  b: 175.831010127831,
+  d: [ 0, 2048, 0, 2048 ] }
+{ I: 14,
+  S: 1024,
+  a: 100.64351200162828,
+  b: 175.831010127831,
+  d: [ 0, 1024, 0, 1024 ] }
+{ I: 15,
+  S: 512,
+  a: 100.64351200162828,
+  b: 175.831010127831,
+  d: [ 0, 512, 0, 512 ] }
+{ I: 16,
+  S: 256,
+  a: 100.64351200162828,
+  b: 175.831010127831,
+  d: [ 0, 256, 0, 256 ] }
+{ I: 17,
+  S: 128,
+  a: 100.64351200162828,
+  b: 175.831010127831,
+  d: [ 0, 128, 128, 256 ] }
+{ I: 18,
+  S: 64,
+  a: 100.64351200162828,
+  b: 175.831010127831,
+  d: [ 64, 128, 192, 256 ] }
+{ I: 19,
+  S: 32,
+  a: 100.64351200162828,
+  b: 175.831010127831,
+  d: [ 96, 128, 224, 256 ] }
+{ I: 20,
+  S: 16,
+  a: 100.64351200162828,
+  b: 175.831010127831,
+  d: [ 112, 128, 240, 256 ] }
+{ I: 21,
+  S: 8,
+  a: 100.64351200162828,
+  b: 175.831010127831,
+  d: [ 120, 128, 248, 256 ] }
+{ I: 22,
+  S: 4,
+  a: 100.64351200162828,
+  b: 175.831010127831,
+  d: [ 124, 128, 252, 256 ] }
+{ I: 23,
+  S: 2,
+  a: 100.64351200162828,
+  b: 175.831010127831,
+  d: [ 126, 128, 254, 256 ] }
+{ I: 24,
+  S: 1,
+  a: 100.64351200162828,
+  b: 175.831010127831,
+  d: [ 127, 128, 255, 256 ] }
 { lat: 30,
   lon: 30,
   dLon: 1.1943285763263702,
@@ -93,7 +193,7 @@ return geo2hash(30,30)
   hexs: [ &#x27;7f&#x27;, &#x27;ff&#x27; ],
   bins: [ &#x27;0000000000000000001111111&#x27;, &#x27;0000000000000000011111111&#x27; ] }
 7fxff
-</code></pre></output></codecell></div></cell><cell startpos="135:1-4307" endpos="239:4-7311" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const mLon = 40075017
+</code></pre></output></codecell></div></cell><cell startpos="235:1-5194" endpos="339:4-8198" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const mLon = 40075017
 const mLat = 40007863
 const x = 25
 const n = Math.pow(2, x)
@@ -126,7 +226,7 @@ const hash2geo = hash =&gt; {
   return {ints,hexs,bins, minLat,maxLat,minLon,maxLon}
 }
 return hash2geo(&quot;7fxff&quot;)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">30m ago</span></span></span><output><pre><code class="txt">{ I: 0, d: [ 0, 90, 0, 180 ] }
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">32m ago</span></span></span><output><pre><code class="txt">{ I: 0, d: [ 0, 90, 0, 180 ] }
 { I: 1, d: [ 0, 45, 0, 90 ] }
 { I: 2, d: [ 0, 22.5, 0, 45 ] }
 { I: 3, d: [ 0, 11.25, 0, 22.5 ] }
