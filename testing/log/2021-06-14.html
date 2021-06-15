@@ -1,4 +1,4 @@
-<html data-reactroot=""><head><title>2021-06-14</title><meta name="litsrc" value="/testing/log/2021-06-14.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><div><menu class="horizontal open"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"></li></menu></div><div class="lit-messages"></div></div><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="103:4-2462"><cell startpos="1:1-0" endpos="1:13-12"><div class="cell-content"><h1 id="2021-06-14">2021-06-14</h1></div></cell><section depth="2" class="" startpos="3:1-14" endpos="103:4-2462"><cell startpos="3:1-14" endpos="6:73-300"><div class="cell-content"><h2 id="a-geo-hash">A Geo Hash</h2><blockquote>
+<html data-reactroot=""><head><title>2021-06-14</title><meta name="litsrc" value="/testing/log/2021-06-14.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><div><menu class="horizontal open"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"></li></menu></div><div class="lit-messages"></div></div><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="110:4-2650"><cell startpos="1:1-0" endpos="1:13-12"><div class="cell-content"><h1 id="2021-06-14">2021-06-14</h1></div></cell><section depth="2" class="" startpos="3:1-14" endpos="110:4-2650"><cell startpos="3:1-14" endpos="6:73-300"><div class="cell-content"><h2 id="a-geo-hash">A Geo Hash</h2><blockquote>
 <p>Earth&#x27;s circumference is the distance around Earth. Measured around the Equator, it is 40,075.017 km (24,901.461 mi). Measured around the poles, the circumference is 40,007.863 km (24,859.734 mi).
 — <a class="external" href="https://en.m.wikipedia.org/wiki/Earth%27s_circumference" filepath="/testing/log/2021-06-14.lit" root="" data="[object Object]" canonical="https://en.m.wikipedia.org/wiki/Earth%27s_circumference">Wikipedia<span class="linkIcon">↗</span></a></p>
 </blockquote></div></cell><cell startpos="8:1-302" endpos="13:4-411" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return 40075017 / Math.pow(2,25)
@@ -13,7 +13,7 @@ return `${n} segments of ${dlon} degrees longitude`
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">13h ago</span></span></span><output><pre><code class="txt">16777215
 </code></pre></output></codecell></div></cell><cell startpos="39:1-1109" endpos="39:52-1160"><div class="cell-content"><p>Coincidentally the max hex representation. is then:</p></div></cell><cell startpos="41:1-1162" endpos="46:4-1257" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (16777215).toString(16)
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">12.7h ago</span></span></span><output><pre><code class="txt">ffffff
-</code></pre></output></codecell></div></cell><cell startpos="50:1-1261" endpos="81:4-1975" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const mLon = 40075017
+</code></pre></output></codecell></div></cell><cell startpos="50:1-1261" endpos="88:4-2163" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const mLon = 40075017
 const mLat = 40007863
 const x = 25
 const n = Math.pow(2, x)
@@ -25,7 +25,7 @@ const binToHex = (str) =&gt; parseInt(str,2).toString(16)
 const normLat = lat =&gt; lat + 90
 const normLon = lon =&gt; lon + 180
 
-const geo = (lat,lon) =&gt; {
+const geo2hash = (lat,lon) =&gt; {
   const bins = [&#x27;&#x27;,&#x27;&#x27;]
   let [a,b] = [normLat(lat) / dLat, normLon(lon) / dLon]
   let S = n
@@ -35,13 +35,20 @@ const geo = (lat,lon) =&gt; {
     bins[1] += ((b &lt; S) ? &quot;0&quot; : &quot;1&quot;)
   }
   console.log({bins})
-  return bins.map( bin =&gt; binToHex(bin))
+  return {hash: bins.map( bin =&gt; binToHex(bin)), bins}
 }
 
-return geo(30,30).join(&#x27;x&#x27;)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1m ago</span></span></span><output><pre><code class="txt">{ bins: [ &#x27;0000000000000000001111111&#x27;, &#x27;0000000000000000011111111&#x27; ] }
-7fxff
-</code></pre></output></codecell></div></cell><cell startpos="83:1-1977" endpos="103:4-2462" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const mLon = 40075017
+return geo2hash(30,30).join(&#x27;x&#x27;)
+</code></pre></codecell><codecell class="dir-error lang-txt local output"><span class="meta"><span class="lang">txt</span><span style="color:white;background-color:red" class="directive dir-error">error</span><span class="updatedAt">Updated <span class="Time relative">57s ago</span></span></span><output><pre><code class="txt">{ bins: [ &#x27;0000000000000000001111111&#x27;, &#x27;0000000000000000011111111&#x27; ] }
+function toString() {
+    [native code]
+}
+untitled.js:27:28
+untitled.js:29:63
+module code@untitled.js:29:139
+evaluate@[native code]
+moduleEvaluation@[native code]
+</code></pre></output></codecell></div></cell><cell startpos="90:1-2165" endpos="110:4-2650" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const mLon = 40075017
 const mLat = 40007863
 const x = 25
 const n = Math.pow(2, x)
@@ -57,7 +64,7 @@ const hash2geo = hash =&gt; {
   return {hexs,bins}
 }
 return hash2geo(&quot;7fxff&quot;)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">2m ago</span></span></span><output><pre><code class="txt">{ hexs: [ &#x27;7f&#x27;, &#x27;ff&#x27; ], bins: [ &#x27;1111111&#x27;, &#x27;11111111&#x27; ] }
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">3m ago</span></span></span><output><pre><code class="txt">{ hexs: [ &#x27;7f&#x27;, &#x27;ff&#x27; ], bins: [ &#x27;1111111&#x27;, &#x27;11111111&#x27; ] }
 </code></pre></output></codecell></div></cell></section></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="meta/files_and_links.lit" href="/meta/files_and_links.html">meta/files_and_links.lit</a></li></ol></div><script>;(function () {
                 var src = '//cdn.jsdelivr.net/npm/eruda';
                 if (!/eruda=true/.test(window.location) && localStorage.getItem('active-eruda') != 'true') return;
