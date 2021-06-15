@@ -70,14 +70,21 @@ const geo2hash = (lat,lon) => {
     S = S / 2
     if (a < maxLatS/2){
       maxLatS = maxLatS - ((maxLatS-minLatS)/2)
-      // bin[0] += "0"
+      bin[0] += "0"
     } else {
       minLatS = minLatS + ((maxLatS-minLatS)/2)
-      // bin[0] += "1"
+      bin[0] += "1"
     }
-    console.log({I, S, a, b})
-    bins[0] += ((a < S) ? "0" : "1")
-    bins[1] += ((b < S) ? "0" : "1")
+    if (b < maxLonS/2){
+      maxLonS = maxLonS - ((maxLonS-minLonS)/2)
+      bin[1] += "0"
+    } else {
+      minLonS = minLonS + ((maxLonS-minLonS)/2)
+      bin[1] += "1"
+    }
+    console.log({I, S, a, b, d: [minLatS,maxLatS,minLonS,maxLonS]})
+    //bins[0] += ((a < S) ? "0" : "1")
+    //bins[1] += ((b < S) ? "0" : "1")
   }
   const ints = bins.map( bin => binToInt(bin))
   const hexs = ints.map( i => intToHex(i))
