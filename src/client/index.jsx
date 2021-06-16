@@ -206,19 +206,19 @@ export const init = async () => {
     }
     time('client', 'readFile')
     
-    let settings
-    try {
-        const settingsPath = '/config.lit'
-        const settingsFile = await vfile({ path: settingsPath, contents: await lit.fs.readFile(settingsPath, {encoding: 'utf8'}) })
-        time('client', 'settingsFetched')
-        settings = await renderer.processor({fs,litroot}).process(settingsFile)
-    } catch(err) { console.log('Failed to load settings', err) }
+    // let settings
+    // try {
+        // const settingsPath = '/config.lit'
+        // const settingsFile = await vfile({ path: settingsPath, contents: await lit.fs.readFile(settingsPath, {encoding: 'utf8'}) })
+        // time('client', 'settingsFetched')
+        // settings = await renderer.processor({fs,litroot}).process(settingsFile)
+    // } catch(err) { console.log('Failed to load settings', err) }
    
     const file = await vfile({path: filepath, contents})
     file.data = file.data || {}
     file.data.times = times
 
-    time('client', 'settingsLoaded')
+    // time('client', 'settingsLoaded')
 
     window.lit.manifest = await fetch(lit.location.base + 'compactManifest.json')
                           .catch(err=>([]))
