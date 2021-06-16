@@ -30,6 +30,21 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
     console.log("Renderer: cwd", cwd)
     return parserProcessor({fs, litroot, files, cwd})
 
+   
+   
+    // hoist ast to data
+    .use( (...args) => {
+         return (tree,file) => {
+            //  console.log(`[${file.path}] Hoisting AST data to file.data.ast`)
+             file.data = file.data || {}
+             file.data.ast = tree
+         }
+     })
+
+    // transclude codeblocks with source
+    // when available 
+    .use( transcludeCode, {fs} )
+
     // includes and config
     .use( ({fs, cwd, skipIncludes}) => {
         return async (tree,file) => {
@@ -59,22 +74,10 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
             console.log(`[${file.path}] Loaded  ${loaded}/${includes.length} includes.`)
         }
     }, {fs, cwd, skipIncludes})
-   
-    // hoist ast to data
-    .use( (...args) => {
-         return (tree,file) => {
-            //  console.log(`[${file.path}] Hoisting AST data to file.data.ast`)
-             file.data = file.data || {}
-             file.data.ast = tree
-         }
-     })
-
-    // transclude codeblocks with source
-    // when available 
-    .use( transcludeCode, {fs} )
 
     // extract plugins
     .use( extractPlugins )
+
 
     // extract files to data
     .use( (...args) => {
