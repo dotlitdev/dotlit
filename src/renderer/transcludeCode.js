@@ -11,12 +11,12 @@ export const transcludeCode = ({fs}) => {
             console.error("not enabled no fs.")
             // return;
         };
-        console.log("Checking for files to transclude")
+        console.log(`(${file.path}) Checking for files to transclude`)
         const blocks = selectAll("code", tree)
         if (blocks?.length) Promise.all(blocks.map( async block => {
             const source = block?.data?.meta?.source
             if (source) {
-                console.log("Found source to be transcluded", block.data.meta.raw)
+               console.log(`(${file.path}) Found source to be transcluded`, block.data.meta.raw)
                block.data.originalSource = block.value
                block.data.hProperties.data = {originalSource: block.value}
                if (source.uri) {
@@ -26,21 +26,21 @@ export const transcludeCode = ({fs}) => {
                     //    console.log("has value", value)
                        block.value = value
                    } else {
-                       const msg = "Failed to load uri " + block.data.meta.fromSource + " status: " + resp.status
+                       const msg = `(${file.path}) Failed to load uri ` + block.data.meta.fromSource + " status: " + resp.status
                        file.message(msg, block)
                        console.error(msg)
                    }
                }
                else if (source.filename) {
                    const filePath = path.join(path.dirname(file.path), source.filename)
-                   console.log("to filePath", filePath)
+                   console.log(`(${file.path}) transclude to filePath`, filePath)
 
                    try {
                        const resp = await fs.readStat(filePath, {encoding: 'utf8'})
                     //    console.log("has value", resp)
                        block.value = resp.local.value || resp.remote.value
                    } catch(err) {
-                       const msg = "Failed to load " + block.data.meta.fromSource + " as " + filePath
+                       const msg = `(${file.path}) Failed to load ` + block.data.meta.fromSource + " as " + filePath
                        file.message(msg, block)
                        console.error(msg, err)
                    }
