@@ -15,13 +15,13 @@ const extractModule = async (src, filename) => {
         if (typeof m._compile === 'function') {
             const babel = transform(filename, src, {type: 'commonjs'})
             m._compile(babel.code, filename);
-            console.log("Compiled as commonjs module", m, m.exports)
+            console.log(`Compiled (${filename}) as commonjs module`, m, m.exports)
             if (m.exports && Object.keys(m.exports).length) return m.exports;
             else throw new Error("No module.exports when loaded as commonjs")
         }
         
     }
-    console.log("Importing as es6 module via data:uri import.")
+    console.log(`Importing (${filename}) as es6 module via data:uri import.`)
     // const blobUrl = URL.createObjectURL(new Blob([src], {type: 'text/javascript'}))
     // return await import(/* webpackIgnore: true */ blobUrl)
     const babel = transform(filename, src) 
@@ -95,7 +95,7 @@ export const extractPlugins = ({fs} = {}) => {
                     
                    
                 } catch(err) {
-                    // console.error("Failed to init plugin", err)
+                    console.error("Failed to init plugin", meta.raw, err)
                     const msg = `Plugin Error (${type}): ` + (err.message || err.toString())
                     file.message(msg, block)
                 }
