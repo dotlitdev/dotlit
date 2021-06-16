@@ -50,7 +50,10 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
         return async (tree,file) => {
             const includes = file?.data?.frontmatter?.includes || ['/config.lit']
             let loaded = 0
-            if (skipIncludes) return
+            if (skipIncludes) {
+                console.log(`(${file.path}) Skipping includes.`)
+                return;
+            }
             for (const include of includes) {
                 const filepath = path.join(path.dirname(file.path), include)
                 const readPath = path.join(cwd || '', (include?.[0] !== '/' ?  path.dirname(file.path) : ''), include)
