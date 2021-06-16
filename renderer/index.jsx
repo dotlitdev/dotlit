@@ -67,6 +67,7 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
                     console.log(`[${file.path}] [Include] Processed include: ${filepath}`)
                     file.data = file.data || {}
                     file.data.plugins = Object.assign(file.data.plugins || {}, included.data.plugins || {})
+                    file.messages = [...included.messages,...file.messages]
                     loaded += 1
                 } catch(err) {
                     console.error(`[${file.path}] Failed to load include: ${include}`, err)
