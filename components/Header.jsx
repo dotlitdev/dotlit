@@ -203,7 +203,6 @@ export const Header = ({ root, toggleViewSource, toggleModal, ssr }) => {
     console.log('<Header/> plugins?', menuPlugins)
 
     return <div id="lit-header">
-      <Menu title="Home" horizontal href={root}/>
     <Menu title="Home" horizontal href={root}>
       <Menu title="File">
         <span disabled className="meta">{ageMessage}</span>
