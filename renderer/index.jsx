@@ -55,16 +55,16 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
                 return;
             }
             for (const include of includes) {
-                const filepath = path.join(path.dirname(file.path), include)
+                //const filepath = path.join(path.dirname(file.path), include)
                 const readPath = path.join(cwd || '', (include?.[0] !== '/' ?  path.dirname(file.path) : ''), include)
                 console.log(`[${file.path}] [Include] Found include: "${include}" loading as: (${readPath})`)
                 // if (file.path === readPath) return
                 try {
-                    const includeFile = await vfile({ path: filepath, contents: await fs.readFile(readPath, {encoding: 'utf8'}) })
+                    const includeFile = await vfile({ path: readPath, contents: await fs.readFile(readPath, {encoding: 'utf8'}) })
                     const p = processor({fs, cwd, litroot, files, skipIncludes: true})
                     console.log(`[${file.path}] [Include] Constructed processor`)
                     const included = await p.process(includeFile)
-                    console.log(`[${file.path}] [Include] Processed include: ${filepath}`)
+                    console.log(`[${file.path}] [Include] Processed include: ${include}, had ${included.messages.length} messages.`, included.messages)
                     file.data = file.data || {}
                     file.data.plugins = Object.assign(file.data.plugins || {}, included.data.plugins || {})
                     file.messages = [...included.messages,...file.messages]
