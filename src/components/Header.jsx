@@ -203,7 +203,7 @@ export const Header = ({ root, toggleViewSource, toggleModal, ssr }) => {
     console.log('<Header/> plugins?', menuPlugins)
 
     return <div id="lit-header">
-      <div>{ssr ? <Menu title="Home" horizontal href={root}/> :
+      <Menu title="Home" horizontal href={root}/>
     <Menu title="Home" horizontal href={root}>
       <Menu title="File">
         <span disabled className="meta">{ageMessage}</span>
@@ -266,7 +266,7 @@ export const Header = ({ root, toggleViewSource, toggleModal, ssr }) => {
         {ageMessage && <span disabled>{`Local is ${ageMessage} than remote.`}</span> }
         {cellSelected && <span disabled>{`Lines ${ctx.selectedCell.start.line}-${ctx.selectedCell.end.line}`}</span> }
       </Menu>
-    </Menu> }</div>
+    </Menu>
     <div className="lit-messages">
     { ctx.file.messages.map( m => {
         return <Message key={m.name} message={m} setSelectedCell={ctx.setSelectedCell} />
