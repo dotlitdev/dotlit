@@ -13,7 +13,7 @@ export const transcludeCode = ({fs}) => {
         };
         console.log(`(${file.path}) Checking for files to transclude`)
         const blocks = selectAll("code", tree)
-        if (blocks?.length) Promise.all(blocks.map( async block => {
+        if (blocks?.length) await Promise.all(blocks.map( async block => {
             const source = block?.data?.meta?.source
             if (source) {
                console.log(`(${file.path}) Found source to be transcluded`, block.data.meta.raw)
@@ -33,7 +33,7 @@ export const transcludeCode = ({fs}) => {
                }
                else if (source.filename) {
                    const filePath = path.join(path.dirname(file.path), source.filename)
-                   console.log(`(${file.path}) transclude to filePath`, filePath)
+                   console.log(`(${file.path}) transclude "${source.filename}" as "${filePath}".`)
 
                    try {
                        const resp = await fs.readStat(filePath, {encoding: 'utf8'})
