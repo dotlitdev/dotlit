@@ -473,31 +473,44 @@ export const viewer = ({ node, React }) =&gt; {
 
   &lt;/script&gt;
 &lt;/body&gt;"></iframe></codecell></div></cell><cell startpos="458:1-10375" endpos="458:92-10466"><div class="cell-content"><p>The above automatically transcludes the <code>.lit</code> manifest and focuses on the current document</p></div></cell></section>
-<section depth="3" class="" startpos="460:1-10468" endpos="492:4-11209"><cell startpos="460:1-10468" endpos="463:71-10585"><div class="cell-content"><h3 id="example-vega">Example: Vega</h3><p>Still a <em>Work in progress</em>
-Docs: <a class="external" href="https://vega.github.io/vega-lite/usage/compile.html" filepath="/viewers.lit" root="" data="[object Object]" canonical="https://vega.github.io/vega-lite/usage/compile.html">vega-lite<span class="linkIcon">↗</span></a></p></div></cell><cell startpos="469:1-10591" endpos="492:4-11209" class="code output"><div class="cell-content"><codecell class="lang-vega local output"><span class="meta"><span class="lang">vega</span></span><output><pre><code class="vega">{
-        // $schema: &#x27;https://vega.github.io/schema/vega-lite/v5.json&#x27;,
-        description: &#x27;A simple bar chart with embedded data.&#x27;,
-        data: {
-          values: [
-            {a: &#x27;A&#x27;, b: 28},
-            {a: &#x27;B&#x27;, b: 55},
-            {a: &#x27;C&#x27;, b: 43},
-            {a: &#x27;D&#x27;, b: 91},
-            {a: &#x27;E&#x27;, b: 81},
-            {a: &#x27;F&#x27;, b: 53},
-            {a: &#x27;G&#x27;, b: 19},
-            {a: &#x27;H&#x27;, b: 87},
-            {a: &#x27;I&#x27;, b: 52}
-          ]
-        },
-        mark: &#x27;bar&#x27;,
-        encoding: {
-          x: {field: &#x27;a&#x27;, type: &#x27;ordinal&#x27;},
-          y: {field: &#x27;b&#x27;, type: &#x27;quantitative&#x27;}
-        }
-      }
+<section depth="3" class="" startpos="459:1-10467" endpos="507:4-11827"><cell startpos="459:1-10467" endpos="462:71-10584"><div class="cell-content"><h3 id="example-vega">Example: Vega</h3><p>Still a <em>Work in progress</em>
+Docs: <a class="external" href="https://vega.github.io/vega-lite/usage/compile.html" filepath="/viewers.lit" root="" data="[object Object]" canonical="https://vega.github.io/vega-lite/usage/compile.html">vega-lite<span class="linkIcon">↗</span></a></p></div></cell><cell startpos="466:1-10588" endpos="478:4-10898" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=vega</span></span><pre><code class="js">import { VegaLite } from &quot;https://cdn.skypack.dev/react-vega&quot;;
+export const viewer = ({ node, React }) =&gt; {
+  let spec, error;
+  try {
+    spec = JSON.parse(node.data.value);
+  } catch (err) {
+    error = error.message;
+  }
+  return error || &lt;VegaLite spec={spec} /&gt;;
+};
+
+</code></pre></codecell></div></cell><cell startpos="480:1-10900" endpos="507:4-11827" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; vega</span></span><pre><code class="js">return JSON.stringify({
+  // $schema: &#x27;https://vega.github.io/schema/vega-lite/v5.json&#x27;,
+  description: &quot;A simple bar chart with embedded data.&quot;,
+  data: {
+    values: [
+      { a: &quot;A&quot;, b: 28 },
+      { a: &quot;B&quot;, b: 55 },
+      { a: &quot;C&quot;, b: 43 },
+      { a: &quot;D&quot;, b: 91 },
+      { a: &quot;E&quot;, b: 81 },
+      { a: &quot;F&quot;, b: 53 },
+      { a: &quot;G&quot;, b: 19 },
+      { a: &quot;H&quot;, b: 87 },
+      { a: &quot;I&quot;, b: 52 },
+    ],
+  },
+  mark: &quot;bar&quot;,
+  encoding: {
+    x: { field: &quot;a&quot;, type: &quot;ordinal&quot; },
+    y: { field: &quot;b&quot;, type: &quot;quantitative&quot; },
+  },
+});
+
+</code></pre></codecell><codecell class="lang-vega local output"><span class="meta"><span class="lang">vega</span><span class="updatedAt">Updated <span class="Time relative">1m ago</span></span></span><output><pre><code class="vega">{&quot;description&quot;:&quot;A simple bar chart with embedded data.&quot;,&quot;data&quot;:{&quot;values&quot;:[{&quot;a&quot;:&quot;A&quot;,&quot;b&quot;:28},{&quot;a&quot;:&quot;B&quot;,&quot;b&quot;:55},{&quot;a&quot;:&quot;C&quot;,&quot;b&quot;:43},{&quot;a&quot;:&quot;D&quot;,&quot;b&quot;:91},{&quot;a&quot;:&quot;E&quot;,&quot;b&quot;:81},{&quot;a&quot;:&quot;F&quot;,&quot;b&quot;:53},{&quot;a&quot;:&quot;G&quot;,&quot;b&quot;:19},{&quot;a&quot;:&quot;H&quot;,&quot;b&quot;:87},{&quot;a&quot;:&quot;I&quot;,&quot;b&quot;:52}]},&quot;mark&quot;:&quot;bar&quot;,&quot;encoding&quot;:{&quot;x&quot;:{&quot;field&quot;:&quot;a&quot;,&quot;type&quot;:&quot;ordinal&quot;},&quot;y&quot;:{&quot;field&quot;:&quot;b&quot;,&quot;type&quot;:&quot;quantitative&quot;}}}
 </code></pre></output></codecell></div></cell></section>
-<section depth="3" class="" startpos="494:1-11211" endpos="551:95-12473"><cell startpos="494:1-11211" endpos="496:53-11302"><div class="cell-content"><h3 id="example-d3-graphviz-dot-viewer">Example: D3 Graphviz <code>dot</code> viewer</h3><p>Docs: <a class="external" href="https://github.com/magjac/d3-graphviz#examples" filepath="/viewers.lit" root="" data="[object Object]" canonical="https://github.com/magjac/d3-graphviz#examples">https://github.com/magjac/d3-graphviz#examples<span class="linkIcon">↗</span></a></p></div></cell><cell startpos="498:1-11304" endpos="516:4-11867" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=dot</span></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
+<section depth="3" class="" startpos="518:1-11838" endpos="575:95-13100"><cell startpos="518:1-11838" endpos="520:53-11929"><div class="cell-content"><h3 id="example-d3-graphviz-dot-viewer">Example: D3 Graphviz <code>dot</code> viewer</h3><p>Docs: <a class="external" href="https://github.com/magjac/d3-graphviz#examples" filepath="/viewers.lit" root="" data="[object Object]" canonical="https://github.com/magjac/d3-graphviz#examples">https://github.com/magjac/d3-graphviz#examples<span class="linkIcon">↗</span></a></p></div></cell><cell startpos="522:1-11931" endpos="540:4-12494" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=dot</span></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
    const c = React.createElement
    const el = c(&#x27;iframe&#x27;, {srcDoc: `&lt;!DOCTYPE html&gt;
 &lt;meta charset=&quot;utf-8&quot;&gt;
@@ -514,7 +527,7 @@ d3.select(&quot;#graph&quot;).graphviz()
 &lt;/script&gt;`})
    return el
 }
-</code></pre></codecell></div></cell><cell startpos="518:1-11869" endpos="520:4-11913" class="code output"><div class="cell-content"><codecell class="lang-dot local output"><span class="meta"><span class="lang">dot</span><span class="attribute attr-xviewer" style="color:white;background-color:#9b3ef8">xviewer=meta</span></span><iframe srcDoc="&lt;!DOCTYPE html&gt;
+</code></pre></codecell></div></cell><cell startpos="542:1-12496" endpos="544:4-12540" class="code output"><div class="cell-content"><codecell class="lang-dot local output"><span class="meta"><span class="lang">dot</span><span class="attribute attr-xviewer" style="color:white;background-color:#9b3ef8">xviewer=meta</span></span><iframe srcDoc="&lt;!DOCTYPE html&gt;
 &lt;meta charset=&quot;utf-8&quot;&gt;
 &lt;body&gt;
 &lt;script src=&quot;//d3js.org/d3.v5.min.js&quot;&gt;&lt;/script&gt;
@@ -526,7 +539,7 @@ d3.select(&quot;#graph&quot;).graphviz()
 d3.select(&quot;#graph&quot;).graphviz()
     .renderDot(&#x27;digraph  { a -&gt; b }&#x27;);
 
-&lt;/script&gt;"></iframe></codecell></div></cell><cell startpos="522:1-11915" endpos="549:4-12377" class="code output"><div class="cell-content"><codecell class="lang-dot local output"><span class="meta"><span class="lang">dot</span></span><iframe srcDoc="&lt;!DOCTYPE html&gt;
+&lt;/script&gt;"></iframe></codecell></div></cell><cell startpos="546:1-12542" endpos="573:4-13004" class="code output"><div class="cell-content"><codecell class="lang-dot local output"><span class="meta"><span class="lang">dot</span></span><iframe srcDoc="&lt;!DOCTYPE html&gt;
 &lt;meta charset=&quot;utf-8&quot;&gt;
 &lt;body&gt;
 &lt;script src=&quot;//d3js.org/d3.v5.min.js&quot;&gt;&lt;/script&gt;
@@ -563,23 +576,23 @@ d3.select(&quot;#graph&quot;).graphviz()
 
 }&#x27;);
 
-&lt;/script&gt;"></iframe></codecell></div></cell><cell startpos="551:1-12379" endpos="551:95-12473"><div class="cell-content"><p>The above mildly more complex example doesn&#x27;t render, likely due to not being actual graphviz.</p></div></cell></section>
-<section depth="2" class="" startpos="555:1-12477" endpos="576:4-12848"><cell startpos="555:1-12477" endpos="555:10-12486"><div class="cell-content"><h2 id="errors">Errors</h2></div></cell><section depth="3" class="" startpos="557:1-12488" endpos="576:4-12848"><cell startpos="557:1-12488" endpos="557:12-12499"><div class="cell-content"><h3 id="runtime">Runtime</h3></div></cell><cell startpos="559:1-12501" endpos="563:4-12625" class="code"><div class="cell-content"><codecell class="dir-plugin-disabled lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#dd74b7" class="directive dir-plugin-disabled">plugin-disabled</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=testerror</span></span><pre><code class="js">export const viewer = ({node}) =&gt; {
+&lt;/script&gt;"></iframe></codecell></div></cell><cell startpos="575:1-13006" endpos="575:95-13100"><div class="cell-content"><p>The above mildly more complex example doesn&#x27;t render, likely due to not being actual graphviz.</p></div></cell></section>
+<section depth="2" class="" startpos="579:1-13104" endpos="600:4-13475"><cell startpos="579:1-13104" endpos="579:10-13113"><div class="cell-content"><h2 id="errors">Errors</h2></div></cell><section depth="3" class="" startpos="581:1-13115" endpos="600:4-13475"><cell startpos="581:1-13115" endpos="581:12-13126"><div class="cell-content"><h3 id="runtime">Runtime</h3></div></cell><cell startpos="583:1-13128" endpos="587:4-13252" class="code"><div class="cell-content"><codecell class="dir-plugin-disabled lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#dd74b7" class="directive dir-plugin-disabled">plugin-disabled</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=testerror</span></span><pre><code class="js">export const viewer = ({node}) =&gt; {
   throw new Error(&quot;Test Error: Broken Viewer&quot;)
 }
-</code></pre></codecell></div></cell><cell startpos="565:1-12627" endpos="569:4-12754" class="code"><div class="cell-content"><codecell class="dir-plugin-disabled lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#dd74b7" class="directive dir-plugin-disabled">plugin-disabled</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=syntaxerror</span></span><pre><code class="js">export const viewer = ({node}) =&gt; {
+</code></pre></codecell></div></cell><cell startpos="589:1-13254" endpos="593:4-13381" class="code"><div class="cell-content"><codecell class="dir-plugin-disabled lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#dd74b7" class="directive dir-plugin-disabled">plugin-disabled</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=syntaxerror</span></span><pre><code class="js">export const viewer = ({node}) =&gt; {
   throw new Error(&quot;Syntax Error: Broken Viewer&quot;
 }
-</code></pre></codecell></div></cell><cell startpos="570:1-12755" endpos="572:4-12795" class="code output"><div class="cell-content"><codecell class="lang-testerror local output"><span class="meta"><span class="lang">testerror</span></span><output><pre><code class="testerror">Viewer throws an Error
-</code></pre></output></codecell></div></cell><cell startpos="574:1-12797" endpos="576:4-12848" class="code output"><div class="cell-content"><codecell class="lang-syntaxerror local output"><span class="meta"><span class="lang">syntaxerror</span></span><output><pre><code class="syntaxerror">TODO: Viewer has a syntax error
+</code></pre></codecell></div></cell><cell startpos="594:1-13382" endpos="596:4-13422" class="code output"><div class="cell-content"><codecell class="lang-testerror local output"><span class="meta"><span class="lang">testerror</span></span><output><pre><code class="testerror">Viewer throws an Error
+</code></pre></output></codecell></div></cell><cell startpos="598:1-13424" endpos="600:4-13475" class="code output"><div class="cell-content"><codecell class="lang-syntaxerror local output"><span class="meta"><span class="lang">syntaxerror</span></span><output><pre><code class="syntaxerror">TODO: Viewer has a syntax error
 </code></pre></output></codecell></div></cell></section></section>
-<section depth="3" class="" startpos="578:1-12850" endpos="588:4-13044"><cell startpos="578:1-12850" endpos="578:11-12860"><div class="cell-content"><h3 id="import">Import</h3></div></cell><cell startpos="580:1-12862" endpos="585:4-13002" class="code"><div class="cell-content"><codecell class="dir-plugin-disabled lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#dd74b7" class="directive dir-plugin-disabled">plugin-disabled</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=testerror2</span></span><pre><code class="js">throw new Error(&quot;Test Error: Broken Viewer&quot;)
+<section depth="3" class="" startpos="602:1-13477" endpos="612:4-13671"><cell startpos="602:1-13477" endpos="602:11-13487"><div class="cell-content"><h3 id="import">Import</h3></div></cell><cell startpos="604:1-13489" endpos="609:4-13629" class="code"><div class="cell-content"><codecell class="dir-plugin-disabled lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#dd74b7" class="directive dir-plugin-disabled">plugin-disabled</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=testerror2</span></span><pre><code class="js">throw new Error(&quot;Test Error: Broken Viewer&quot;)
 export const viewer = ({node}) =&gt; {
   return &quot;never&quot;
 }
-</code></pre></codecell></div></cell><cell startpos="586:1-13003" endpos="588:4-13044" class="code output"><div class="cell-content"><codecell class="lang-testerror2 local output"><span class="meta"><span class="lang">testerror2</span></span><output><pre><code class="testerror2">Viewer throws an Error
+</code></pre></codecell></div></cell><cell startpos="610:1-13630" endpos="612:4-13671" class="code output"><div class="cell-content"><codecell class="lang-testerror2 local output"><span class="meta"><span class="lang">testerror2</span></span><output><pre><code class="testerror2">Viewer throws an Error
 </code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="590:1-13046" endpos="613:4-13524"><cell startpos="590:1-13046" endpos="590:21-13066"><div class="cell-content"><h2 id="initial-prototype">Initial prototype</h2></div></cell><cell startpos="592:1-13068" endpos="613:4-13524" class="code"><div class="cell-content"><codecell class="dir-below lang-html local"><span class="meta"><span class="lang">html</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span><span class="attribute attr-viewer" style="color:black;background-color:#cf5332">viewer=iframe</span></span><pre><code class="html">&lt;!DOCTYPE html&gt;
+<section depth="2" class="" startpos="614:1-13673" endpos="637:4-14151"><cell startpos="614:1-13673" endpos="614:21-13693"><div class="cell-content"><h2 id="initial-prototype">Initial prototype</h2></div></cell><cell startpos="616:1-13695" endpos="637:4-14151" class="code"><div class="cell-content"><codecell class="dir-below lang-html local"><span class="meta"><span class="lang">html</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span><span class="attribute attr-viewer" style="color:black;background-color:#cf5332">viewer=iframe</span></span><pre><code class="html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
   &lt;head&gt;
     &lt;title&gt;Test page&lt;/title&gt;
