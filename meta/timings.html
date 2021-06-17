@@ -14,7 +14,35 @@
   --code-bg-color: black;
   --code-text-color: white;
   --box-bg-opacity: 0.05;
-}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="110:4-5107"><cell startpos="1:1-0" endpos="1:10-9"><div class="cell-content"><h1 id="timings">Timings</h1></div></cell><cell startpos="3:1-11" endpos="46:4-1481" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; text #sw-connected #gh-connected</span></span><pre><code class="js">const raw = localStorage.getItem(&quot;litTimings&quot;);
+}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="149:4-6421"><cell startpos="1:1-0" endpos="1:10-9"><div class="cell-content"><h1 id="timings">Timings</h1></div></cell><cell startpos="6:1-14" endpos="18:4-324" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=vega</span></span><pre><code class="js">import { VegaLite } from &quot;https://cdn.skypack.dev/react-vega&quot;;
+export const viewer = ({ node, React }) =&gt; {
+  let spec, error;
+  try {
+    spec = JSON.parse(node.data.value);
+  } catch (err) {
+    error = error.message;
+  }
+  return error || &lt;VegaLite spec={spec} /&gt;;
+};
+
+</code></pre></codecell></div></cell><cell startpos="20:1-326" endpos="40:4-1323" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="output">&gt; vega</span></span><pre><code class="js">
+const events = Object.keys(lit.timings.client.timeTo)
+const data = events.map( e =&gt; ({event:e||&#x27;start&#x27;, time: lit.timings.client.timeTo[e||&#x27;start&#x27;]}))
+return JSON.stringify({
+  // $schema: &#x27;https://vega.github.io/schema/vega-lite/v5.json&#x27;,
+  description: &quot;A simple bar chart with embedded data.&quot;,
+  data: {
+    values: data
+  },
+  mark: &quot;bar&quot;,
+  encoding: {
+    x: { field: &quot;event&quot;, type: &quot;ordinal&quot; },
+    y: { field: &quot;time&quot;, type: &quot;quantitative&quot; },
+  },
+});
+
+</code></pre></codecell><codecell class="lang-vega local output"><span class="meta"><span class="lang">vega</span><span class="updatedAt">Updated <span class="Time relative">3m ago</span></span></span><output><pre><code class="vega">{&quot;description&quot;:&quot;A simple bar chart with embedded data.&quot;,&quot;data&quot;:{&quot;values&quot;:[{&quot;event&quot;:&quot;importsComplete&quot;,&quot;time&quot;:104},{&quot;event&quot;:&quot;fsSetup&quot;,&quot;time&quot;:105},{&quot;event&quot;:&quot;litObj&quot;,&quot;time&quot;:105},{&quot;event&quot;:&quot;initStart&quot;,&quot;time&quot;:105},{&quot;event&quot;:&quot;readFile&quot;,&quot;time&quot;:1317},{&quot;event&quot;:&quot;manifestLoaded&quot;,&quot;time&quot;:1594},{&quot;event&quot;:&quot;processedFile&quot;,&quot;time&quot;:6427},{&quot;event&quot;:&quot;rendered&quot;,&quot;time&quot;:6648}]},&quot;mark&quot;:&quot;bar&quot;,&quot;encoding&quot;:{&quot;x&quot;:{&quot;field&quot;:&quot;event&quot;,&quot;type&quot;:&quot;ordinal&quot;},&quot;y&quot;:{&quot;field&quot;:&quot;time&quot;,&quot;type&quot;:&quot;quantitative&quot;}}}
+</code></pre></output></codecell></div></cell><cell startpos="42:1-1325" endpos="85:4-2795" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="output">&gt; text #sw-connected #gh-connected</span></span><pre><code class="js">const raw = localStorage.getItem(&quot;litTimings&quot;);
 const events = {};
 const logs = raw
   .split(&quot;\n&quot;)
@@ -54,7 +82,7 @@ return raw;
   manifestLoaded: { min: 621, max: 9011, mean: 2692.9625, n: 80 },
   processedFile: { min: 693, max: 9739, mean: 3907.1688311688313, n: 77 },
   rendered: { min: 718, max: 9878, mean: 4105.363636363636, n: 77 } }
-</code></pre></output></codecell></div></cell><cell startpos="47:1-1482" endpos="58:4-2246" class="code output"><div class="cell-content"><codecell class="tag-sw-connected tag-gh-connected lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span class="updatedAt">Updated <span class="Time relative">2.8d ago</span></span></span><output><pre><code class="text">{ importsComplete: { min: 31, max: 200, mean: 73.72631578947369, n: 95 },
+</code></pre></output></codecell></div></cell><cell startpos="86:1-2796" endpos="97:4-3560" class="code output"><div class="cell-content"><codecell class="tag-sw-connected tag-gh-connected lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span class="updatedAt">Updated <span class="Time relative">2.8d ago</span></span></span><output><pre><code class="text">{ importsComplete: { min: 31, max: 200, mean: 73.72631578947369, n: 95 },
   fsSetup: { min: 31, max: 202, mean: 74.51578947368421, n: 95 },
   litObj: { min: 31, max: 202, mean: 74.56842105263158, n: 95 },
   initStart: { min: 31, max: 203, mean: 74.93684210526315, n: 95 },
@@ -64,7 +92,7 @@ return raw;
   processedFile: { min: 3033, max: 72866, mean: 8876, n: 53 },
   rendered: { min: 3171, max: 73111, mean: 9079.471698113208, n: 53 },
   settingsFetched: { min: 1156, max: 10758, mean: 3542.625, n: 24 } }
-</code></pre></output></codecell></div></cell><section depth="2" class="" startpos="63:1-2251" endpos="110:4-5107"><cell startpos="63:1-2251" endpos="63:8-2258"><div class="cell-content"><h2 id="runs">Runs</h2></div></cell><cell startpos="65:1-2260" endpos="75:4-2937" class="code output"><div class="cell-content"><codecell class="tag-gh-connected tag-no-sw lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span style="color:white;background-color:#64145f" class="tag">no-sw</span></span><output><pre><code class="text">{ importsComplete: { min: 33, max: 212, mean: 80.08333333333333, n: 36 },
+</code></pre></output></codecell></div></cell><section depth="2" class="" startpos="102:1-3565" endpos="149:4-6421"><cell startpos="102:1-3565" endpos="102:8-3572"><div class="cell-content"><h2 id="runs">Runs</h2></div></cell><cell startpos="104:1-3574" endpos="114:4-4251" class="code output"><div class="cell-content"><codecell class="tag-gh-connected tag-no-sw lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span style="color:white;background-color:#64145f" class="tag">no-sw</span></span><output><pre><code class="text">{ importsComplete: { min: 33, max: 212, mean: 80.08333333333333, n: 36 },
   fsSetup: { min: 33, max: 213, mean: 80.61111111111111, n: 36 },
   litObj: { min: 33, max: 213, mean: 80.66666666666667, n: 36 },
   initStart: { min: 33, max: 215, mean: 81.05555555555556, n: 36 },
@@ -73,7 +101,7 @@ return raw;
   manifestLoaded: { min: 1368, max: 73575, mean: 6254.181818181818, n: 22 },
   processedFile: { min: 1373, max: 73583, mean: 6429.409090909091, n: 22 },
   rendered: { min: 1536, max: 73941, mean: 6668.590909090909, n: 22 } }
-</code></pre></output></codecell></div></cell><cell startpos="77:1-2939" endpos="77:206-3144"><div class="cell-content"><p>So far the majority of time before complete is spent fetching files from the remote, 3s to read file, doubled by config, +1s for manifest. Of ~30 samples, with service worker disabled and GitHub connected.</p></div></cell><cell startpos="78:1-3145" endpos="88:4-3823" class="code output"><div class="cell-content"><codecell class="tag-no-gh tag-no-sw lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:white;background-color:#641446" class="tag">no-gh</span><span style="color:white;background-color:#64145f" class="tag">no-sw</span><span class="updatedAt">Updated <span class="Time relative">5.5d ago</span></span></span><output><pre><code class="text">{ importsComplete: { min: 73, max: 197, mean: 108.9090909090909, n: 11 },
+</code></pre></output></codecell></div></cell><cell startpos="116:1-4253" endpos="116:206-4458"><div class="cell-content"><p>So far the majority of time before complete is spent fetching files from the remote, 3s to read file, doubled by config, +1s for manifest. Of ~30 samples, with service worker disabled and GitHub connected.</p></div></cell><cell startpos="117:1-4459" endpos="127:4-5137" class="code output"><div class="cell-content"><codecell class="tag-no-gh tag-no-sw lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:white;background-color:#641446" class="tag">no-gh</span><span style="color:white;background-color:#64145f" class="tag">no-sw</span><span class="updatedAt">Updated <span class="Time relative">5.5d ago</span></span></span><output><pre><code class="text">{ importsComplete: { min: 73, max: 197, mean: 108.9090909090909, n: 11 },
   fsSetup: { min: 73, max: 198, mean: 109.81818181818181, n: 11 },
   litObj: { min: 73, max: 199, mean: 110, n: 11 },
   initStart: { min: 74, max: 200, mean: 110.36363636363636, n: 11 },
@@ -82,7 +110,7 @@ return raw;
   manifestLoaded: { min: 7537, max: 7920, mean: 7709.363636363636, n: 11 },
   processedFile: { min: 7543, max: 10109, mean: 7922.363636363636, n: 11 },
   rendered: { min: 7831, max: 10452, mean: 8227.272727272728, n: 11 } }
-</code></pre></output></codecell></div></cell><cell startpos="89:1-3824" endpos="99:4-4502" class="code output"><div class="cell-content"><codecell class="tag-sw-connected tag-gh-connected lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span class="updatedAt">Updated <span class="Time relative">5.5d ago</span></span></span><output><pre><code class="text">{ importsComplete: { min: 71, max: 196, mean: 86.66666666666667, n: 15 },
+</code></pre></output></codecell></div></cell><cell startpos="128:1-5138" endpos="138:4-5816" class="code output"><div class="cell-content"><codecell class="tag-sw-connected tag-gh-connected lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span class="updatedAt">Updated <span class="Time relative">5.5d ago</span></span></span><output><pre><code class="text">{ importsComplete: { min: 71, max: 196, mean: 86.66666666666667, n: 15 },
   fsSetup: { min: 72, max: 197, mean: 87.33333333333333, n: 15 },
   litObj: { min: 72, max: 197, mean: 87.4, n: 15 },
   initStart: { min: 72, max: 198, mean: 87.53333333333333, n: 15 },
@@ -91,7 +119,7 @@ return raw;
   manifestLoaded: { min: 2910, max: 6193, mean: 3419.4666666666667, n: 15 },
   processedFile: { min: 2946, max: 6208, mean: 4012.9285714285716, n: 14 },
   rendered: { min: 3035, max: 6409, mean: 4171, n: 14 } }
-</code></pre></output></codecell></div></cell><cell startpos="100:1-4503" endpos="110:4-5107" class="code output"><div class="cell-content"><codecell class="tag-sw-connected tag-gh-connected tag-offline lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span style="color:black;background-color:#a3b2de" class="tag">offline</span><span class="updatedAt">Updated <span class="Time relative">5.5d ago</span></span></span><output><pre><code class="text">{ importsComplete: { min: 72, max: 199, mean: 113.3, n: 10 },
+</code></pre></output></codecell></div></cell><cell startpos="139:1-5817" endpos="149:4-6421" class="code output"><div class="cell-content"><codecell class="tag-sw-connected tag-gh-connected tag-offline lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span style="color:black;background-color:#a3b2de" class="tag">offline</span><span class="updatedAt">Updated <span class="Time relative">5.5d ago</span></span></span><output><pre><code class="text">{ importsComplete: { min: 72, max: 199, mean: 113.3, n: 10 },
   fsSetup: { min: 72, max: 201, mean: 114, n: 10 },
   litObj: { min: 72, max: 201, mean: 114.1, n: 10 },
   initStart: { min: 73, max: 202, mean: 114.8, n: 10 },

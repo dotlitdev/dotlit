@@ -1,5 +1,44 @@
 # Timings
 
+
+
+
+```js !plugin type=viewer of=vega 
+import { VegaLite } from "https://cdn.skypack.dev/react-vega";
+export const viewer = ({ node, React }) => {
+  let spec, error;
+  try {
+    spec = JSON.parse(node.data.value);
+  } catch (err) {
+    error = error.message;
+  }
+  return error || <VegaLite spec={spec} />;
+};
+
+```
+
+```js !collapse > vega
+
+const events = Object.keys(lit.timings.client.timeTo)
+const data = events.map( e => ({event:e||'start', time: lit.timings.client.timeTo[e||'start']}))
+return JSON.stringify({
+  // $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+  description: "A simple bar chart with embedded data.",
+  data: {
+    values: data
+  },
+  mark: "bar",
+  encoding: {
+    x: { field: "event", type: "ordinal" },
+    y: { field: "time", type: "quantitative" },
+  },
+});
+
+```
+```>vega attached=true updated=1623929354624
+{"description":"A simple bar chart with embedded data.","data":{"values":[{"event":"importsComplete","time":104},{"event":"fsSetup","time":105},{"event":"litObj","time":105},{"event":"initStart","time":105},{"event":"readFile","time":1317},{"event":"manifestLoaded","time":1594},{"event":"processedFile","time":6427},{"event":"rendered","time":6648}]},"mark":"bar","encoding":{"x":{"field":"event","type":"ordinal"},"y":{"field":"time","type":"quantitative"}}}
+```
+
 ```js > text #sw-connected #gh-connected
 const raw = localStorage.getItem("litTimings");
 const events = {};
