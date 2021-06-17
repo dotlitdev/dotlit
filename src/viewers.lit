@@ -480,7 +480,7 @@ export const viewer = ({ node, React }) => {
 ```js !collapse > vega
 
 const events = Object.keys(lit.timings.client.timeTo)
-const data = events.map( e => ({a:e||'start', b: lit.timings.client.timeTo[e||'start']}))
+const data = events.map( e => ({event:e||'start', time: lit.timings.client.timeTo[e||'start']}))
 return JSON.stringify({
   // $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
   description: "A simple bar chart with embedded data.",
@@ -489,8 +489,8 @@ return JSON.stringify({
   },
   mark: "bar",
   encoding: {
-    x: { field: "a", type: "ordinal" },
-    y: { field: "b", type: "quantitative" },
+    x: { field: "event", type: "ordinal" },
+    y: { field: "time", type: "quantitative" },
   },
 });
 
