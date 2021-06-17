@@ -204,7 +204,7 @@ export const Header = ({ root, toggleViewSource, toggleModal, ssr }) => {
 
     return <div id="lit-header">
     <Menu title="Home" horizontal href={root}>
-      <Menu title="File">
+      <Menu title="File" disabled={ssr}>
         <span disabled className="meta">{ageMessage}</span>
         <span disabled>New</span>
         <span disabled>Open</span>
@@ -250,7 +250,7 @@ export const Header = ({ root, toggleViewSource, toggleModal, ssr }) => {
       
       { !menuPlugins ? null : menuPlugins && Object.keys(menuPlugins).map( key => <ErrorBoundary>{menuPlugins[key](ctx, {React, Menu, toggleModal})}</ErrorBoundary>) }
       
-      <Menu title="Help">
+      <Menu title="Help" disabled={ssr}>
         { !helpMenuPlugins ? null : helpMenuPlugins && Object.keys(helpMenuPlugins).map( key => <ErrorBoundary>{helpMenuPlugins[key](ctx, {React, Menu, toggleModal})}</ErrorBoundary>) }
         <a href="/config.html?file=config.lit">Config</a>
         <Menu title="Debug">
@@ -266,11 +266,11 @@ export const Header = ({ root, toggleViewSource, toggleModal, ssr }) => {
         {cellSelected && <span disabled>{`Lines ${ctx.selectedCell.start.line}-${ctx.selectedCell.end.line}`}</span> }
       </Menu>
     </Menu>
-    <div className="lit-messages">
+    {!ssr && <div className="lit-messages">
     { ctx.file.messages.map( m => {
         return <Message key={m.name} message={m} setSelectedCell={ctx.setSelectedCell} />
     } ) }
-    </div>
+    </div> }
   </div>
   }}
 </SelectionContext.Consumer>
