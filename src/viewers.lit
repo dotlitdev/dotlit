@@ -456,6 +456,54 @@ export const viewer = ({node, React}) => {
 ```
 
 The above automatically transcludes the `.lit` manifest and focuses on the current document
+### Example: Vega 
+
+Still a *Work in progress*
+Docs: [vega-lite](https://vega.github.io/vega-lite/usage/compile.html)
+
+
+
+```js !plugin type=viewer of=vega 
+import { VegaLite } from "https://cdn.skypack.dev/react-vega";
+export const viewer = ({ node, React }) => {
+  let spec, error;
+  try {
+    spec = JSON.parse(node.data.value);
+  } catch (err) {
+    error = error.message;
+  }
+  return error || <VegaLite spec={spec} />;
+};
+
+```
+
+```js > vega
+return JSON.stringify({
+        // $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+        description: 'A simple bar chart with embedded data.',
+        data: {
+          values: [
+            {a: 'A', b: 28},
+            {a: 'B', b: 55},
+            {a: 'C', b: 43},
+            {a: 'D', b: 91},
+            {a: 'E', b: 81},
+            {a: 'F', b: 53},
+            {a: 'G', b: 19},
+            {a: 'H', b: 87},
+            {a: 'I', b: 52}
+          ]
+        },
+        mark: 'bar',
+        encoding: {
+          x: {field: 'a', type: 'ordinal'},
+          y: {field: 'b', type: 'quantitative'}
+        }
+      })
+```
+```>vega attached=true updated=1623927853961
+{"description":"A simple bar chart with embedded data.","data":{"values":[{"a":"A","b":28},{"a":"B","b":55},{"a":"C","b":43},{"a":"D","b":91},{"a":"E","b":81},{"a":"F","b":53},{"a":"G","b":19},{"a":"H","b":87},{"a":"I","b":52}]},"mark":"bar","encoding":{"x":{"field":"a","type":"ordinal"},"y":{"field":"b","type":"quantitative"}}}
+```
 
 
 
