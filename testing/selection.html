@@ -14,45 +14,44 @@
   --code-bg-color: black;
   --code-text-color: white;
   --box-bg-opacity: 0.05;
-}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="64:4-1390"><cell startpos="1:1-0" endpos="3:37-63"><div class="cell-content"><h1 id="more-powerful-selection">More powerful selection</h1><p>Ie multi cell and section selection.</p></div></cell><section depth="2" class="" startpos="4:1-64" endpos="64:4-1390"><cell startpos="4:1-64" endpos="4:15-78"><div class="cell-content"><h2 id="experiments">Experiments</h2></div></cell><cell startpos="6:1-80" endpos="19:4-262" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><a name="fakePos"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=data</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=fakePos</span></span><pre><code class="js">export const data = {
-  start: {
-    line: 1,
-    column: 1,
-    offset: 0
-  },
-  end: {
-    line: 99,
-    column: 99,
-    offset: 999999
-  }
-}
-</code></pre></codecell></div></cell><cell startpos="21:1-264" endpos="48:4-1032" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><a name="selection"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=selection</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=menu</span></span><pre><code class="js">
-export const menu = (ctx, {React, Menu}) =&gt; {
-  const pos = lit.file.data.plugins.data.fakePos
-  const {filter, select, selectPosition} = lit.utils.unist
-  const rc = React.createElement
+}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="62:4-1258"><cell startpos="1:1-0" endpos="3:37-63"><div class="cell-content"><h1 id="more-powerful-selection">More powerful selection</h1><p>Ie multi cell and section selection.</p></div></cell><section depth="2" class="" startpos="4:1-64" endpos="62:4-1258"><cell startpos="4:1-64" endpos="4:15-78"><div class="cell-content"><h2 id="experiments">Experiments</h2></div></cell><cell startpos="8:1-82" endpos="46:4-900" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><a name="selection"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=selection</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=menu</span></span><pre><code class="js">export const menu = (ctx, { React, Menu }) =&gt; {
+  const { filter, select, selectPosition } = lit.utils.unist;
+  const rc = React.createElement;
 
   const secFromCell = (pos) =&gt; {
-    const secs = selectPosition.selectAll(&#x27;section&#x27;, ctx.selectedCell, lit.ast)
-   const last = secs.slice(-1)[0]
-   console.log(&quot;Sections&quot;, secs, last)
-   return last.position 
-  }
+    const secs = selectPosition.selectAll(&quot;section&quot;, ctx.selectedCell, lit.ast);
+    const last = secs.slice(-1)[0];
+    console.log(&quot;Sections&quot;, secs, last);
+    return last.position;
+  };
 
-  const selectAll = rc(&#x27;span&#x27;, {onClick: () =&gt; ctx.setSelectedCell(lit.ast.position)}, &#x27;Select All&#x27;)
+  const selectAll = rc(
+    &quot;span&quot;,
+    { onClick: () =&gt; ctx.setSelectedCell(lit.ast.position) },
+    &quot;Select All&quot;
+  );
 
-  const selectSec = rc(&#x27;span&#x27;, {onClick: () =&gt; {
-ctx.setSelectedCell(
-secFromCell(ctx.selectedCell)
-)
-}}, &#x27;Select Section&#x27;)
+  const selectSec = rc(
+    &quot;span&quot;,
+    {
+      onClick: () =&gt; {
+        ctx.setSelectedCell(secFromCell(ctx.selectedCell));
+      },
+    },
+    &quot;Select Section&quot;
+  );
 
-  return rc( Menu, {
-    title:&quot;Selection&quot;,
-    disabled: false,
-  }, [selectAll, selectSec])
-}
-</code></pre></codecell></div></cell><cell startpos="50:1-1034" endpos="64:4-1390" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const {filter, select, selectPosition} = lit.utils.unist
+  return rc(
+    Menu,
+    {
+      title: &quot;Selection&quot;,
+      disabled: false,
+    },
+    [selectAll, selectSec]
+  );
+};
+
+</code></pre></codecell></div></cell><cell startpos="48:1-902" endpos="62:4-1258" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const {filter, select, selectPosition} = lit.utils.unist
 const is = t =&gt; node =&gt; {
   console.log(node.type)
   return node.type === t
