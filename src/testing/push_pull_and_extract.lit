@@ -10,8 +10,22 @@ Increase or decrease a sections nesting level.
 const {visit} = lit.utils.unist
 return visit.toString()
 ```
-```>txt attached=true updated=1624572545029
-{ [Function: visit] CONTINUE: true, SKIP: 'skip', EXIT: false }
+```>txt attached=true updated=1624572566952
+function visit(tree, test, visitor, reverse) {
+  if (typeof test === 'function' && typeof visitor !== 'function') {
+    reverse = visitor
+    visitor = test
+    test = null
+  }
+
+  visitParents(tree, test, overload, reverse)
+
+  function overload(node, parents) {
+    var parent = parents[parents.length - 1]
+    var index = parent ? parent.children.indexOf(node) : null
+    return visitor(node, index, parent)
+  }
+}
 ```
 
 
