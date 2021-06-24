@@ -8,10 +8,18 @@ Increase or decrease a sections nesting level.
 
 ```js
 const {visit} = lit.utils.unist
+const {toMarkdown, ungroupSections}
+      = lit.parser.utils
+const unGroup = ungroupSections()()
+
+const ast2md = tree => toMarkdown(unGroup(tree))
+
 const tree = lit.ast
 const test = 'heading'
 const push = (node) => node.depth += 1
 const pull = (node) => node.depth -= 1
+
+return ast2md(tree)
 return visit(tree,test,push)
 ```
 ```>txt attached=true updated=1624572927578
