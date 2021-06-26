@@ -1,5 +1,9 @@
 const timings = {}
-let prev = ((typeof localStorage !== 'undefined') && localStorage.getItem('litTimings')) || ''
+
+export const getPrev = () => ((typeof localStorage !== 'undefined') && localStorage.getItem('litTimings')) || ''
+
+let prev = getPrev()
+
 export const time = (ns, marker) => {
     const now = Date.now()
     timings[ns] = timings[ns] || {
