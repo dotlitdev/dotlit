@@ -47,8 +47,8 @@ Object.keys(events).map((event) => {
     n: ev.length,
   };
 });
-
-const values = Object.entries(aggregates).map( ([k,v])=>({id:k, ...v}))
+// const values = Object.entries(aggregates).map( ([k,v])=>({id:k, ...v}))
+const values = Object.entries(events).map( ([k,v])=>({id:k, value: v}))
 const spec = {
   // $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
   description: "A simple bar chart with embedded data.",
@@ -58,7 +58,7 @@ const spec = {
   mark: "bar",
   encoding: {
     x: { field: "id", type: "ordinal" },
-    y: { field: "mean", type: "quantitative" },
+    y: { field: "value", type: "quantitative" },
   },
 }
 
