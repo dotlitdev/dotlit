@@ -172,7 +172,7 @@ export const Header = ({ root, toggleViewSource, toggleModal, ssr }) => {
   const addCodeCell = ctx => ev => {
     console.log('Adding code cell after cell at pos:', ctx.selectedCell)
     const src = source(ctx.selectedCell, ctx.src)
-    const add = "```lang\n\n```"
+    const add = "```js\n\n```"
     ctx.setSrc(ctx.selectedCell, `${src}\n\n${add}`)
     ctx.selectCell(null)
   }
