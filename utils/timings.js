@@ -2,8 +2,6 @@ const timings = {}
 
 export const getPrev = () => ((typeof localStorage !== 'undefined') && localStorage.getItem('litTimings')) || ''
 
-let prev = getPrev()
-
 export const time = (ns, marker) => {
     const now = Date.now()
     timings[ns] = timings[ns] || {
@@ -18,8 +16,8 @@ export const time = (ns, marker) => {
         timings[ns].timeTo[marker] = took
         console.log(`[timings][${ns}] "start" to "${marker}" took ${took}ms`)
         const log = JSON.stringify({ns,marker,id,took}) + "\n"
-        prev += log
-        if (typeof localStorage !== 'undefined') localStorage.setItem('litTimings', prev)
+   
+        if (typeof localStorage !== 'undefined') localStorage.setItem('litTimings', getPrev() + log)
     }
 }
 
