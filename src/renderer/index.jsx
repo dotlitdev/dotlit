@@ -24,7 +24,7 @@ import { getConsoleForNamespace } from '../utils/console'
 import { decorateLinkNode } from '../parser/links'
 
 import {time} from '../utils/timings'
-const timer = ({ns, marker}) => (t,f) => { time(ns,marker) }
+const timer = () => ({ns, marker}) => (t,f) => { time(ns,marker) }
 
 
 const console = getConsoleForNamespace('renderer')
@@ -46,7 +46,7 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
     // transclude codeblocks with source
     // when available 
     .use( transcludeCode, {fs} )
-    .use(timer,{ns:'renderer', marker: 'transcludeCodeComplete'})
+    .use(timer(),{ns:'renderer', marker: 'transcludeCodeComplete'})
 
     // includes and config
     .use( ({fs, cwd, skipIncludes}) => {
@@ -81,11 +81,11 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
             console.log(`[${file.path}] Loaded  ${loaded}/${includes.length} includes.`)
         }
     }, {fs, cwd, skipIncludes})
-    .use(timer,{ns:'renderer', marker: 'includesComplete'})
+    .use(timer(),{ns:'renderer', marker: 'includesComplete'})
 
     // extract plugins
     .use( extractPlugins )
-        .use(timer,{ns:'renderer', marker: 'extractPluginsComplete'})
+    .use(timer(),{ns:'renderer', marker: 'extractPluginsComplete'})
 
     // extract files to data
     .use( (...args) => {
@@ -128,7 +128,7 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
             code: hastCodeHandler,
         },
      })
-    .use(timer,{ns:'renderer', marker: 'toRehypeComplete'})
+    .use(timer(),{ns:'renderer', marker: 'toRehypeComplete'})
     .use(rehype2react, {
         Fragment: React.Fragment,
         allowDangerousHtml: true,
@@ -142,7 +142,7 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
             section: Section
         }
     })
-    .use(timer,{ns:'renderer', marker: 'toReactComplete'})
+    .use(timer(),{ns:'renderer', marker: 'toReactComplete'})
 }
 
 export async function renderedVFileToDoc(vfile, cmd) {
