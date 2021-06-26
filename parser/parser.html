@@ -52,14 +52,19 @@ import frontmatter from &#x27;./frontmatter&#x27;
 import {mdblocks} from &#x27;./mdblocks&#x27;
 import links, { decorateLinkNode } from &#x27;./links&#x27;
 import { getConsoleForNamespace} from &#x27;../utils/console&#x27;
+
+import {time} from &#x27;../utils/timings&#x27;
+
 //import { transform as jsTransform } from &#x27;./transformers/js&#x27;
 
 const jsTransform = null
 const console = getConsoleForNamespace(&#x27;parser&#x27;)
 
+const timer = ({ns, marker}) =&gt; (t,f) =&gt; { time(ns,marker) }
+
 const baseProcessor = ({litroot, files} = {}) =&gt; {
     return unified()
-
+    .use(timer,{ns:&#x27;parser&#x27;})
     .use((...args) =&gt; (tree, file) =&gt; {
         console.log(&quot;Parsing file: &quot;, file.path)
         file.data = file.data || {}
@@ -94,6 +99,8 @@ const baseProcessor = ({litroot, files} = {}) =&gt; {
     .use(toc, {})
     .use(headingIds)
     .use(footnotes, {inlineNotes: true})
+
+    .use(timer,{ns:&#x27;parser&#x27;, marker: &#x27;baseProcessorComplete&#x27;})
 }
 
 export const processor = ({files, fs, litroot} = {files: []}) =&gt; {
@@ -107,7 +114,7 @@ export const processor = ({files, fs, litroot} = {files: []}) =&gt; {
     .use(links.resolveLinks({litroot, files}))
 
     .use(sections, {})
-
+    .use(timer,{ns:&#x27;parser&#x27;, marker: &#x27;processorComplete&#x27;})
 }
 
 export const utils = {
