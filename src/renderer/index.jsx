@@ -33,7 +33,7 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
     console.log("Renderer: cwd", cwd)
     return parserProcessor({fs, litroot, files, cwd})
 
-    .use(timer,{ns:'renderer'})
+    .use(timer(),{ns:'renderer'})
     // hoist ast to data
     .use( (...args) => {
          return (tree,file) => {
