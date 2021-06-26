@@ -1,0 +1,3691 @@
+<html data-reactroot=""><head><title>Timings</title><meta name="litsrc" value="/meta/timings.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children" disabled=""><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu></div><style>body {
+  --bg: white;
+  --bg-secondary-color: #efefef;
+    
+  --text-color: black;
+  --text-secondary-color: grey;
+  --text-primary-color: #9999f7;
+  --text-highlight-bg: yellow;
+  --text-highlight-color: black;
+
+  --divider-subtle: #efefef;
+  --medium-space: 0.4em;
+
+  --code-bg-color: black;
+  --code-text-color: white;
+  --box-bg-opacity: 0.05;
+}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="3710:4-77976"><cell startpos="1:1-0" endpos="1:10-9"><div class="cell-content"><h1 id="timings">Timings</h1></div></cell><cell startpos="6:1-14" endpos="18:4-349" class="code"><div class="cell-content"><codecell class="dir-collapse dir-plugin lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=vega</span></span><pre><code class="js">import { VegaLite } from &quot;https://cdn.skypack.dev/react-vega&quot;;
+export const viewer = ({ node, React }) =&gt; {
+  let spec, error;
+  try {
+    spec = JSON.parse(node.data.value);
+  } catch (err) {
+    error = error.message;
+  }
+  return error || &lt;VegaLite spec={spec} renderer=&quot;svg&quot; /&gt;;
+};
+
+</code></pre></codecell></div></cell><cell startpos="22:1-353" endpos="3480:4-71229" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="output">&gt; vega #sw-connected #gh-connected</span></span><pre><code class="js">const raw = localStorage.getItem(&quot;litTimings&quot;);
+const json = obj =&gt; JSON.stringify(obj,null,2)
+
+const events = {};
+const logs = raw
+  .split(&quot;\n&quot;)
+  .map((l) =&gt; {
+    try {
+      const data = JSON.parse(l);
+      events[data.marker] = events[data.marker] || [];
+      events[data.marker].push(data.took);
+      return data
+    } catch (err) {}
+  })
+  .filter((x) =&gt; x);
+
+const avg = (arr) =&gt; arr.reduce((a, x) =&gt; a + x, 0) / arr.length;
+
+const aggregates = {};
+Object.keys(events).map((event) =&gt; {
+  const ev = events[event];
+  aggregates[event] = {
+    min: Math.min(...ev),
+    max: Math.max(...ev),
+    mean: avg(ev),
+    n: ev.length,
+  };
+});
+// const values = Object.entries(aggregates).map( ([k,v])=&gt;({id:k, ...v}))
+const values = Object.entries(events).map( ([k,v])=&gt;({id:k, value: v}))
+const spec = {
+  // $schema: &#x27;https://vega.github.io/schema/vega-lite/v5.json&#x27;,
+  description: &quot;A simple bar chart with embedded data.&quot;,
+  data: {values: logs},
+  mark: &quot;errorbar&quot;,
+  encoding: {
+    x: { field: &quot;marker&quot;, type: &quot;ordinal&quot; },
+    y: { field: &quot;took&quot;, type: &quot;quantitative&quot; },
+  },
+}
+
+return json(spec)
+return aggregates;
+return events;
+return logs;
+return raw;
+
+</code></pre></codecell><codecell class="tag-sw-connected tag-gh-connected lang-vega local output"><span class="meta"><span class="lang">vega</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span class="updatedAt">Updated <span class="Time relative">27m ago</span></span></span><output><pre><code class="vega">{
+  &quot;description&quot;: &quot;A simple bar chart with embedded data.&quot;,
+  &quot;data&quot;: {
+    &quot;values&quot;: [
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624462031002,
+        &quot;took&quot;: 102
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624462031003,
+        &quot;took&quot;: 103
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624462031003,
+        &quot;took&quot;: 103
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624462031004,
+        &quot;took&quot;: 104
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624462031910,
+        &quot;took&quot;: 1010
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624462031929,
+        &quot;took&quot;: 1029
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624462034380,
+        &quot;took&quot;: 3480
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624462034415,
+        &quot;took&quot;: 3515
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624462070004,
+        &quot;took&quot;: 102
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624462070004,
+        &quot;took&quot;: 102
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624462070004,
+        &quot;took&quot;: 102
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624462070005,
+        &quot;took&quot;: 103
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624462071157,
+        &quot;took&quot;: 1255
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624462071173,
+        &quot;took&quot;: 1271
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624462073593,
+        &quot;took&quot;: 3691
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624462073629,
+        &quot;took&quot;: 3727
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624462083559,
+        &quot;took&quot;: 39
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624462083559,
+        &quot;took&quot;: 39
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624462083559,
+        &quot;took&quot;: 39
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624462083559,
+        &quot;took&quot;: 39
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624462084540,
+        &quot;took&quot;: 1020
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624462084548,
+        &quot;took&quot;: 1028
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624462087113,
+        &quot;took&quot;: 3593
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624462087141,
+        &quot;took&quot;: 3621
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624462161259,
+        &quot;took&quot;: 107
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624462161260,
+        &quot;took&quot;: 108
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624462161260,
+        &quot;took&quot;: 108
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624462161260,
+        &quot;took&quot;: 108
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624462162203,
+        &quot;took&quot;: 1051
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624462162218,
+        &quot;took&quot;: 1066
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624462164858,
+        &quot;took&quot;: 3706
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624462164896,
+        &quot;took&quot;: 3744
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624470562441,
+        &quot;took&quot;: 106
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624470562442,
+        &quot;took&quot;: 107
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624470562442,
+        &quot;took&quot;: 107
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624470562443,
+        &quot;took&quot;: 108
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624470573057,
+        &quot;took&quot;: 44
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624470573058,
+        &quot;took&quot;: 45
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624470573058,
+        &quot;took&quot;: 45
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624470573058,
+        &quot;took&quot;: 45
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624470574605,
+        &quot;took&quot;: 1592
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624470574772,
+        &quot;took&quot;: 1759
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624470578164,
+        &quot;took&quot;: 5151
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624470578334,
+        &quot;took&quot;: 5321
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624470592728,
+        &quot;took&quot;: 41
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624470592728,
+        &quot;took&quot;: 41
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624470592728,
+        &quot;took&quot;: 41
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624470592728,
+        &quot;took&quot;: 41
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624470593826,
+        &quot;took&quot;: 1139
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624470593839,
+        &quot;took&quot;: 1152
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624470595869,
+        &quot;took&quot;: 3182
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624470595887,
+        &quot;took&quot;: 3200
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624484576005,
+        &quot;took&quot;: 105
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624484576006,
+        &quot;took&quot;: 106
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624484576006,
+        &quot;took&quot;: 106
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624484576007,
+        &quot;took&quot;: 107
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624484641797,
+        &quot;took&quot;: 125
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624484641798,
+        &quot;took&quot;: 126
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624484641798,
+        &quot;took&quot;: 126
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624484641799,
+        &quot;took&quot;: 127
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624484643578,
+        &quot;took&quot;: 1906
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624484643811,
+        &quot;took&quot;: 2139
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624484647725,
+        &quot;took&quot;: 6053
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624484647896,
+        &quot;took&quot;: 6224
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624484983852,
+        &quot;took&quot;: 35
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624484983852,
+        &quot;took&quot;: 35
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624484983852,
+        &quot;took&quot;: 35
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624484983853,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624484985620,
+        &quot;took&quot;: 1803
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624484985645,
+        &quot;took&quot;: 1828
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624484987777,
+        &quot;took&quot;: 3960
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624484987965,
+        &quot;took&quot;: 4148
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624485082204,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624485082204,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624485082204,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624485082204,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624485083402,
+        &quot;took&quot;: 1234
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624485083413,
+        &quot;took&quot;: 1245
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624485087056,
+        &quot;took&quot;: 4888
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624485087105,
+        &quot;took&quot;: 4937
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624485219840,
+        &quot;took&quot;: 54
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624485219840,
+        &quot;took&quot;: 54
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624485219841,
+        &quot;took&quot;: 55
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624485219841,
+        &quot;took&quot;: 55
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624485221289,
+        &quot;took&quot;: 1503
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624485221314,
+        &quot;took&quot;: 1528
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624485224659,
+        &quot;took&quot;: 4873
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624485224847,
+        &quot;took&quot;: 5061
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624485348637,
+        &quot;took&quot;: 110
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624485348637,
+        &quot;took&quot;: 110
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624485348637,
+        &quot;took&quot;: 110
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624485348638,
+        &quot;took&quot;: 111
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624485350117,
+        &quot;took&quot;: 1590
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624485350344,
+        &quot;took&quot;: 1817
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624485352673,
+        &quot;took&quot;: 4146
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624485352696,
+        &quot;took&quot;: 4169
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624485397233,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624485397233,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624485397234,
+        &quot;took&quot;: 37
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624485397234,
+        &quot;took&quot;: 37
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624485398414,
+        &quot;took&quot;: 1217
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624485398423,
+        &quot;took&quot;: 1226
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624485400455,
+        &quot;took&quot;: 3258
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624485400482,
+        &quot;took&quot;: 3285
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624485485235,
+        &quot;took&quot;: 37
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624485485235,
+        &quot;took&quot;: 37
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624485485235,
+        &quot;took&quot;: 37
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624485485235,
+        &quot;took&quot;: 37
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624485486668,
+        &quot;took&quot;: 1470
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624485486681,
+        &quot;took&quot;: 1483
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624485488738,
+        &quot;took&quot;: 3540
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624485488756,
+        &quot;took&quot;: 3558
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624485574902,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624485574902,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624485574902,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624485574902,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624485575742,
+        &quot;took&quot;: 876
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624485575753,
+        &quot;took&quot;: 887
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624485626330,
+        &quot;took&quot;: 35
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624485626330,
+        &quot;took&quot;: 35
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624485626330,
+        &quot;took&quot;: 35
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624485626330,
+        &quot;took&quot;: 35
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624485627411,
+        &quot;took&quot;: 1116
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624485627435,
+        &quot;took&quot;: 1140
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624485631432,
+        &quot;took&quot;: 5137
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624485631658,
+        &quot;took&quot;: 5363
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624485632379,
+        &quot;took&quot;: 46
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624485632379,
+        &quot;took&quot;: 46
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624485632379,
+        &quot;took&quot;: 46
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624485632379,
+        &quot;took&quot;: 46
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624485633762,
+        &quot;took&quot;: 1429
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624485633793,
+        &quot;took&quot;: 1460
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624485635732,
+        &quot;took&quot;: 3399
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624485635754,
+        &quot;took&quot;: 3421
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624485675473,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624485675473,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624485675473,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624485675473,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624485676060,
+        &quot;took&quot;: 623
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624485676067,
+        &quot;took&quot;: 630
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624485679387,
+        &quot;took&quot;: 3950
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624485679560,
+        &quot;took&quot;: 4123
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624486205033,
+        &quot;took&quot;: 247
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624486205034,
+        &quot;took&quot;: 248
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624486205035,
+        &quot;took&quot;: 249
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624486205036,
+        &quot;took&quot;: 250
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624486206325,
+        &quot;took&quot;: 1539
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624486206556,
+        &quot;took&quot;: 1770
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624486208766,
+        &quot;took&quot;: 3980
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624486208832,
+        &quot;took&quot;: 4046
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624486288797,
+        &quot;took&quot;: 77
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624486288798,
+        &quot;took&quot;: 78
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624486288798,
+        &quot;took&quot;: 78
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624486288798,
+        &quot;took&quot;: 78
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624486289898,
+        &quot;took&quot;: 1178
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624486289908,
+        &quot;took&quot;: 1188
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624486291908,
+        &quot;took&quot;: 3188
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624486291948,
+        &quot;took&quot;: 3228
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624486307482,
+        &quot;took&quot;: 78
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624486307483,
+        &quot;took&quot;: 79
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624486307483,
+        &quot;took&quot;: 79
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624486307483,
+        &quot;took&quot;: 79
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624486308494,
+        &quot;took&quot;: 1090
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624486308507,
+        &quot;took&quot;: 1103
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624486310504,
+        &quot;took&quot;: 3100
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624486310530,
+        &quot;took&quot;: 3126
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624486322632,
+        &quot;took&quot;: 79
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624486322633,
+        &quot;took&quot;: 80
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624486322633,
+        &quot;took&quot;: 80
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624486322633,
+        &quot;took&quot;: 80
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624486323690,
+        &quot;took&quot;: 1137
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624486323701,
+        &quot;took&quot;: 1148
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624486325772,
+        &quot;took&quot;: 3219
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624486325789,
+        &quot;took&quot;: 3236
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624486350461,
+        &quot;took&quot;: 78
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624486350462,
+        &quot;took&quot;: 79
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624486350462,
+        &quot;took&quot;: 79
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624486350462,
+        &quot;took&quot;: 79
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624486351691,
+        &quot;took&quot;: 1308
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624486351701,
+        &quot;took&quot;: 1318
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624486353793,
+        &quot;took&quot;: 3410
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624486353816,
+        &quot;took&quot;: 3433
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624486367413,
+        &quot;took&quot;: 77
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624486367414,
+        &quot;took&quot;: 78
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624486367414,
+        &quot;took&quot;: 78
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624486367414,
+        &quot;took&quot;: 78
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624486368632,
+        &quot;took&quot;: 1296
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624486368640,
+        &quot;took&quot;: 1304
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624486370752,
+        &quot;took&quot;: 3416
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624486370772,
+        &quot;took&quot;: 3436
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624486387650,
+        &quot;took&quot;: 79
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624486387651,
+        &quot;took&quot;: 80
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624486387651,
+        &quot;took&quot;: 80
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624486387651,
+        &quot;took&quot;: 80
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624486388744,
+        &quot;took&quot;: 1173
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624486388756,
+        &quot;took&quot;: 1185
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624486390854,
+        &quot;took&quot;: 3283
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624486390897,
+        &quot;took&quot;: 3326
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624486519927,
+        &quot;took&quot;: 258
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624486519930,
+        &quot;took&quot;: 261
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624486519930,
+        &quot;took&quot;: 261
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624486519931,
+        &quot;took&quot;: 262
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624486522009,
+        &quot;took&quot;: 2340
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624486522043,
+        &quot;took&quot;: 2374
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624486525464,
+        &quot;took&quot;: 5795
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624486525867,
+        &quot;took&quot;: 6198
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624486556252,
+        &quot;took&quot;: 255
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624486556254,
+        &quot;took&quot;: 257
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624486556254,
+        &quot;took&quot;: 257
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624486556256,
+        &quot;took&quot;: 259
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624486557340,
+        &quot;took&quot;: 1343
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624486557789,
+        &quot;took&quot;: 87
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624486557790,
+        &quot;took&quot;: 88
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624486557790,
+        &quot;took&quot;: 88
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624486557790,
+        &quot;took&quot;: 88
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624486558949,
+        &quot;took&quot;: 1247
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624486558964,
+        &quot;took&quot;: 1262
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624486561594,
+        &quot;took&quot;: 3892
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624486561995,
+        &quot;took&quot;: 4293
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624523417377,
+        &quot;took&quot;: 103
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624523417377,
+        &quot;took&quot;: 103
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624523417378,
+        &quot;took&quot;: 104
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624523417378,
+        &quot;took&quot;: 104
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624523418763,
+        &quot;took&quot;: 1489
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624523418968,
+        &quot;took&quot;: 1694
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624523422741,
+        &quot;took&quot;: 5467
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624523422914,
+        &quot;took&quot;: 5640
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624523601141,
+        &quot;took&quot;: 35
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624523601141,
+        &quot;took&quot;: 35
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624523601141,
+        &quot;took&quot;: 35
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624523601141,
+        &quot;took&quot;: 35
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624523602296,
+        &quot;took&quot;: 1190
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624523602979,
+        &quot;took&quot;: 37
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624523602979,
+        &quot;took&quot;: 37
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624523602979,
+        &quot;took&quot;: 37
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624523602979,
+        &quot;took&quot;: 37
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624523604425,
+        &quot;took&quot;: 1483
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624523604436,
+        &quot;took&quot;: 1494
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624523607988,
+        &quot;took&quot;: 5046
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624523608023,
+        &quot;took&quot;: 5081
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624523626062,
+        &quot;took&quot;: 34
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624523626063,
+        &quot;took&quot;: 35
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624523626063,
+        &quot;took&quot;: 35
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624523626063,
+        &quot;took&quot;: 35
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624523627490,
+        &quot;took&quot;: 1462
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624523627494,
+        &quot;took&quot;: 1466
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624523630753,
+        &quot;took&quot;: 4725
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624523630967,
+        &quot;took&quot;: 4939
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624536759190,
+        &quot;took&quot;: 105
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624536759191,
+        &quot;took&quot;: 106
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624536759191,
+        &quot;took&quot;: 106
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624536759192,
+        &quot;took&quot;: 107
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624536759961,
+        &quot;took&quot;: 876
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624536760143,
+        &quot;took&quot;: 1058
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624536762241,
+        &quot;took&quot;: 3156
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624536762414,
+        &quot;took&quot;: 3329
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624536916985,
+        &quot;took&quot;: 113
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624536916986,
+        &quot;took&quot;: 114
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624536916986,
+        &quot;took&quot;: 114
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624536916987,
+        &quot;took&quot;: 115
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624536917477,
+        &quot;took&quot;: 605
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624536917486,
+        &quot;took&quot;: 614
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624536918859,
+        &quot;took&quot;: 1987
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624536919037,
+        &quot;took&quot;: 2165
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624536948753,
+        &quot;took&quot;: 42
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624536948753,
+        &quot;took&quot;: 42
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624536948753,
+        &quot;took&quot;: 42
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624536948753,
+        &quot;took&quot;: 42
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624536949340,
+        &quot;took&quot;: 629
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624536949344,
+        &quot;took&quot;: 633
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624536949965,
+        &quot;took&quot;: 1254
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624536950151,
+        &quot;took&quot;: 1440
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624536950273,
+        &quot;took&quot;: 47
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624536950274,
+        &quot;took&quot;: 48
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624536950274,
+        &quot;took&quot;: 48
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624536950274,
+        &quot;took&quot;: 48
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624536951657,
+        &quot;took&quot;: 35
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624536951658,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624536951658,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624536951658,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624536954963,
+        &quot;took&quot;: 3341
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624536954967,
+        &quot;took&quot;: 3345
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624536960462,
+        &quot;took&quot;: 8840
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624536960492,
+        &quot;took&quot;: 8870
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624538802995,
+        &quot;took&quot;: 107
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624538802996,
+        &quot;took&quot;: 108
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624538802996,
+        &quot;took&quot;: 108
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624538802996,
+        &quot;took&quot;: 108
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624538803799,
+        &quot;took&quot;: 911
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624538803986,
+        &quot;took&quot;: 1098
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624538806057,
+        &quot;took&quot;: 3169
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624538806229,
+        &quot;took&quot;: 3341
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624556534534,
+        &quot;took&quot;: 875
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624556534541,
+        &quot;took&quot;: 882
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624556534541,
+        &quot;took&quot;: 882
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624556534547,
+        &quot;took&quot;: 888
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624556535539,
+        &quot;took&quot;: 1880
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624556535802,
+        &quot;took&quot;: 2143
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624556540229,
+        &quot;took&quot;: 6570
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624556541147,
+        &quot;took&quot;: 7488
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624572099259,
+        &quot;took&quot;: 103
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624572099260,
+        &quot;took&quot;: 104
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624572099260,
+        &quot;took&quot;: 104
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624572099261,
+        &quot;took&quot;: 105
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624572100768,
+        &quot;took&quot;: 1612
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624572100990,
+        &quot;took&quot;: 1834
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624572104817,
+        &quot;took&quot;: 5661
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624572105007,
+        &quot;took&quot;: 5851
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624572114233,
+        &quot;took&quot;: 38
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624572114233,
+        &quot;took&quot;: 38
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624572114233,
+        &quot;took&quot;: 38
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624572114233,
+        &quot;took&quot;: 38
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624572115405,
+        &quot;took&quot;: 1210
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624572115418,
+        &quot;took&quot;: 1223
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624572117494,
+        &quot;took&quot;: 3299
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624572117519,
+        &quot;took&quot;: 3324
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624572227315,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624572227315,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624572227315,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624572227315,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624572228513,
+        &quot;took&quot;: 1234
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624572228525,
+        &quot;took&quot;: 1246
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624572230535,
+        &quot;took&quot;: 3256
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624572230563,
+        &quot;took&quot;: 3284
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624572321597,
+        &quot;took&quot;: 55
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624572321598,
+        &quot;took&quot;: 56
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624572321598,
+        &quot;took&quot;: 56
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624572321598,
+        &quot;took&quot;: 56
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624572322934,
+        &quot;took&quot;: 1392
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624572322943,
+        &quot;took&quot;: 1401
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624572325100,
+        &quot;took&quot;: 3558
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624572325123,
+        &quot;took&quot;: 3581
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624572943926,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624572943926,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624572943927,
+        &quot;took&quot;: 37
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624572943927,
+        &quot;took&quot;: 37
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624572944911,
+        &quot;took&quot;: 1021
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624572945098,
+        &quot;took&quot;: 1208
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624572947331,
+        &quot;took&quot;: 3441
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624572947485,
+        &quot;took&quot;: 3595
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624572948270,
+        &quot;took&quot;: 40
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624572948270,
+        &quot;took&quot;: 40
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624572948270,
+        &quot;took&quot;: 40
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624572948270,
+        &quot;took&quot;: 40
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624572949381,
+        &quot;took&quot;: 1151
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624572949392,
+        &quot;took&quot;: 1162
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624572952752,
+        &quot;took&quot;: 4522
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624572952917,
+        &quot;took&quot;: 4687
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624573790870,
+        &quot;took&quot;: 105
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624573790871,
+        &quot;took&quot;: 106
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624573790871,
+        &quot;took&quot;: 106
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624573790872,
+        &quot;took&quot;: 107
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624573792096,
+        &quot;took&quot;: 1331
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624573792501,
+        &quot;took&quot;: 39
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624573792501,
+        &quot;took&quot;: 39
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624573792502,
+        &quot;took&quot;: 40
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624573792502,
+        &quot;took&quot;: 40
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624573793820,
+        &quot;took&quot;: 1358
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624573793836,
+        &quot;took&quot;: 1374
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624573797808,
+        &quot;took&quot;: 5346
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624573797996,
+        &quot;took&quot;: 5534
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624573802165,
+        &quot;took&quot;: 41
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624573802165,
+        &quot;took&quot;: 41
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624573802165,
+        &quot;took&quot;: 41
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624573802165,
+        &quot;took&quot;: 41
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624573803198,
+        &quot;took&quot;: 1074
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624573803209,
+        &quot;took&quot;: 1085
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624573806548,
+        &quot;took&quot;: 4424
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624573806598,
+        &quot;took&quot;: 4474
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624573903562,
+        &quot;took&quot;: 108
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624573903563,
+        &quot;took&quot;: 109
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624573903563,
+        &quot;took&quot;: 109
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624573903563,
+        &quot;took&quot;: 109
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624573904463,
+        &quot;took&quot;: 1009
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624573904758,
+        &quot;took&quot;: 40
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624573904759,
+        &quot;took&quot;: 41
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624573904759,
+        &quot;took&quot;: 41
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624573904759,
+        &quot;took&quot;: 41
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624573906160,
+        &quot;took&quot;: 1442
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624573906185,
+        &quot;took&quot;: 1467
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624573908502,
+        &quot;took&quot;: 3784
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624573908700,
+        &quot;took&quot;: 3982
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624710628557,
+        &quot;took&quot;: 104
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624710628558,
+        &quot;took&quot;: 105
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624710628558,
+        &quot;took&quot;: 105
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624710628558,
+        &quot;took&quot;: 105
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624710833113,
+        &quot;took&quot;: 113
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624710833114,
+        &quot;took&quot;: 114
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624710833114,
+        &quot;took&quot;: 114
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624710833115,
+        &quot;took&quot;: 115
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624710833918,
+        &quot;took&quot;: 918
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624710834108,
+        &quot;took&quot;: 1108
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624710837109,
+        &quot;took&quot;: 4109
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624710837295,
+        &quot;took&quot;: 4295
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624711638177,
+        &quot;took&quot;: 102
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624711638178,
+        &quot;took&quot;: 103
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624711638178,
+        &quot;took&quot;: 103
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624711638178,
+        &quot;took&quot;: 103
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624711638671,
+        &quot;took&quot;: 596
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624711638741,
+        &quot;took&quot;: 666
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624711640364,
+        &quot;took&quot;: 2289
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624711640543,
+        &quot;took&quot;: 2468
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624711669427,
+        &quot;took&quot;: 38
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624711669427,
+        &quot;took&quot;: 38
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624711669427,
+        &quot;took&quot;: 38
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624711669427,
+        &quot;took&quot;: 38
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624711670026,
+        &quot;took&quot;: 637
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624711670032,
+        &quot;took&quot;: 643
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624711670820,
+        &quot;took&quot;: 1431
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624711670973,
+        &quot;took&quot;: 1584
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624711671114,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624711671114,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624711671114,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624711671114,
+        &quot;took&quot;: 36
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624711671576,
+        &quot;took&quot;: 498
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624711671580,
+        &quot;took&quot;: 502
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624711675921,
+        &quot;took&quot;: 4843
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624711675950,
+        &quot;took&quot;: 4872
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624744199165,
+        &quot;took&quot;: 108
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624744199166,
+        &quot;took&quot;: 109
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624744199166,
+        &quot;took&quot;: 109
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624744199166,
+        &quot;took&quot;: 109
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624744200012,
+        &quot;took&quot;: 955
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624744200182,
+        &quot;took&quot;: 1125
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624744202367,
+        &quot;took&quot;: 3310
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624744202538,
+        &quot;took&quot;: 3481
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624744246751,
+        &quot;took&quot;: 38
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624744246751,
+        &quot;took&quot;: 38
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624744246751,
+        &quot;took&quot;: 38
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624744246751,
+        &quot;took&quot;: 38
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624744247233,
+        &quot;took&quot;: 520
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624744247237,
+        &quot;took&quot;: 524
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624744248186,
+        &quot;took&quot;: 1473
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624744248366,
+        &quot;took&quot;: 1653
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624744253726,
+        &quot;took&quot;: 34
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624744253726,
+        &quot;took&quot;: 34
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624744253726,
+        &quot;took&quot;: 34
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624744253727,
+        &quot;took&quot;: 35
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624744254338,
+        &quot;took&quot;: 646
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624744254343,
+        &quot;took&quot;: 651
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624744255060,
+        &quot;took&quot;: 1368
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624744255085,
+        &quot;took&quot;: 1393
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624744255229,
+        &quot;took&quot;: 34
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624744255230,
+        &quot;took&quot;: 35
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624744255230,
+        &quot;took&quot;: 35
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624744255230,
+        &quot;took&quot;: 35
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624744260641,
+        &quot;took&quot;: 5446
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624744260647,
+        &quot;took&quot;: 5452
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624744262276,
+        &quot;took&quot;: 7081
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624744262333,
+        &quot;took&quot;: 7138
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624744898211,
+        &quot;took&quot;: 104
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624744898212,
+        &quot;took&quot;: 105
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624744898212,
+        &quot;took&quot;: 105
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624744898213,
+        &quot;took&quot;: 106
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624744898691,
+        &quot;took&quot;: 584
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624747627243,
+        &quot;took&quot;: 238
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624747627244,
+        &quot;took&quot;: 239
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624747627245,
+        &quot;took&quot;: 240
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624747627246,
+        &quot;took&quot;: 241
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624747628017,
+        &quot;took&quot;: 1012
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624747628195,
+        &quot;took&quot;: 1190
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624747628284,
+        &quot;took&quot;: 0
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624747628301,
+        &quot;took&quot;: 17
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624747628308,
+        &quot;took&quot;: 0
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624747628498,
+        &quot;took&quot;: 214
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624747628510,
+        &quot;took&quot;: 226
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624747628511,
+        &quot;took&quot;: 227
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624747628513,
+        &quot;took&quot;: 205
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624747628728,
+        &quot;took&quot;: 1723
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624747629114,
+        &quot;took&quot;: 2109
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624747629372,
+        &quot;took&quot;: 84
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624747629372,
+        &quot;took&quot;: 84
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624747629372,
+        &quot;took&quot;: 84
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624747629373,
+        &quot;took&quot;: 85
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624747631518,
+        &quot;took&quot;: 83
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624747631519,
+        &quot;took&quot;: 84
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624747631519,
+        &quot;took&quot;: 84
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624747631519,
+        &quot;took&quot;: 84
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624747646868,
+        &quot;took&quot;: 77
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624747646868,
+        &quot;took&quot;: 77
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624747646868,
+        &quot;took&quot;: 77
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624747646869,
+        &quot;took&quot;: 78
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624747660648,
+        &quot;took&quot;: 239
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624747660650,
+        &quot;took&quot;: 241
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624747660650,
+        &quot;took&quot;: 241
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624747660652,
+        &quot;took&quot;: 243
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624747660773,
+        &quot;took&quot;: 364
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624747660785,
+        &quot;took&quot;: 376
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624747660863,
+        &quot;took&quot;: 0
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624747660879,
+        &quot;took&quot;: 16
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624747660885,
+        &quot;took&quot;: 0
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624747661406,
+        &quot;took&quot;: 543
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624747661417,
+        &quot;took&quot;: 554
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624747661417,
+        &quot;took&quot;: 554
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624747661420,
+        &quot;took&quot;: 535
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624747662851,
+        &quot;took&quot;: 2442
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624747663229,
+        &quot;took&quot;: 2820
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624747667698,
+        &quot;took&quot;: 83
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624747667699,
+        &quot;took&quot;: 84
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624747667699,
+        &quot;took&quot;: 84
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624747667699,
+        &quot;took&quot;: 84
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624747668199,
+        &quot;took&quot;: 584
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624747668205,
+        &quot;took&quot;: 590
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624747668238,
+        &quot;took&quot;: 0
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624747668242,
+        &quot;took&quot;: 0
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624747668291,
+        &quot;took&quot;: 53
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624747668302,
+        &quot;took&quot;: 64
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624747668303,
+        &quot;took&quot;: 65
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624747668306,
+        &quot;took&quot;: 64
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624747669111,
+        &quot;took&quot;: 1496
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624747669435,
+        &quot;took&quot;: 1820
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624747672072,
+        &quot;took&quot;: 82
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624747672072,
+        &quot;took&quot;: 82
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624747672072,
+        &quot;took&quot;: 82
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624747672073,
+        &quot;took&quot;: 83
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624747672587,
+        &quot;took&quot;: 597
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624747672591,
+        &quot;took&quot;: 601
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624747672709,
+        &quot;took&quot;: 0
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624747672713,
+        &quot;took&quot;: 0
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624747672756,
+        &quot;took&quot;: 47
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624747672766,
+        &quot;took&quot;: 57
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624747672767,
+        &quot;took&quot;: 58
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624747672769,
+        &quot;took&quot;: 56
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624747674362,
+        &quot;took&quot;: 2372
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624747674424,
+        &quot;took&quot;: 2434
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624747677410,
+        &quot;took&quot;: 4701
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624747677412,
+        &quot;took&quot;: 4699
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624747677472,
+        &quot;took&quot;: 4763
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624747677479,
+        &quot;took&quot;: 4770
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624747677480,
+        &quot;took&quot;: 4771
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624747677482,
+        &quot;took&quot;: 4769
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624747689640,
+        &quot;took&quot;: 83
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624747689641,
+        &quot;took&quot;: 84
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624747689641,
+        &quot;took&quot;: 84
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624747689642,
+        &quot;took&quot;: 85
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624747689983,
+        &quot;took&quot;: 426
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624747689986,
+        &quot;took&quot;: 429
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624747690109,
+        &quot;took&quot;: 0
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624747690111,
+        &quot;took&quot;: 0
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624747690152,
+        &quot;took&quot;: 43
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624747690162,
+        &quot;took&quot;: 53
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624747690162,
+        &quot;took&quot;: 53
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624747690165,
+        &quot;took&quot;: 54
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624747691215,
+        &quot;took&quot;: 1658
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624747691276,
+        &quot;took&quot;: 1719
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624747693961,
+        &quot;took&quot;: 3852
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624747693964,
+        &quot;took&quot;: 3853
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624747694024,
+        &quot;took&quot;: 3915
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624747694033,
+        &quot;took&quot;: 3924
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624747694033,
+        &quot;took&quot;: 3924
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624747694036,
+        &quot;took&quot;: 3925
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624747704482,
+        &quot;took&quot;: 77
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624747704483,
+        &quot;took&quot;: 78
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624747704483,
+        &quot;took&quot;: 78
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624747704483,
+        &quot;took&quot;: 78
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624747704799,
+        &quot;took&quot;: 394
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624747704802,
+        &quot;took&quot;: 397
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624747704930,
+        &quot;took&quot;: 0
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624747704932,
+        &quot;took&quot;: 0
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624747704971,
+        &quot;took&quot;: 41
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624747704980,
+        &quot;took&quot;: 50
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624747704980,
+        &quot;took&quot;: 50
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624747704982,
+        &quot;took&quot;: 50
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624747705963,
+        &quot;took&quot;: 1558
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624747706026,
+        &quot;took&quot;: 1621
+      }
+    ]
+  },
+  &quot;mark&quot;: &quot;errorbar&quot;,
+  &quot;encoding&quot;: {
+    &quot;x&quot;: {
+      &quot;field&quot;: &quot;marker&quot;,
+      &quot;type&quot;: &quot;ordinal&quot;
+    },
+    &quot;y&quot;: {
+      &quot;field&quot;: &quot;took&quot;,
+      &quot;type&quot;: &quot;quantitative&quot;
+    }
+  }
+}
+</code></pre></output></codecell></div></cell><cell startpos="3481:1-71230" endpos="3556:4-72643" class="code output"><div class="cell-content"><codecell class="tag-sw-connected tag-gh-connected lang-vega local output"><span class="meta"><span class="lang">vega</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span class="updatedAt">Updated <span class="Time relative">3.3d ago</span></span></span><output><pre><code class="vega">{
+  &quot;description&quot;: &quot;A simple bar chart with embedded data.&quot;,
+  &quot;data&quot;: {
+    &quot;values&quot;: [
+      {
+        &quot;id&quot;: &quot;importsComplete&quot;,
+        &quot;min&quot;: 35,
+        &quot;max&quot;: 171,
+        &quot;mean&quot;: 82.55172413793103,
+        &quot;n&quot;: 29
+      },
+      {
+        &quot;id&quot;: &quot;fsSetup&quot;,
+        &quot;min&quot;: 35,
+        &quot;max&quot;: 172,
+        &quot;mean&quot;: 83.37931034482759,
+        &quot;n&quot;: 29
+      },
+      {
+        &quot;id&quot;: &quot;litObj&quot;,
+        &quot;min&quot;: 35,
+        &quot;max&quot;: 172,
+        &quot;mean&quot;: 83.41379310344827,
+        &quot;n&quot;: 29
+      },
+      {
+        &quot;id&quot;: &quot;initStart&quot;,
+        &quot;min&quot;: 35,
+        &quot;max&quot;: 173,
+        &quot;mean&quot;: 83.82758620689656,
+        &quot;n&quot;: 29
+      },
+      {
+        &quot;id&quot;: &quot;readFile&quot;,
+        &quot;min&quot;: 603,
+        &quot;max&quot;: 2339,
+        &quot;mean&quot;: 1487.24,
+        &quot;n&quot;: 25
+      },
+      {
+        &quot;id&quot;: &quot;manifestLoaded&quot;,
+        &quot;min&quot;: 611,
+        &quot;max&quot;: 2723,
+        &quot;mean&quot;: 1627.1739130434783,
+        &quot;n&quot;: 23
+      },
+      {
+        &quot;id&quot;: &quot;processedFile&quot;,
+        &quot;min&quot;: 3250,
+        &quot;max&quot;: 7818,
+        &quot;mean&quot;: 5322.478260869565,
+        &quot;n&quot;: 23
+      },
+      {
+        &quot;id&quot;: &quot;rendered&quot;,
+        &quot;min&quot;: 3278,
+        &quot;max&quot;: 7847,
+        &quot;mean&quot;: 5534.521739130435,
+        &quot;n&quot;: 23
+      }
+    ]
+  },
+  &quot;mark&quot;: &quot;bar&quot;,
+  &quot;encoding&quot;: {
+    &quot;x&quot;: {
+      &quot;field&quot;: &quot;id&quot;,
+      &quot;type&quot;: &quot;ordinal&quot;
+    },
+    &quot;y&quot;: {
+      &quot;field&quot;: &quot;mean&quot;,
+      &quot;type&quot;: &quot;quantitative&quot;
+    }
+  }
+}
+</code></pre></output></codecell></div></cell><cell startpos="3557:1-72644" endpos="3646:4-74350" class="code output"><div class="cell-content"><codecell class="tag-sw-connected tag-gh-connected lang-vega local output"><span class="meta"><span class="lang">vega</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span class="updatedAt">Updated <span class="Time relative">1.4w ago</span></span></span><output><pre><code class="vega">{
+  &quot;description&quot;: &quot;A simple bar chart with embedded data.&quot;,
+  &quot;data&quot;: {
+    &quot;values&quot;: [
+      {
+        &quot;id&quot;: &quot;importsComplete&quot;,
+        &quot;min&quot;: 34,
+        &quot;max&quot;: 254,
+        &quot;mean&quot;: 73.28888888888889,
+        &quot;n&quot;: 135
+      },
+      {
+        &quot;id&quot;: &quot;fsSetup&quot;,
+        &quot;min&quot;: 34,
+        &quot;max&quot;: 258,
+        &quot;mean&quot;: 73.92592592592592,
+        &quot;n&quot;: 135
+      },
+      {
+        &quot;id&quot;: &quot;litObj&quot;,
+        &quot;min&quot;: 34,
+        &quot;max&quot;: 258,
+        &quot;mean&quot;: 74.00740740740741,
+        &quot;n&quot;: 135
+      },
+      {
+        &quot;id&quot;: &quot;initStart&quot;,
+        &quot;min&quot;: 34,
+        &quot;max&quot;: 259,
+        &quot;mean&quot;: 74.36296296296297,
+        &quot;n&quot;: 135
+      },
+      {
+        &quot;id&quot;: &quot;readFile&quot;,
+        &quot;min&quot;: 433,
+        &quot;max&quot;: 7691,
+        &quot;mean&quot;: 1391.264,
+        &quot;n&quot;: 125
+      },
+      {
+        &quot;id&quot;: &quot;settingsFetched&quot;,
+        &quot;min&quot;: 435,
+        &quot;max&quot;: 7715,
+        &quot;mean&quot;: 1606.446153846154,
+        &quot;n&quot;: 65
+      },
+      {
+        &quot;id&quot;: &quot;settingsLoaded&quot;,
+        &quot;min&quot;: 610,
+        &quot;max&quot;: 8998,
+        &quot;mean&quot;: 2904.6774193548385,
+        &quot;n&quot;: 62
+      },
+      {
+        &quot;id&quot;: &quot;manifestLoaded&quot;,
+        &quot;min&quot;: 621,
+        &quot;max&quot;: 9011,
+        &quot;mean&quot;: 2366.153153153153,
+        &quot;n&quot;: 111
+      },
+      {
+        &quot;id&quot;: &quot;processedFile&quot;,
+        &quot;min&quot;: 693,
+        &quot;max&quot;: 51116,
+        &quot;mean&quot;: 4615.3644859813085,
+        &quot;n&quot;: 107
+      },
+      {
+        &quot;id&quot;: &quot;rendered&quot;,
+        &quot;min&quot;: 718,
+        &quot;max&quot;: 51276,
+        &quot;mean&quot;: 4801.411214953271,
+        &quot;n&quot;: 107
+      }
+    ]
+  },
+  &quot;mark&quot;: &quot;bar&quot;,
+  &quot;encoding&quot;: {
+    &quot;x&quot;: {
+      &quot;field&quot;: &quot;id&quot;,
+      &quot;type&quot;: &quot;ordinal&quot;
+    },
+    &quot;y&quot;: {
+      &quot;field&quot;: &quot;mean&quot;,
+      &quot;type&quot;: &quot;quantitative&quot;
+    }
+  }
+}
+</code></pre></output></codecell></div></cell><cell startpos="3647:1-74351" endpos="3658:4-75115" class="code output"><div class="cell-content"><codecell class="tag-sw-connected tag-gh-connected lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span class="updatedAt">Updated <span class="Time relative">1.8w ago</span></span></span><output><pre><code class="text">{ importsComplete: { min: 31, max: 200, mean: 73.72631578947369, n: 95 },
+  fsSetup: { min: 31, max: 202, mean: 74.51578947368421, n: 95 },
+  litObj: { min: 31, max: 202, mean: 74.56842105263158, n: 95 },
+  initStart: { min: 31, max: 203, mean: 74.93684210526315, n: 95 },
+  readFile: { min: 300, max: 51363, mean: 1548.6463414634147, n: 82 },
+  settingsLoaded: { min: 1100, max: 70246, mean: 6993.295081967213, n: 61 },
+  manifestLoaded: { min: 2428, max: 70436, mean: 7705.462962962963, n: 54 },
+  processedFile: { min: 3033, max: 72866, mean: 8876, n: 53 },
+  rendered: { min: 3171, max: 73111, mean: 9079.471698113208, n: 53 },
+  settingsFetched: { min: 1156, max: 10758, mean: 3542.625, n: 24 } }
+</code></pre></output></codecell></div></cell><section depth="2" class="" startpos="3663:1-75120" endpos="3710:4-77976"><cell startpos="3663:1-75120" endpos="3663:8-75127"><div class="cell-content"><h2 id="runs">Runs</h2></div></cell><cell startpos="3665:1-75129" endpos="3675:4-75806" class="code output"><div class="cell-content"><codecell class="tag-gh-connected tag-no-sw lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span style="color:white;background-color:#64145f" class="tag">no-sw</span></span><output><pre><code class="text">{ importsComplete: { min: 33, max: 212, mean: 80.08333333333333, n: 36 },
+  fsSetup: { min: 33, max: 213, mean: 80.61111111111111, n: 36 },
+  litObj: { min: 33, max: 213, mean: 80.66666666666667, n: 36 },
+  initStart: { min: 33, max: 215, mean: 81.05555555555556, n: 36 },
+  readFile: { min: 43, max: 69015, mean: 3341.6153846153848, n: 26 },
+  settingsLoaded: { min: 222, max: 73567, mean: 5477.653846153846, n: 26 },
+  manifestLoaded: { min: 1368, max: 73575, mean: 6254.181818181818, n: 22 },
+  processedFile: { min: 1373, max: 73583, mean: 6429.409090909091, n: 22 },
+  rendered: { min: 1536, max: 73941, mean: 6668.590909090909, n: 22 } }
+</code></pre></output></codecell></div></cell><cell startpos="3677:1-75808" endpos="3677:206-76013"><div class="cell-content"><p>So far the majority of time before complete is spent fetching files from the remote, 3s to read file, doubled by config, +1s for manifest. Of ~30 samples, with service worker disabled and GitHub connected.</p></div></cell><cell startpos="3678:1-76014" endpos="3688:4-76692" class="code output"><div class="cell-content"><codecell class="tag-no-gh tag-no-sw lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:white;background-color:#641446" class="tag">no-gh</span><span style="color:white;background-color:#64145f" class="tag">no-sw</span><span class="updatedAt">Updated <span class="Time relative">2w ago</span></span></span><output><pre><code class="text">{ importsComplete: { min: 73, max: 197, mean: 108.9090909090909, n: 11 },
+  fsSetup: { min: 73, max: 198, mean: 109.81818181818181, n: 11 },
+  litObj: { min: 73, max: 199, mean: 110, n: 11 },
+  initStart: { min: 74, max: 200, mean: 110.36363636363636, n: 11 },
+  readFile: { min: 645, max: 1024, mean: 833.9090909090909, n: 11 },
+  settingsLoaded: { min: 7519, max: 7895, mean: 7688.909090909091, n: 11 },
+  manifestLoaded: { min: 7537, max: 7920, mean: 7709.363636363636, n: 11 },
+  processedFile: { min: 7543, max: 10109, mean: 7922.363636363636, n: 11 },
+  rendered: { min: 7831, max: 10452, mean: 8227.272727272728, n: 11 } }
+</code></pre></output></codecell></div></cell><cell startpos="3689:1-76693" endpos="3699:4-77371" class="code output"><div class="cell-content"><codecell class="tag-sw-connected tag-gh-connected lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span class="updatedAt">Updated <span class="Time relative">2w ago</span></span></span><output><pre><code class="text">{ importsComplete: { min: 71, max: 196, mean: 86.66666666666667, n: 15 },
+  fsSetup: { min: 72, max: 197, mean: 87.33333333333333, n: 15 },
+  litObj: { min: 72, max: 197, mean: 87.4, n: 15 },
+  initStart: { min: 72, max: 198, mean: 87.53333333333333, n: 15 },
+  readFile: { min: 340, max: 853, mean: 522.7333333333333, n: 15 },
+  settingsLoaded: { min: 2784, max: 5956, mean: 3275.3333333333335, n: 15 },
+  manifestLoaded: { min: 2910, max: 6193, mean: 3419.4666666666667, n: 15 },
+  processedFile: { min: 2946, max: 6208, mean: 4012.9285714285716, n: 14 },
+  rendered: { min: 3035, max: 6409, mean: 4171, n: 14 } }
+</code></pre></output></codecell></div></cell><cell startpos="3700:1-77372" endpos="3710:4-77976" class="code output"><div class="cell-content"><codecell class="tag-sw-connected tag-gh-connected tag-offline lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span style="color:black;background-color:#a3b2de" class="tag">offline</span><span class="updatedAt">Updated <span class="Time relative">2w ago</span></span></span><output><pre><code class="text">{ importsComplete: { min: 72, max: 199, mean: 113.3, n: 10 },
+  fsSetup: { min: 72, max: 201, mean: 114, n: 10 },
+  litObj: { min: 72, max: 201, mean: 114.1, n: 10 },
+  initStart: { min: 73, max: 202, mean: 114.8, n: 10 },
+  readFile: { min: 120, max: 523, mean: 379.1, n: 10 },
+  settingsLoaded: { min: 1470, max: 1880, mean: 1782.3, n: 10 },
+  manifestLoaded: { min: 1917, max: 2319, mean: 2189.9, n: 10 },
+  processedFile: { min: 2084, max: 4027, mean: 2793.4, n: 10 },
+  rendered: { min: 2123, max: 9410, mean: 3966.4, n: 10 } }
+</code></pre></output></codecell></div></cell></section></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="Meta" href="/meta.html">Meta</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
