@@ -1,27 +1,8 @@
 // IOS indexDB bug workaround
 const idb = indexedDB
 
-const timings = {}
-let prev = ((typeof localStorage !== 'undefined') && localStorage.getItem('litTimings')) || ''
-const time = (ns, marker) => {
-    const now = Date.now()
-    timings[ns] = timings[ns] || {
-        start: now,
-        marks: [],
-        timeTo: {},
-    }
-    timings[ns].marks.push({marker,time: now})
-    if (marker) {
-        const id = now
-        const took = now - timings[ns].start 
-        timings[ns].timeTo[marker] = took
-        console.log(`[timings][${ns}] "start" to "${marker}" took ${took}ms`)
-        const log = JSON.stringify({ns,marker,id,took}) + "\n"
-        prev += log
-        if (typeof localStorage !== 'undefined') localStorage.setItem('litTimings', prev)
-    }
-    
-}
+const {time, getTimings} = require('../utils/timings')
+
 time('client')
 const React = require('react')
 const ReactDOM = require('react-dom')
@@ -101,7 +82,7 @@ export const lit = {
         base: baseUrl,
         query: query,
     },
-    timings,
+    getTimings,
     parser,
     renderer,
     Repl,
