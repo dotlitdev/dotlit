@@ -31,6 +31,7 @@ const logs = raw
       const data = JSON.parse(l);
       events[data.marker] = events[data.marker] || [];
       events[data.marker].push(data.took);
+      return data
     } catch (err) {}
   })
   .filter((x) => x);
@@ -53,12 +54,12 @@ const spec = {
   // $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
   description: "A simple bar chart with embedded data.",
   data: {
-    values
+    logs
   },
   mark: "bar",
   encoding: {
-    x: { field: "id", type: "ordinal" },
-    y: { field: "value", type: "quantitative" },
+    x: { field: "marker", type: "ordinal" },
+    y: { field: "took", type: "quantitative" },
   },
 }
 
