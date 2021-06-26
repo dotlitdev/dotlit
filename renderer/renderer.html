@@ -42,6 +42,9 @@ import { Section } from &#x27;../components/Section&#x27;
 import { getConsoleForNamespace } from &#x27;../utils/console&#x27;
 import { decorateLinkNode } from &#x27;../parser/links&#x27;
 
+import {time} from &#x27;../utils/timings&#x27;
+const timer = ({ns, marker}) =&gt; (t,f) =&gt; { time(ns,marker) }
+
 
 const console = getConsoleForNamespace(&#x27;renderer&#x27;)
 
@@ -49,8 +52,7 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
     console.log(&quot;Renderer: cwd&quot;, cwd)
     return parserProcessor({fs, litroot, files, cwd})
 
-   
-   
+    .use(timer,{ns:&#x27;renderer&#x27;})
     // hoist ast to data
     .use( (...args) =&gt; {
          return (tree,file) =&gt; {
@@ -63,6 +65,7 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
     // transclude codeblocks with source
     // when available 
     .use( transcludeCode, {fs} )
+    .use(timer,{ns:&#x27;renderer&#x27;, marker: &#x27;transcludeCodeComplete&#x27;})
 
     // includes and config
     .use( ({fs, cwd, skipIncludes}) =&gt; {
@@ -97,10 +100,11 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
             console.log(`[${file.path}] Loaded  ${loaded}/${includes.length} includes.`)
         }
     }, {fs, cwd, skipIncludes})
+    .use(timer,{ns:&#x27;renderer&#x27;, marker: &#x27;includesComplete&#x27;})
 
     // extract plugins
     .use( extractPlugins )
-
+        .use(timer,{ns:&#x27;renderer&#x27;, marker: &#x27;extractPluginsComplete&#x27;})
 
     // extract files to data
     .use( (...args) =&gt; {
@@ -143,6 +147,7 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
             code: hastCodeHandler,
         },
      })
+    .use(timer,{ns:&#x27;renderer&#x27;, marker: &#x27;toRehypeComplete&#x27;})
     .use(rehype2react, {
         Fragment: React.Fragment,
         allowDangerousHtml: true,
@@ -156,6 +161,7 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
             section: Section
         }
     })
+    .use(timer,{ns:&#x27;renderer&#x27;, marker: &#x27;toReactComplete&#x27;})
 }
 
 export async function renderedVFileToDoc(vfile, cmd) {

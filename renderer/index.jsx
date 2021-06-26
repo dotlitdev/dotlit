@@ -23,6 +23,9 @@ import { Section } from '../components/Section'
 import { getConsoleForNamespace } from '../utils/console'
 import { decorateLinkNode } from '../parser/links'
 
+import {time} from '../utils/timings'
+const timer = ({ns, marker}) => (t,f) => { time(ns,marker) }
+
 
 const console = getConsoleForNamespace('renderer')
 
@@ -30,8 +33,7 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
     console.log("Renderer: cwd", cwd)
     return parserProcessor({fs, litroot, files, cwd})
 
-   
-   
+    .use(timer,{ns:'renderer'})
     // hoist ast to data
     .use( (...args) => {
          return (tree,file) => {
@@ -44,6 +46,7 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
     // transclude codeblocks with source
     // when available 
     .use( transcludeCode, {fs} )
+    .use(timer,{ns:'renderer', marker: 'transcludeCodeComplete'})
 
     // includes and config
     .use( ({fs, cwd, skipIncludes}) => {
@@ -78,10 +81,11 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
             console.log(`[${file.path}] Loaded  ${loaded}/${includes.length} includes.`)
         }
     }, {fs, cwd, skipIncludes})
+    .use(timer,{ns:'renderer', marker: 'includesComplete'})
 
     // extract plugins
     .use( extractPlugins )
-
+        .use(timer,{ns:'renderer', marker: 'extractPluginsComplete'})
 
     // extract files to data
     .use( (...args) => {
@@ -124,6 +128,7 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
             code: hastCodeHandler,
         },
      })
+    .use(timer,{ns:'renderer', marker: 'toRehypeComplete'})
     .use(rehype2react, {
         Fragment: React.Fragment,
         allowDangerousHtml: true,
@@ -137,6 +142,7 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
             section: Section
         }
     })
+    .use(timer,{ns:'renderer', marker: 'toReactComplete'})
 }
 
 export async function renderedVFileToDoc(vfile, cmd) {
