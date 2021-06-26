@@ -1,3 +1,6 @@
+// IOS indexDB bug workaround
+const idb = indexedDB
+
 const timings = {}
 let prev = ((typeof localStorage !== 'undefined') && localStorage.getItem('litTimings')) || ''
 const time = (ns, marker) => {
