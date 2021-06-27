@@ -6,11 +6,13 @@ export const getPrev = () =>
 
 export const time = (ns, marker) => {
   const now = Date.now();
-  timings[ns] = timings[ns] || {
-    start: now,
-    marks: [],
-    timeTo: {},
-  };
+  timings[ns] = !marker
+    ? timings[ns]
+    : {
+        start: now,
+        marks: [],
+        timeTo: {},
+      };
   timings[ns].marks.push({ marker, time: now });
   if (marker) {
     const id = now;
