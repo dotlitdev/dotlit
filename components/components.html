@@ -453,8 +453,8 @@ const App = ({root, file, fs, result, files, ssr}) =&gt; {
         console.log(&quot;[CodeCells in Change (pos)]&quot;, tmpPos, file.path, tree, nodes)
         for (const codeCell of nodes) {
             const meta = codeCell.data &amp;&amp; codeCell.data.meta &amp;&amp; codeCell.data.meta
-            const filename = meta &amp;&amp; meta.filename
-            const extract = filename &amp;&amp; meta.isOutput &amp;&amp; meta.extract !== &#x27;false&#x27;
+            const filename = meta &amp;&amp; (meta.filename || meta.source?.filename)
+            const extract = filename &amp;&amp; (meta.isOutput || meta.source) &amp;&amp; meta.extract !== &#x27;false&#x27;
             const content = source(codeCell.position, patchedSrc).split(&#x27;\n&#x27;).slice(1,-1).join(&#x27;\n&#x27;)
             if (extract) {
                 const filepath = path.join( path.dirname(file.path), filename)
