@@ -6,7 +6,7 @@ export const getPrev = () =>
 
 export const time = (ns, marker) => {
   const now = Date.now();
-  timings[ns] = !marker
+  timings[ns] = (!marker || !timings[ns])
     ? {
         start: now,
         marks: [],
