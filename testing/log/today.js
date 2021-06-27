@@ -27,7 +27,3 @@ const checkForTodayFile = async () => {
 };
 
 return checkForTodayFile();
-
-```
-```>md attached=true updated=1623707994361
-*Today* is [**2021-06-14**](/testing/log/2021-06-14.lit?template=/testing/log/day.lit), a log exists: *false*; See [week](/testing/log/2021-w25.lit), [month](/testing/log/2021-06.lit) or [year](/testing/log/2021.lit).

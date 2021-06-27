@@ -1,0 +1,1154 @@
+<html data-reactroot=""><head><title>Timings</title><meta name="litsrc" value="/meta/timings.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children" disabled=""><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu></div><style>body {
+  --bg: white;
+  --bg-secondary-color: #efefef;
+    
+  --text-color: black;
+  --text-secondary-color: grey;
+  --text-primary-color: #9999f7;
+  --text-highlight-bg: yellow;
+  --text-highlight-color: black;
+
+  --divider-subtle: #efefef;
+  --medium-space: 0.4em;
+
+  --code-bg-color: black;
+  --code-text-color: white;
+  --box-bg-opacity: 0.05;
+}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="1175:4-27440"><cell startpos="1:1-0" endpos="1:10-9"><div class="cell-content"><h1 id="timings">Timings</h1></div></cell><cell startpos="3:1-11" endpos="34:4-823" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="source">&lt; ../utils/timings.js</span></span><pre><code class="js">const timings = {};
+
+export const getPrev = () =&gt;
+  (typeof localStorage !== &quot;undefined&quot; &amp;&amp; localStorage.getItem(&quot;litTimings&quot;)) ||
+  &quot;&quot;;
+
+export const time = (ns, marker) =&gt; {
+  const now = Date.now();
+  timings[ns] = (!marker || !timings[ns])
+    ? {
+        start: now,
+        marks: [],
+        timeTo: {},
+      }
+    : timings[ns];
+
+  timings[ns].marks.push({ marker, time: now });
+  if (marker) {
+    const id = now;
+    const took = now - timings[ns].start;
+    timings[ns].timeTo[marker] = took;
+    console.log(`[timings][${ns}] &quot;start&quot; to &quot;${marker}&quot; took ${took}ms`);
+    const log = JSON.stringify({ ns, marker, id, took }) + &quot;\n&quot;;
+
+    if (typeof localStorage !== &quot;undefined&quot;)
+      localStorage.setItem(&quot;litTimings&quot;, getPrev() + log);
+  }
+};
+
+export const getTimings = () =&gt; timings;
+
+</code></pre></codecell></div></cell><cell startpos="39:1-828" endpos="51:4-1163" class="code"><div class="cell-content"><codecell class="dir-collapse dir-plugin lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=vega</span></span><pre><code class="js">import { VegaLite } from &quot;https://cdn.skypack.dev/react-vega&quot;;
+export const viewer = ({ node, React }) =&gt; {
+  let spec, error;
+  try {
+    spec = JSON.parse(node.data.value);
+  } catch (err) {
+    error = error.message;
+  }
+  return error || &lt;VegaLite spec={spec} renderer=&quot;svg&quot; /&gt;;
+};
+
+</code></pre></codecell></div></cell><cell startpos="55:1-1167" endpos="945:4-20693" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="output">&gt; vega #sw-connected #gh-connected</span></span><pre><code class="js">const raw = localStorage.getItem(&quot;litTimings&quot;);
+const json = obj =&gt; JSON.stringify(obj,null,2)
+
+const events = {};
+const logs = raw
+  .split(&quot;\n&quot;)
+  .map((l) =&gt; {
+    try {
+      const data = JSON.parse(l);
+      events[data.marker] = events[data.marker] || [];
+      events[data.marker].push(data.took);
+      return data
+    } catch (err) {}
+  })
+  .filter((x) =&gt; x);
+
+const avg = (arr) =&gt; arr.reduce((a, x) =&gt; a + x, 0) / arr.length;
+
+const aggregates = {};
+Object.keys(events).map((event) =&gt; {
+  const ev = events[event];
+  aggregates[event] = {
+    min: Math.min(...ev),
+    max: Math.max(...ev),
+    mean: avg(ev),
+    n: ev.length,
+  };
+});
+// const values = Object.entries(aggregates).map( ([k,v])=&gt;({id:k, ...v}))
+const values = Object.entries(events).map( ([k,v])=&gt;({id:k, value: v}))
+const spec = {
+  // $schema: &#x27;https://vega.github.io/schema/vega-lite/v5.json&#x27;,
+  description: &quot;A simple bar chart with embedded data.&quot;,
+  data: {values: logs},
+  mark: &quot;errorbar&quot;,
+  encoding: {
+    x: { field: &quot;marker&quot;, type: &quot;ordinal&quot; },
+    y: { field: &quot;took&quot;, type: &quot;quantitative&quot; },
+  },
+}
+
+return json(spec)
+return aggregates;
+return events;
+return logs;
+return raw;
+
+</code></pre></codecell><codecell class="tag-sw-connected tag-gh-connected lang-vega local output"><span class="meta"><span class="lang">vega</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span class="updatedAt">Updated <span class="Time relative">9m ago</span></span></span><output><pre><code class="vega">{
+  &quot;description&quot;: &quot;A simple bar chart with embedded data.&quot;,
+  &quot;data&quot;: {
+    &quot;values&quot;: [
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624801123312,
+        &quot;took&quot;: 119
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624801123313,
+        &quot;took&quot;: 120
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624801123313,
+        &quot;took&quot;: 120
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624801123313,
+        &quot;took&quot;: 120
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624801123771,
+        &quot;took&quot;: 578
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624801123779,
+        &quot;took&quot;: 586
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624801123818,
+        &quot;took&quot;: 0
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624801123826,
+        &quot;took&quot;: 8
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;transcludeCodeComplete&quot;,
+        &quot;id&quot;: 1624801124092,
+        &quot;took&quot;: 263
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624801124124,
+        &quot;took&quot;: 306
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624801124129,
+        &quot;took&quot;: 311
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624801124130,
+        &quot;took&quot;: 312
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;transcludeCodeComplete&quot;,
+        &quot;id&quot;: 1624801124372,
+        &quot;took&quot;: 543
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;includesComplete&quot;,
+        &quot;id&quot;: 1624801124372,
+        &quot;took&quot;: 543
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;extractPluginsComplete&quot;,
+        &quot;id&quot;: 1624801124523,
+        &quot;took&quot;: 694
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toRehypeComplete&quot;,
+        &quot;id&quot;: 1624801124533,
+        &quot;took&quot;: 704
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624801124533,
+        &quot;took&quot;: 704
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;includesComplete&quot;,
+        &quot;id&quot;: 1624801124536,
+        &quot;took&quot;: 707
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;extractPluginsComplete&quot;,
+        &quot;id&quot;: 1624801124541,
+        &quot;took&quot;: 712
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toRehypeComplete&quot;,
+        &quot;id&quot;: 1624801124544,
+        &quot;took&quot;: 715
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624801124544,
+        &quot;took&quot;: 715
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624801124545,
+        &quot;took&quot;: 1352
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624801124722,
+        &quot;took&quot;: 1529
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624801125921,
+        &quot;took&quot;: 38
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624801125921,
+        &quot;took&quot;: 38
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624801125921,
+        &quot;took&quot;: 38
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624801125921,
+        &quot;took&quot;: 38
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624801126258,
+        &quot;took&quot;: 375
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624801126263,
+        &quot;took&quot;: 380
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624801126296,
+        &quot;took&quot;: 0
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;transcludeCodeComplete&quot;,
+        &quot;id&quot;: 1624801126301,
+        &quot;took&quot;: 1
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624801126334,
+        &quot;took&quot;: 38
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624801126341,
+        &quot;took&quot;: 45
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624801126342,
+        &quot;took&quot;: 46
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;transcludeCodeComplete&quot;,
+        &quot;id&quot;: 1624801126565,
+        &quot;took&quot;: 265
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;includesComplete&quot;,
+        &quot;id&quot;: 1624801126566,
+        &quot;took&quot;: 266
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;extractPluginsComplete&quot;,
+        &quot;id&quot;: 1624801127062,
+        &quot;took&quot;: 762
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toRehypeComplete&quot;,
+        &quot;id&quot;: 1624801127070,
+        &quot;took&quot;: 770
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624801127070,
+        &quot;took&quot;: 770
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;includesComplete&quot;,
+        &quot;id&quot;: 1624801127076,
+        &quot;took&quot;: 776
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;extractPluginsComplete&quot;,
+        &quot;id&quot;: 1624801127076,
+        &quot;took&quot;: 776
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toRehypeComplete&quot;,
+        &quot;id&quot;: 1624801127078,
+        &quot;took&quot;: 778
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624801127078,
+        &quot;took&quot;: 778
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624801127078,
+        &quot;took&quot;: 1195
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624801127226,
+        &quot;took&quot;: 1343
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624801127341,
+        &quot;took&quot;: 39
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624801127341,
+        &quot;took&quot;: 39
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624801127341,
+        &quot;took&quot;: 39
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624801127341,
+        &quot;took&quot;: 39
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624801127688,
+        &quot;took&quot;: 386
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624801127690,
+        &quot;took&quot;: 388
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624801127817,
+        &quot;took&quot;: 0
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;transcludeCodeComplete&quot;,
+        &quot;id&quot;: 1624801128095,
+        &quot;took&quot;: 276
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624801128148,
+        &quot;took&quot;: 331
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624801128156,
+        &quot;took&quot;: 339
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624801128157,
+        &quot;took&quot;: 340
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;transcludeCodeComplete&quot;,
+        &quot;id&quot;: 1624801128391,
+        &quot;took&quot;: 572
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;includesComplete&quot;,
+        &quot;id&quot;: 1624801128393,
+        &quot;took&quot;: 574
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;extractPluginsComplete&quot;,
+        &quot;id&quot;: 1624801129464,
+        &quot;took&quot;: 1645
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toRehypeComplete&quot;,
+        &quot;id&quot;: 1624801129475,
+        &quot;took&quot;: 1656
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624801129475,
+        &quot;took&quot;: 1656
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;includesComplete&quot;,
+        &quot;id&quot;: 1624801129481,
+        &quot;took&quot;: 1662
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;extractPluginsComplete&quot;,
+        &quot;id&quot;: 1624801129571,
+        &quot;took&quot;: 1752
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toRehypeComplete&quot;,
+        &quot;id&quot;: 1624801129572,
+        &quot;took&quot;: 1753
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624801129572,
+        &quot;took&quot;: 1753
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624801129572,
+        &quot;took&quot;: 2270
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624801129602,
+        &quot;took&quot;: 2300
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624801135270,
+        &quot;took&quot;: 7453
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;transcludeCodeComplete&quot;,
+        &quot;id&quot;: 1624801135292,
+        &quot;took&quot;: 7473
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624801135307,
+        &quot;took&quot;: 7490
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624801135311,
+        &quot;took&quot;: 7494
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624801135312,
+        &quot;took&quot;: 7495
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;transcludeCodeComplete&quot;,
+        &quot;id&quot;: 1624801135588,
+        &quot;took&quot;: 7769
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;includesComplete&quot;,
+        &quot;id&quot;: 1624801135589,
+        &quot;took&quot;: 7770
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;extractPluginsComplete&quot;,
+        &quot;id&quot;: 1624801135694,
+        &quot;took&quot;: 7875
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toRehypeComplete&quot;,
+        &quot;id&quot;: 1624801135696,
+        &quot;took&quot;: 7877
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624801135696,
+        &quot;took&quot;: 7877
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;includesComplete&quot;,
+        &quot;id&quot;: 1624801135698,
+        &quot;took&quot;: 7879
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;extractPluginsComplete&quot;,
+        &quot;id&quot;: 1624801135701,
+        &quot;took&quot;: 7882
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toRehypeComplete&quot;,
+        &quot;id&quot;: 1624801135701,
+        &quot;took&quot;: 7882
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624801135701,
+        &quot;took&quot;: 7882
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624801154815,
+        &quot;took&quot;: 26998
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;transcludeCodeComplete&quot;,
+        &quot;id&quot;: 1624801154834,
+        &quot;took&quot;: 27015
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624801154848,
+        &quot;took&quot;: 27031
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624801154852,
+        &quot;took&quot;: 27035
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624801154852,
+        &quot;took&quot;: 27035
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;transcludeCodeComplete&quot;,
+        &quot;id&quot;: 1624801155289,
+        &quot;took&quot;: 27470
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;includesComplete&quot;,
+        &quot;id&quot;: 1624801155290,
+        &quot;took&quot;: 27471
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;extractPluginsComplete&quot;,
+        &quot;id&quot;: 1624801155343,
+        &quot;took&quot;: 27524
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toRehypeComplete&quot;,
+        &quot;id&quot;: 1624801155345,
+        &quot;took&quot;: 27526
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624801155345,
+        &quot;took&quot;: 27526
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;includesComplete&quot;,
+        &quot;id&quot;: 1624801155347,
+        &quot;took&quot;: 27528
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;extractPluginsComplete&quot;,
+        &quot;id&quot;: 1624801155349,
+        &quot;took&quot;: 27530
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toRehypeComplete&quot;,
+        &quot;id&quot;: 1624801155350,
+        &quot;took&quot;: 27531
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624801155350,
+        &quot;took&quot;: 27531
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624801170580,
+        &quot;took&quot;: 42763
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;transcludeCodeComplete&quot;,
+        &quot;id&quot;: 1624801170599,
+        &quot;took&quot;: 42780
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624801170610,
+        &quot;took&quot;: 42793
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624801170613,
+        &quot;took&quot;: 42796
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624801170613,
+        &quot;took&quot;: 42796
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;transcludeCodeComplete&quot;,
+        &quot;id&quot;: 1624801171025,
+        &quot;took&quot;: 43206
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;includesComplete&quot;,
+        &quot;id&quot;: 1624801171026,
+        &quot;took&quot;: 43207
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;extractPluginsComplete&quot;,
+        &quot;id&quot;: 1624801171094,
+        &quot;took&quot;: 43275
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toRehypeComplete&quot;,
+        &quot;id&quot;: 1624801171096,
+        &quot;took&quot;: 43277
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624801171096,
+        &quot;took&quot;: 43277
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;includesComplete&quot;,
+        &quot;id&quot;: 1624801171097,
+        &quot;took&quot;: 43278
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;extractPluginsComplete&quot;,
+        &quot;id&quot;: 1624801171100,
+        &quot;took&quot;: 43281
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toRehypeComplete&quot;,
+        &quot;id&quot;: 1624801171100,
+        &quot;took&quot;: 43281
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624801171100,
+        &quot;took&quot;: 43281
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624801174304,
+        &quot;took&quot;: 46487
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;transcludeCodeComplete&quot;,
+        &quot;id&quot;: 1624801174322,
+        &quot;took&quot;: 46503
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624801174335,
+        &quot;took&quot;: 46518
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624801174338,
+        &quot;took&quot;: 46521
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624801174338,
+        &quot;took&quot;: 46521
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;transcludeCodeComplete&quot;,
+        &quot;id&quot;: 1624801174652,
+        &quot;took&quot;: 46833
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;includesComplete&quot;,
+        &quot;id&quot;: 1624801174652,
+        &quot;took&quot;: 46833
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;extractPluginsComplete&quot;,
+        &quot;id&quot;: 1624801174701,
+        &quot;took&quot;: 46882
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toRehypeComplete&quot;,
+        &quot;id&quot;: 1624801174703,
+        &quot;took&quot;: 46884
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624801174703,
+        &quot;took&quot;: 46884
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;includesComplete&quot;,
+        &quot;id&quot;: 1624801174706,
+        &quot;took&quot;: 46887
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;extractPluginsComplete&quot;,
+        &quot;id&quot;: 1624801174708,
+        &quot;took&quot;: 46889
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toRehypeComplete&quot;,
+        &quot;id&quot;: 1624801174708,
+        &quot;took&quot;: 46889
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624801174708,
+        &quot;took&quot;: 46889
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624801177055,
+        &quot;took&quot;: 49238
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;transcludeCodeComplete&quot;,
+        &quot;id&quot;: 1624801177077,
+        &quot;took&quot;: 49258
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624801177088,
+        &quot;took&quot;: 49271
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624801177091,
+        &quot;took&quot;: 49274
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624801177091,
+        &quot;took&quot;: 49274
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;transcludeCodeComplete&quot;,
+        &quot;id&quot;: 1624801177356,
+        &quot;took&quot;: 49537
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;includesComplete&quot;,
+        &quot;id&quot;: 1624801177357,
+        &quot;took&quot;: 49538
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;extractPluginsComplete&quot;,
+        &quot;id&quot;: 1624801177422,
+        &quot;took&quot;: 49603
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toRehypeComplete&quot;,
+        &quot;id&quot;: 1624801177424,
+        &quot;took&quot;: 49605
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624801177424,
+        &quot;took&quot;: 49605
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;includesComplete&quot;,
+        &quot;id&quot;: 1624801177426,
+        &quot;took&quot;: 49607
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;extractPluginsComplete&quot;,
+        &quot;id&quot;: 1624801177428,
+        &quot;took&quot;: 49609
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toRehypeComplete&quot;,
+        &quot;id&quot;: 1624801177429,
+        &quot;took&quot;: 49610
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624801177429,
+        &quot;took&quot;: 49610
+      }
+    ]
+  },
+  &quot;mark&quot;: &quot;errorbar&quot;,
+  &quot;encoding&quot;: {
+    &quot;x&quot;: {
+      &quot;field&quot;: &quot;marker&quot;,
+      &quot;type&quot;: &quot;ordinal&quot;
+    },
+    &quot;y&quot;: {
+      &quot;field&quot;: &quot;took&quot;,
+      &quot;type&quot;: &quot;quantitative&quot;
+    }
+  }
+}
+</code></pre></output></codecell></div></cell><cell startpos="946:1-20694" endpos="1021:4-22107" class="code output"><div class="cell-content"><codecell class="tag-sw-connected tag-gh-connected lang-vega local output"><span class="meta"><span class="lang">vega</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span class="updatedAt">Updated <span class="Time relative">3.9d ago</span></span></span><output><pre><code class="vega">{
+  &quot;description&quot;: &quot;A simple bar chart with embedded data.&quot;,
+  &quot;data&quot;: {
+    &quot;values&quot;: [
+      {
+        &quot;id&quot;: &quot;importsComplete&quot;,
+        &quot;min&quot;: 35,
+        &quot;max&quot;: 171,
+        &quot;mean&quot;: 82.55172413793103,
+        &quot;n&quot;: 29
+      },
+      {
+        &quot;id&quot;: &quot;fsSetup&quot;,
+        &quot;min&quot;: 35,
+        &quot;max&quot;: 172,
+        &quot;mean&quot;: 83.37931034482759,
+        &quot;n&quot;: 29
+      },
+      {
+        &quot;id&quot;: &quot;litObj&quot;,
+        &quot;min&quot;: 35,
+        &quot;max&quot;: 172,
+        &quot;mean&quot;: 83.41379310344827,
+        &quot;n&quot;: 29
+      },
+      {
+        &quot;id&quot;: &quot;initStart&quot;,
+        &quot;min&quot;: 35,
+        &quot;max&quot;: 173,
+        &quot;mean&quot;: 83.82758620689656,
+        &quot;n&quot;: 29
+      },
+      {
+        &quot;id&quot;: &quot;readFile&quot;,
+        &quot;min&quot;: 603,
+        &quot;max&quot;: 2339,
+        &quot;mean&quot;: 1487.24,
+        &quot;n&quot;: 25
+      },
+      {
+        &quot;id&quot;: &quot;manifestLoaded&quot;,
+        &quot;min&quot;: 611,
+        &quot;max&quot;: 2723,
+        &quot;mean&quot;: 1627.1739130434783,
+        &quot;n&quot;: 23
+      },
+      {
+        &quot;id&quot;: &quot;processedFile&quot;,
+        &quot;min&quot;: 3250,
+        &quot;max&quot;: 7818,
+        &quot;mean&quot;: 5322.478260869565,
+        &quot;n&quot;: 23
+      },
+      {
+        &quot;id&quot;: &quot;rendered&quot;,
+        &quot;min&quot;: 3278,
+        &quot;max&quot;: 7847,
+        &quot;mean&quot;: 5534.521739130435,
+        &quot;n&quot;: 23
+      }
+    ]
+  },
+  &quot;mark&quot;: &quot;bar&quot;,
+  &quot;encoding&quot;: {
+    &quot;x&quot;: {
+      &quot;field&quot;: &quot;id&quot;,
+      &quot;type&quot;: &quot;ordinal&quot;
+    },
+    &quot;y&quot;: {
+      &quot;field&quot;: &quot;mean&quot;,
+      &quot;type&quot;: &quot;quantitative&quot;
+    }
+  }
+}
+</code></pre></output></codecell></div></cell><cell startpos="1022:1-22108" endpos="1111:4-23814" class="code output"><div class="cell-content"><codecell class="tag-sw-connected tag-gh-connected lang-vega local output"><span class="meta"><span class="lang">vega</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span class="updatedAt">Updated <span class="Time relative">1.4w ago</span></span></span><output><pre><code class="vega">{
+  &quot;description&quot;: &quot;A simple bar chart with embedded data.&quot;,
+  &quot;data&quot;: {
+    &quot;values&quot;: [
+      {
+        &quot;id&quot;: &quot;importsComplete&quot;,
+        &quot;min&quot;: 34,
+        &quot;max&quot;: 254,
+        &quot;mean&quot;: 73.28888888888889,
+        &quot;n&quot;: 135
+      },
+      {
+        &quot;id&quot;: &quot;fsSetup&quot;,
+        &quot;min&quot;: 34,
+        &quot;max&quot;: 258,
+        &quot;mean&quot;: 73.92592592592592,
+        &quot;n&quot;: 135
+      },
+      {
+        &quot;id&quot;: &quot;litObj&quot;,
+        &quot;min&quot;: 34,
+        &quot;max&quot;: 258,
+        &quot;mean&quot;: 74.00740740740741,
+        &quot;n&quot;: 135
+      },
+      {
+        &quot;id&quot;: &quot;initStart&quot;,
+        &quot;min&quot;: 34,
+        &quot;max&quot;: 259,
+        &quot;mean&quot;: 74.36296296296297,
+        &quot;n&quot;: 135
+      },
+      {
+        &quot;id&quot;: &quot;readFile&quot;,
+        &quot;min&quot;: 433,
+        &quot;max&quot;: 7691,
+        &quot;mean&quot;: 1391.264,
+        &quot;n&quot;: 125
+      },
+      {
+        &quot;id&quot;: &quot;settingsFetched&quot;,
+        &quot;min&quot;: 435,
+        &quot;max&quot;: 7715,
+        &quot;mean&quot;: 1606.446153846154,
+        &quot;n&quot;: 65
+      },
+      {
+        &quot;id&quot;: &quot;settingsLoaded&quot;,
+        &quot;min&quot;: 610,
+        &quot;max&quot;: 8998,
+        &quot;mean&quot;: 2904.6774193548385,
+        &quot;n&quot;: 62
+      },
+      {
+        &quot;id&quot;: &quot;manifestLoaded&quot;,
+        &quot;min&quot;: 621,
+        &quot;max&quot;: 9011,
+        &quot;mean&quot;: 2366.153153153153,
+        &quot;n&quot;: 111
+      },
+      {
+        &quot;id&quot;: &quot;processedFile&quot;,
+        &quot;min&quot;: 693,
+        &quot;max&quot;: 51116,
+        &quot;mean&quot;: 4615.3644859813085,
+        &quot;n&quot;: 107
+      },
+      {
+        &quot;id&quot;: &quot;rendered&quot;,
+        &quot;min&quot;: 718,
+        &quot;max&quot;: 51276,
+        &quot;mean&quot;: 4801.411214953271,
+        &quot;n&quot;: 107
+      }
+    ]
+  },
+  &quot;mark&quot;: &quot;bar&quot;,
+  &quot;encoding&quot;: {
+    &quot;x&quot;: {
+      &quot;field&quot;: &quot;id&quot;,
+      &quot;type&quot;: &quot;ordinal&quot;
+    },
+    &quot;y&quot;: {
+      &quot;field&quot;: &quot;mean&quot;,
+      &quot;type&quot;: &quot;quantitative&quot;
+    }
+  }
+}
+</code></pre></output></codecell></div></cell><cell startpos="1112:1-23815" endpos="1123:4-24579" class="code output"><div class="cell-content"><codecell class="tag-sw-connected tag-gh-connected lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span class="updatedAt">Updated <span class="Time relative">1.8w ago</span></span></span><output><pre><code class="text">{ importsComplete: { min: 31, max: 200, mean: 73.72631578947369, n: 95 },
+  fsSetup: { min: 31, max: 202, mean: 74.51578947368421, n: 95 },
+  litObj: { min: 31, max: 202, mean: 74.56842105263158, n: 95 },
+  initStart: { min: 31, max: 203, mean: 74.93684210526315, n: 95 },
+  readFile: { min: 300, max: 51363, mean: 1548.6463414634147, n: 82 },
+  settingsLoaded: { min: 1100, max: 70246, mean: 6993.295081967213, n: 61 },
+  manifestLoaded: { min: 2428, max: 70436, mean: 7705.462962962963, n: 54 },
+  processedFile: { min: 3033, max: 72866, mean: 8876, n: 53 },
+  rendered: { min: 3171, max: 73111, mean: 9079.471698113208, n: 53 },
+  settingsFetched: { min: 1156, max: 10758, mean: 3542.625, n: 24 } }
+</code></pre></output></codecell></div></cell><section depth="2" class="" startpos="1128:1-24584" endpos="1175:4-27440"><cell startpos="1128:1-24584" endpos="1128:8-24591"><div class="cell-content"><h2 id="runs">Runs</h2></div></cell><cell startpos="1130:1-24593" endpos="1140:4-25270" class="code output"><div class="cell-content"><codecell class="tag-gh-connected tag-no-sw lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span style="color:white;background-color:#64145f" class="tag">no-sw</span></span><output><pre><code class="text">{ importsComplete: { min: 33, max: 212, mean: 80.08333333333333, n: 36 },
+  fsSetup: { min: 33, max: 213, mean: 80.61111111111111, n: 36 },
+  litObj: { min: 33, max: 213, mean: 80.66666666666667, n: 36 },
+  initStart: { min: 33, max: 215, mean: 81.05555555555556, n: 36 },
+  readFile: { min: 43, max: 69015, mean: 3341.6153846153848, n: 26 },
+  settingsLoaded: { min: 222, max: 73567, mean: 5477.653846153846, n: 26 },
+  manifestLoaded: { min: 1368, max: 73575, mean: 6254.181818181818, n: 22 },
+  processedFile: { min: 1373, max: 73583, mean: 6429.409090909091, n: 22 },
+  rendered: { min: 1536, max: 73941, mean: 6668.590909090909, n: 22 } }
+</code></pre></output></codecell></div></cell><cell startpos="1142:1-25272" endpos="1142:206-25477"><div class="cell-content"><p>So far the majority of time before complete is spent fetching files from the remote, 3s to read file, doubled by config, +1s for manifest. Of ~30 samples, with service worker disabled and GitHub connected.</p></div></cell><cell startpos="1143:1-25478" endpos="1153:4-26156" class="code output"><div class="cell-content"><codecell class="tag-no-gh tag-no-sw lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:white;background-color:#641446" class="tag">no-gh</span><span style="color:white;background-color:#64145f" class="tag">no-sw</span><span class="updatedAt">Updated <span class="Time relative">2.2w ago</span></span></span><output><pre><code class="text">{ importsComplete: { min: 73, max: 197, mean: 108.9090909090909, n: 11 },
+  fsSetup: { min: 73, max: 198, mean: 109.81818181818181, n: 11 },
+  litObj: { min: 73, max: 199, mean: 110, n: 11 },
+  initStart: { min: 74, max: 200, mean: 110.36363636363636, n: 11 },
+  readFile: { min: 645, max: 1024, mean: 833.9090909090909, n: 11 },
+  settingsLoaded: { min: 7519, max: 7895, mean: 7688.909090909091, n: 11 },
+  manifestLoaded: { min: 7537, max: 7920, mean: 7709.363636363636, n: 11 },
+  processedFile: { min: 7543, max: 10109, mean: 7922.363636363636, n: 11 },
+  rendered: { min: 7831, max: 10452, mean: 8227.272727272728, n: 11 } }
+</code></pre></output></codecell></div></cell><cell startpos="1154:1-26157" endpos="1164:4-26835" class="code output"><div class="cell-content"><codecell class="tag-sw-connected tag-gh-connected lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span class="updatedAt">Updated <span class="Time relative">2.2w ago</span></span></span><output><pre><code class="text">{ importsComplete: { min: 71, max: 196, mean: 86.66666666666667, n: 15 },
+  fsSetup: { min: 72, max: 197, mean: 87.33333333333333, n: 15 },
+  litObj: { min: 72, max: 197, mean: 87.4, n: 15 },
+  initStart: { min: 72, max: 198, mean: 87.53333333333333, n: 15 },
+  readFile: { min: 340, max: 853, mean: 522.7333333333333, n: 15 },
+  settingsLoaded: { min: 2784, max: 5956, mean: 3275.3333333333335, n: 15 },
+  manifestLoaded: { min: 2910, max: 6193, mean: 3419.4666666666667, n: 15 },
+  processedFile: { min: 2946, max: 6208, mean: 4012.9285714285716, n: 14 },
+  rendered: { min: 3035, max: 6409, mean: 4171, n: 14 } }
+</code></pre></output></codecell></div></cell><cell startpos="1165:1-26836" endpos="1175:4-27440" class="code output"><div class="cell-content"><codecell class="tag-sw-connected tag-gh-connected tag-offline lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span style="color:black;background-color:#a3b2de" class="tag">offline</span><span class="updatedAt">Updated <span class="Time relative">2.2w ago</span></span></span><output><pre><code class="text">{ importsComplete: { min: 72, max: 199, mean: 113.3, n: 10 },
+  fsSetup: { min: 72, max: 201, mean: 114, n: 10 },
+  litObj: { min: 72, max: 201, mean: 114.1, n: 10 },
+  initStart: { min: 73, max: 202, mean: 114.8, n: 10 },
+  readFile: { min: 120, max: 523, mean: 379.1, n: 10 },
+  settingsLoaded: { min: 1470, max: 1880, mean: 1782.3, n: 10 },
+  manifestLoaded: { min: 1917, max: 2319, mean: 2189.9, n: 10 },
+  processedFile: { min: 2084, max: 4027, mean: 2793.4, n: 10 },
+  rendered: { min: 2123, max: 9410, mean: 3966.4, n: 10 } }
+</code></pre></output></codecell></div></cell></section></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="Meta" href="/meta.html">Meta</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
