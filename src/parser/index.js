@@ -25,11 +25,11 @@ import {time} from '../utils/timings'
 const jsTransform = null
 const console = getConsoleForNamespace('parser')
 
-const timer = ({ns, marker}) => (t,f) => { time(ns,marker) }
+const timer = () => ({ns, marker}) => (t,f) => { time(ns,marker) }
 
 const baseProcessor = ({litroot, files} = {}) => {
     return unified()
-    .use(timer,{ns:'parser'})
+    .use(timer(),{ns:'parser'})
     .use((...args) => (tree, file) => {
         console.log("Parsing file: ", file.path)
         file.data = file.data || {}
@@ -65,7 +65,7 @@ const baseProcessor = ({litroot, files} = {}) => {
     .use(headingIds)
     .use(footnotes, {inlineNotes: true})
 
-    .use(timer,{ns:'parser', marker: 'baseProcessorComplete'})
+    .use(timer(),{ns:'parser', marker: 'baseProcessorComplete'})
 }
 
 export const processor = ({files, fs, litroot} = {files: []}) => {
@@ -79,7 +79,7 @@ export const processor = ({files, fs, litroot} = {files: []}) => {
     .use(links.resolveLinks({litroot, files}))
 
     .use(sections, {})
-    .use(timer,{ns:'parser', marker: 'processorComplete'})
+    .use(timer(),{ns:'parser', marker: 'processorComplete'})
 }
 
 export const utils = {
