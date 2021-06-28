@@ -11,7 +11,7 @@ import select from 'unist-util-select'
 import { to_string } from './utils/mdast-util-to-string'
 import toMarkdown from 'mdast-util-to-markdown'
 
-import {sections, groupIntoSections, ungroupSections} from './sections'
+import {sections, ungroupSections} from './sections'
 import codeblocks, {parseMeta} from './codeblocks'
 import frontmatter from './frontmatter'
 import {mdblocks} from './mdblocks'
