@@ -14,7 +14,7 @@
   --code-bg-color: black;
   --code-text-color: white;
   --box-bg-opacity: 0.05;
-}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="335:4-9256"><cell startpos="1:1-0" endpos="1:10-9"><div class="cell-content"><h1 id="timings">Timings</h1></div></cell><cell startpos="3:1-11" endpos="35:4-874" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="source">&lt; ../utils/timings.js</span></span><pre><code class="js">const timings = {};
+}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section depth="1" class="" startpos="1:1-0" endpos="675:4-17521"><cell startpos="1:1-0" endpos="1:10-9"><div class="cell-content"><h1 id="timings">Timings</h1></div></cell><cell startpos="3:1-11" endpos="35:4-874" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span><span class="source">&lt; ../utils/timings.js</span></span><pre><code class="js">const timings = {};
 
 export const getPrev = () =&gt;
   (typeof localStorage !== &quot;undefined&quot; &amp;&amp; localStorage.getItem(&quot;litTimings&quot;)) ||
@@ -56,8 +56,8 @@ export const viewer = ({ node, React }) =&gt; {
   return error || &lt;VegaLite spec={spec} renderer=&quot;svg&quot; /&gt;;
 };
 
-</code></pre></codecell></div></cell><cell startpos="56:1-1218" endpos="105:4-2509" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="output">&gt; vega #sw-connected #gh-connected</span></span><pre><code class="js">const raw = localStorage.getItem(&quot;litTimings&quot;);
-const json = obj =&gt; JSON.stringify(obj,null,2)
+</code></pre></codecell></div></cell><cell startpos="56:1-1218" endpos="445:4-10774" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="output">&gt; vega #sw-connected #gh-connected</span></span><pre><code class="js">const raw = localStorage.getItem(&quot;litTimings&quot;);
+const json = (obj) =&gt; JSON.stringify(obj, null, 2);
 
 const events = {};
 const logs = raw
@@ -67,8 +67,8 @@ const logs = raw
       const data = JSON.parse(l);
       events[data.marker] = events[data.marker] || [];
       events[data.marker].push(data.took);
-      data.title = `${data.ns}-${data.index}-${data.marker}`
-      return data
+      data.title = `${data.ns}-${data.index}-${data.marker}`;
+      return data;
     } catch (err) {}
   })
   .filter((x) =&gt; x);
@@ -86,25 +86,363 @@ Object.keys(events).map((event) =&gt; {
   };
 });
 // const values = Object.entries(aggregates).map( ([k,v])=&gt;({id:k, ...v}))
-const values = Object.entries(events).map( ([k,v])=&gt;({id:k, value: v}))
+const values = Object.entries(events).map(([k, v]) =&gt; ({ id: k, value: v }));
 const spec = {
   // $schema: &#x27;https://vega.github.io/schema/vega-lite/v5.json&#x27;,
   description: &quot;A simple bar chart with embedded data.&quot;,
-  data: {values: logs},
+  data: { values: logs },
   mark: &quot;errorbar&quot;,
   encoding: {
-    x: { title: field: &quot;marker&quot;, type: &quot;ordinal&quot; },
+    x: { field: &quot;title&quot;, type: &quot;ordinal&quot; },
     y: { field: &quot;took&quot;, type: &quot;quantitative&quot; },
   },
-}
+};
 
-return json(spec)
+return json(spec);
 return aggregates;
 return events;
 return logs;
 return raw;
 
-</code></pre></codecell></div></cell><cell startpos="106:1-2510" endpos="181:4-3923" class="code output"><div class="cell-content"><codecell class="tag-sw-connected tag-gh-connected lang-vega local output"><span class="meta"><span class="lang">vega</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span class="updatedAt">Updated <span class="Time relative">4.2d ago</span></span></span><output><pre><code class="vega">{
+</code></pre></codecell><codecell class="tag-sw-connected tag-gh-connected lang-vega local output"><span class="meta"><span class="lang">vega</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span class="updatedAt">Updated <span class="Time relative">1m ago</span></span></span><output><pre><code class="vega">{
+  &quot;description&quot;: &quot;A simple bar chart with embedded data.&quot;,
+  &quot;data&quot;: {
+    &quot;values&quot;: [
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;importsComplete&quot;,
+        &quot;id&quot;: 1624869381610,
+        &quot;took&quot;: 36,
+        &quot;index&quot;: 2,
+        &quot;title&quot;: &quot;client-2-importsComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;fsSetup&quot;,
+        &quot;id&quot;: 1624869381610,
+        &quot;took&quot;: 36,
+        &quot;index&quot;: 3,
+        &quot;title&quot;: &quot;client-3-fsSetup&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;litObj&quot;,
+        &quot;id&quot;: 1624869381610,
+        &quot;took&quot;: 36,
+        &quot;index&quot;: 4,
+        &quot;title&quot;: &quot;client-4-litObj&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;initStart&quot;,
+        &quot;id&quot;: 1624869381610,
+        &quot;took&quot;: 36,
+        &quot;index&quot;: 5,
+        &quot;title&quot;: &quot;client-5-initStart&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;readFile&quot;,
+        &quot;id&quot;: 1624869381901,
+        &quot;took&quot;: 327,
+        &quot;index&quot;: 6,
+        &quot;title&quot;: &quot;client-6-readFile&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;manifestLoaded&quot;,
+        &quot;id&quot;: 1624869381906,
+        &quot;took&quot;: 332,
+        &quot;index&quot;: 7,
+        &quot;title&quot;: &quot;client-7-manifestLoaded&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624869381936,
+        &quot;took&quot;: 1,
+        &quot;index&quot;: 2,
+        &quot;title&quot;: &quot;parser-2-baseProcessorComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624869381937,
+        &quot;took&quot;: 2,
+        &quot;index&quot;: 3,
+        &quot;title&quot;: &quot;parser-3-processorComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;transcludeCodeComplete&quot;,
+        &quot;id&quot;: 1624869382180,
+        &quot;took&quot;: 243,
+        &quot;index&quot;: 2,
+        &quot;title&quot;: &quot;renderer-2-transcludeCodeComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624869382232,
+        &quot;took&quot;: 2,
+        &quot;index&quot;: 2,
+        &quot;title&quot;: &quot;parser-2-baseProcessorComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624869382238,
+        &quot;took&quot;: 1,
+        &quot;index&quot;: 2,
+        &quot;title&quot;: &quot;parser-2-baseProcessorComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624869382238,
+        &quot;took&quot;: 0,
+        &quot;index&quot;: 2,
+        &quot;title&quot;: &quot;parser-2-baseProcessorComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624869382239,
+        &quot;took&quot;: 1,
+        &quot;index&quot;: 3,
+        &quot;title&quot;: &quot;parser-3-processorComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;transcludeCodeComplete&quot;,
+        &quot;id&quot;: 1624869382498,
+        &quot;took&quot;: 259,
+        &quot;index&quot;: 2,
+        &quot;title&quot;: &quot;renderer-2-transcludeCodeComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;includesComplete&quot;,
+        &quot;id&quot;: 1624869382498,
+        &quot;took&quot;: 259,
+        &quot;index&quot;: 3,
+        &quot;title&quot;: &quot;renderer-3-includesComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;extractPluginsComplete&quot;,
+        &quot;id&quot;: 1624869382997,
+        &quot;took&quot;: 758,
+        &quot;index&quot;: 4,
+        &quot;title&quot;: &quot;renderer-4-extractPluginsComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toRehypeComplete&quot;,
+        &quot;id&quot;: 1624869383005,
+        &quot;took&quot;: 766,
+        &quot;index&quot;: 5,
+        &quot;title&quot;: &quot;renderer-5-toRehypeComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624869383005,
+        &quot;took&quot;: 766,
+        &quot;index&quot;: 6,
+        &quot;title&quot;: &quot;renderer-6-toReactComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;includesComplete&quot;,
+        &quot;id&quot;: 1624869383011,
+        &quot;took&quot;: 772,
+        &quot;index&quot;: 7,
+        &quot;title&quot;: &quot;renderer-7-includesComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;extractPluginsComplete&quot;,
+        &quot;id&quot;: 1624869383446,
+        &quot;took&quot;: 1207,
+        &quot;index&quot;: 8,
+        &quot;title&quot;: &quot;renderer-8-extractPluginsComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toRehypeComplete&quot;,
+        &quot;id&quot;: 1624869383446,
+        &quot;took&quot;: 1207,
+        &quot;index&quot;: 9,
+        &quot;title&quot;: &quot;renderer-9-toRehypeComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624869383446,
+        &quot;took&quot;: 1207,
+        &quot;index&quot;: 10,
+        &quot;title&quot;: &quot;renderer-10-toReactComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;processedFile&quot;,
+        &quot;id&quot;: 1624869383447,
+        &quot;took&quot;: 1873,
+        &quot;index&quot;: 8,
+        &quot;title&quot;: &quot;client-8-processedFile&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;client&quot;,
+        &quot;marker&quot;: &quot;rendered&quot;,
+        &quot;id&quot;: 1624869383473,
+        &quot;took&quot;: 1899,
+        &quot;index&quot;: 9,
+        &quot;title&quot;: &quot;client-9-rendered&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624869467254,
+        &quot;took&quot;: 1,
+        &quot;index&quot;: 2,
+        &quot;title&quot;: &quot;parser-2-baseProcessorComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624869467257,
+        &quot;took&quot;: 4,
+        &quot;index&quot;: 3,
+        &quot;title&quot;: &quot;parser-3-processorComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;transcludeCodeComplete&quot;,
+        &quot;id&quot;: 1624869467553,
+        &quot;took&quot;: 296,
+        &quot;index&quot;: 2,
+        &quot;title&quot;: &quot;renderer-2-transcludeCodeComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624869467602,
+        &quot;took&quot;: 1,
+        &quot;index&quot;: 2,
+        &quot;title&quot;: &quot;parser-2-baseProcessorComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624869467609,
+        &quot;took&quot;: 1,
+        &quot;index&quot;: 2,
+        &quot;title&quot;: &quot;parser-2-baseProcessorComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;baseProcessorComplete&quot;,
+        &quot;id&quot;: 1624869467609,
+        &quot;took&quot;: 0,
+        &quot;index&quot;: 2,
+        &quot;title&quot;: &quot;parser-2-baseProcessorComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;parser&quot;,
+        &quot;marker&quot;: &quot;processorComplete&quot;,
+        &quot;id&quot;: 1624869467610,
+        &quot;took&quot;: 1,
+        &quot;index&quot;: 3,
+        &quot;title&quot;: &quot;parser-3-processorComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;transcludeCodeComplete&quot;,
+        &quot;id&quot;: 1624869467891,
+        &quot;took&quot;: 281,
+        &quot;index&quot;: 2,
+        &quot;title&quot;: &quot;renderer-2-transcludeCodeComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;includesComplete&quot;,
+        &quot;id&quot;: 1624869467891,
+        &quot;took&quot;: 281,
+        &quot;index&quot;: 3,
+        &quot;title&quot;: &quot;renderer-3-includesComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;extractPluginsComplete&quot;,
+        &quot;id&quot;: 1624869467950,
+        &quot;took&quot;: 340,
+        &quot;index&quot;: 4,
+        &quot;title&quot;: &quot;renderer-4-extractPluginsComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toRehypeComplete&quot;,
+        &quot;id&quot;: 1624869467953,
+        &quot;took&quot;: 343,
+        &quot;index&quot;: 5,
+        &quot;title&quot;: &quot;renderer-5-toRehypeComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624869467953,
+        &quot;took&quot;: 343,
+        &quot;index&quot;: 6,
+        &quot;title&quot;: &quot;renderer-6-toReactComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;includesComplete&quot;,
+        &quot;id&quot;: 1624869467955,
+        &quot;took&quot;: 345,
+        &quot;index&quot;: 7,
+        &quot;title&quot;: &quot;renderer-7-includesComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;extractPluginsComplete&quot;,
+        &quot;id&quot;: 1624869467958,
+        &quot;took&quot;: 348,
+        &quot;index&quot;: 8,
+        &quot;title&quot;: &quot;renderer-8-extractPluginsComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toRehypeComplete&quot;,
+        &quot;id&quot;: 1624869467958,
+        &quot;took&quot;: 348,
+        &quot;index&quot;: 9,
+        &quot;title&quot;: &quot;renderer-9-toRehypeComplete&quot;
+      },
+      {
+        &quot;ns&quot;: &quot;renderer&quot;,
+        &quot;marker&quot;: &quot;toReactComplete&quot;,
+        &quot;id&quot;: 1624869467958,
+        &quot;took&quot;: 348,
+        &quot;index&quot;: 10,
+        &quot;title&quot;: &quot;renderer-10-toReactComplete&quot;
+      }
+    ]
+  },
+  &quot;mark&quot;: &quot;errorbar&quot;,
+  &quot;encoding&quot;: {
+    &quot;x&quot;: {
+      &quot;field&quot;: &quot;title&quot;,
+      &quot;type&quot;: &quot;ordinal&quot;
+    },
+    &quot;y&quot;: {
+      &quot;field&quot;: &quot;took&quot;,
+      &quot;type&quot;: &quot;quantitative&quot;
+    }
+  }
+}
+</code></pre></output></codecell></div></cell><cell startpos="446:1-10775" endpos="521:4-12188" class="code output"><div class="cell-content"><codecell class="tag-sw-connected tag-gh-connected lang-vega local output"><span class="meta"><span class="lang">vega</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span class="updatedAt">Updated <span class="Time relative">4.7d ago</span></span></span><output><pre><code class="vega">{
   &quot;description&quot;: &quot;A simple bar chart with embedded data.&quot;,
   &quot;data&quot;: {
     &quot;values&quot;: [
@@ -178,7 +516,7 @@ return raw;
     }
   }
 }
-</code></pre></output></codecell></div></cell><cell startpos="182:1-3924" endpos="271:4-5630" class="code output"><div class="cell-content"><codecell class="tag-sw-connected tag-gh-connected lang-vega local output"><span class="meta"><span class="lang">vega</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span class="updatedAt">Updated <span class="Time relative">1.5w ago</span></span></span><output><pre><code class="vega">{
+</code></pre></output></codecell></div></cell><cell startpos="522:1-12189" endpos="611:4-13895" class="code output"><div class="cell-content"><codecell class="tag-sw-connected tag-gh-connected lang-vega local output"><span class="meta"><span class="lang">vega</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span class="updatedAt">Updated <span class="Time relative">1.6w ago</span></span></span><output><pre><code class="vega">{
   &quot;description&quot;: &quot;A simple bar chart with embedded data.&quot;,
   &quot;data&quot;: {
     &quot;values&quot;: [
@@ -266,7 +604,7 @@ return raw;
     }
   }
 }
-</code></pre></output></codecell></div></cell><cell startpos="272:1-5631" endpos="283:4-6395" class="code output"><div class="cell-content"><codecell class="tag-sw-connected tag-gh-connected lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span class="updatedAt">Updated <span class="Time relative">1.9w ago</span></span></span><output><pre><code class="text">{ importsComplete: { min: 31, max: 200, mean: 73.72631578947369, n: 95 },
+</code></pre></output></codecell></div></cell><cell startpos="612:1-13896" endpos="623:4-14660" class="code output"><div class="cell-content"><codecell class="tag-sw-connected tag-gh-connected lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span class="updatedAt">Updated <span class="Time relative">2.0w ago</span></span></span><output><pre><code class="text">{ importsComplete: { min: 31, max: 200, mean: 73.72631578947369, n: 95 },
   fsSetup: { min: 31, max: 202, mean: 74.51578947368421, n: 95 },
   litObj: { min: 31, max: 202, mean: 74.56842105263158, n: 95 },
   initStart: { min: 31, max: 203, mean: 74.93684210526315, n: 95 },
@@ -276,7 +614,7 @@ return raw;
   processedFile: { min: 3033, max: 72866, mean: 8876, n: 53 },
   rendered: { min: 3171, max: 73111, mean: 9079.471698113208, n: 53 },
   settingsFetched: { min: 1156, max: 10758, mean: 3542.625, n: 24 } }
-</code></pre></output></codecell></div></cell><section depth="2" class="" startpos="288:1-6400" endpos="335:4-9256"><cell startpos="288:1-6400" endpos="288:8-6407"><div class="cell-content"><h2 id="runs">Runs</h2></div></cell><cell startpos="290:1-6409" endpos="300:4-7086" class="code output"><div class="cell-content"><codecell class="tag-gh-connected tag-no-sw lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span style="color:white;background-color:#64145f" class="tag">no-sw</span></span><output><pre><code class="text">{ importsComplete: { min: 33, max: 212, mean: 80.08333333333333, n: 36 },
+</code></pre></output></codecell></div></cell><section depth="2" class="" startpos="628:1-14665" endpos="675:4-17521"><cell startpos="628:1-14665" endpos="628:8-14672"><div class="cell-content"><h2 id="runs">Runs</h2></div></cell><cell startpos="630:1-14674" endpos="640:4-15351" class="code output"><div class="cell-content"><codecell class="tag-gh-connected tag-no-sw lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span style="color:white;background-color:#64145f" class="tag">no-sw</span></span><output><pre><code class="text">{ importsComplete: { min: 33, max: 212, mean: 80.08333333333333, n: 36 },
   fsSetup: { min: 33, max: 213, mean: 80.61111111111111, n: 36 },
   litObj: { min: 33, max: 213, mean: 80.66666666666667, n: 36 },
   initStart: { min: 33, max: 215, mean: 81.05555555555556, n: 36 },
@@ -285,7 +623,7 @@ return raw;
   manifestLoaded: { min: 1368, max: 73575, mean: 6254.181818181818, n: 22 },
   processedFile: { min: 1373, max: 73583, mean: 6429.409090909091, n: 22 },
   rendered: { min: 1536, max: 73941, mean: 6668.590909090909, n: 22 } }
-</code></pre></output></codecell></div></cell><cell startpos="302:1-7088" endpos="302:206-7293"><div class="cell-content"><p>So far the majority of time before complete is spent fetching files from the remote, 3s to read file, doubled by config, +1s for manifest. Of ~30 samples, with service worker disabled and GitHub connected.</p></div></cell><cell startpos="303:1-7294" endpos="313:4-7972" class="code output"><div class="cell-content"><codecell class="tag-no-gh tag-no-sw lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:white;background-color:#641446" class="tag">no-gh</span><span style="color:white;background-color:#64145f" class="tag">no-sw</span><span class="updatedAt">Updated <span class="Time relative">2.3w ago</span></span></span><output><pre><code class="text">{ importsComplete: { min: 73, max: 197, mean: 108.9090909090909, n: 11 },
+</code></pre></output></codecell></div></cell><cell startpos="642:1-15353" endpos="642:206-15558"><div class="cell-content"><p>So far the majority of time before complete is spent fetching files from the remote, 3s to read file, doubled by config, +1s for manifest. Of ~30 samples, with service worker disabled and GitHub connected.</p></div></cell><cell startpos="643:1-15559" endpos="653:4-16237" class="code output"><div class="cell-content"><codecell class="tag-no-gh tag-no-sw lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:white;background-color:#641446" class="tag">no-gh</span><span style="color:white;background-color:#64145f" class="tag">no-sw</span><span class="updatedAt">Updated <span class="Time relative">2.3w ago</span></span></span><output><pre><code class="text">{ importsComplete: { min: 73, max: 197, mean: 108.9090909090909, n: 11 },
   fsSetup: { min: 73, max: 198, mean: 109.81818181818181, n: 11 },
   litObj: { min: 73, max: 199, mean: 110, n: 11 },
   initStart: { min: 74, max: 200, mean: 110.36363636363636, n: 11 },
@@ -294,7 +632,7 @@ return raw;
   manifestLoaded: { min: 7537, max: 7920, mean: 7709.363636363636, n: 11 },
   processedFile: { min: 7543, max: 10109, mean: 7922.363636363636, n: 11 },
   rendered: { min: 7831, max: 10452, mean: 8227.272727272728, n: 11 } }
-</code></pre></output></codecell></div></cell><cell startpos="314:1-7973" endpos="324:4-8651" class="code output"><div class="cell-content"><codecell class="tag-sw-connected tag-gh-connected lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span class="updatedAt">Updated <span class="Time relative">2.3w ago</span></span></span><output><pre><code class="text">{ importsComplete: { min: 71, max: 196, mean: 86.66666666666667, n: 15 },
+</code></pre></output></codecell></div></cell><cell startpos="654:1-16238" endpos="664:4-16916" class="code output"><div class="cell-content"><codecell class="tag-sw-connected tag-gh-connected lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span class="updatedAt">Updated <span class="Time relative">2.3w ago</span></span></span><output><pre><code class="text">{ importsComplete: { min: 71, max: 196, mean: 86.66666666666667, n: 15 },
   fsSetup: { min: 72, max: 197, mean: 87.33333333333333, n: 15 },
   litObj: { min: 72, max: 197, mean: 87.4, n: 15 },
   initStart: { min: 72, max: 198, mean: 87.53333333333333, n: 15 },
@@ -303,7 +641,7 @@ return raw;
   manifestLoaded: { min: 2910, max: 6193, mean: 3419.4666666666667, n: 15 },
   processedFile: { min: 2946, max: 6208, mean: 4012.9285714285716, n: 14 },
   rendered: { min: 3035, max: 6409, mean: 4171, n: 14 } }
-</code></pre></output></codecell></div></cell><cell startpos="325:1-8652" endpos="335:4-9256" class="code output"><div class="cell-content"><codecell class="tag-sw-connected tag-gh-connected tag-offline lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span style="color:black;background-color:#a3b2de" class="tag">offline</span><span class="updatedAt">Updated <span class="Time relative">2.3w ago</span></span></span><output><pre><code class="text">{ importsComplete: { min: 72, max: 199, mean: 113.3, n: 10 },
+</code></pre></output></codecell></div></cell><cell startpos="665:1-16917" endpos="675:4-17521" class="code output"><div class="cell-content"><codecell class="tag-sw-connected tag-gh-connected tag-offline lang-text local output"><span class="meta"><span class="lang">text</span><span style="color:black;background-color:#797f36" class="tag">sw-connected</span><span style="color:black;background-color:#63c4fd" class="tag">gh-connected</span><span style="color:black;background-color:#a3b2de" class="tag">offline</span><span class="updatedAt">Updated <span class="Time relative">2.3w ago</span></span></span><output><pre><code class="text">{ importsComplete: { min: 72, max: 199, mean: 113.3, n: 10 },
   fsSetup: { min: 72, max: 201, mean: 114, n: 10 },
   litObj: { min: 72, max: 201, mean: 114.1, n: 10 },
   initStart: { min: 73, max: 202, mean: 114.8, n: 10 },
