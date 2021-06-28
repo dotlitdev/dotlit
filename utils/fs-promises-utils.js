@@ -160,7 +160,8 @@ export const extendFs = (fs, litroot = "", ghOpts, noPassthrough) => {
   const clonedfs = {...fs}
   const origReadFile = clonedfs.readFile
   const origStat = clonedfs.stat
-  
+
+  if (ghOpts) clonedfs.ghOrigin = true
   
   if (!noPassthrough) clonedfs.readFile = passThroughRead(origReadFile,litroot);
   clonedfs.writeFile = writeFileP(clonedfs, litroot);

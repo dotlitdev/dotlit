@@ -1,4 +1,4 @@
-<html data-reactroot=""><head><title>Components</title><meta name="litsrc" value="/components/components.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children" disabled=""><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu></div><style>body {
+<html data-reactroot=""><head><title>Components</title><meta name="litsrc" value="/components/components.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children" disabled=""><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span><span class="led led-grey"></span><span class="led led-grey"></span></li></menu></li></menu></div><style>body {
   --bg: white;
   --bg-secondary-color: #efefef;
     
@@ -87,7 +87,7 @@ const Document = props =&gt; {
 export default Document
 
 </code></pre></codecell></div></cell></section>
-<section depth="2" class="" startpos="15:1-154" endpos="19:4-199"><cell startpos="15:1-154" endpos="15:10-163"><div class="cell-content"><h2 id="header">Header</h2></div></cell><cell startpos="17:1-165" endpos="19:4-199" class="code"><div class="cell-content"><codecell class="dir-collapse lang-jsx local collapsed"><span class="meta"><span class="lang">jsx</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; Header.jsx</span></span><pre><code class="jsx">import React, { useState } from &#x27;react&#x27;
+<section depth="2" class="" startpos="15:1-154" endpos="19:4-199"><cell startpos="15:1-154" endpos="15:10-163"><div class="cell-content"><h2 id="header">Header</h2></div></cell><cell startpos="17:1-165" endpos="19:4-199" class="code"><div class="cell-content"><codecell class="dir-collapse lang-jsx local collapsed"><span class="meta"><span class="lang">jsx</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; Header.jsx</span></span><pre><code class="jsx">import React, { useState, useEffect } from &#x27;react&#x27;
 import * as clipboard from &quot;clipboard-polyfill&quot;
 import source from &#x27;unist-util-source&#x27;
 import SelectionContext from &#x27;./SelectionContext&#x27;
@@ -96,6 +96,7 @@ import { getConsoleForNamespace } from &#x27;../utils/console&#x27;
 import { CloseIcon } from &#x27;./Icons&#x27;
 import { ErrorBoundary } from &#x27;./ErrorBoundry&#x27;
 import {version} from &#x27;../../package.json&#x27;
+import { addListener } from &#x27;process&#x27;
 
 
 const console = getConsoleForNamespace(&#x27;Header&#x27;)
@@ -121,7 +122,8 @@ const LED = ({color,status}) =&gt; {
   return &lt;span title={status} className={`led led-${color}`}&gt;&lt;/span&gt;
 }
 
-const Status = ({local, remote}) =&gt; {
+const Status = ({local, remote, sw, gh}) =&gt; {
+
   const color = (typeof window === &#x27;undefined&#x27; || typeof window.localStorage === &#x27;undefined)&#x27;)
     ? &#x27;grey&#x27;
     : (local &amp;&amp; !remote)
@@ -131,7 +133,11 @@ const Status = ({local, remote}) =&gt; {
         : (!remote &amp;&amp; !local)
           ? &#x27;red&#x27;
           : &#x27;green&#x27;
-  return &lt;LED color={color} title=&quot;Status&quot; /&gt;
+  return &lt;&gt;
+      &lt;LED color={gh ? &#x27;green&#x27; : &#x27;grey&#x27;} title=&quot;Github&quot; /&gt;
+      &lt;LED color={sw ? &#x27;green&#x27; : &#x27;grey&#x27;} title=&quot;Service Worker&quot; /&gt;
+      &lt;LED color={color} title=&quot;Status&quot; /&gt;
+    &lt;/&gt;
 }
 
 const Menu = props =&gt; {
@@ -209,6 +215,8 @@ const Message = ({message, setSelectedCell}) =&gt; {
 export const Header = ({ root, toggleViewSource, toggleModal, ssr }) =&gt; {
   console.log(&#x27;&lt;Header/&gt;&#x27;)
 
+  const [sw, setSw] = useState(null);
+
   const resetFile = (ctx, localOnly) =&gt; async ev =&gt; {
     const filepath = ctx.file.path
     console.log(&quot;Reset File:&quot;, filepath)
@@ -273,6 +281,11 @@ export const Header = ({ root, toggleViewSource, toggleModal, ssr }) =&gt; {
 
     ctx.setSrc(ctx.selectedCell, `${meta}\n${end}`)
   }
+
+  useEffect(async () =&gt; {
+    const resp = await fetch(&#x27;--sw&#x27;).then( res =&gt; res.json().catch( err=&gt; null) ).catch(err =&gt; null)
+    setSw(resp)
+  }, [])
 
   return &lt;SelectionContext.Consumer&gt;{(ctx) =&gt; {
 
@@ -347,7 +360,9 @@ export const Header = ({ root, toggleViewSource, toggleModal, ssr }) =&gt; {
             &lt;span onClick={showInspector}&gt;Show Inspector&lt;/span&gt;
         &lt;/Menu&gt;
       &lt;/Menu&gt;
-      &lt;Menu right title={&lt;Status local={local} remote={remote} /&gt;}&gt;
+      &lt;Menu right title={&lt;Status local={local} remote={remote} sw={sw} gh={ctx?.fs?.ghOrigin}/&gt;}&gt;
+        &lt;span disabled&gt;{`GitHub: ${ ctx?.fs?.ghOrigin ? &#x27;Connected&#x27; : &#x27;Not connected&#x27;}`}&lt;/span&gt;
+        &lt;span disabled&gt;{`Service Worker: ${ sw ? sw.version : &#x27; not&#x27;} active.`}&lt;/span&gt;
         {ctx.file &amp;&amp; &lt;span disabled&gt;{`File: ${ctx.file.path}`}&lt;/span&gt;}
         {local &amp;&amp; &lt;span disabled&gt;{`Local last updated ${local}`}&lt;/span&gt; }
         {remote &amp;&amp; &lt;span disabled&gt;{`Remote last updated ${remote}`}&lt;/span&gt; }

@@ -1,4 +1,4 @@
-<html data-reactroot=""><head><title>Parser</title><meta name="litsrc" value="/parser/parser.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children" disabled=""><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span></li></menu></li></menu></div><style>body {
+<html data-reactroot=""><head><title>Parser</title><meta name="litsrc" value="/parser/parser.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children" disabled=""><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span><span class="led led-grey"></span><span class="led led-grey"></span></li></menu></li></menu></div><style>body {
   --bg: white;
   --bg-secondary-color: #efefef;
     
@@ -46,7 +46,7 @@ import select from &#x27;unist-util-select&#x27;
 import { to_string } from &#x27;./utils/mdast-util-to-string&#x27;
 import toMarkdown from &#x27;mdast-util-to-markdown&#x27;
 
-import {sections, groupIntoSections, ungroupSections} from &#x27;./sections&#x27;
+import {sections, ungroupSections} from &#x27;./sections&#x27;
 import codeblocks, {parseMeta} from &#x27;./codeblocks&#x27;
 import frontmatter from &#x27;./frontmatter&#x27;
 import {mdblocks} from &#x27;./mdblocks&#x27;
@@ -305,58 +305,6 @@ const cellsFromNodes = (nodes, {addSectionDataToFirstCell}={}) =&gt; {
 
 }
 
-const wrapSection = (options) =&gt; (start, nodes, end) =&gt; {
-  console.log(
-    &quot;[Sections] Wrapping:&quot;,
-    start &amp;&amp; start.data.id,
-    nodes &amp;&amp; nodes.length,
-    end &amp;&amp; end.type
-  );
-
-  nodes = [start, ...nodes]
-
-  // log(&quot;[Section] nodes:&quot;, nodes)
-
-  const cells = cellsFromNodes(nodes)
-
-  return [
-    {
-      type: &quot;section&quot;,
-      data: {
-        id: start.data.id,
-        hName: &quot;section&quot;,
-        hProperties: {
-          name: start.data.id,
-        },
-      },
-      position: {
-        start: start.position.start,
-        end: end ? end.position.end : nodes[nodes.length - 1].position.end,
-      },
-      children: [
-        // Mark that heading as having been mutated,
-        // otherwise we&#x27;d be processing the same header
-        // over and over (infinite loop)
-        ...cells,
-      ],
-    },
-  ];
-};
-
-const transform = (options) =&gt; (node, index, parent) =&gt; {
-  console.log(&quot;[Sections] Visiting&quot;, node.data.id)
-  return heading(
-    parent,
-    (_, node2) =&gt; node.data.id === node2.data.id,
-    wrapSection(options)
-  )
-}
-
-export const groupIntoSections = (options = {}) =&gt; (...args) =&gt; (tree) =&gt; {
-  console.log(&quot;[Sections] Init&quot;);
-  visit(tree, &quot;heading&quot;, transform(options), true);
-}
-
 export const sections = (...args) =&gt; (tree) =&gt; {
   console.log(&#x27;[Sections II] Init.&#x27;, args, tree.type, tree.children.length)
   let headings = 0
@@ -415,9 +363,13 @@ export const sections = (...args) =&gt; (tree) =&gt; {
     }
   }, true)
 
-  tree.children = tree.children.filter(Identity)
-
   console.log(&quot;Headings: &quot;, headings)
+  if (!headings) {
+    tree.children = cellsFromNodes(tree.children)
+  } else {
+    tree.children = tree.children.filter(Identity)
+  }
+  
 }
 
 

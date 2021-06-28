@@ -107,58 +107,6 @@ const cellsFromNodes = (nodes, {addSectionDataToFirstCell}={}) => {
 
 }
 
-const wrapSection = (options) => (start, nodes, end) => {
-  console.log(
-    "[Sections] Wrapping:",
-    start && start.data.id,
-    nodes && nodes.length,
-    end && end.type
-  );
-
-  nodes = [start, ...nodes]
-
-  // log("[Section] nodes:", nodes)
-
-  const cells = cellsFromNodes(nodes)
-
-  return [
-    {
-      type: "section",
-      data: {
-        id: start.data.id,
-        hName: "section",
-        hProperties: {
-          name: start.data.id,
-        },
-      },
-      position: {
-        start: start.position.start,
-        end: end ? end.position.end : nodes[nodes.length - 1].position.end,
-      },
-      children: [
-        // Mark that heading as having been mutated,
-        // otherwise we'd be processing the same header
-        // over and over (infinite loop)
-        ...cells,
-      ],
-    },
-  ];
-};
-
-const transform = (options) => (node, index, parent) => {
-  console.log("[Sections] Visiting", node.data.id)
-  return heading(
-    parent,
-    (_, node2) => node.data.id === node2.data.id,
-    wrapSection(options)
-  )
-}
-
-export const groupIntoSections = (options = {}) => (...args) => (tree) => {
-  console.log("[Sections] Init");
-  visit(tree, "heading", transform(options), true);
-}
-
 export const sections = (...args) => (tree) => {
   console.log('[Sections II] Init.', args, tree.type, tree.children.length)
   let headings = 0
@@ -217,9 +165,13 @@ export const sections = (...args) => (tree) => {
     }
   }, true)
 
-  tree.children = tree.children.filter(Identity)
-
   console.log("Headings: ", headings)
+  if (!headings) {
+    tree.children = cellsFromNodes(tree.children)
+  } else {
+    tree.children = tree.children.filter(Identity)
+  }
+  
 }
 
 
