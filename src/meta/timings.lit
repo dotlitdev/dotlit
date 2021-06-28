@@ -55,7 +55,7 @@ export const viewer = ({ node, React }) => {
 
 ```js !collapse > vega #sw-connected #gh-connected
 const raw = localStorage.getItem("litTimings");
-const json = obj => JSON.stringify(obj,null,2)
+const json = (obj) => JSON.stringify(obj, null, 2);
 
 const events = {};
 const logs = raw
@@ -65,8 +65,8 @@ const logs = raw
       const data = JSON.parse(l);
       events[data.marker] = events[data.marker] || [];
       events[data.marker].push(data.took);
-      data.title = `${data.ns}-${data.index}-${data.marker}`
-      return data
+      data.title = `${data.ns}-${data.index}-${data.marker}`;
+      return data;
     } catch (err) {}
   })
   .filter((x) => x);
@@ -84,19 +84,19 @@ Object.keys(events).map((event) => {
   };
 });
 // const values = Object.entries(aggregates).map( ([k,v])=>({id:k, ...v}))
-const values = Object.entries(events).map( ([k,v])=>({id:k, value: v}))
+const values = Object.entries(events).map(([k, v]) => ({ id: k, value: v }));
 const spec = {
   // $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
   description: "A simple bar chart with embedded data.",
-  data: {values: logs},
+  data: { values: logs },
   mark: "errorbar",
   encoding: {
-    x: { title: field: "marker", type: "ordinal" },
+    x: { field: "title", type: "ordinal" },
     y: { field: "took", type: "quantitative" },
   },
-}
+};
 
-return json(spec)
+return json(spec);
 return aggregates;
 return events;
 return logs;
