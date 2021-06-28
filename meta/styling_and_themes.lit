@@ -143,6 +143,148 @@ body {
 
 ```
 ```styl !collapse < ../client/styles/header.styl
+.lit-message
+    background-color: #ff0000b3
+    border-bottom: 1px solid #c32d2d
+    font-family: monospace;
+    color: white
+    padding: 0.4em
+    overflow: scroll;
+
+    .message
+        overflow: hidden
+        flex: 1
+        white-space: pre-wrap;
+        cursor: pointer;
+        display: block;
+
+    &:not(.showall)
+        display: flex
+        .message
+            white-space: nowrap
+            text-overflow: ellipsis
+
+    .name
+        cursor: pointer
+        margin-left: 0.4em
+        text-decoration: underline
+
+    .close 
+        padding: 0 var(--medium-space);
+        cursor: pointer;
+
+#lit-header
+    top: 0
+    position: sticky
+    background-color: var(--bg)
+    z-index: 99999
+
+    *[disabled] 
+        opacity: 0.5
+        font-style: italic
+        cursor: default
+
+    menu
+        margin: 0
+        padding: 0
+        display: flex
+        flex-direction: row
+        position relative
+        white-space: nowrap
+
+        &.right
+            margin-left: auto
+            & > .MenuItems
+                right: 0
+                left: auto
+
+        .MenuTitle
+            list-style: none
+            cursor: pointer
+            display: flex
+            padding-right: 0.6em
+
+        .MenuItems
+            list-style: none
+            cursor: pointer
+            display: flex
+            flex-direction: column
+            flex-grow: 1;
+
+            .meta
+                font-size: 0.6em
+                font-style: normal
+
+        &.open > .MenuTitle
+            // font-weight: bold
+        
+        &:not(.horizontal) > .MenuItems 
+            & > * 
+                padding-top: 0.4em
+                &:first-child 
+                    padding-top: 0
+
+            & > menu
+                display: flex
+                flex-direction: column
+
+                & > .MenuTitle:after
+                    padding: 0 .4em
+                    content: '\203A'
+
+                &.open > .MenuTitle:after
+                    transform: rotate(90deg)
+
+                & > .MenuItems
+                    position: static
+                    padding-top: 0.4em
+
+                    & > *
+                        padding-left: 0.4em
+                        border-left: 3px solid var(--text-primary-color)
+
+        &.open:not(.horizontal)
+
+            & > .MenuItems
+                position: absolute
+                top: 1.6em
+                background-color: var(--bg)
+                padding: 0.6em
+                margin: 0 -0.6em
+                box-shadow: 0 3px 3px rgba(0,0,0,0.2)
+                min-width: 100%
+                padding-top: 0;
+
+        &.horizontal
+            display: flex
+            flex-direction: row
+            padding: 0.6em
+            border-bottom: 1px solid var(--divider-subtle)
+
+            & > li 
+                flex-direction: row
+
+.led 
+    display: inline-block
+    width: 0.6em
+    height: 0.6em
+    border-radius: 0.6em
+    margin-top: 0.4em
+    background-color: var(--bg-secondary-color)
+    box-shadow: 0 0 0 0.1em var(--bg);
+    margin-left: -0.2em;
+
+.led-green
+    background-color: #33cc33
+
+.led-orange
+    background-color: orange
+
+.led-blue
+    background-color: #9999f7
+
+.led-red
+    background-color: red
 
 ```
 
