@@ -1,3 +1,7 @@
+import { getConsoleForNamespace } from './console'
+
+const console = getConsoleForNamespace('timings')
+
 const timings = {};
 
 export const getPrev = () =>
