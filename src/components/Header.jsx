@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import * as clipboard from "clipboard-polyfill"
 import source from 'unist-util-source'
 import SelectionContext from './SelectionContext'
@@ -7,6 +7,7 @@ import { getConsoleForNamespace } from '../utils/console'
 import { CloseIcon } from './Icons'
 import { ErrorBoundary } from './ErrorBoundry'
 import {version} from '../../package.json'
+import { addListener } from 'process'
 
 
 const console = getConsoleForNamespace('Header')
@@ -32,7 +33,8 @@ const LED = ({color,status}) => {
   return <span title={status} className={`led led-${color}`}></span>
 }
 
-const Status = ({local, remote}) => {
+const Status = ({local, remote, sw, gh}) => {
+
   const color = (typeof window === 'undefined' || typeof window.localStorage === 'undefined)')
     ? 'grey'
     : (local && !remote)
@@ -42,7 +44,11 @@ const Status = ({local, remote}) => {
         : (!remote && !local)
           ? 'red'
           : 'green'
-  return <LED color={color} title="Status" />
+  return <>
+      <LED color={gh ? 'green' : 'grey'} title="Github" />
+      <LED color={sw ? 'green' : 'grey'} title="Service Worker" />
+      <LED color={color} title="Status" />
+    </>
 }
 
 const Menu = props => {
@@ -120,6 +126,8 @@ const Message = ({message, setSelectedCell}) => {
 export const Header = ({ root, toggleViewSource, toggleModal, ssr }) => {
   console.log('<Header/>')
 
+  const [sw, setSw] = useState(null);
+
   const resetFile = (ctx, localOnly) => async ev => {
     const filepath = ctx.file.path
     console.log("Reset File:", filepath)
@@ -184,6 +192,11 @@ export const Header = ({ root, toggleViewSource, toggleModal, ssr }) => {
 
     ctx.setSrc(ctx.selectedCell, `${meta}\n${end}`)
   }
+
+  useEffect(async () => {
+    const resp = await fetch('--sw').then( res => res.json().catch( err=> null) ).catch(err => null)
+    setSw(resp)
+  }, [])
 
   return <SelectionContext.Consumer>{(ctx) => {
 
@@ -258,7 +271,9 @@ export const Header = ({ root, toggleViewSource, toggleModal, ssr }) => {
             <span onClick={showInspector}>Show Inspector</span>
         </Menu>
       </Menu>
-      <Menu right title={<Status local={local} remote={remote} />}>
+      <Menu right title={<Status local={local} remote={remote} sw={sw} gh={ctx?.fs?.ghOrigin}/>}>
+        <span disabled>{`GitHub: ${ ctx?.fs?.ghOrigin ? 'Connected' : 'Not connected'}`}</span>
+        <span disabled>{`Service Worker: ${ sw ? sw.version : ' not'} active.`}</span>
         {ctx.file && <span disabled>{`File: ${ctx.file.path}`}</span>}
         {local && <span disabled>{`Local last updated ${local}`}</span> }
         {remote && <span disabled>{`Remote last updated ${remote}`}</span> }
