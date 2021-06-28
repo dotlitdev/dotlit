@@ -7,8 +7,6 @@ import { getConsoleForNamespace } from '../utils/console'
 import { CloseIcon } from './Icons'
 import { ErrorBoundary } from './ErrorBoundry'
 import {version} from '../../package.json'
-import { addListener } from 'process'
-
 
 const console = getConsoleForNamespace('Header')
 
