@@ -31,7 +31,17 @@ const LED = ({color,status}) => {
   return <span title={status} className={`led led-${color}`}></span>
 }
 
+const useHasMounted = () => {
+  const [hasMounted, setHasMounted] = useState(false);
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+  return hasMounted;
+}
+
 const Status = ({local, remote, sw, gh}) => {
+  const hasMounted = useHasMounted()
+  if (!hasMounted) return null;
 
   const color = (typeof window === 'undefined' || typeof window.localStorage === 'undefined)')
     ? 'grey'
