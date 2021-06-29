@@ -43,7 +43,7 @@ const Status = ({local, remote, sw, gh}) => {
   const hasMounted = useHasMounted()
   // if (!hasMounted) return null;
 
-  const color = hasMounted
+  const color = !hasMounted
     ? 'grey'
     : (local && !remote)
       ? 'orange'
