@@ -31,6 +31,7 @@ const Cell = props => {
 
     const [src, setSrc] = useState('')
     const [content, setContent] = useState(null)
+    const [loaded, setLoaded] = useState(null)
     // const content = props.children
     const [editing, setEditing] = useState(false)
     const [executing, setExecuting] = useState(false)
@@ -124,14 +125,15 @@ const Cell = props => {
     }
 
     useEffect( async () => {
-         if (meta && meta.exec === 'onload') {
+         if (!loaded && meta && meta.exec === 'onload') {
              console.log("Onload execution: ", rawSource)
-    //         const output = await exec()()
-    //         console.log("produced output", output)
-    //         const outputVFile = await vfile({ path: meta.output?.filename || lit.location.src, contents: output})
-    //         const result = await processor({fs: lit.fs,litroot: lit.location.root}).process(outputVFile)
-    //         console.log("Result", result)
-    //         setContent(result.result)
+             const output = await exec()()
+             console.log("produced output", output)
+             const outputVFile = await vfile({ path: meta.output?.filename || lit.location.src, contents: output})
+             const result = await processor({fs: lit.fs,litroot: lit.location.root}).process(outputVFile)
+             console.log("Result", result)
+             setLoaded(true)
+             setContent(result.result)
          }
     },[])
 

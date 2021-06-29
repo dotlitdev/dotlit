@@ -591,6 +591,7 @@ const Cell = props =&gt; {
 
     const [src, setSrc] = useState(&#x27;&#x27;)
     const [content, setContent] = useState(null)
+    const [loaded, setLoaded] = useState(null)
     // const content = props.children
     const [editing, setEditing] = useState(false)
     const [executing, setExecuting] = useState(false)
@@ -684,14 +685,15 @@ const Cell = props =&gt; {
     }
 
     useEffect( async () =&gt; {
-         if (meta &amp;&amp; meta.exec === &#x27;onload&#x27;) {
+         if (!loaded &amp;&amp; meta &amp;&amp; meta.exec === &#x27;onload&#x27;) {
              console.log(&quot;Onload execution: &quot;, rawSource)
-    //         const output = await exec()()
-    //         console.log(&quot;produced output&quot;, output)
-    //         const outputVFile = await vfile({ path: meta.output?.filename || lit.location.src, contents: output})
-    //         const result = await processor({fs: lit.fs,litroot: lit.location.root}).process(outputVFile)
-    //         console.log(&quot;Result&quot;, result)
-    //         setContent(result.result)
+             const output = await exec()()
+             console.log(&quot;produced output&quot;, output)
+             const outputVFile = await vfile({ path: meta.output?.filename || lit.location.src, contents: output})
+             const result = await processor({fs: lit.fs,litroot: lit.location.root}).process(outputVFile)
+             console.log(&quot;Result&quot;, result)
+             setLoaded(true)
+             setContent(result.result)
          }
     },[])
 
