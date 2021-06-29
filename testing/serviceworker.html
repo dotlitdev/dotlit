@@ -46,7 +46,7 @@
 </code></pre></output></codecell></div></cell><cell startpos="44:1-1013" endpos="51:4-1190" class="code"><div class="cell-content"><codecell class="tag-register lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#d6dc2e" class="tag">register</span></span><pre><code class="js">return navigator
           .serviceWorker
           .register(&#x27;/serviceworker.js?root=&#x27;+lit.location.root)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">11.8h ago</span></span></span><output><pre><code class="txt">{}
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">13.4h ago</span></span></span><output><pre><code class="txt">{}
 </code></pre></output></codecell></div></cell><cell startpos="53:1-1192" endpos="53:60-1251"><div class="cell-content"><ul class="contains-task-list">
 <li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->To do, handle register for non-root hosted notebooks.</li>
 </ul></div></cell><cell startpos="55:1-1253" endpos="62:4-1463" class="code"><div class="cell-content"><codecell class="tag-status lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#cacdcf" class="tag">status</span></span><pre><code class="js">return navigator.serviceWorker.controller
@@ -98,13 +98,13 @@ Unregistered 1 regisration(s)
   }
 }
 </code></pre></output></codecell></div></cell><cell startpos="132:1-2900" endpos="134:4-2938" class="code"><div class="cell-content"><codecell class="lang-text local"><span class="meta"><span class="lang">text</span><span class="source">&lt; ./getserviceworker--sw</span></span><pre><code class="text"></code></pre></codecell></div></cell></section>
-<section depth="2" class="" startpos="136:1-2940" endpos="290:4-7442"><cell startpos="136:1-2940" endpos="136:18-2957"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="138:1-2959" endpos="290:4-7442" class="code output"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed output"><a name="../serviceworker.js"></a><span class="meta"><span class="lang">js</span><span class="filename">../serviceworker.js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><output><pre><code class="js">// gross hack around one of @codemirror/view bugs
+<section depth="2" class="" startpos="136:1-2940" endpos="140:4-3017"><cell startpos="136:1-2940" endpos="136:18-2957"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></cell><cell startpos="138:1-2959" endpos="140:4-3017" class="code"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span><span class="source">&lt; ../serviceworker.js</span></span><pre><code class="js">// gross hack around one of @codemirror/view bugs
 let document = { documentElement: { style: {} } };
 
 importScripts(&quot;web.bundle.js&quot;);
 
 const state = {
-  version: &quot;0.2.17&quot;,
+  version: &quot;0.2.22&quot;,
   dotlit: typeof dotlit,
   root: &quot;&quot;,
   enableCache: false,
@@ -113,6 +113,14 @@ const state = {
 
 const PRECACHE = &quot;precache-v1&quot;;
 const RUNTIME = &quot;runtime&quot;;
+const CACHE_FIRST = &#x27;cachefirst-v1&#x27;;
+
+const CACHE_FIRST_DOMAINS = [
+  &#x27;https://cdn.skypack.dev&#x27;,
+  &#x27;http://cdn.jsdelivr.net&#x27;,
+  &#x27;https://cdn.jsdelivr.net&#x27;,
+  &#x27;https://unpkg.com/&#x27;
+]
 
 // A list of local resources we always want to be cached.
 const PRECACHE_URLS = [
@@ -184,7 +192,7 @@ self.addEventListener(&quot;install&quot;, (event) =&gt; {
 
 // The activate handler takes care of cleaning up old caches.
 self.addEventListener(&quot;activate&quot;, (event) =&gt; {
-  const currentCaches = [PRECACHE, RUNTIME];
+  const currentCaches = [PRECACHE, RUNTIME, CACHE_FIRST];
   event.waitUntil(
     caches
       .keys()
@@ -204,15 +212,69 @@ self.addEventListener(&quot;activate&quot;, (event) =&gt; {
   );
 });
 
+
+const isCacheFirstOrigin = (url) =&gt; {
+  for (const domain of CACHE_FIRST_DOMAINS) {
+    if (url.startsWith(domain)) return true
+  }  
+}
+
+const isSameOrigin = (url) =&gt; {
+  return url.startsWith(self.location.origin)
+}
+
+const fetchAndAddToCache = (event, cacheBucket = RUNTIME) =&gt; {
+  return caches.match(event.request).then((cachedResponse) =&gt; {
+    return caches.open(cacheBucket).then((cache) =&gt; {
+      return fetch(event.request)
+        .then((response) =&gt; {
+          // Put a copy of the response in the runtime cache.
+          return cache
+            .put(event.request, response.clone())
+            .then(() =&gt; {
+              return response;
+            });
+        })
+        .catch((err) =&gt; {
+          if (!cachedResponse) throw err;
+          return cachedResponse;
+        });
+    });
+  });
+  
+}
+
+const cacheFirstHandler = (event) =&gt; {
+  console.log(&quot;Cache first origin request &quot;, event.request.url)
+  return caches.match(event.request).then((cachedResponse) =&gt; {
+    if (cachedResponse) {
+      console.log(&#x27;Serving from cache.&#x27;)
+      return cachedResponse
+    } else return fetchAndAddToCache(event, CACHE_FIRST)
+  })
+}
+
 // The fetch handler serves responses for same-origin resources from a cache.
 // If no response is found, it populates the runtime cache with the response
 // from the network before returning it to the page.
 self.addEventListener(&quot;fetch&quot;, (event) =&gt; {
-  // Skip cross-origin requests, like those for Google Analytics. And add mock response
-  if (true || event.request.url.startsWith(self.location.origin)) {
+
+  const url = event.request.url
+
+  // is the request is for a CacheFirst origin
+  if (isCacheFirstOrigin(url)) {
+    console.log(&quot;CACHE FIRST REQUEST&quot;, url)
+    event.respondWith( cacheFirstHandler(event) )
+
+  // if the requset if for the same origin
+  } else if (isSameOrigin(url)) {
+
+    // if its a mock requests
     if (event.request.url.endsWith(&quot;--sw&quot;)) {
       console.log(&quot;Mock/Info request&quot;);
       event.respondWith(getMockResponse(event));
+    
+    // check local filessystem first
     } else {
       event.respondWith(
         localFile(event)
@@ -222,34 +284,20 @@ self.addEventListener(&quot;fetch&quot;, (event) =&gt; {
           })
           .catch((err) =&gt; {
             console.log(&quot;Failed local file check, reverting to network&quot;, err);
-            return caches.match(event.request).then((cachedResponse) =&gt; {
-              if (state.enableCache &amp;&amp; cachedResponse) {
-                return cachedResponse;
-              }
-
-              return caches.open(RUNTIME).then((cache) =&gt; {
-                return fetch(event.request)
-                  .then((response) =&gt; {
-                    // Put a copy of the response in the runtime cache.
-                    return cache
-                      .put(event.request, response.clone())
-                      .then(() =&gt; {
-                        return response;
-                      });
-                  })
-                  .catch((err) =&gt; {
-                    if (!cachedResponse) throw err;
-                    return cachedResponse;
-                  });
-              });
-            });
+            return fetchAndAddToCache(event)
           })
       );
     }
+
+  // for everything else fetch and add to cache for when offline
+  } else {
+    event.respondWith( fetchAndAddToCache(event) )
   }
+    
 });
 
-</code></pre></output></codecell></div></cell></section>
-<section depth="2" class="" startpos="292:1-7444" endpos="294:80-7533"><cell startpos="292:1-7444" endpos="294:80-7533"><div class="cell-content"><h2 id="to-do">To do</h2><ul class="contains-task-list">
-<li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->Add responses not on host domain to <code>RUNTIME</code> cache for offline usage...?</li>
+</code></pre></codecell></div></cell></section>
+<section depth="2" class="" startpos="142:1-3019" endpos="145:80-3191"><cell startpos="142:1-3019" endpos="145:80-3191"><div class="cell-content"><h2 id="to-do">To do</h2><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->Serve from cache first for specified domains (skypack, unpkg, jsdeliver etc)</li>
+<li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <!-- -->Add responses not on host domain to <code>RUNTIME</code> cache for offline usage...?</li>
 </ul></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (2)</h4><ol><li><a title="Importing JS Modules" href="/testing/importing_js_modules.html">Importing JS Modules</a></li><li><a title="🔬 Tests, experiments and investigations" href="/testing/index.html">🔬 Tests, experiments and investigations</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>

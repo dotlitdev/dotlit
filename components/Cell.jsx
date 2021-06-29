@@ -123,17 +123,17 @@ const Cell = props => {
         }
     }
 
-    useEffect( async () => {
-        if (meta && meta.exec === 'onload') {
-            console.log("Onload execution: ", rawSource)
-            const output = await exec()()
-            console.log("produced output", output)
-            const outputVFile = await vfile({ path: meta.output?.filename || lit.location.src, contents: output})
-            const result = await processor({fs: lit.fs,litroot: lit.location.root}).process(outputVFile)
-            console.log("Result", result)
-            setContent(result.result)
-        }
-    },[])
+    // useEffect( async () => {
+    //     if (meta && meta.exec === 'onload') {
+    //         console.log("Onload execution: ", rawSource)
+    //         const output = await exec()()
+    //         console.log("produced output", output)
+    //         const outputVFile = await vfile({ path: meta.output?.filename || lit.location.src, contents: output})
+    //         const result = await processor({fs: lit.fs,litroot: lit.location.root}).process(outputVFile)
+    //         console.log("Result", result)
+    //         setContent(result.result)
+    //     }
+    // },[])
 
     const getClasses = ctx => [
         isSelected(ctx) ? 'selected' : '',

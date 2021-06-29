@@ -4,7 +4,7 @@ let document = { documentElement: { style: {} } };
 importScripts("web.bundle.js");
 
 const state = {
-  version: "0.2.17",
+  version: "0.2.22",
   dotlit: typeof dotlit,
   root: "",
   enableCache: false,
@@ -13,6 +13,14 @@ const state = {
 
 const PRECACHE = "precache-v1";
 const RUNTIME = "runtime";
+const CACHE_FIRST = 'cachefirst-v1';
+
+const CACHE_FIRST_DOMAINS = [
+  'https://cdn.skypack.dev',
+  'http://cdn.jsdelivr.net',
+  'https://cdn.jsdelivr.net',
+  'https://unpkg.com/'
+]
 
 // A list of local resources we always want to be cached.
 const PRECACHE_URLS = [
@@ -84,7 +92,7 @@ self.addEventListener("install", (event) => {
 
 // The activate handler takes care of cleaning up old caches.
 self.addEventListener("activate", (event) => {
-  const currentCaches = [PRECACHE, RUNTIME];
+  const currentCaches = [PRECACHE, RUNTIME, CACHE_FIRST];
   event.waitUntil(
     caches
       .keys()
@@ -104,15 +112,69 @@ self.addEventListener("activate", (event) => {
   );
 });
 
+
+const isCacheFirstOrigin = (url) => {
+  for (const domain of CACHE_FIRST_DOMAINS) {
+    if (url.startsWith(domain)) return true
+  }  
+}
+
+const isSameOrigin = (url) => {
+  return url.startsWith(self.location.origin)
+}
+
+const fetchAndAddToCache = (event, cacheBucket = RUNTIME) => {
+  return caches.match(event.request).then((cachedResponse) => {
+    return caches.open(cacheBucket).then((cache) => {
+      return fetch(event.request)
+        .then((response) => {
+          // Put a copy of the response in the runtime cache.
+          return cache
+            .put(event.request, response.clone())
+            .then(() => {
+              return response;
+            });
+        })
+        .catch((err) => {
+          if (!cachedResponse) throw err;
+          return cachedResponse;
+        });
+    });
+  });
+  
+}
+
+const cacheFirstHandler = (event) => {
+  console.log("Cache first origin request ", event.request.url)
+  return caches.match(event.request).then((cachedResponse) => {
+    if (cachedResponse) {
+      console.log('Serving from cache.')
+      return cachedResponse
+    } else return fetchAndAddToCache(event, CACHE_FIRST)
+  })
+}
+
 // The fetch handler serves responses for same-origin resources from a cache.
 // If no response is found, it populates the runtime cache with the response
 // from the network before returning it to the page.
 self.addEventListener("fetch", (event) => {
-  // Skip cross-origin requests, like those for Google Analytics. And add mock response
-  if (true || event.request.url.startsWith(self.location.origin)) {
+
+  const url = event.request.url
+
+  // is the request is for a CacheFirst origin
+  if (isCacheFirstOrigin(url)) {
+    console.log("CACHE FIRST REQUEST", url)
+    event.respondWith( cacheFirstHandler(event) )
+
+  // if the requset if for the same origin
+  } else if (isSameOrigin(url)) {
+
+    // if its a mock requests
     if (event.request.url.endsWith("--sw")) {
       console.log("Mock/Info request");
       event.respondWith(getMockResponse(event));
+    
+    // check local filessystem first
     } else {
       event.respondWith(
         localFile(event)
@@ -122,29 +184,14 @@ self.addEventListener("fetch", (event) => {
           })
           .catch((err) => {
             console.log("Failed local file check, reverting to network", err);
-            return caches.match(event.request).then((cachedResponse) => {
-              if (state.enableCache && cachedResponse) {
-                return cachedResponse;
-              }
-
-              return caches.open(RUNTIME).then((cache) => {
-                return fetch(event.request)
-                  .then((response) => {
-                    // Put a copy of the response in the runtime cache.
-                    return cache
-                      .put(event.request, response.clone())
-                      .then(() => {
-                        return response;
-                      });
-                  })
-                  .catch((err) => {
-                    if (!cachedResponse) throw err;
-                    return cachedResponse;
-                  });
-              });
-            });
+            return fetchAndAddToCache(event)
           })
       );
     }
+
+  // for everything else fetch and add to cache for when offline
+  } else {
+    event.respondWith( fetchAndAddToCache(event) )
   }
+    
 });
