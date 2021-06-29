@@ -135,9 +135,11 @@ const Message = ({message, setSelectedCell}) => {
   </div>
 }
 
-export const Header = ({ root, toggleViewSource, toggleModal, ssr }) => {
+export const Header = ({ root, toggleViewSource, toggleModal}) => {
   console.log('<Header/>')
 
+  const hasMounted = useHasMounted();
+  const ssr = !hasMounted
   const [sw, setSw] = useState(null);
 
   const resetFile = (ctx, localOnly) => async ev => {
