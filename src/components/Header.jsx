@@ -41,9 +41,9 @@ const useHasMounted = () => {
 
 const Status = ({local, remote, sw, gh}) => {
   const hasMounted = useHasMounted()
-  if (!hasMounted) return null;
+  // if (!hasMounted) return null;
 
-  const color = (typeof window === 'undefined' || typeof window.localStorage === 'undefined)')
+  const color = hasMounted
     ? 'grey'
     : (local && !remote)
       ? 'orange'
