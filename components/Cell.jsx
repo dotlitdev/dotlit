@@ -133,7 +133,7 @@ const Cell = props => {
             console.log("Result", result)
             setContent(result.result)
         }
-    },[rawSource])
+    },[])
 
     const getClasses = ctx => [
         isSelected(ctx) ? 'selected' : '',
