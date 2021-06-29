@@ -41,7 +41,11 @@ const useHasMounted = () => {
 
 const Status = ({local, remote, sw, gh}) => {
   const hasMounted = useHasMounted()
-  // if (!hasMounted) return null;
+  if (!hasMounted) return <>
+      <LED color={'grey'} title="Github" />
+      <LED color={'grey'} title="Service Worker" />
+      <LED color={'grey'} title="Status" />
+    </>;
 
   const color = !hasMounted
     ? 'grey'
@@ -53,8 +57,8 @@ const Status = ({local, remote, sw, gh}) => {
           ? 'red'
           : 'green'
   return <>
-      <LED color={(hasMounted && gh) ? 'green' : 'grey'} title="Github" />
-      <LED color={(hasMounted && sw) ? 'green' : 'grey'} title="Service Worker" />
+      <LED color={gh ? 'green' : 'grey'} title="Github" />
+      <LED color={sw ? 'green' : 'grey'} title="Service Worker" />
       <LED color={color} title="Status" />
     </>
 }
