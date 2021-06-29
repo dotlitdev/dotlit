@@ -126,6 +126,7 @@ const Cell = props => {
 
     useEffect( async () => {
          if (!loaded && meta && meta.exec === 'onload') {
+             try {
              console.log("Onload execution: ", rawSource)
              const output = await exec()()
              console.log("produced output", output)
@@ -133,6 +134,10 @@ const Cell = props => {
              const result = await processor({fs: lit.fs,litroot: lit.location.root}).process(outputVFile)
              console.log("Result", result)
              setLoaded(true)
+             } catch(err) {
+               console.error("onload exec failed",err)
+               return
+             }
              setContent(result.result.props.children[0].props.children) // Whoa! That is a DirtyHack™️; result.result is a cell so will nest infinitely 
          }
     },[])
