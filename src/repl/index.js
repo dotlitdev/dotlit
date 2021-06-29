@@ -114,7 +114,7 @@ export class Repl {
         return new Promise((resolve, reject) => {
     
             const script = document.createElement('script');
-            const execId = `litExec_${Date.now()}`
+            const execId = `litExec_${Date.now()}_${Math.random()}`
 
             const esm = ({raw}, ...vals) => URL.createObjectURL(new Blob([String.raw({raw}, ...vals)], {type: 'text/javascript'}));
             const wrappedConsole = wrapConsole(window.console, stdoutUpdate)
