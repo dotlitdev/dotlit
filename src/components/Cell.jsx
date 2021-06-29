@@ -133,7 +133,8 @@ const Cell = props => {
              const result = await processor({fs: lit.fs,litroot: lit.location.root}).process(outputVFile)
              console.log("Result", result)
              setLoaded(true)
-             setContent(result.result)
+             console.log(result)
+             setContent("Onload resp") //result.result is a cell so will nest infinitely 
          }
     },[])
 
