@@ -53,8 +53,8 @@ const Status = ({local, remote, sw, gh}) => {
           ? 'red'
           : 'green'
   return <>
-      <LED color={gh ? 'green' : 'grey'} title="Github" />
-      <LED color={sw ? 'green' : 'grey'} title="Service Worker" />
+      <LED color={(hasMounted && gh) ? 'green' : 'grey'} title="Github" />
+      <LED color={(hasMounted && sw) ? 'green' : 'grey'} title="Service Worker" />
       <LED color={color} title="Status" />
     </>
 }
