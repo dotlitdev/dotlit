@@ -121,7 +121,8 @@ export const sections = (...args) => (tree) => {
         name: first.data.id,
         hName: 'section',
         hProperties: {
-          depth: depth
+          depth: depth,
+          id: first.data.id,
         }
       },
       depth: depth,
