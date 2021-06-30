@@ -113,9 +113,16 @@ export const viewer = ({ node, React }) => {
     setResults({ msg, results: res });
   };
 
+  const inputStyle = {
+    display: "block",
+    width: "100%",
+    fontSize: "1em",
+  };
+
   return (
     <div>
       <input
+        style={inputStyle}
         placeholder={`Search (local ${meta.ns || "/"}) file system`}
         onChange={(ev) => search(ev.target.value, meta)}
       />
