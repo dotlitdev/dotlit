@@ -104,7 +104,7 @@ let document = { documentElement: { style: {} } };
 importScripts(&quot;web.bundle.js&quot;);
 
 const state = {
-  version: &quot;0.2.22&quot;,
+  version: &quot;0.2.23&quot;,
   dotlit: typeof dotlit,
   root: &quot;&quot;,
   enableCache: false,
@@ -260,6 +260,9 @@ const cacheFirstHandler = (event) =&gt; {
 self.addEventListener(&quot;fetch&quot;, (event) =&gt; {
 
   const url = event.request.url
+  const method = event.request.method
+
+  if (method.toLowerCase() !== &#x27;get&#x27;) return
 
   // is the request is for a CacheFirst origin
   if (isCacheFirstOrigin(url)) {
