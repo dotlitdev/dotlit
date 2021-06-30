@@ -148,6 +148,17 @@ return Object.keys(all).map(t=>`${t} (${Object.keys(all[t]).length})`)
 ```>md !info
 ℹ️ Move, copy or *transclude* any document specific `!plugin` here to have it apply to all documents.
 ```
+```>js plugins/viewers/meta.js !plugin type=viewer of=meta !collapse
+export const viewer = ({ node, React }) => {
+  const { useEffect, useState } = React;
+  const [output, setOutput] = useState("Loading...");
+  useEffect(() => {
+    setOutput(lit.utils.inspect(node));
+  }, [node]);
+  return React.createElement("pre", { style: { color: "black" } }, output);
+};
+
+```
 
 ```js !plugin of=esm !collapse < ../plugins/viewers/esm.js 
 
