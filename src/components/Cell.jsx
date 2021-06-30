@@ -136,7 +136,7 @@ const Cell = props => {
              console.log("Result", result)
              setLoaded(true)
              } catch(err) {
-               console.error("onload exec failed", err)
+               console.error("onload exec failed", err.message, err.stack)
                return
              }
              setContent(result.result.props.children[0].props.children) // Whoa! That is a DirtyHack™️; result.result is a cell so will nest infinitely 
