@@ -115,7 +115,10 @@ export const viewer = ({ node, React }) => {
 
   return (
     <div>
-      <input onChange={(ev) => search(ev.target.value, meta)} />
+      <input
+        placeholder="Search (local) file system"
+        onChange={(ev) => search(ev.target.value, meta)}
+      />
       <div>{results && results.msg}</div>
       <div>
         {results &&
