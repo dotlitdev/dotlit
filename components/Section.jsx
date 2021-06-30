@@ -19,6 +19,7 @@ export const Section = (props) => {
         ].filter(Identity).join(' ')
 
         return <section
+            id={props.id}
             depth={props.depth}
             className={classes}
             startpos={`${pos.start.line}:${pos.start.column}-${pos.start.offset}`}
