@@ -138,6 +138,8 @@ export const sections = (...args) => (tree) => {
       console.log(`[Sections II] Ignoring already processed node ${node.data.id}`)
     } else if (parent.type === 'root') {
       console.log(`[Sections II] heading "${node.data.id}" ${headings}, depth: ${node.depth}`)
+      // remove rehype ids 
+      node.data.hProperties = {}
       const section = parent.children[index] = newSection([node])
       const children = parent.children
       
