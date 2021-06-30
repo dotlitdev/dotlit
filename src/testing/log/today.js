@@ -1,3 +1,5 @@
+
+return "weep"
 const date = new Date();
 const isoDate = date.toISOString().split("T")[0];
 const today = isoDate;
