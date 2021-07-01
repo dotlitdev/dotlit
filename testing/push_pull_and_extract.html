@@ -77,7 +77,7 @@ function selectAll(type, pos, tree) {
 
 </code></pre></output></codecell></div></cell></section>
 <section id="extract" depth="2" class="" startpos="73:1-1546" endpos="73:11-1556"><cell startpos="73:1-1546" endpos="73:11-1556"><div class="cell-content"><h2>Extract</h2></div></cell></section>
-<section id="as-menu-plugin" depth="2" class="" startpos="75:1-1558" endpos="299:4-6094"><cell startpos="75:1-1558" endpos="75:21-1578"><div class="cell-content"><h2>As menu <code>!plugin</code></h2></div></cell><cell startpos="77:1-1580" endpos="242:4-4967" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const v = lit.utils.unist.visit;
+<section id="as-menu-plugin" depth="2" class="" startpos="75:1-1558" endpos="161:4-3254"><cell startpos="75:1-1558" endpos="75:21-1578"><div class="cell-content"><h2>As menu <code>!plugin</code></h2></div></cell><cell startpos="77:1-1580" endpos="104:4-2127" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const v = lit.utils.unist.visit;
 const { toMarkdown, ungroupSections } = lit.parser.utils;
 
 const ast2md = (ast) =&gt; {
@@ -87,159 +87,21 @@ const ast2md = (ast) =&gt; {
   return md;
 };
 
+visit(lit.ast, &quot;heading&quot;, (node) =&gt; {
+  node.depth += 1;
+});
+
 return ast2md(lit.ast);
 
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1m ago</span></span></span><output><pre><code class="txt"># 🔬 Push, Pull and Extract
-
-## Table of Contents
-
-*   [Push &amp; Pull](#push--pull)
-*   [Extract](#extract)
-*   [As menu `!plugin`](#as-menu-plugin)
-
-## Push &amp; Pull
-
-Increase or decrease a sections nesting level.
-
-•••js
-const {visit, selectPosition} = lit.utils.unist
-const {toMarkdown, ungroupSections}
-      = lit.parser.utils
-const selectPos = selectPosition.selectAll
-const unGroup = ungroupSections()()
-const ast2md = tree =&gt; toMarkdown(unGroup(tree))
-
-const tree = lit.ast
-const test = &#x27;heading&#x27;
-const push = (node) =&gt; node.depth += 1 
-const pull = (node) =&gt; node.depth -= 1
-
-visit(tree,test,push)
-
-// return selectPos.toString()
-return ast2md(tree)
-•••
-
-•••&gt;txt attached=true updated=1624575522731
-## 🔬 Push, Pull and Extract
-
-### Table of Contents
-
-*   [Push &amp; Pull](#push--pull)
-*   [Extract](#extract)
-
-### Push &amp; Pull
-
-Increase or decrease a sections nesting level.
-
-•••js
-const {visit, selectPosition} = lit.utils.unist
-const {toMarkdown, ungroupSections}
-      = lit.parser.utils
-const selectPos = selectPosition.selectAll
-const unGroup = ungroupSections()()
-const ast2md = tree =&gt; toMarkdown(unGroup(tree))
-
-const tree = lit.ast
-const test = &#x27;heading&#x27;
-const push = (node) =&gt; node.depth += 1 
-const pull = (node) =&gt; node.depth -= 1
-
-visit(tree,test,push)
-
-// return selectPos.toString()
-return ast2md(tree)
-•••
-
-•••&gt;txt attached=true updated=1624574708458
-function selectAll(type, pos, tree) {
-  var filteredTree = unist_util_filter__WEBPACK_IMPORTED_MODULE_0___default()(tree, atPos(pos));
-  var nodes = (0,unist_util_select__WEBPACK_IMPORTED_MODULE_1__.selectAll)(type, filteredTree);
-  return nodes;
+</code></pre></codecell><codecell class="dir-error lang-txt local output"><span class="meta"><span class="lang">txt</span><span style="color:white;background-color:red" class="directive dir-error">error</span><span class="updatedAt">Updated <span class="Time relative">53s ago</span></span></span><output><pre><code class="txt">function toString() {
+    [native code]
 }
-•••
-
-### Extract
-
-•••
-
-## Extract
-
-## As menu `!plugin`
-
-•••js
-const v = lit.utils.unist.visit;
-const { toMarkdown, ungroupSections } = lit.parser.utils;
-
-const ast2md = (ast) =&gt; {
-  const unGroup = ungroupSections()();
-  const tree = unGroup(ast);
-  const md = toMarkdown(tree);
-  return md;
-};
-
-return ast2md(lit.ast);
-
-•••
-
-•••js !plugin !collapse id=depth type=sectionmenu
-export const sectionmenu = (ctx, { React, Menu }) =&gt; {
-  const rc = React.createElement;
-
-  const secFromCell = (pos) =&gt; {
-    const { filter, select, selectPosition } = lit.utils.unist;
-    const secs = selectPosition.selectAll(&quot;section&quot;, ctx.selectedCell, lit.ast);
-    const last = secs.slice(-1)[0];
-    return last;
-  };
-
-  const push = () =&gt; {
-    visit(
-      secFromCell(ctx.selectedCell),
-      &quot;heading&quot;,
-      (node) =&gt; (node.depth += 1)
-    );
-
-    ctx.setSrc(lit.ast.position, ctx.ast2md(lit.ast));
-  };
-
-  const pull = () =&gt; {
-    visit(
-      secFromCell(ctx.selectedCell),
-      &quot;heading&quot;,
-      (node) =&gt; (node.depth -= 1)
-    );
-
-    ctx.setSrc(lit.ast.position, ctx.ast2md(lit.ast));
-  };
-
-  const Test = rc(
-    &quot;span&quot;,
-    {
-      onClick: () =&gt; {
-        alert(&quot;ast2md? &quot; + typeof ctx.ast2md);
-      },
-    },
-    &quot;Test&quot;
-  );
-
-  const Push = rc(&quot;span&quot;, { onClick: push }, &quot;Push&quot;);
-
-  const Pull = rc(&quot;span&quot;, { onClick: pull }, &quot;Pull&quot;);
-
-  return rc(
-    Menu,
-    {
-      title: &quot;Depth&quot;,
-      disabled: false,
-    },
-    [Test, Push, Pull]
-  );
-};
-
-•••
-
-</code></pre></output></codecell></div></cell><cell startpos="244:1-4969" endpos="299:4-6094" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><a name="depth"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=depth</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=sectionmenu</span></span><pre><code class="js">export const sectionmenu = (ctx, { React, Menu }) =&gt; {
+untitled.js:12:6
+untitled.js:19:63
+module code@untitled.js:19:159
+evaluate@[native code]
+moduleEvaluation@[native code]
+</code></pre></output></codecell></div></cell><cell startpos="106:1-2129" endpos="161:4-3254" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><a name="depth"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=depth</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=sectionmenu</span></span><pre><code class="js">export const sectionmenu = (ctx, { React, Menu }) =&gt; {
   const rc = React.createElement;
 
   const secFromCell = (pos) =&gt; {

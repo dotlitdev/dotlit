@@ -85,160 +85,22 @@ const ast2md = (ast) => {
   return md;
 };
 
+visit(lit.ast, "heading", (node) => {
+  node.depth += 1;
+});
+
 return ast2md(lit.ast);
 
 ```
-```>txt attached=true updated=1625176122363
-# 🔬 Push, Pull and Extract
-
-## Table of Contents
-
-*   [Push & Pull](#push--pull)
-*   [Extract](#extract)
-*   [As menu `!plugin`](#as-menu-plugin)
-
-## Push & Pull
-
-Increase or decrease a sections nesting level.
-
-•••js
-const {visit, selectPosition} = lit.utils.unist
-const {toMarkdown, ungroupSections}
-      = lit.parser.utils
-const selectPos = selectPosition.selectAll
-const unGroup = ungroupSections()()
-const ast2md = tree => toMarkdown(unGroup(tree))
-
-const tree = lit.ast
-const test = 'heading'
-const push = (node) => node.depth += 1 
-const pull = (node) => node.depth -= 1
-
-visit(tree,test,push)
-
-// return selectPos.toString()
-return ast2md(tree)
-•••
-
-•••>txt attached=true updated=1624575522731
-## 🔬 Push, Pull and Extract
-
-### Table of Contents
-
-*   [Push & Pull](#push--pull)
-*   [Extract](#extract)
-
-### Push & Pull
-
-Increase or decrease a sections nesting level.
-
-•••js
-const {visit, selectPosition} = lit.utils.unist
-const {toMarkdown, ungroupSections}
-      = lit.parser.utils
-const selectPos = selectPosition.selectAll
-const unGroup = ungroupSections()()
-const ast2md = tree => toMarkdown(unGroup(tree))
-
-const tree = lit.ast
-const test = 'heading'
-const push = (node) => node.depth += 1 
-const pull = (node) => node.depth -= 1
-
-visit(tree,test,push)
-
-// return selectPos.toString()
-return ast2md(tree)
-•••
-
-•••>txt attached=true updated=1624574708458
-function selectAll(type, pos, tree) {
-  var filteredTree = unist_util_filter__WEBPACK_IMPORTED_MODULE_0___default()(tree, atPos(pos));
-  var nodes = (0,unist_util_select__WEBPACK_IMPORTED_MODULE_1__.selectAll)(type, filteredTree);
-  return nodes;
+```>txt attached=true updated=1625176229335 !error
+function toString() {
+    [native code]
 }
-•••
-
-### Extract
-
-•••
-
-## Extract
-
-## As menu `!plugin`
-
-•••js
-const v = lit.utils.unist.visit;
-const { toMarkdown, ungroupSections } = lit.parser.utils;
-
-const ast2md = (ast) => {
-  const unGroup = ungroupSections()();
-  const tree = unGroup(ast);
-  const md = toMarkdown(tree);
-  return md;
-};
-
-return ast2md(lit.ast);
-
-•••
-
-•••js !plugin !collapse id=depth type=sectionmenu
-export const sectionmenu = (ctx, { React, Menu }) => {
-  const rc = React.createElement;
-
-  const secFromCell = (pos) => {
-    const { filter, select, selectPosition } = lit.utils.unist;
-    const secs = selectPosition.selectAll("section", ctx.selectedCell, lit.ast);
-    const last = secs.slice(-1)[0];
-    return last;
-  };
-
-  const push = () => {
-    visit(
-      secFromCell(ctx.selectedCell),
-      "heading",
-      (node) => (node.depth += 1)
-    );
-
-    ctx.setSrc(lit.ast.position, ctx.ast2md(lit.ast));
-  };
-
-  const pull = () => {
-    visit(
-      secFromCell(ctx.selectedCell),
-      "heading",
-      (node) => (node.depth -= 1)
-    );
-
-    ctx.setSrc(lit.ast.position, ctx.ast2md(lit.ast));
-  };
-
-  const Test = rc(
-    "span",
-    {
-      onClick: () => {
-        alert("ast2md? " + typeof ctx.ast2md);
-      },
-    },
-    "Test"
-  );
-
-  const Push = rc("span", { onClick: push }, "Push");
-
-  const Pull = rc("span", { onClick: pull }, "Pull");
-
-  return rc(
-    Menu,
-    {
-      title: "Depth",
-      disabled: false,
-    },
-    [Test, Push, Pull]
-  );
-};
-
-•••
-
+untitled.js:12:6
+untitled.js:19:63
+module code@untitled.js:19:159
+evaluate@[native code]
+moduleEvaluation@[native code]
 ```
 
 ```js !plugin !collapse id=depth type=sectionmenu
