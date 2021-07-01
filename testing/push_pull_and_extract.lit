@@ -82,8 +82,27 @@ export const sectionmenu = (ctx, { React, Menu }) => {
     const { filter, select, selectPosition } = lit.utils.unist;
     const secs = selectPosition.selectAll("section", ctx.selectedCell, lit.ast);
     const last = secs.slice(-1)[0];
-    console.log("Sections", secs, last);
-    return last.position;
+    return last;
+  };
+
+  const push = () => {
+    visit(
+      secFromCell(ctx.selectedCell),
+      "heading",
+      (node) => (node.depth += 1)
+    );
+
+    ctx.setSrc(lit.ast.position, lit.ast);
+  };
+
+  const pull = () => {
+    visit(
+      secFromCell(ctx.selectedCell),
+      "heading",
+      (node) => (node.depth -= 1)
+    );
+
+    ctx.setSrc(lit.ast.position, lit.ast);
   };
 
   const Test = rc(
@@ -96,9 +115,9 @@ export const sectionmenu = (ctx, { React, Menu }) => {
     "Test"
   );
 
-  const Push = rc("span", { onClick: () => {} }, "Push");
+  const Push = rc("span", { onClick: push }, "Push");
 
-  const Pull = rc("span", { onClick: () => {} }, "Pull");
+  const Pull = rc("span", { onClick: pull }, "Pull");
 
   return rc(
     Menu,
