@@ -76,7 +76,16 @@ function selectAll(type, pos, tree) {
 
 ```js
 const v = lit.utils.unist.visit;
-return v;
+const { toMarkdown, ungroupSections } = lit.parser.utils;
+
+const ast2md = (ast) => {
+  const unGroup = ungroupSections()();
+  const tree = unGroup(ast);
+  const md = toMarkdown(tree);
+  return md;
+};
+
+return ast2md(lit.ast);
 
 ```
 
