@@ -404,6 +404,7 @@ import Highlight from &#x27;react-highlight.js&#x27;
 import source from &#x27;unist-util-source&#x27;
 import patchSource from &#x27;../utils/unist-util-patch-source&#x27;
 import { processor } from &#x27;../renderer&#x27;
+import {utils as parserUtils} from &#x27;../parser&#x27;
 import { getConsoleForNamespace } from &#x27;../utils/console&#x27;
 import filter from &#x27;unist-util-filter&#x27;
 import { atPos } from &#x27;../utils/unist-util-select-position&#x27;
@@ -413,6 +414,7 @@ import { ErrorBoundary } from &#x27;./ErrorBoundry&#x27;
 
 const console = getConsoleForNamespace(&#x27;App&#x27;)
 
+const {toMarkdown, ungroupSections} = parserUtils
 
 const ONLOAD = &quot;onload&quot;
 const ONSAVE = &quot;onsave&quot;
@@ -427,6 +429,13 @@ const onLifecyclePlugins = async (file, type, ...args) =&gt; {
             await plugins[key](...args)
         }
     }
+}
+
+const ast2md = (ast) =&gt; {
+  const unGroup = ungroupSections()()
+  const tree = unGroup(ast)
+  const md = toMarkdown(tree)
+  return md
 }
 
 const App = ({root, file, fs, result, files, ssr}) =&gt; {
@@ -514,7 +523,8 @@ const App = ({root, file, fs, result, files, ssr}) =&gt; {
         src: srcAndRes.src, 
         selectedCell, 
         setSelectedCell: setSelectedCellWrapper, 
-        setSrc: setSrcWrapper
+        setSrc: setSrcWrapper,
+        ast2md,
     }
 
     useEffect( async fn =&gt; {

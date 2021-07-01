@@ -7,6 +7,7 @@ import Highlight from 'react-highlight.js'
 import source from 'unist-util-source'
 import patchSource from '../utils/unist-util-patch-source'
 import { processor } from '../renderer'
+import {utils as parserUtils} from '../parser'
 import { getConsoleForNamespace } from '../utils/console'
 import filter from 'unist-util-filter'
 import { atPos } from '../utils/unist-util-select-position'
@@ -16,6 +17,7 @@ import { ErrorBoundary } from './ErrorBoundry'
 
 const console = getConsoleForNamespace('App')
 
+const {toMarkdown, ungroupSections} = parserUtils
 
 const ONLOAD = "onload"
 const ONSAVE = "onsave"
@@ -30,6 +32,13 @@ const onLifecyclePlugins = async (file, type, ...args) => {
             await plugins[key](...args)
         }
     }
+}
+
+const ast2md = (ast) => {
+  const unGroup = ungroupSections()()
+  const tree = unGroup(ast)
+  const md = toMarkdown(tree)
+  return md
 }
 
 const App = ({root, file, fs, result, files, ssr}) => {
@@ -117,7 +126,8 @@ const App = ({root, file, fs, result, files, ssr}) => {
         src: srcAndRes.src, 
         selectedCell, 
         setSelectedCell: setSelectedCellWrapper, 
-        setSrc: setSrcWrapper
+        setSrc: setSrcWrapper,
+        ast2md,
     }
 
     useEffect( async fn => {
