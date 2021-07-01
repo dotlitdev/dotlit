@@ -71,3 +71,41 @@ function selectAll(type, pos, tree) {
 
 
 ## Extract
+
+## As menu `!plugin`
+
+```js !plugin !collapse id=selection type=sectionmenu
+export const sectionmenu = (ctx, { React, Menu }) => {
+  const rc = React.createElement;
+
+  const secFromCell = (pos) => {
+    const { filter, select, selectPosition } = lit.utils.unist;
+    const secs = selectPosition.selectAll("section", ctx.selectedCell, lit.ast);
+    const last = secs.slice(-1)[0];
+    console.log("Sections", secs, last);
+    return last.position;
+  };
+
+  const Push = rc(
+    "span",
+    { onClick: () => {}},
+    "Push"
+  );
+
+  const Pull = rc(
+    "span",
+    { onClick: () => {}},
+    "Pull"
+  );
+
+  return rc(
+    Menu,
+    {
+      title: "Depth",
+      disabled: false,
+    },
+    [Push, Pull]
+  );
+};
+
+```
