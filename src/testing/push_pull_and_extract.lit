@@ -76,11 +76,17 @@ function selectAll(type, pos, tree) {
 
 ```js
 const v = lit.utils.unist.visit;
-return v;
+const { toMarkdown, ungroupSections } = lit.parser.utils;
 
-```
-```>txt attached=true updated=1625175816537
-{ [Function: visit] CONTINUE: true, SKIP: 'skip', EXIT: false }
+const ast2md = (ast) => {
+  const unGroup = ungroupSections()();
+  const tree = unGroup(ast);
+  const md = toMarkdown(tree);
+  return md;
+};
+
+return ast2md(lit.ast);
+
 ```
 
 ```js !plugin !collapse id=depth type=sectionmenu
