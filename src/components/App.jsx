@@ -7,7 +7,7 @@ import Highlight from 'react-highlight.js'
 import source from 'unist-util-source'
 import patchSource from '../utils/unist-util-patch-source'
 import { processor } from '../renderer'
-import parser from '../parser'
+import {utils as parserUtils} from '../parser'
 import { getConsoleForNamespace } from '../utils/console'
 import filter from 'unist-util-filter'
 import { atPos } from '../utils/unist-util-select-position'
@@ -17,7 +17,7 @@ import { ErrorBoundary } from './ErrorBoundry'
 
 const console = getConsoleForNamespace('App')
 
-const {toMarkdown, ungroupSections} = parser.utils
+const {toMarkdown, ungroupSections} = parserUtils
 
 const ONLOAD = "onload"
 const ONSAVE = "onsave"
