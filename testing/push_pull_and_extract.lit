@@ -55,19 +55,21 @@ const secFromCell = (pos) => {
 
 const pos = secFromCell(this.position);
 
-visit(
+const withPos = (tree, pos, visitor) => visit(
   lit.ast,
   () => true,
   (node) => {
     if (node?.position?.start?.offset === pos.start?.offset) {
-      visit(node, "heading", (node) => {
-        node.depth += 1;
-      });
       console.log("found match: ", node.type);
+      visitor(node)
       return visit.SKIP;
     }
   }
 );
+
+withPos(lit.ast, pos, (node) => visit(node, "heading", (node) => {
+        node.depth += 1;
+      });)
 
 return ast2md(lit.ast);
 
