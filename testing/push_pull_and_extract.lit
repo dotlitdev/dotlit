@@ -58,7 +58,21 @@ visit(
     }
   }
 );
-return found;
+
+const { toMarkdown, ungroupSections } = lit.parser.utils;
+
+const ast2md = (ast) => {
+  const unGroup = ungroupSections()();
+  const tree = unGroup(ast);
+  const md = toMarkdown(tree);
+  return md;
+};
+
+visit(found, "heading", (node) => {
+  node.depth += 1;
+});
+
+return ast2md(lit.ast);
 
 ```
 

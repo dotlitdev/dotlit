@@ -37,7 +37,7 @@ visit(tree,test,push)
 return ast2md(tree)
 </code></pre></codecell></div></cell></section>
 <section id="extract" depth="2" class="" startpos="32:1-567" endpos="32:11-577"><cell startpos="32:1-567" endpos="32:11-577"><div class="cell-content"><h2>Extract</h2></div></cell></section>
-<section id="as-menu-plugin" depth="2" class="" startpos="34:1-579" endpos="140:4-2638"><cell startpos="34:1-579" endpos="34:21-599"><div class="cell-content"><h2>As menu <code>!plugin</code></h2></div></cell><cell startpos="36:1-601" endpos="63:4-1160" class="code"><div class="cell-content"><codecell class="tag-visit-position lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#647493" class="tag">visit-position</span></span><pre><code class="js">const { visit, filter, select, selectPosition } = lit.utils.unist;
+<section id="as-menu-plugin" depth="2" class="" startpos="34:1-579" endpos="154:4-2910"><cell startpos="34:1-579" endpos="34:21-599"><div class="cell-content"><h2>As menu <code>!plugin</code></h2></div></cell><cell startpos="36:1-601" endpos="77:4-1432" class="code"><div class="cell-content"><codecell class="tag-visit-position lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#647493" class="tag">visit-position</span></span><pre><code class="js">const { visit, filter, select, selectPosition } = lit.utils.unist;
 
 let found;
 
@@ -61,9 +61,23 @@ visit(
     }
   }
 );
-return found;
 
-</code></pre></codecell></div></cell><cell startpos="65:1-1162" endpos="82:4-1520" class="code"><div class="cell-content"><codecell class="tag-visit-headings tag-push-all lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#f56a3c" class="tag">visit-headings</span><span style="color:black;background-color:#69c980" class="tag">push-all</span></span><pre><code class="js">const { visit } = lit.utils.unist;
+const { toMarkdown, ungroupSections } = lit.parser.utils;
+
+const ast2md = (ast) =&gt; {
+  const unGroup = ungroupSections()();
+  const tree = unGroup(ast);
+  const md = toMarkdown(tree);
+  return md;
+};
+
+visit(found, &quot;heading&quot;, (node) =&gt; {
+  node.depth += 1;
+});
+
+return ast2md(lit.ast);
+
+</code></pre></codecell></div></cell><cell startpos="79:1-1434" endpos="96:4-1792" class="code"><div class="cell-content"><codecell class="tag-visit-headings tag-push-all lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#f56a3c" class="tag">visit-headings</span><span style="color:black;background-color:#69c980" class="tag">push-all</span></span><pre><code class="js">const { visit } = lit.utils.unist;
 const { toMarkdown, ungroupSections } = lit.parser.utils;
 
 const ast2md = (ast) =&gt; {
@@ -79,7 +93,7 @@ visit(lit.ast, &quot;heading&quot;, (node) =&gt; {
 
 return ast2md(lit.ast);
 
-</code></pre></codecell></div></cell><cell startpos="85:1-1523" endpos="140:4-2638" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><a name="depth"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=depth</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=sectionmenu</span></span><pre><code class="js">export const sectionmenu = (ctx, { React, Menu }) =&gt; {
+</code></pre></codecell></div></cell><cell startpos="99:1-1795" endpos="154:4-2910" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><a name="depth"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=depth</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=sectionmenu</span></span><pre><code class="js">export const sectionmenu = (ctx, { React, Menu }) =&gt; {
   const rc = React.createElement;
 
   const secFromCell = (pos) =&gt; {
