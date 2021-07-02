@@ -58,38 +58,22 @@ visit(
     }
   }
 );
-return found;
 
-```
-```>txt attached=true updated=1625259470098
-skip
-found match: ,section
-{ type: 'section',
-  data: 
-   { name: 'as-menu-plugin',
-     hName: 'section',
-     hProperties: { depth: 2, id: 'as-menu-plugin' } },
-  depth: 2,
-  children: 
-   [ { type: 'cell',
-       position: [Object],
-       data: [Object],
-       children: [Object] },
-     { type: 'cell',
-       position: [Object],
-       data: [Object],
-       children: [Object] },
-     { type: 'cell',
-       position: [Object],
-       data: [Object],
-       children: [Object] },
-     { type: 'cell',
-       position: [Object],
-       data: [Object],
-       children: [Object] } ],
-  position: 
-   { start: { line: 34, column: 1, offset: 579 },
-     end: { line: 140, column: 4, offset: 2638 } } }
+const { toMarkdown, ungroupSections } = lit.parser.utils;
+
+const ast2md = (ast) => {
+  const unGroup = ungroupSections()();
+  const tree = unGroup(ast);
+  const md = toMarkdown(tree);
+  return md;
+};
+
+visit(found, "heading", (node) => {
+  node.depth += 1;
+});
+
+return ast2md(lit.ast);
+
 ```
 
 ```js #visit-headings #push-all
