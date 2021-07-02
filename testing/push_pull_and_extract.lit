@@ -37,50 +37,7 @@ return ast2md(tree)
 
 ## As menu `!plugin`
 
-```js #visit-position
-const { visit, filter, select, selectPosition } = lit.utils.unist;
 
-let found;
-
-const { toMarkdown, ungroupSections } = lit.parser.utils;
-
-const ast2md = (ast) => {
-  const unGroup = ungroupSections()();
-  const tree = unGroup(ast);
-  const md = toMarkdown(tree);
-  return md;
-};
-
-const secFromCell = (pos) => {
-  const secs = selectPosition.selectAll("section", pos, lit.ast);
-  const last = secs.slice(-1)[0];
-  return last.position;
-};
-
-const pos = secFromCell(this.position);
-
-const withPos = (tree, pos, visitor) =>
-  visit(
-    lit.ast,
-    () => true,
-    (node) => {
-      if (node?.position?.start?.offset === pos.start?.offset) {
-        console.log("found match: ", node.type);
-        visitor(node);
-        return visit.SKIP;
-      }
-    }
-  );
-
-withPos(lit.ast, pos, (node) => {
-  visit(node, "heading", (node) => {
-    node.depth += 1;
-  });
-});
-
-return ast2md(lit.ast);
-
-```
 
 ## Other
 
