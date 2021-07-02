@@ -101,42 +101,17 @@ return ast2md(lit.ast);
 export const sectionmenu = (ctx, { React, Menu }) => {
   const rc = React.createElement;
 
-  const secFromCell = (pos) => {
-    const { filter, select, selectPosition } = lit.utils.unist;
-    const secs = selectPosition.selectAll("section", ctx.selectedCell, lit.ast);
-    const last = secs.slice(-1)[0];
-    return last;
-  };
+  const update = () => ctx.setSrc(lit.ast.position, ctx.ast2md(lit.ast));
 
   const push = () => {
-    visit(
-      secFromCell(ctx.selectedCell),
-      "heading",
-      (node) => (node.depth += 1)
-    );
-
-    ctx.setSrc(lit.ast.position, ctx.ast2md(lit.ast));
+    visit(lit.ast, "heading", (node) => (node.depth += 1));
+    update();
   };
 
   const pull = () => {
-    visit(
-      secFromCell(ctx.selectedCell),
-      "heading",
-      (node) => (node.depth -= 1)
-    );
-
-    ctx.setSrc(lit.ast.position, ctx.ast2md(lit.ast));
+    visit(lit.ast, "heading", (node) => (node.depth -= 1));
+    update();
   };
-
-  const Test = rc(
-    "span",
-    {
-      onClick: () => {
-        alert("ast2md? " + typeof ctx.ast2md);
-      },
-    },
-    "Test"
-  );
 
   const Push = rc("span", { onClick: push }, "Push");
 
@@ -148,7 +123,7 @@ export const sectionmenu = (ctx, { React, Menu }) => {
       title: "Depth",
       disabled: false,
     },
-    [Test, Push, Pull]
+    [Push, Pull]
   );
 };
 
