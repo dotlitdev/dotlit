@@ -72,6 +72,163 @@ visit(
 return ast2md(lit.ast);
 
 ```
+```>txt attached=true updated=1625260501915
+found match: ,section
+# 🔬 Push, Pull and Extract
+
+## Table of Contents
+
+*   [Push & Pull](#push--pull)
+*   [Extract](#extract)
+*   [As menu `!plugin`](#as-menu-plugin)
+*   [Other](#other)
+
+## Push & Pull
+
+Increase or decrease a sections nesting level.
+
+•••js
+const {visit, selectPosition} = lit.utils.unist
+const {toMarkdown, ungroupSections}
+      = lit.parser.utils
+const selectPos = selectPosition.selectAll
+const unGroup = ungroupSections()()
+const ast2md = tree => toMarkdown(unGroup(tree))
+
+const tree = lit.ast
+const test = 'heading'
+const push = (node) => node.depth += 1 
+const pull = (node) => node.depth -= 1
+
+visit(tree,test,push)
+
+// return selectPos.toString()
+return ast2md(tree)
+•••
+
+## Extract
+
+### As menu `!plugin`
+
+•••js #visit-position
+const { visit, filter, select, selectPosition } = lit.utils.unist;
+
+let found;
+
+const { toMarkdown, ungroupSections } = lit.parser.utils;
+
+const ast2md = (ast) => {
+  const unGroup = ungroupSections()();
+  const tree = unGroup(ast);
+  const md = toMarkdown(tree);
+  return md;
+};
+
+const secFromCell = (pos) => {
+  const secs = selectPosition.selectAll("section", pos, lit.ast);
+  const last = secs.slice(-1)[0];
+  return last.position;
+};
+
+const pos = secFromCell(this.position);
+
+visit(
+  lit.ast,
+  () => true,
+  (node) => {
+    if (node?.position?.start?.offset === pos.start?.offset) {
+      visit(node, "heading", (node) => {
+        node.depth += 1;
+      });
+      console.log("found match: ", node.type);
+      return visit.SKIP;
+    }
+  }
+);
+
+return ast2md(lit.ast);
+
+•••
+
+## Other
+
+•••js #visit-headings #push-all
+const { visit } = lit.utils.unist;
+const { toMarkdown, ungroupSections } = lit.parser.utils;
+
+const ast2md = (ast) => {
+  const unGroup = ungroupSections()();
+  const tree = unGroup(ast);
+  const md = toMarkdown(tree);
+  return md;
+};
+
+visit(lit.ast, "heading", (node) => {
+  node.depth += 1;
+});
+
+return ast2md(lit.ast);
+
+•••
+
+•••js !plugin id=depth type=sectionmenu
+export const sectionmenu = (ctx, { React, Menu }) => {
+  const rc = React.createElement;
+
+  const secFromCell = (pos) => {
+    const { filter, select, selectPosition } = lit.utils.unist;
+    const secs = selectPosition.selectAll("section", ctx.selectedCell, lit.ast);
+    const last = secs.slice(-1)[0];
+    return last;
+  };
+
+  const push = () => {
+    visit(
+      secFromCell(ctx.selectedCell),
+      "heading",
+      (node) => (node.depth += 1)
+    );
+
+    ctx.setSrc(lit.ast.position, ctx.ast2md(lit.ast));
+  };
+
+  const pull = () => {
+    visit(
+      secFromCell(ctx.selectedCell),
+      "heading",
+      (node) => (node.depth -= 1)
+    );
+
+    ctx.setSrc(lit.ast.position, ctx.ast2md(lit.ast));
+  };
+
+  const Test = rc(
+    "span",
+    {
+      onClick: () => {
+        alert("ast2md? " + typeof ctx.ast2md);
+      },
+    },
+    "Test"
+  );
+
+  const Push = rc("span", { onClick: push }, "Push");
+
+  const Pull = rc("span", { onClick: pull }, "Pull");
+
+  return rc(
+    Menu,
+    {
+      title: "Depth",
+      disabled: false,
+    },
+    [Test, Push, Pull]
+  );
+};
+
+•••
+
+```
 
 
 ## Other
