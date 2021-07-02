@@ -32,6 +32,50 @@ visit(tree,test,push)
 // return selectPos.toString()
 return ast2md(tree)
 ```
+```js #visit-position
+const { visit, filter, select, selectPosition } = lit.utils.unist;
+
+let found;
+
+const { toMarkdown, ungroupSections } = lit.parser.utils;
+
+const ast2md = (ast) => {
+  const unGroup = ungroupSections()();
+  const tree = unGroup(ast);
+  const md = toMarkdown(tree);
+  return md;
+};
+
+const secFromCell = (pos) => {
+  const secs = selectPosition.selectAll("section", pos, lit.ast);
+  const last = secs.slice(-1)[0];
+  return last.position;
+};
+
+const pos = secFromCell(this.position);
+
+const withPos = (tree, pos, visitor) =>
+  visit(
+    lit.ast,
+    () => true,
+    (node) => {
+      if (node?.position?.start?.offset === pos.start?.offset) {
+        console.log("found match: ", node.type);
+        visitor(node);
+        return visit.SKIP;
+      }
+    }
+  );
+
+withPos(lit.ast, pos, (node) => {
+  visit(node, "heading", (node) => {
+    node.depth += 1;
+  });
+});
+
+return ast2md(lit.ast);
+
+```
 
 ## Extract
 
@@ -60,50 +104,3 @@ return ast2md(lit.ast);
 
 ```
 
-```js !plugin id=depth type=sectionmenu
-export const sectionmenu = (ctx, { React, Menu }) => {
-  const rc = React.createElement;
-  const { visit } = lit.utils.unist;
-
-  const update = () => ctx.setSrc(lit.ast.position, ctx.ast2md(lit.ast));
-
-  const withPos = (tree, pos, visitor) =>
-    visit(
-      lit.ast,
-      () => true,
-      (node) => {
-        if (node?.position?.start?.offset === pos.start?.offset) {
-          console.log("found match: ", node.type);
-          visitor(node);
-          return visit.SKIP;
-        }
-      }
-    );
-
-  const push = () =>
-    withPos(lit.ast, ctx.selectedCell, (node) => {
-      visit(node, "heading", (node) => (node.depth += 1));
-      update();
-    });
-
-  const pull = () =>
-    withPos(lit.ast, ctx.selectedCell, (node) => {
-      visit(node, "heading", (node) => (node.depth -= 1));
-      update();
-    });
-
-  const Push = rc("span", { onClick: push }, "Push");
-
-  const Pull = rc("span", { onClick: pull }, "Pull");
-
-  return rc(
-    Menu,
-    {
-      title: "Depth",
-      disabled: !ctx.selectedCell,
-    },
-    [Push, Pull]
-  );
-};
-
-```
