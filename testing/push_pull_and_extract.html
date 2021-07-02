@@ -80,8 +80,53 @@ return ast2md(lit.ast);
 
 </code></pre></codecell></div></cell></section>
 <section id="extract" depth="2" class="" startpos="80:1-1599" endpos="80:11-1609"><cell startpos="80:1-1599" endpos="80:11-1609"><div class="cell-content"><h2>Extract</h2></div></cell></section>
-<section id="as-menu-plugin" depth="2" class="" startpos="82:1-1611" endpos="82:21-1631"><cell startpos="82:1-1611" endpos="82:21-1631"><div class="cell-content"><h2>As menu <code>!plugin</code></h2></div></cell></section>
-<section id="other" depth="2" class="" startpos="86:1-1635" endpos="105:4-2003"><cell startpos="86:1-1635" endpos="86:9-1643"><div class="cell-content"><h2>Other</h2></div></cell><cell startpos="88:1-1645" endpos="105:4-2003" class="code"><div class="cell-content"><codecell class="tag-visit-headings tag-push-all lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#f56a3c" class="tag">visit-headings</span><span style="color:black;background-color:#69c980" class="tag">push-all</span></span><pre><code class="js">const { visit } = lit.utils.unist;
+<section id="as-menu-plugin" depth="2" class="" startpos="82:1-1611" endpos="129:4-2746"><cell startpos="82:1-1611" endpos="82:21-1631"><div class="cell-content"><h2>As menu <code>!plugin</code></h2></div></cell><cell startpos="83:1-1632" endpos="129:4-2746" class="code output"><div class="cell-content"><codecell class="dir-plugin lang-js local output"><a name="depth"></a><span class="meta"><span class="lang">js</span><span class="filename">../plugins/menu/depth.js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=depth</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=sectionmenu</span></span><output><pre><code class="js">export const sectionmenu = (ctx, { React, Menu }) =&gt; {
+  const rc = React.createElement;
+  const { visit } = lit.utils.unist;
+
+  const update = () =&gt; ctx.setSrc(lit.ast.position, ctx.ast2md(lit.ast));
+
+  const withPos = (tree, pos, visitor) =&gt;
+    visit(
+      lit.ast,
+      () =&gt; true,
+      (node) =&gt; {
+        if (node?.position?.start?.offset === pos.start?.offset) {
+          console.log(&quot;found match: &quot;, node.type);
+          visitor(node);
+          return visit.SKIP;
+        }
+      }
+    );
+
+  const push = () =&gt;
+    withPos(lit.ast, ctx.selectedCell, (node) =&gt; {
+      visit(node, &quot;heading&quot;, (node) =&gt; (node.depth += 1));
+      update();
+    });
+
+  const pull = () =&gt;
+    withPos(lit.ast, ctx.selectedCell, (node) =&gt; {
+      visit(node, &quot;heading&quot;, (node) =&gt; (node.depth -= 1));
+      update();
+    });
+
+  const Push = rc(&quot;span&quot;, { onClick: push }, &quot;Push&quot;);
+
+  const Pull = rc(&quot;span&quot;, { onClick: pull }, &quot;Pull&quot;);
+
+  return rc(
+    Menu,
+    {
+      title: &quot;Depth&quot;,
+      disabled: !ctx.selectedCell,
+    },
+    [Push, Pull]
+  );
+};
+
+</code></pre></output></codecell></div></cell></section>
+<section id="other" depth="2" class="" startpos="133:1-2750" endpos="152:4-3118"><cell startpos="133:1-2750" endpos="133:9-2758"><div class="cell-content"><h2>Other</h2></div></cell><cell startpos="135:1-2760" endpos="152:4-3118" class="code"><div class="cell-content"><codecell class="tag-visit-headings tag-push-all lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#f56a3c" class="tag">visit-headings</span><span style="color:black;background-color:#69c980" class="tag">push-all</span></span><pre><code class="js">const { visit } = lit.utils.unist;
 const { toMarkdown, ungroupSections } = lit.parser.utils;
 
 const ast2md = (ast) =&gt; {
