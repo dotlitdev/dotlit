@@ -24,7 +24,8 @@ export const transcludeCode = ({fs}) => {
                    if (resp.status >= 200 && resp.status < 400) {
                        const value = await resp.text()
                     //    console.log("has value", value)
-                       block.value = value
+                       // block.value = value
+                       block.data.value = value
                    } else {
                        const msg = `(${file.path}) Failed to load uri ` + block.data.meta.fromSource + " status: " + resp.status
                        file.message(msg, block)
@@ -38,7 +39,8 @@ export const transcludeCode = ({fs}) => {
                    try {
                        const resp = await fs.readStat(filePath, {encoding: 'utf8'})
                     //    console.log("has value", resp)
-                       block.value = resp.local.value || resp.remote.value
+                       // block.value = resp.local.value || resp.remote.value
+                       block.data.value = value
                    } catch(err) {
                        const msg = `(${file.path}) Failed to load ` + block.data.meta.fromSource + " as " + filePath
                        file.message(msg, block)
