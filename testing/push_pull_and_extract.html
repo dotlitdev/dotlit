@@ -38,7 +38,7 @@ visit(tree,test,push)
 return ast2md(tree)
 </code></pre></codecell></div></cell></section>
 <section id="extract" depth="2" class="" startpos="32:1-567" endpos="32:11-577"><cell startpos="32:1-567" endpos="32:11-577"><div class="cell-content"><h2>Extract</h2></div></cell></section>
-<section id="as-menu-plugin" depth="2" class="" startpos="34:1-579" endpos="235:4-4487"><cell startpos="34:1-579" endpos="34:21-599"><div class="cell-content"><h2>As menu <code>!plugin</code></h2></div></cell><cell startpos="36:1-601" endpos="235:4-4487" class="code"><div class="cell-content"><codecell class="tag-visit-position lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#647493" class="tag">visit-position</span></span><pre><code class="js">const { visit, filter, select, selectPosition } = lit.utils.unist;
+<section id="as-menu-plugin" depth="2" class="" startpos="34:1-579" endpos="76:4-1406"><cell startpos="34:1-579" endpos="34:21-599"><div class="cell-content"><h2>As menu <code>!plugin</code></h2></div></cell><cell startpos="36:1-601" endpos="76:4-1406" class="code"><div class="cell-content"><codecell class="tag-visit-position lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#647493" class="tag">visit-position</span></span><pre><code class="js">const { visit, filter, select, selectPosition } = lit.utils.unist;
 
 let found;
 
@@ -77,89 +77,8 @@ visit(found, &quot;heading&quot;, (node) =&gt; {
 
 return ast2md(lit.ast);
 
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1m ago</span></span></span><output><pre><code class="txt">found match: ,section
-# 🔬 Push, Pull and Extract
-
-## Table of Contents
-
-*   [Push &amp; Pull](#push--pull)
-*   [Extract](#extract)
-*   [As menu `!plugin`](#as-menu-plugin)
-*   [Other](#other)
-
-## Push &amp; Pull
-
-Increase or decrease a sections nesting level.
-
-•••js
-const {visit, selectPosition} = lit.utils.unist
-const {toMarkdown, ungroupSections}
-      = lit.parser.utils
-const selectPos = selectPosition.selectAll
-const unGroup = ungroupSections()()
-const ast2md = tree =&gt; toMarkdown(unGroup(tree))
-
-const tree = lit.ast
-const test = &#x27;heading&#x27;
-const push = (node) =&gt; node.depth += 1 
-const pull = (node) =&gt; node.depth -= 1
-
-visit(tree,test,push)
-
-// return selectPos.toString()
-return ast2md(tree)
-•••
-
-## Extract
-
-###### As menu `!plugin`
-
-•••js #visit-position
-const { visit, filter, select, selectPosition } = lit.utils.unist;
-
-let found;
-
-const secFromCell = (pos) =&gt; {
-  const secs = selectPosition.selectAll(&quot;section&quot;, pos, lit.ast);
-  const last = secs.slice(-1)[0];
-  return last.position;
-};
-
-const pos = secFromCell(this.position);
-
-visit(
-  lit.ast,
-  () =&gt; true,
-  (node) =&gt; {
-    if (node?.position?.start?.offset === pos.start?.offset) {
-      found = node;
-      console.log(&quot;found match: &quot;, node.type);
-      return visit.SKIP;
-    }
-  }
-);
-
-const { toMarkdown, ungroupSections } = lit.parser.utils;
-
-const ast2md = (ast) =&gt; {
-  const unGroup = ungroupSections()();
-  const tree = unGroup(ast);
-  const md = toMarkdown(tree);
-  return md;
-};
-
-visit(found, &quot;heading&quot;, (node) =&gt; {
-  node.depth = 6;
-});
-
-return ast2md(lit.ast);
-
-•••
-
-## Other
-
-•••js #visit-headings #push-all
-const { visit } = lit.utils.unist;
+</code></pre></codecell></div></cell></section>
+<section id="other" depth="2" class="" startpos="79:1-1409" endpos="156:4-2895"><cell startpos="79:1-1409" endpos="79:9-1417"><div class="cell-content"><h2>Other</h2></div></cell><cell startpos="81:1-1419" endpos="98:4-1777" class="code"><div class="cell-content"><codecell class="tag-visit-headings tag-push-all lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#f56a3c" class="tag">visit-headings</span><span style="color:black;background-color:#69c980" class="tag">push-all</span></span><pre><code class="js">const { visit } = lit.utils.unist;
 const { toMarkdown, ungroupSections } = lit.parser.utils;
 
 const ast2md = (ast) =&gt; {
@@ -175,83 +94,7 @@ visit(lit.ast, &quot;heading&quot;, (node) =&gt; {
 
 return ast2md(lit.ast);
 
-•••
-
-•••js !plugin id=depth type=sectionmenu
-export const sectionmenu = (ctx, { React, Menu }) =&gt; {
-  const rc = React.createElement;
-
-  const secFromCell = (pos) =&gt; {
-    const { filter, select, selectPosition } = lit.utils.unist;
-    const secs = selectPosition.selectAll(&quot;section&quot;, ctx.selectedCell, lit.ast);
-    const last = secs.slice(-1)[0];
-    return last;
-  };
-
-  const push = () =&gt; {
-    visit(
-      secFromCell(ctx.selectedCell),
-      &quot;heading&quot;,
-      (node) =&gt; (node.depth += 1)
-    );
-
-    ctx.setSrc(lit.ast.position, ctx.ast2md(lit.ast));
-  };
-
-  const pull = () =&gt; {
-    visit(
-      secFromCell(ctx.selectedCell),
-      &quot;heading&quot;,
-      (node) =&gt; (node.depth -= 1)
-    );
-
-    ctx.setSrc(lit.ast.position, ctx.ast2md(lit.ast));
-  };
-
-  const Test = rc(
-    &quot;span&quot;,
-    {
-      onClick: () =&gt; {
-        alert(&quot;ast2md? &quot; + typeof ctx.ast2md);
-      },
-    },
-    &quot;Test&quot;
-  );
-
-  const Push = rc(&quot;span&quot;, { onClick: push }, &quot;Push&quot;);
-
-  const Pull = rc(&quot;span&quot;, { onClick: pull }, &quot;Pull&quot;);
-
-  return rc(
-    Menu,
-    {
-      title: &quot;Depth&quot;,
-      disabled: false,
-    },
-    [Test, Push, Pull]
-  );
-};
-
-•••
-
-</code></pre></output></codecell></div></cell></section>
-<section id="other" depth="2" class="" startpos="237:1-4489" endpos="314:4-5975"><cell startpos="237:1-4489" endpos="237:9-4497"><div class="cell-content"><h2>Other</h2></div></cell><cell startpos="239:1-4499" endpos="256:4-4857" class="code"><div class="cell-content"><codecell class="tag-visit-headings tag-push-all lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#f56a3c" class="tag">visit-headings</span><span style="color:black;background-color:#69c980" class="tag">push-all</span></span><pre><code class="js">const { visit } = lit.utils.unist;
-const { toMarkdown, ungroupSections } = lit.parser.utils;
-
-const ast2md = (ast) =&gt; {
-  const unGroup = ungroupSections()();
-  const tree = unGroup(ast);
-  const md = toMarkdown(tree);
-  return md;
-};
-
-visit(lit.ast, &quot;heading&quot;, (node) =&gt; {
-  node.depth += 1;
-});
-
-return ast2md(lit.ast);
-
-</code></pre></codecell></div></cell><cell startpos="259:1-4860" endpos="314:4-5975" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><a name="depth"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=depth</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=sectionmenu</span></span><pre><code class="js">export const sectionmenu = (ctx, { React, Menu }) =&gt; {
+</code></pre></codecell></div></cell><cell startpos="101:1-1780" endpos="156:4-2895" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><a name="depth"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=depth</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=sectionmenu</span></span><pre><code class="js">export const sectionmenu = (ctx, { React, Menu }) =&gt; {
   const rc = React.createElement;
 
   const secFromCell = (pos) =&gt; {
