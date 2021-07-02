@@ -14,11 +14,7 @@
   --code-bg-color: black;
   --code-text-color: white;
   --box-bg-opacity: 0.05;
-}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section id="timings" depth="1" class="" startpos="1:1-0" endpos="347:4-9487"><cell startpos="1:1-0" endpos="1:10-9"><div class="cell-content"><h1>Timings</h1></div></cell><cell startpos="3:1-11" endpos="35:4-884" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; ../utils/timings.js</span></span><pre><code class="js">import { getConsoleForNamespace } from &#x27;./console&#x27;
-
-const console = getConsoleForNamespace(&#x27;timings&#x27;)
-
-const timings = {};
+}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section id="timings" depth="1" class="" startpos="1:1-0" endpos="347:4-9487"><cell startpos="1:1-0" endpos="1:10-9"><div class="cell-content"><h1>Timings</h1></div></cell><cell startpos="3:1-11" endpos="35:4-884" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; ../utils/timings.js</span></span><pre><code class="js">const timings = {};
 
 export const getPrev = () =&gt;
   (typeof localStorage !== &quot;undefined&quot; &amp;&amp; localStorage.getItem(&quot;litTimings&quot;)) ||
@@ -26,14 +22,13 @@ export const getPrev = () =&gt;
 
 export const time = (ns, marker) =&gt; {
   const now = Date.now();
-  timings[ns] = (!marker || ! timings[ns])
-    ? {
+  timings[ns] = !marker
+    ? timings[ns]
+    : {
         start: now,
         marks: [],
         timeTo: {},
-      }
-    : timings[ns];
-
+      };
   timings[ns].marks.push({ marker, time: now });
   if (marker) {
     const id = now;
