@@ -26,4 +26,54 @@ const now = Date.now()
 const mtimeMs = lit.stats.local.stat.mtimeMs
 return MsToRelative(mtimeMs - now)
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">3.7w ago</span></span></span><output><pre><code class="txt">1m ago
-</code></pre></output></codecell></div></cell><section id="implementation" depth="2" class="" startpos="32:1-627" endpos="35:4-678"><cell startpos="32:1-627" endpos="32:18-644"><div class="cell-content"><h2>Implementation</h2></div></cell><cell startpos="34:1-646" endpos="35:4-678" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; momento.js</span></span><pre><code class="js"></code></pre></codecell></div></cell></section></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title=".lit Utils" href="/utils/index.html">.lit Utils</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
+</code></pre></output></codecell></div></cell><section id="implementation" depth="2" class="" startpos="32:1-627" endpos="35:4-678"><cell startpos="32:1-627" endpos="32:18-644"><div class="cell-content"><h2>Implementation</h2></div></cell><cell startpos="34:1-646" endpos="35:4-678" class="code"><div class="cell-content"><codecell class="dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; momento.js</span></span><pre><code class="js">export const MsToRelative = (ms, p, f) =&gt; {
+    // console.log(&#x27;MsToRelative&#x27;, ms, p, f)
+    const abs = Math.abs(ms)
+    const nowish = abs &lt;= 1000
+    if (nowish) return &#x27;now&#x27;
+
+    const second = 1000
+    const seconds = abs / second
+    const future = ms &gt; 0
+    const minute = second * 60
+    const minutes = abs / minute
+    const hour = minute * 60
+    const hours = abs / hour
+    const day = hour * 24
+    const days = abs / day
+    const week = day * 7
+    const weeks = abs / week    
+
+    let suffix = future ? (f || &#x27;from now&#x27;) : (p || &#x27;ago&#x27;)
+    let val, unit;
+    // console.log({ms, abs, seconds, minutes, hours, days, weeks})
+    if (abs &lt; minute) {
+        val = Math.round(seconds)
+        unit = &#x27;s&#x27;
+    } else if (abs &lt; hour) {
+        val = Math.round(minutes)
+        unit = &#x27;m&#x27; 
+    } else if (abs &lt; day) {
+        val = (hours % 1 &gt; 0.2) ? hours.toFixed(1) : Math.round(hours)
+        unit = &#x27;h&#x27;
+    } else if (abs &lt; week) {
+        val = (days % 1 &gt; 0.2) ? days.toFixed(1) : Math.round(days)
+        unit = &#x27;d&#x27;
+    } else {
+        val = (weeks % 1 &gt; 0.2) ? weeks.toFixed(1) : Math.round(weeks)
+        unit = &#x27;w&#x27;
+    }
+
+    // if (val &gt; 1) unit = `${unit}s`
+
+    return `${val}${unit} ${suffix}`
+}
+
+export const DatesToRelativeDelta = (a, b) =&gt; {
+    // console.log(&#x27;DatesToRelativeDelta&#x27;, a, b)
+    const A = new Date(a)
+    const B = new Date(b)
+    const deltaMs = A.getTime() - B.getTime()
+    return MsToRelative(deltaMs, &#x27;older&#x27;, &#x27;newer&#x27;)
+}
+</code></pre></codecell></div></cell></section></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title=".lit Utils" href="/utils/index.html">.lit Utils</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>

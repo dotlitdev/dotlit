@@ -49,7 +49,61 @@
 <section id="about" depth="2" class="" startpos="19:1-660" endpos="103:53-10865"><cell startpos="19:1-660" endpos="19:9-668"><div class="cell-content"><h2>About</h2></div></cell><cell startpos="21:1-670" endpos="25:4-845" class="code output"><div class="cell-content"><codecell class="dir-warn lang-md local output"><span class="meta"><span class="lang">md</span><span style="color:white;background-color:#037928" class="directive dir-warn">warn</span></span><div class="md-block dir-warn">
 <p>⚠️ <strong><code>.lit</code></strong> is <em>still a Work in progress</em>.</p>
 <p>This iteration is a from-scratch rewrite of an [initial prototype], with many features yet to be re-implemented.</p>
-</div></codecell></div></cell><cell startpos="27:1-847" endpos="29:284-1280"><div class="cell-content"><p><code>.lit</code> is the culmination of a few seemingly disperate ideas: <a class="exists local" href="literate_programming.html" title="Literate Programming" wikilink="true" filepath="/index.lit" root="" data="[object Object]" canonical="/literate_programming.lit">Literate Programming</a>, <a class="local" href="interactive_notebooks.html" title="Interactive Notebooks" wikilink="true" filepath="/index.lit" root="" data="[object Object]" canonical="/interactive_notebooks.lit">Interactive Notebooks</a>, <a class="exists local" href="digital_gardens.html" title="Digital Gardens" wikilink="true" filepath="/index.lit" root="" data="[object Object]" canonical="/digital_gardens.lit">Digital Gardens</a> and <a class="local" href="wiki.html" title="Wiki" wikilink="true" filepath="/index.lit" root="" data="[object Object]" canonical="/wiki.lit">Wiki</a>.</p><p>Meant to enable <a class="local" href="guided_learning.html" title="Guided Learning" wikilink="true" filepath="/index.lit" root="" data="[object Object]" canonical="/guided_learning.lit">Guided Learning</a> — where the author shows the reader by <em>tactile</em> example; and exploration or <a class="local" href="rapid_prototyping.html" title="Rapid Prototyping" wikilink="true" filepath="/index.lit" root="" data="[object Object]" canonical="/rapid_prototyping.lit">Rapid Prototyping</a> while trying not to be a separate system from which a student or project <em>graduates</em> but which is itself <em><a class="exists local" href="an_acceptable_development_evironment.html" title="an acceptable development evironment" wikilink="true" filepath="/index.lit" root="" data="[object Object]" canonical="/an_acceptable_development_evironment.lit">an acceptable development evironment</a></em>.</p></div></cell><cell startpos="30:1-1281" endpos="32:4-1365" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><a name="corsProxy"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=proxy</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=corsProxy</span><span class="source">&lt; ./plugins/other/cors-proxy.js</span></span><pre><code class="js"></code></pre></codecell></div></cell><cell startpos="33:1-1366" endpos="82:4-10184" class="code"><div class="cell-content"><codecell class="dir-collapse lang-uml local collapsed"><span class="meta"><span class="lang">uml</span><span class="repl">uml</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="output">&gt; img influences.svg</span></span><pre><code class="uml">@startmindmap
+</div></codecell></div></cell><cell startpos="27:1-847" endpos="29:284-1280"><div class="cell-content"><p><code>.lit</code> is the culmination of a few seemingly disperate ideas: <a class="exists local" href="literate_programming.html" title="Literate Programming" wikilink="true" filepath="/index.lit" root="" data="[object Object]" canonical="/literate_programming.lit">Literate Programming</a>, <a class="local" href="interactive_notebooks.html" title="Interactive Notebooks" wikilink="true" filepath="/index.lit" root="" data="[object Object]" canonical="/interactive_notebooks.lit">Interactive Notebooks</a>, <a class="exists local" href="digital_gardens.html" title="Digital Gardens" wikilink="true" filepath="/index.lit" root="" data="[object Object]" canonical="/digital_gardens.lit">Digital Gardens</a> and <a class="local" href="wiki.html" title="Wiki" wikilink="true" filepath="/index.lit" root="" data="[object Object]" canonical="/wiki.lit">Wiki</a>.</p><p>Meant to enable <a class="local" href="guided_learning.html" title="Guided Learning" wikilink="true" filepath="/index.lit" root="" data="[object Object]" canonical="/guided_learning.lit">Guided Learning</a> — where the author shows the reader by <em>tactile</em> example; and exploration or <a class="local" href="rapid_prototyping.html" title="Rapid Prototyping" wikilink="true" filepath="/index.lit" root="" data="[object Object]" canonical="/rapid_prototyping.lit">Rapid Prototyping</a> while trying not to be a separate system from which a student or project <em>graduates</em> but which is itself <em><a class="exists local" href="an_acceptable_development_evironment.html" title="an acceptable development evironment" wikilink="true" filepath="/index.lit" root="" data="[object Object]" canonical="/an_acceptable_development_evironment.lit">an acceptable development evironment</a></em>.</p></div></cell><cell startpos="30:1-1281" endpos="32:4-1365" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><a name="corsProxy"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=proxy</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=corsProxy</span><span class="source">&lt; ./plugins/other/cors-proxy.js</span></span><pre><code class="js">export const proxy = async (returnEndpoint) =&gt; {
+  const setup = (resolve, reject) =&gt; {
+    if (typeof lit === &quot;undefined&quot;) reject(&quot;No lit&quot;);
+    else if (!window.__runkitCORSProxyEnpoint) {
+      (async (fn) =&gt; {
+        const rkEmbed = document.createElement(&quot;script&quot;);
+        rkEmbed.onload = async (fn) =&gt; {
+          const el = document.createElement(&quot;div&quot;);
+          document.body.appendChild(el);
+          el.setAttribute(&quot;style&quot;, &quot;height:0;&quot;);
+          RunKit.createNotebook({
+            element: el,
+            mode: &quot;endpoint&quot;,
+            onLoad: async (rk) =&gt; {
+              const endpoint = await rk.getEndpointURL();
+              window.__runkitCORSProxyEnpoint = endpoint;
+              document.body.removeChild(el);
+            },
+            evaluateOnLoad: true,
+            source: await lit.fs.readFile(
+              &quot;/testing/runkit-express-cors-proxy.js&quot;,
+              {
+                encoding: &quot;utf8&quot;,
+              }
+            ),
+          });
+        };
+        rkEmbed.setAttribute(&quot;src&quot;, &quot;https://embed.runkit.com&quot;);
+        document.body.appendChild(rkEmbed);
+      })();
+    } else {
+      resolve(window.__runkitCORSProxyEnpoint);
+    }
+  };
+
+  const endpoint = await new Promise(setup).then((e) =&gt; e);
+  if (false &amp;&amp; !window.__runkitCORSProxyEnpoint) {
+    return &quot;Still setting up proxy endpoint&quot;;
+  } else {
+    if (returnEndpoint) return endpoint;
+
+    const getAndReplaceDomain = (originalUrl, newDomain) =&gt; {
+      return newDomain + originalUrl.replace(/^https?:\/\//, &quot;/&quot;);
+    };
+
+    const proxyFetch = async (url, opts = {}) =&gt; {
+      const proxyUrl = getAndReplaceDomain(url, endpoint);
+      return fetch(proxyUrl, opts);
+    };
+
+    return proxyFetch;
+  }
+};
+
+</code></pre></codecell></div></cell><cell startpos="33:1-1366" endpos="82:4-10184" class="code"><div class="cell-content"><codecell class="dir-collapse lang-uml local collapsed"><span class="meta"><span class="lang">uml</span><span class="repl">uml</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="output">&gt; img influences.svg</span></span><pre><code class="uml">@startmindmap
 * .lit
 	* Digital Gardens
 		* Tools for Thought

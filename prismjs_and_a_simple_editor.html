@@ -148,7 +148,38 @@ return () =&gt; &lt;App /&gt;;
   return &lt;EditorExample /&gt;;
 })();
 
-</code></pre></codecell></div></cell><cell startpos="145:1-3445" endpos="147:4-3522" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=repl</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=module</span><span class="source">&lt; ./plugins/repls/module.js</span></span><pre><code class="js"></code></pre></codecell></div></cell><cell startpos="149:1-3524" endpos="217:4-5179" class="code"><div class="cell-content"><codecell class="dir-collapse tag-v2test lang-js local collapsed"><span class="meta"><span class="lang">js</span><span class="repl">module</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#cc52b5" class="tag">v2test</span></span><pre><code class="js">import Editor, {defaultProps as eprops} from &quot;https://cdn.skypack.dev/react-simple-code-editor&quot;;
+</code></pre></codecell></div></cell><cell startpos="145:1-3445" endpos="147:4-3522" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=repl</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=module</span><span class="source">&lt; ./plugins/repls/module.js</span></span><pre><code class="js">export const repl = async (src, meta) =&gt; {
+  const { btoa } = lit.utils.safeEncoders;
+  const { transform } = lit.utils;
+  const filename = (meta &amp;&amp; meta.filename) || &quot;untitled.js&quot;;
+  let babel;
+  try {
+    babel = transform(filename, src);
+
+    // So many hacks due to blob and/or data uri
+    // - cachbusting comment
+    // - rewrite imports urls to be absolute
+    const s =
+      `/*${Date.now()}*/` +
+      babel.code.replace(
+        /HORRIBLE_HACK([^&#x27;&quot;]+)/g,
+        //location.href
+        new URL(&quot;.&quot;, location.href).toString() + &quot;$1&quot;
+      );
+    const console = &quot;fake me&quot;;
+    // const url = `data:text/javascript;base64,${btoa(s)}`
+    const url = URL.createObjectURL(new Blob([s], { type: &quot;text/javascript&quot; }));
+    const m = await import(url + &quot;#location=&quot; + location.href);
+    if (typeof m.default === &quot;function&quot;) {
+      const res = await m.default.call({ console });
+      return lit.utils.inspect(res);
+    } else return lit.utils.inspect(m);
+  } catch (err) {
+    return err.message;
+  }
+};
+
+</code></pre></codecell></div></cell><cell startpos="149:1-3524" endpos="217:4-5179" class="code"><div class="cell-content"><codecell class="dir-collapse tag-v2test lang-js local collapsed"><span class="meta"><span class="lang">js</span><span class="repl">module</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#cc52b5" class="tag">v2test</span></span><pre><code class="js">import Editor, {defaultProps as eprops} from &quot;https://cdn.skypack.dev/react-simple-code-editor&quot;;
 import Highlight, {
   defaultProps as hprops 
 } from &quot;https://cdn.skypack.dev/prism-react-renderer&quot;;

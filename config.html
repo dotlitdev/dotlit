@@ -335,7 +335,61 @@ export const viewer = ({node, React}) =&gt; {
   }))
 }
 </code></pre></codecell></div></cell><cell startpos="401:1-9158" endpos="402:4-9198" class="code output"><div class="cell-content"><codecell class="dir-inline lang-json3 local output"><span class="meta"><span class="lang">json3</span><span style="color:black;background-color:#b96da2" class="directive dir-inline">inline</span></span><output><pre><code class="json3"></code></pre></output></codecell></div></cell></section>
-<section id="cors-proxy" depth="3" class="" startpos="404:1-9200" endpos="410:4-9341"><cell startpos="404:1-9200" endpos="406:40-9255"><div class="cell-content"><h3>CORS Proxy</h3><p><em>Cors proxy see <a class="exists local" href="testing/cors_proxy.html" title="testing/Cors proxy" wikilink="true" filepath="/config.lit" root="" data="[object Object]" canonical="/testing/cors_proxy.lit">testing/Cors proxy</a></em></p></div></cell><cell startpos="408:1-9257" endpos="410:4-9341" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><a name="corsProxy"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=proxy</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=corsProxy</span><span class="source">&lt; ./plugins/other/cors-proxy.js</span></span><pre><code class="js"></code></pre></codecell></div></cell></section>
+<section id="cors-proxy" depth="3" class="" startpos="404:1-9200" endpos="410:4-9341"><cell startpos="404:1-9200" endpos="406:40-9255"><div class="cell-content"><h3>CORS Proxy</h3><p><em>Cors proxy see <a class="exists local" href="testing/cors_proxy.html" title="testing/Cors proxy" wikilink="true" filepath="/config.lit" root="" data="[object Object]" canonical="/testing/cors_proxy.lit">testing/Cors proxy</a></em></p></div></cell><cell startpos="408:1-9257" endpos="410:4-9341" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><a name="corsProxy"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=proxy</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=corsProxy</span><span class="source">&lt; ./plugins/other/cors-proxy.js</span></span><pre><code class="js">export const proxy = async (returnEndpoint) =&gt; {
+  const setup = (resolve, reject) =&gt; {
+    if (typeof lit === &quot;undefined&quot;) reject(&quot;No lit&quot;);
+    else if (!window.__runkitCORSProxyEnpoint) {
+      (async (fn) =&gt; {
+        const rkEmbed = document.createElement(&quot;script&quot;);
+        rkEmbed.onload = async (fn) =&gt; {
+          const el = document.createElement(&quot;div&quot;);
+          document.body.appendChild(el);
+          el.setAttribute(&quot;style&quot;, &quot;height:0;&quot;);
+          RunKit.createNotebook({
+            element: el,
+            mode: &quot;endpoint&quot;,
+            onLoad: async (rk) =&gt; {
+              const endpoint = await rk.getEndpointURL();
+              window.__runkitCORSProxyEnpoint = endpoint;
+              document.body.removeChild(el);
+            },
+            evaluateOnLoad: true,
+            source: await lit.fs.readFile(
+              &quot;/testing/runkit-express-cors-proxy.js&quot;,
+              {
+                encoding: &quot;utf8&quot;,
+              }
+            ),
+          });
+        };
+        rkEmbed.setAttribute(&quot;src&quot;, &quot;https://embed.runkit.com&quot;);
+        document.body.appendChild(rkEmbed);
+      })();
+    } else {
+      resolve(window.__runkitCORSProxyEnpoint);
+    }
+  };
+
+  const endpoint = await new Promise(setup).then((e) =&gt; e);
+  if (false &amp;&amp; !window.__runkitCORSProxyEnpoint) {
+    return &quot;Still setting up proxy endpoint&quot;;
+  } else {
+    if (returnEndpoint) return endpoint;
+
+    const getAndReplaceDomain = (originalUrl, newDomain) =&gt; {
+      return newDomain + originalUrl.replace(/^https?:\/\//, &quot;/&quot;);
+    };
+
+    const proxyFetch = async (url, opts = {}) =&gt; {
+      const proxyUrl = getAndReplaceDomain(url, endpoint);
+      return fetch(proxyUrl, opts);
+    };
+
+    return proxyFetch;
+  }
+};
+
+</code></pre></codecell></div></cell></section>
 <section id="plantuml-viewer--repl" depth="3" class="" startpos="412:1-9343" endpos="536:46-15188"><cell startpos="412:1-9343" endpos="415:18-9607"><div class="cell-content"><h3>Plant<code>uml</code> viewer &amp; repl</h3><p>Uses <a class="external" href="https://plantuml.com" filepath="/config.lit" root="" data="[object Object]" canonical="https://plantuml.com">plantuml.com<span class="linkIcon">↗</span></a> to create <code>svg</code> images from <code>uml</code> source. Not included as a default viewer due to the external dependency, but it&#x27;s great! See <a class="exists local" href="plugins/viewers/plantuml/plantuml.html" title="plugins/viewers/plantuml/plantuml" wikilink="true" filepath="/config.lit" root="" data="[object Object]" canonical="/plugins/viewers/plantuml/plantuml.lit">plugins/viewers/plantuml/plantuml</a> for more.</p><p><em>Implementation:</em></p></div></cell><cell startpos="417:1-9609" endpos="471:4-11077" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse tag-viewer lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=uml</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=repl</span><span style="color:black;background-color:#cf5332" class="tag">viewer</span></span><pre><code class="js">async function encodePlantUML(src) {
   console.log(&quot;encoding&quot;, src);
   const module = await import(&quot;https://cdn.skypack.dev/plantuml-encoder&quot;);
@@ -512,9 +566,19 @@ export const viewer = ({ node, React }) =&gt; {
     setResults({ msg, results: res });
   };
 
+  const inputStyle = {
+    display: &quot;block&quot;,
+    width: &quot;100%&quot;,
+    fontSize: &quot;1em&quot;,
+  };
+
   return (
     &lt;div&gt;
-      &lt;input onChange={(ev) =&gt; search(ev.target.value, meta)} /&gt;
+      &lt;input
+        style={inputStyle}
+        placeholder={`Search (local ${meta.ns || &quot;/&quot;}) file system`}
+        onChange={(ev) =&gt; search(ev.target.value, meta)}
+      /&gt;
       &lt;div&gt;{results &amp;&amp; results.msg}&lt;/div&gt;
       &lt;div&gt;
         {results &amp;&amp;
@@ -543,7 +607,59 @@ export const viewer = ({ node, React }) =&gt; {
 };
 
 </code></pre></codecell></div></cell></section>
-<section id="miscellaneous" depth="3" class="" startpos="688:1-19459" endpos="705:4-19771"><cell startpos="688:1-19459" endpos="688:18-19476"><div class="cell-content"><h3>Miscellaneous</h3></div></cell><cell startpos="690:1-19478" endpos="692:4-19552" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><a name="diff"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=filemenu</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=diff</span><span class="source">&lt; plugins/modal/diff.js</span></span><pre><code class="js"></code></pre></codecell></div></cell><cell startpos="694:1-19554" endpos="699:4-19662" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><a name="2tabs"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=2tabs</span></span><pre><code class="js">export const transformer = ({ src }) =&gt; {
+<section id="miscellaneous" depth="3" class="" startpos="688:1-19459" endpos="705:4-19771"><cell startpos="688:1-19459" endpos="688:18-19476"><div class="cell-content"><h3>Miscellaneous</h3></div></cell><cell startpos="690:1-19478" endpos="692:4-19552" class="code"><div class="cell-content"><codecell class="dir-plugin dir-collapse lang-js local collapsed"><a name="diff"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=filemenu</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=diff</span><span class="source">&lt; plugins/modal/diff.js</span></span><pre><code class="js">import diff from &quot;https://cdn.skypack.dev/react-diff-viewer&quot;;
+
+export const filemenu = (ctx, { React, Menu, toggleModal }) =&gt; {
+  const rc = React.createElement;
+
+  const showDiff = async () =&gt; {
+    const close = rc(&quot;button&quot;, { onClick: () =&gt; toggleModal() }, [&quot;Close&quot;]);
+
+    const styles = {
+      lineNumber: {
+        fontWeight: &quot;bold&quot;,
+      },
+      gutter: {
+        minWidth: &quot;0.6em&quot;,
+        padding: &quot;0 0.2em&quot;,
+      },
+      marker: {
+        width: &quot;auto&quot;,
+        padding: &quot;0 0.2em&quot;,
+      },
+      contentText: {
+        lineHeight: &quot;1em !important&quot;,
+        wordBreak: &quot;break-all&quot;,
+      },
+      content: {
+        width: &quot;auto&quot;,
+        padding: 0,
+      },
+    };
+    const stats = await lit.fs.readStat(lit.location.src, { encoding: &quot;utf8&quot; });
+    if (stats.local.value === stats.remote.value) {
+      toggleModal(rc(&quot;div&quot;, {}, [close, &quot;Local and Remote match. (No Diff)&quot;]));
+      return;
+    }
+
+    const view = rc(diff, {
+      newValue: stats.local.value,
+      rightTitle: &quot;local&quot;,
+      oldValue: stats.remote.value,
+      leftTitle: &quot;remote&quot;,
+      splitView: false,
+      styles,
+      compareMethod: diff[&quot;CHARS&quot;],
+    });
+
+    const modal = rc(&quot;div&quot;, {}, [close, view]);
+    toggleModal(modal);
+  };
+
+  return rc(&quot;span&quot;, { onClick: showDiff }, &quot;Show Diff&quot;);
+};
+
+</code></pre></codecell></div></cell><cell startpos="694:1-19554" endpos="699:4-19662" class="code"><div class="cell-content"><codecell class="dir-plugin lang-js local"><a name="2tabs"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=2tabs</span></span><pre><code class="js">export const transformer = ({ src }) =&gt; {
   return src.replace(/^\s/g, &quot;\t&quot;);
 };
 
