@@ -48,6 +48,7 @@ export const extractPlugins = ({fs} = {}) => {
                 && block.data.meta.directives.indexOf('plugin') >= 0) {
                 
                 const meta = block.data.meta
+                const value = block.data?.value || block.value
                 console.log('Found Plugin', meta.raw)
                 
                 let type = meta.type || 'unknown'
@@ -60,12 +61,12 @@ export const extractPlugins = ({fs} = {}) => {
                 if (meta.lang === 'css') {
                      const len = Object.keys(file.data.plugins[type]).length
                      const id = meta.of || meta.id || meta.filename || len
-                     file.data.plugins[type][id] = {value: block.value}
+                     file.data.plugins[type][id] = {value: value}
                      return;
                 }
                 
                 try {
-                    let plugin = await extractModule(block.value, filename)
+                    let plugin = await extractModule(value, filename)
                     console.log("plugin module:", plugin)
                     let foundExport;
                     if (plugin?.asyncPlugin) {
