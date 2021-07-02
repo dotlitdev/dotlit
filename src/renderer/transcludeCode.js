@@ -40,7 +40,7 @@ export const transcludeCode = ({fs}) => {
                        const resp = await fs.readStat(filePath, {encoding: 'utf8'})
                     //    console.log("has value", resp)
                        // block.value = resp.local.value || resp.remote.value
-                       block.data.value = value
+                       block.data.value = resp.local.value || resp.remote.value
                    } catch(err) {
                        const msg = `(${file.path}) Failed to load ` + block.data.meta.fromSource + " as " + filePath
                        file.message(msg, block)
