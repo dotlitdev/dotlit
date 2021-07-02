@@ -34,10 +34,19 @@ return ast2md(tree)
 ## As menu `!plugin`
 
 ```js #visit-position
-const { visit } = lit.utils.unist;
-const pos = this.position;
+const { visit, filter, select, selectPosition } = lit.utils.unist;
+
 let found;
 console.log(pos);
+
+const secFromCell = (pos) => {
+  const secs = selectPosition.selectAll("section", ctx.selectedCell, lit.ast);
+  const last = secs.slice(-1)[0];
+  return last.position;
+};
+
+const pos = secFromCell(this.position);
+
 visit(
   lit.ast,
   () => true,
