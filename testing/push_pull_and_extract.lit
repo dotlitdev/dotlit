@@ -38,6 +38,15 @@ const { visit, filter, select, selectPosition } = lit.utils.unist;
 
 let found;
 
+const { toMarkdown, ungroupSections } = lit.parser.utils;
+
+const ast2md = (ast) => {
+  const unGroup = ungroupSections()();
+  const tree = unGroup(ast);
+  const md = toMarkdown(tree);
+  return md;
+};
+
 const secFromCell = (pos) => {
   const secs = selectPosition.selectAll("section", pos, lit.ast);
   const last = secs.slice(-1)[0];
@@ -51,25 +60,14 @@ visit(
   () => true,
   (node) => {
     if (node?.position?.start?.offset === pos.start?.offset) {
-      found = node;
+      visit(node, "heading", (node) => {
+        node.depth += 1;
+      });
       console.log("found match: ", node.type);
       return visit.SKIP;
     }
   }
 );
-
-const { toMarkdown, ungroupSections } = lit.parser.utils;
-
-const ast2md = (ast) => {
-  const unGroup = ungroupSections()();
-  const tree = unGroup(ast);
-  const md = toMarkdown(tree);
-  return md;
-};
-
-visit(found, "heading", (node) => {
-  node.depth += 1;
-});
 
 return ast2md(lit.ast);
 
