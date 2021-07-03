@@ -2,14 +2,20 @@
 
 ## Table of Contents
 
+*   [Test cases](#test-cases)
+*   [Push & Pull](#push--pull)
+*   [As menu `!plugin`](#as-menu-plugin)
+*   [Extract](#extract)
+*   [Other](#other)
+
 ## Test cases
 
-The current implementation (due to `ast2md`) causes Table of Contents, [[wiki-links]] and [normal links](index.lit) to be saved incorrectly, as well as transcluded code:
+The current implementation (due to `ast2md`) causes Table of Contents, [wiki-links](../wiki-links.html "wiki-links") and [normal links](index.html) to be saved incorrectly, as well as transcluded code:
 
 ```text < ../dummy/🔥.lit
+🔥 Emoji in file name. ⚠️
+
 ```
-
-
 
 ## Push & Pull
 
@@ -33,6 +39,7 @@ visit(tree,test,push)
 // return selectPos.toString()
 return ast2md(tree)
 ```
+
 ```js #visit-position
 const { visit, filter, select, selectPosition } = lit.utils.unist;
 
@@ -78,9 +85,8 @@ return ast2md(lit.ast);
 
 ```
 
-
-
 ## As menu `!plugin`
+
 ```>js ../plugins/menu/depth.js !plugin id=depth type=sectionmenu
 export const sectionmenu = (ctx, { React, Menu }) => {
   const rc = React.createElement;
@@ -128,9 +134,8 @@ export const sectionmenu = (ctx, { React, Menu }) => {
 };
 
 ```
+
 ## Extract
-
-
 
 ## Other
 
@@ -152,4 +157,3 @@ visit(lit.ast, "heading", (node) => {
 return ast2md(lit.ast);
 
 ```
-
