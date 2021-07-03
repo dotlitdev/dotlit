@@ -538,6 +538,38 @@ function ident (x, i) {
 }
   
 
+export const metaToString = (meta) =&gt; {
+
+  const prefix = p =&gt; str =&gt; p + str
+  const tag = prefix(&quot;#&quot;)
+  const dir = prefix(&quot;!&quot;)
+  const attr = ([key,value]) =&gt; `${key}=${value}`
+
+  const parts = [];
+  const dirs = meta.directives || []
+  const tags = meta.tags || []
+  const attrs = meta.attrs || {}
+
+  parts.push(meta.isOutput &amp;&amp; &quot;&gt;&quot;);
+  parts.push(meta.lang);
+  parts.push(meta.filename || meta.uri);
+  
+  dirs.forEach( d =&gt; parts.push(dir(d)))
+  Object.entries(attrs).forEach( (e) =&gt; parts.push(attr(e)))
+  tags.forEach( t =&gt; parts.push(tag(t)))
+
+  if (meta.source) {
+    parts.push(&quot;&lt;&quot;)
+    parts.push(metaToString(meta.source))
+  }
+
+  if (meta.output) {
+    parts.push(&quot;&gt;&quot;)
+    parts.push(metaToString(meta.output))
+  }
+
+  return parts.filter((x) =&gt; x).join(&quot; &quot;);
+};
 
 </code></pre></codecell></div></cell><cell startpos="53:1-879" endpos="131:4-2984" class="code"><div class="cell-content"><codecell class="tag-meta tag-tostring lang-js local"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#033165" class="tag">meta</span><span style="color:black;background-color:#ccb166" class="tag">tostring</span></span><pre><code class="js">// const meta = this.children[0].children[0].properties.meta
 
