@@ -139,3 +139,35 @@ function ident (x, i) {
 }
   
 
+export const metaToString = (meta) => {
+
+  const prefix = p => str => p + str
+  const tag = prefix("#")
+  const dir = prefix("!")
+  const attr = ([key,value]) => `${key}=${value}`
+
+  const parts = [];
+  const dirs = meta.directives || []
+  const tags = meta.tags || []
+  const attrs = meta.attrs || {}
+
+  parts.push(meta.isOutput && ">");
+  parts.push(meta.lang);
+  parts.push(meta.filename || meta.uri);
+  
+  dirs.forEach( d => parts.push(dir(d)))
+  Object.entries(attrs).forEach( (e) => parts.push(attr(e)))
+  tags.forEach( t => parts.push(tag(t)))
+
+  if (meta.source) {
+    parts.push("<")
+    parts.push(metaToString(meta.source))
+  }
+
+  if (meta.output) {
+    parts.push(">")
+    parts.push(metaToString(meta.output))
+  }
+
+  return parts.filter((x) => x).join(" ");
+};
