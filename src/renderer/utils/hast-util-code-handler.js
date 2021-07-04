@@ -9,6 +9,8 @@ function code(h, node) {
   // console.log("[HastCodeHander] start", node)
   // transcludeCode sets data.value
   node.value = node.data?.value || node.value
+  var originalSource = node.data?.originalSouce
+
   var value = node.value ? node.value + '\n' : ''
   // To do: next major, use `node.lang` w/o regex, the splitting’s been going
   // on for years in remark now.
@@ -25,7 +27,8 @@ function code(h, node) {
   code = h(node, 'code', props, toHast(divcode).children)
   code.data = {
     value: value,
-    meta: node.meta, 
+    meta: node.meta,
+    originalSource: originalSource,
     __customHastCodeHandler: true,
   }
   // console.log("[HastCodeHander] end", code)
