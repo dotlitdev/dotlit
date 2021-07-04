@@ -58,7 +58,7 @@ const Cell = props => {
     const rawSource = codeSource && ("```" + (meta.raw || '') + "\n" + codeSource + "```")
 
     const isTranscluded = meta?.source?.filename
-    const originalSource = meta && ("```" + (meta.raw || '') + "\n" + codeNode.value + "```")
+    const originalSource = meta && ("```" + (meta.raw || '') + "\n" + (isTranscluded ? codeNode.data.originalSource : codeNode.data.value) + "```")
     
     const output = meta && meta.isOutput
 
@@ -118,8 +118,9 @@ const Cell = props => {
             }
             const outputMeta = (meta.hasOutput ? meta.output.raw : 'txt').trim() + (" attached=true updated=" + Date.now()) + (error ? ' !error' : '')
             const output = "\n```>"+ outputMeta +"\n" + result.stdout.replace(/\n```/g, "\n•••") + "\n```\n"
-            if (ctx) ctx.setSrc(pos, rawSource + output)
-            else return rawSource + output
+            const src = isTranscluded ? originalSource : rawSource
+            if (ctx) ctx.setSrc(pos, src + output)
+            else return src + output
         }
     }
 
