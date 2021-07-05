@@ -69,6 +69,7 @@ const Cell = props => {
         const transform = meta && (meta.transformer || meta.lang)
         const transformer = lit.file?.data?.plugins?.transformer?.[transform]
         if (transformer) {
+            console.log("Transforming on save:", transformer)
             const newSrc = await transformer({node, src, codeSource, rawSource, originalSource})
             ctx.setSrc(pos, newSrc)
         } else {
