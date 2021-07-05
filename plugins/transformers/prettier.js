@@ -5,7 +5,7 @@ export const transformer = async ({
   rawSource,
   originalSource,
 }) => {
-  const lines = src.split("\n");
+  const lines = rawSource.split("\n");
   let [first, ...rest] = lines;
   let middle = rest.slice(0, -1);
   const [last] = rest.slice(-1);
