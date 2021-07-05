@@ -58,7 +58,7 @@ const Cell = props => {
     const rawSource = codeSource && ("```" + (meta.raw || '') + "\n" + codeSource + "```")
 
     const isTranscluded = meta?.source?.filename
-    const originalSource = meta && ("```" + (meta.raw || '') + "\n" + (isTranscluded ? codeNode.data.originalSource : codeNode.data.value) + "```")
+    const originalSource = meta && ("```" + (meta.raw || '') + "\n" + (isTranscluded ? (codeNode.data.originalSource||"") : codeNode.data.value) + "```")
     
     const output = meta && meta.isOutput
 
