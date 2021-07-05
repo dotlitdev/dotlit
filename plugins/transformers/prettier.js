@@ -25,6 +25,7 @@ export const transformer = async ({
       last,
     ].join("\n");
   } catch (err) {
+    console.error(err);
     lit.file.message(err.message);
     return src;
   }
