@@ -78,11 +78,11 @@ export const transformer = async ({
   const format = p.default.format;
   const babelPlugin = b.default;
   try {
-    return [
-      first,
-      format(body, { parser: "babel", plugins: [babelPlugin] }),
-      last,
-    ].join("\n");
+    const result = format(body, { parser: "babel", plugins: [babelPlugin] });
+    if (body !== result) {
+      console.log("prettier transformed source", { body, result });
+    }
+    return [first, result, last].join("\n");
   } catch (err) {
     console.error(err);
     lit.file.message(err.message);
