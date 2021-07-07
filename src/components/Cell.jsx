@@ -114,9 +114,10 @@ const Cell = props => {
         } else {
             const outputMeta = (meta.hasOutput ? meta.output.raw : 'txt').trim() + (" attached=true updated=" + Date.now()) + (error ? ' !error' : '')
             let output
-            if (meta?.output?.filename) {
-                console.log("TODO: write repl output to file system ")
-                // lit.fs.writeFile(join(dirname(), meta.output.filename), result.stdout)
+            if (ctx && meta?.output?.filename) {
+                const filepath = path.join( path.dirname(ctx.file.path), meta.output.filename)
+                console.log("Write repl output to file system ", filepath, result.stdout)
+                lit.fs.writeFile( filepath, result.stdout)
                 output = "\n```>"+ outputMeta + " < " + meta.output.filename + "\n\n```\n"
             } else {
                 output = "\n```>"+ outputMeta + "\n" + result.stdout.replace(/\n```/g, "\n•••") + "\n```\n"
