@@ -1,5 +1,6 @@
 import React, {useState,useEffect} from "react"
 import vfile from 'vfile'
+import path from 'path'
 import source from 'unist-util-source'
 import filter from 'unist-util-filter'
 import { atPos } from '../utils/unist-util-select-position'
