@@ -112,13 +112,17 @@ const Cell = props => {
             // so re-render from that
             if (ctx) ctx.setSrc(lit.ast.position, result.resp)
         } else {
-
+            const outputMeta = (meta.hasOutput ? meta.output.raw : 'txt').trim() + (" attached=true updated=" + Date.now()) + (error ? ' !error' : '')
+            let output
             if (meta?.output?.filename) {
                 console.log("TODO: write repl output to file system ")
-                // lit.fs.writeFile(join(dirname(), meta?.output?.filename), result.stdout)
+                // lit.fs.writeFile(join(dirname(), meta.output.filename), result.stdout)
+                output = "\n```>"+ outputMeta + " < " + meta.output.filename + "\n\n```\n"
+            } else {
+                output = "\n```>"+ outputMeta + "\n" + result.stdout.replace(/\n```/g, "\n•••") + "\n```\n"
             }
-            const outputMeta = (meta.hasOutput ? meta.output.raw : 'txt').trim() + (" attached=true updated=" + Date.now()) + (error ? ' !error' : '')
-            const output = "\n```>"+ outputMeta +"\n" + result.stdout.replace(/\n```/g, "\n•••") + "\n```\n"
+           
+           
             const src = isTranscluded ? originalSource : rawSource
             console.log("exec setSrc", !!ctx, pos, src + output)
             if (ctx) ctx.setSrc(pos, src + output)
