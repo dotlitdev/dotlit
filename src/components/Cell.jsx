@@ -119,7 +119,7 @@ const Cell = props => {
                 const filepath = path.join( path.dirname(ctx.file.path), meta.output.filename)
                 console.log("Write repl output to file system ", filepath, result.stdout)
                 lit.fs.writeFile( filepath, result.stdout)
-                output = "\n```>"+ outputMeta + " < " + meta.output.filename + "\n\n```\n"
+                output = "\n```>"+ outputMeta.replace(meta.output.filename,'') + " < " + meta.output.filename + "\n\n```\n"
             } else {
                 output = "\n```>"+ outputMeta + "\n" + result.stdout.replace(/\n```/g, "\n•••") + "\n```\n"
             }
