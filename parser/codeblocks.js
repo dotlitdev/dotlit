@@ -49,15 +49,15 @@ export const parseMeta = function parseMeta (node) {
 
     if (isOutput) {
         [_, input] = raw.split('>').map( x => x.trim() )
-    } else {
+    }
+
       if (hasOutput) {
-        [input, output] = raw.split('>').map( x => x.trim() )
+        [input, output] = input.split('>').map( x => x.trim() )
       }
 
       if (hasSource) {
         [input,source] = input.split('<').map( x => x.trim() )
       }
-    }
 
     const meta = input
         .replace(NONESCAPEDSPACES_REGEX, "$1" + LSP)
