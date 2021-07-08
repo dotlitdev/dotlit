@@ -4,7 +4,7 @@ let document = { documentElement: { style: {} } };
 importScripts("web.bundle.js");
 
 const state = {
-  version: "0.2.24",
+  version: "0.3.1",
   dotlit: typeof dotlit,
   root: "",
   enableCache: false,
@@ -43,6 +43,7 @@ const getMockResponse = async (event) => {
         ...state,
         filepath,
         stat,
+        method: event.request.method,
       };
       return new Response(JSON.stringify(status, null, 2), {
         headers: { meta: state.version },
