@@ -729,6 +729,13 @@ const Cell = props =&gt; {
         executing ? &#x27;executing&#x27; :&#x27;&#x27;,
     ].join(&#x27; &#x27;).trim() || undefined
 
+    const editCell = (src) =&gt; isCodeCell 
+        ? &lt;div class=&quot;codeCellEditor&quot;&gt;
+              &lt;Editor src={meta.raw} update={()=&gt;{}}/&gt; 
+              &lt;Editor src={src} update={setSrc}/&gt; 
+          &lt;/div&gt;
+        : &lt;Editor src={src} update={setSrc}/&gt; 
+
     return &lt;SelectionContext.Consumer&gt;
         { ctx =&gt; {
             // console.log(&quot;[Cell] code: &quot;, !!isCodeCell, meta &amp;&amp; meta.raw )//, codeNode, {src: codeSource, orig: originalSource}, ctx ) // meta, codeSource)
@@ -738,7 +745,7 @@ const Cell = props =&gt; {
                 startpos={posstr(pos.start)}
                 endpos={posstr(pos.end)}
                 className={getClasses(ctx)}&gt;
-                    { editing ? &lt;Editor src={src} update={setSrc}/&gt; : &lt;div className=&quot;cell-content&quot;&gt;{content || props.children}&lt;/div&gt; }
+                    { editing ? editCell(src) : &lt;div className=&quot;cell-content&quot;&gt;{content || props.children}&lt;/div&gt; }
                     { isSelected(ctx) &amp;&amp; &lt;CellMenu meta={meta} editing={editing} toggleEditing={toggleEditing} save={save(ctx)} exec={exec(ctx)}/&gt;}
             &lt;/cell&gt;
         }}
