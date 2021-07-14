@@ -31,15 +31,17 @@ const checkForInput = async () => {
       ((stat.local.stat && stat.local.value) ||
         stat.remote.value ||
         `# ${today}
+
 See [week ${week}](/${filename(
           year + "-w" + week
         )}), [month ${month}](/${filename(
           year + "-" + month
-        )}) or [year ${year}](/${filename(year)})
+        )}) or [year ${year}](/${filename(year)}) or [[testing/Input Buffer]]
 `) +
       ("\n" + input);
     await lit.fs.writeFile(`/${filename(today)}`, newContent);
     return `***Captured Input (below) to [${today}](/${filename(today)})***
+
 ${input}`;
   } else {
     return "*No input detected.*";
