@@ -40,10 +40,14 @@ return (async fn=>{
 ```
 
 ```js !plugin of=prose
-export const viewer = async (node,React) => {
+export const asyncPlugin = async ()=> {
   const ProseMirror = await import("https://cdn.skypack.dev/react-prosemirror")
-  return typeof ProseMirror
-  return <ProseMirror value={node.data.value} />
+  return {
+    viewer: (node,React) => {
+      return typeof ProseMirror
+      return <ProseMirror value={node.data.value} />
+    }
+  }
 }
 ```
 
