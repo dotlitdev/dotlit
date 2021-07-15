@@ -43,8 +43,13 @@ return (async fn=>{
 export const asyncPlugin = async () => {
   return {
     viewer: ({node,React}) => {
-      const ProseMirror = await import("https://cdn.skypack.dev/react-prosemirror")
-      return <div contenteditable="true">{node.data.value}</div>
+      const {useState,useEffect} = React
+      const [ProseMirror, setProse] = useState(null)
+      useEffect(async fn =>{
+        const ProseMirror = await import("https://cdn.skypack.dev/react-prosemirror")
+        setProse(ProseMirror)
+      },[])
+      return ProseMirror ? <ProseMirror value={node.data.value}/> : "Loading..."
     }
   }
 }
