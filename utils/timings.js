@@ -21,8 +21,9 @@ export const time = (ns, marker) => {
   timings[ns].marks.push({ marker, time: now });
   if (marker) {
     const id = now;
-    const took = now - timings[ns].start;
     const index = timings[ns].marks.length;
+    const took = now - timings[ns].marks[index-1].time;
+   
     timings[ns].timeTo[marker] = took;
     console.log(`[timings][${ns}] "start" to "${marker}" took ${took}ms`);
     const log = JSON.stringify({ ns, marker, id, took, index }) + "\n";
