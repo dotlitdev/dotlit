@@ -22,7 +22,8 @@ export const time = (ns, marker) => {
   if (marker) {
     const id = now;
     const index = timings[ns].marks.length;
-    const took = now - timings[ns].marks[index-2].time;
+    const last = timings[ns]?.marks[index-1]?.time || timings[ns]?.start
+    const took = now - last;
    
     timings[ns].timeTo[marker] = took;
     console.log(`[timings][${ns}] "start" to "${marker}" took ${took}ms`);
