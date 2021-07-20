@@ -22,7 +22,7 @@ export const time = (ns, marker) => {
   if (marker) {
     const id = now;
     const index = timings[ns].marks.length;
-    const last = timings[ns]?.marks[index-1]?.time || timings[ns]?.start
+    const last = (index-2 >= 0 && timings[ns]?.marks[index-2]?.time) || timings[ns]?.start
     const took = now - last;
    
     timings[ns].timeTo[marker] = took;
