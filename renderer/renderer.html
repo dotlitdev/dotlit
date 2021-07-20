@@ -72,7 +72,7 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
         return async (tree,file) =&gt; {
             const includes = file?.data?.frontmatter?.includes || [&#x27;/config.lit&#x27;]
             let loaded = 0
-            if (skipIncludes) {
+            if (skipIncludes || includes === &quot;skip&quot;) {
                 console.log(`(${file.path}) Skipping includes.`)
                 return;
             }
