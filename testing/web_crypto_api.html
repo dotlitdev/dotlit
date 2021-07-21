@@ -14,11 +14,11 @@
   --code-bg-color: black;
   --code-text-color: white;
   --box-bg-opacity: 0.05;
-}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section id="web-crypto-api" depth="1" class="" startpos="1:1-0" endpos="32:4-535"><cell startpos="1:1-0" endpos="7:53-93"><div class="cell-content"><h1>Web Crypto API</h1><p><a class="exists local" href="index.html" title="🔬 Testing" wikilink="true" filepath="/testing/web_crypto_api.lit" root="" data="[object Object]" canonical="/testing/index.lit">🔬 Testing</a></p><p>Refs:</p><ul>
+}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section id="web-crypto-api" depth="1" class="" startpos="1:1-0" endpos="44:4-757"><cell startpos="1:1-0" endpos="7:53-93"><div class="cell-content"><h1>Web Crypto API</h1><p><a class="exists local" href="index.html" title="🔬 Testing" wikilink="true" filepath="/testing/web_crypto_api.lit" root="" data="[object Object]" canonical="/testing/index.lit">🔬 Testing</a></p><p>Refs:</p><ul>
 <li><a class="external" href="https://bradyjoslin.com/blog/encryption-webcrypto/" filepath="/testing/web_crypto_api.lit" root="" data="[object Object]" canonical="https://bradyjoslin.com/blog/encryption-webcrypto/">https://bradyjoslin.com/blog/encryption-webcrypto/<span class="linkIcon">↗</span></a></li>
 </ul></div></cell><cell startpos="9:1-95" endpos="14:4-212" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return window.crypto.subtle.importKey
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">4m ago</span></span></span><output><pre><code class="txt">[Function: importKey]
-</code></pre></output></codecell></div></cell><cell startpos="16:1-214" endpos="32:4-535" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const enc = new TextEncoder();
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">5m ago</span></span></span><output><pre><code class="txt">[Function: importKey]
+</code></pre></output></codecell></div></cell><cell startpos="16:1-214" endpos="44:4-757" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const enc = new TextEncoder();
 const dec = new TextDecoder();
 
 const getPasswordKey = (password) =&gt;
@@ -29,6 +29,20 @@ const getPasswordKey = (password) =&gt;
     false,
     [&quot;deriveKey&quot;]
   );
+
+const deriveKey = (passwordKey, salt, keyUsage) =&gt;
+  window.crypto.subtle.deriveKey(
+    {
+      name: &quot;PBKDF2&quot;,
+      salt: salt,
+      iterations: 250000,
+      hash: &quot;SHA-256&quot;,
+    },
+    passwordKey,
+    { name: &quot;AES-GCM&quot;, length: 256 },
+    false,
+    keyUsage
+  );
+
 return getPasswordKey(prompt(&quot;Password&quot;))
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">1m ago</span></span></span><output><pre><code class="txt">{}
-</code></pre></output></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="2021-07-21" href="/testing/log/2021-07-21.html">2021-07-21</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
+</code></pre></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="2021-07-21" href="/testing/log/2021-07-21.html">2021-07-21</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
