@@ -14,49 +14,49 @@
   --code-bg-color: black;
   --code-text-color: white;
   --box-bg-opacity: 0.05;
-}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section id="web-crypto-api" depth="1" class="" startpos="1:1-0" endpos="113:4-3203"><cell startpos="1:1-0" endpos="7:53-93"><div class="cell-content"><h1>Web Crypto API</h1><p><a class="exists local" href="index.html" title="🔬 Testing" wikilink="true" filepath="/testing/web_crypto_api.lit" root="" data="[object Object]" canonical="/testing/index.lit">🔬 Testing</a></p><p>Refs:</p><ul>
+}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section id="web-crypto-api" depth="1" class="" startpos="1:1-0" endpos="113:4-3217"><cell startpos="1:1-0" endpos="7:53-93"><div class="cell-content"><h1>Web Crypto API</h1><p><a class="exists local" href="index.html" title="🔬 Testing" wikilink="true" filepath="/testing/web_crypto_api.lit" root="" data="[object Object]" canonical="/testing/index.lit">🔬 Testing</a></p><p>Refs:</p><ul>
 <li><a class="external" href="https://bradyjoslin.com/blog/encryption-webcrypto/" filepath="/testing/web_crypto_api.lit" root="" data="[object Object]" canonical="https://bradyjoslin.com/blog/encryption-webcrypto/">https://bradyjoslin.com/blog/encryption-webcrypto/<span class="linkIcon">↗</span></a></li>
 </ul></div></cell><cell startpos="9:1-95" endpos="14:4-212" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return window.crypto.subtle.importKey
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">8m ago</span></span></span><output><pre><code class="txt">[Function: importKey]
-</code></pre></output></codecell></div></cell><cell startpos="16:1-214" endpos="113:4-3203" class="code"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><pre><code class="js">const buff_to_base64 = (buff) =&gt; btoa(String.fromCharCode.apply(null, buff));
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">9m ago</span></span></span><output><pre><code class="txt">[Function: importKey]
+</code></pre></output></codecell></div></cell><cell startpos="16:1-214" endpos="113:4-3217" class="code"><div class="cell-content"><codecell class="dir-collapse tag-implementation lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-viewer" style="color:black;background-color:#cf5332">viewer=script</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><script>const buff_to_base64 = (buff) => btoa(String.fromCharCode.apply(null, buff));
 
-const base64_to_buf = (b64) =&gt;
-  Uint8Array.from(atob(b64), (c) =&gt; c.charCodeAt(null));
+const base64_to_buf = (b64) =>
+  Uint8Array.from(atob(b64), (c) => c.charCodeAt(null));
 
 const enc = new TextEncoder();
 const dec = new TextDecoder();
 
 async function encrypt() {
-  const data = window.document.getElementById(&quot;data&quot;).value;
-  let encryptedDataOut = window.document.getElementById(&quot;encryptedData&quot;);
-  const password = window.prompt(&quot;Password&quot;);
+  const data = window.document.getElementById("data").value;
+  let encryptedDataOut = window.document.getElementById("encryptedData");
+  const password = window.prompt("Password");
   const encryptedData = await encryptData(data, password);
   encryptedDataOut.value = encryptedData;
 }
 
 async function decrypt() {
-  const password = window.prompt(&quot;Password&quot;);
-  const encryptedData = window.document.getElementById(&quot;encryptedData&quot;).value;
-  let decryptedDataOut = window.document.getElementById(&quot;decrypted&quot;);
+  const password = window.prompt("Password");
+  const encryptedData = window.document.getElementById("encryptedData").value;
+  let decryptedDataOut = window.document.getElementById("decrypted");
   const decryptedData = await decryptData(encryptedData, password);
-  decryptedDataOut.value = decryptedData || &quot;decryption failed!&quot;;
+  decryptedDataOut.value = decryptedData || "decryption failed!";
 }
 
-const getPasswordKey = (password) =&gt;
-  window.crypto.subtle.importKey(&quot;raw&quot;, enc.encode(password), &quot;PBKDF2&quot;, false, [
-    &quot;deriveKey&quot;,
+const getPasswordKey = (password) =>
+  window.crypto.subtle.importKey("raw", enc.encode(password), "PBKDF2", false, [
+    "deriveKey",
   ]);
 
-const deriveKey = (passwordKey, salt, keyUsage) =&gt;
+const deriveKey = (passwordKey, salt, keyUsage) =>
   window.crypto.subtle.deriveKey(
     {
-      name: &quot;PBKDF2&quot;,
+      name: "PBKDF2",
       salt: salt,
       iterations: 250000,
-      hash: &quot;SHA-256&quot;,
+      hash: "SHA-256",
     },
     passwordKey,
-    { name: &quot;AES-GCM&quot;, length: 256 },
+    { name: "AES-GCM", length: 256 },
     false,
     keyUsage
   );
@@ -66,10 +66,10 @@ async function encryptData(secretData, password) {
     const salt = window.crypto.getRandomValues(new Uint8Array(16));
     const iv = window.crypto.getRandomValues(new Uint8Array(12));
     const passwordKey = await getPasswordKey(password);
-    const aesKey = await deriveKey(passwordKey, salt, [&quot;encrypt&quot;]);
+    const aesKey = await deriveKey(passwordKey, salt, ["encrypt"]);
     const encryptedContent = await window.crypto.subtle.encrypt(
       {
-        name: &quot;AES-GCM&quot;,
+        name: "AES-GCM",
         iv: iv,
       },
       aesKey,
@@ -87,7 +87,7 @@ async function encryptData(secretData, password) {
     return base64Buff;
   } catch (e) {
     console.log(`Error - ${e}`);
-    return &quot;&quot;;
+    return "";
   }
 }
 
@@ -98,10 +98,10 @@ async function decryptData(encryptedData, password) {
     const iv = encryptedDataBuff.slice(16, 16 + 12);
     const data = encryptedDataBuff.slice(16 + 12);
     const passwordKey = await getPasswordKey(password);
-    const aesKey = await deriveKey(passwordKey, salt, [&quot;decrypt&quot;]);
+    const aesKey = await deriveKey(passwordKey, salt, ["decrypt"]);
     const decryptedContent = await window.crypto.subtle.decrypt(
       {
-        name: &quot;AES-GCM&quot;,
+        name: "AES-GCM",
         iv: iv,
       },
       aesKey,
@@ -110,8 +110,8 @@ async function decryptData(encryptedData, password) {
     return dec.decode(decryptedContent);
   } catch (e) {
     console.log(`Error - ${e}`);
-    return &quot;&quot;;
+    return "";
   }
 }
-return getPasswordKey(prompt(&quot;Password&quot;))
-</code></pre></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="2021-07-21" href="/testing/log/2021-07-21.html">2021-07-21</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
+return getPasswordKey(prompt("Password"))
+</script></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="2021-07-21" href="/testing/log/2021-07-21.html">2021-07-21</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
