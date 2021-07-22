@@ -39,9 +39,22 @@ const viewers = {
   md: mdViewer,
   script: ({node}) => {
     const path = node?.properties?.meta?.uri || node?.properties?.meta?.filename
-    return path 
-      ? <script src={path} {...node?.properties?.meta?.attr}></script>
-      : <script {...node?.properties?.meta?.attr} dangerouslySetInnerHTML={{__html: node.value}}></script>
+    useEffect(() => {
+      const script = document.createElement('script');
+
+      if (path) script.src = path
+      else script.innerHTML = node.value
+      const body = typeof document !== "undefined" && document.body
+      script.async = true;
+      body && body.appendChild(script);
+
+      return () => {
+        body && body.removeChild(script);
+      }
+    }, []);
+    return <div className="scriptLoaded"></div>// path 
+      // ? <script src={path} {...node?.properties?.meta?.attr}></script>
+      // : <script {...node?.properties?.meta?.attr} dangerouslySetInnerHTML={{__html: node.value}}></script>
   },
   style: ({node}) => {
     const path = node?.properties?.meta?.uri || node?.properties?.meta?.filename
