@@ -37,7 +37,7 @@ export const getTimings = () => timings;
 
 
 
-```js !collapse !plugin type=viewer of=vega 
+```js !collapse !plugin type=viewer of=vega
 import { VegaLite } from "https://cdn.skypack.dev/react-vega";
 export const viewer = ({ node, React }) => {
   let spec, error;
@@ -46,7 +46,7 @@ export const viewer = ({ node, React }) => {
   } catch (err) {
     error = error.message;
   }
-  return error || <VegaLite spec={spec} renderer="svg" />;
+  return error || <VegaLite spec={spec} renderer="png" />;
 };
 
 ```
@@ -1536,51 +1536,3 @@ return raw;
 
 
 
-## Runs
-
-```>text #gh-connected #no-sw
-{ importsComplete: { min: 33, max: 212, mean: 80.08333333333333, n: 36 },
-  fsSetup: { min: 33, max: 213, mean: 80.61111111111111, n: 36 },
-  litObj: { min: 33, max: 213, mean: 80.66666666666667, n: 36 },
-  initStart: { min: 33, max: 215, mean: 81.05555555555556, n: 36 },
-  readFile: { min: 43, max: 69015, mean: 3341.6153846153848, n: 26 },
-  settingsLoaded: { min: 222, max: 73567, mean: 5477.653846153846, n: 26 },
-  manifestLoaded: { min: 1368, max: 73575, mean: 6254.181818181818, n: 22 },
-  processedFile: { min: 1373, max: 73583, mean: 6429.409090909091, n: 22 },
-  rendered: { min: 1536, max: 73941, mean: 6668.590909090909, n: 22 } }
-```
-
-So far the majority of time before complete is spent fetching files from the remote, 3s to read file, doubled by config, +1s for manifest. Of ~30 samples, with service worker disabled and GitHub connected.
-```>text #no-gh #no-sw updated=1623453687467
-{ importsComplete: { min: 73, max: 197, mean: 108.9090909090909, n: 11 },
-  fsSetup: { min: 73, max: 198, mean: 109.81818181818181, n: 11 },
-  litObj: { min: 73, max: 199, mean: 110, n: 11 },
-  initStart: { min: 74, max: 200, mean: 110.36363636363636, n: 11 },
-  readFile: { min: 645, max: 1024, mean: 833.9090909090909, n: 11 },
-  settingsLoaded: { min: 7519, max: 7895, mean: 7688.909090909091, n: 11 },
-  manifestLoaded: { min: 7537, max: 7920, mean: 7709.363636363636, n: 11 },
-  processedFile: { min: 7543, max: 10109, mean: 7922.363636363636, n: 11 },
-  rendered: { min: 7831, max: 10452, mean: 8227.272727272728, n: 11 } }
-```
-```>text #sw-connected #gh-connected updated=1623454494037
-{ importsComplete: { min: 71, max: 196, mean: 86.66666666666667, n: 15 },
-  fsSetup: { min: 72, max: 197, mean: 87.33333333333333, n: 15 },
-  litObj: { min: 72, max: 197, mean: 87.4, n: 15 },
-  initStart: { min: 72, max: 198, mean: 87.53333333333333, n: 15 },
-  readFile: { min: 340, max: 853, mean: 522.7333333333333, n: 15 },
-  settingsLoaded: { min: 2784, max: 5956, mean: 3275.3333333333335, n: 15 },
-  manifestLoaded: { min: 2910, max: 6193, mean: 3419.4666666666667, n: 15 },
-  processedFile: { min: 2946, max: 6208, mean: 4012.9285714285716, n: 14 },
-  rendered: { min: 3035, max: 6409, mean: 4171, n: 14 } }
-```
-```>text #sw-connected #gh-connected #offline updated=1623454645423
-{ importsComplete: { min: 72, max: 199, mean: 113.3, n: 10 },
-  fsSetup: { min: 72, max: 201, mean: 114, n: 10 },
-  litObj: { min: 72, max: 201, mean: 114.1, n: 10 },
-  initStart: { min: 73, max: 202, mean: 114.8, n: 10 },
-  readFile: { min: 120, max: 523, mean: 379.1, n: 10 },
-  settingsLoaded: { min: 1470, max: 1880, mean: 1782.3, n: 10 },
-  manifestLoaded: { min: 1917, max: 2319, mean: 2189.9, n: 10 },
-  processedFile: { min: 2084, max: 4027, mean: 2793.4, n: 10 },
-  rendered: { min: 2123, max: 9410, mean: 3966.4, n: 10 } }
-```
