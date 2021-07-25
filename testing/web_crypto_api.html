@@ -142,12 +142,12 @@ async function decryptData(encryptedData, password) {
     </div>
 
 </div></codecell></div></cell></section>
-<section id="encrypting-a-token" depth="2" class="" startpos="141:1-3877" endpos="179:4-4987"><cell startpos="141:1-3877" endpos="141:22-3898"><div class="cell-content"><h2>Encrypting a token</h2></div></cell><cell startpos="142:1-3899" endpos="148:4-4174" class="code"><div class="cell-content"><codecell class="dir-inline lang-html local"><span class="meta"><span class="lang">html</span><span style="color:black;background-color:#b96da2" class="directive dir-inline">inline</span></span><div><input id="access_token" type="password" placeholder="GitHub Personal Access Token"/>
+<section id="encrypting-a-token" depth="2" class="" startpos="141:1-3877" endpos="179:4-5005"><cell startpos="141:1-3877" endpos="141:22-3898"><div class="cell-content"><h2>Encrypting a token</h2></div></cell><cell startpos="142:1-3899" endpos="148:4-4174" class="code"><div class="cell-content"><codecell class="dir-inline lang-html local"><span class="meta"><span class="lang">html</span><span style="color:black;background-color:#b96da2" class="directive dir-inline">inline</span></span><div><input id="access_token" type="password" placeholder="GitHub Personal Access Token"/>
 <form action="#" method="post">
   <input type="text" name="username" id="username" value="" />
   <input type="password" name="password" id="password" value="" />
 </form>
-</div></codecell></div></cell><cell startpos="150:1-4176" endpos="179:4-4987" class="code"><div class="cell-content"><codecell class="dir-collapse tag-encrypt-token lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#97bbe0" class="tag">encrypt-token</span></span><pre><code class="js">return (async fn =&gt;{
+</div></codecell></div></cell><cell startpos="150:1-4176" endpos="179:4-5005" class="code"><div class="cell-content"><codecell class="dir-collapse tag-encrypt-token lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#97bbe0" class="tag">encrypt-token</span></span><pre><code class="js">return (async fn =&gt;{
   const token = access_token.value
   const passphrase = password.value
   if (!token || !passphrase)
@@ -160,7 +160,7 @@ async function decryptData(encryptedData, password) {
 
   const file = &quot;/.github_token&quot;
   try {
-    await lit.fs.writeFile(file, secret)
+    await lit.fs.writeFile(file, secret,{encoding:&#x27;utf8&#x27;})
   } catch (err) {
     console.log(err.message, err)
     return &quot;Failed to write encrypted token to file &quot; + file
