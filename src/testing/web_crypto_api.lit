@@ -147,9 +147,18 @@ return (async fn =>{
   if (!token || !passphrase)
     return "Cancelled"
 
-  const secret = encryptData(token, passphrase);
+  let secret
+  try{
+      secret = encryptData(token, passphrase);
+  } catch () {return "Failed to encrypt."}
+
   const file = "./github_token"
-  await lit.fs.writeFile(file, secret)
+  try {
+    await lit.fs.writeFile(file, secret)
+  } catch () {
+    return "Failed to write encrypted token to file " + file
+  }
+
   return "Stored encrypted token in file " + file
 })()
 ```
