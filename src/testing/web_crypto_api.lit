@@ -144,9 +144,11 @@ async function decryptData(encryptedData, password) {
 return (async fn =>{
   const token = prompt("token")
   const passphrase = prompt("passphrase")
-  if (!token || !passphrase) return "Cancelled"
+  if (!token || !passphrase)
+    return "Cancelled"
+
   const secret = encryptData(token, passphrase);
-  const file = ".github_token"
+  const file = "./github_token"
   await lit.fs.writeFile(file, secret)
   return "Stored encrypted token in file " + file
 })()
