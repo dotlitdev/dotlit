@@ -114,7 +114,7 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
      // use render plugins
     .use( (...args) => {
         return async (tree, file) => {
-            const rendererPlugins = Object.keys(file?.data?.plugins?.renderer || {})
+            const rendererPlugins = file?.data?.plugins?.renderer || {}
             // console.log(`[${file.path}] Looking for renderer plugins `)
             for (const plugin in rendererPlugins) {
                 console.log(`[${file.path}] Render Plugin`, plugin)
