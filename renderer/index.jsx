@@ -118,7 +118,7 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
             // console.log(`[${file.path}] Looking for renderer plugins `)
             for (const plugin in rendererPlugins) {
                 console.log(`[${file.path}] Render Plugin`, plugin)
-                await (plugin(...args))(tree, file)
+                await (rendererPlugins[plugin](...args))(tree, file)
             }
         }
     }, {React, testGlobal})
