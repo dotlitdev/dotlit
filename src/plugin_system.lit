@@ -141,6 +141,15 @@ export const renderer = (...args) => {
   }
 }
 ```
+```js !plugin
+export const renderer = ({React,testGlobal}) => {
+  return async (tree,file) => {
+    file.data.testRebdererPlugin = true
+    testGlobal.Paragraph = (props) => <div>A paragraph </div>
+    console.log("Custom Renderer ran", React,testGlobal)
+  }
+}
+```
 
 ### Menu
 
