@@ -31,7 +31,8 @@ const console = getConsoleForNamespace('renderer')
 
 export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
     console.log("Renderer: cwd", cwd)
-    return parserProcessor({fs, litroot, files, cwd})
+    let testGlobal = {}
+    return parserProcessor({fs, litroot, files, cwd, testGlobal})
 
     .use(timer(),{ns:'renderer'})
     // hoist ast to data
@@ -84,7 +85,7 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
     .use(timer(),{ns:'renderer', marker: 'includesComplete'})
 
     // extract plugins
-    .use( extractPlugins )
+    .use( extractPlugins, {testGlobal} )
     .use(timer(),{ns:'renderer', marker: 'extractPluginsComplete'})
 
     // extract files to data
@@ -116,7 +117,7 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
             const rendererPlugins = Object.keys(file?.data?.plugins?.renderer || {})
             // console.log(`[${file.path}] Looking for renderer plugins `)
             for (const plugin in rendererPlugins) {
-                console.log(`[${file.path}] Render Plugin`, plugin)
+                console.log(`[${file.path}] Render Plugin`, plugin, testGlobal)
                 // await plugin(...args)(tree, file)
             }
         }
@@ -135,11 +136,11 @@ export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
         createElement: React.createElement,
         passNode: true,
         components: {
-            p: Paragraph,
-            a: Link,
-            pre: Codeblock,
-            cell: Cell,
-            section: Section
+            p: testGlobal.Paragraph || Paragraph,
+            a: testGlobal.Link || Link,
+            pre: testGlobal.Codeblock || Codeblock,
+            cell: testGlobal.Cell || Cell,
+            section: testGlobal.Section || Section
         }
     })
     .use(timer(),{ns:'renderer', marker: 'toReactComplete'})
