@@ -172,6 +172,32 @@ return (async fn =>{
 ```>txt attached=true updated=1640446777753
 Stored encrypted token in file /.github_token
 ```
+```js !collapse #encrypt-token
+return (async fn =>{
+  const token = access_token.value
+  const passphrase = password.value
+  if (!token || !passphrase)
+    return "Cancelled"
+
+  let secret
+  try {
+      secret = await encryptData(token, passphrase);
+  } catch (err) {return "Failed to encrypt."}
+
+  const file = "/.github_token"
+  try {
+    await lit.fs.writeFile(file, secret,{encoding:'utf8'})
+  } catch (err) {
+    console.log(err.message, err)
+    return "Failed to write encrypted token to file " + file
+  }
+
+  return "Stored encrypted token in file " + file
+})()
+```
+```>txt attached=true updated=1640446777753
+Stored encrypted token in file /.github_token
+```
 
 
 
