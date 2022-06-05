@@ -27,7 +27,7 @@ const {CompactPrefixTree} = require('compact-prefix-tree/cjs')
 const copyFiles = async (fs, filepaths, input, output) => await Promise.all( filepaths.map( async filepath => {
                     const src = path.join(input, filepath)
                     if (src.startsWith('.git/')) return;
-                    if (src.indexOf('git')) console.log("git file detected:",src)
+                    if (src.indexOf('git') >= 0) console.log("git file detected:",src)
                     const dest = path.join(output, filepath)
                     await mkdirp(path.dirname(dest))
                     const stat = await fs.stat(src);
