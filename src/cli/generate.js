@@ -30,6 +30,7 @@ const copyFiles = async (fs, filepaths, input, output) => await Promise.all( fil
                     await mkdirp(path.dirname(dest))
                     const stat = await fs.stat(src);
                     await fs.copyFile(src, dest)
+                    console.log(`copied ${src} to ${dest}`)
                     await fs.utimes(dest, stat.atime, stat.mtime)
                 }))
 
