@@ -26,11 +26,13 @@ const {CompactPrefixTree} = require('compact-prefix-tree/cjs')
 
 const copyFiles = async (fs, filepaths, input, output) => await Promise.all( filepaths.map( async filepath => {
                     const src = path.join(input, filepath)
+                    if (src.startsWith('.git/')) return;
+                    if (src.indexOf('git')) console.log("git file detected:",src)
                     const dest = path.join(output, filepath)
                     await mkdirp(path.dirname(dest))
                     const stat = await fs.stat(src);
                     await fs.copyFile(src, dest)
-                    console.log(`copied ${src} to ${dest}`)
+                    // console.log(`copied ${src} to ${dest}`)
                     await fs.utimes(dest, stat.atime, stat.mtime)
                 }))
 
@@ -162,7 +164,7 @@ function generateBacklinks(files, root) {
 
 export function generate(cmd) {
     const globAll = `**/*.*`
-    const ignore = cmd.ignore || '+(**/node_modules/*|**/.git/*)'
+    const ignore = cmd.ignore || '+(**/node_modules/*)'
     const matchRegex = /\.(lit|md)(\.(md|lit))?$/
 
     console.log(`Generating from path: ${cmd.path} (${globAll})`)
