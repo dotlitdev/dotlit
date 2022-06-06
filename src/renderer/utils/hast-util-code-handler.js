@@ -1,11 +1,7 @@
-'use strict'
+import {u} from 'unist-builder'
+import {toHast} from 'mdast-util-to-hast'
 
-module.exports = code
-
-var u = require('unist-builder')
-var toHast = require('mdast-util-to-hast')
-
-function code(h, node) {
+export default function code(h, node) {
   // console.log("[HastCodeHander] start", node)
   // transcludeCode sets data.value
   node.value = node.data?.value || node.value
