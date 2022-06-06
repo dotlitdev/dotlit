@@ -1,4 +1,4 @@
-const settings = {
+const _settings = {
     username: "dotlitdev",
     repository: "dotlit",
     branch: "main",
@@ -7,7 +7,8 @@ const settings = {
 
 const __key = "ghSettings";
 
-export const setupGithubAccess = async (token) => {
+export const setupGithubAccess = async (token, config) => {
+  const settings = config || _settings;
   if (typeof localStorage === "undefined") return "No localStorage available.";
   const display = fn => {
       const redacted = Object.assign({token:'••••••••••'}, settings, {})
