@@ -88,7 +88,7 @@ export const lit = {
     renderer,
     Repl,
     config: {
-
+        setupGithubAccess
     },
     fs, lfs, git,
     utils: {
