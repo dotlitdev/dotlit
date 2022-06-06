@@ -1,7 +1,7 @@
 import {u} from 'unist-builder'
 import {toHast} from 'mdast-util-to-hast'
 
-export function code(h, node) {
+export default function code(h, node) {
   // console.log("[HastCodeHander] start", node)
   // transcludeCode sets data.value
   node.value = node.data?.value || node.value
