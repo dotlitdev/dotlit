@@ -19,11 +19,6 @@ export const setupGithubAccess = async (token) => {
 
   const current = localStorage.getItem(__key);
 
-  if (current) {
-    let data = JSON.parse(current);
-    if (data && data.token) return "Already set up.\n\n" + display();
-  }
-
   token = token || prompt(
     `Enter a GitHub Access Token for:\n Repository: ${settings.username}/${settings.repository}`
   );
