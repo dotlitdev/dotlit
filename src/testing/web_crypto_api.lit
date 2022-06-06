@@ -178,6 +178,7 @@ Stored encrypted token in file /.github_token
 ```js !collapse #decrypt-token
 return (async fn =>{
   const file = "/.github_token"
+  let resp;
   const token = await lit.fs.readFile(file, 'utf-8')
   const passphrase = password.value
   if (!passphrase)
@@ -188,11 +189,11 @@ return (async fn =>{
       console.log('decrypting: ', token)
       secret = await decryptData(token, passphrase);
       if (!secret) throw new Error('Failed to decrypt')
-      lit.config.setupGithubAccess(secret)
+      resp = lit.config.setupGithubAccess(secret)
   } catch (err) {return "Failed to decrypt."}
 
   
-  return "Decrypted token in file " + file
+  return "Decrypted token in file " + file + '; ' + resp
 })()
 ```
 
