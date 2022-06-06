@@ -110,7 +110,7 @@ async function decryptData(encryptedData, password) {
   }
 }
 
-</code></pre><div class="scriptLoaded"></div></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">5m ago</span></span></span><output><pre><code class="txt">undefined
+</code></pre><div class="scriptLoaded"></div></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">6m ago</span></span></span><output><pre><code class="txt">undefined
 </code></pre></output></codecell></div></cell></section>
 <section id="demo" depth="2" class="" startpos="125:1-3299" endpos="142:4-3933"><cell startpos="125:1-3299" endpos="125:8-3306"><div class="cell-content"><h2>Demo</h2></div></cell><cell startpos="127:1-3308" endpos="142:4-3933" class="code"><div class="cell-content"><codecell class="dir-inline lang-html local"><span class="meta"><span class="lang">html</span><span style="color:black;background-color:#b96da2" class="directive dir-inline">inline</span></span><div><div>
       <p>Enter text to encrypt, click Encrypt, then enter a password when prompted.  A base64 representation of the encrypted data will be displayed.</p>
@@ -127,7 +127,7 @@ async function decryptData(encryptedData, password) {
     </div>
 
 </div></codecell></div></cell></section>
-<section id="encrypting-a-token" depth="2" class="" startpos="144:1-3935" endpos="201:4-5606"><cell startpos="144:1-3935" endpos="144:22-3956"><div class="cell-content"><h2>Encrypting a token</h2></div></cell><cell startpos="145:1-3957" endpos="150:4-4193" class="code"><div class="cell-content"><codecell class="dir-inline lang-html local"><span class="meta"><span class="lang">html</span><span style="color:black;background-color:#b96da2" class="directive dir-inline">inline</span></span><div><input id="access_token" type="password" placeholder="GitHub Personal Access Token"/>
+<section id="encrypting-a-token" depth="2" class="" startpos="144:1-3935" endpos="197:4-5416"><cell startpos="144:1-3935" endpos="144:22-3956"><div class="cell-content"><h2>Encrypting a token</h2></div></cell><cell startpos="145:1-3957" endpos="150:4-4193" class="code"><div class="cell-content"><codecell class="dir-inline lang-html local"><span class="meta"><span class="lang">html</span><span style="color:black;background-color:#b96da2" class="directive dir-inline">inline</span></span><div><input id="access_token" type="password" placeholder="GitHub Personal Access Token"/>
 <form action="#" method="post">
   <input type="password" name="password" id="password" value="" placeholder="passphrase"/>
 </form>
@@ -152,8 +152,8 @@ async function decryptData(encryptedData, password) {
 
   return &quot;Stored encrypted token in file &quot; + file
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">5m ago</span></span></span><output><pre><code class="txt">Stored encrypted token in file /.github_token
-</code></pre></output></codecell></div></cell><cell startpos="178:1-4862" endpos="201:4-5606" class="code"><div class="cell-content"><codecell class="dir-collapse tag-decrypt-token lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#63fa9b" class="tag">decrypt-token</span></span><pre><code class="js">return (async fn =&gt;{
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">6m ago</span></span></span><output><pre><code class="txt">Stored encrypted token in file /.github_token
+</code></pre></output></codecell></div></cell><cell startpos="178:1-4862" endpos="197:4-5416" class="code"><div class="cell-content"><codecell class="dir-collapse tag-decrypt-token lang-js local collapsed"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#63fa9b" class="tag">decrypt-token</span></span><pre><code class="js">return (async fn =&gt;{
   const file = &quot;/.github_token&quot;
   const token = await lit.fs.readFile(file, &#x27;utf-8&#x27;)
   const passphrase = password.value
@@ -165,12 +165,10 @@ async function decryptData(encryptedData, password) {
       console.log(&#x27;decrypting: &#x27;, token)
       secret = await decryptData(token, passphrase);
       if (!secret) throw new Error(&#x27;Failed to decrypt&#x27;)
-      alert(secret)
+      lit.config.setupGithubAccess(secret)
   } catch (err) {return &quot;Failed to decrypt.&quot;}
 
   
   return &quot;Decrypted token in file &quot; + file
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">56s ago</span></span></span><output><pre><code class="txt">decrypting: ,mSXrvbXMLlyZLerQle2yZUMJ1sfZ8AkwEzTK6BBV9Ku2fQ5QgohFpXBfbaa7+wQnybzEpIj4LZ9/cdHEIKNNXtHOehvin8XjYhxGuPvV0qKB809i
-Decrypted token in file /.github_token
-</code></pre></output></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="2021-07-21" href="/testing/log/2021-07-21.html">2021-07-21</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
+</code></pre></codecell></div></cell></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="2021-07-21" href="/testing/log/2021-07-21.html">2021-07-21</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
