@@ -38,6 +38,7 @@ const { inspect } = require('util')
 const diff = require('diff')
 const fns = require('../utils/functions')
 import { getConsoleForNamespace } from '../utils/console'
+import {setupGithubAccess} from '../utils/github'
 
 const console = getConsoleForNamespace('client')
 
@@ -86,6 +87,9 @@ export const lit = {
     parser,
     renderer,
     Repl,
+    config: {
+        setupGithubAccess,
+    },
     fs, lfs, git,
     utils: {
         transform,
