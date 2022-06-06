@@ -31,8 +31,7 @@ const copyFiles = async (fs, filepaths, input, output) => await Promise.all( fil
                     const dest = path.join(output, filepath)
                     await mkdirp(path.dirname(dest))
                     const stat = await fs.stat(src);
-                    await fs.copyFile(src, dest)
-                    // console.log(`copied ${src} to ${dest}`)
+                    await fs.copyFile(src, dest);
                     await fs.utimes(dest, stat.atime, stat.mtime)
                 }))
 
@@ -95,18 +94,18 @@ function generateBacklinks(files, root) {
         const canonical = path.join('/', file.path)
         if (!file) { console.error('Cannot get links for file.'); return;}
         try {
-        const fileLink = decorateLinkNode({ url: canonical }, '/', '', file_paths)
-        const title = file?.data?.frontmatter?.title || `Title TBD (${fileLink.data.canonical})`
-        console.log(`[${title}] Adding "${file.path}" as "${fileLink.data.canonical} to manifest."`)
-        const links = getLinks(file, root)
-        manifest[fileLink.data.canonical] = manifest[fileLink.data.canonical] || {
-            backlinks: [],
-            url: fileLink.url,
-            exists: true,
-            title: title,
-            links: links.length,
-            size: file.contents.toString().length,
-        }
+            const fileLink = decorateLinkNode({ url: canonical }, '/', '', file_paths)
+            const title = file?.data?.frontmatter?.title || `Title TBD (${fileLink.data.canonical})`
+            console.log(`[${title}] Adding "${file.path}" as "${fileLink.data.canonical} to manifest."`)
+            const links = getLinks(file, root)
+            manifest[fileLink.data.canonical] = manifest[fileLink.data.canonical] || {
+                backlinks: [],
+                url: fileLink.url,
+                exists: true,
+                title: title,
+                links: links.length,
+                size: file.contents.toString().length,
+            }
         } catch(err) {
             meta.failures[file.path] = meta.failures[file.path] || []
             meta.failures[file.path].push("genBackLinks1: " + err.message)
@@ -115,39 +114,39 @@ function generateBacklinks(files, root) {
     files.forEach( file => {
         if (!file) return
         try {
-        const canonical = path.join('/', file.path)
-        const fileLink = decorateLinkNode({ url: canonical }, '/', '', file_paths)
-        const title = file?.data?.frontmatter?.title || path.basename(file.path, path.extname(file.path))
-        console.log(`About to get links for file: ${title} (${file.path})`)
-        
-        const links = getLinks(file, root)
-        // console.log('fileLink', fileLink)
-        console.log(`[${title}] ${fileLink.data.canonical} links: (${links.length})`)
-        links.forEach( (link, i) => {
-            // console.log(link)
-            // console.log(`[Backlinks] ${link.type} >> ${link.url} >> ${link.data.canonical} relative: ${link.data.isRelative}`)
-            const linkNode = {
-                id: fileLink.data.canonical,
-                url: fileLink.url,
-                title: title,
-            }
-            if (link.data.isRelative || link.data.isAbsolute || link.data.isCode) {
-                if (manifest[link.data.canonical] && manifest[link.data.canonical].backlinks) {
-                    console.log(`[${title}][${i}] Adding link ${fileLink.data.canonical} to existing "${link.data.canonical}"`)
-                    manifest[link.data.canonical].backlinks.push(linkNode)
-                } else {
-                    console.log(`[${title}][${i}] Adding link ${fileLink.data.canonical} to "${link.data.canonical}"`)
-                    manifest[link.data.canonical] = {
-                        backlinks: [linkNode], 
-                        url: link.url,
-                        exists: link.exists || false,
-                        type: link.type
-                    }
+            const canonical = path.join('/', file.path)
+            const fileLink = decorateLinkNode({ url: canonical }, '/', '', file_paths)
+            const title = file?.data?.frontmatter?.title || path.basename(file.path, path.extname(file.path))
+            console.log(`About to get links for file: ${title} (${file.path})`)
+            
+            const links = getLinks(file, root)
+            // console.log('fileLink', fileLink)
+            console.log(`[${title}] ${fileLink.data.canonical} links: (${links.length})`)
+            links.forEach( (link, i) => {
+                // console.log(link)
+                // console.log(`[Backlinks] ${link.type} >> ${link.url} >> ${link.data.canonical} relative: ${link.data.isRelative}`)
+                const linkNode = {
+                    id: fileLink.data.canonical,
+                    url: fileLink.url,
+                    title: title,
                 }
-            } else {
-                console.log(`[${title}][${i}] Other:`, link.data.canonical)
-            }
-        })
+                if (link.data.isRelative || link.data.isAbsolute || link.data.isCode) {
+                    if (manifest[link.data.canonical] && manifest[link.data.canonical].backlinks) {
+                        console.log(`[${title}][${i}] Adding link ${fileLink.data.canonical} to existing "${link.data.canonical}"`)
+                        manifest[link.data.canonical].backlinks.push(linkNode)
+                    } else {
+                        console.log(`[${title}][${i}] Adding link ${fileLink.data.canonical} to "${link.data.canonical}"`)
+                        manifest[link.data.canonical] = {
+                            backlinks: [linkNode], 
+                            url: link.url,
+                            exists: link.exists || false,
+                            type: link.type
+                        }
+                    }
+                } else {
+                    console.log(`[${title}][${i}] Other:`, link.data.canonical)
+                }
+            })
         } catch(err) {
             meta.failures[file.path] = meta.failures[file.path] || []
             meta.failures[file.path].push("genBackLinks2: " + err.message)
@@ -163,8 +162,8 @@ function generateBacklinks(files, root) {
 }
 
 export function generate(cmd) {
-    const globAll = `**/*.*`
-    const ignore = cmd.ignore || '+(**/node_modules/*)'
+    const globAll = `**/*`
+    const ignore = cmd.ignore || '+(**/node_modules/*|**/.git/*)'
     const matchRegex = /\.(lit|md)(\.(md|lit))?$/
 
     console.log(`Generating from path: ${cmd.path} (${globAll})`)
@@ -175,7 +174,7 @@ export function generate(cmd) {
     function processFilesystem(done) {
         console.time('generate')
 
-        glob(globAll, {cwd: `${cmd.path}/`, ignore}, async (err, matches) => {
+        glob(globAll, {cwd: `${cmd.path}/`, ignore, dot: true}, async (err, matches) => {
             if (err) error(err)
             else {
                 const litFiles = matches.filter( (f) => f.match(matchRegex))
@@ -186,131 +185,129 @@ export function generate(cmd) {
 
                 try {
 
-                const copied = await copyFiles(fs, nonLitFiles, cmd.path, cmd.output)
-                console.log(`Copied ${copied.length} file(s) from source.`)
+                    const copied = await copyFiles(fs, nonLitFiles, cmd.path, cmd.output)
+                    console.log(`Copied ${copied.length} file(s) from source.`)
 
-          
-                console.log(`Detected ${litFiles.length} .lit file(s) ${matches.length} total.`)
-                const failures = {}
+            
+                    console.log(`Detected ${litFiles.length} .lit file(s) ${matches.length} total.`)
+                    const failures = {}
 
-                const src_files = await Promise.all(litFiles.map( async filepath => {
-                    try {
-                    const source = await vfile.read({
-                        path: filepath,
-                        cwd: cmd.path
-                    })
-                    source.data = {canonical: path.join('/', source.path)}
-                    return source
-                    } catch(err) {
-                        failures[filepath] = failures[filepath] || []
-                        failures[filepath].push("Failed read source due to: " + err.message)
-                    }
-                }))
-
-                let ast_files_prelinks = await Promise.all(src_files.map( async file => {
-                    let wroteSource;
-                    try {
-                       
-                        await fs.writeFile(file.path, file.contents)
-                        wroteSource = true
-                        return await renderProcessor({fs, cwd: cmd.path, files: matches.map(x=>'/'+x)}).process(file)
-                      
-                    } catch (err) {
-                        console.error(err)
-                        failures[file.path] = failures[file.path] || []
-                        if (wroteSource) failures[file.path].push("Failed to Process to AST (prelinks) due to: " + err.toString())
-                        else failures[file.path].push("Failed to write source file due to: " + err.toString())
-                        console.error(`Failed to process ${file.path}`, err)
-                    }
-                }))
-
-                const [ast_files, manifest, meta] = generateBacklinks(ast_files_prelinks, cmd.output)
-
-                const html_files = await Promise.all(ast_files.map( async file => {
-                    try {
-                        if(file?.data?.frontmatter?.private) {
-                            file.contents = `# 🔐 Private File
-
-<!-- data
-private: true
--->
-
-The contents of this file are private. Only visible by the author.
-
-`
-                           file = await renderProcessor({fs, cwd: cmd.path, files: matches.map(x=>'/'+x)}).process(file)
-
+                    const src_files = await Promise.all(litFiles.map( async filepath => {
+                        try {
+                            const source = await vfile.read({
+                                path: filepath,
+                                cwd: cmd.path
+                            })
+                            source.data = {canonical: path.join('/', source.path)}
+                            return source
+                        } catch(err) {
+                            failures[filepath] = failures[filepath] || []
+                            failures[filepath].push("Failed read source due to: " + err.message)
                         }
-                        // await mkdirp(path.join(cmd.output,path.dirname(file.path)))
-                        // await fs.writeFile(file.path, file.contents)
-                        // await fs.writeFile(file.path + '.json', JSON.stringify(file.data.ast, null, 4))
-                        const html_file = await renderedVFileToDoc(await file, cmd)
-                        await fs.writeFile(file.path, file.contents)
-                        console.log(`Wrote ${file.path} to "${path.join(cmd.output, file.path)}" to disk`)
+                    }))
 
-                        for (const codefile of html_file.data.files) {
-                            
-                            const filename = codefile?.data?.meta?.filename
-                            try {
-                            const hasValue = !!codefile.value
-                            if (filename && hasValue) {
-                                const filepath = path.join(path.dirname(file.path), filename)
-                                console.log("Writing codefile to path: ", filepath, hasValue)
-                                await fs.writeFile(filepath, codefile.value)
-                                console.log(`Wrote codefile ${filename} to "${filepath}" on disk`)
-                            }
-                            } catch(err) {
-                                failures[file.path] = failures[file.path] || []
-                                failures[file.path].push(`Failed to extract codefile ${filename} due to: ` + err.message)
-                            }
+                    let ast_files_prelinks = await Promise.all(src_files.map( async file => {
+                        let wroteSource;
+                        try {
+                        
+                            await fs.writeFile(file.path, file.contents)
+                            wroteSource = true
+                            return await renderProcessor({fs, cwd: cmd.path, files: matches.map(x=>'/'+x)}).process(file)
+                        
+                        } catch (err) {
+                            console.error(err)
+                            failures[file.path] = failures[file.path] || []
+                            if (wroteSource) failures[file.path].push("Failed to Process to AST (prelinks) due to: " + err.toString())
+                            else failures[file.path].push("Failed to write source file due to: " + err.toString())
+                            console.error(`Failed to process ${file.path}`, err)
                         }
-                        return html_file;
-                    } catch (err) {
-                        failures[file.path] = failures[file.path] || []
-                        failures[file.path].push("Failed to Render to file due to: " + err.message)
+                    }))
 
-                        console.error(`Failed to process ${file.path}`, err) 
-                        file.contents = `# ⚠️ Failed to process file
-File: ${file.path}
-    ${err.toString()}
-`
-                        file = await renderProcessor({fs, cwd: cmd.path}).process(file)
-                        // await mkdirp(path.join(cmd.output,path.dirname(file.path)))
-                        // await fs.writeFile(file.path, file.contents)
-                        // await fs.writeFile(file.path + '.json', JSON.stringify(file.data.ast, null, 4))
-                        const html_file = await renderedVFileToDoc(await file, cmd)
-                        await fs.writeFile(file.path, file.contents)
-                        console.log(`Wrote  ${file.path} to "${path.join(cmd.output, file.path)}" to disk`)
-                        return false
-                    }
-                }))
+                    const [ast_files, manifest, meta] = generateBacklinks(ast_files_prelinks, cmd.output)
 
-                const graph = {meta, nodes: [], links: []}
-                Object.keys(manifest).forEach( key => {
-                    const node = manifest[key]
-                    graph.nodes.push({ id: key, ...node})
-                    node.backlinks.forEach( link => {
-                       graph.links.push({source: link.id, target: key})
+                    const html_files = await Promise.all(ast_files.map( async file => {
+                        try {
+                            if(file?.data?.frontmatter?.private) {
+                                file.contents = `# 🔐 Private File
+
+    <!-- data
+    private: true
+    -->
+
+    The contents of this file are private. Only visible by the author.
+
+    `
+                                file = await renderProcessor({fs, cwd: cmd.path, files: matches.map(x=>'/'+x)}).process(file)
+                            }
+                            // await mkdirp(path.join(cmd.output,path.dirname(file.path)))
+                            // await fs.writeFile(file.path, file.contents)
+                            // await fs.writeFile(file.path + '.json', JSON.stringify(file.data.ast, null, 4))
+                            const html_file = await renderedVFileToDoc(await file, cmd)
+                            await fs.writeFile(file.path, file.contents)
+                            console.log(`Wrote ${file.path} to "${path.join(cmd.output, file.path)}" to disk`)
+
+                            for (const codefile of html_file.data.files) {
+                                const filename = codefile?.data?.meta?.filename
+                                try {
+                                    const hasValue = !!codefile.value
+                                    if (filename && hasValue) {
+                                        const filepath = path.join(path.dirname(file.path), filename)
+                                        console.log("Writing codefile to path: ", filepath, hasValue)
+                                        await fs.writeFile(filepath, codefile.value)
+                                        console.log(`Wrote codefile ${filename} to "${filepath}" on disk`)
+                                    }
+                                } catch(err) {
+                                    failures[file.path] = failures[file.path] || []
+                                    failures[file.path].push(`Failed to extract codefile ${filename} due to: ` + err.message)
+                                }
+                            }
+                            return html_file;
+                        } catch (err) {
+                            failures[file.path] = failures[file.path] || []
+                            failures[file.path].push("Failed to Render to file due to: " + err.message)
+
+                            console.error(`Failed to process ${file.path}`, err) 
+                            file.contents = `# ⚠️ Failed to process file
+    File: ${file.path}
+        ${err.toString()}
+    `
+                            file = await renderProcessor({fs, cwd: cmd.path}).process(file)
+                            // await mkdirp(path.join(cmd.output,path.dirname(file.path)))
+                            // await fs.writeFile(file.path, file.contents)
+                            // await fs.writeFile(file.path + '.json', JSON.stringify(file.data.ast, null, 4))
+                            const html_file = await renderedVFileToDoc(await file, cmd)
+                            await fs.writeFile(file.path, file.contents)
+                            console.log(`Wrote  ${file.path} to "${path.join(cmd.output, file.path)}" to disk`)
+                            return false
+                        }
+                    }))
+
+                    const graph = {meta, nodes: [], links: []}
+                    Object.keys(manifest).forEach( key => {
+                        const node = manifest[key]
+                        graph.nodes.push({ id: key, ...node})
+                        node.backlinks.forEach( link => {
+                        graph.links.push({source: link.id, target: key})
+                        })
                     })
-                })
-                
-                await fs.writeFile('manifest.json', JSON.stringify(graph, null, 4))
-                meta.failures2 = failures 
-                meta.litFiles = litFiles.length
-                meta.nonLitFiles = nonLitFiles.length
-                meta.wroteHtml = html_files.filter(Identity).length
-                await fs.writeFile('meta.json', JSON.stringify(meta, null, 4))
-                console.log(`Wrote ${html_files.filter(Identity).length}/${html_files.length} .lit file(s) to disk`)
+                    
+                    await fs.writeFile('manifest.json', JSON.stringify(graph, null, 4))
+                    meta.failures2 = failures 
+                    meta.litFiles = litFiles.length
+                    meta.nonLitFiles = nonLitFiles.length
+                    meta.wroteHtml = html_files.filter(Identity).length
+                    await fs.writeFile('meta.json', JSON.stringify(meta, null, 4))
+                    console.log(`Wrote ${html_files.filter(Identity).length}/${html_files.length} .lit file(s) to disk`)
 
-                if (global.litenv) {
-                    await fs.copyFile( path.join(__dirname,'./web.bundle.js'), path.join(cmd.output, 'web.bundle.js'))
-                    await fs.copyFile( path.join(__dirname,'./style.css'), path.join(cmd.output, 'style.css'))
-                } else {
-                    await fs.copyFile( path.join(__dirname,'../../dist/web.bundle.js'), path.join(cmd.output, 'web.bundle.js'))
-                    await fs.copyFile( path.join(__dirname,'../../dist/web.bundle.js.map'), path.join(cmd.output, 'web.bundle.js.map'))
-                    await fs.copyFile( path.join(__dirname,'../../dist/style.css'), path.join(cmd.output, 'style.css'))
-                }
-                console.timeEnd('generate')
+                    if (global.litenv) {
+                        await fs.copyFile( path.join(__dirname,'./web.bundle.js'), path.join(cmd.output, 'web.bundle.js'))
+                        await fs.copyFile( path.join(__dirname,'./style.css'), path.join(cmd.output, 'style.css'))
+                    } else {
+                        await fs.copyFile( path.join(__dirname,'../../dist/web.bundle.js'), path.join(cmd.output, 'web.bundle.js'))
+                        await fs.copyFile( path.join(__dirname,'../../dist/web.bundle.js.map'), path.join(cmd.output, 'web.bundle.js.map'))
+                        await fs.copyFile( path.join(__dirname,'../../dist/style.css'), path.join(cmd.output, 'style.css'))
+                    }
+                    console.timeEnd('generate')
 
                } catch(err) {
                   console.error(err)
