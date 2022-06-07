@@ -22,7 +22,7 @@ export default class Editor extends React.Component {
         const {src, update, links = [{src: 'testing/links', title: 'Testing Link autocompletions'}]} = props;
         this.editorRef = React.createRef();
 
-        const linkOptions = links.map( l => ({label: link.src, type: 'link', detail: link.title, info: 'Additional info'}))
+        const linkOptions = links.map( l => ({label: l.src, type: 'link', detail: l.title, info: 'Additional info'}))
 
         this.editorState = window.cms = EditorState.create({
             doc: props.src, 
