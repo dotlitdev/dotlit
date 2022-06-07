@@ -115,10 +115,10 @@ export const decorateLinkNode = (link, root = "", filepath = "", files = []) => 
   link.type = "link";
   link.url = href;
   
-  const potentialTitle = link.title || link.value
-  if (potentialTitle) {
-    const valueAndTitle = potentialTitle.split('|') 
-    link.title = valueAndTitle[1] || valueAndTitle[1]
+  const tempTitle = link.title || link.value;
+  if (tempTitle) {
+    const valueAndTitle = tempTitle.split("|")
+    link.title = valueAndTitle[1] || valueAndTitle[0]
     link.value = valueAndTitle[0]
   }
 
