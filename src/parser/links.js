@@ -142,7 +142,7 @@ export const decorateLinkNode = (link, root = "", filepath = "", files = []) => 
   };
 
   delete link.value;
-  console.log(`[${filepath}] resolving (${link.type}) [${canonical}] exists: ${exists}`, link.url)
+  console.log(`[${filepath}] resolving (${link.type}) [${canonical}] exists: ${exists}`, link.url, link)
 
   return link;
 };
