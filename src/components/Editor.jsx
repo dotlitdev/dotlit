@@ -19,15 +19,19 @@ const lineWrapping = new Compartment
 export default class Editor extends React.Component {
     constructor(props) {
         super(props)
-        const {src, update, links = [{src: '[[testing/links]]', title: 'Testing Link autocompletions'}]} = props;
+        const {src, update} = props;
         this.editorRef = React.createRef();
 
-        const linkOptions = links.map( l => ({
-            label: l.src, 
-            type: 'link', 
-            detail: l.title, 
-            info: 'Additional info', 
-            apply: l.src.slice(0,-2)}))
+        const linkOptions = lit.manifest.nodes.filter(n=>(n.exists && (n.id.endsWith('.lit') || n.id.endsWith('.md')))).map( n => {
+            const id = n.id.slice(1).replace(/\.lit|\.md$/, '')
+            return {
+                label: '[[' + id + ']]' , 
+                type: 'link', 
+                detail: n.title, 
+                info: 'Additional info', 
+                apply: '[[' + id
+            }
+        })
 
         this.editorState = window.cms = EditorState.create({
             doc: props.src, 
