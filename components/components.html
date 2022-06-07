@@ -808,6 +808,7 @@ export default CellMenu
 <section id="editor" depth="2" class="" startpos="44:1-407" endpos="48:4-452"><div startpos="44:1-407" endpos="44:10-416" class="cell"><div class="cell-content"><h2>Editor</h2></div></div><div startpos="46:1-418" endpos="48:4-452" class="code   cell"><div class="cell-content"><div class="dir-collapse lang-jsx local collapsed codecell"><span class="meta"><span class="lang">jsx</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; Editor.jsx</span></span><pre><code class="jsx">import React from &#x27;react&#x27;
 import {EditorState, EditorView, basicSetup} from &quot;@codemirror/basic-setup&quot;
 import {Compartment} from &#x27;@codemirror/state&#x27;
+import {CompletionContext} from &quot;@codemirror/autocomplete&quot;
 
 // import {html} from &quot;@codemirror/lang-html&quot;
 // import {oneDark} from &quot;@codemirror/theme-one-dark&quot;
@@ -822,6 +823,21 @@ import {Compartment} from &#x27;@codemirror/state&#x27;
 
 const lineWrapping = new Compartment
 
+
+function myCompletions(context) {
+    let word = context.matchBefore(/\w*/)
+    if (word.from == word.to &amp;&amp; !context.explicit)
+      return null
+    return {
+      from: word.from,
+      options: [
+        {label: &quot;match&quot;, type: &quot;keyword&quot;},
+        {label: &quot;hello&quot;, type: &quot;variable&quot;, info: &quot;(World)&quot;},
+        {label: &quot;magic&quot;, type: &quot;text&quot;, apply: &quot;⠁⭒*.✩.*⭒⠁&quot;, detail: &quot;macro&quot;}
+      ]
+    }
+  }
+
 export default class Editor extends React.Component {
     constructor(props) {
         super(props)
@@ -831,7 +847,8 @@ export default class Editor extends React.Component {
             extensions: [
                 basicSetup,
                 EditorView.lineWrapping,
-                EditorView.updateListener.of(this.onUpdate.bind(this))
+                EditorView.updateListener.of(this.onUpdate.bind(this)),
+                autocompletion({override: [myCompletions]}),
             //   html(),
             //   oneDark
             //  linter(esLint(new Linter)),
