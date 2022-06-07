@@ -6,7 +6,6 @@ const sortBy = (keys) => (a, b) => {
   }
 };
 
-
 const itemBuilder = (React) => (item) => {
   const rc = React.createElement;
   return rc(
