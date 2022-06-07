@@ -223,13 +223,19 @@ export const init = async () =&gt; {
 
     // time(&#x27;client&#x27;, &#x27;settingsLoaded&#x27;)
 
-    window.lit.manifest = await fetch(lit.location.base + &#x27;compactManifest.json&#x27;)
+    window.lit.files = await fetch(lit.location.base + &#x27;compactManifest.json&#x27;)
                           .catch(err=&gt;([]))
                           .then(res =&gt; res.json().then( data =&gt; {
                               return Array.from(lit.utils.compactPrefixTree.getWordsFromTrie(data)).map(x=&gt;&#x27;/&#x27;+x)
                           }))
+
+    window.lit.manifest = await fetch(lit.location.base + &#x27;manifest.json&#x27;)
+                            .catch(err=&gt;({}))
+                            .then(res =&gt; res.json().then( data =&gt; {
+                                return data;
+                            }))
     time(&#x27;client&#x27;, &#x27;manifestLoaded&#x27;)
-    const processedFile = await renderer.processor({fs,litroot, files: lit.manifest}).process(file)
+    const processedFile = await renderer.processor({fs,litroot, files: lit.files}).process(file)
     if (stats) {
         const remoteNewer = stats.local.stat.mtimeMs &lt; stats.remote.stat.mtimeMs
         const hasDiff = stats.local.value !== stats.remote.value
@@ -250,7 +256,7 @@ export const init = async () =&gt; {
             fs={lit.fs}
             file={processedFile}
             result={processedFile.result}
-            files={lit.manifest}
+            files={lit.files}
         /&gt;
     } catch(err) {
         console.error(&quot;Error instantiating App&quot;, err)

@@ -208,13 +208,19 @@ export const init = async () => {
 
     // time('client', 'settingsLoaded')
 
-    window.lit.manifest = await fetch(lit.location.base + 'compactManifest.json')
+    window.lit.files = await fetch(lit.location.base + 'compactManifest.json')
                           .catch(err=>([]))
                           .then(res => res.json().then( data => {
                               return Array.from(lit.utils.compactPrefixTree.getWordsFromTrie(data)).map(x=>'/'+x)
                           }))
+
+    window.lit.manifest = await fetch(lit.location.base + 'manifest.json')
+                            .catch(err=>({}))
+                            .then(res => res.json().then( data => {
+                                return data;
+                            }))
     time('client', 'manifestLoaded')
-    const processedFile = await renderer.processor({fs,litroot, files: lit.manifest}).process(file)
+    const processedFile = await renderer.processor({fs,litroot, files: lit.files}).process(file)
     if (stats) {
         const remoteNewer = stats.local.stat.mtimeMs < stats.remote.stat.mtimeMs
         const hasDiff = stats.local.value !== stats.remote.value
@@ -235,7 +241,7 @@ export const init = async () => {
             fs={lit.fs}
             file={processedFile}
             result={processedFile.result}
-            files={lit.manifest}
+            files={lit.files}
         />
     } catch(err) {
         console.error("Error instantiating App", err)
