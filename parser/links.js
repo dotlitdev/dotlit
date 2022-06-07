@@ -115,9 +115,12 @@ export const decorateLinkNode = (link, root = "", filepath = "", files = []) => 
   link.type = "link";
   link.url = href;
   
-  const [value, title] = (link.title || link.value)?.split('|');
-  link.title = title || value || link.value
-  link.value = value || link.value
+  const potentialTitle = link.title || link.value
+  if (potentialTitle) {
+    const valueAndTitle = potentialTitle.split('|') 
+    link.title = valueAndTitle[1] || valueAndTitle[1]
+    link.value = valueAndTitle[0]
+  }
 
   const exists = files.indexOf(canonical) >= 0
 
