@@ -1,7 +1,7 @@
 import React from 'react'
 import {EditorState, EditorView, basicSetup} from "@codemirror/basic-setup"
 import {Compartment} from '@codemirror/state'
-import {CompletionContext} from "@codemirror/autocomplete"
+import {autocompletion} from "@codemirror/autocomplete"
 
 // import {html} from "@codemirror/lang-html"
 // import {oneDark} from "@codemirror/theme-one-dark"
@@ -29,7 +29,12 @@ function myCompletions(context) {
         {label: "magic", type: "text", apply: "⠁⭒*.✩.*⭒⠁", detail: "macro"}
       ]
     }
-  }
+}
+
+const autocompleteSetup = autocompletion({
+    override: [myCompletions],
+    activateOnTyping: true,
+})
 
 export default class Editor extends React.Component {
     constructor(props) {
@@ -41,7 +46,7 @@ export default class Editor extends React.Component {
                 basicSetup,
                 EditorView.lineWrapping,
                 EditorView.updateListener.of(this.onUpdate.bind(this)),
-                autocompletion({override: [myCompletions]}),
+                autocompleteSetup,
             //   html(),
             //   oneDark
             //  linter(esLint(new Linter)),
