@@ -16,21 +16,6 @@ import {autocompletion} from "@codemirror/autocomplete"
 
 const lineWrapping = new Compartment
 
-
-function myCompletions(context) {
-    let word = context.matchBefore(/\w*/)
-    if (word.from == word.to && !context.explicit)
-      return null
-    return {
-      from: word.from,
-      options: [
-        {label: "match", type: "keyword"},
-        {label: "hello", type: "variable", info: "(World)"},
-        {label: "magic", type: "text", apply: "⠁⭒*.✩.*⭒⠁", detail: "macro"}
-      ]
-    }
-}
-
 export default class Editor extends React.Component {
     constructor(props) {
         super(props)
@@ -41,10 +26,21 @@ export default class Editor extends React.Component {
                 basicSetup,
                 EditorView.lineWrapping,
                 EditorView.updateListener.of(this.onUpdate.bind(this)),
-                // autocompletion({
-                //     override: [myCompletions],
-                //     activateOnTyping: true,
-                // }),
+                autocompletion({
+                    override: [function (context) {
+                        let word = context.matchBefore(/\w*/)
+                        if (word.from == word.to && !context.explicit) return null
+                        return {
+                            from: word.from,
+                            options: [
+                                {label: "match", type: "keyword"},
+                                {label: "hello", type: "variable", info: "(World)"},
+                                {label: "magic", type: "text", apply: "⠁⭒*.✩.*⭒⠁", detail: "macro"}
+                            ]
+                        }
+                    }],
+                    activateOnTyping: true,
+                }),
                 //   html(),
                 //   oneDark
                 //  linter(esLint(new Linter)),
