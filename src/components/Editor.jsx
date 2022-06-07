@@ -1,6 +1,7 @@
 import React from 'react'
 import {EditorState, EditorView, basicSetup} from "@codemirror/basic-setup"
 import {Compartment} from '@codemirror/state'
+import {CompletionContext} from "@codemirror/autocomplete"
 
 // import {html} from "@codemirror/lang-html"
 // import {oneDark} from "@codemirror/theme-one-dark"
@@ -15,6 +16,21 @@ import {Compartment} from '@codemirror/state'
 
 const lineWrapping = new Compartment
 
+
+function myCompletions(context) {
+    let word = context.matchBefore(/\w*/)
+    if (word.from == word.to && !context.explicit)
+      return null
+    return {
+      from: word.from,
+      options: [
+        {label: "match", type: "keyword"},
+        {label: "hello", type: "variable", info: "(World)"},
+        {label: "magic", type: "text", apply: "⠁⭒*.✩.*⭒⠁", detail: "macro"}
+      ]
+    }
+  }
+
 export default class Editor extends React.Component {
     constructor(props) {
         super(props)
@@ -24,7 +40,8 @@ export default class Editor extends React.Component {
             extensions: [
                 basicSetup,
                 EditorView.lineWrapping,
-                EditorView.updateListener.of(this.onUpdate.bind(this))
+                EditorView.updateListener.of(this.onUpdate.bind(this)),
+                autocompletion({override: [myCompletions]}),
             //   html(),
             //   oneDark
             //  linter(esLint(new Linter)),
