@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import { MenuIcon, EditIcon, ExecIcon, CloseIcon, SaveIcon, TrashIcon } from './Icons'
+import { MenuIcon, EditIcon, ExecIcon, CloseIcon, SaveIcon, TrashIcon, CancelUndoIcon } from './Icons'
 import { getConsoleForNamespace } from '../utils/console'
 
 const console = getConsoleForNamespace('CellMenu')
