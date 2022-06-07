@@ -583,8 +583,9 @@ export const viewer = ({ node, React }) => {
   const item = itemBuilder(React);
 
   useEffect(async () => {
+    if (!src) return;
     const resp = await fetch("/manifest.json");
-    const json = await resp.json()
+    const json = lit.manifest;
     let regex;
     try {
       regex = new RegExp(src, "i");
