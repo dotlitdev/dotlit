@@ -454,76 +454,8 @@ export const viewer = ({ node, React }) =&gt; {
 	* another first level node
 @endmindmap
 </code></pre></div><div class="lang-img local codecell output"><a name="testing/repl-output.svg"></a><span class="meta"><span class="lang">img</span><span class="filename">testing/repl-output.svg</span><span class="updatedAt">Updated <span class="Time relative">53.4w ago</span></span></span><img src="testing/repl-output.svg"/></div></div></div><div startpos="548:1-16510" endpos="552:46-16692" class="cell"><div class="cell-content"><p>Urgh, CORS...</p><p>So to bypass CORS we need a proxy, see <a class="exists local" href="testing/runkit.html" title="testing/runkit" wikilink="true" filepath="/config.lit" root="" data="[object Object]" canonical="/testing/runkit.lit">testing/runkit</a> for an example nodejs repl, which could achieve this proxying.</p><p>Fixed see <a class="exists local" href="testing/cors_proxy.html" title="testing/Cors Proxy" wikilink="true" filepath="/config.lit" root="" data="[object Object]" canonical="/testing/cors_proxy.lit">testing/Cors Proxy</a> for example.</p></div></div></section>
-<section id="search" depth="3" class="" startpos="554:1-16694" endpos="625:4-18378"><div startpos="554:1-16694" endpos="554:11-16704" class="cell"><div class="cell-content"><h3>Search</h3></div></div><div startpos="556:1-16706" endpos="625:4-18378" class="code   cell"><div class="cell-content"><div class="dir-plugin dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=search</span><span class="source">&lt; ./plugins/viewers/searchmanifest.js</span></span><pre><code class="js">
-const sortBy = (keys) =&gt; (a, b) =&gt; {
-  for (const key of keys) {
-    if (a[key] !== b[key]) break;
-    else return a[key] &gt; b[key] ? 1 : -1;
-  }
-};
-
-const itemBuilder = (React) =&gt; (item) =&gt; {
-  const rc = React.createElement;
-  return rc(
-    &quot;li&quot;,
-    { className: &quot;item&quot; },
-    rc(
-      &quot;a&quot;,
-      { href: lit.href || lit.location.root + item.id },
-      item.title || item.id
-    )
-  );
-};
-
-export const viewer = ({ node, React }) =&gt; {
-  const rc = React.createElement;
-  const { useState, useEffect } = React;
-  const meta = node.properties &amp;&amp; node.properties.meta;
-  const [src, setSrc] = useState(meta.search || node.data.value.trim());
-  const [content, setContent] = useState(&quot;Loading...&quot;);
-  const item = itemBuilder(React);
-
-  useEffect(async () =&gt; {
-    const resp = await fetch(&quot;/manifest.json&quot;);
-    const json = await resp.json();
-    let regex;
-    try {
-      regex = new RegExp(src, &quot;i&quot;);
-    } catch (err) {}
-    const res = json.nodes
-      .map((x) =&gt; x)
-      .filter((x) =&gt; {
-        return (
-          x.id.indexOf(src) &gt;= 0 ||
-          (regex &amp;&amp; regex.test(x.id)) ||
-          (x.title &amp;&amp;
-            (x.title.indexOf(src) &gt;= 0 || (regex &amp;&amp; regex.test(x.title))))
-        );
-      })
-      .sort()
-      .map((x) =&gt; item(x));
-    //.join(&quot;\n&quot;)
-    setContent(rc(&quot;ol&quot;, null, res));
-  }, [src]);
-
-  return rc(
-    &quot;div&quot;,
-    {
-      className: &quot;custom-react-view&quot;,
-    },
-    [
-      rc(&quot;input&quot;, {
-        style: { width: &quot;100%&quot;, fontSize: &quot;1.2em&quot; },
-        value: src,
-        onChange: (e) =&gt; setSrc(e.target.value),
-      }),
-      content,
-    ]
-  );
-};
-
-</code></pre></div></div></div></section>
-<section id="miscellaneous" depth="3" class="" startpos="629:1-18382" endpos="684:4-19768"><div startpos="629:1-18382" endpos="629:18-18399" class="cell"><div class="cell-content"><h3>Miscellaneous</h3></div></div><div startpos="631:1-18401" endpos="684:4-19768" class="code   cell"><div class="cell-content"><div class="dir-xplugin dir-collapse lang-js local collapsed codecell"><a name="diff"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#913335" class="directive dir-xplugin">xplugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=filemenu</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=diff</span><span class="source">&lt; plugins/modal/diff.js</span></span><pre><code class="js">import diff from &quot;https://cdn.skypack.dev/react-diff-viewer&quot;;
+<section id="search" depth="3" class="" startpos="554:1-16694" endpos="555:5-16709"><div startpos="554:1-16694" endpos="555:5-16709" class="cell"><div class="cell-content"><h3>Search</h3><p>null</p></div></div></section>
+<section id="miscellaneous" depth="3" class="" startpos="561:1-16715" endpos="616:4-18101"><div startpos="561:1-16715" endpos="561:18-16732" class="cell"><div class="cell-content"><h3>Miscellaneous</h3></div></div><div startpos="563:1-16734" endpos="616:4-18101" class="code   cell"><div class="cell-content"><div class="dir-xplugin dir-collapse lang-js local collapsed codecell"><a name="diff"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#913335" class="directive dir-xplugin">xplugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=filemenu</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=diff</span><span class="source">&lt; plugins/modal/diff.js</span></span><pre><code class="js">import diff from &quot;https://cdn.skypack.dev/react-diff-viewer&quot;;
 
 export const filemenu = (ctx, { React, Menu, toggleModal }) =&gt; {
   const rc = React.createElement;
