@@ -27,9 +27,8 @@ export default class Editor extends React.Component {
             return {
                 label: '[[' + id + ']]' , 
                 type: 'link', 
-                detail: n.title, 
-                info: 'Additional info', 
-                apply: '[[' + id
+                detail: n.title,
+                apply: '[[' + id + '|' + n.title
             }
         })
 
