@@ -19,7 +19,7 @@ const lineWrapping = new Compartment
 export default class Editor extends React.Component {
     constructor(props) {
         super(props)
-        const {src, update, links = [{src: 'testing/links', title: 'Testing Link autocompletions'}]} = props;
+        const {src, update, links = [{src: '[[testing/links]]', title: 'Testing Link autocompletions'}]} = props;
         this.editorRef = React.createRef();
 
         const linkOptions = links.map( l => ({label: l.src, type: 'link', detail: l.title, info: 'Additional info'}))
@@ -32,10 +32,10 @@ export default class Editor extends React.Component {
                 EditorView.updateListener.of(this.onUpdate.bind(this)),
                 autocompletion({
                     override: [function (context) {
-                        let word = context.matchBefore(/\w*|\S+/)
+                        let word = context.matchBefore(/\S*/)
                         console.log(word, context)
                         if(word.from == word.to && !context.explicit) return null
-                        if (word.text === '[[') {
+                        if (word.text.startsWith('[[')) {
                             return {
                                 from: word.from,
                                 options: [
