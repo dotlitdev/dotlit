@@ -157,10 +157,11 @@ const Cell = props => {
         isCodeCell ? 'code' : '',
         output ? 'output' : '',
         executing ? 'executing' :'',
+        'cell'
     ].join(' ').trim() || undefined
 
     const editCell = (src) => isCodeCell 
-        ? <div class="codeCellEditor">
+        ? <div className="codeCellEditor">
               <Editor src={meta.raw} update={()=>{}}/> 
               <Editor src={src} update={setSrc}/> 
           </div>
@@ -168,16 +169,15 @@ const Cell = props => {
 
     return <SelectionContext.Consumer>
         { ctx => {
-            // console.log("[Cell] code: ", !!isCodeCell, meta && meta.raw )//, codeNode, {src: codeSource, orig: originalSource}, ctx ) // meta, codeSource)
             const src = rawSource || source(pos, ctx.src)
-            return <cell
+            return <div
                 onClick={toggleSelected(ctx)}
                 startpos={posstr(pos.start)}
                 endpos={posstr(pos.end)}
                 className={getClasses(ctx)}>
                     { editing ? editCell(src) : <div className="cell-content">{content || props.children}</div> }
                     { isSelected(ctx) && <CellMenu meta={meta} editing={editing} toggleEditing={toggleEditing} save={save(ctx)} exec={exec(ctx)}/>}
-            </cell>
+            </div>
         }}
     </SelectionContext.Consumer>
 }

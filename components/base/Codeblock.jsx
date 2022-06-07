@@ -77,7 +77,8 @@ export const Codeblock = props => {
         localRemote,
         collapsed,
         fullScreen && 'fullscreen',
-        meta && meta.isOutput && 'output'
+        'codecell',
+        meta && meta.isOutput && 'output',
       ].filter(Identity).join(' ')
       
       if (codeNode) {
@@ -94,11 +95,9 @@ export const Codeblock = props => {
 
         const above = Viewer && meta.directives && (meta.directives.indexOf('above') >= 0)
         const below = Viewer && meta.directives && (meta.directives.indexOf('below') >= 0)
-
-        console.log(meta && meta.raw)
         const highlighted = <Highlight language={(meta && meta.lang) || "plaintext"}>{source}</Highlight>
         const metaView = meta && <CodeMeta meta={meta} toggleCollapsed={toggleCollapsed} toggleFullscreen={toggleFullscreen} toggleLocalRemote={toggleLocalRemote} />
-        return <codecell className={classes} onClick={anchorClick}>
+        return <div className={classes} onClick={anchorClick}>
             { id && <a name={id}/> }
             { meta && !above && metaView}
             { Viewer 
@@ -115,10 +114,10 @@ export const Codeblock = props => {
                    : null }
             { meta && above && metaView }
             { above && highlighted }
-        </codecell>
+        </div>
       } else {
           console.log("Default codeblock", this.props.node.children[0])
-          return <codecell><pre className="default">{props.children}</pre></codecell>
+          return <div className="codecell"><pre className="default">{props.children}</pre></div>
       }
     }
   }</SelectionContext.Consumer>
