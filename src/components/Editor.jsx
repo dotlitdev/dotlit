@@ -31,11 +31,6 @@ function myCompletions(context) {
     }
 }
 
-const autocompleteSetup = autocompletion({
-    override: [myCompletions],
-    activateOnTyping: true,
-})
-
 export default class Editor extends React.Component {
     constructor(props) {
         super(props)
@@ -46,7 +41,10 @@ export default class Editor extends React.Component {
                 basicSetup,
                 EditorView.lineWrapping,
                 EditorView.updateListener.of(this.onUpdate.bind(this)),
-                autocompleteSetup,
+                autocompletion({
+                    override: [myCompletions],
+                    activateOnTyping: true,
+                }),
             //   html(),
             //   oneDark
             //  linter(esLint(new Linter)),
