@@ -162,7 +162,6 @@ const Cell = props => {
 
     const editCell = (src) => isCodeCell 
         ? <div className="codeCellEditor">
-              <Editor src={meta.raw} update={()=>{}}/> 
               <Editor src={src} update={setSrc}/> 
           </div>
         : <Editor src={src} update={setSrc}/> 
