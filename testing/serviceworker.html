@@ -22,11 +22,11 @@
 <li><a class="external" href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch" filepath="/testing/serviceworker.lit" root="" data="[object Object]" canonical="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch">https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch<span class="linkIcon">↗</span></a></li>
 </ul><p>See <a class="exists local" href="web_workers.html" title="testing/Web Workers" wikilink="true" filepath="/testing/serviceworker.lit" root="" data="[object Object]" canonical="/testing/web_workers.lit">testing/Web Workers</a> for related investigation.</p></div></cell></section>
 <section id="exploration" depth="2" class="" startpos="26:1-802" endpos="134:4-2938"><cell startpos="26:1-802" endpos="26:15-816"><div class="cell-content"><h2>Exploration</h2></div></cell><cell startpos="27:1-817" endpos="32:4-894" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return navigator
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">57.3w ago</span></span></span><output><pre><code class="txt">{}
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">57.4w ago</span></span></span><output><pre><code class="txt">{}
 </code></pre></output></codecell></div></cell><cell startpos="34:1-896" endpos="41:4-1010" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">if (&#x27;serviceWorker&#x27; in navigator) {
   return true
 }
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">57.9w ago</span></span></span><output><pre><code class="txt">true
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">58.0w ago</span></span></span><output><pre><code class="txt">true
 </code></pre></output></codecell></div></cell><cell startpos="44:1-1013" endpos="51:4-1190" class="code"><div class="cell-content"><codecell class="tag-register lang-js local"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#d6dc2e" class="tag">register</span></span><pre><code class="js">return navigator
           .serviceWorker
           .register(&#x27;/serviceworker.js?root=&#x27;+lit.location.root)
@@ -47,16 +47,16 @@
   }
   return `Unregistered ${regs.length} regisration(s)`
 })()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">53.3w ago</span></span></span><output><pre><code class="txt">{}
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">53.4w ago</span></span></span><output><pre><code class="txt">{}
 Unregistered 1 regisration(s)
 </code></pre></output></codecell></div></cell><cell startpos="80:1-1855" endpos="86:4-1974" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return fetch(&#x27;/none&#x27;)
        .then( resp =&gt; resp.status )
 </code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">57w ago</span></span></span><output><pre><code class="txt">404
 </code></pre></output></codecell></div></cell><cell startpos="87:1-1975" endpos="93:4-2101" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return fetch(&#x27;/manifest.json&#x27;)
        .then(resp =&gt; resp.status)
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">57.3w ago</span></span></span><output><pre><code class="txt">200
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">57.4w ago</span></span></span><output><pre><code class="txt">200
 </code></pre></output></codecell></div></cell><cell startpos="94:1-2102" endpos="99:4-2203" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (new Response(&#x27;hello&#x27;)).text()
-</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">57.9w ago</span></span></span><output><pre><code class="txt">hello
+</code></pre></codecell><codecell class="lang-txt local output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">58.0w ago</span></span></span><output><pre><code class="txt">hello
 </code></pre></output></codecell></div></cell><cell startpos="101:1-2205" endpos="101:195-2399"><div class="cell-content"><p>As of now, the service worker doesn&#x27;t cache anything and just passes through to the network as normal. Except if the <code>request.url</code> ends with <code>--sw</code> in which case it returns a mock/info response.</p></div></cell><cell startpos="102:1-2400" endpos="129:4-2897" class="code"><div class="cell-content"><codecell class="lang-js local"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return fetch(&#x27;/--sw&#x27;)
        .then(resp =&gt; resp.text()
                           .then( text =&gt; `${resp.status}\n${text}`)
