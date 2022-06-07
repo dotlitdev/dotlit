@@ -32,7 +32,7 @@ export default class Editor extends React.Component {
                 EditorView.updateListener.of(this.onUpdate.bind(this)),
                 autocompletion({
                     override: [function (context) {
-                        let word = context.matchBefore(/\w*|\s+/)
+                        let word = context.matchBefore(/\w*|\S+/)
                         console.log(word, context)
                         if(word.from == word.to && !context.explicit) return null
                         if (word.text === '[[') {
