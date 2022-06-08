@@ -579,12 +579,11 @@ export const viewer = ({ node, React }) => {
   const { useState, useEffect } = React;
   const meta = node.properties && node.properties.meta;
   const [src, setSrc] = useState(meta.search || node.data.value.trim());
-  const [content, setContent] = useState("Loading...");
+  const [content, setContent] = useState("");
   const item = itemBuilder(React);
 
   useEffect(async () => {
     if (!src) return;
-    const resp = await fetch("/manifest.json");
     const json = lit.manifest;
     let regex;
     try {
