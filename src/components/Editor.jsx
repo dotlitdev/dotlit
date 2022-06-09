@@ -55,7 +55,7 @@ export default class Editor extends React.Component {
                         return {
                             from: word.from,
                             options: [
-                                {label: "toc", type: "keyword", apply: "Table of contents"},
+                                {label: "toc", type: "keyword", detail:"Table of contents", apply: "Table of contents"},
                                 {label: "`", type: "variable", detail: "Fenced code block", apply:"```\n\n```"},
                                 {label: "magic", type: "text", apply: "⠁⭒*.✩.*⭒⠁", detail: "macro"}
                             ]
