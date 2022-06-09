@@ -56,7 +56,7 @@ export default class Editor extends React.Component {
                             from: word.from,
                             options: [
                                 {label: "toc", type: "keyword", apply: "Table of contents"},
-                                {label: "`", type: "variable", info: "Fenced code block", apply:"```\n\n```},
+                                {label: "`", type: "variable", info: "Fenced code block", apply:"```\n\n```"},
                                 {label: "magic", type: "text", apply: "⠁⭒*.✩.*⭒⠁", detail: "macro"}
                             ]
                         }
