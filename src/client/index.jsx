@@ -184,6 +184,8 @@ export const init = async () => {
             } catch (err) {
                 console.error(`Failed to load template: ${query.template}`, err)
             }
+        } else if (query.title || query.body) {
+            contents = query.title ? `# ${query.title}\n\n${query.body||''}` : query.body || ''
         }
         
         console.log(`Showing 404 page`)

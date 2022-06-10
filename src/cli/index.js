@@ -1,4 +1,3 @@
-import fs from 'fs'
 import program from 'commander'
 import util from 'util'
 import vfile from 'to-vfile'
