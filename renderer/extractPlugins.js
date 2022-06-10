@@ -96,7 +96,7 @@ export const extractPlugins = ({fs} = {}) => {
                     
                    
                 } catch(err) {
-                    console.error("Failed to init plugin", meta.raw, err)
+                    console.log("Failed to init plugin", meta.raw, err)
                     const msg = `Plugin Error (${type}): ` + (err.message || err.toString())
                     file.message(msg, block)
                 }

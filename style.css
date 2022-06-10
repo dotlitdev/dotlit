@@ -11,9 +11,11 @@ body {
   --divider-subtle: #efefef;
   --medium-space: 0.4em;
   --code-bg-color: #000;
-  --code-text-color: #fff;
-  --code-highlight-bg: #111;
-  --code-highlight-text: #fff;
+  --code-text-color: #efefef;
+  --code-active-bg: #333;
+  --code-active-text: #fff;
+  --code-highlight-bg: var(--text-primary-color);
+  --code-highlight-text: var(--text-highlight-color);
   --box-bg-opacity: 0.05;
   color: var(--text-color);
   background-color: var(--bg);
@@ -449,22 +451,40 @@ a.codecell-anchor {
   color: var(--code-text-color);
 }
 #lit-app .editor .cm-content {
-  caret-color: var(--code-highlight-color);
+  caret-color: var(--code-highlight-text);
 }
 #lit-app .editor .cm-cursor {
-  border-left-color: var(--code-highlight-color);
+  border-left-color: var(--code-active-text);
 }
 #lit-app .editor .cm-gutters {
   background-color: var(--code-bg-color);
   color: var(--text-secondary-color);
   border-right-color: var(--text-secondary-color);
 }
+#lit-app .editor .cm-gutters .cm-activeLineGutter {
+  background-color: var(--code-active-bg);
+  color: var(--code-active-text);
+}
 #lit-app .editor .cm-activeLine.cm-line {
-  background-color: var(--code-highlight-bg);
-  color: var(--code-highlight-color);
+  background-color: var(--code-active-bg);
+  color: var(--code-active-text);
 }
 #lit-app .editor .cm-focused {
   outline: 0 none;
+}
+#lit-app .editor .cm-selectionBackground {
+  background: var(--code-highlight-bg);
+}
+#lit-app .editor .cm-tooltip {
+  background-color: var(--code-bg-color);
+  border-color: var(--text-secondary-color);
+  color: var(--code-text-color);
+}
+#lit-app .editor .cm-tooltip ul li[aria-selected] {
+  background: var(--code-highlight-bg);
+}
+#lit-app .editor .cm-completionIcon-link:after {
+  content: '🔗';
 }
 .codecell.dir-error pre {
   border: 2px solid #f00;

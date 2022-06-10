@@ -94,6 +94,7 @@ import { Identity } from &#x27;../utils/functions&#x27;
 import { getConsoleForNamespace } from &#x27;../utils/console&#x27;
 import { CloseIcon } from &#x27;./Icons&#x27;
 import { ErrorBoundary } from &#x27;./ErrorBoundry&#x27;
+import parser from &#x27;../parser&#x27;
 import {version} from &#x27;../../package.json&#x27;
 
 const console = getConsoleForNamespace(&#x27;Header&#x27;)
@@ -295,6 +296,13 @@ export const Header = ({ root, toggleViewSource, toggleModal}) =&gt; {
     ctx.setSrc(ctx.selectedCell, `${meta}\n${end}`)
   }
 
+  const newFile = () =&gt; {
+    const filename = prompt(&#x27;Please enter a file name or path&#x27;)
+    if (filename) {
+      location.href = lit.parser.utils.links.resolver( filename ).href + &#x27;?title=&#x27; + encodeURIComponent(filename);
+    }
+  }
+
   useEffect(async () =&gt; {
     const resp = await fetch(&#x27;--sw&#x27;).then( res =&gt; res.json().catch( err=&gt; null) ).catch(err =&gt; null)
     setSw(resp)
@@ -321,7 +329,7 @@ export const Header = ({ root, toggleViewSource, toggleModal}) =&gt; {
     &lt;Menu title=&quot;Home&quot; horizontal href={root}&gt;
       &lt;Menu title=&quot;File&quot; disabled={ssr}&gt;
         &lt;span disabled className=&quot;meta&quot;&gt;{ageMessage}&lt;/span&gt;
-        &lt;span disabled&gt;New&lt;/span&gt;
+        &lt;span onClick={newFile}&gt;New&lt;/span&gt;
         &lt;span disabled&gt;Open&lt;/span&gt;
         &lt;span disabled&gt;Save&lt;/span&gt;
         &lt;span onClick={toggleViewSource}&gt;View Source&lt;/span&gt;

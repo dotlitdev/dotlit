@@ -6,6 +6,7 @@ import { Identity } from '../utils/functions'
 import { getConsoleForNamespace } from '../utils/console'
 import { CloseIcon } from './Icons'
 import { ErrorBoundary } from './ErrorBoundry'
+import parser from '../parser'
 import {version} from '../../package.json'
 
 const console = getConsoleForNamespace('Header')
@@ -207,6 +208,13 @@ export const Header = ({ root, toggleViewSource, toggleModal}) => {
     ctx.setSrc(ctx.selectedCell, `${meta}\n${end}`)
   }
 
+  const newFile = () => {
+    const filename = prompt('Please enter a file name or path')
+    if (filename) {
+      location.href = lit.parser.utils.links.resolver( filename ).href + '?title=' + encodeURIComponent(filename);
+    }
+  }
+
   useEffect(async () => {
     const resp = await fetch('--sw').then( res => res.json().catch( err=> null) ).catch(err => null)
     setSw(resp)
@@ -233,7 +241,7 @@ export const Header = ({ root, toggleViewSource, toggleModal}) => {
     <Menu title="Home" horizontal href={root}>
       <Menu title="File" disabled={ssr}>
         <span disabled className="meta">{ageMessage}</span>
-        <span disabled>New</span>
+        <span onClick={newFile}>New</span>
         <span disabled>Open</span>
         <span disabled>Save</span>
         <span onClick={toggleViewSource}>View Source</span>
