@@ -162,20 +162,24 @@ function generateBacklinks(files, root) {
         }), manifest, meta]
 }
 
-export function generate(cmd) {
+export function generate(cmd, cb = NoOp) {
     const globAll = `**/*`
     const ignore = cmd.ignore || '+(**/node_modules/*|**/.git/*)'
     const matchRegex = /\.(lit|md)(\.(md|lit))?$/
 
-    console.log(`Generating from path: ${cmd.path} (${globAll})`)
-    console.log(`Output path: ${cmd.output} cwd: ${cmd.cwd}`)
-    console.log(path.resolve(cmd.output))
-    const fs = extendFs(fsPromises, path.resolve(cmd.output) + '/', null, true)
+    const SOURCE = path.resolve(cmd.cwd, cmd.path);
+    const OUTPUT = path.resolve(cmd.cwd, cmd.output);
+
+    console.log(`Generating from source path: ${cmd.path} (${globAll}) resolved: ${SOURCE}`)
+    console.log(`Output path: ${cmd.output} cwd: ${cmd.cwd} resolved: ${OUTPUT}`)
+    const fs = extendFs(fsPromises, OUTPUT + '/', null, true)
+
+    
     
     function processFilesystem(done) {
         console.time('generate')
 
-        glob(globAll, {cwd: `${cmd.path}/`, ignore, dot: true}, async (err, matches) => {
+        glob(globAll, {cwd: SOURCE, ignore, dot: true}, async (err, matches) => {
             if (err) error(err)
             else {
                 const litFiles = matches.filter( (f) => f.match(matchRegex))
@@ -186,7 +190,7 @@ export function generate(cmd) {
 
                 try {
 
-                    const copied = await copyFiles(fs, nonLitFiles, cmd.path, cmd.output)
+                    const copied = await copyFiles(fs, nonLitFiles, SOURCE, OUTPUT)
                     console.log(`Copied ${copied.length} file(s) from source.`)
 
             
@@ -194,12 +198,14 @@ export function generate(cmd) {
                     const failures = {}
 
                     const src_files = await Promise.all(litFiles.map( async filepath => {
+                        console.log(filepath, SOURCE)
                         try {
                             const source = await vfile.read({
                                 path: filepath,
-                                cwd: cmd.path
+                                cwd: SOURCE
                             })
                             source.data = {canonical: path.join('/', source.path)}
+                            console.log(source)
                             return source
                         } catch(err) {
                             failures[filepath] = failures[filepath] || []
@@ -210,10 +216,10 @@ export function generate(cmd) {
                     let ast_files_prelinks = await Promise.all(src_files.map( async file => {
                         let wroteSource;
                         try {
-                        
+                            console.log(file)
                             await fs.writeFile(file.path, file.contents)
                             wroteSource = true
-                            return await renderProcessor({fs, cwd: cmd.path, files: matches.map(x=>'/'+x)}).process(file)
+                            return await renderProcessor({fs, cwd: SOURCE, files: matches.map(x=>'/'+x)}).process(file)
                         
                         } catch (err) {
                             console.error(err)
@@ -238,7 +244,7 @@ export function generate(cmd) {
     The contents of this file are private. Only visible by the author.
 
     `
-                                file = await renderProcessor({fs, cwd: cmd.path, files: matches.map(x=>'/'+x)}).process(file)
+                                file = await renderProcessor({fs, cwd: SOURCE, files: matches.map(x=>'/'+x)}).process(file)
                             }
                             // await mkdirp(path.join(cmd.output,path.dirname(file.path)))
                             // await fs.writeFile(file.path, file.contents)
@@ -272,7 +278,7 @@ export function generate(cmd) {
     File: ${file.path}
         ${err.toString()}
     `
-                            file = await renderProcessor({fs, cwd: cmd.path}).process(file)
+                            file = await renderProcessor({fs, cwd: SOURCE}).process(file)
                             // await mkdirp(path.join(cmd.output,path.dirname(file.path)))
                             // await fs.writeFile(file.path, file.contents)
                             // await fs.writeFile(file.path + '.json', JSON.stringify(file.data.ast, null, 4))
@@ -309,22 +315,28 @@ export function generate(cmd) {
                         await fs.copyFile( path.join(__dirname,'../../dist/style.css'), path.join(cmd.output, 'style.css'))
                     }
                     console.timeEnd('generate')
+                    if (done) done()
 
                } catch(err) {
                   console.error(err)
+                  done(err)
                   process.exit(1)
                }
             }
         })
     }
 
-    processFilesystem(NoOp)
+    
 
     if (cmd.watch) {
         console.log(`Watching "${cmd.path}" for changes...`)
+        processFilesystem(NoOp)
         watch([`${cmd.path}/${globAll}`], function(done){
             console.log(`Change detected in "${cmd.path}".`)
             processFilesystem(done)
         })
+        
+    } else {
+        processFilesystem(cb)
     }
 }
