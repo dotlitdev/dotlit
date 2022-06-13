@@ -80,7 +80,7 @@ if (typeof localStorage !== 'undefined') {
     ghSettings = JSON.parse(localStorage.getItem('ghSettings'))
   } catch(err) {}
 }
-const fs = extendFs(lfs.promises, litLocation.root, !query.__no_gh && ghSettings)
+const fs = extendFs(lfs.promises, litLocation.root, !litLocation.query.__no_gh && ghSettings)
 
 time('client', 'fsSetup')
 
@@ -151,7 +151,7 @@ console.log(`lit:`, lit)
 time('client', 'litObj')
 
 export const init = async () => {
-    if(query.__lit_no_client==="true") return;
+    if(lit.location.query.__lit_no_client==="true") return;
 
     console.log('.lit Notebook client initializing...')
     time('client', 'initStart')
@@ -180,16 +180,16 @@ export const init = async () => {
         console.error(`Error fetching local and remote file`, err)
 
         
-        if (query.template) {
-            console.log(`Loading template (${query.template}) for 404 file "${lit.location.src}".`)
+        if (lit.location.query.template) {
+            console.log(`Loading template (${lit.location.query.template}) for 404 file "${lit.location.src}".`)
             try {
-                const template = await lit.fs.readStat(query.template, {encoding: 'utf8'})
+                const template = await lit.fs.readStat(lit.location.query.template, {encoding: 'utf8'})
                 contents = lit.utils.fns.template(template.local.value || template.remote.value, window)
             } catch (err) {
-                console.error(`Failed to load template: ${query.template}`, err)
+                console.error(`Failed to load template: ${lit.location.query.template}`, err)
             }
-        } else if (query.title || query.body) {
-            contents = query.title ? `# ${query.title}\n\n${query.body||''}` : query.body || ''
+        } else if (lit.location.query.title || lit.location.query.body) {
+            contents = lit.location.query.title ? `# ${lit.location.query.title}\n\n${lit.location.query.body||''}` : lit.location.query.body || ''
         }
         
         console.log(`Showing 404 page`)
