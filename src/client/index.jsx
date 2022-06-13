@@ -70,7 +70,7 @@ function getLitLocation () {
 }
 
 const lfs = new FS(litLocation.base, {
-    wipe: query.__lfs_wipe==="true" ? confirm("Are you sure you want to wipe the local file system: " + litLocation.base) : undefined,
+    wipe: litLocation.query.__lfs_wipe==="true" ? confirm("Are you sure you want to wipe the local file system: " + litLocation.base) : undefined,
     url: litLocation.base,
 })
 
