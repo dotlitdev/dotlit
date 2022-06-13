@@ -113,10 +113,6 @@ export function stringify(vfile) {
         .use(ungroupSections())
         .use(remarkStringify, {
             bullet: '-',
-            // handlers: {
-            //     cell: debugAstToMarkdown,
-            //     section: debugAstToMarkdown
-            // }
         })
         .process(vfile)
 }

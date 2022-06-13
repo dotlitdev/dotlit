@@ -1,4 +1,4 @@
-import {join, resolve, relative, dirname} from "path";
+import {join, resolve, relative as isRelative, dirname} from "path";
 import visit from "unist-util-visit";
 import { getConsoleForNamespace } from "../utils/console";
 
@@ -91,23 +91,23 @@ export const decorateLinkNode = (link, root = "", filepath = "", files = []) => 
   const url = linkToUrl(link, root);
 
   
-  const isExternal = /^(https?\:)?\/\//.test(url);
-  const isAbsolute = !isExternal && /^\//.test(url);
-  const isFragment = /^(\?|#)/.test(url);
-  const isRelative = url && !isAbsolute && !isFragment && !isExternal;
+  const external = /^(https?\:)?\/\//.test(url);
+  const absolute = !external && /^\//.test(url);
+  const fragment = /^(\?|#)/.test(url);
+  const relative = url && !absolute && !fragment && !external;
   
   const srcToGH = (src, prefix) => join(prefix, src);
   const relToCanonical = (src, link) => resolve(dirname(src), link);
-  const canonicalToRel = (src1, src2) => relative(dirname(src1), src2)
+  const canonicalToRel = (src1, src2) => isRelative(dirname(src1), src2)
 
   let canonical = url;
   let href = url;
   let [base, frag] = url.split(/(\?|#)/);
 
-  if (isRelative) {
+  if (relative) {
     canonical = relToCanonical(filepath, base)
     href = url.replace(/\.(md|lit)/i, ".html") ;
-  } else if (isAbsolute) {
+  } else if (absolute) {
     const rel = canonicalToRel(filepath, url);
     href = rel.replace(/\.(md|lit)/i, ".html");
   }
@@ -125,10 +125,10 @@ export const decorateLinkNode = (link, root = "", filepath = "", files = []) => 
   const exists = files.indexOf(canonical) >= 0
 
   const data = {
-    isExternal,
-    isAbsolute,
-    isFragment,
-    isRelative,
+    external,
+    absolute,
+    fragment,
+    relative,
     canonical,
     wikilink,
     exists,

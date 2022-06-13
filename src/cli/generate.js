@@ -18,6 +18,7 @@ import { decorateLinkNode } from '../parser/links'
 
 import { getConsoleForNamespace } from '../utils/console'
 import { Identity } from '../utils/functions'
+import { copyRecursive } from '../utils/fs-copy'
 
 const console = getConsoleForNamespace('generate')
 
@@ -125,13 +126,13 @@ function generateBacklinks(files, root) {
             console.log(`[${title}] ${fileLink.data.canonical} links: (${links.length})`)
             links.forEach( (link, i) => {
                 // console.log(link)
-                // console.log(`[Backlinks] ${link.type} >> ${link.url} >> ${link.data.canonical} relative: ${link.data.isRelative}`)
+                // console.log(`[Backlinks] ${link.type} >> ${link.url} >> ${link.data.canonical} relative: ${link.data.relative}`)
                 const linkNode = {
                     id: fileLink.data.canonical,
                     url: fileLink.url,
                     title: title,
                 }
-                if (link.data.isRelative || link.data.isAbsolute || link.data.isCode) {
+                if (link.data.relative || link.data.absolute || link.data.isCode) {
                     if (manifest[link.data.canonical] && manifest[link.data.canonical].backlinks) {
                         console.log(`[${title}][${i}] Adding link ${fileLink.data.canonical} to existing "${link.data.canonical}"`)
                         manifest[link.data.canonical].backlinks.push(linkNode)
@@ -309,10 +310,12 @@ export function generate(cmd, cb = NoOp) {
                     if (global.litenv) {
                         await fs.copyFile( path.join(__dirname,'./web.bundle.js'), path.join(cmd.output, 'web.bundle.js'))
                         await fs.copyFile( path.join(__dirname,'./style.css'), path.join(cmd.output, 'style.css'))
+                        await copyRecursive(path.join(__dirname,'./assets'), path.join(cmd.output, 'assets'))
                     } else {
                         await fs.copyFile( path.join(__dirname,'../../dist/web.bundle.js'), path.join(cmd.output, 'web.bundle.js'))
                         await fs.copyFile( path.join(__dirname,'../../dist/web.bundle.js.map'), path.join(cmd.output, 'web.bundle.js.map'))
                         await fs.copyFile( path.join(__dirname,'../../dist/style.css'), path.join(cmd.output, 'style.css'))
+                        await copyRecursive(path.join(__dirname,'../../assets'), path.join(cmd.output, 'assets'))
                     }
                     console.timeEnd('generate')
                     if (done) done()
@@ -320,7 +323,7 @@ export function generate(cmd, cb = NoOp) {
                } catch(err) {
                   console.error(err)
                   done(err)
-                  process.exit(1)
+                //   process.exit(1)
                }
             }
         })
