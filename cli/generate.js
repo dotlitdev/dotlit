@@ -145,8 +145,20 @@ function generateBacklinks(files, root) {
                             type: link.type
                         }
                     }
+                } else if (link.data.external) {
+                    console.log(`[${title}][${i}] External:`, link.data.canonical)
+                    if (manifest[link.data.canonical]) manifest[link.data.canonical].backlinks.push(linkNode)
+                    else {
+                        manifest[link.data.canonical] = {
+                            backlinks: [linkNode], 
+                            url: link.url,
+                            exists: undefined,
+                            type: 'external'
+                        }
+                    }
                 } else {
                     console.log(`[${title}][${i}] Other:`, link.data.canonical)
+                    
                 }
             })
         } catch(err) {
@@ -157,7 +169,7 @@ function generateBacklinks(files, root) {
 
     return [files.map( (file, index) => {
             file.data = file.data || {}
-            console.log(file.path, index, file.data.canonical, manifest[file.data.canonical])
+            // console.log(file.path, index, file.data.canonical, manifest[file.data.canonical])
             file.data.backlinks = manifest[file.data.canonical].backlinks
             return file
         }), manifest, meta]
