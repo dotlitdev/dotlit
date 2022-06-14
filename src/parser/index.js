@@ -61,7 +61,6 @@ const baseProcessor = ({litroot, files} = {}) => {
 
     .use(wikiLinkPlugin, links.wikiLinkOptions(files))
     .use(slug)
-    .use(toc, {})
     .use(headingIds)
     .use(footnotes, {inlineNotes: true})
 
@@ -77,7 +76,7 @@ export const processor = ({files, fs, litroot} = {files: []}) => {
     // Async reparse `md` codeblocks as children
     .use(mdblocks, {baseProcessor, litroot, files})
     .use(links.resolveLinks({litroot, files}))
-
+    .use(toc, {})
     .use(sections, {})
     .use(timer(),{ns:'parser', marker: 'processorComplete'})
 }

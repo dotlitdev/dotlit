@@ -9,21 +9,22 @@ const Link = props => {
     const href = props.node.properties.href
     const data = props.data || {}
     const wikilink = props.wikilink ? 'true' : undefined
-    const icon = data.external
+    const fragment = data.fragment || href[0] === '#'
+    const local = !fragment && !data.external
+    const external = data.external || /^https?:\/\//.test(href)
+
+    const icon = external
                  ? '↗'
-                 : data.fragment
+                 : fragment
                    ? '§'
                    : null
 
-    // console.log("<Link/>", data.exists)
-    
-    const local = !data.fragment && !data.external
     const classNames = [
         props.className,
         data.exists && 'exists',
         local && 'local',
         data.external && 'external',
-        data.fragment && 'fragment',
+        fragment && 'fragment',
     ].filter(x=>x).join(' ')
 
     const imgOnlyLink = props.node.children
