@@ -21,8 +21,8 @@ const Document = props => {
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
             {theme && <link rel="stylesheet" href={theme}/>}
             <meta name="apple-mobile-web-app-capable" content="yes"/>
-            <link rel="apple-touch-icon" href="assets/lit-logo.png"/>
-            <link rel="icon" href="assets/lit-logo.png"/>
+            <link rel="apple-touch-icon" href={path.join(props.root, 'assets/lit-logo.png')}/>
+            <link rel="icon" href={path.join(props.root, 'assets/lit-logo.png')}/>
             <link rel="stylesheet" href={path.join(props.root, 'style.css')}/>
         </head>
         <body>
