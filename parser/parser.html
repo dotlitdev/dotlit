@@ -1,4 +1,4 @@
-<html data-reactroot=""><head><title>Parser</title><meta name="litsrc" value="/parser/parser.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children" disabled=""><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span><span class="led led-grey"></span><span class="led led-grey"></span></li></menu></li></menu></div><style>body {
+<html data-reactroot=""><head><title>Parser</title><meta name="litsrc" value="/parser/parser.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><meta name="apple-mobile-web-app-capable" content="yes"/><link rel="apple-touch-icon" href="assets/lit-logo.png"/><link rel="icon" href="assets/lit-logo.png"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children" disabled=""><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span><span class="led led-grey"></span><span class="led led-grey"></span></li></menu></li></menu></div><style>body {
   --bg: white;
   --bg-secondary-color: #efefef;
     
@@ -13,23 +13,23 @@
   --code-bg-color: black;
   --code-text-color: white;
   --box-bg-opacity: 0.05;
-}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section id="parser" depth="1" class="" startpos="1:1-0" endpos="5:21-185"><div startpos="1:1-0" endpos="3:154-163" class="cell"><div class="cell-content"><h1>Parser</h1><p>Built atop the <a class="local" href="../unified.html" title="unified" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="/unified.lit">unified</a> ecosystem, specifically <a class="local" href="../remark.html" title="remark" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="/remark.lit">remark</a>, which takes <code>.lit</code> <a class="local" href="../markdown.html" title="Markdown" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="/markdown.lit">Markdown</a> source and outputs <code>mdast</code> (Markdown Abstract Syntax Tree)</p></div></div><section id="table-of-contents" depth="2" class="" startpos="5:1-165" endpos="5:21-185"><div startpos="5:1-165" endpos="5:21-185" class="cell"><div class="cell-content"><h2>Table of Contents</h2><ul>
+}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section id="parser" depth="1" class="" startpos="1:1-0" endpos="5:21-185"><div startpos="1:1-0" endpos="3:154-163" class="cell"><div class="cell-content"><h1>Parser</h1><p>Built atop the <a class="local" href="../unified.html" title="unified" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]">unified</a> ecosystem, specifically <a class="local" href="../remark.html" title="remark" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]">remark</a>, which takes <code>.lit</code> <a class="local" href="../markdown.html" title="Markdown" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]">Markdown</a> source and outputs <code>mdast</code> (Markdown Abstract Syntax Tree)</p></div></div><section id="table-of-contents" depth="2" class="" startpos="5:1-165" endpos="5:21-185"><div startpos="5:1-165" endpos="5:21-185" class="cell"><div class="cell-content"><h2>Table of Contents</h2><ul>
 <li>
-<p><a class="fragment" href="#implementation-1" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="#implementation-1">Implementation<span class="linkIcon">§</span></a></p>
+<p><a class="fragment" href="#implementation-1">Implementation<span class="linkIcon">§</span></a></p>
 </li>
 <li>
-<p><a class="fragment" href="#extensions" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="#extensions">Extensions<span class="linkIcon">§</span></a></p>
+<p><a class="fragment" href="#extensions">Extensions<span class="linkIcon">§</span></a></p>
 <ul>
-<li><a class="fragment" href="#frontmatter" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="#frontmatter">Frontmatter<span class="linkIcon">§</span></a></li>
-<li><a class="fragment" href="#sections" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="#sections">Sections<span class="linkIcon">§</span></a></li>
-<li><a class="fragment" href="#cells" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="#cells">Cells<span class="linkIcon">§</span></a></li>
-<li><a class="fragment" href="#codeblocks" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="#codeblocks">Codeblocks<span class="linkIcon">§</span></a></li>
-<li><a class="fragment" href="#markdown-blocks" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="#markdown-blocks">Markdown blocks<span class="linkIcon">§</span></a></li>
-<li><a class="fragment" href="#links" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="#links">Links<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#frontmatter">Frontmatter<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#sections">Sections<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#cells">Cells<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#codeblocks">Codeblocks<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#markdown-blocks">Markdown blocks<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#links">Links<span class="linkIcon">§</span></a></li>
 </ul>
 </li>
 <li>
-<p><a class="fragment" href="#ast-to-string" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="#ast-to-string">AST to String<span class="linkIcon">§</span></a></p>
+<p><a class="fragment" href="#ast-to-string">AST to String<span class="linkIcon">§</span></a></p>
 </li>
 </ul></div></div></section></section>
 <section id="implementation-1" depth="2" class="" startpos="13:1-312" endpos="16:4-374"><div startpos="13:1-312" endpos="13:19-330" class="cell"><div class="cell-content"><h2>Implementation</h2></div></div><div startpos="15:1-332" endpos="16:4-374" class="code   cell"><div class="cell-content"><div class="dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; index.js</span></span><pre><code class="js">import unified from &#x27;unified&#x27;
@@ -95,7 +95,6 @@ const baseProcessor = ({litroot, files} = {}) =&gt; {
 
     .use(wikiLinkPlugin, links.wikiLinkOptions(files))
     .use(slug)
-    .use(toc, {})
     .use(headingIds)
     .use(footnotes, {inlineNotes: true})
 
@@ -111,7 +110,7 @@ export const processor = ({files, fs, litroot} = {files: []}) =&gt; {
     // Async reparse `md` codeblocks as children
     .use(mdblocks, {baseProcessor, litroot, files})
     .use(links.resolveLinks({litroot, files}))
-
+    .use(toc, {})
     .use(sections, {})
     .use(timer(),{ns:&#x27;parser&#x27;, marker: &#x27;processorComplete&#x27;})
 }
@@ -147,10 +146,6 @@ export function stringify(vfile) {
         .use(ungroupSections())
         .use(remarkStringify, {
             bullet: &#x27;-&#x27;,
-            // handlers: {
-            //     cell: debugAstToMarkdown,
-            //     section: debugAstToMarkdown
-            // }
         })
         .process(vfile)
 }
@@ -580,7 +575,7 @@ console.log(meta);
 return metaToString(meta);
 return lit.parser.utils;
 
-</code></pre></div><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">49w ago</span></span></span><output><pre><code class="txt">js index.jsx !foo #bar baz=qux\ zig &lt; source.jsx &gt; json output.json #faz !raz
+</code></pre></div><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">49.3w ago</span></span></span><output><pre><code class="txt">js index.jsx !foo #bar baz=qux\ zig &lt; source.jsx &gt; json output.json #faz !raz
 { attrs: { baz: &#x27;qux\\ zig&#x27; },
   lang: &#x27;js&#x27;,
   filename: &#x27;index.jsx&#x27;,
@@ -652,7 +647,7 @@ export const mdblocks = function ({baseProcessor, files, litroot}) {
 }
 
 </code></pre></div></div></div></section>
-<section id="links" depth="3" class="" startpos="111:1-2304" endpos="116:4-2363"><div startpos="111:1-2304" endpos="113:17-2331" class="cell"><div class="cell-content"><h3>Links</h3><p><em>Implementation</em></p></div></div><div startpos="115:1-2333" endpos="116:4-2363" class="code   cell"><div class="cell-content"><div class="dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; links.js</span></span><pre><code class="js">import {join, resolve, relative, dirname} from &quot;path&quot;;
+<section id="links" depth="3" class="" startpos="111:1-2304" endpos="116:4-2363"><div startpos="111:1-2304" endpos="113:17-2331" class="cell"><div class="cell-content"><h3>Links</h3><p><em>Implementation</em></p></div></div><div startpos="115:1-2333" endpos="116:4-2363" class="code   cell"><div class="cell-content"><div class="dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; links.js</span></span><pre><code class="js">import {join, resolve, relative as isRelative, dirname} from &quot;path&quot;;
 import visit from &quot;unist-util-visit&quot;;
 import { getConsoleForNamespace } from &quot;../utils/console&quot;;
 
@@ -745,23 +740,23 @@ export const decorateLinkNode = (link, root = &quot;&quot;, filepath = &quot;&qu
   const url = linkToUrl(link, root);
 
   
-  const isExternal = /^(https?\:)?\/\//.test(url);
-  const isAbsolute = !isExternal &amp;&amp; /^\//.test(url);
-  const isFragment = /^(\?|#)/.test(url);
-  const isRelative = url &amp;&amp; !isAbsolute &amp;&amp; !isFragment &amp;&amp; !isExternal;
+  const external = /^(https?\:)?\/\//.test(url);
+  const absolute = !external &amp;&amp; /^\//.test(url);
+  const fragment = /^(\?|#)/.test(url);
+  const relative = url &amp;&amp; !absolute &amp;&amp; !fragment &amp;&amp; !external;
   
   const srcToGH = (src, prefix) =&gt; join(prefix, src);
   const relToCanonical = (src, link) =&gt; resolve(dirname(src), link);
-  const canonicalToRel = (src1, src2) =&gt; relative(dirname(src1), src2)
+  const canonicalToRel = (src1, src2) =&gt; isRelative(dirname(src1), src2)
 
   let canonical = url;
   let href = url;
   let [base, frag] = url.split(/(\?|#)/);
 
-  if (isRelative) {
+  if (relative) {
     canonical = relToCanonical(filepath, base)
     href = url.replace(/\.(md|lit)/i, &quot;.html&quot;) ;
-  } else if (isAbsolute) {
+  } else if (absolute) {
     const rel = canonicalToRel(filepath, url);
     href = rel.replace(/\.(md|lit)/i, &quot;.html&quot;);
   }
@@ -779,10 +774,10 @@ export const decorateLinkNode = (link, root = &quot;&quot;, filepath = &quot;&qu
   const exists = files.indexOf(canonical) &gt;= 0
 
   const data = {
-    isExternal,
-    isAbsolute,
-    isFragment,
-    isRelative,
+    external,
+    absolute,
+    fragment,
+    relative,
     canonical,
     wikilink,
     exists,
@@ -820,7 +815,7 @@ export default {
 </code></pre></div></div></div></section>
 <section id="ast-to-string" depth="2" class="" startpos="118:1-2365" endpos="130:4-2891"><div startpos="118:1-2365" endpos="122:168-2716" class="cell"><div class="cell-content"><h2>AST to String</h2><ul class="contains-task-list">
 <li class="task-list-item">
-<p><input type="checkbox" disabled=""/> <a class="exists local" href="../todo.html" title="TODO" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="/todo.lit">TODO</a> refactor save (update src) to operate on AST directly and stringify as below, instead of the cureent <a class="local" href="../utils/unist-patch-source.html" title="../utils/unist-patch-source" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]" canonical="/utils/unist-patch-source.lit">../utils/unist-patch-source</a> implementaction.</p>
+<p><input type="checkbox" disabled=""/> <a class="exists local" href="../todo.html" title="TODO" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]">TODO</a> refactor save (update src) to operate on AST directly and stringify as below, instead of the cureent <a class="local" href="../utils/unist-patch-source.html" title="../utils/unist-patch-source" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]">../utils/unist-patch-source</a> implementaction.</p>
 <p>This is complicated by the fact that new cell source can in effect result in previous and next cell semantic/structure changes, hence the patch source implementation</p>
 </li>
 </ul></div></div><div startpos="123:1-2717" endpos="130:4-2891" class="code   cell"><div class="cell-content"><div class="lang-js local codecell"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const {toMarkdown, ungroupSections}
@@ -829,4 +824,4 @@ const unGroup = ungroupSections()()
 const tree = unGroup(lit.ast)
 const md = toMarkdown(tree)
 return md
-</code></pre></div></div></div></section></div></div><div id="backlinks"><h4>Backlinks (2)</h4><ol><li><a title=".lit" href="/index.html">.lit</a></li><li><a title="Links" href="/testing/links.html">Links</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
+</code></pre></div></div></div></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="Links" href="/testing/links.html">Links</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>

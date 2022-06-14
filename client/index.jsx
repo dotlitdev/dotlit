@@ -47,22 +47,31 @@ const  { DatesToRelativeDelta, MsToRelative } = momento
 time('client', 'importsComplete')
 
 const hasLocation = typeof location !== "undefined"
+const litLocation = getLitLocation()
 
-const query = hasLocation ? qs.parse(location.search.slice(1)) : {}
-const litsrcMeta = fns.getMeta('src', '')
-const litsrc = (litsrcMeta === '/404.lit')
-                ? (query.file || location.pathname.replace(/\.html$/, '.lit').slice(1))
-                : litsrcMeta
-const litroot = fns.getMeta('root', '/')
-// const litbase = getMeta('base', '/')
-const litbase = (!hasLocation || litroot === '/')
-                 ? litroot 
-                 : path.join(path.dirname(location.pathname), litroot)
-const baseUrl = hasLocation && `${location.protocol}//${location.host}${litbase}`
+function getLitLocation () {
+    const query = hasLocation ? qs.parse(location.search.slice(1)) : {}
+    const litsrcMeta = fns.getMeta('src', '')
+    const litsrc = (litsrcMeta === '/404.lit')
+                    ? (query.file || location.pathname.replace(/\.html$/, '.lit').slice(1))
+                    : litsrcMeta
+    const litroot = fns.getMeta('root', '/')
+    const litbase = (!hasLocation || litroot === '/')
+                    ? litroot 
+                    : path.join(path.dirname(location.pathname), litroot);
+    const baseSuffix = litbase.slice(-1) === '/' ? '' : '/';
+    const baseUrl = hasLocation && `${location.protocol}//${location.host}${litbase}${baseSuffix}`
+    return {
+        src: litsrc,
+        root: litroot,
+        base: baseUrl,
+        query: query,
+    }
+}
 
-const lfs = new FS(baseUrl, {
-    wipe: query.__lfs_wipe==="true" ? confirm("Are you sure you want to wipe the local file system: " + baseUrl) : undefined,
-    url: baseUrl,
+const lfs = new FS(litLocation.base, {
+    wipe: litLocation.query.__lfs_wipe==="true" ? confirm("Are you sure you want to wipe the local file system: " + litLocation.base) : undefined,
+    url: litLocation.base,
 })
 
 let ghSettings
@@ -71,18 +80,13 @@ if (typeof localStorage !== 'undefined') {
     ghSettings = JSON.parse(localStorage.getItem('ghSettings'))
   } catch(err) {}
 }
-const fs = extendFs(lfs.promises, litroot, !query.__no_gh && ghSettings)
+const fs = extendFs(lfs.promises, litLocation.root, !litLocation.query.__no_gh && ghSettings)
 
 time('client', 'fsSetup')
 
 export const lit = {
     version: pkg.version,
-    location: {
-        src: litsrc,
-        root: litroot,
-        base: baseUrl,
-        query: query,
-    },
+    location: litLocation,
     getTimings,
     parser,
     renderer,
@@ -118,14 +122,14 @@ export const lit = {
         querystring: qs,
         vfile,
         delete: async (fp) => {
-            const f = fp || litsrc
+            const f = fp || litLocation.src
             const filepath = f[0] === '/' ? f : ('/' + f)
             console.log(`Removing local file: "${filepath}"`)
             await lit.fs.unlink(filepath)
             console.log(`Unlinked: "${filepath}"`)
         },
         read: async (fp) => {
-            const f = fp || litsrc
+            const f = fp || litLocation.src
             const filepath = f[0] === '/' ? f : ('/' + f)
             const resp = await lit.fs.readStat(filepath, {encoding: 'utf8'})
             console.log(`Loaded file: ${filepath} local: ${!!resp.local.stat} remote: ${!!resp.remote.stat} resp: `, resp)
@@ -147,7 +151,7 @@ console.log(`lit:`, lit)
 time('client', 'litObj')
 
 export const init = async () => {
-    if(query.__lit_no_client==="true") return;
+    if(lit.location.query.__lit_no_client==="true") return;
 
     console.log('.lit Notebook client initializing...')
     time('client', 'initStart')
@@ -155,7 +159,7 @@ export const init = async () => {
     const App = require('../components/App').default
 
     const filepath = lit.location.src
-    console.log(`Checking local (${baseUrl}) filesystem for: ${filepath}`)
+    console.log(`Checking local (${lit.location.base}) filesystem for: ${filepath}`)
     let contents, stats;
     let times = {local: null, remote: null}
     try {
@@ -176,39 +180,27 @@ export const init = async () => {
         console.error(`Error fetching local and remote file`, err)
 
         
-        if (query.template) {
-            console.log(`Loading template (${query.template}) for 404 file "${lit.location.src}".`)
+        if (lit.location.query.template) {
+            console.log(`Loading template (${lit.location.query.template}) for 404 file "${lit.location.src}".`)
             try {
-                const template = await lit.fs.readStat(query.template, {encoding: 'utf8'})
+                const template = await lit.fs.readStat(lit.location.query.template, {encoding: 'utf8'})
                 contents = lit.utils.fns.template(template.local.value || template.remote.value, window)
             } catch (err) {
-                console.error(`Failed to load template: ${query.template}`, err)
+                console.error(`Failed to load template: ${lit.location.query.template}`, err)
             }
-        } else if (query.title || query.body) {
-            contents = query.title ? `# ${query.title}\n\n${query.body||''}` : query.body || ''
+        } else if (lit.location.query.title || lit.location.query.body) {
+            contents = lit.location.query.title ? `# ${lit.location.query.title}\n\n${lit.location.query.body||''}` : lit.location.query.body || ''
         }
         
         console.log(`Showing 404 page`)
-        // const resp404 = await lit.fs.readStat( '/' + path.join(litroot, "404.lit") )
-        // contents = resp404.value
         const filename = lit.utils.path.basename(lit.location.src).slice(0, 0-lit.utils.path.extname(lit.location.src).length)
         if (!contents) contents = `# ${lit.location.src}\n\nFile not *yet* found, edit this to change that.`
     }
     time('client', 'readFile')
-    
-    // let settings
-    // try {
-        // const settingsPath = '/config.lit'
-        // const settingsFile = await vfile({ path: settingsPath, contents: await lit.fs.readFile(settingsPath, {encoding: 'utf8'}) })
-        // time('client', 'settingsFetched')
-        // settings = await renderer.processor({fs,litroot}).process(settingsFile)
-    // } catch(err) { console.log('Failed to load settings', err) }
    
     const file = await vfile({path: filepath, contents})
     file.data = file.data || {}
     file.data.times = times
-
-    // time('client', 'settingsLoaded')
 
     window.lit.files = await fetch(lit.location.base + 'compactManifest.json')
                           .catch(err=>([]))
@@ -222,7 +214,7 @@ export const init = async () => {
                                 return data;
                             }))
     time('client', 'manifestLoaded')
-    const processedFile = await renderer.processor({fs,litroot, files: lit.files}).process(file)
+    const processedFile = await renderer.processor({fs,litroot: lit.location.root, files: lit.files}).process(file)
     if (stats) {
         const remoteNewer = stats.local.stat.mtimeMs < stats.remote.stat.mtimeMs
         const hasDiff = stats.local.value !== stats.remote.value
@@ -239,7 +231,7 @@ export const init = async () => {
     time('client', 'processedFile')
     try {
         lit.notebook = <App
-            root={litroot}
+            root={lit.location.root}
             fs={lit.fs}
             file={processedFile}
             result={processedFile.result}
@@ -251,9 +243,7 @@ export const init = async () => {
     console.log('notebook', window.lit.notebook)
     
     try {
-        //ReactDOM.render(window.lit.notebook, document.getElementById('lit-app'))
         ReactDOM.hydrate(window.lit.notebook, document.getElementById('lit-app'))
-        // ReactDOM.hydrate(<Header root={litroot} />, document.getElementById('header'))
     } catch (err) {
         console.error("Error hydrating App", err)
     }
