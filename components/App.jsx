@@ -62,6 +62,7 @@ const App = ({root, file, fs, result, files, ssr}) => {
     const themes = themePlugins && Object.keys(themePlugins).map(t=>({id: t, ...themePlugins[t]}))
     
     const setSrcWrapper = async (pos, cellSource) => {
+        try {
         console.log("<App/> Set src wrapper", posstr(pos.start), posstr(pos.end))
         const patchedSrc = patchSource(srcAndRes.src, pos, cellSource.trimEnd())
         if (patchedSrc === srcAndRes.src) {
@@ -72,7 +73,7 @@ const App = ({root, file, fs, result, files, ssr}) => {
         file.contents = patchedSrc
         file.messages = []
         const processedFile = await processor({fs, files}).process(file)
-        console.log("Processed clientside on setSrc", file.path)
+        console.log("Processed clientside on setSrc", file.path, processedFile)
 
         await onLifecyclePlugins(processedFile, ONSAVE, patchedSrc, processedFile, processedFile.data.ast)
 
@@ -111,6 +112,9 @@ const App = ({root, file, fs, result, files, ssr}) => {
             res: processedFile.result
        })
        setSelectedCell(tmpPos)
+       } catch (err) {
+           console.log("failed to setSrc",err)
+       }
     }
 
     const setSelectedCellWrapper = async (pos, scroll) => {
