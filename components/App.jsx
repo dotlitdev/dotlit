@@ -92,6 +92,7 @@ const App = ({root, file, fs, result, files, ssr}) => {
         const tmpPos = {start: pos.start, end: tmpEnd }
         const tree = filter(processedFile.data.ast, atPos(tmpPos))
         const nodes = selectAll('code', tree)
+        window._dss = {filter, selectAll, tree, ast: processedFile.data.ast, atPos, appliedAtPos: atPos(tmpPos), tmpPos}
         console.log("[CodeCells in Change (pos)]", tmpPos, file.path, tree, nodes)
         for (const codeCell of nodes) {
             const meta = codeCell.data && codeCell.data.meta && codeCell.data.meta
