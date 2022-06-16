@@ -13,10 +13,7 @@
   --code-bg-color: black;
   --code-text-color: white;
   --box-bg-opacity: 0.05;
-}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><h1 id="parser">Parser</h1>
-<p>Built atop the <a class="local" href="../unified.html" title="unified" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]">unified</a> ecosystem, specifically <a class="local" href="../remark.html" title="remark" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]">remark</a>, which takes <code>.lit</code> <a class="local" href="../markdown.html" title="Markdown" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]">Markdown</a> source and outputs <code>mdast</code> (Markdown Abstract Syntax Tree)</p>
-<h2 id="table-of-contents">Table of Contents</h2>
-<ul>
+}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section id="parser" depth="1" class="" startpos="1:1-0" endpos="5:21-185"><div startpos="1:1-0" endpos="3:154-163" class="cell"><div class="cell-content"><h1>Parser</h1><p>Built atop the <a class="local" href="../unified.html" title="unified" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]">unified</a> ecosystem, specifically <a class="local" href="../remark.html" title="remark" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]">remark</a>, which takes <code>.lit</code> <a class="local" href="../markdown.html" title="Markdown" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]">Markdown</a> source and outputs <code>mdast</code> (Markdown Abstract Syntax Tree)</p></div></div><section id="table-of-contents" depth="2" class="" startpos="5:1-165" endpos="5:21-185"><div startpos="5:1-165" endpos="5:21-185" class="cell"><div class="cell-content"><h2>Table of Contents</h2><ul>
 <li>
 <p><a class="fragment" href="#implementation-1">Implementation<span class="linkIcon">§</span></a></p>
 </li>
@@ -34,9 +31,8 @@
 <li>
 <p><a class="fragment" href="#ast-to-string">AST to String<span class="linkIcon">§</span></a></p>
 </li>
-</ul>
-<h2 id="implementation-1">Implementation</h2>
-<div class="dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; index.js</span></span><pre><code class="js">import unified from &#x27;unified&#x27;
+</ul></div></div></section></section>
+<section id="implementation-1" depth="2" class="" startpos="13:1-312" endpos="16:4-374"><div startpos="13:1-312" endpos="13:19-330" class="cell"><div class="cell-content"><h2>Implementation</h2></div></div><div startpos="15:1-332" endpos="16:4-374" class="code   cell"><div class="cell-content"><div class="dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; index.js</span></span><pre><code class="js">import unified from &#x27;unified&#x27;
 import markdown from &#x27;remark-parse&#x27;
 import remarkStringify from &#x27;remark-stringify&#x27;
 import slug from &#x27;remark-slug&#x27;
@@ -115,7 +111,7 @@ export const processor = ({files, fs, litroot} = {files: []}) =&gt; {
     .use(mdblocks, {baseProcessor, litroot, files})
     .use(links.resolveLinks({litroot, files}))
     .use(toc, {})
-    // .use(sections, {})
+    .use(sections, {})
     .use(timer(),{ns:&#x27;parser&#x27;, marker: &#x27;processorComplete&#x27;})
 }
 
@@ -154,11 +150,8 @@ export function stringify(vfile) {
         .process(vfile)
 }
 
-</code></pre></div>
-<h2 id="extensions">Extensions</h2>
-<h3 id="frontmatter">Frontmatter</h3>
-<p><em>Implementation</em></p>
-<div class="dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; frontmatter.js</span></span><pre><code class="js">import visit from &#x27;unist-util-visit&#x27;
+</code></pre></div></div></div></section>
+<section id="extensions" depth="2" class="" startpos="18:1-376" endpos="23:4-460"><div startpos="18:1-376" endpos="18:14-389" class="cell"><div class="cell-content"><h2>Extensions</h2></div></div><section id="frontmatter" depth="3" class="" startpos="19:1-390" endpos="23:4-460"><div startpos="19:1-390" endpos="20:17-422" class="cell"><div class="cell-content"><h3>Frontmatter</h3><p><em>Implementation</em></p></div></div><div startpos="22:1-424" endpos="23:4-460" class="code   cell"><div class="cell-content"><div class="dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; frontmatter.js</span></span><pre><code class="js">import visit from &#x27;unist-util-visit&#x27;
 import before from &#x27;unist-util-find-before&#x27;
 import after from &#x27;unist-util-find-after&#x27;
 import yaml from &#x27;js-yaml&#x27;
@@ -193,17 +186,11 @@ export default function (...args) {
 }
 
 
-</code></pre></div>
-<h3 id="sections">Sections</h3>
-<p>Sections are automatically created from the nested structure of Headings.</p>
-<div class="lang-md local codecell"><span class="meta"><span class="lang">md</span></span><pre><code class="md"># Headline (root section)
+</code></pre></div></div></div></section></section>
+<section id="sections" depth="3" class="" startpos="25:1-462" endpos="41:4-735"><div startpos="25:1-462" endpos="27:74-549" class="cell"><div class="cell-content"><h3>Sections</h3><p>Sections are automatically created from the nested structure of Headings.</p></div></div><div startpos="29:1-551" endpos="32:4-614" class="code   cell"><div class="cell-content"><div class="lang-md local codecell"><span class="meta"><span class="lang">md</span></span><pre><code class="md"># Headline (root section)
 ## Subtitle (child section)
-</code></pre></div>
-<p>They can be collapse/folded (tbd)</p>
-<div class="lang-md local codecell"><span class="meta"><span class="lang">md</span></span><pre><code class="md"># &gt;Headline (collapsed)
-</code></pre></div>
-<p><em>Implementation</em></p>
-<div class="dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; sections.js</span></span><pre><code class="js">import heading from &quot;mdast-util-heading-range&quot;;
+</code></pre></div></div></div><div startpos="34:1-616" endpos="34:34-649" class="cell"><div class="cell-content"><p>They can be collapse/folded (tbd)</p></div></div><div startpos="36:1-651" endpos="38:4-684" class="code   cell"><div class="cell-content"><div class="lang-md local codecell"><span class="meta"><span class="lang">md</span></span><pre><code class="md"># &gt;Headline (collapsed)
+</code></pre></div></div></div><div startpos="39:1-685" endpos="39:17-701" class="cell"><div class="cell-content"><p><em>Implementation</em></p></div></div><div startpos="40:1-702" endpos="41:4-735" class="code   cell"><div class="cell-content"><div class="dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; sections.js</span></span><pre><code class="js">import heading from &quot;mdast-util-heading-range&quot;;
 import visit from &quot;unist-util-visit&quot;;
 import flatMap from &quot;unist-util-flatmap&quot;;
 import { getConsoleForNamespace } from &#x27;../utils/console&#x27;
@@ -402,12 +389,9 @@ export const ungroupSections = (options = {}) =&gt; (...args) =&gt; (tree) =&gt;
   return tree
 }
 
-</code></pre></div>
-<h3 id="cells">Cells</h3>
-<p><em>Currently implemented as part of <strong>Sections</strong>, see above.</em></p>
-<h3 id="codeblocks">Codeblocks</h3>
-<p><em>Implementation</em></p>
-<div class="dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; codeblocks.js</span></span><pre><code class="js">import visit from &#x27;unist-util-visit&#x27;
+</code></pre></div></div></div></section>
+<section id="cells" depth="3" class="" startpos="43:1-737" endpos="45:60-807"><div startpos="43:1-737" endpos="45:60-807" class="cell"><div class="cell-content"><h3>Cells</h3><p><em>Currently implemented as part of <strong>Sections</strong>, see above.</em></p></div></div></section>
+<section id="codeblocks" depth="3" class="" startpos="47:1-809" endpos="101:4-2226"><div startpos="47:1-809" endpos="49:17-841" class="cell"><div class="cell-content"><h3>Codeblocks</h3><p><em>Implementation</em></p></div></div><div startpos="51:1-843" endpos="52:4-878" class="code   cell"><div class="cell-content"><div class="dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; codeblocks.js</span></span><pre><code class="js">import visit from &#x27;unist-util-visit&#x27;
 import { getConsoleForNamespace } from &#x27;../utils/console&#x27;
 
 const console = getConsoleForNamespace(&#x27;codeblocks&#x27;)
@@ -581,8 +565,7 @@ export const metaToString = (meta) =&gt; {
   return parts.filter((x) =&gt; x).join(&quot; &quot;);
 };
 
-</code></pre></div>
-<div class="tag-meta tag-tostring lang-js local codecell"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#033165" class="tag">meta</span><span style="color:black;background-color:#ccb166" class="tag">tostring</span></span><pre><code class="js">const metaToString = lit.parser.utils.metaToString;
+</code></pre></div></div></div><div startpos="53:1-879" endpos="101:4-2226" class="code   cell"><div class="cell-content"><div class="tag-meta tag-tostring lang-js local codecell"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#033165" class="tag">meta</span><span style="color:black;background-color:#ccb166" class="tag">tostring</span></span><pre><code class="js">const metaToString = lit.parser.utils.metaToString;
 
 const input =
   &quot;js index.jsx !foo #bar baz=qux\\ zig &lt; source.jsx &gt; json output.json #faz !raz&quot;;
@@ -592,8 +575,7 @@ console.log(meta);
 return metaToString(meta);
 return lit.parser.utils;
 
-</code></pre></div>
-<div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">49.6w ago</span></span></span><output><pre><code class="txt">js index.jsx !foo #bar baz=qux\ zig &lt; source.jsx &gt; json output.json #faz !raz
+</code></pre></div><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">49.6w ago</span></span></span><output><pre><code class="txt">js index.jsx !foo #bar baz=qux\ zig &lt; source.jsx &gt; json output.json #faz !raz
 { attrs: { baz: &#x27;qux\\ zig&#x27; },
   lang: &#x27;js&#x27;,
   filename: &#x27;index.jsx&#x27;,
@@ -628,10 +610,8 @@ return lit.parser.utils;
   raw: &#x27;js index.jsx !foo #bar baz=qux\\ zig &lt; source.jsx &gt; json output.json #faz !raz&#x27;,
   fromSource: &#x27;source.jsx&#x27; }
 js index.jsx !foo baz=qux\ zig #bar &lt; txt source.jsx &gt; json output.json !raz #faz
-</code></pre></output></div>
-<h3 id="markdown-blocks">Markdown blocks</h3>
-<p><em>Implementation</em></p>
-<div class="dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; mdblocks.js</span></span><pre><code class="js">import visit from &#x27;unist-util-visit&#x27;
+</code></pre></output></div></div></div></section>
+<section id="markdown-blocks" depth="3" class="" startpos="104:1-2229" endpos="109:4-2301"><div startpos="104:1-2229" endpos="106:17-2266" class="cell"><div class="cell-content"><h3>Markdown blocks</h3><p><em>Implementation</em></p></div></div><div startpos="108:1-2268" endpos="109:4-2301" class="code   cell"><div class="cell-content"><div class="dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; mdblocks.js</span></span><pre><code class="js">import visit from &#x27;unist-util-visit&#x27;
 import {getConsoleForNamespace} from &#x27;../utils/console&#x27;
 import vfile from &#x27;vfile&#x27;
 
@@ -666,10 +646,8 @@ export const mdblocks = function ({baseProcessor, files, litroot}) {
     }
 }
 
-</code></pre></div>
-<h3 id="links">Links</h3>
-<p><em>Implementation</em></p>
-<div class="dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; links.js</span></span><pre><code class="js">import {join, resolve, relative as isRelative, dirname} from &quot;path&quot;;
+</code></pre></div></div></div></section>
+<section id="links" depth="3" class="" startpos="111:1-2304" endpos="116:4-2363"><div startpos="111:1-2304" endpos="113:17-2331" class="cell"><div class="cell-content"><h3>Links</h3><p><em>Implementation</em></p></div></div><div startpos="115:1-2333" endpos="116:4-2363" class="code   cell"><div class="cell-content"><div class="dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; links.js</span></span><pre><code class="js">import {join, resolve, relative as isRelative, dirname} from &quot;path&quot;;
 import visit from &quot;unist-util-visit&quot;;
 import { getConsoleForNamespace } from &quot;../utils/console&quot;;
 
@@ -834,18 +812,16 @@ export default {
   decorateLinkNode,
 }
 
-</code></pre></div>
-<h2 id="ast-to-string">AST to String</h2>
-<ul class="contains-task-list">
+</code></pre></div></div></div></section>
+<section id="ast-to-string" depth="2" class="" startpos="118:1-2365" endpos="130:4-2891"><div startpos="118:1-2365" endpos="122:168-2716" class="cell"><div class="cell-content"><h2>AST to String</h2><ul class="contains-task-list">
 <li class="task-list-item">
 <p><input type="checkbox" disabled=""/> <a class="exists local" href="../todo.html" title="TODO" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]">TODO</a> refactor save (update src) to operate on AST directly and stringify as below, instead of the cureent <a class="local" href="../utils/unist-patch-source.html" title="../utils/unist-patch-source" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]">../utils/unist-patch-source</a> implementaction.</p>
 <p>This is complicated by the fact that new cell source can in effect result in previous and next cell semantic/structure changes, hence the patch source implementation</p>
 </li>
-</ul>
-<div class="lang-js local codecell"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const {toMarkdown, ungroupSections}
+</ul></div></div><div startpos="123:1-2717" endpos="130:4-2891" class="code   cell"><div class="cell-content"><div class="lang-js local codecell"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const {toMarkdown, ungroupSections}
       = lit.parser.utils
 const unGroup = ungroupSections()()
 const tree = unGroup(lit.ast)
 const md = toMarkdown(tree)
 return md
-</code></pre></div></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="Links" href="/testing/links.html">Links</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
+</code></pre></div></div></div></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="Links" href="/testing/links.html">Links</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
