@@ -62,7 +62,7 @@ const App = ({root, file, fs, result, files, ssr}) => {
     const themes = themePlugins && Object.keys(themePlugins).map(t=>({id: t, ...themePlugins[t]}))
     
     const setSrcWrapper = async (pos, cellSource) => {
-        console.log("<App/> Set src wrapper", posstr(pos))
+        console.log("<App/> Set src wrapper", posstr(pos.start), posstr(pos.end))
         const patchedSrc = patchSource(srcAndRes.src, pos, cellSource.trimEnd())
         if (patchedSrc === srcAndRes.src) {
             console.log("No Change to source of document. Not updating.")
