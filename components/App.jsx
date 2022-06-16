@@ -113,7 +113,7 @@ const App = ({root, file, fs, result, files, ssr}) => {
        })
        setSelectedCell(tmpPos)
        } catch (err) {
-           console.log("failed to setSrc",err)
+           console.log("failed to setSrc", pos, cellSource, err)
        }
     }
 
