@@ -101,6 +101,8 @@ const App = ({root, file, fs, result, files, ssr}) => {
                 const filepath = path.join( path.dirname(file.path), filename)
                 await fs.writeFile(filepath, content)
                 console.log(`Wrote codefile ${filename} to "${filepath}" on disk`)
+            } else {
+                console.log(`Not writing code cell to fs`,filename, extract, codeCell)
             }
        }
 
