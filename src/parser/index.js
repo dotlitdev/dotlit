@@ -77,7 +77,7 @@ export const processor = ({files, fs, litroot} = {files: []}) => {
     .use(mdblocks, {baseProcessor, litroot, files})
     .use(links.resolveLinks({litroot, files}))
     .use(toc, {})
-    // .use(sections, {})
+    .use(sections, {})
     .use(timer(),{ns:'parser', marker: 'processorComplete'})
 }
 
