@@ -3,13 +3,13 @@
 Pseodo code steps, operating during `parse` of standard `mdast`.
 
 - With a stack initialised with root node (with children removed) ie `[root]`
-- define `currentSection` as `null`
 - Iterate over all removed root chilren (in reverse? TBD) as `node`
-  - if `currentSection` is null
-    - create with `node` depth or 0.
-    - add `node` as child of `currentSection`
+  - if top of stack is `root`
+    - create section with `node` depth or 0.
+    - add `node` as child of section
+    - push section to top of stack
   - else if `node` is a `heading`
     - with deeper depth?
     - with shallower depth?
     - with equal depth?
-  - else add to `currentSection`
+  - else add `node` to section at top of stack
