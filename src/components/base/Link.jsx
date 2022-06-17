@@ -14,7 +14,7 @@ const Link = props => {
     const external = data.external || /^https?:\/\//.test(href)
 
     const icon = external
-                 ? <ExternalLinkIcon />
+                 ? '↗'
                  : fragment
                    ? '§'
                    : null

@@ -6,14 +6,14 @@ import vfile from 'vfile'
 
 import hastCodeHandler from './utils/hast-util-code-handler'
 
-import {renderToString} from 'react-dom/server'
+import ReactDOMServer from 'react-dom/server'
 import React from 'react'
 
 import {processor as parserProcessor} from '../parser'
 import {transcludeCode} from './transcludeCode'
 import {extractPlugins} from './extractPlugins'
 
-import {createDocument} from '../components/Document'
+import Document from '../components/Document'
 import Paragraph from '../components/base/Paragraph'
 import Link from '../components/base/Link'
 import {Codeblock} from '../components/base/Codeblock'
@@ -154,13 +154,13 @@ export async function renderedVFileToDoc(vfile, cmd) {
 
     // console.log('Render to document vFile', vfile.path)
 
-    const notebook = createDocument({
-        file: vfile,
-        root: cmd.base || relroot,
-        backlinks: vfile.data.backlinks,
-    })
+    const notebook = <Document
+        file={vfile}
+        root={cmd.base || relroot}
+        backlinks={vfile.data.backlinks}
+    />
 
-    vfile.contents = notebook
+    vfile.contents = ReactDOMServer.renderToString(notebook)
     vfile.extname = '.html'
     return vfile
 }
