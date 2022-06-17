@@ -1,4 +1,18 @@
-<html data-reactroot=""><head><title>Components</title><meta name="litsrc" value="/components/components.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><meta name="apple-mobile-web-app-capable" content="yes"/><link rel="apple-touch-icon" href="/assets/lit-logo.png"/><link rel="icon" href="/assets/lit-logo.png"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children" disabled=""><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span><span class="led led-grey"></span><span class="led led-grey"></span></li></menu></li></menu></div><style>body {
+<html>
+        <head>
+            <title>Components</title>
+            <meta name="litsrc" value="/components/components.lit"/>
+            <meta name="litroot" value="/"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+            
+            <meta name="apple-mobile-web-app-capable" content="yes"/>
+            <link rel="apple-touch-icon" href="/assets/lit-logo.png"/>
+            <link rel="icon" href="/assets/lit-logo.png"/>
+            <link rel="stylesheet" href="/style.css"/>
+            
+        </head>
+        <body>
+            <div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children" disabled=""><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span><span class="led led-grey"></span><span class="led led-grey"></span></li></menu></li></menu></div><style>body {
   --bg: white;
   --bg-secondary-color: #efefef;
     
@@ -54,39 +68,48 @@ import path from &#x27;path&#x27;
 import App from &#x27;./App&#x27;
 import Backlinks from &#x27;./Backlinks&#x27;
 import { getConsoleForNamespace } from &#x27;../utils/console&#x27;
+import { ServerStyleSheet } from &#x27;styled-components&#x27;;
+import { renderToString } from &#x27;react-dom/server&#x27;
 
 const console = getConsoleForNamespace(&#x27;Document&#x27;)
 
-const Document = props =&gt; {
+export function createDocument (props) {
 
     const files = props.files || []
     const result = props.file.result
     const title = props.file.data.frontmatter.title || props.file.stem
     const theme = props.file.data.frontmatter.theme
 
-    return &lt;html&gt;
+    const sheet = new ServerStyleSheet();
+    const app = renderToString(sheet.collectStyles(&lt;&gt;
+        &lt;div id=&quot;lit-app&quot;&gt;&lt;App root={props.root} file={props.file} fs={props.fs} result={result} files={files} ssr={true} /&gt;&lt;/div&gt;
+        &lt;div id=&quot;backlinks&quot;&gt;&lt;Backlinks root={props.root} links={props.backlinks || []}/&gt;&lt;/div&gt;
+    &lt;/&gt;))
+
+    const styles = sheet.getStyleTags()
+
+    return `&lt;html&gt;
         &lt;head&gt;
-            &lt;title&gt;{title}&lt;/title&gt;
-            &lt;meta name=&quot;litsrc&quot; value={props.file.data.canonical}/&gt;
-            &lt;meta name=&quot;litroot&quot; value={props.root}/&gt;
+            &lt;title&gt;${title}&lt;/title&gt;
+            &lt;meta name=&quot;litsrc&quot; value=&quot;${props.file.data.canonical}&quot;/&gt;
+            &lt;meta name=&quot;litroot&quot; value=&quot;${props.root}&quot;/&gt;
             &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0&quot;/&gt;
-            {theme &amp;&amp; &lt;link rel=&quot;stylesheet&quot; href={theme}/&gt;}
+            ${theme ? `&lt;link rel=&quot;stylesheet&quot; href=&quot;${theme}&quot;/&gt;` : &#x27;&#x27;}
             &lt;meta name=&quot;apple-mobile-web-app-capable&quot; content=&quot;yes&quot;/&gt;
-            &lt;link rel=&quot;apple-touch-icon&quot; href={path.join(props.root, &#x27;assets/lit-logo.png&#x27;)}/&gt;
-            &lt;link rel=&quot;icon&quot; href={path.join(props.root, &#x27;assets/lit-logo.png&#x27;)}/&gt;
-            &lt;link rel=&quot;stylesheet&quot; href={path.join(props.root, &#x27;style.css&#x27;)}/&gt;
+            &lt;link rel=&quot;apple-touch-icon&quot; href=&quot;${path.join(props.root, &#x27;assets/lit-logo.png&#x27;)}&quot;/&gt;
+            &lt;link rel=&quot;icon&quot; href=&quot;${path.join(props.root, &#x27;assets/lit-logo.png&#x27;)}&quot;/&gt;
+            &lt;link rel=&quot;stylesheet&quot; href=&quot;${path.join(props.root, &#x27;style.css&#x27;)}&quot;/&gt;
+            ${styles}
         &lt;/head&gt;
         &lt;body&gt;
-            &lt;div id=&quot;lit-app&quot;&gt;&lt;App root={props.root} file={props.file} fs={props.fs} result={result} files={files} ssr={true}/&gt;&lt;/div&gt;
-            &lt;div id=&quot;backlinks&quot;&gt;&lt;Backlinks root={props.root} links={props.backlinks || []}/&gt;&lt;/div&gt;
+            ${app}
             &lt;script src=&quot;//cdn.jsdelivr.net/npm/eruda&quot;&gt;&lt;/script&gt;
             &lt;script&gt;eruda.init();&lt;/script&gt;
-            &lt;script async src={path.join(props.root, &#x27;web.bundle.js&#x27;)}/&gt;
+            &lt;script async src=&quot;${path.join(props.root, &#x27;web.bundle.js&#x27;)}&quot;/&gt;
+            
         &lt;/body&gt;
-    &lt;/html&gt;
+    &lt;/html&gt;`
 }
-
-export default Document
 
 </code></pre></div></div></div></section>
 <section id="header" depth="2" class="" startpos="15:1-154" endpos="19:4-199"><div startpos="15:1-154" endpos="15:10-163" class="cell"><div class="cell-content"><h2>Header</h2></div></div><div startpos="17:1-165" endpos="19:4-199" class="code   cell"><div class="cell-content"><div class="dir-collapse lang-jsx local collapsed codecell"><span class="meta"><span class="lang">jsx</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; Header.jsx</span></span><pre><code class="jsx">import React, { useState, useEffect } from &#x27;react&#x27;
@@ -1099,7 +1122,7 @@ const Link = props =&gt; {
     const external = data.external || /^https?:\/\//.test(href)
 
     const icon = external
-                 ? &#x27;↗&#x27;
+                 ? &lt;ExternalLinkIcon /&gt;
                  : fragment
                    ? &#x27;§&#x27;
                    : null
@@ -1155,4 +1178,10 @@ export default class Backlinks extends React.Component {
     }
 }
 
-</code></pre></div></div></div></section></div></div><div id="backlinks"><h4>Backlinks (2)</h4><ol><li><a title="Client" href="/client/client.html">Client</a></li><li><a title="Renderer" href="/renderer/renderer.html">Renderer</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
+</code></pre></div></div></div></section></div></div><div id="backlinks"><h4>Backlinks (2)</h4><ol><li><a title="Client" href="/client/client.html">Client</a></li><li><a title="Renderer" href="/renderer/renderer.html">Renderer</a></li></ol></div>
+            <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+            <script>eruda.init();</script>
+            <script async src="/web.bundle.js"/>
+            
+        </body>
+    </html>

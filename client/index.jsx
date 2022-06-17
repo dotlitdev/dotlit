@@ -6,6 +6,7 @@ const {time, getTimings} = require('../utils/timings')
 time('client')
 const React = require('react')
 const ReactDOM = require('react-dom')
+const styled = require('styled-components')
 const vfile = require('vfile')
 const path = require('path')
 const qs = require('querystring-es3')
@@ -103,6 +104,7 @@ export const lit = {
         mime,
         React,
         ReactDOM,
+        styled,
         unist: {
             select,
             source,
