@@ -1,18 +1,4 @@
-<html>
-        <head>
-            <title>Renderer</title>
-            <meta name="litsrc" value="/renderer/renderer.lit"/>
-            <meta name="litroot" value="/"/>
-            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-            
-            <meta name="apple-mobile-web-app-capable" content="yes"/>
-            <link rel="apple-touch-icon" href="/assets/lit-logo.png"/>
-            <link rel="icon" href="/assets/lit-logo.png"/>
-            <link rel="stylesheet" href="/style.css"/>
-            
-        </head>
-        <body>
-            <div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children" disabled=""><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span><span class="led led-grey"></span><span class="led led-grey"></span></li></menu></li></menu></div><style>body {
+<html data-reactroot=""><head><title>Renderer</title><meta name="litsrc" value="/renderer/renderer.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><meta name="apple-mobile-web-app-capable" content="yes"/><link rel="apple-touch-icon" href="/assets/lit-logo.png"/><link rel="icon" href="/assets/lit-logo.png"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children" disabled=""><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span><span class="led led-grey"></span><span class="led led-grey"></span></li></menu></li></menu></div><style>body {
   --bg: white;
   --bg-secondary-color: #efefef;
     
@@ -38,14 +24,14 @@ import vfile from &#x27;vfile&#x27;
 
 import hastCodeHandler from &#x27;./utils/hast-util-code-handler&#x27;
 
-import {renderToString} from &#x27;react-dom/server&#x27;
+import ReactDOMServer from &#x27;react-dom/server&#x27;
 import React from &#x27;react&#x27;
 
 import {processor as parserProcessor} from &#x27;../parser&#x27;
 import {transcludeCode} from &#x27;./transcludeCode&#x27;
 import {extractPlugins} from &#x27;./extractPlugins&#x27;
 
-import {createDocument} from &#x27;../components/Document&#x27;
+import Document from &#x27;../components/Document&#x27;
 import Paragraph from &#x27;../components/base/Paragraph&#x27;
 import Link from &#x27;../components/base/Link&#x27;
 import {Codeblock} from &#x27;../components/base/Codeblock&#x27;
@@ -186,13 +172,13 @@ export async function renderedVFileToDoc(vfile, cmd) {
 
     // console.log(&#x27;Render to document vFile&#x27;, vfile.path)
 
-    const notebook = createDocument({
-        file: vfile,
-        root: cmd.base || relroot,
-        backlinks: vfile.data.backlinks,
-    })
+    const notebook = &lt;Document
+        file={vfile}
+        root={cmd.base || relroot}
+        backlinks={vfile.data.backlinks}
+    /&gt;
 
-    vfile.contents = notebook
+    vfile.contents = ReactDOMServer.renderToString(notebook)
     vfile.extname = &#x27;.html&#x27;
     return vfile
 }
@@ -358,10 +344,4 @@ export const transcludeCode = ({fs}) =&gt; {
     }
 }
 
-</code></pre></div></div></div></section></div></div><div id="backlinks"></div>
-            <script src="//cdn.jsdelivr.net/npm/eruda"></script>
-            <script>eruda.init();</script>
-            <script async src="/web.bundle.js"/>
-            
-        </body>
-    </html>
+</code></pre></div></div></div></section></div></div><div id="backlinks"></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
