@@ -11,6 +11,7 @@ export const sections = (...args) => (tree) => {
       children: [node],
       depth: node.depth || 0,
     }
+    // TODO? push section to stack[-1].children
     stack.push(section)
   }
 
@@ -22,6 +23,7 @@ export const sections = (...args) => (tree) => {
       if (node.depth > section.depth) {
         createSection(node)
       } else {
+        // TODO? stop before popping root?
         while (stack[-1].depth > node.depth ) {
           stack.pop()
         }
