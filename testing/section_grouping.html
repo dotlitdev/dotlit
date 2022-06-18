@@ -13,7 +13,7 @@
   --code-bg-color: black;
   --code-text-color: white;
   --box-bg-opacity: 0.05;
-}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section id="-testing-section-grouping" depth="1" class="" startpos="1:1-0" endpos="79:4-2159"><div startpos="1:1-0" endpos="22:33-864" class="cell"><div class="cell-content"><h1><a class="exists local" href="index.html" title="🔬 Testing" wikilink="true" filepath="/testing/section_grouping.lit" root="" data="[object Object]">🔬 Testing</a> Section grouping</h1><p>Pseodo code steps, operating during <code>parse</code> of standard <code>mdast</code>.</p><ul>
+}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section id="-testing-section-grouping" depth="1" class="" startpos="1:1-0" endpos="83:4-2376"><div startpos="1:1-0" endpos="26:61-1081" class="cell"><div class="cell-content"><h1><a class="exists local" href="index.html" title="🔬 Testing" wikilink="true" filepath="/testing/section_grouping.lit" root="" data="[object Object]">🔬 Testing</a> Section grouping</h1><p>Pseudo code steps, operating during <code>parse</code> of standard <code>mdast</code>.</p><ul>
 <li>With a stack initialised with root node (with children removed) ie <code>[root]</code></li>
 <li>Iterate over all removed root chilren (in reverse? TBD) as <code>node</code>
 <ul>
@@ -36,7 +36,11 @@
 </li>
 <li>else<!-- -->
 <ul>
-<li>pop the stack until top of stack has depth equal to or lower (shallower) than <code>node</code> depth.</li>
+<li>for each section in stack until top of stack has depth equal to or lower (shallower) than <code>node</code> depth.<!-- -->
+<ul>
+<li>pop stack and call process handler on popped section</li>
+</ul>
+</li>
 <li>create section with <code>node</code> depth</li>
 <li>add <code>node</code> as child of section</li>
 <li>push section to top of stack</li>
@@ -45,9 +49,18 @@
 </ul>
 </li>
 <li>else add <code>node</code> to <code>section</code></li>
+<li>if no next node<!-- -->
+<ul>
+<li>for each section in stack until but not including root<!-- -->
+<ul>
+<li>pop stack and call process handler on popped section</li>
 </ul>
 </li>
-</ul></div></div><div startpos="24:1-866" endpos="79:4-2159" class="code output  cell"><div class="cell-content"><div class="lang-js local codecell output"><a name="../parser/sections-v3.js"></a><span class="meta"><span class="lang">js</span><span class="filename">../parser/sections-v3.js</span></span><output><pre><code class="js">// This files source is defined in [[testing/section_grouping|🔬 Testing Section grouping]]
+</ul>
+</li>
+</ul>
+</li>
+</ul></div></div><div startpos="28:1-1083" endpos="83:4-2376" class="code output  cell"><div class="cell-content"><div class="lang-js local codecell output"><a name="../parser/sections-v3.js"></a><span class="meta"><span class="lang">js</span><span class="filename">../parser/sections-v3.js</span></span><output><pre><code class="js">// This files source is defined in [[testing/section_grouping|🔬 Testing Section grouping]]
 
 export const sections = ({processSection}) =&gt; (tree) =&gt; {
   const stack = [tree]
