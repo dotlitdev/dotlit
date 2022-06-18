@@ -87,15 +87,14 @@ export const sections = ({processSection}) => (tree) => {
 
 ## Cells
 
-- given a node (generally a `section`)
+- given a set of nodes (generally childrrn of a `section`)
 - define an empty stack `[]`
-- for each child in node.children
+- for each node in nodes
   - if its a section push to top of stack
-  - else 
-    - if top of stack is a section
-      - create empty cell
-      - push to top of stack
-    - if its a code block
-      - if previous cell is a code block and node is attached
-        - ...
-    - else push node to children of cell at top of stack
+  - else if its a code block
+    - if previous cell is a code block and node is attached
+      - ...
+  - else if stack is empty or top of stack is a section
+    - create empty cell
+    - push to top of stack
+  - else push node to children of cell at top of stack
