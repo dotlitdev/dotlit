@@ -15,9 +15,11 @@ export const sections = ({processSection}) => (tree) => {
     stack.push(section)
   }
 
-  const shouldPopStack = (node, force) => {
-    const section = stack.at(-1)
-    return section.type !== 'root' && (force || section.depth >= node.depth)
+  const shouldPopStack = (n, force) => {
+    const s = stack.at(-1)
+    const notRoot = s.type !== 'root'
+    const nShallow = s.depth >= n.depth
+    return notRoot && (force || nShallow)
   }
 
   const endSection = () => {
