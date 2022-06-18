@@ -13,7 +13,7 @@
   --code-bg-color: black;
   --code-text-color: white;
   --box-bg-opacity: 0.05;
-}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section id="-testing-section-grouping" depth="1" class="" startpos="1:1-0" endpos="69:4-2028"><div startpos="1:1-0" endpos="22:33-864" class="cell"><div class="cell-content"><h1><a class="exists local" href="index.html" title="🔬 Testing" wikilink="true" filepath="/testing/section_grouping.lit" root="" data="[object Object]">🔬 Testing</a> Section grouping</h1><p>Pseodo code steps, operating during <code>parse</code> of standard <code>mdast</code>.</p><ul>
+}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section id="-testing-section-grouping" depth="1" class="" startpos="1:1-0" endpos="77:4-2170"><div startpos="1:1-0" endpos="22:33-864" class="cell"><div class="cell-content"><h1><a class="exists local" href="index.html" title="🔬 Testing" wikilink="true" filepath="/testing/section_grouping.lit" root="" data="[object Object]">🔬 Testing</a> Section grouping</h1><p>Pseodo code steps, operating during <code>parse</code> of standard <code>mdast</code>.</p><ul>
 <li>With a stack initialised with root node (with children removed) ie <code>[root]</code></li>
 <li>Iterate over all removed root chilren (in reverse? TBD) as <code>node</code>
 <ul>
@@ -47,7 +47,7 @@
 <li>else add <code>node</code> to <code>section</code></li>
 </ul>
 </li>
-</ul></div></div><div startpos="24:1-866" endpos="69:4-2028" class="code output  cell"><div class="cell-content"><div class="lang-js local codecell output"><a name="../parser/sections-v3.js"></a><span class="meta"><span class="lang">js</span><span class="filename">../parser/sections-v3.js</span></span><output><pre><code class="js">// This files source is defined in [[testing/section_grouping|🔬 Testing Section grouping]]
+</ul></div></div><div startpos="24:1-866" endpos="77:4-2170" class="code output  cell"><div class="cell-content"><div class="lang-js local codecell output"><a name="../parser/sections-v3.js"></a><span class="meta"><span class="lang">js</span><span class="filename">../parser/sections-v3.js</span></span><output><pre><code class="js">// This files source is defined in [[testing/section_grouping|🔬 Testing Section grouping]]
 
 export const sections = ({processSection}) =&gt; (tree) =&gt; {
   const stack = [tree]
@@ -64,6 +64,16 @@ export const sections = ({processSection}) =&gt; (tree) =&gt; {
     stack.push(section)
   }
 
+  const shouldPopStack = (node, force) =&gt; {
+    const section = stack.at(-1)
+    return section.type !== &#x27;root&#x27; &amp;&amp; (force || section.depth &gt;= node.depth)
+  }
+
+  const endSection = () =&gt; {
+    const s = stack.pop()
+    if (processSection) processSection(s)
+  }
+
   for (const node in nodes) {
     const section = stack.at(-1)
     if (section.type === &#x27;root&#x27;) {
@@ -73,8 +83,7 @@ export const sections = ({processSection}) =&gt; (tree) =&gt; {
         createSection(node)
       } else {
         while (stack.at(-1).type !== &#x27;root&#x27; &amp;&amp; stack.at(-1).depth &gt;= node.depth ) {
-          const s = stack.pop()
-          // processSection(s)
+          endSection()
         }
         createSection(node)
       }
@@ -83,9 +92,8 @@ export const sections = ({processSection}) =&gt; (tree) =&gt; {
     }
 
     if (!nodes[index+1]) {
-      while (stack.at(-1).type !== &#x27;root&#x27; &amp;&amp; stack.at(-1).depth &gt;= node.depth ) {
-          const s = stack.pop()
-          // processSection(s)
+      while (shouldPopStack(node, true)) {
+          endSection()
         }
     }
   }
