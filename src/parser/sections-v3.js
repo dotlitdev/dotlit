@@ -15,6 +15,16 @@ export const sections = ({processSection}) => (tree) => {
     stack.push(section)
   }
 
+  const shouldPopStack = (node, force) => {
+    const section = stack.at(-1)
+    return section.type !== 'root' && (force || section.depth >= node.depth)
+  }
+
+  const endSection = () => {
+    const s = stack.pop()
+    if (processSection) processSection(s)
+  }
+
   for (const node in nodes) {
     const section = stack.at(-1)
     if (section.type === 'root') {
@@ -24,8 +34,7 @@ export const sections = ({processSection}) => (tree) => {
         createSection(node)
       } else {
         while (stack.at(-1).type !== 'root' && stack.at(-1).depth >= node.depth ) {
-          const s = stack.pop()
-          // processSection(s)
+          endSection()
         }
         createSection(node)
       }
@@ -34,9 +43,8 @@ export const sections = ({processSection}) => (tree) => {
     }
 
     if (!nodes[index+1]) {
-      while (stack.at(-1).type !== 'root' && stack.at(-1).depth >= node.depth ) {
-          const s = stack.pop()
-          // processSection(s)
+      while (shouldPopStack(node, true)) {
+          endSection()
         }
     }
   }
