@@ -1,6 +1,7 @@
 // This files source is defined in [[testing/section_grouping|🔬 Testing Section grouping]]
 
-export const sections = ({processSection}) => (tree) => {
+export const sections = (options) => (...args) => (tree) => {
+  const {processSection} = options
   const stack = [tree]
   const nodes = tree.children
   tree.children = []
