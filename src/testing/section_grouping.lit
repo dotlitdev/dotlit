@@ -57,7 +57,7 @@ export const sections = ({processSection}) => (tree) => {
       if (node.depth > section.depth) {
         createSection(node)
       } else {
-        while (stack.at(-1).type !== 'root' && stack.at(-1).depth >= node.depth ) {
+        while (shouldPopStack(node)) {
           endSection()
         }
         createSection(node)
