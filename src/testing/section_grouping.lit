@@ -1,6 +1,6 @@
 # [[🔬 Testing]] Section grouping
 
-Pseodo code steps, operating during `parse` of standard `mdast`.
+Pseudo code steps, operating during `parse` of standard `mdast`.
 
 - With a stack initialised with root node (with children removed) ie `[root]`
 - Iterate over all removed root chilren (in reverse? TBD) as `node`
@@ -15,11 +15,15 @@ Pseodo code steps, operating during `parse` of standard `mdast`.
       - add `node` as child of section
       - push section to top of stack
     - else
-      - pop the stack until top of stack has depth equal to or lower (shallower) than `node` depth.
+      - for each section in stack until top of stack has depth equal to or lower (shallower) than `node` depth.
+        - pop stack and call process handler on popped section
       - create section with `node` depth
       - add `node` as child of section
       - push section to top of stack
   - else add `node` to `section`
+  - if no next node
+    - for each section in stack until but not including root
+      - pop stack and call process handler on popped section
 
 ```>js ../parser/sections-v3.js
 // This files source is defined in [[testing/section_grouping|🔬 Testing Section grouping]]
