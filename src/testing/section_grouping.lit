@@ -8,17 +8,20 @@ Pseudo code steps, operating during `parse` of standard `mdast`.
   - if `section` is `root`
     - create section with `node` depth or 0.
     - add `node` as child of section
+    - push section to children of node at the top of stack
     - push section to top of stack
   - else if `node` is a `heading`
     - with deeper depth?
       - create section with `node` depth
       - add `node` as child of section
+      - push section to children of node at the top of stack
       - push section to top of stack
     - else
       - for each section in stack until top of stack has depth equal to or lower (shallower) than `node` depth.
         - pop stack and call process handler on popped section
       - create section with `node` depth
       - add `node` as child of section
+      - push section to children of node at the top of stack
       - push section to top of stack
   - else add `node` to `section`
   - if no next node
