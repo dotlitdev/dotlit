@@ -52,8 +52,7 @@ export const sections = (options) => (...args) => (tree) => {
       }
     } else {
       section.children.push(node);
-      // TODO why no position?
-      if (node.position) section.position.end = node.oposition.end;
+      section.position.end = node.position.end;
     }
 
     if (!nodes[index+1]) {
