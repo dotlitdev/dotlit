@@ -21,8 +21,8 @@ export const cells = (section) => {
     if (node.type === 'section')
       stack.push(node)
     else if (node.type === 'code') {
-      if (prev?.type === 'code') {
-        // ...
+      if (prev?.type === 'code' && node.data?.meta?.attached) {
+        prev.children.push(node)
       } else {
         createCell(node)
       }
@@ -32,4 +32,6 @@ export const cells = (section) => {
       stack.at(-1).children.push(node)
     }
   })
+
+  return section
 }
