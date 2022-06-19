@@ -1,0 +1,398 @@
+<html data-reactroot=""><head><title>PrismJs</title><meta name="litsrc" value="/prismjs_and_a_simple_editor.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><meta name="apple-mobile-web-app-capable" content="yes"/><link rel="apple-touch-icon" href="/assets/lit-logo.png"/><link rel="icon" href="/assets/lit-logo.png"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children" disabled=""><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span><span class="led led-grey"></span><span class="led led-grey"></span></li></menu></li></menu></div><style>body {
+  --bg: white;
+  --bg-secondary-color: #efefef;
+    
+  --text-color: black;
+  --text-secondary-color: grey;
+  --text-primary-color: #9999f7;
+  --text-highlight-bg: yellow;
+  --text-highlight-color: black;
+
+  --divider-subtle: #efefef;
+  --medium-space: 0.4em;
+  --code-bg-color: black;
+  --code-text-color: white;
+  --box-bg-opacity: 0.05;
+}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section class="" startpos="1:1-0" endpos="3:55-65"><div startpos="1:1-0" endpos="3:55-65" class="cell"><div class="cell-content"><h1 id="prismjs">PrismJs</h1><p><a class="external" href="https://github.com/FormidableLabs/prism-react-renderer" filepath="/prismjs_and_a_simple_editor.lit" root="" data="[object Object]">https://github.com/FormidableLabs/prism-react-renderer<span class="linkIcon">↗</span></a></p></div></div><div startpos="5:1-67" endpos="74:4-1778" class="code   cell"><div class="cell-content"><div class="dir-inline lang-js local codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#b96da2" class="directive dir-inline">inline</span></span><pre><code class="js">const importDefault = async (src) =&gt;
+  import(&quot;https://cdn.skypack.dev/&quot; + src).then((m) =&gt; m.default);
+
+return (async (fn) =&gt; {
+  const Editor = lit.utils.ReactEditor.default;
+  const editorProps = lit.utils.ReactEditor.defaultProps;
+  const Highlight = lit.utils.PrismReactRenderer.default;
+  const highlightProps = lit.utils.PrismReactRenderer.defaultProps;
+
+  // return { Editor, Highlight };
+
+  const React = lit.utils.React;
+  const { Fragment, useState } = React;
+
+  const exampleCode = `
+(function someDemo() {
+  var test = &quot;Hello World!&quot;;
+  console.log(test);
+})();
+
+return () =&gt; &lt;App /&gt;;
+`;
+
+  const styles = {
+    root: {
+      boxSizing: &quot;border-box&quot;,
+      fontFamily: &#x27;&quot;Dank Mono&quot;, &quot;Fira Code&quot;, monospace&#x27;,
+    },
+  };
+
+  const EditorExample = (props) =&gt; {
+    const [state, setState] = useState({ code: exampleCode });
+
+    const onValueChange = (code) =&gt; {
+      setState({ code });
+    };
+
+    const highlight = (code) =&gt; (
+      &lt;Highlight {...highlightProps} code={code} language=&quot;jsx&quot;&gt;
+        {({ className, style, tokens, getLineProps, getTokenProps }) =&gt; (
+          &lt;Fragment&gt;
+            {tokens.map((line, i) =&gt; (
+              &lt;div {...getLineProps({ line, key: i })}&gt;
+                {line.map((token, key) =&gt; (
+                  &lt;span {...getTokenProps({ token, key })} /&gt;
+                ))}
+              &lt;/div&gt;
+            ))}
+          &lt;/Fragment&gt;
+        )}
+      &lt;/Highlight&gt;
+    );
+
+    return (
+      &lt;Editor
+        {...editorProps}
+        value={state.code}
+        onValueChange={onValueChange}
+        padding={10}
+        highlight={highlight}
+        style={styles.root}
+      /&gt;
+    );
+  };
+
+  return &lt;EditorExample /&gt;;
+})();
+
+</code></pre></div></div></div><div startpos="76:1-1780" endpos="143:4-3443" class="code   cell"><div class="cell-content"><div class="dir-collapse tag-initial lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#742157" class="tag">initial</span></span><pre><code class="js">const importDefault = async (src) =&gt;
+  import(&quot;https://cdn.skypack.dev/&quot; + src).then((m) =&gt; m.default);
+
+return (async (fn) =&gt; {
+  const Editor = await importDefault(&quot;react-simple-code-editor&quot;);
+  const Highlight = await importDefault(&quot;prism-react-renderer&quot;);
+  const theme = await importDefault(&quot;prism-react-renderer/themes/nightOwl&quot;);
+
+  return { Editor, Highlight, theme };
+
+  const React = lit.utils.React;
+  const { Fragment, useState } = React;
+
+  const exampleCode = `
+(function someDemo() {
+  var test = &quot;Hello World!&quot;;
+  console.log(test);
+})();
+
+return () =&gt; &lt;App /&gt;;
+`;
+
+  const styles = {
+    root: {
+      boxSizing: &quot;border-box&quot;,
+      fontFamily: &#x27;&quot;Dank Mono&quot;, &quot;Fira Code&quot;, monospace&#x27;,
+      ...theme.plain,
+    },
+  };
+
+  const EditorExample = (props) =&gt; {
+    const [state, setState] = useState({ code: exampleCode });
+
+    const onValueChange = (code) =&gt; {
+      setState({ code });
+    };
+
+    const highlight = (code) =&gt; (
+      &lt;Highlight theme={theme} code={code} language=&quot;jsx&quot;&gt;
+        {({ className, style, tokens, getLineProps, getTokenProps }) =&gt; (
+          &lt;Fragment&gt;
+            {tokens.map((line, i) =&gt; (
+              &lt;div {...getLineProps({ line, key: i })}&gt;
+                {line.map((token, key) =&gt; (
+                  &lt;span {...getTokenProps({ token, key })} /&gt;
+                ))}
+              &lt;/div&gt;
+            ))}
+          &lt;/Fragment&gt;
+        )}
+      &lt;/Highlight&gt;
+    );
+
+    return (
+      &lt;Editor
+        value={state.code}
+        onValueChange={onValueChange}
+        padding={10}
+        style={styles.root}
+      /&gt;
+    );
+  };
+
+  return &lt;EditorExample /&gt;;
+})();
+
+</code></pre></div></div></div><div startpos="145:1-3445" endpos="147:4-3522" class="code   cell"><div class="cell-content"><div class="dir-plugin dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=repl</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=module</span><span class="source">&lt; ./plugins/repls/module.js</span></span><pre><code class="js">export const repl = async (src, meta) =&gt; {
+  const { btoa } = lit.utils.safeEncoders;
+  const { transform } = lit.utils;
+  const filename = (meta &amp;&amp; meta.filename) || &quot;untitled.js&quot;;
+  let babel;
+  try {
+    babel = transform(filename, src);
+
+    // So many hacks due to blob and/or data uri
+    // - cachbusting comment
+    // - rewrite imports urls to be absolute
+    const s =
+      `/*${Date.now()}*/` +
+      babel.code.replace(
+        /HORRIBLE_HACK([^&#x27;&quot;]+)/g,
+        //location.href
+        new URL(&quot;.&quot;, location.href).toString() + &quot;$1&quot;
+      );
+    const console = &quot;fake me&quot;;
+    // const url = `data:text/javascript;base64,${btoa(s)}`
+    const url = URL.createObjectURL(new Blob([s], { type: &quot;text/javascript&quot; }));
+    const m = await import(url + &quot;#location=&quot; + location.href);
+    if (typeof m.default === &quot;function&quot;) {
+      const res = await m.default.call({ console });
+      return lit.utils.inspect(res);
+    } else return lit.utils.inspect(m);
+  } catch (err) {
+    return err.message;
+  }
+};
+
+</code></pre></div></div></div><div startpos="149:1-3524" endpos="214:4-5079" class="code   cell"><div class="cell-content"><div class="dir-collapse tag-v2test lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span class="repl">module</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#cc52b5" class="tag">v2test</span></span><pre><code class="js">import Editor, {defaultProps as eprops} from &quot;https://cdn.skypack.dev/react-simple-code-editor&quot;;
+import Highlight, {
+  defaultProps as hprops 
+} from &quot;https://cdn.skypack.dev/prism-react-renderer&quot;;
+// import theme from &quot;https://cdn.skypack.dev/prism-react-renderer/themes/nightOwl&quot;;
+
+// return { Editor, Highlight, theme };
+
+const React = lit.utils.React;
+const { Fragment, useState } = React;
+
+const exampleCode = `
+(function someDemo() {
+  var test = &quot;Hello World!&quot;;
+  console.log(test);
+})();
+
+return () =&gt; &lt;App /&gt;;
+`;
+
+const styles = {
+  root: {
+    boxSizing: &quot;border-box&quot;,
+    fontFamily: &#x27;&quot;Dank Mono&quot;, &quot;Fira Code&quot;, monospace&#x27;,
+  },
+};
+
+const EditorExample = (props) =&gt; {
+  const [state, setState] = useState({ code: exampleCode });
+
+  const onValueChange = (code) =&gt; {
+    setState({ code });
+  };
+
+  const highlight = (code) =&gt; (
+    &lt;Highlight {...{hprops}} code={code} language=&quot;jsx&quot;&gt;
+      {({ className, style, tokens, getLineProps, getTokenProps }) =&gt; (
+        &lt;Fragment&gt;
+          {tokens.map((line, i) =&gt; (
+            &lt;div {...getLineProps({ line, key: i })}&gt;
+              {line.map((token, key) =&gt; (
+                &lt;span {...getTokenProps({ token, key })} /&gt;
+              ))}
+            &lt;/div&gt;
+          ))}
+        &lt;/Fragment&gt;
+      )}
+    &lt;/Highlight&gt;
+  );
+
+  return (
+    &lt;Editor
+      {...eprops}
+      value={state.code}
+      onValueChange={onValueChange}
+      highlight={highlight}
+      padding={10}
+      style={styles.root}
+    /&gt;
+  );
+};
+
+export const returns = &lt;EditorExample /&gt;;
+
+</code></pre></div></div></div><div startpos="215:1-5080" endpos="217:4-5179" class="code output  cell"><div class="cell-content"><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">56.3w ago</span></span></span><output><pre><code class="txt">Importing binding name &#x27;defaultProps&#x27; is not found.
+</code></pre></output></div></div></div><div startpos="219:1-5181" endpos="221:4-5208" class="code   cell"><div class="cell-content"><div class="lang-js local codecell"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return lit.utils 
+</code></pre></div></div></div><div startpos="222:1-5209" endpos="374:4-10335" class="code output  cell"><div class="cell-content"><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">56.5w ago</span></span></span><output><pre><code class="txt">{ inspect: 
+   { [Function: inspect]
+     colors: 
+      { bold: [Object],
+        italic: [Object],
+        underline: [Object],
+        inverse: [Object],
+        white: [Object],
+        grey: [Object],
+        black: [Object],
+        blue: [Object],
+        cyan: [Object],
+        green: [Object],
+        magenta: [Object],
+        red: [Object],
+        yellow: [Object] },
+     styles: 
+      { special: &#x27;cyan&#x27;,
+        number: &#x27;yellow&#x27;,
+        boolean: &#x27;yellow&#x27;,
+        undefined: &#x27;grey&#x27;,
+        null: &#x27;bold&#x27;,
+        string: &#x27;green&#x27;,
+        date: &#x27;magenta&#x27;,
+        regexp: &#x27;red&#x27; } },
+  diff: 
+   { Diff: [Getter],
+     diffChars: [Getter],
+     diffWords: [Getter],
+     diffWordsWithSpace: [Getter],
+     diffLines: [Getter],
+     diffTrimmedLines: [Getter],
+     diffSentences: [Getter],
+     diffCss: [Getter],
+     diffJson: [Getter],
+     canonicalize: [Getter],
+     diffArrays: [Getter],
+     applyPatch: [Getter],
+     applyPatches: [Getter],
+     parsePatch: [Getter],
+     merge: [Getter],
+     structuredPatch: [Getter],
+     createTwoFilesPatch: [Getter],
+     createPatch: [Getter],
+     convertChangesToDMP: [Getter],
+     convertChangesToXML: [Getter] },
+  React: 
+   { Fragment: {},
+     StrictMode: {},
+     Profiler: {},
+     Suspense: {},
+     Children: 
+      { map: [Function: mapChildren],
+        forEach: [Function: forEachChildren],
+        count: [Function: countChildren],
+        toArray: [Function: toArray],
+        only: [Function: onlyChild] },
+     Component: [Function: Component],
+     PureComponent: [Function: PureComponent],
+     __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED: 
+      { ReactCurrentDispatcher: [Object],
+        ReactCurrentBatchConfig: [Object],
+        ReactCurrentOwner: [Object],
+        IsSomeRendererActing: [Object],
+        assign: [Function: assign],
+        ReactDebugCurrentFrame: [Object] },
+     cloneElement: [Function: cloneElementWithValidation],
+     createContext: [Function: createContext],
+     createElement: [Function: createElementWithValidation],
+     createFactory: [Function: createFactoryWithValidation],
+     createRef: [Function: createRef],
+     forwardRef: [Function: forwardRef],
+     isValidElement: [Function: isValidElement],
+     lazy: [Function: lazy],
+     memo: [Function: memo],
+     useCallback: [Function: useCallback],
+     useContext: [Function: useContext],
+     useDebugValue: [Function: useDebugValue],
+     useEffect: [Function: useEffect],
+     useImperativeHandle: [Function: useImperativeHandle],
+     useLayoutEffect: [Function: useLayoutEffect],
+     useMemo: [Function: useMemo],
+     useReducer: [Function: useReducer],
+     useRef: [Function: useRef],
+     useState: [Function: useState],
+     version: &#x27;17.0.1&#x27; },
+  ReactDOM: 
+   { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED: { Events: [Object] },
+     createPortal: [Function: createPortal$1],
+     findDOMNode: [Function: findDOMNode],
+     flushSync: [Function: flushSync],
+     hydrate: [Function: hydrate],
+     render: [Function: render],
+     unmountComponentAtNode: [Function: unmountComponentAtNode],
+     unstable_batchedUpdates: [Function: batchedUpdates$1],
+     unstable_createPortal: [Function: unstable_createPortal],
+     unstable_renderSubtreeIntoContainer: [Function: renderSubtreeIntoContainer],
+     version: &#x27;17.0.1&#x27; },
+  PrismReactRenderer: { Prism: [Getter], default: [Getter], defaultProps: [Getter] },
+  ReactEditor: { default: { [Function: Editor] defaultProps: [Object] } },
+  unist: 
+   { select: 
+      { matches: [Function: matches],
+        selectAll: [Function: selectAll],
+        select: [Function: select] },
+     source: [Function: source],
+     filter: [Function: filter],
+     visit: { [Function: visit] CONTINUE: true, SKIP: &#x27;skip&#x27;, EXIT: false },
+     patchSource: { default: [Getter] },
+     selectPosition: { atPos: [Getter], selectAll: [Getter] } },
+  mdast: { to_string: [Function: to_string] },
+  momento: { MsToRelative: [Getter], DatesToRelativeDelta: [Getter] },
+  colors: { pickTextColorBasedOnBgColor: [Getter], stringToHex: [Getter] },
+  safeEncoders: 
+   { btoa: [Getter],
+     atob: [Getter],
+     b64EncodeUnicode: [Getter],
+     b64DecodeUnicode: [Getter] },
+  fns: 
+   { NoOp: [Getter],
+     Identity: [Getter],
+     AsInt: [Getter],
+     Undef: [Getter],
+     getMeta: [Getter],
+     posstr: [Getter],
+     wait: [Getter],
+     template: [Getter] },
+  path: 
+   { resolve: [Function: resolve],
+     normalize: [Function: normalize],
+     absolute: [Function: absolute],
+     join: [Function: join],
+     relative: [Function: relative],
+     _makeLong: [Function: _makeLong],
+     dirname: [Function: dirname],
+     basename: [Function: basename],
+     extname: [Function: extname],
+     format: [Function: format],
+     parse: [Function: parse],
+     sep: &#x27;/&#x27;,
+     delimiter: &#x27;:&#x27;,
+     win32: null,
+     posix: [Circular] },
+  querystring: 
+   { parse: [Function],
+     decode: [Function],
+     stringify: [Function],
+     encode: [Function] },
+  vfile: [Function: VFile],
+  delete: [Function: _delete],
+  read: [Function: read] }
+</code></pre></output></div></div></div></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="🔬 Tests, experiments and investigations" href="/testing/index.html">🔬 Tests, experiments and investigations</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>

@@ -1,0 +1,829 @@
+<html data-reactroot=""><head><title>Parser</title><meta name="litsrc" value="/parser/parser.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><meta name="apple-mobile-web-app-capable" content="yes"/><link rel="apple-touch-icon" href="/assets/lit-logo.png"/><link rel="icon" href="/assets/lit-logo.png"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children" disabled=""><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span><span class="led led-grey"></span><span class="led led-grey"></span></li></menu></li></menu></div><style>body {
+  --bg: white;
+  --bg-secondary-color: #efefef;
+    
+  --text-color: black;
+  --text-secondary-color: grey;
+  --text-primary-color: #9999f7;
+  --text-highlight-bg: yellow;
+  --text-highlight-color: black;
+
+  --divider-subtle: #efefef;
+  --medium-space: 0.4em;
+  --code-bg-color: black;
+  --code-text-color: white;
+  --box-bg-opacity: 0.05;
+}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section class="" startpos="1:1-0" endpos="7:43-284"><div startpos="1:1-0" endpos="7:43-284" class="cell"><div class="cell-content"><h1 id="parser">Parser</h1><p>Built atop the <a class="local" href="https://unifiedjs.com">unified<span class="linkIcon">↗</span></a> ecosystem, specifically <a class="local" href="https://github.com/remarkjs/remark">remark<span class="linkIcon">↗</span></a>, which takes <code>.lit</code> <a class="local" href="../markdown.html" title="Markdown" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]">Markdown</a> source and outputs <code>mdast</code><sup id="fnref-1"><a class="footnote-ref" href="#fn-1">1<span class="linkIcon">§</span></a></sup>(Markdown Abstract Syntax Tree)</p></div></div><section class="" startpos="9:1-286" endpos="9:21-306"><div startpos="9:1-286" endpos="9:21-306" class="cell"><div class="cell-content"><h2 id="table-of-contents">Table of Contents</h2><ul>
+<li>
+<p><a class="fragment" href="#implementation-1">Implementation<span class="linkIcon">§</span></a></p>
+</li>
+<li>
+<p><a class="fragment" href="#extensions">Extensions<span class="linkIcon">§</span></a></p>
+<ul>
+<li><a class="fragment" href="#frontmatter">Frontmatter<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#sections">Sections<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#cells">Cells<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#codeblocks">Codeblocks<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#markdown-blocks">Markdown blocks<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#links">Links<span class="linkIcon">§</span></a></li>
+</ul>
+</li>
+<li>
+<p><a class="fragment" href="#ast-to-string">AST to String<span class="linkIcon">§</span></a></p>
+</li>
+</ul></div></div></section><section class="" startpos="17:1-433" endpos="20:4-495"><div startpos="17:1-433" endpos="20:4-495" class="cell"><div class="cell-content"><h2 id="implementation-1">Implementation</h2></div></div><div startpos="19:1-453" endpos="20:4-495" class="code   cell"><div class="cell-content"><div class="dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; index.js</span></span><pre><code class="js">import unified from &#x27;unified&#x27;
+import markdown from &#x27;remark-parse&#x27;
+import remarkStringify from &#x27;remark-stringify&#x27;
+import slug from &#x27;remark-slug&#x27;
+import headingIds from &#x27;remark-heading-id&#x27;
+import toc from &#x27;remark-toc&#x27;
+import footnotes from &#x27;remark-footnotes&#x27;
+import gfm from &#x27;remark-gfm&#x27;
+import wikiLinkPlugin from &#x27;remark-wiki-link&#x27;
+import select from &#x27;unist-util-select&#x27;
+import { to_string } from &#x27;./utils/mdast-util-to-string&#x27;
+import toMarkdown from &#x27;mdast-util-to-markdown&#x27;
+
+import {sections, ungroupSections} from &#x27;./sections&#x27;
+import {sections as sectionsV3} from &#x27;./sections-v3&#x27;
+import {cells as cellsV3} from &#x27;./cells-v3&#x27;
+
+
+import codeblocks, {parseMeta, metaToString} from &#x27;./codeblocks&#x27;
+import frontmatter from &#x27;./frontmatter&#x27;
+import {mdblocks} from &#x27;./mdblocks&#x27;
+import links, { decorateLinkNode } from &#x27;./links&#x27;
+import { getConsoleForNamespace} from &#x27;../utils/console&#x27;
+
+import {time} from &#x27;../utils/timings&#x27;
+
+//import { transform as jsTransform } from &#x27;./transformers/js&#x27;
+
+const jsTransform = null
+const console = getConsoleForNamespace(&#x27;parser&#x27;)
+
+const timer = () =&gt; ({ns, marker}) =&gt; (t,f) =&gt; { time(ns,marker) }
+
+const baseProcessor = ({litroot, files} = {}) =&gt; {
+    return unified()
+    .use(timer(),{ns:&#x27;parser&#x27;})
+    .use((...args) =&gt; (tree, file) =&gt; {
+        console.log(&quot;Parsing file: &quot;, file.path)
+        file.data = file.data || {}
+        if (file &amp;&amp; file.path) {
+            file.data.canonical = decorateLinkNode({url: file.path}, &#x27;&#x27;, &#x27;/&#x27;, files).data.canonical
+        }
+    })
+
+    // remark
+    .use(markdown, {})
+    .use(gfm)
+    .use(frontmatter, {})
+
+    // Extact title
+    .use((...args) =&gt; (tree,file) =&gt; {
+        if(!file.data.frontmatter || !file.data.frontmatter.title) {
+           
+           file.data = file.data || {}
+           file.data.frontmatter = file.data.frontmatter || {}
+           const heading = select.select(&#x27;heading&#x27;, tree)
+           // console.log(&quot;Found heading:&quot;, heading)
+           if (heading) {
+               console.log(&quot;No title in frontmatter, extracting heading.&quot;)
+               const title = to_string(heading)
+               file.data.frontmatter.title = title
+           }
+        }
+    },{})
+
+    .use(wikiLinkPlugin, links.wikiLinkOptions(files))
+    .use(slug)
+    .use(headingIds)
+    .use(footnotes, {inlineNotes: true})
+
+    .use(timer(),{ns:&#x27;parser&#x27;, marker: &#x27;baseProcessorComplete&#x27;})
+}
+
+export const processor = ({files, fs, litroot} = {files: []}) =&gt; {
+    console.log(`Setting up processor litroot: &quot;${litroot}&quot; files: ${!!files} fs: ${!!fs}`)
+    return baseProcessor({files, litroot})
+    // remark-litmd (rehype compatable)
+
+    .use(codeblocks)
+    // Async reparse `md` codeblocks as children
+    .use(mdblocks, {baseProcessor, litroot, files})
+    .use(links.resolveLinks({litroot, files}))
+    .use(toc, {})
+    .use(sectionsV3({processSection: cellsV3}), {})
+    .use(timer(),{ns:&#x27;parser&#x27;, marker: &#x27;processorComplete&#x27;})
+}
+
+export const utils = {
+  mdblocks,
+  sections, ungroupSections,
+  links,
+  codeblocks, parseMeta, metaToString,
+  remarkStringify,
+  to_string,
+  toMarkdown,
+  frontmatter,
+}
+
+export async function parse(vfile, options) {
+    const p = processor(options)
+    const parsed = await p.parse( vfile )
+    const ast = await p.run(parsed)
+    if (!parsed.data) parsed.data = {}
+    parsed.data.ast = ast
+    // parsed.data.frontmatter = select.selectAll(&#x27;html&#x27;,ast).reduce( (memo,el) =&gt; Object.assign(memo,el.data || {}),{})
+    return parsed
+}
+
+export const transformers = {
+    jsx: jsTransform,
+}
+
+
+export function stringify(vfile) {
+    return processor()
+        .use(ungroupSections())
+        .use(remarkStringify, {
+            bullet: &#x27;-&#x27;,
+        })
+        .process(vfile)
+}
+
+</code></pre></div></div></div></section><section class="" startpos="22:1-497" endpos="22:14-510"><div startpos="22:1-497" endpos="22:14-510" class="cell"><div class="cell-content"><h2 id="extensions">Extensions</h2></div></div><section class="" startpos="23:1-511" endpos="24:17-543"><div startpos="23:1-511" endpos="24:17-543" class="cell"><div class="cell-content"><h3 id="frontmatter">Frontmatter</h3><p><em>Implementation</em></p></div></div><div startpos="26:1-545" endpos="27:4-581" class="code   cell"><div class="cell-content"><div class="dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; frontmatter.js</span></span><pre><code class="js">import visit from &#x27;unist-util-visit&#x27;
+import before from &#x27;unist-util-find-before&#x27;
+import after from &#x27;unist-util-find-after&#x27;
+import yaml from &#x27;js-yaml&#x27;
+
+import {log, level} from &#x27;../utils/console&#x27;
+import { notEqual } from &#x27;assert&#x27;
+import { getConsoleForNamespace } from &#x27;../utils/console&#x27;
+
+const console = getConsoleForNamespace(&#x27;frontmatter&#x27;)
+
+const FRONTMATTER_OPEN = &#x27;&lt;!-- data&#x27;
+const FRONTMATTER_CLOSE = &#x27;--&gt;&#x27;
+
+export default function (...args) {
+    return (tree,file) =&gt; {
+        const matters = []
+        visit( tree, &#x27;html&#x27;, (node, index, parent) =&gt; {  
+            if (node.value.indexOf(FRONTMATTER_OPEN) === 0 &amp;&amp; node.value.indexOf(FRONTMATTER_CLOSE) === (node.value.length - FRONTMATTER_CLOSE.length)) {
+                console.log( &#x27;Raw&#x27;, node.value)
+                const yamlString = node.value.slice(FRONTMATTER_OPEN.length, node.value.length - FRONTMATTER_CLOSE.length).trim()
+                try {
+                    node.data = yaml.load(yamlString, &#x27;utf8&#x27;)
+                } catch(err) {
+                    node.data = {error: err.toString()}
+                }
+               console.log( &#x27;Parsed&#x27;, yamlString)
+               matters.push(node.data)
+            }
+        })
+        file.data.frontmatter = matters.reduce( (memo,matter) =&gt; Object.assign({}, memo, matter || {}), {})
+    }
+}
+
+
+</code></pre></div></div></div></section><section class="" startpos="29:1-583" endpos="31:74-670"><div startpos="29:1-583" endpos="31:74-670" class="cell"><div class="cell-content"><h3 id="sections">Sections</h3><p>Sections are automatically created from the nested structure of Headings.</p></div></div><div startpos="33:1-672" endpos="38:34-770" class="code   cell"><div class="cell-content"><div class="lang-md local codecell"><span class="meta"><span class="lang">md</span></span><pre><code class="md"># Headline (root section)
+## Subtitle (child section)
+</code></pre></div><p>They can be collapse/folded (tbd)</p></div></div><div startpos="40:1-772" endpos="43:17-822" class="code   cell"><div class="cell-content"><div class="lang-md local codecell"><span class="meta"><span class="lang">md</span></span><pre><code class="md"># &gt;Headline (collapsed)
+</code></pre></div><p><em>Implementation</em></p></div></div><div startpos="44:1-823" endpos="45:4-856" class="code   cell"><div class="cell-content"><div class="dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; sections.js</span></span><pre><code class="js">import heading from &quot;mdast-util-heading-range&quot;;
+import visit from &quot;unist-util-visit&quot;;
+import flatMap from &quot;unist-util-flatmap&quot;;
+import { getConsoleForNamespace } from &#x27;../utils/console&#x27;
+import { Identity } from &quot;../utils/functions&quot;;
+
+const console = getConsoleForNamespace(&#x27;sections&#x27;, {disabled: true})
+
+const firstChild = (node,type) =&gt; node.children 
+            &amp;&amp; node.children[0]
+            &amp;&amp; node.children[0].type === type
+
+const createCell = (node,nodes) =&gt; {
+     const pos = node.position
+     // pos.start.offset = pos.start.offset - pos.start.column
+     // pos.start.column = 0
+     return {
+          type: &quot;cell&quot;,
+          position: pos,
+          data: {
+            hName: &quot;cell&quot;,
+            hProperties: {
+              class: &quot;cell&quot;,
+            },
+          },
+          children: nodes || [node],
+        }
+}
+
+const createSection = (node,nodes) =&gt; {
+  if (!nodes) node.children = cellsFromNodes(node.children)
+  return {
+        type: &quot;section&quot;,
+        data: {
+          hName: &quot;section&quot;,
+        },
+        position: node.position,
+        children: nodes || [node],
+      }
+}
+
+const cellsFromNodes = (nodes, {addSectionDataToFirstCell}={}) =&gt; {
+
+  const cells = [];
+  let newCell = null;
+
+  nodes.map((current, index) =&gt; {
+    const node = current;
+    console.log(&quot;[Sections] child: &quot;, index, node.type);
+
+    if (node.type === &quot;section&quot;) {
+      newCell = null;
+      cells.push(node);
+
+    } else if (false &amp;&amp; node.type === &quot;list&quot; &amp;&amp; node.spread) {
+      newCell = null;
+      let listSection = createSection(node)
+      cells.push(listSection);
+
+    } else if (false &amp;&amp; node.type === &quot;listItem&quot; &amp;&amp; node.spread) {
+      newCell = null;
+      let listItem = node
+      if (firstChild(listItem, &#x27;section&#x27;)) {
+        console.log(&quot;[Sections] ListItem with section: &quot;, node.type);
+        listItem.children = listItem.children.map( section =&gt; {
+          section.children = cellsFromNodes(section.children)
+        })
+      } else {
+        listItem.children = [createSection(node, node.children)]
+      }
+      
+      cells.push(listItem);
+
+    } else if (node.type === &quot;code&quot;) {
+      const next = nodes[index+1]
+      const attached = node =&gt; node &amp;&amp; node.data &amp;&amp; node.data.meta &amp;&amp; node.data.meta.attached
+      const nextIsAttached = attached(next)
+                            
+      let singleCell = createCell(node)
+      if (nextIsAttached) {
+          newCell = singleCell
+         
+      } else if (newCell &amp;&amp; attached(node)) {
+          newCell.children.push(node)
+          if (node.position) newCell.position.end = node.position.end;
+          cells.push(newCell)
+          newCell = null
+
+      } else {
+          newCell = null
+          cells.push(singleCell);
+      }
+     
+     
+      
+    } else if (newCell) {
+      newCell.children.push(node);
+      if (node.position) newCell.position.end = node.position.end;
+
+    } else {
+      newCell = createCell(node)
+      if(addSectionDataToFirstCell) newCell.data.section = addSectionDataToFirstCell
+      cells.push(newCell);
+    }
+  });
+  return cells;
+
+}
+
+export const sections = (...args) =&gt; (tree) =&gt; {
+  console.log(&#x27;[Sections II] Init.&#x27;, args, tree.type, tree.children.length)
+  let headings = 0
+  const newSection = (children) =&gt; {
+    const first = children[0]
+    const last = children[ children.length - 1]
+    const depth = first.depth || 0
+    first.processed = true
+    return {
+      type: &#x27;section&#x27;,
+      data: {
+        name: first.data.id,
+        hName: &#x27;section&#x27;,
+        hProperties: {
+          depth: depth,
+          id: first.data.id,
+        }
+      },
+      depth: depth,
+      children: children,
+      position: {
+        start: first.position.start,
+        end: last.position.end
+      }
+    }
+  }
+
+  visit(tree, &#x27;heading&#x27;, (node, index, parent) =&gt; {
+    if (node.processed) {
+      console.log(`[Sections II] Ignoring already processed node ${node.data.id}`)
+    } else if (parent.type === &#x27;root&#x27;) {
+      console.log(`[Sections II] heading &quot;${node.data.id}&quot; ${headings}, depth: ${node.depth}`)
+      // remove rehype ids 
+      node.data.hProperties = {}
+      const section = parent.children[index] = newSection([node])
+      const children = parent.children
+      
+      for (let i = index + 1; i &lt; children.length; i++) {
+        if (!children[i] || children[i].processed) {
+          console.log(&#x27;Skipping removed&#x27;, children[i])
+          break
+        }
+        const nextNode = children[i]
+        if ((nextNode.type === &#x27;heading&#x27; || nextNode.type === &#x27;section&#x27;) &amp;&amp; nextNode.depth &lt;= node.depth) {
+          console.log(`[Sections II] ended &quot;${node.data.id}&quot; due to &quot;${nextNode.data.id || nextNode.data.name}&quot;`, nextNode.type, nextNode.depth)
+          console.log(`[Sections II] contains: &quot;${node.data.id}&quot;`, section.children.map( n =&gt; n.type).join(&#x27;,&#x27;))
+          break;
+        }
+        console.log(`[Sections II] child index: ${i}, type: ${nextNode.type} depth: ${nextNode.depth} id: ${nextNode.data &amp;&amp; (nextNode.data.id || nextNode.data.name)}`)
+        section.children.push(nextNode)
+        if (nextNode.position) section.position.end = nextNode.position.end
+        delete parent.children[i]
+      }
+      headings++
+      node = section 
+      node.children = cellsFromNodes(node.children, {addSectionDataToFirstCell: { id: section.data.id, position: section.position}})
+    } else {
+      console.log(&#x27;[Sections II] WARN: Header parent not root&#x27;, node.data.id)
+    }
+  }, true)
+
+  console.log(&quot;Headings: &quot;, headings)
+  if (!headings) {
+    tree.children = cellsFromNodes(tree.children)
+  } else {
+    tree.children = tree.children.filter(Identity)
+  }
+  
+}
+
+
+const cells = (...args) =&gt; (tree) =&gt; {
+  visit( tree, cells )
+}
+
+
+export const ungroupSections = (options = {}) =&gt; (...args) =&gt; (tree) =&gt; {
+  console.log(&quot;[UnSection] Init&quot;, options)
+  tree = flatMap(tree, (node) =&gt; {
+    if (node.type === &quot;cell&quot;) {
+      return node.children
+    } else if (node.type === &quot;section&quot;) {
+      return node.children
+    } else {
+      return [node]
+    }
+  })
+  return tree
+}
+
+</code></pre></div></div></div></section><section class="" startpos="47:1-858" endpos="49:60-928"><div startpos="47:1-858" endpos="49:60-928" class="cell"><div class="cell-content"><h3 id="cells">Cells</h3><p><em>Currently implemented as part of <strong>Sections</strong>, see above.</em></p></div></div></section><section class="" startpos="51:1-930" endpos="53:17-962"><div startpos="51:1-930" endpos="53:17-962" class="cell"><div class="cell-content"><h3 id="codeblocks">Codeblocks</h3><p><em>Implementation</em></p></div></div><div startpos="55:1-964" endpos="56:4-999" class="code   cell"><div class="cell-content"><div class="dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; codeblocks.js</span></span><pre><code class="js">import visit from &#x27;unist-util-visit&#x27;
+import { getConsoleForNamespace } from &#x27;../utils/console&#x27;
+
+const console = getConsoleForNamespace(&#x27;codeblocks&#x27;)
+
+const LSP = &#x27;__.litsp__&#x27;
+const NONESCAPEDSPACES_REGEX = /([^\\])\s/g
+const LANG = &#x27;lang&#x27;
+const ATTR = &#x27;attribute&#x27;
+const TAG = &#x27;tag&#x27;
+const DIREC = &#x27;directive&#x27;
+const FILENAME = &#x27;filename&#x27;
+const URI = &#x27;uri&#x27;
+const UNKNOWN = &#x27;unknown&#x27;
+
+const isListType = t =&gt; [TAG,DIREC,UNKNOWN].indexOf(t) &gt;= 0
+
+export default function (...args) {
+    return (tree) =&gt; visit( tree, &#x27;code&#x27;, transform )
+}
+
+function transform (node, index, parent) {  
+    console.log( &#x27;[CodeBlocks] Visiting: &#x27;, node.lang, node.meta)
+    const litMeta = parseMeta(node)
+    
+    node.data = {
+        ...node.data,
+        meta: litMeta,
+        hProperties: {
+            className: litMeta &amp;&amp; litMeta.tags ? litMeta.tags.map( t =&gt; `tag-${t}`).join(&#x27; &#x27;) : &#x27;&#x27;,
+            meta: litMeta,
+        }
+    }
+    return node
+}
+
+
+export const parseMeta = function parseMeta (node) {
+    const raw = `${node.lang || &#x27;&#x27;} ${node.meta || &#x27;&#x27;}`.trim()
+    console.log(`[CodeBlocks] lang: &quot;${node.lang}&quot; meta: &quot;${node.meta}&quot;, raw: &quot;${raw}&quot;`)
+
+    const isOutput = raw.indexOf(&#x27;&gt;&#x27;) === 0
+    const hasOutput = node.meta &amp;&amp; node.meta.indexOf(&#x27;&gt;&#x27;) &gt;= 0
+    let hasSource = node.meta &amp;&amp; node.meta.indexOf(&#x27;&lt;&#x27;) &gt;= 0
+
+    let input = raw
+    let _, output, source
+    let fromSource;
+
+    if (isOutput) {
+        [_, input] = raw.split(&#x27;&gt;&#x27;).map( x =&gt; x.trim() )
+    }
+
+      if (hasOutput) {
+        [input, output] = input.split(&#x27;&gt;&#x27;).map( x =&gt; x.trim() )
+      }
+
+      if (hasSource) {
+        [input,source] = input.split(&#x27;&lt;&#x27;).map( x =&gt; x.trim() )
+      }
+
+    const meta = input
+        .replace(NONESCAPEDSPACES_REGEX, &quot;$1&quot; + LSP)
+        .split(LSP)
+        .map(ident)
+        .reduce(reduceParts, {})
+    
+    meta.isOutput = isOutput
+    meta.output = output &amp;&amp; parseMeta({ meta: output })
+    meta.hasOutput = !!output
+    meta.hasSource = !!source
+    meta.source = source &amp;&amp; parseMeta({ lang: &#x27;txt&#x27;, meta: source })
+    meta.raw = raw
+    if (meta.source) meta.fromSource = meta.source.filename || meta.source.uri
+
+    return meta
+}
+
+function isUri(str) {
+  return str.startsWith(&#x27;http&#x27;) || str.startsWith(&#x27;//&#x27;)
+}
+
+function ident (x, i) {
+    let type, value = x
+    if (i === 0) {
+      type = LANG
+    }
+    else if(x &amp;&amp; x[0]) {
+      if (x[0] === &quot;#&quot;) {
+        type = TAG
+        value = x.slice(1)
+      }
+      else if (x[0] === &quot;!&quot;) {
+        type = DIREC
+        value = x.slice(1)
+      }
+      else if (x.indexOf(&quot;=&quot;) &gt; 0) {
+        type = ATTR
+        value = x.split(&quot;=&quot;)
+        value = {
+          type: value[0],
+          value: value[1]
+        }
+      }
+      else if(i===1) {
+
+        if (isUri(x)) type = URI
+        else type = FILENAME
+      }
+      else if (!type) type = UNKNOWN
+    }
+    return {type, value}
+  }
+  
+  function reduceParts(memo,item, i) {
+    memo.attrs = memo.attrs || {}
+
+    if (item.type === ATTR){
+        memo.attrs[item.value.type] = item.value.value
+        item = item.value
+    }
+
+    if (isListType(item.type)) {
+        const collective = `${item.type}s`
+        if(memo[collective]) {
+             memo[collective]
+             .push(item.value)
+        } else {
+            memo[collective] = [item.value]
+        }
+        if (item.type === DIREC) {
+            // memo.attrs[item.value] = true
+        }
+    } else {
+        memo[item.type] = item.value
+    }
+    
+    return memo
+}
+  
+
+export const metaToString = (meta) =&gt; {
+
+  const prefix = p =&gt; str =&gt; p + str
+  const tag = prefix(&quot;#&quot;)
+  const dir = prefix(&quot;!&quot;)
+  const attr = ([key,value]) =&gt; `${key}=${value}`
+
+  const parts = [];
+  const dirs = meta.directives || []
+  const tags = meta.tags || []
+  const attrs = meta.attrs || {}
+
+  parts.push(meta.isOutput &amp;&amp; &quot;&gt;&quot;);
+  parts.push(meta.lang);
+  parts.push(meta.filename || meta.uri);
+  
+  dirs.forEach( d =&gt; parts.push(dir(d)))
+  Object.entries(attrs).forEach( (e) =&gt; parts.push(attr(e)))
+  tags.forEach( t =&gt; parts.push(tag(t)))
+
+  if (meta.source) {
+    parts.push(&quot;&lt;&quot;)
+    parts.push(metaToString(meta.source))
+  }
+
+  if (meta.output) {
+    parts.push(&quot;&gt;&quot;)
+    parts.push(metaToString(meta.output))
+  }
+
+  return parts.filter((x) =&gt; x).join(&quot; &quot;);
+};
+
+</code></pre></div></div></div><div startpos="57:1-1000" endpos="68:4-1326" class="code   cell"><div class="cell-content"><div class="tag-meta tag-tostring lang-js local codecell"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#033165" class="tag">meta</span><span style="color:black;background-color:#ccb166" class="tag">tostring</span></span><pre><code class="js">const metaToString = lit.parser.utils.metaToString;
+
+const input =
+  &quot;js index.jsx !foo #bar baz=qux\\ zig &lt; source.jsx &gt; json output.json #faz !raz&quot;;
+const meta = lit.parser.utils.parseMeta({ meta: input });
+console.log(input);
+console.log(meta);
+return metaToString(meta);
+return lit.parser.utils;
+
+</code></pre></div></div></div><div startpos="69:1-1327" endpos="105:4-2347" class="code output  cell"><div class="cell-content"><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">50w ago</span></span></span><output><pre><code class="txt">js index.jsx !foo #bar baz=qux\ zig &lt; source.jsx &gt; json output.json #faz !raz
+{ attrs: { baz: &#x27;qux\\ zig&#x27; },
+  lang: &#x27;js&#x27;,
+  filename: &#x27;index.jsx&#x27;,
+  directives: [ &#x27;foo&#x27; ],
+  tags: [ &#x27;bar&#x27; ],
+  baz: &#x27;qux\\ zig&#x27;,
+  isOutput: false,
+  output: 
+   { attrs: {},
+     lang: &#x27;json&#x27;,
+     filename: &#x27;output.json&#x27;,
+     tags: [ &#x27;faz&#x27; ],
+     directives: [ &#x27;raz&#x27; ],
+     isOutput: false,
+     output: undefined,
+     hasOutput: false,
+     hasSource: false,
+     source: undefined,
+     raw: &#x27;json output.json #faz !raz&#x27; },
+  hasOutput: true,
+  hasSource: true,
+  source: 
+   { attrs: {},
+     lang: &#x27;txt&#x27;,
+     filename: &#x27;source.jsx&#x27;,
+     isOutput: false,
+     output: undefined,
+     hasOutput: false,
+     hasSource: false,
+     source: undefined,
+     raw: &#x27;txt source.jsx&#x27; },
+  raw: &#x27;js index.jsx !foo #bar baz=qux\\ zig &lt; source.jsx &gt; json output.json #faz !raz&#x27;,
+  fromSource: &#x27;source.jsx&#x27; }
+js index.jsx !foo baz=qux\ zig #bar &lt; txt source.jsx &gt; json output.json !raz #faz
+</code></pre></output></div></div></div></section><section class="" startpos="108:1-2350" endpos="110:17-2387"><div startpos="108:1-2350" endpos="110:17-2387" class="cell"><div class="cell-content"><h3 id="markdown-blocks">Markdown blocks</h3><p><em>Implementation</em></p></div></div><div startpos="112:1-2389" endpos="113:4-2422" class="code   cell"><div class="cell-content"><div class="dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; mdblocks.js</span></span><pre><code class="js">import visit from &#x27;unist-util-visit&#x27;
+import {getConsoleForNamespace} from &#x27;../utils/console&#x27;
+import vfile from &#x27;vfile&#x27;
+
+const console = getConsoleForNamespace(&#x27;mdblocks&#x27;)
+
+export const mdblocks = function ({baseProcessor, files, litroot}) {
+    return async (tree, file) =&gt; {
+        file.data = file.data || {}
+        file.data.__mdcodeblocks = 0
+        const filepath = file?.data?.canonical || &#x27;inexplicable.ext&#x27;
+        const promises = [];
+        visit(tree, &#x27;code&#x27;, (node,index,parent) =&gt; {
+            if (!node.data || !node.data.meta || node.data.meta.lang !== &#x27;md&#x27;) return;
+
+            const idx = file.data.__mdcodeblocks++
+            // instead of await (why?)
+            const p = new Promise(async resolve =&gt; {
+                // console.log(idx + &quot;Node: &quot;, node)
+                const mdfile = await vfile({path: filepath, contents: node.value})
+                const p = baseProcessor({files, litroot})
+                const parsed = await p.parse( mdfile )
+                const ast = await p.run(parsed, mdfile)
+                console.log(idx + &quot;MD AST: &quot;, filepath, mdfile, ast)
+                node.children = ast.children
+                resolve()
+            });
+           
+            promises.push(p)
+        });
+        await Promise.all(promises);
+        return null
+    }
+}
+
+</code></pre></div></div></div></section><section class="" startpos="115:1-2425" endpos="117:17-2452"><div startpos="115:1-2425" endpos="117:17-2452" class="cell"><div class="cell-content"><h3 id="links">Links</h3><p><em>Implementation</em></p></div></div><div startpos="119:1-2454" endpos="120:4-2484" class="code   cell"><div class="cell-content"><div class="dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; links.js</span></span><pre><code class="js">import {join, resolve, relative as isRelative, dirname} from &quot;path&quot;;
+import visit from &quot;unist-util-visit&quot;;
+import { getConsoleForNamespace } from &quot;../utils/console&quot;;
+
+const console = getConsoleForNamespace(&quot;links&quot;);
+
+export const resolveLinks =
+  (options = { litroot: &quot;&quot;, filepath: &quot;&quot;, files: []}) =&gt;
+  (...args) =&gt;
+  (tree, file) =&gt; {
+    // console.log(&quot;[Links] Init&quot;, file.path, options);
+    options.filepath = options.filepath || file?.data?.canonical || file.path
+    return visit(tree, isLink, transform(options));
+  };
+
+export const slug = (str) =&gt;
+  str
+    .replace(/[^\w\s/-]+/g, &quot;&quot;)
+    .trim()
+    .replace(/\s+/g, &quot;_&quot;)
+    .toLowerCase();
+
+export const resolver = (str) =&gt; {
+  // console.log(&quot;Input: &quot;, str);
+  if (!str) {
+    throw Error(&quot;No string to resolve&quot;)
+    process.exit(1)
+  }
+  let main, title, doc, hash, base, query, file, ext, _
+  try {
+    [main, title] = str.split(&quot;|&quot;);
+    [doc, hash] = main.split(&quot;#&quot;);
+    [base, query] = doc.split(&quot;?&quot;);
+    [_, file, ext = &#x27;&#x27;] = base.match(/([^\.]+)(\.[a-zA-Z0-9]+)?$/) || []
+  } catch(err) {
+    console.log({str, main, title, doc, hash, base, query, file, ext, _})
+    console.log(&#x27;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&#x27;, err)
+    process.exit(1)
+  }
+  
+ 
+  const root = file &amp;&amp; file[0] &amp;&amp; [&#x27;/&#x27;, &#x27;.&#x27;].indexOf(file[0]) &gt;= 0 ? &#x27;&#x27; : &#x27;/&#x27;
+  const path = file &amp;&amp; (root + slug(file))
+  const section = hash &amp;&amp; slug(hash);
+
+  const href = path + (query ? &quot;?&quot; + query : &quot;&quot;) + (hash ? &quot;#&quot; + section : &quot;&quot;);
+  // console.log(&#x27;Href: &#x27;, href)
+  return { title, path, ext, hash, query, section, href };
+};
+
+
+const isLink = (node) =&gt; [&quot;link&quot;, &quot;wikiLink&quot;].indexOf(node.type) &gt;= 0;
+
+const transform = (options) =&gt; (node, index, parent) =&gt; {
+  return decorateLinkNode(node, options.litroot, options.filepath, options.files);
+};
+
+export const wikiLinkOptions = (files = []) =&gt; {
+  return {
+    permalinks: files,
+    pageResolver: (name) =&gt; {
+      // console.log(&#x27;Resolving&#x27;, name)
+      const {path, ext} = resolver(name)
+      const exts = [&#x27;.lit&#x27;, &#x27;/index.lit&#x27;, &#x27;.md&#x27;, ext]
+      const opts = exts.map( ext =&gt; {
+        return `${path}${ext}`
+      })
+      // console.log(opts)
+      return opts //.filter(file =&gt; files.indexOf(file) &gt;= 0)[0] || opts
+    }
+  }
+};
+// ({
+//     permalinks: files,
+//     pageResolver: nameToPermalinks,
+//     hrefTemplate: (permalink) =&gt; `${permalink}?file=${permalink}`
+// })
+
+const linkToUrl = (link, root) =&gt; {
+  if (link.type === &quot;wikiLink&quot;) {
+    // console.log(link)
+    return link.data.permalink
+  } else {
+    return link.url;
+  }
+};
+
+export const decorateLinkNode = (link, root = &quot;&quot;, filepath = &quot;&quot;, files = []) =&gt; {
+  // console.log(link)
+  const wikilink = link.type === &quot;wikiLink&quot;;
+  const url = linkToUrl(link, root);
+
+  
+  const external = /^(https?\:)?\/\//.test(url);
+  const absolute = !external &amp;&amp; /^\//.test(url);
+  const fragment = /^(\?|#)/.test(url);
+  const relative = url &amp;&amp; !absolute &amp;&amp; !fragment &amp;&amp; !external;
+  
+  const srcToGH = (src, prefix) =&gt; join(prefix, src);
+  const relToCanonical = (src, link) =&gt; resolve(dirname(src), link);
+  const canonicalToRel = (src1, src2) =&gt; isRelative(dirname(src1), src2)
+
+  let canonical = url;
+  let href = url;
+  let [base, frag] = url.split(/(\?|#)/);
+
+  if (relative) {
+    canonical = relToCanonical(filepath, base)
+    href = url.replace(/\.(md|lit)/i, &quot;.html&quot;) ;
+  } else if (absolute) {
+    const rel = canonicalToRel(filepath, url);
+    href = rel.replace(/\.(md|lit)/i, &quot;.html&quot;);
+  }
+
+  link.type = &quot;link&quot;;
+  link.url = href;
+  
+  const tempTitle = link.title || link.value;
+  if (tempTitle) {
+    const valueAndTitle = tempTitle.split(&quot;|&quot;)
+    link.title = valueAndTitle[0]
+    link.value = valueAndTitle[1] || valueAndTitle[0]
+  }
+
+  const exists = files.indexOf(canonical) &gt;= 0
+
+  const data = {
+    external,
+    absolute,
+    fragment,
+    relative,
+    canonical,
+    wikilink,
+    exists,
+  };
+  link.data = Object.assign({},data,{})
+
+  if (wikilink) {
+    link.children = [
+      { position: link.position, type: &quot;text&quot;, value: link.value },
+    ];
+  }
+
+  link.data.hProperties = {
+    wikilink,
+    filepath,
+    root,
+    data,
+  };
+
+  delete link.value;
+  console.log(`[${filepath}] resolving (${link.type}) [${canonical}] exists: ${exists}`, link.url, link)
+
+  return link;
+};
+
+
+export default {
+  resolveLinks,
+  wikiLinkOptions,
+  resolver,
+  linkToUrl,
+  decorateLinkNode,
+}
+
+</code></pre></div></div></div></section></section><section class="" startpos="122:1-2486" endpos="126:168-2837"><div startpos="122:1-2486" endpos="126:168-2837" class="cell"><div class="cell-content"><h2 id="ast-to-string">AST to String</h2><ul class="contains-task-list">
+<li class="task-list-item">
+<p><input type="checkbox" disabled=""/> <a class="exists local" href="../todo.html" title="TODO" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]">TODO</a> refactor save (update src) to operate on AST directly and stringify as below, instead of the cureent <a class="local" href="../utils/unist-patch-source.html" title="../utils/unist-patch-source" wikilink="true" filepath="/parser/parser.lit" root="" data="[object Object]">../utils/unist-patch-source</a> implementaction.</p>
+<p>This is complicated by the fact that new cell source can in effect result in previous and next cell semantic/structure changes, hence the patch source implementation</p>
+</li>
+</ul></div></div><div startpos="127:1-2838" endpos="134:4-3012" class="code   cell"><div class="cell-content"><div class="lang-js local codecell"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const {toMarkdown, ungroupSections}
+      = lit.parser.utils
+const unGroup = ungroupSections()()
+const tree = unGroup(lit.ast)
+const md = toMarkdown(tree)
+return md
+</code></pre></div></div></div></section></section>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn-1"><a class="external" href="https://github.com/syntax-tree/mdast" filepath="/parser/parser.lit" root="" data="[object Object]">https://github.com/syntax-tree/mdast<span class="linkIcon">↗</span></a><a class="footnote-backref" href="#fnref-1">↩<span class="linkIcon">§</span></a></li>
+</ol>
+</div></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="Links" href="/testing/links.html">Links</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>

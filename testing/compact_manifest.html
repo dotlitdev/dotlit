@@ -1,0 +1,129 @@
+<html data-reactroot=""><head><title>Compact Manifest</title><meta name="litsrc" value="/testing/compact_manifest.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><meta name="apple-mobile-web-app-capable" content="yes"/><link rel="apple-touch-icon" href="/assets/lit-logo.png"/><link rel="icon" href="/assets/lit-logo.png"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children" disabled=""><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span><span class="led led-grey"></span><span class="led led-grey"></span></li></menu></li></menu></div><style>body {
+  --bg: white;
+  --bg-secondary-color: #efefef;
+    
+  --text-color: black;
+  --text-secondary-color: grey;
+  --text-primary-color: #9999f7;
+  --text-highlight-bg: yellow;
+  --text-highlight-color: black;
+
+  --divider-subtle: #efefef;
+  --medium-space: 0.4em;
+  --code-bg-color: black;
+  --code-text-color: white;
+  --box-bg-opacity: 0.05;
+}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section class="" startpos="1:1-0" endpos="3:78-97"><div startpos="1:1-0" endpos="3:78-97" class="cell"><div class="cell-content"><h1 id="compact-manifest">Compact Manifest</h1><p>Reducing the serialised size of a manifest of all files in a <code>.lit</code> notebook.</p></div></div><section class="" startpos="5:1-99" endpos="7:84-196"><div startpos="5:1-99" endpos="7:84-196" class="cell"><div class="cell-content"><h2 id="exploring">Exploring</h2><p>Trying out <a class="external" href="https://github.com/sidvishnoi/compact-prefix-tree" filepath="/testing/compact_manifest.lit" root="" data="[object Object]">compact-prefix-tree<span class="linkIcon">↗</span></a></p></div></div><div startpos="8:1-197" endpos="23:4-849" class="code   cell"><div class="cell-content"><div class="lang-js local codecell"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async fn =&gt; {
+  const {CompactPrefixTree} = await import(&#x27;https://cdn.skypack.dev/compact-prefix-tree&#x27;)
+
+  const manifest = await fetch(&#x27;/manifest.json&#x27;).then(res =&gt; res.json())
+  const keys = manifest.nodes.map(n=&gt;n.id)
+  const trie = new CompactPrefixTree(keys)
+
+  const before = JSON.stringify(manifest.nodes.reduce((m,n)=&gt;{m[n.id] = null; return m }, {}))
+  //console.log(before)
+  const after = JSON.stringify(trie.T)
+  // console.log(trie.T)
+  await lit.fs.writeFile(&#x27;/testing/compactManifest1.json&#x27;, after, &#x27;utf8&#x27;)
+  return `${before.length}-&gt;${after.length}. A ${100-(after.length/before.length*100)}% reduction in size.`
+})()
+</code></pre></div></div></div><div startpos="24:1-850" endpos="30:40-993" class="code output  cell"><div class="cell-content"><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">54w ago</span></span></span><output><pre><code class="txt">5978-&gt;4663. A 21.997323519571765% reduction in size.
+</code></pre></output></div><p>Looking up a file, check for existence:</p></div></div><div startpos="31:1-994" endpos="46:4-1399" class="code   cell"><div class="cell-content"><div class="lang-js local codecell"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async (fn) =&gt; {
+  const { CompactPrefixTree, getWordsFromTrie } = await import(
+    &quot;https://cdn.skypack.dev/compact-prefix-tree&quot;
+  );
+
+  const json = await fetch(&quot;/testing/compactManifest1.json&quot;).then((res) =&gt;
+    res.json()
+  );
+  // return json
+  const keys = getWordsFromTrie(json);
+  const trie = new CompactPrefixTree(Array.from(keys));
+  return trie.prefix(&quot;testing/log/&quot;);
+})();
+
+</code></pre></div></div></div><div startpos="47:1-1400" endpos="49:4-1484" class="code output  cell"><div class="cell-content"><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">56.7w ago</span></span></span><output><pre><code class="txt">{ prefix: &#x27;testing/log/day.lit&#x27;, isProper: true }
+</code></pre></output></div></div></div><div startpos="50:1-1485" endpos="52:4-1550" class="code output  cell"><div class="cell-content"><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">56.7w ago</span></span></span><output><pre><code class="txt">{ prefix: &#x27;&#x27;, isProper: false }
+</code></pre></output></div></div></div></section><section class="" startpos="54:1-1552" endpos="145:4-3992"><div startpos="54:1-1552" endpos="145:4-3992" class="cell"><div class="cell-content"><h2 id="a-start">A Start</h2></div></div><div startpos="56:1-1564" endpos="68:4-1907" class="code   cell"><div class="cell-content"><div class="lang-js local codecell"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async (fn) =&gt; {
+  const { CompactPrefixTree, getWordsFromTrie } = lit.utils.compactPrefixTree;
+
+  const resp = await fetch(&quot;/compactManifest.json&quot;);
+  const data = await resp.json();
+  const keyset = getWordsFromTrie(data);
+  const list = Array.from(keyset).map(k=&gt;`/${k}`)
+  console.log(list[50])
+  return list.length
+})();
+
+</code></pre></div></div></div><div startpos="69:1-1908" endpos="74:67-2050" class="code output  cell"><div class="cell-content"><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">55w ago</span></span></span><output><pre><code class="txt">/parser/frontmatter.js
+159
+</code></pre></output></div><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled=""/> <!-- -->Use the above to sync local file system instead of manifest.</li>
+</ul></div></div><div startpos="75:1-2051" endpos="137:4-3666" class="code   cell"><div class="cell-content"><div class="dir-collapse tag-sync lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:white;background-color:#0361a9" class="tag">sync</span></span><pre><code class="js">// fetch all remote files and store
+// locally if they don&#x27;t already exist
+
+const getList = async () =&gt; {
+  const { CompactPrefixTree, getWordsFromTrie } = lit.utils.compactPrefixTree;
+
+  const resp = await fetch(&quot;/compactManifest.json&quot;);
+  const data = await resp.json();
+  const keyset = getWordsFromTrie(data);
+  const list = Array.from(keyset).map((k) =&gt; `/${k}`);
+  return list;
+};
+
+return (async (fn) =&gt; {
+  const t = Date.now();
+  const p = lit.utils.path;
+  const writePLocal = async (...args) =&gt; {};
+
+  const list = await getList();
+
+  const existed = []
+  const duds = [];
+  const synced = [];
+  const errors = [];
+  const res = await Promise.all(
+    list.map(async (n) =&gt; {
+      try {
+        const stats = await lit.fs
+          .readStat(n)
+          .then((x) =&gt; x)
+          .catch((err) =&gt; {
+            duds.push(n);
+            return { local: {}, remote: {} };
+          });
+        if (stats.local.stat) {
+          existed.push(n)
+        }
+        else if (stats.remote.stat) {
+          await lit.fs.writeFile(n, stats.remote.value, {
+            localOnly: true,
+            encoding: &quot;utf8&quot;,
+          });
+          synced.push(n);
+        } else {
+          errors.push(n)
+        }
+
+        return n;
+      } catch (err) {
+        errors.push(n + &quot; : &quot; + err.message);
+      }
+    })
+  );
+  console.log(
+    `Synced ${synced.length + existed.length}/${list.length} files in ${
+      (Date.now() - t) / 1000
+    } seconds. Fetched: ${synced.length} Duds: ${duds.length} Errors: ${errors.length} Skipped: ${existed.length}`
+  );
+  return { duds, errors };
+})();
+
+</code></pre></div></div></div><div startpos="138:1-3667" endpos="145:4-3992" class="code output  cell"><div class="cell-content"><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">54w ago</span></span></span><output><pre><code class="txt">Synced 165/168 files in 3.451 seconds. Fetched: 3 Duds: 0 Errors: 3 Skipped: 162
+{ duds: [],
+  errors: 
+   [ &#x27;/testing/uploads/B98FC982-EB37-427B-A7D7-D872628323C0.png&#x27;,
+     &#x27;/testing/uploads/graph.png&#x27;,
+     &#x27;/testing/uploads/EC0FF74E-93A5-496D-A5A7-1F2FC1885F77.png.png&#x27; ] }
+</code></pre></output></div></div></div></section></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="🔬 Tests, experiments and investigations" href="/testing/index.html">🔬 Tests, experiments and investigations</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>

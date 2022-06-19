@@ -1,0 +1,569 @@
+<html data-reactroot=""><head><title>Isomorphic Git</title><meta name="litsrc" value="/testing/isomorphic_git.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><meta name="apple-mobile-web-app-capable" content="yes"/><link rel="apple-touch-icon" href="/assets/lit-logo.png"/><link rel="icon" href="/assets/lit-logo.png"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children" disabled=""><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span><span class="led led-grey"></span><span class="led led-grey"></span></li></menu></li></menu></div><style>body {
+  --bg: white;
+  --bg-secondary-color: #efefef;
+    
+  --text-color: black;
+  --text-secondary-color: grey;
+  --text-primary-color: #9999f7;
+  --text-highlight-bg: yellow;
+  --text-highlight-color: black;
+
+  --divider-subtle: #efefef;
+  --medium-space: 0.4em;
+  --code-bg-color: black;
+  --code-text-color: white;
+  --box-bg-opacity: 0.05;
+}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section class="" startpos="1:1-0" endpos="5:163-196"><div startpos="1:1-0" endpos="5:163-196" class="cell"><div class="cell-content"><h1 id="isomorphic-git">Isomorphic Git</h1><p><a class="exists local" href="index.html" title="🔬 Testing" wikilink="true" filepath="/testing/isomorphic_git.lit" root="" data="[object Object]">🔬 Testing</a></p><p>Since <code>.lit</code> already uses <a class="exists local" href="lightningfs.html" title="testing/LightningFS" wikilink="true" filepath="/testing/isomorphic_git.lit" root="" data="[object Object]">testing/LightningFS</a> for the local filesystem we can easily use <a class="external" href="https://isomorphic-git.org/docs/en/quickstart" filepath="/testing/isomorphic_git.lit" root="" data="[object Object]">https://isomorphic-git.org/docs/en/quickstart<span class="linkIcon">↗</span></a> to manage versioning...</p></div></div><section class="" startpos="7:1-198" endpos="7:21-218"><div startpos="7:1-198" endpos="7:21-218" class="cell"><div class="cell-content"><h2 id="table-of-contents">Table of Contents</h2><ul>
+<li>
+<p><a class="fragment" href="#initial-plan">Initial plan<span class="linkIcon">§</span></a></p>
+</li>
+<li>
+<p><a class="fragment" href="#investigating-api">Investigating API<span class="linkIcon">§</span></a></p>
+<ul>
+<li><a class="fragment" href="#status">Status<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#add">Add<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#commit">Commit<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#log">Log<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#diff">Diff<span class="linkIcon">§</span></a></li>
+</ul>
+</li>
+<li>
+<p><a class="fragment" href="#http-client">Http client<span class="linkIcon">§</span></a></p>
+</li>
+<li>
+<p><a class="fragment" href="#web-worker">Web worker<span class="linkIcon">§</span></a></p>
+</li>
+</ul></div></div></section><section class="" startpos="9:1-220" endpos="15:17-468"><div startpos="9:1-220" endpos="15:17-468" class="cell"><div class="cell-content"><h2 id="initial-plan">Initial plan</h2><p>The initial plan is to just auto commit on all actions, enabling &quot;infinite&quot; undo.</p><p>Thereafter that may remain the default but ideally an ergonomic version of the raw git api can be exposed for more advanced users.</p><p><em>Implementation</em></p></div></div><div startpos="21:1-474" endpos="69:4-1672" class="code   cell"><div class="cell-content"><div class="dir-plugin dir-collapse lang-js local collapsed codecell"><a name="git-commit-all"></a><span class="meta"><span class="lang">js</span><span class="filename">../utils/git-commit-all.js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=fn</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=git-commit-all</span></span><pre><code class="js">// initially, because it&#x27;s on every change 
+// a commit will mostly be for a single
+// file at a time the immediate exception 
+// being when a file with output files 
+// is edited, in which case the commit 
+// includes those files.
+
+export const fn = async () =&gt; {
+  const now = (new Date()).toISOString()
+
+  const fs = lit.lfs 
+  const dir = lit.location.root
+  const git = lit.git
+  const FILE = 0, WORKDIR = 2, STAGE = 3
+
+  const unstaged = row =&gt; {
+    return row[WORKDIR] !== row[STAGE]
+  }
+
+  // get/list unstaged files
+  const status = await git.statusMatrix({ fs,dir})
+  const files = status
+                .filter( unstaged )
+                .map(row =&gt; row[FILE])
+
+  // stage everything
+  await git.add({fs, dir, filepath: &#x27;.&#x27;})
+
+  // message 
+  const message = `Commit ${lit.location.src}
+
+at ${now} includes the following ${files.length} files:
+${files.map(f=&gt; &quot;- &quot; + f).join(&#x27;\n&#x27;)}`
+
+  // return message
+
+  // commit
+  const sha = await git.commit({fs, dir,
+    message,
+    author: {
+      name: &#x27;dotlitbot&#x27;,
+      email: &#x27;bot@dotlit.org&#x27;
+    }
+  })
+  return `Committed ${sha.slice(0,6)} 
+${message}`
+}
+</code></pre></div></div></div><div startpos="70:1-1673" endpos="80:4-2013" class="code   cell"><div class="cell-content"><div class="dir-plugin dir-collapse lang-js local collapsed codecell"><a name="git"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=git</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=menu</span></span><pre><code class="js">export const menu = (ctx, {React, Menu}) =&gt; {
+  const rc = React.createElement
+  const commit = lit.file.data.plugins.fn[&#x27;git-commit-all&#x27;]
+  const onClick = async ev =&gt; alert(await commit())
+  return rc( Menu, {
+    title:&quot;Git&quot;,
+    disabled: false,
+  }, [rc(&#x27;span&#x27;, {onClick}, &#x27;Commit All&#x27;)])
+}
+</code></pre></div></div></div><div startpos="81:1-2014" endpos="89:4-2220" class="code   cell"><div class="cell-content"><div class="lang-txt local codecell"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">59.9w ago</span></span></span><pre><code class="txt">Committed d738da 
+Auto commit testing/isomorphic_git.lit
+
+at: 2021-04-26T08:25:54.893Z
+includes the following 2 files:
+- testing/isomorphic_git.lit
+- utils/git-commit-all.js
+</code></pre></div></div></div></section><section class="" startpos="90:1-2221" endpos="123:4-2789"><div startpos="90:1-2221" endpos="123:4-2789" class="cell"><div class="cell-content"><h2 id="investigating-api">Investigating API</h2></div></div><div startpos="93:1-2244" endpos="98:4-2338" class="code   cell"><div class="cell-content"><div class="lang-js local codecell"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return lit.fs
+       .readFile(&#x27;/.git/HEAD&#x27;, {
+          encoding: &#x27;utf8&#x27;
+        })
+</code></pre></div></div></div><div startpos="99:1-2339" endpos="102:4-2410" class="code output  cell"><div class="cell-content"><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">54.5w ago</span></span></span><output><pre><code class="txt">ref: refs/heads/master
+
+</code></pre></output></div></div></div><div startpos="103:1-2411" endpos="108:4-2518" class="code   cell"><div class="cell-content"><div class="lang-js local codecell"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return lit.fs
+       .readFile(&#x27;/.git/refs/heads/master&#x27;, {
+          encoding: &#x27;utf8&#x27;
+        })
+</code></pre></div></div></div><div startpos="109:1-2519" endpos="112:4-2608" class="code output  cell"><div class="cell-content"><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">54.5w ago</span></span></span><output><pre><code class="txt">c87e4931458d48d27b0b1aeec2f48da44b88d027
+
+</code></pre></output></div></div></div><div startpos="113:1-2609" endpos="120:4-2731" class="code   cell"><div class="cell-content"><div class="tag-init lang-js local codecell"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#031651" class="tag">init</span></span><pre><code class="js">return (async () =&gt; {
+  return await lit.git.init({
+    fs: lit.lfs, 
+    dir: lit.location.root
+  })
+})()
+</code></pre></div></div></div><div startpos="121:1-2732" endpos="123:4-2789" class="code output  cell"><div class="cell-content"><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">54.5w ago</span></span></span><output><pre><code class="txt">undefined
+</code></pre></output></div></div></div><section class="" startpos="124:1-2790" endpos="226:4-6219"><div startpos="124:1-2790" endpos="226:4-6219" class="cell"><div class="cell-content"><h3 id="status">Status</h3></div></div><div startpos="126:1-2802" endpos="134:4-2968" class="code   cell"><div class="cell-content"><div class="lang-js local codecell"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async () =&gt; {
+  return lit.location.src + &quot; : &quot; + await lit.git.status({
+    fs: lit.lfs, 
+    dir: lit.location.root, 
+    filepath: &#x27;.&#x27; 
+  })
+})()
+</code></pre></div></div></div><div startpos="135:1-2969" endpos="137:4-3052" class="code output  cell"><div class="cell-content"><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">56.8w ago</span></span></span><output><pre><code class="txt">testing/isomorphic_git.lit : *added
+</code></pre></output></div></div></div><div startpos="138:1-3053" endpos="146:4-3207" class="code   cell"><div class="cell-content"><div class="lang-js local codecell"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async () =&gt; {
+  return await lit.git.statusMatrix({
+    fs: lit.lfs, 
+    dir: lit.location.root, 
+    filepaths: [&#x27;testing/&#x27;]
+  })
+})()
+</code></pre></div></div></div><div startpos="147:1-3208" endpos="206:4-5806" class="code output  cell"><div class="cell-content"><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">54.5w ago</span></span></span><output><pre><code class="txt">[ [ &#x27;testing/&lt;&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/autoformatting_cell_source.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/autoformatting_cell_source.lit#prettier&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/compactManifest1.json&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/compact_manifest.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/cors_proxy.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/custom-module.js&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/custom-module.mjs&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/esm_viewer_repl.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/full.json&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/fuzzy_text_search.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/gitworker.js&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/importing_js_modules.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/index.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/input_buffer.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/isomorphic_git.lit&#x27;, 1, 2, 1 ],
+  [ &#x27;testing/lightningfs.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/links.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/local_remote_files.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/log/2021-05-09.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/log/2021-05-11.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/log/2021-05-12.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/log/2021-05-13.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/log/2021-05-15.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/log/2021-05-16.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/log/2021-05-17.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/log/2021-05-18.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/log/2021-05-19.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/log/2021-05-20.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/log/2021-05-21.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/log/2021-05-23.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/log/2021-05-25.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/log/2021-05-27.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/log/2021-05-29.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/log/2021-05-30.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/log/2021-05.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/log/2021-06-01.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/log/2021-06-02.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/log/2021-w20.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/log/2021-w21.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/log/2021.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/log/checkforinput.js&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/log/day.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/log/today.js&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/paths.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/private_files.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/repl-output.svg&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/runkit-cors-proxy-endpoint.js&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/runkit-express-cors-proxy.js&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/runkit-repl-endpoint.js&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/runkit.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/selection.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/serviceworker.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/test.txt&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/testing/repl-output.svg&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/web_workers.lit&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/worker.js&#x27;, 1, 1, 1 ],
+  [ &#x27;testing/worker2.js&#x27;, 1, 1, 1 ] ]
+</code></pre></output></div></div></div><div startpos="210:1-5810" endpos="223:4-6138" class="code   cell"><div class="cell-content"><div class="lang-js local codecell"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const fs = lit.lfs 
+const dir = lit.location.root
+const git = lit.git
+const FILE = 0, WORKDIR = 2, STAGE = 3
+
+// list files with unstaged changes
+return (async () =&gt; {
+  const filenames = (await git.statusMatrix({ fs,dir}))
+  .filter(row =&gt; row[WORKDIR] !== row[STAGE])
+  .map(row =&gt; row[FILE])
+  return filenames
+})()
+</code></pre></div></div></div><div startpos="224:1-6139" endpos="226:4-6219" class="code output  cell"><div class="cell-content"><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">54.5w ago</span></span></span><output><pre><code class="txt">[ &#x27;testing/isomorphic_git.lit&#x27; ]
+</code></pre></output></div></div></div></section><section class="" startpos="227:1-6220" endpos="244:4-6442"><div startpos="227:1-6220" endpos="244:4-6442" class="cell"><div class="cell-content"><h3 id="add">Add</h3></div></div><div startpos="229:1-6229" endpos="241:4-6384" class="code   cell"><div class="cell-content"><div class="lang-js local codecell"><span class="meta"><span class="lang">js</span></span><pre><code class="js">
+const fs = lit.lfs
+const dir = lit.location.root
+
+return (async ()=&gt; {
+  return await lit.git.add({
+    fs,
+    dir,
+    filepath: &#x27;.&#x27;
+  })
+})()
+</code></pre></div></div></div><div startpos="242:1-6385" endpos="244:4-6442" class="code output  cell"><div class="cell-content"><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">54.5w ago</span></span></span><output><pre><code class="txt">undefined
+</code></pre></output></div></div></div></section><section class="" startpos="248:1-6446" endpos="274:4-6849"><div startpos="248:1-6446" endpos="274:4-6849" class="cell"><div class="cell-content"><h3 id="commit">Commit</h3></div></div><div startpos="250:1-6458" endpos="270:4-6750" class="code   cell"><div class="cell-content"><div class="lang-js local codecell"><span class="meta"><span class="lang">js</span></span><pre><code class="js">
+const fs = lit.lfs
+const dir = lit.location.root
+
+return (async ()=&gt; {
+const now = (new Date()).toISOString()
+let sha = await lit.git.commit({
+  fs,
+  dir,
+  message: `Auto commit (${now})`,
+  author: {
+    name: &#x27;dotlit&#x27;,
+    email: &#x27;bit@dotlit.org&#x27;
+  }
+})
+
+console.log(sha)
+
+})()
+</code></pre></div></div></div><div startpos="271:1-6751" endpos="274:4-6849" class="code output  cell"><div class="cell-content"><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">54.5w ago</span></span></span><output><pre><code class="txt">46ceec21a687227f28f6f1ca3139b6a0cd37fad5
+undefined
+</code></pre></output></div></div></div></section><section class="" startpos="276:1-6851" endpos="305:4-7507"><div startpos="276:1-6851" endpos="305:4-7507" class="cell"><div class="cell-content"><h3 id="log">Log</h3></div></div><div startpos="278:1-6860" endpos="291:4-7210" class="code   cell"><div class="cell-content"><div class="lang-js local codecell"><span class="meta"><span class="lang">js</span><span class="output">&gt; md</span></span><pre><code class="js">const indentLines = str =&gt; str.split(&#x27;\n&#x27;).map( line =&gt; `      ${line}`).join(&#x27;\n&#x27;)
+
+return (async ()=&gt; {
+  let commits = await lit.git.log({
+     fs: lit.lfs, 
+     dir: lit.location.root, 
+     depth: 10
+  })
+  return &quot;**Log**\n&quot; + commits.map( x =&gt; `1. **\`${x.oid.slice(0,6)}\`**
+
+${indentLines(x.commit.message)}`).join(&#x27;\n&#x27;)
+})()
+</code></pre></div></div></div><div startpos="292:1-7211" endpos="305:4-7507" class="code output  cell"><div class="cell-content"><div class="lang-md local codecell output"><span class="meta"><span class="lang">md</span><span class="updatedAt">Updated <span class="Time relative">54.5w ago</span></span></span><div class="md-block">
+<p><strong>Log</strong></p>
+<ol>
+<li>
+<p><strong><code>c87e49</code></strong></p>
+<p>Commit /testing/isomorphic_git.lit</p>
+<p>at 2021-06-03T13:14:34.272Z includes the following 1 files:</p>
+<ul>
+<li>testing/isomorphic_git.lit</li>
+</ul>
+</li>
+<li>
+<p><strong><code>46ceec</code></strong></p>
+<p>Auto commit (2021-06-03T13:10:44.622Z)</p>
+</li>
+</ol>
+</div></div></div></div></section><section class="" startpos="307:1-7509" endpos="332:4-8129"><div startpos="307:1-7509" endpos="332:4-8129" class="cell"><div class="cell-content"><h3 id="diff">Diff</h3></div></div><div startpos="309:1-7519" endpos="312:4-7579" class="code   cell"><div class="cell-content"><div class="lang-js local codecell"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const {git, lfs} = lit
+return [git.walk, git.TREE]
+</code></pre></div></div></div><div startpos="313:1-7580" endpos="315:4-7666" class="code output  cell"><div class="cell-content"><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">58.3w ago</span></span></span><output><pre><code class="txt">[ [Function: walk], [Function: TREE] ]
+</code></pre></output></div></div></div><div startpos="316:1-7667" endpos="329:4-8064" class="code   cell"><div class="cell-content"><div class="dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span></span><pre><code class="js">return lit.git
+  const commitHash1 = &#x27;0c40ed746ebe53cf744d78191d0bbc2941537280&#x27;
+  const commitHash2 = &#x27;b081f51cd27f54cf58915512006838d4eb67716b&#x27;
+  const git = lit.git
+  return git.walk({
+    lit.lfs,
+    lit.location.root,
+    trees: [git.TREE({ ref: commitHash1 }), git.TREE({ ref: commitHash2 })],
+    map: async function(filepath, [A, B]) {
+      return filepath
+    })
+  )}
+</code></pre></div></div></div><div startpos="330:1-8065" endpos="332:4-8129" class="code output  cell"><div class="cell-content"><div class="dir-error lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span style="color:white;background-color:red" class="directive dir-error">error</span><span class="updatedAt">Updated <span class="Time relative">58.3w ago</span></span></span><output><pre><code class="txt">undefined
+</code></pre></output></div></div></div></section></section><section class="" startpos="334:1-8131" endpos="336:23-8169"><div startpos="334:1-8131" endpos="336:23-8169" class="cell"><div class="cell-content"><h2 id="http-client">Http client</h2><p>Requires a CORS Proxy!</p></div></div><div startpos="338:1-8171" endpos="339:4-8255" class="code   cell"><div class="cell-content"><div class="dir-plugin dir-collapse lang-js local collapsed codecell"><a name="corsProxy"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=proxy</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=corsProxy</span><span class="source">&lt; ../plugins/other/cors-proxy.js</span></span><pre><code class="js">export const proxy = async (returnEndpoint) =&gt; {
+  const setup = (resolve, reject) =&gt; {
+    if (typeof lit === &quot;undefined&quot;) reject(&quot;No lit&quot;);
+    else if (!window.__runkitCORSProxyEnpoint) {
+      (async (fn) =&gt; {
+        const rkEmbed = document.createElement(&quot;script&quot;);
+        rkEmbed.onload = async (fn) =&gt; {
+          const el = document.createElement(&quot;div&quot;);
+          document.body.appendChild(el);
+          el.setAttribute(&quot;style&quot;, &quot;height:0;&quot;);
+          RunKit.createNotebook({
+            element: el,
+            mode: &quot;endpoint&quot;,
+            onLoad: async (rk) =&gt; {
+              const endpoint = await rk.getEndpointURL();
+              window.__runkitCORSProxyEnpoint = endpoint;
+              document.body.removeChild(el);
+            },
+            evaluateOnLoad: true,
+            source: await lit.fs.readFile(
+              &quot;/testing/runkit-express-cors-proxy.js&quot;,
+              {
+                encoding: &quot;utf8&quot;,
+              }
+            ),
+          });
+        };
+        rkEmbed.setAttribute(&quot;src&quot;, &quot;https://embed.runkit.com&quot;);
+        document.body.appendChild(rkEmbed);
+      })();
+    } else {
+      resolve(window.__runkitCORSProxyEnpoint);
+    }
+  };
+
+  const endpoint = await new Promise(setup).then((e) =&gt; e);
+  if (false &amp;&amp; !window.__runkitCORSProxyEnpoint) {
+    return &quot;Still setting up proxy endpoint&quot;;
+  } else {
+    if (returnEndpoint) return endpoint;
+
+    const getAndReplaceDomain = (originalUrl, newDomain) =&gt; {
+      return newDomain + originalUrl.replace(/^https?:\/\//, &quot;/&quot;);
+    };
+
+    const proxyFetch = async (url, opts = {}) =&gt; {
+      const proxyUrl = getAndReplaceDomain(url, endpoint);
+      return fetch(proxyUrl, opts);
+    };
+
+    return proxyFetch;
+  }
+};
+
+</code></pre></div></div></div><div startpos="342:1-8258" endpos="354:4-8566" class="code   cell"><div class="cell-content"><div class="lang-js local codecell"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return (async (fn) =&gt; {
+  const http = await import(
+    &quot;https://unpkg.com/isomorphic-git/http/web/index.js&quot;
+  );
+  return lit.git.getRemoteInfo({
+    http: http.default,
+    corsProxy: await lit.file.data.plugins.proxy.corsProxy(true),
+    url: &quot;https://github.com/dotlitdev/dotlit&quot;,
+  });
+})();
+
+</code></pre></div></div></div><div startpos="355:1-8567" endpos="382:4-9281" class="code output  cell"><div class="cell-content"><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">54w ago</span></span></span><output><pre><code class="txt">{ capabilities: 
+   [ &#x27;multi_ack&#x27;,
+     &#x27;thin-pack&#x27;,
+     &#x27;side-band&#x27;,
+     &#x27;side-band-64k&#x27;,
+     &#x27;ofs-delta&#x27;,
+     &#x27;shallow&#x27;,
+     &#x27;deepen-since&#x27;,
+     &#x27;deepen-not&#x27;,
+     &#x27;deepen-relative&#x27;,
+     &#x27;no-progress&#x27;,
+     &#x27;include-tag&#x27;,
+     &#x27;multi_ack_detailed&#x27;,
+     &#x27;allow-tip-sha1-in-want&#x27;,
+     &#x27;allow-reachable-sha1-in-want&#x27;,
+     &#x27;no-done&#x27;,
+     &#x27;symref=HEAD:refs/heads/main&#x27;,
+     &#x27;filter&#x27;,
+     &#x27;object-format=sha1&#x27;,
+     &#x27;agent=git/github-g69d6dd5d35d8&#x27; ],
+  HEAD: &#x27;refs/heads/main&#x27;,
+  refs: 
+   { heads: 
+      { &#x27;gh-pages&#x27;: &#x27;1bdc2d1a354a7386ce859becb16b2e01d4224456&#x27;,
+        main: &#x27;7ea81d7733d7a388fb06a496a2cc630cb66a4308&#x27; },
+     pull: { &#x27;1&#x27;: [Object] } } }
+</code></pre></output></div></div></div></section><section class="" startpos="385:1-9284" endpos="605:4-15039"><div startpos="385:1-9284" endpos="605:4-15039" class="cell"><div class="cell-content"><h2 id="web-worker">Web worker</h2></div></div><div startpos="387:1-9299" endpos="439:4-10726" class="code output  cell"><div class="cell-content"><div class="lang-js local codecell output"><a name="gitworker.js"></a><span class="meta"><span class="lang">js</span><span class="filename">gitworker.js</span></span><output><pre><code class="js">/* eslint-env worker */
+/* globals LightningFS git MagicPortal GitHttp */
+importScripts(
+  &quot;https://unpkg.com/@isomorphic-git/lightning-fs&quot;,
+  &quot;https://unpkg.com/isomorphic-git@beta&quot;,
+  &quot;https://unpkg.com/isomorphic-git@beta/http/web/index.umd.js&quot;,
+  &quot;https://unpkg.com/magic-portal&quot;
+);
+
+let fs = new LightningFS(&quot;fs&quot;, { wipe: true });
+const portal = new MagicPortal(self);
+self.addEventListener(&quot;message&quot;, ({ data }) =&gt; console.log(data));
+
+(async () =&gt; {
+  let mainThread = await portal.get(&quot;mainThread&quot;);
+  let dir = &quot;/&quot;;
+  portal.set(&quot;workerThread&quot;, {
+    setDir: async _dir =&gt; {
+      dir = _dir;
+    },
+    clone: async args =&gt; {
+      fs = new LightningFS(&quot;fs&quot;, { wipe: true });
+      try{
+      return git.clone({
+        ...args,
+        fs,
+        http: GitHttp,
+        dir,
+        onProgress(evt) {
+          mainThread.progress(evt);
+        },
+        onMessage(msg) {
+          mainThread.print(msg);
+        },
+        onAuth(url) {
+          console.log(url);
+          return mainThread.fill(url);
+        },
+        onAuthFailure({ url, auth }) {
+          return mainThread.rejected({ url, auth });
+        }
+      });
+      } catch(err) {
+        mainThread.failure({message}=err)
+      }
+    },
+    listBranches: args =&gt; git.listBranches({ ...args, fs, dir }),
+    listFiles: args =&gt; git.listFiles({ ...args, fs, dir }),
+    log: args =&gt; git.log({ ...args, fs, dir })
+  });
+})();
+</code></pre></output></div></div></div><div startpos="441:1-10728" endpos="496:4-12376" class="code   cell"><div class="cell-content"><div class="dir-collapse tag-reference lang-html local collapsed codecell"><span class="meta"><span class="lang">html</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#c8db3f" class="tag">reference</span></span><pre><code class="html">&lt;div&gt;
+  &lt;input
+    id=&quot;repository&quot;
+    type=&quot;text&quot;
+    style=&quot;width: 50em&quot;
+    title=&quot;Tip: enter a private repo URL to see the credentialManager plugin prompt for a password.&quot;,
+    value=&quot;https://github.com/isomorphic-git/isomorphic-git&quot;,
+  /&gt;
+  &lt;button type=&quot;button&quot; id=&quot;cloneButton&quot;&gt;Clone&lt;/button&gt;
+&lt;/div&gt;
+&lt;div&gt;
+  &lt;progress id=&quot;progress&quot; value=&quot;0&quot;&gt;&lt;/progress&gt;
+  &lt;span id=&quot;progress-txt&quot; style=&quot;font-family: monospace;&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;
+&lt;output id=&quot;log&quot; style=&quot;white-space: pre; font-family: monospace;&quot;&gt;&lt;/output&gt;
+
+&lt;script src=&quot;https://unpkg.com/magic-portal&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+  // alert(&quot;Running&quot;)
+  const $ = id =&gt; document.getElementById(id);
+
+  let worker = new Worker(&quot;gitworker.js&quot;);
+  const portal = new MagicPortal(worker);
+  worker.addEventListener(&quot;message&quot;, ({ data }) =&gt; console.log(data));
+
+  const mainThread = {
+    async print(message) {
+      let text = $(&quot;log&quot;).textContent;
+      if (message.endsWith(&quot;\r&quot;)) {
+        // overwrite last line
+        text = text.trim().replace(/.+$/, &quot;&quot;);
+      }
+      text += message + &quot;\n&quot;;
+      $(&quot;log&quot;).textContent = text;
+    },
+    async progress(evt) {
+      $(&quot;progress-txt&quot;).textContent = evt.phase;
+      $(&quot;progress&quot;).value = evt.total ? evt.loaded / evt.total : 0.5;
+      return;
+    },
+    async fill(url) {
+      let username = window.prompt(&quot;Username:&quot;);
+      let password = window.prompt(&quot;Password:&quot;);
+      return { username, password };
+    },
+    async rejected({ url, auth }) {
+      window.alert(&quot;Authentication rejected&quot;);
+      return;
+    }
+  };
+  portal.set(&quot;mainThread&quot;, mainThread, {
+    void: [&quot;print&quot;, &quot;progress&quot;, &quot;rejected&quot;]
+  });
+
+</code></pre></div></div></div><div startpos="498:1-12378" endpos="500:4-12461" class="code output  cell"><div class="cell-content"><div class="dir-below lang-script local codecell output"><span class="meta"><span class="lang">script</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="script">https://unpkg.com/magic-portal
+</code></pre><div class="scriptLoaded"></div></div></div></div><div startpos="502:1-12463" endpos="519:4-12917" class="code   cell"><div class="cell-content"><div class="lang-js local codecell"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return new Promise((resolve,reject) =&gt; {
+  let myWorker;
+  try {
+    myWorker = new Worker(&#x27;gitworker.js&#x27;)
+    myWorker.onmessage = (ev) =&gt; {
+      if (ev.data === &#x27;done&#x27;) resolve(ev.data)
+      else console.log(ev.data)
+    }
+    myWorker.onerror = (err) =&gt; {
+      resolve({msg: &quot;worker.onerror: &quot; + err.message + &quot; (&quot; + err.filename + &quot;:&quot; + err.lineno + &quot;)&quot;, err, err},)
+    }
+  } catch(err) {
+    resolve({msg: &quot;Caught err&quot;, err})
+  }
+  
+})
+</code></pre></div></div></div><div startpos="522:1-12920" endpos="591:4-14783" class="code   cell"><div class="cell-content"><div class="lang-js local codecell"><span class="meta"><span class="lang">js</span></span><pre><code class="js">  // alert(&quot;Running&quot;)
+  const $ = id =&gt; document.getElementById(id);
+
+  let worker = new Worker(&quot;gitworker.js&quot;);
+  const portal = new MagicPortal(worker);
+  worker.addEventListener(&quot;message&quot;, ({ data }) =&gt; console.log(data));
+
+  const mainThread = {
+    async print(message) {
+      console.log(message)
+    },
+    async progress(evt) {
+      console.log(evt.phase, evt.total ? evt.loaded / evt.total : 0.5)
+      return;
+    },
+    async fill(url) {
+      let username = window.prompt(&quot;Username:&quot;);
+      let password = window.prompt(&quot;Password:&quot;);
+      return { username, password };
+    },
+    async rejected({ url, auth }) {
+      window.alert(&quot;Authentication rejected&quot;);
+      return;
+    }, 
+    async failure({message}) {
+      alert(&quot;Failure: &quot;, message)
+      return
+    },
+  }
+  portal.set(&quot;mainThread&quot;, mainThread, {
+    void: [&quot;print&quot;, &quot;progress&quot;, &quot;rejected&quot;, &quot;failure&quot;]
+  });
+
+async function doCloneAndStuff() {
+    console.log(&quot;CLONE&quot;);
+
+    await workerThread.setDir(&quot;/testing&quot;);
+
+    await workerThread.clone({
+      corsProxy: &quot;https://cors.isomorphic-git.org&quot;,
+      url: &quot;https://GitHub.com/dotlitdev/dotlit&quot;
+    });
+    console.log(&quot;CLONED!!&quot;)
+
+    let branches = await workerThread.listBranches({ remote: &quot;origin&quot; });
+    console.log(&quot;BRANCHES:\n&quot; + branches.map(b =&gt; `  ${b}`).join(&quot;\n&quot;))
+
+    let files = await workerThread.listFiles({});
+    console.log(&quot;FILES:\n&quot; + files.map(b =&gt; `  ${b}`).join(&quot;\n&quot;))
+
+    let commits = await workerThread.log({});
+    console.log(&quot;LOG:\n&quot; +
+      commits
+        .map(c =&gt; `  ${c.oid.slice(0, 7)}: ${c.commit.message}`)
+        .join(&quot;\n&quot;))
+  }
+
+  return (async () =&gt; {
+    const workerThread = await portal.get(&quot;workerThread&quot;);
+    window.workerThread = workerThread
+    window.worker = worker
+    console.log(workerThread)
+
+    console.log(&quot;ready&quot;)
+    await doCloneAndStuff()
+
+    
+  })();
+</code></pre></div></div></div><div startpos="592:1-14784" endpos="594:4-14836" class="code output  cell"><div class="cell-content"><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">56.8w ago</span></span></span><output><pre><code class="txt">true
+</code></pre></output></div></div></div><div startpos="596:1-14838" endpos="598:4-14875" class="code   cell"><div class="cell-content"><div class="lang-js local codecell"><span class="meta"><span class="lang">js</span></span><pre><code class="js">return workerThread.log({})
+</code></pre></div></div></div><div startpos="599:1-14876" endpos="605:4-15039" class="code output  cell"><div class="cell-content"><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">56.8w ago</span></span></span><output><pre><code class="txt">{ setDir: [Function],
+  clone: [Function],
+  listBranches: [Function],
+  listFiles: [Function],
+  log: [Function] }
+</code></pre></output></div></div></div></section></section></div></div><div id="backlinks"><h4>Backlinks (2)</h4><ol><li><a title=".lit Filesystem" href="/filesystem/index.html">.lit Filesystem</a></li><li><a title="🔬 Tests, experiments and investigations" href="/testing/index.html">🔬 Tests, experiments and investigations</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>

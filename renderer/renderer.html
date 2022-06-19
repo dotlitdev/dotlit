@@ -1,0 +1,344 @@
+<html data-reactroot=""><head><title>Renderer</title><meta name="litsrc" value="/renderer/renderer.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><meta name="apple-mobile-web-app-capable" content="yes"/><link rel="apple-touch-icon" href="/assets/lit-logo.png"/><link rel="icon" href="/assets/lit-logo.png"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children" disabled=""><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span><span class="led led-grey"></span><span class="led led-grey"></span></li></menu></li></menu></div><style>body {
+  --bg: white;
+  --bg-secondary-color: #efefef;
+    
+  --text-color: black;
+  --text-secondary-color: grey;
+  --text-primary-color: #9999f7;
+  --text-highlight-bg: yellow;
+  --text-highlight-color: black;
+
+  --divider-subtle: #efefef;
+  --medium-space: 0.4em;
+  --code-bg-color: black;
+  --code-text-color: white;
+  --box-bg-opacity: 0.05;
+}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section class="" startpos="1:1-0" endpos="3:4-26"><div startpos="1:1-0" endpos="3:4-26" class="cell"><div class="cell-content"></div></div><section class="" startpos="5:1-28" endpos="7:112-151"><div startpos="5:1-28" endpos="7:112-151" class="cell"><div class="cell-content"><h1 id="renderer">Renderer</h1><p>The default render output is <code>html</code> which includes client-side <code>javascript</code> which hydrates a React application.</p></div></div><section class="" startpos="11:1-155" endpos="11:17-171"><div startpos="11:1-155" endpos="11:17-171" class="cell"><div class="cell-content"><h2 id="static-html">Static <code>html</code></h2></div></div></section><section class="" startpos="13:1-173" endpos="15:97-296"><div startpos="13:1-173" endpos="15:97-296" class="cell"><div class="cell-content"><h2 id="interactive-components">Interactive Components</h2><p><a class="exists local" href="../components" title="Components" wikilink="true" filepath="/renderer/renderer.lit" root="" data="[object Object]">Components</a> (wiki link) alternativly regular link: <a class="exists local" href="../components/components.html" filepath="/renderer/renderer.lit" root="" data="[object Object]">Components</a></p></div></div></section><section class="" startpos="17:1-298" endpos="19:12-322"><div startpos="17:1-298" endpos="19:12-322" class="cell"><div class="cell-content"><h2 id="viewers">Viewers</h2><p><a class="exists local" href="../viewers.html" title="Viewers" wikilink="true" filepath="/renderer/renderer.lit" root="" data="[object Object]">Viewers</a></p></div></div></section><section class="" startpos="26:1-329" endpos="33:4-459"><div startpos="26:1-329" endpos="33:4-459" class="cell"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></div><div startpos="27:1-347" endpos="28:4-378" class="code   cell"><div class="cell-content"><div class="dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; index.jsx</span></span><pre><code class="js">import path from &#x27;path&#x27;
+import remark2rehype from &#x27;remark-rehype&#x27;
+import rehype2react from &#x27;rehype-react&#x27;
+import {selectAll} from &#x27;unist-util-select&#x27;
+import vfile from &#x27;vfile&#x27;
+
+import hastCodeHandler from &#x27;./utils/hast-util-code-handler&#x27;
+
+import ReactDOMServer from &#x27;react-dom/server&#x27;
+import React from &#x27;react&#x27;
+
+import {processor as parserProcessor} from &#x27;../parser&#x27;
+import {transcludeCode} from &#x27;./transcludeCode&#x27;
+import {extractPlugins} from &#x27;./extractPlugins&#x27;
+
+import Document from &#x27;../components/Document&#x27;
+import Paragraph from &#x27;../components/base/Paragraph&#x27;
+import Link from &#x27;../components/base/Link&#x27;
+import {Codeblock} from &#x27;../components/base/Codeblock&#x27;
+import Cell from &#x27;../components/Cell&#x27;
+import { Section } from &#x27;../components/Section&#x27;
+
+import { getConsoleForNamespace } from &#x27;../utils/console&#x27;
+import { decorateLinkNode } from &#x27;../parser/links&#x27;
+
+import {time} from &#x27;../utils/timings&#x27;
+const timer = () =&gt; ({ns, marker}) =&gt; (t,f) =&gt; { time(ns,marker) }
+
+
+const console = getConsoleForNamespace(&#x27;renderer&#x27;)
+
+export function processor({fs, litroot, files, cwd, skipIncludes} = {}) {
+    console.log(&quot;Renderer: cwd&quot;, cwd)
+    let testGlobal = {}
+    return parserProcessor({fs, litroot, files, cwd, testGlobal})
+
+    .use(timer(),{ns:&#x27;renderer&#x27;})
+    // hoist ast to data
+    .use( (...args) =&gt; {
+         return (tree,file) =&gt; {
+            //  console.log(`[${file.path}] Hoisting AST data to file.data.ast`)
+             file.data = file.data || {}
+             file.data.ast = tree
+         }
+     })
+
+    // transclude codeblocks with source
+    // when available 
+    .use( transcludeCode, {fs} )
+    .use(timer(),{ns:&#x27;renderer&#x27;, marker: &#x27;transcludeCodeComplete&#x27;})
+
+    // includes and config
+    .use( ({fs, cwd, skipIncludes}) =&gt; {
+        return async (tree,file) =&gt; {
+            const includes = file?.data?.frontmatter?.includes || [&#x27;/config.lit&#x27;]
+            let loaded = 0
+            if (skipIncludes || includes === &quot;skip&quot;) {
+                console.log(`(${file.path}) Skipping includes.`)
+                return;
+            }
+            for (const include of includes) {
+                //const filepath = path.join(path.dirname(file.path), include)
+                const readPath = path.join(cwd || &#x27;&#x27;, (include?.[0] !== &#x27;/&#x27; ?  path.dirname(file.path) : &#x27;&#x27;), include)
+                console.log(`[${file.path}] [Include] Found include: &quot;${include}&quot; loading as: (${readPath})`)
+                // if (file.path === readPath) return
+                try {
+                    const includeFile = await vfile({ path: readPath, contents: await fs.readFile(readPath, {encoding: &#x27;utf8&#x27;}) })
+                    const p = processor({fs, cwd, litroot, files, skipIncludes: true})
+                    console.log(`[${file.path}] [Include] Constructed processor`)
+                    const included = await p.process(includeFile)
+                    console.log(`[${file.path}] [Include] Processed include: ${include}, had ${included.messages.length} messages.`, included.messages)
+                    file.data = file.data || {}
+                    file.data.plugins = Object.assign(file.data.plugins || {}, included.data.plugins || {})
+                    file.messages = [...included.messages,...file.messages]
+                    loaded += 1
+                } catch(err) {
+                    console.error(`[${file.path}] Failed to load include: ${include}`, err)
+                    
+                }
+                
+            }
+            console.log(`[${file.path}] Loaded  ${loaded}/${includes.length} includes.`)
+        }
+    }, {fs, cwd, skipIncludes})
+    .use(timer(),{ns:&#x27;renderer&#x27;, marker: &#x27;includesComplete&#x27;})
+
+    // extract plugins
+    .use( extractPlugins, {testGlobal} )
+    .use(timer(),{ns:&#x27;renderer&#x27;, marker: &#x27;extractPluginsComplete&#x27;})
+
+    // extract files to data
+    .use( (...args) =&gt; {
+         return (tree,file) =&gt; {
+            //  console.log(`[${file.path}] Extract codeblocks to file.data.files`)
+             file.data.files = selectAll(&quot;code&quot;, tree)
+         }
+     })
+
+    // hoist mdast data to hast data
+    // Disabled as failed to process due to JSON stringify error
+    .use( (...args) =&gt; {
+         return (tree,file) =&gt; {
+
+            //  console.log(`[${file.path}] Hoist mdast data (disabled)`)
+             for (const code of selectAll(&quot;code&quot;, tree)) {
+                 if (false &amp;&amp; code.data) {
+                     code.data.hProperties = code.data.hProperties || {}
+                     code.data.hProperties.data = code.data
+                 }
+             }
+         }
+     })
+
+     // use render plugins
+    .use( (...args) =&gt; {
+        return async (tree, file) =&gt; {
+            const rendererPlugins = file?.data?.plugins?.renderer || {}
+            // console.log(`[${file.path}] Looking for renderer plugins `)
+            for (const plugin in rendererPlugins) {
+                console.log(`[${file.path}] Render Plugin`, plugin)
+                await (rendererPlugins[plugin](...args))(tree, file)
+            }
+        }
+    }, {React, testGlobal})
+    .use(remark2rehype, {
+        allowDangerousHtml: true,
+        // passThrough: [&#x27;mdcode&#x27;],
+        handlers: {
+            code: hastCodeHandler,
+        },
+     })
+    .use(timer(),{ns:&#x27;renderer&#x27;, marker: &#x27;toRehypeComplete&#x27;})
+    .use(rehype2react, {
+        Fragment: React.Fragment,
+        allowDangerousHtml: true,
+        createElement: React.createElement,
+        passNode: true,
+        components: {
+            p: testGlobal.Paragraph || Paragraph,
+            a: testGlobal.Link || Link,
+            pre: testGlobal.Codeblock || Codeblock,
+            cell: testGlobal.Cell || Cell,
+            section: testGlobal.Section || Section
+        }
+    })
+    .use(timer(),{ns:&#x27;renderer&#x27;, marker: &#x27;toReactComplete&#x27;})
+}
+
+export async function renderedVFileToDoc(vfile, cmd) {
+
+    const root = path.resolve( cmd.output )
+    const dir = path.dirname( path.join(root, vfile.path) )
+    const relroot = path.relative(dir, root) || &#x27;.&#x27;
+
+    // console.log(&#x27;Render to document vFile&#x27;, vfile.path)
+
+    const notebook = &lt;Document
+        file={vfile}
+        root={cmd.base || relroot}
+        backlinks={vfile.data.backlinks}
+    /&gt;
+
+    vfile.contents = ReactDOMServer.renderToString(notebook)
+    vfile.extname = &#x27;.html&#x27;
+    return vfile
+}
+
+</code></pre></div></div></div><div startpos="29:1-379" endpos="30:4-418" class="code   cell"><div class="cell-content"><div class="dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; extractPlugins.js</span></span><pre><code class="js">import path from &#x27;path&#x27;
+import { getConsoleForNamespace } from &#x27;../utils/console&#x27;
+import { selectAll } from &#x27;unist-util-select&#x27;
+import {btoa, atob } from &#x27;../utils/safe-encoders&#x27;
+import { transform } from &#x27;../repl&#x27;
+
+const console = getConsoleForNamespace(&#x27;plugins&#x27;)
+   
+
+const extractModule = async (src, filename) =&gt; {
+    if (typeof global !== &#x27;undefined&#x27;){
+        var Module = module.constructor;
+        var m = new Module();
+
+        if (typeof m._compile === &#x27;function&#x27;) {
+            const babel = transform(filename, src, {type: &#x27;commonjs&#x27;})
+            m._compile(babel.code, filename);
+            console.log(`Compiled (${filename}) as commonjs module`, m, m.exports)
+            if (m.exports &amp;&amp; Object.keys(m.exports).length) return m.exports;
+            else throw new Error(&quot;No module.exports when loaded as commonjs&quot;)
+        }
+        
+    }
+    console.log(`Importing (${filename}) as es6 module via data:uri import.`)
+    // const blobUrl = URL.createObjectURL(new Blob([src], {type: &#x27;text/javascript&#x27;}))
+    // return await import(/* webpackIgnore: true */ blobUrl)
+    const babel = transform(filename, src) 
+    return await import(/* webpackIgnore: true */ `data:text/javascript;base64,${ btoa(babel.code)}`)
+}
+
+export const extractPlugins = ({fs} = {}) =&gt; {
+    return async (tree,file) =&gt; {
+        console.log(&quot;Checking for plugins&quot;)
+        file.data = file.data || {}
+        // file.data.plugins = {}
+        const blocks = selectAll(&quot;code&quot;, tree)
+        if (blocks?.length) await Promise.all(blocks.map(async block =&gt; {
+
+            const filename = (block.data
+                             &amp;&amp; block.data.meta
+                             &amp;&amp; block.data.meta.filename) || &#x27;&#x27;
+           
+            // Generic plugins
+            if (block.data 
+                &amp;&amp; block.data.meta 
+                &amp;&amp; block.data.meta.directives
+                &amp;&amp; block.data.meta.directives.indexOf(&#x27;disable&#x27;) === -1
+                &amp;&amp; block.data.meta.directives.indexOf(&#x27;plugin&#x27;) &gt;= 0) {
+                
+                const meta = block.data.meta
+                const value = block.data?.value || block.value
+                console.log(&#x27;Found Plugin&#x27;, meta.raw)
+                
+                let type = meta.type || &#x27;unknown&#x27;
+                const types = [&#x27;parser&#x27;, &#x27;renderer&#x27;, &#x27;transformer&#x27;, &#x27;viewer&#x27;, &#x27;unknown&#x27;, &#x27;onsave&#x27;, &#x27;onload&#x27;, &#x27;onselect&#x27;, &#x27;menu&#x27;, &#x27;data&#x27;, &#x27;setting&#x27;]
+                
+                file.data = file.data || {}
+                file.data.plugins = file.data.plugins || {}
+                file.data.plugins[type] = file.data.plugins[type] || {}
+
+                if (meta.lang === &#x27;css&#x27;) {
+                     const len = Object.keys(file.data.plugins[type]).length
+                     const id = meta.of || meta.id || meta.filename || len
+                     file.data.plugins[type][id] = {value: value}
+                     return;
+                }
+                
+                try {
+                    let plugin = await extractModule(value, filename)
+                    console.log(&quot;plugin module:&quot;, plugin)
+                    let foundExport;
+                    if (plugin?.asyncPlugin) {
+                        plugin = await plugin.asyncPlugin()
+                    }
+  
+                    for (const type of types) {
+                        if (plugin?.[type]) {
+                            foundExport = true
+                            file.data.plugins[type] = file.data.plugins[type] || {}
+                            const len = Object.keys(file.data.plugins[type]).length
+                            const id = meta.of || meta.id || meta.filename || len
+                            if (file.data.plugins[type] &amp;&amp; file.data.plugins[type][id]) {
+                                console.log(`Duplicate plugin for type: ${type} id: ${id}, overwriting.`)
+                            }
+                            file.data.plugins[type][id] = plugin[type]
+                        }
+                    }
+                    if (types.indexOf(type) === -1 &amp;&amp; plugin?.[type]) {
+                       file.data.plugins[type] = file.data.plugins[type] || {}
+                       const len = Object.keys(file.data.plugins[type]).length
+                       const id = meta.of || meta.id || meta.filename || len
+                       file.data.plugins[type][id] = plugin[type]
+                       foundExport = true
+                    }
+                    if (!foundExport) throw new Error(`No plugin exported from module. for ${block.meta}`)
+                    
+                   
+                } catch(err) {
+                    console.log(&quot;Failed to init plugin&quot;, meta.raw, err)
+                    const msg = `Plugin Error (${type}): ` + (err.message || err.toString())
+                    file.message(msg, block)
+                }
+            }
+        }))
+    }
+}
+
+</code></pre></div></div></div><div startpos="32:1-420" endpos="33:4-459" class="code   cell"><div class="cell-content"><div class="dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; transcludeCode.js</span></span><pre><code class="js">
+import path from &#x27;path&#x27;
+import { getConsoleForNamespace } from &#x27;../utils/console&#x27;
+import { selectAll } from &#x27;unist-util-select&#x27;
+
+const console = getConsoleForNamespace(&#x27;transcludeCode&#x27;)
+
+export const transcludeCode = ({fs}) =&gt; {
+    return async (tree,file) =&gt; {
+        if(!fs) {
+            console.error(&quot;not enabled no fs.&quot;)
+            // return;
+        };
+        console.log(`(${file.path}) Checking for files to transclude`)
+        const blocks = selectAll(&quot;code&quot;, tree)
+        if (blocks?.length) await Promise.all(blocks.map( async block =&gt; {
+            const source = block?.data?.meta?.source
+            if (source) {
+               console.log(`(${file.path}) Found source to be transcluded`, block.data.meta.raw)
+               block.data.originalSource = block.value
+               block.data.hProperties.data = {originalSource: block.value}
+               if (source.uri) {
+                   const resp = await fetch(source.uri)
+                   if (resp.status &gt;= 200 &amp;&amp; resp.status &lt; 400) {
+                       const value = await resp.text()
+                    //    console.log(&quot;has value&quot;, value)
+                       // block.value = value
+                       block.data.value = value
+                   } else {
+                       const msg = `(${file.path}) Failed to load uri ` + block.data.meta.fromSource + &quot; status: &quot; + resp.status
+                       file.message(msg, block)
+                       console.error(msg)
+                   }
+               }
+               else if (source.filename) {
+                   const filePath = path.join(path.dirname(file.path), source.filename)
+                   console.log(`(${file.path}) transclude &quot;${source.filename}&quot; as &quot;${filePath}&quot;.`)
+
+                   try {
+                       const resp = await fs.readStat(filePath, {encoding: &#x27;utf8&#x27;})
+                    //    console.log(&quot;has value&quot;, resp)
+                       // block.value = resp.local.value || resp.remote.value
+                       block.data.value = resp.local.value || resp.remote.value
+                   } catch(err) {
+                       const msg = `(${file.path}) Failed to load ` + block.data.meta.fromSource + &quot; as &quot; + filePath
+                       file.message(msg, block)
+                       console.error(msg, err)
+                   }
+               }
+            }
+        }))
+    }
+}
+
+</code></pre></div></div></div></section></section></section></div></div><div id="backlinks"></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>

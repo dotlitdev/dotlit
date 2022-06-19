@@ -1,0 +1,139 @@
+<html data-reactroot=""><head><title>🔌 Plugin system</title><meta name="litsrc" value="/plugin_system.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><meta name="apple-mobile-web-app-capable" content="yes"/><link rel="apple-touch-icon" href="/assets/lit-logo.png"/><link rel="icon" href="/assets/lit-logo.png"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children" disabled=""><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span><span class="led led-grey"></span><span class="led led-grey"></span></li></menu></li></menu></div><style>body {
+  --bg: white;
+  --bg-secondary-color: #efefef;
+    
+  --text-color: black;
+  --text-secondary-color: grey;
+  --text-primary-color: #9999f7;
+  --text-highlight-bg: yellow;
+  --text-highlight-color: black;
+
+  --divider-subtle: #efefef;
+  --medium-space: 0.4em;
+  --code-bg-color: black;
+  --code-text-color: white;
+  --box-bg-opacity: 0.05;
+}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section class="" startpos="1:1-0" endpos="3:149-168"><div startpos="1:1-0" endpos="3:149-168" class="cell"><div class="cell-content"><h1 id="-plugin-system">🔌 Plugin system</h1><p><code>.lit</code> has a flexible Plugin system, primarily to allow the author to create custom <a class="exists local" href="viewers.html" title="Viewers" wikilink="true" filepath="/plugin_system.lit" root="" data="[object Object]">Viewers</a> and <a class="exists local" href="repls.html" title="REPLs" wikilink="true" filepath="/plugin_system.lit" root="" data="[object Object]">REPLs</a> but also includes various other types.</p></div></div><section class="" startpos="5:1-170" endpos="5:21-190"><div startpos="5:1-170" endpos="5:21-190" class="cell"><div class="cell-content"><h2 id="table-of-contents">Table of Contents</h2><ul>
+<li>
+<p><a class="fragment" href="#anatomy-of-a-plugin">Anatomy of a plugin<span class="linkIcon">§</span></a></p>
+<ul>
+<li><a class="fragment" href="#scope">Scope<span class="linkIcon">§</span></a></li>
+</ul>
+</li>
+<li>
+<p><a class="fragment" href="#types">Types<span class="linkIcon">§</span></a></p>
+<ul>
+<li><a class="fragment" href="#viewer">Viewer<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#repl">REPL<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#parser">Parser<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#renderer">Renderer<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#menu">Menu<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#on-lifecycle-plugins">On Lifecycle plugins<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#custom">Custom<span class="linkIcon">§</span></a></li>
+</ul>
+</li>
+</ul></div></div></section><section class="" startpos="7:1-192" endpos="9:81-297"><div startpos="7:1-192" endpos="9:81-297" class="cell"><div class="cell-content"><h2 id="anatomy-of-a-plugin">Anatomy of a plugin</h2><p><code>.lit</code> plugins are defined using the <code>!plugin</code> directive on a fenced code block.</p></div></div><div startpos="11:1-299" endpos="18:135-571" class="code   cell"><div class="cell-content"><div class="lang- local codecell"><span class="meta"><span class="lang"></span></span><pre><code class="plaintext">```js !plugin id=foo type=bar
+// implementation 
+export const bar = (...args) =&gt; {
+  return &quot;I&#x27;m a plugin&quot;
+}
+```
+</code></pre></div><p>Initially it is assumed that a plugin is implemented in <code>js</code> but hopefully due to the flexibility this won&#x27;t remain the case for long.</p></div></div><section class="" startpos="20:1-573" endpos="26:110-956"><div startpos="20:1-573" endpos="26:110-956" class="cell"><div class="cell-content"><h3 id="scope">Scope</h3><p>Generally plugins are scoped only to the <code>.lit</code> document they&#x27;re defined in, they are evaluated sequentially and duplicates are overwritten.</p><p>If you would like to make a plugin available in all documents then you need to move them to a special <a class="exists local" href="config.html" title="config" wikilink="true" filepath="/plugin_system.lit" root="" data="[object Object]">config</a> page.</p><p>Alternatively just make sure your plugin defines a filename and is an output, and then transclude it like so:</p></div></div><div startpos="28:1-958" endpos="38:4-1324" class="code output  cell"><div class="cell-content"><div class="dir-plugin dir-collapse lang-js local collapsed codecell output"><a name="plugins/viewers/meta.js"></a><span class="meta"><span class="lang">js</span><span class="filename">plugins/viewers/meta.js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=meta</span></span><output><pre><code class="js">export const viewer = ({ node, React }) =&gt; {
+  const { useEffect, useState } = React;
+  const [output, setOutput] = useState(&quot;Loading...&quot;);
+  useEffect(() =&gt; {
+    setOutput(lit.utils.inspect(node));
+  }, [node]);
+  return React.createElement(&quot;pre&quot;, { style: { color: &quot;black&quot; } }, output);
+};
+
+</code></pre></output></div></div></div><div startpos="40:1-1326" endpos="42:4-1370" class="code output  cell"><div class="cell-content"><div class="lang-meta local codecell output"><span class="meta"><span class="lang">meta</span></span><output><pre><code class="meta">Using transcluded `meta` viewer
+</code></pre></output></div></div></div></section></section><section class="" startpos="46:1-1374" endpos="59:15-1731"><div startpos="46:1-1374" endpos="59:15-1731" class="cell"><div class="cell-content"><h2 id="types">Types</h2><p>Plugins can optionally define a <code>type=</code> attribute. For built in types this is not necessary, but can also be used to exclude implementations that might be defined within.</p><p><em>Implemented yet or not?</em></p><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled=""/> <code>parser</code>:</li>
+<li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <code>renderer</code>:</li>
+<li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <code>viewer</code>:</li>
+<li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <code>transformer</code>:</li>
+<li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <code>repl</code>:</li>
+<li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <code>menu</code>:</li>
+<li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <code>onsave|onload|onselect</code>:</li>
+<li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <code>theme</code>:</li>
+</ul></div></div><div startpos="61:1-1733" endpos="68:4-1948" class="code   cell"><div class="cell-content"><div class="dir-collapse tag-list-plugins-active-on-this-page lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span style="color:black;background-color:#3da5e6" class="tag">list-plugins-active-on-this-page</span><span class="output">&gt; json</span></span><pre><code class="js">const all = lit.file.data.plugins;
+return Object.keys(all).map(
+  (t) =&gt;
+    `${t} (${Object.keys(all[t]).length}): ${Object.keys(all[t]).join(&quot;, &quot;)}`
+);
+
+</code></pre></div></div></div><div startpos="69:1-1949" endpos="81:4-2326" class="code output  cell"><div class="cell-content"><div class="lang-json local codecell output"><span class="meta"><span class="lang">json</span><span class="updatedAt">Updated <span class="Time relative">46.6w ago</span></span></span><output><pre><code class="json">[ &#x27;theme (1): test&#x27;,
+  &#x27;viewer (2): meta, lang&#x27;,
+  &#x27;onload (2): sw, example-onload&#x27;,
+  &#x27;unknown (0): &#x27;,
+  &#x27;repl (1): lang&#x27;,
+  &#x27;menu (2): example-menu, example-modal&#x27;,
+  &#x27;onselect (1): example-onselect&#x27;,
+  &#x27;onsave (1): example-onsave&#x27;,
+  &#x27;data (1): mydata&#x27;,
+  &#x27;parser (1): example-parser&#x27;,
+  &#x27;renderer (2): 1, example-renderer&#x27; ]
+</code></pre></output></div></div></div><section class="" startpos="87:1-2332" endpos="91:175-2732"><div startpos="87:1-2332" endpos="91:175-2732" class="cell"><div class="cell-content"><h3 id="viewer">Viewer</h3><p>The viewer type plugin -- which preceded the <code>!plugin</code> directive as <code>!viewer</code> -- allow the author to define how source content of a fenced code block should be viewed when rendered to <code>html</code> based on its <code>lang</code>.</p><p>This is useful for example when the source is <code>json</code> <code>html</code> or <code>svg</code> but as it turns out has many more uses see <a class="exists local" href="viewers.html" title="Viewers" wikilink="true" filepath="/plugin_system.lit" root="" data="[object Object]">Viewers</a> for details, built-in viewers and useful examples.</p></div></div><div startpos="93:1-2734" endpos="97:4-2878" class="code   cell"><div class="cell-content"><div class="dir-plugin tag-implementation lang-js local codecell"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=lang</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><pre><code class="js">export const viewer = ({node, React}) =&gt; {
+  return &quot;Example viewer plugin used: &quot; + node.data.value
+}
+</code></pre></div></div></div><div startpos="99:1-2880" endpos="101:4-2910" class="code output  cell"><div class="cell-content"><div class="tag-usage lang-lang local codecell output"><span class="meta"><span class="lang">lang</span><span style="color:white;background-color:#6a67da" class="tag">usage</span></span>Example viewer plugin used: content 😊
+</div></div></div></section><section class="" startpos="103:1-2912" endpos="107:103-3209"><div startpos="103:1-2912" endpos="107:103-3209" class="cell"><div class="cell-content"><h3 id="repl">REPL</h3><p>Initially implemented directly but in the process of being ported to plugins by default. <a class="exists local" href="repls.html" title="REPLs" wikilink="true" filepath="/plugin_system.lit" root="" data="[object Object]">REPLs</a> are one of the cornerstones of <code>.lit</code> allowing the reader to <a class="exists local" href="execute_code_cells.html" title="Execute code cells" wikilink="true" filepath="/plugin_system.lit" root="" data="[object Object]">Execute code cells</a>.</p><p>They take an input source from fenced code blocks and when executed add or replace an attached output.</p></div></div><div startpos="108:1-3210" endpos="112:4-3358" class="code   cell"><div class="cell-content"><div class="dir-plugin tag-implementation lang-js local codecell"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=lang</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=repl</span><span style="color:white;background-color:#6455ab" class="tag">implementation</span></span><pre><code class="js">export const repl = (src, meta, node) =&gt; {
+  return `Input was ${src.length} characters long.`
+}
+</code></pre></div></div></div><div startpos="113:1-3359" endpos="115:4-3398" class="code   cell"><div class="cell-content"><div class="tag-usage lang-lang local codecell"><span class="meta"><span class="lang">lang</span><span class="repl">lang</span><span style="color:white;background-color:#6a67da" class="tag">usage</span></span><pre><code class="lang">content 😊
+</code></pre></div></div></div><div startpos="116:1-3399" endpos="118:4-3476" class="code output  cell"><div class="cell-content"><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">58.6w ago</span></span></span><output><pre><code class="txt">Input was 11 characters long.
+</code></pre></output></div></div></div></section><section class="" startpos="120:1-3478" endpos="122:23-3512"><div startpos="120:1-3478" endpos="122:23-3512" class="cell"><div class="cell-content"><h3 id="parser">Parser</h3><p><em>Not yet Implemented.</em></p></div></div><div startpos="124:1-3514" endpos="131:4-3687" class="code   cell"><div class="cell-content"><div class="dir-plugin lang-js local codecell"><a name="example-parser"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=example-parser</span></span><pre><code class="js">export const parser = (...args) =&gt; {
+  return (tree) =&gt; {
+    tree.data = file.data || {}
+    tree.data__examplePluginActive = true
+  }
+}
+</code></pre></div></div></div></section><section class="" startpos="133:1-3689" endpos="142:4-3886"><div startpos="133:1-3689" endpos="142:4-3886" class="cell"><div class="cell-content"><h3 id="renderer">Renderer</h3></div></div><div startpos="135:1-3703" endpos="142:4-3886" class="code   cell"><div class="cell-content"><div class="dir-plugin lang-js local codecell"><a name="example-renderer"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=example-renderer</span></span><pre><code class="js">export const renderer = (...args) =&gt; {
+  return (tree,file) =&gt; {
+    file.data = file.data || {}
+    file.data.__examplePluginActive = true
+  }
+}
+</code></pre></div></div></div></section><section class="" startpos="145:1-3889" endpos="170:4-4550"><div startpos="145:1-3889" endpos="170:4-4550" class="cell"><div class="cell-content"><h3 id="menu">Menu</h3></div></div><div startpos="147:1-3899" endpos="155:4-4169" class="code   cell"><div class="cell-content"><div class="dir-plugin lang-js local codecell"><a name="example-menu"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=example-menu</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=menu</span></span><pre><code class="js">export const menu = (ctx, {React, Menu}) =&gt; {
+  const rc = React.createElement
+  return rc( Menu, {
+    title:&quot;Example&quot;,
+    disabled: false,
+  }, [rc(&#x27;span&#x27;, {onClick: () =&gt; alert(&quot;Hi From example plugin!&quot;)}, &#x27;Menu Item&#x27;)])
+}
+</code></pre></div></div></div><div startpos="156:1-4170" endpos="170:4-4550" class="code   cell"><div class="cell-content"><div class="dir-plugin lang-js local codecell"><a name="example-modal"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=example-modal</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=menu</span></span><pre><code class="js">export const menu = (ctx, { React, Menu, toggleModal }) =&gt; {
+  const rc = React.createElement;
+  const modal = rc(&quot;button&quot;, { onClick: () =&gt; toggleModal() }, [&quot;Close modal&quot;]);
+  return rc(
+    Menu,
+    {
+      title: &quot;Modal&quot;,
+      disabled: false,
+    },
+    [rc(&quot;span&quot;, { onClick: () =&gt; toggleModal(modal) }, &quot;Show Modal&quot;)]
+  );
+};
+
+</code></pre></div></div></div></section><section class="" startpos="171:1-4551" endpos="175:83-4812"><div startpos="171:1-4551" endpos="175:83-4812" class="cell"><div class="cell-content"><h3 id="on-lifecycle-plugins">On Lifecycle plugins</h3><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <code>onload</code>: Executed once on initial load of the document.</li>
+<li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <code>onselect</code>: Executed on every cell selection, includes deselection, <code>pos</code> is null.</li>
+<li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <code>onsave</code>: Executed on save (edit) but before filesystem or state is updated.</li>
+</ul></div></div><div startpos="178:1-4815" endpos="182:4-4952" class="code   cell"><div class="cell-content"><div class="dir-plugin lang-js local codecell"><a name="example-onload"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=example-onload</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=onload</span></span><pre><code class="js">export const onload  = (...args) =&gt; {
+  alert(&quot;Custom Onload plugin executed&quot;, ...args)
+}
+</code></pre></div></div></div><div startpos="183:1-4953" endpos="187:4-5104" class="code   cell"><div class="cell-content"><div class="dir-plugin lang-js local codecell"><a name="example-onselect"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=example-onselect</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=onselect</span></span><pre><code class="js">export const onselect = (...args) =&gt; {
+  console.info(&quot;Custom onselect plugin executed&quot;, ...args)
+}
+</code></pre></div></div></div><div startpos="188:1-5105" endpos="192:4-5241" class="code   cell"><div class="cell-content"><div class="dir-plugin lang-js local codecell"><a name="example-onsave"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=example-onsave</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=onsave</span></span><pre><code class="js">export const onsave = (...args) =&gt; {
+  alert(&quot;Custom onsave plugin executed&quot;, ...args)
+}
+</code></pre></div></div></div></section><section class="" startpos="195:1-5244" endpos="197:199-5454"><div startpos="195:1-5244" endpos="197:199-5454" class="cell"><div class="cell-content"><h3 id="custom">Custom</h3><p>Since all plugins are extracted (to the global <code>lit</code> object) during parsing, regardless of implementation status, you can define your own. A good example is exporting data to be used in other cells.</p></div></div><div startpos="199:1-5456" endpos="204:4-5548" class="code   cell"><div class="cell-content"><div class="dir-plugin lang-js local codecell"><a name="mydata"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=data</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=mydata</span></span><pre><code class="js">export const data = {
+  type: &quot;beer&quot;,
+  bottles: 99,
+}
+</code></pre></div></div></div><div startpos="206:1-5550" endpos="209:4-5696" class="code   cell"><div class="cell-content"><div class="tag-usage lang-js local codecell"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#6a67da" class="tag">usage</span><span class="output">&gt; md</span></span><pre><code class="js">const data = lit.file.data.plugins.data.mydata
+return `There are **${data.bottles}** bottles of *${data.type}* on the wall.`
+</code></pre></div></div></div><div startpos="210:1-5697" endpos="212:4-5791" class="code output  cell"><div class="cell-content"><div class="lang-md local codecell output"><span class="meta"><span class="lang">md</span><span class="updatedAt">Updated <span class="Time relative">57.2w ago</span></span></span><div class="md-block">
+<p>There are <strong>99</strong> bottles of <em>beer</em> on the wall.</p>
+</div></div></div></div></section></section></section></div></div><div id="backlinks"><h4>Backlinks (2)</h4><ol><li><a title="REPL" href="/repl/index.html">REPL</a></li><li><a title="REPLs" href="/repls.html">REPLs</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
