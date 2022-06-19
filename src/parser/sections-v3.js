@@ -1,6 +1,7 @@
 // This files source is defined in [[testing/section_grouping|🔬 Testing Section grouping]]
 
 export const sections = (options) => (...args) => (tree) => {
+  try {
   const {processSection} = options
   const stack = [tree]
   const nodes = tree.children
@@ -26,7 +27,12 @@ export const sections = (options) => (...args) => (tree) => {
 
   const endSection = () => {
     const s = stack.pop()
-    if (processSection) processSection(s)
+    if (processSection) {
+      try{
+        processSection(s)
+      } catch(err) {
+        throw new Error(`Failed to processSection due to ${err.message}`)
+      }
   }
 
   nodes.map((node, index) => {
@@ -53,5 +59,9 @@ export const sections = (options) => (...args) => (tree) => {
         }
     }
   })
+
+  } catch(err) {
+    throw new Error(`Failed to group sections due to ${err.message}`)
+  }
 
 }
