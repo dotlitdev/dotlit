@@ -54,7 +54,7 @@ export const sections = (options) => (...args) => (tree) => {
       if (!node.position) { throw new Error(`Node ${node.type} has no position`)}
       if (!section.position) { throw new Error(`Section ${section.type} has no position`)}
       section.children.push(node);
-      section.position.end = node.position.end;
+      if (node.position) section.position.end = node.position.end;
     }
 
     if (!nodes[index+1]) {
