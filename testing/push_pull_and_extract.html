@@ -13,10 +13,131 @@
   --code-bg-color: black;
   --code-text-color: white;
   --box-bg-opacity: 0.05;
-}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section class="" startpos="1:1-0" endpos="1:28-27"><div><h1 id="-push-pull-and-extract">🔬 Push, Pull and Extract</h1></div><section class="" startpos="3:1-29" endpos="3:21-49"><div><h2 id="table-of-contents">Table of Contents</h2><ul>
+}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section class="" startpos="1:1-0" endpos="1:28-27"><div startpos="1:1-0" endpos="1:28-27" class="cell"><div class="cell-content"><h1 id="-push-pull-and-extract">🔬 Push, Pull and Extract</h1></div></div><section class="" startpos="3:1-29" endpos="3:21-49"><div startpos="3:1-29" endpos="3:21-49" class="cell"><div class="cell-content"><h2 id="table-of-contents">Table of Contents</h2><ul>
 <li><a class="fragment" href="#test-cases">Test cases<span class="linkIcon">§</span></a></li>
 <li><a class="fragment" href="#push--pull">Push &amp; Pull<span class="linkIcon">§</span></a></li>
 <li><a class="fragment" href="#as-menu-plugin">As menu <code>!plugin</code><span class="linkIcon">§</span></a></li>
 <li><a class="fragment" href="#extract">Extract<span class="linkIcon">§</span></a></li>
 <li><a class="fragment" href="#other">Other<span class="linkIcon">§</span></a></li>
-</ul></div></section><section class="" startpos="11:1-198" endpos="13:170-382"><div><h2 id="test-cases">Test cases</h2><p>The current implementation (due to <code>ast2md</code>) causes Table of Contents, <a class="exists local" href="../wiki-links.html" title="wiki-links" wikilink="true" filepath="/testing/push_pull_and_extract.lit" root="" data="[object Object]">wiki-links</a> and <a class="exists local" href="index.html" filepath="/testing/push_pull_and_extract.lit" root="" data="[object Object]">normal links</a> to be saved incorrectly, as well as transcluded code:</p></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div></section><section class="" startpos="18:1-415" endpos="20:47-477"><div><h2 id="push--pull">Push &amp; Pull</h2><p>Increase or decrease a sections nesting level.</p></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div></section><section class="" startpos="86:1-1840" endpos="134:4-2976"><div><h2 id="as-menu-plugin">As menu <code>!plugin</code></h2></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div></section><section class="" startpos="136:1-2978" endpos="136:11-2988"><div><h2 id="extract">Extract</h2></div></section><section class="" startpos="138:1-2990" endpos="157:4-3358"><div><h2 id="other">Other</h2></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div></section></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="🔬 Tests, experiments and investigations" href="/testing/index.html">🔬 Tests, experiments and investigations</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
+</ul></div></div></section><section class="" startpos="11:1-198" endpos="13:170-382"><div startpos="11:1-198" endpos="13:170-382" class="cell"><div class="cell-content"><h2 id="test-cases">Test cases</h2><p>The current implementation (due to <code>ast2md</code>) causes Table of Contents, <a class="exists local" href="../wiki-links.html" title="wiki-links" wikilink="true" filepath="/testing/push_pull_and_extract.lit" root="" data="[object Object]">wiki-links</a> and <a class="exists local" href="index.html" filepath="/testing/push_pull_and_extract.lit" root="" data="[object Object]">normal links</a> to be saved incorrectly, as well as transcluded code:</p></div></div><div startpos="15:1-384" endpos="16:4-413" class="code   cell"><div class="cell-content"><div class="lang-text local codecell"><span class="meta"><span class="lang">text</span><span class="source">&lt; ../dummy/🔥.lit</span></span><pre><code class="text">🔥 Emoji in file name. ⚠️
+
+</code></pre></div></div></div></section><section class="" startpos="18:1-415" endpos="20:47-477"><div startpos="18:1-415" endpos="20:47-477" class="cell"><div class="cell-content"><h2 id="push--pull">Push &amp; Pull</h2><p>Increase or decrease a sections nesting level.</p></div></div><div startpos="22:1-479" endpos="39:4-924" class="code   cell"><div class="cell-content"><div class="lang-js local codecell"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const {visit, selectPosition} = lit.utils.unist
+const {toMarkdown, ungroupSections}
+      = lit.parser.utils
+const selectPos = selectPosition.selectAll
+const unGroup = ungroupSections()()
+const ast2md = tree =&gt; toMarkdown(unGroup(tree))
+
+const tree = lit.ast
+const test = &#x27;heading&#x27;
+const push = (node) =&gt; node.depth += 1 
+const pull = (node) =&gt; node.depth -= 1
+
+visit(tree,test,push)
+
+// return selectPos.toString()
+return ast2md(tree)
+</code></pre></div></div></div><div startpos="41:1-926" endpos="84:4-1838" class="code   cell"><div class="cell-content"><div class="tag-visit-position lang-js local codecell"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#647493" class="tag">visit-position</span></span><pre><code class="js">const { visit, filter, select, selectPosition } = lit.utils.unist;
+
+let found;
+
+const { toMarkdown, ungroupSections } = lit.parser.utils;
+
+const ast2md = (ast) =&gt; {
+  const unGroup = ungroupSections()();
+  const tree = unGroup(ast);
+  const md = toMarkdown(tree);
+  return md;
+};
+
+const secFromCell = (pos) =&gt; {
+  const secs = selectPosition.selectAll(&quot;section&quot;, pos, lit.ast);
+  const last = secs.slice(-1)[0];
+  return last.position;
+};
+
+const pos = secFromCell(this.position);
+
+const withPos = (tree, pos, visitor) =&gt;
+  visit(
+    lit.ast,
+    () =&gt; true,
+    (node) =&gt; {
+      if (node?.position?.start?.offset === pos.start?.offset) {
+        console.log(&quot;found match: &quot;, node.type);
+        visitor(node);
+        return visit.SKIP;
+      }
+    }
+  );
+
+withPos(lit.ast, pos, (node) =&gt; {
+  visit(node, &quot;heading&quot;, (node) =&gt; {
+    node.depth += 1;
+  });
+});
+
+return ast2md(lit.ast);
+
+</code></pre></div></div></div></section><section class="" startpos="86:1-1840" endpos="134:4-2976"><div startpos="86:1-1840" endpos="134:4-2976" class="cell"><div class="cell-content"><h2 id="as-menu-plugin">As menu <code>!plugin</code></h2></div></div><div startpos="88:1-1862" endpos="134:4-2976" class="code output  cell"><div class="cell-content"><div class="dir-plugin lang-js local codecell output"><a name="depth"></a><span class="meta"><span class="lang">js</span><span class="filename">../plugins/menu/depth.js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=depth</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=sectionmenu</span></span><output><pre><code class="js">export const sectionmenu = (ctx, { React, Menu }) =&gt; {
+  const rc = React.createElement;
+  const { visit } = lit.utils.unist;
+
+  const update = () =&gt; ctx.setSrc(lit.ast.position, ctx.ast2md(lit.ast));
+
+  const withPos = (tree, pos, visitor) =&gt;
+    visit(
+      lit.ast,
+      () =&gt; true,
+      (node) =&gt; {
+        if (node?.position?.start?.offset === pos.start?.offset) {
+          console.log(&quot;found match: &quot;, node.type);
+          visitor(node);
+          return visit.SKIP;
+        }
+      }
+    );
+
+  const push = () =&gt;
+    withPos(lit.ast, ctx.selectedCell, (node) =&gt; {
+      visit(node, &quot;heading&quot;, (node) =&gt; (node.depth += 1));
+      update();
+    });
+
+  const pull = () =&gt;
+    withPos(lit.ast, ctx.selectedCell, (node) =&gt; {
+      visit(node, &quot;heading&quot;, (node) =&gt; (node.depth -= 1));
+      update();
+    });
+
+  const Push = rc(&quot;span&quot;, { onClick: push }, &quot;Push&quot;);
+
+  const Pull = rc(&quot;span&quot;, { onClick: pull }, &quot;Pull&quot;);
+
+  return rc(
+    Menu,
+    {
+      title: &quot;Depth&quot;,
+      disabled: !ctx.selectedCell,
+    },
+    [Push, Pull]
+  );
+};
+
+</code></pre></output></div></div></div></section><section class="" startpos="136:1-2978" endpos="136:11-2988"><div startpos="136:1-2978" endpos="136:11-2988" class="cell"><div class="cell-content"><h2 id="extract">Extract</h2></div></div></section><section class="" startpos="138:1-2990" endpos="157:4-3358"><div startpos="138:1-2990" endpos="157:4-3358" class="cell"><div class="cell-content"><h2 id="other">Other</h2></div></div><div startpos="140:1-3000" endpos="157:4-3358" class="code   cell"><div class="cell-content"><div class="tag-visit-headings tag-push-all lang-js local codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#f56a3c" class="tag">visit-headings</span><span style="color:black;background-color:#69c980" class="tag">push-all</span></span><pre><code class="js">const { visit } = lit.utils.unist;
+const { toMarkdown, ungroupSections } = lit.parser.utils;
+
+const ast2md = (ast) =&gt; {
+  const unGroup = ungroupSections()();
+  const tree = unGroup(ast);
+  const md = toMarkdown(tree);
+  return md;
+};
+
+visit(lit.ast, &quot;heading&quot;, (node) =&gt; {
+  node.depth += 1;
+});
+
+return ast2md(lit.ast);
+
+</code></pre></div></div></div></section></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="🔬 Tests, experiments and investigations" href="/testing/index.html">🔬 Tests, experiments and investigations</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>

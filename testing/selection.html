@@ -13,4 +13,52 @@
   --code-bg-color: black;
   --code-text-color: white;
   --box-bg-opacity: 0.05;
-}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section class="" startpos="1:1-0" endpos="3:37-63"><div><h1 id="more-powerful-selection">More powerful selection</h1><p>Ie multi cell and section selection.</p></div><section class="" startpos="4:1-64" endpos="62:4-1258"><div><h2 id="experiments">Experiments</h2></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div></section></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="🔬 Tests, experiments and investigations" href="/testing/index.html">🔬 Tests, experiments and investigations</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
+}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section class="" startpos="1:1-0" endpos="3:37-63"><div startpos="1:1-0" endpos="3:37-63" class="cell"><div class="cell-content"><h1 id="more-powerful-selection">More powerful selection</h1><p>Ie multi cell and section selection.</p></div></div><section class="" startpos="4:1-64" endpos="62:4-1258"><div startpos="4:1-64" endpos="62:4-1258" class="cell"><div class="cell-content"><h2 id="experiments">Experiments</h2></div></div><div startpos="8:1-82" endpos="46:4-900" class="code   cell"><div class="cell-content"><div class="dir-plugin lang-js local codecell"><a name="selection"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=selection</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=menu</span></span><pre><code class="js">export const menu = (ctx, { React, Menu }) =&gt; {
+  const { filter, select, selectPosition } = lit.utils.unist;
+  const rc = React.createElement;
+
+  const secFromCell = (pos) =&gt; {
+    const secs = selectPosition.selectAll(&quot;section&quot;, ctx.selectedCell, lit.ast);
+    const last = secs.slice(-1)[0];
+    console.log(&quot;Sections&quot;, secs, last);
+    return last.position;
+  };
+
+  const selectAll = rc(
+    &quot;span&quot;,
+    { onClick: () =&gt; ctx.setSelectedCell(lit.ast.position) },
+    &quot;Select All&quot;
+  );
+
+  const selectSec = rc(
+    &quot;span&quot;,
+    {
+      onClick: () =&gt; {
+        ctx.setSelectedCell(secFromCell(ctx.selectedCell));
+      },
+    },
+    &quot;Select Section&quot;
+  );
+
+  return rc(
+    Menu,
+    {
+      title: &quot;Selection&quot;,
+      disabled: false,
+    },
+    [selectAll, selectSec]
+  );
+};
+
+</code></pre></div></div></div><div startpos="48:1-902" endpos="59:4-1169" class="code   cell"><div class="cell-content"><div class="lang-js local codecell"><span class="meta"><span class="lang">js</span></span><pre><code class="js">const {filter, select, selectPosition} = lit.utils.unist
+const is = t =&gt; node =&gt; {
+  console.log(node.type)
+  return node.type === t
+}
+
+// return lit.ast
+// return filter.toString()
+// filter(lit.ast, {cascade: false } , is(&#x27;heading&#x27;))
+return selectPosition
+</code></pre></div></div></div><div startpos="60:1-1170" endpos="62:4-1258" class="code output  cell"><div class="cell-content"><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">58.4w ago</span></span></span><output><pre><code class="txt">{ atPos: [Getter], selectAll: [Getter] }
+</code></pre></output></div></div></div></section></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="🔬 Tests, experiments and investigations" href="/testing/index.html">🔬 Tests, experiments and investigations</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
