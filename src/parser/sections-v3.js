@@ -11,6 +11,7 @@ export const sections = (options) => (...args) => (tree) => {
       type: 'section',
       children: [node],
       depth: node.depth || 0,
+      position: node.position,
     }
     stack.at(-1).children.push(section)
     stack.push(section)
@@ -43,6 +44,7 @@ export const sections = (options) => (...args) => (tree) => {
       }
     } else {
       section.children.push(node)
+      section.position.end = node.position.end
     }
 
     if (!nodes[index+1]) {
