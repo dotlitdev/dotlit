@@ -6,3 +6,5 @@ export const viewer = ({ node, React }) => {
   }, [node]);
   return React.createElement("pre", { style: { color: "black" } }, output);
 };
+);
+};

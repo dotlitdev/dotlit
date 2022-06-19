@@ -28,7 +28,7 @@ export const sections = (options) => (...args) => (tree) => {
     if (processSection) processSection(s)
   }
 
-  for (const node in nodes) {
+  nodes.map((node, index) => {
     const section = stack.at(-1)
     if (section.type === 'root') {
       createSection(node)
@@ -50,6 +50,6 @@ export const sections = (options) => (...args) => (tree) => {
           endSection()
         }
     }
-  }
+  })
 
 }
