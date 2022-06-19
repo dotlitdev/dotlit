@@ -2,10 +2,10 @@
 
 export const sections = (options) => (...args) => (tree) => {
   try {
-  const {processSection} = options
-  const stack = [tree]
-  const nodes = tree.children
-  tree.children = []
+  const {processSection} = options;
+  const stack = [tree];
+  const nodes = tree.children;
+  tree.children = [];
 
   const createSection = (node) => {
     const section = {
@@ -13,55 +13,56 @@ export const sections = (options) => (...args) => (tree) => {
       children: [node],
       depth: node.depth || 0,
       position: node.position,
-    }
-    stack[stack.length-1].children.push(section)
-    stack.push(section)
+    };
+    stack[stack.length-1].children.push(section);
+    stack.push(section);
   }
 
   const shouldPopStack = (n, force) => {
-    const s = stack[stack.length-1]
-    const notRoot = s.type !== 'root'
-    const nShallow = s.depth >= n.depth
-    return notRoot && (force || nShallow)
+    const s = stack[stack.length-1];
+    const notRoot = s.type !== 'root';
+    const nShallow = s.depth >= n.depth;
+    return notRoot && (force || nShallow);
   }
 
   const endSection = () => {
-    const s = stack.pop()
+    const s = stack.pop();
     if (processSection) {
-      try{
-        processSection(s)
+      try {
+        processSection(s);
       } catch(err) {
-        throw new Error(`Failed to processSection due to ${err.message}`)
+        throw new Error(`Failed to processSection due to ${err.message}`);
       }
+    }
   }
 
   nodes.map((node, index) => {
-    const section = stack[stack.length-1]
+    const section = stack[stack.length-1];
     if (section.type === 'root') {
-      createSection(node)
+      createSection(node);
     } else if (node.type === 'heading') {
       if (node.depth > section.depth) {
-        createSection(node)
+        createSection(node);
       } else {
         while (shouldPopStack(node)) {
-          endSection()
+          endSection();
         }
-        createSection(node)
+        createSection(node);
       }
     } else {
-      section.children.push(node)
-      section.position.end = node.position.end
+      section.children.push(node);
+      section.position.end = node.position.end;
     }
 
     if (!nodes[index+1]) {
       while (shouldPopStack(node, true)) {
-          endSection()
+          endSection();
         }
     }
-  })
+  });
 
   } catch(err) {
-    throw new Error(`Failed to group sections due to ${err.message}`)
+    throw new Error(`Failed to group sections due to ${err.message}`);
   }
 
 }
