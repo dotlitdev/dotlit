@@ -1,0 +1,48 @@
+<html data-reactroot=""><head><title>🔌 Plugin system</title><meta name="litsrc" value="/plugin_system.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><meta name="apple-mobile-web-app-capable" content="yes"/><link rel="apple-touch-icon" href="/assets/lit-logo.png"/><link rel="icon" href="/assets/lit-logo.png"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children" disabled=""><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span><span class="led led-grey"></span><span class="led led-grey"></span></li></menu></li></menu></div><style>body {
+  --bg: white;
+  --bg-secondary-color: #efefef;
+    
+  --text-color: black;
+  --text-secondary-color: grey;
+  --text-primary-color: #9999f7;
+  --text-highlight-bg: yellow;
+  --text-highlight-color: black;
+
+  --divider-subtle: #efefef;
+  --medium-space: 0.4em;
+  --code-bg-color: black;
+  --code-text-color: white;
+  --box-bg-opacity: 0.05;
+}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><div><div><h1 id="-plugin-system">🔌 Plugin system</h1><p><code>.lit</code> has a flexible Plugin system, primarily to allow the author to create custom <a class="exists local" href="viewers.html" title="Viewers" wikilink="true" filepath="/plugin_system.lit" root="" data="[object Object]">Viewers</a> and <a class="exists local" href="repls.html" title="REPLs" wikilink="true" filepath="/plugin_system.lit" root="" data="[object Object]">REPLs</a> but also includes various other types.</p></div><div><div><h2 id="table-of-contents">Table of Contents</h2><ul>
+<li>
+<p><a class="fragment" href="#anatomy-of-a-plugin">Anatomy of a plugin<span class="linkIcon">§</span></a></p>
+<ul>
+<li><a class="fragment" href="#scope">Scope<span class="linkIcon">§</span></a></li>
+</ul>
+</li>
+<li>
+<p><a class="fragment" href="#types">Types<span class="linkIcon">§</span></a></p>
+<ul>
+<li><a class="fragment" href="#viewer">Viewer<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#repl">REPL<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#parser">Parser<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#renderer">Renderer<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#menu">Menu<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#on-lifecycle-plugins">On Lifecycle plugins<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#custom">Custom<span class="linkIcon">§</span></a></li>
+</ul>
+</li>
+</ul></div></div><div><div><h2 id="anatomy-of-a-plugin">Anatomy of a plugin</h2><p><code>.lit</code> plugins are defined using the <code>!plugin</code> directive on a fenced code block.</p></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div><div><div><h3 id="scope">Scope</h3><p>Generally plugins are scoped only to the <code>.lit</code> document they&#x27;re defined in, they are evaluated sequentially and duplicates are overwritten.</p><p>If you would like to make a plugin available in all documents then you need to move them to a special <a class="exists local" href="config.html" title="config" wikilink="true" filepath="/plugin_system.lit" root="" data="[object Object]">config</a> page.</p><p>Alternatively just make sure your plugin defines a filename and is an output, and then transclude it like so:</p></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div></div></div><div><div><h2 id="types">Types</h2><p>Plugins can optionally define a <code>type=</code> attribute. For built in types this is not necessary, but can also be used to exclude implementations that might be defined within.</p><p><em>Implemented yet or not?</em></p><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled=""/> <code>parser</code>:</li>
+<li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <code>renderer</code>:</li>
+<li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <code>viewer</code>:</li>
+<li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <code>transformer</code>:</li>
+<li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <code>repl</code>:</li>
+<li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <code>menu</code>:</li>
+<li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <code>onsave|onload|onselect</code>:</li>
+<li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <code>theme</code>:</li>
+</ul></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div><div><div><h3 id="viewer">Viewer</h3><p>The viewer type plugin -- which preceded the <code>!plugin</code> directive as <code>!viewer</code> -- allow the author to define how source content of a fenced code block should be viewed when rendered to <code>html</code> based on its <code>lang</code>.</p><p>This is useful for example when the source is <code>json</code> <code>html</code> or <code>svg</code> but as it turns out has many more uses see <a class="exists local" href="viewers.html" title="Viewers" wikilink="true" filepath="/plugin_system.lit" root="" data="[object Object]">Viewers</a> for details, built-in viewers and useful examples.</p></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div></div><div><div><h3 id="repl">REPL</h3><p>Initially implemented directly but in the process of being ported to plugins by default. <a class="exists local" href="repls.html" title="REPLs" wikilink="true" filepath="/plugin_system.lit" root="" data="[object Object]">REPLs</a> are one of the cornerstones of <code>.lit</code> allowing the reader to <a class="exists local" href="execute_code_cells.html" title="Execute code cells" wikilink="true" filepath="/plugin_system.lit" root="" data="[object Object]">Execute code cells</a>.</p><p>They take an input source from fenced code blocks and when executed add or replace an attached output.</p></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div></div><div><div><h3 id="parser">Parser</h3><p><em>Not yet Implemented.</em></p></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div></div><div><div><h3 id="renderer">Renderer</h3></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div></div><div><div><h3 id="menu">Menu</h3></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div></div><div><div><h3 id="on-lifecycle-plugins">On Lifecycle plugins</h3><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <code>onload</code>: Executed once on initial load of the document.</li>
+<li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <code>onselect</code>: Executed on every cell selection, includes deselection, <code>pos</code> is null.</li>
+<li class="task-list-item"><input type="checkbox" checked="" disabled=""/> <code>onsave</code>: Executed on save (edit) but before filesystem or state is updated.</li>
+</ul></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div></div><div><div><h3 id="custom">Custom</h3><p>Since all plugins are extracted (to the global <code>lit</code> object) during parsing, regardless of implementation status, you can define your own. A good example is exporting data to be used in other cells.</p></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div></div></div></div></div></div><div id="backlinks"><h4>Backlinks (2)</h4><ol><li><a title="REPL" href="/repl/index.html">REPL</a></li><li><a title="REPLs" href="/repls.html">REPLs</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>

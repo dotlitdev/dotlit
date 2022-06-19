@@ -1,0 +1,102 @@
+<html data-reactroot=""><head><title>🔬 Testing Section grouping</title><meta name="litsrc" value="/testing/section_grouping.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><meta name="apple-mobile-web-app-capable" content="yes"/><link rel="apple-touch-icon" href="/assets/lit-logo.png"/><link rel="icon" href="/assets/lit-logo.png"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children" disabled=""><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span><span class="led led-grey"></span><span class="led led-grey"></span></li></menu></li></menu></div><style>body {
+  --bg: white;
+  --bg-secondary-color: #efefef;
+    
+  --text-color: black;
+  --text-secondary-color: grey;
+  --text-primary-color: #9999f7;
+  --text-highlight-bg: yellow;
+  --text-highlight-color: black;
+
+  --divider-subtle: #efefef;
+  --medium-space: 0.4em;
+  --code-bg-color: black;
+  --code-text-color: white;
+  --box-bg-opacity: 0.05;
+}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><div><div><h1 id="-testing-section-grouping"><a class="exists local" href="index.html" title="🔬 Testing" wikilink="true" filepath="/testing/section_grouping.lit" root="" data="[object Object]">🔬 Testing</a> Section grouping</h1></div><div><div><h2 id="table-of-contents">Table of contents</h2><ul>
+<li><a class="fragment" href="#sections">Sections<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#cells">Cells<span class="linkIcon">§</span></a></li>
+<li><a class="fragment" href="#potential-improvements--optimisations">Potential improvements &amp; optimisations<span class="linkIcon">§</span></a></li>
+</ul></div></div><div><div><h2 id="sections">Sections</h2><p>Pseudo code steps, operating during <code>parse</code> of standard <code>mdast</code>.</p><ul>
+<li>With a stack initialised with root node (with children removed) ie <code>[root]</code></li>
+<li>Iterate over all removed root chilren (in reverse? TBD) as <code>node</code>
+<ul>
+<li>define <code>section</code> as top of stack</li>
+<li>if <code>section</code> is <code>root</code>
+<ul>
+<li>create section with <code>node</code> depth or 0.</li>
+<li>add <code>node</code> as child of section</li>
+<li>push section to children of node at the top of stack</li>
+<li>push section to top of stack</li>
+</ul>
+</li>
+<li>else if <code>node</code> is a <code>heading</code>
+<ul>
+<li>with deeper depth?<!-- -->
+<ul>
+<li>create section with <code>node</code> depth</li>
+<li>add <code>node</code> as child of section</li>
+<li>push section to children of node at the top of stack</li>
+<li>push section to top of stack</li>
+</ul>
+</li>
+<li>else<!-- -->
+<ul>
+<li>for each section in stack until top of stack has depth equal to or lower (shallower) than <code>node</code> depth.<!-- -->
+<ul>
+<li>pop stack and call process handler on popped section</li>
+</ul>
+</li>
+<li>create section with <code>node</code> depth</li>
+<li>add <code>node</code> as child of section</li>
+<li>push section to children of node at the top of stack</li>
+<li>push section to top of stack</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>else add <code>node</code> to <code>section</code></li>
+<li>if no next node<!-- -->
+<ul>
+<li>for each section in stack until but not including root<!-- -->
+<ul>
+<li>pop stack and call process handler on popped section</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div></div><div><div><h2 id="cells">Cells</h2><ul>
+<li>given a set of nodes (generally children of a <code>section</code>)</li>
+<li>define an empty stack <code>[]</code></li>
+<li>for each node in nodes<!-- -->
+<ul>
+<li>if node type is section push to top of stack</li>
+<li>else if node type is a code<!-- -->
+<ul>
+<li>if previous cell is a code cell and node is attached<!-- -->
+<ul>
+<li>push node as child of code cell at top of stack</li>
+</ul>
+</li>
+<li>else<!-- -->
+<ul>
+<li>create new cell with node as first child</li>
+<li>push cell to top of stack</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>else if stack is empty or top of stack is a section or code cell<!-- -->
+<ul>
+<li>create new cell with node as first child</li>
+<li>push cell to top of stack</li>
+</ul>
+</li>
+<li>else push node to children of cell at top of stack</li>
+</ul>
+</li>
+</ul></div><div class="local codecell"><pre><code class="plaintext"></code></pre></div></div><div><div><h2 id="potential-improvements--optimisations">Potential improvements &amp; optimisations</h2><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled=""/> <a class="exists local" href="../todo.html" title="TODO" wikilink="true" filepath="/testing/section_grouping.lit" root="" data="[object Object]">TODO</a> perform cell grouping internal to section node collection, preventing unnecessary additional loops.</li>
+</ul></div></div></div></div></div><div id="backlinks"></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
