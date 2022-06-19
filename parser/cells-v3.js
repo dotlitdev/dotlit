@@ -4,7 +4,7 @@ export const cells = (section) => {
   section.children = stack
 
   const needNewCell = () => {
-    const cell = stack[stack.length-1]
+    const cell = stack.at(-1)
     return !cell || cell.type === 'section'
   }
 
@@ -18,13 +18,13 @@ export const cells = (section) => {
   }
 
   const addToCell = (node) => {
-    const cell = stack[stack.length-1]
+    const cell = stack.at(-1)
     cell.children.push(node)
     cell.position.end = node.position.end
   }
 
   nodes.children.map((node, index) => {
-    const prev = index ? stack[index-1] : null
+    const prev = index ? stack.at(index-1) : null
     if (node.type === 'section')
       stack.push(node)
     else if (node.type === 'code') {
