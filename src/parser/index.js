@@ -12,6 +12,10 @@ import { to_string } from './utils/mdast-util-to-string'
 import toMarkdown from 'mdast-util-to-markdown'
 
 import {sections, ungroupSections} from './sections'
+import {sections as sectionsV3} from './sections-v3'
+import {cells as cellsV3} from './cells-v3'
+
+
 import codeblocks, {parseMeta, metaToString} from './codeblocks'
 import frontmatter from './frontmatter'
 import {mdblocks} from './mdblocks'
