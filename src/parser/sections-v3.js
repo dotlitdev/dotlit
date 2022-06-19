@@ -15,7 +15,12 @@ export const sections = (options) => (...args) => (tree) => {
       depth: node.depth || 0,
       position: node.position,
       data: {
-        hName: "section",
+        name: node.data.id,
+        hName: 'section',
+        hProperties: {
+          depth: depth,
+          id: node.data.id,
+        }
       },
     };
     stack[stack.length-1].children.push(section);
