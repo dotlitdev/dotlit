@@ -13,7 +13,14 @@ export const cells = (section) => {
     stack.push({
        type: type,
        children: [node],
+       position: node.position,
      })
+  }
+
+  const addToCell = (node) => {
+    const cell = stack.at(-1)
+    cell.children.push(node)
+    cell.position.end = node.position.end
   }
 
   nodes.children.map((node, index) => {
@@ -22,14 +29,14 @@ export const cells = (section) => {
       stack.push(node)
     else if (node.type === 'code') {
       if (prev?.type === 'code' && node.data?.meta?.attached) {
-        prev.children.push(node)
+        addToCell(node)
       } else {
         createCell(node)
       }
     } else if (needNewCell()) {
       createCell(node)
     } else {
-      stack.at(-1).children.push(node)
+      addToCell(node)
     }
   })
 
