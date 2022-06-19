@@ -13,12 +13,12 @@ export const sections = (options) => (...args) => (tree) => {
       depth: node.depth || 0,
       position: node.position,
     }
-    stack.at(-1).children.push(section)
+    stack[stack.length-1].children.push(section)
     stack.push(section)
   }
 
   const shouldPopStack = (n, force) => {
-    const s = stack.at(-1)
+    const s = stack[stack.length-1]
     const notRoot = s.type !== 'root'
     const nShallow = s.depth >= n.depth
     return notRoot && (force || nShallow)
@@ -30,7 +30,7 @@ export const sections = (options) => (...args) => (tree) => {
   }
 
   nodes.map((node, index) => {
-    const section = stack.at(-1)
+    const section = stack[stack.length-1]
     if (section.type === 'root') {
       createSection(node)
     } else if (node.type === 'heading') {
