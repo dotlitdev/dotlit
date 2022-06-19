@@ -1,7 +1,7 @@
 export const cells = (section) => {
   const stack = []
   const nodes = section.children
-  const section.children = stack
+  section.children = stack
 
   const needNewCell = () => {
     const cell = stack.at(-1)
