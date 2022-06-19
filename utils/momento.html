@@ -1,0 +1,78 @@
+<html data-reactroot=""><head><title>momento</title><meta name="litsrc" value="/utils/momento.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><meta name="apple-mobile-web-app-capable" content="yes"/><link rel="apple-touch-icon" href="/assets/lit-logo.png"/><link rel="icon" href="/assets/lit-logo.png"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children" disabled=""><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span><span class="led led-grey"></span><span class="led led-grey"></span></li></menu></li></menu></div><style>body {
+  --bg: white;
+  --bg-secondary-color: #efefef;
+    
+  --text-color: black;
+  --text-secondary-color: grey;
+  --text-primary-color: #9999f7;
+  --text-highlight-bg: yellow;
+  --text-highlight-color: black;
+
+  --divider-subtle: #efefef;
+  --medium-space: 0.4em;
+  --code-bg-color: black;
+  --code-text-color: white;
+  --box-bg-opacity: 0.05;
+}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section id="momento" depth="1" class="" startpos="1:1-0" endpos="3:43-53"><div startpos="1:1-0" endpos="3:43-53" class="cell"><div class="cell-content"><h1 id="momento">momento</h1><p>A vanilla bare bones polyfil for moment.js</p></div></div><div startpos="5:1-55" endpos="7:4-95" class="code   cell"><div class="cell-content"><div class="tag-api lang-js local codecell"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#017a1a" class="tag">api</span></span><pre><code class="js">return lit.utils.momento 
+</code></pre></div></div></div><div startpos="8:1-96" endpos="10:4-202" class="code output  cell"><div class="cell-content"><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">54w ago</span></span></span><output><pre><code class="txt">{ MsToRelative: [Getter], DatesToRelativeDelta: [Getter] }
+</code></pre></output></div></div></div><div startpos="12:1-204" endpos="17:4-353" class="code   cell"><div class="cell-content"><div class="tag-usage lang-js local codecell"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#6a67da" class="tag">usage</span></span><pre><code class="js">const {MsToRelative} = lit.utils.momento
+const now = Date.now()
+const inThePast = 0 - 1000*60*60*24*7
+return MsToRelative(inThePast)
+</code></pre></div></div></div><div startpos="18:1-354" endpos="20:4-408" class="code output  cell"><div class="cell-content"><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">54w ago</span></span></span><output><pre><code class="txt">1w ago
+</code></pre></output></div></div></div><div startpos="21:1-409" endpos="26:4-569" class="code   cell"><div class="cell-content"><div class="tag-usage lang-js local codecell"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#6a67da" class="tag">usage</span></span><pre><code class="js">const {MsToRelative} = lit.utils.momento
+const now = Date.now()
+const mtimeMs = lit.stats.local.stat.mtimeMs
+return MsToRelative(mtimeMs - now)
+</code></pre></div></div></div><div startpos="27:1-570" endpos="29:4-624" class="code output  cell"><div class="cell-content"><div class="lang-txt local codecell output"><span class="meta"><span class="lang">txt</span><span class="updatedAt">Updated <span class="Time relative">54w ago</span></span></span><output><pre><code class="txt">1m ago
+</code></pre></output></div></div></div><section id="implementation" depth="2" class="" startpos="32:1-627" endpos="35:4-678"><div startpos="32:1-627" endpos="35:4-678" class="cell"><div class="cell-content"><h2 id="implementation">Implementation</h2></div></div><div startpos="34:1-646" endpos="35:4-678" class="code   cell"><div class="cell-content"><div class="dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="source">&lt; momento.js</span></span><pre><code class="js">export const MsToRelative = (ms, p, f) =&gt; {
+    // console.log(&#x27;MsToRelative&#x27;, ms, p, f)
+    const abs = Math.abs(ms)
+    const nowish = abs &lt;= 1000
+    if (nowish) return &#x27;now&#x27;
+
+    const second = 1000
+    const seconds = abs / second
+    const future = ms &gt; 0
+    const minute = second * 60
+    const minutes = abs / minute
+    const hour = minute * 60
+    const hours = abs / hour
+    const day = hour * 24
+    const days = abs / day
+    const week = day * 7
+    const weeks = abs / week    
+
+    let suffix = future ? (f || &#x27;from now&#x27;) : (p || &#x27;ago&#x27;)
+    let val, unit;
+    // console.log({ms, abs, seconds, minutes, hours, days, weeks})
+    if (abs &lt; minute) {
+        val = Math.round(seconds)
+        unit = &#x27;s&#x27;
+    } else if (abs &lt; hour) {
+        val = Math.round(minutes)
+        unit = &#x27;m&#x27; 
+    } else if (abs &lt; day) {
+        val = (hours % 1 &gt; 0.2) ? hours.toFixed(1) : Math.round(hours)
+        unit = &#x27;h&#x27;
+    } else if (abs &lt; week) {
+        val = (days % 1 &gt; 0.2) ? days.toFixed(1) : Math.round(days)
+        unit = &#x27;d&#x27;
+    } else {
+        val = (weeks % 1 &gt; 0.2) ? weeks.toFixed(1) : Math.round(weeks)
+        unit = &#x27;w&#x27;
+    }
+
+    // if (val &gt; 1) unit = `${unit}s`
+
+    return `${val}${unit} ${suffix}`
+}
+
+export const DatesToRelativeDelta = (a, b) =&gt; {
+    // console.log(&#x27;DatesToRelativeDelta&#x27;, a, b)
+    const A = new Date(a)
+    const B = new Date(b)
+    const deltaMs = A.getTime() - B.getTime()
+    return MsToRelative(deltaMs, &#x27;older&#x27;, &#x27;newer&#x27;)
+}
+</code></pre></div></div></div></section></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title=".lit Utils" href="/utils/index.html">.lit Utils</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>

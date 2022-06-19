@@ -1,0 +1,74 @@
+<html data-reactroot=""><head><title>Viewer REPL</title><meta name="litsrc" value="/testing/esm_viewer_repl.lit"/><meta name="litroot" value="/"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/><meta name="apple-mobile-web-app-capable" content="yes"/><link rel="apple-touch-icon" href="/assets/lit-logo.png"/><link rel="icon" href="/assets/lit-logo.png"/><link rel="stylesheet" href="/style.css"/></head><body><div id="lit-app"><div id="lit-header"><menu class="horizontal open has-children"><li class="MenuTitle"><a href="/">Home</a></li><li class="MenuItems"><menu class="has-children" disabled=""><li class="MenuTitle">File</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Cell</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Section</li></menu><menu class="has-children" disabled=""><li class="MenuTitle">Help</li></menu><menu class="has-children right"><li class="MenuTitle"><span class="led led-grey"></span><span class="led led-grey"></span><span class="led led-grey"></span></li></menu></li></menu></div><style>body {
+  --bg: white;
+  --bg-secondary-color: #efefef;
+    
+  --text-color: black;
+  --text-secondary-color: grey;
+  --text-primary-color: #9999f7;
+  --text-highlight-bg: yellow;
+  --text-highlight-color: black;
+
+  --divider-subtle: #efefef;
+  --medium-space: 0.4em;
+  --code-bg-color: black;
+  --code-text-color: white;
+  --box-bg-opacity: 0.05;
+}</style><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/sunburst.min.css"/><div id="content"><section id="viewer-repl" depth="3" class="" startpos="2:1-1" endpos="6:72-202"><div startpos="2:1-1" endpos="6:72-202" class="cell"><div class="cell-content"><h3 id="viewer-repl">Viewer REPL</h3><p>What if <strong>REPLs</strong> were just custom viewers <a class="exists local" href="../viewers.html" title="Viewers" wikilink="true" filepath="/testing/esm_viewer_repl.lit" root="" data="[object Object]">Viewers</a>? Implementing clientside execution via custom <code>!viewer</code>.</p><p>useEffect for execution on load otherwise require button press to exec.</p></div></div><div startpos="8:1-204" endpos="40:4-1171" class="code output  cell"><div class="cell-content"><div class="dir-plugin lang-js local codecell output"><a name="../plugins/viewers/esm.js"></a><span class="meta"><span class="lang">js</span><span class="filename">../plugins/viewers/esm.js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=esm</span></span><output><pre><code class="js">export const viewer = ({ node, React }) =&gt; {
+  const rce = React.createElement;
+  const { useState, useEffect } = React;
+  const [resp, setResp] = useState(null);
+  const [run, setRun] = useState(0);
+
+  const exec = (ev) =&gt; {
+    ev &amp;&amp; ev.stopPropagation();
+    setRun(run + 1);
+    load(node.data.value);
+    return false;
+  };
+
+  useEffect((args) =&gt; {
+    if (run === 0 &amp;&amp; node.properties.meta.exec === &quot;onload&quot;) exec();
+  }, []);
+
+  async function load(src) {
+    const val = `//run: ${run}\n${src}`;
+    const module = await import(`data:text/javascript;base64,${btoa(src)}`);
+    if (typeof module.returns === &quot;function&quot;)
+      setResp(await module.returns(run));
+    else if (module.returns) setResp(module.returns);
+  }
+
+  const btn = rce(&quot;button&quot;, { onClick: exec }, &quot;Run &quot; + run);
+  const t = rce(&quot;div&quot;, null, [btn, resp]);
+  return t;
+};
+if (typeof module !== &quot;undefined&quot;) module.exports.viewer = viewer;
+
+</code></pre></output></div></div></div><div startpos="41:1-1172" endpos="47:4-1278" class="code   cell"><div class="cell-content"><div class="dir-below lang-esm local codecell"><span class="meta"><span class="lang">esm</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="esm">function foo(baz) {
+  alert(&quot;foo II&quot;)
+  return &quot;bar:&quot; + baz
+}
+export const returns = foo
+</code></pre><div><button>Run 0</button></div></div></div></div><div startpos="48:1-1279" endpos="59:37-1521" class="code   cell"><div class="cell-content"><div class="dir-below lang-js local codecell"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span><span class="attribute attr-viewer" style="color:black;background-color:#cf5332">viewer=esm</span></span><pre><code class="js">import confetti from &#x27;https://cdn.skypack.dev/canvas-confetti&#x27;
+
+export const returns = run =&gt; confetti({
+  origin: {y: 0},
+  spread: 55,
+  particleCount: 100,
+  ticks: 1000,
+})
+</code></pre><div><button>Run 0</button></div></div><p>Setting <code>exec</code> attribute to <code>onload</code></p></div></div><div startpos="61:1-1523" endpos="70:66-1733" class="code   cell"><div class="cell-content"><div class="dir-below lang-esm local codecell"><span class="meta"><span class="lang">esm</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span><span class="attribute attr-exec" style="color:black;background-color:#02fb89">exec=onload</span></span><pre><code class="esm">function output(num) {
+  alert(&quot;execd onload!&quot;)
+  return &quot;done: &quot; + new Date()
+}
+export const returns = output()
+</code></pre><div><button>Run 0</button></div></div><p>Cannot <em>yet</em> output raw DOM nodes, due to react setup of viewers.</p></div></div><div startpos="72:1-1735" endpos="81:155-2058" class="code   cell"><div class="cell-content"><div class="dir-below lang-esm local codecell"><span class="meta"><span class="lang">esm</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="esm">function output(num) {
+  const dom = document.createElement(&quot;pre&quot;)
+  dom.innerHTML = `Run number ${num}`
+  return dom
+}
+export const returns = output
+</code></pre><div><button>Run 0</button></div></div><p>So far so good, the only issue is that output is entirely ephemeral, how would we enable document modification, ie persist the output as an attached cell.</p></div></div><div startpos="83:1-2060" endpos="87:4-2163" class="code   cell"><div class="cell-content"><div class="dir-below lang-esm local codecell"><span class="meta"><span class="lang">esm</span><span style="color:white;background-color:#5948c3" class="directive dir-below">below</span></span><pre><code class="esm">import git from &#x27;https://cdn.skypack.dev/isomorphic-git&#x27;
+
+export const returns = git 
+</code></pre><div><button>Run 0</button></div></div></div></div></section></div></div><div id="backlinks"><h4>Backlinks (1)</h4><ol><li><a title="🔬 Tests, experiments and investigations" href="/testing/index.html">🔬 Tests, experiments and investigations</a></li></ol></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
