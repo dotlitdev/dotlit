@@ -34,7 +34,7 @@ export const cells = (section) => {
     if (node.type === 'section')
       stack.push(node)
     else if (node.type === 'code') {
-      if (prev?.type === 'code' && node.data?.meta?.attached) {
+      if (prev?.data?.code && node.data?.meta?.attached) {
         addToCell(node)
       } else {
         createCell(node)
