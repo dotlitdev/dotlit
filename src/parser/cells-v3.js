@@ -5,7 +5,10 @@ export const cells = (section) => {
 
   const needNewCell = () => {
     const cell = stack[stack.length-1]
-    return !cell || cell.type === 'section'
+    return !cell 
+    || cell.data?.code 
+    || cell.type === 'section' 
+    || cell.children?.[0]?.type === 'heading';
   }
 
   const createCell = (node) => {
