@@ -9,12 +9,12 @@ export const cells = (section) => {
   }
 
   const createCell = (node) => {
-    const type = node.type === 'code' ? 'code' : 'cell';
     stack.push({
        type: 'cell',
        children: [node],
        position: node.position,
        data: {
+         code: node.type === 'code',
          hName: "cell",
          hProperties: {
            class: "cell",
