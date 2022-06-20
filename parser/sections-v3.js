@@ -12,6 +12,7 @@ export const sections = (options) => (...args) => (tree) => {
     if (!node.data?.id) {
       // throw new Error(`Node ${node.type} has no data.id`)
     }
+
     const section = {
       type: 'section',
       children: [node],
