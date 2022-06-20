@@ -9,7 +9,6 @@ export const sections = (options) => (...args) => (tree) => {
 
   const createSection = (node) => {
     if (!node.position) throw new Error(`Node ${node.type} has no position`)
-    if (typeof node.depth === 'undefined') throw new Error(`Node ${node.type} has no depth`)
     if (!node.data?.id) throw new Error(`Node ${node.type} has no data.id`)
     const section = {
       type: 'section',
