@@ -159,7 +159,7 @@ export const sections = (options) =&gt; (...args) =&gt; (tree) =&gt; {
   }
 
 }
-</code></pre></output></div></div></div></section><section id="cells" depth="2" class="" startpos="121:1-3499" endpos="189:4-5261"><div startpos="121:1-3499" endpos="189:4-5261" class="cell"><div class="cell-content"><h2 id="cells">Cells</h2></div></div><div startpos="123:1-3509" endpos="136:55-4115" class="cell"><div class="cell-content"><ul>
+</code></pre></output></div></div></div></section><section id="cells" depth="2" class="" startpos="121:1-3499" endpos="192:4-5338"><div startpos="121:1-3499" endpos="192:4-5338" class="cell"><div class="cell-content"><h2 id="cells">Cells</h2></div></div><div startpos="123:1-3509" endpos="136:55-4115" class="cell"><div class="cell-content"><ul>
 <li>given a set of nodes (generally children of a <code>section</code>)</li>
 <li>define an empty stack <code>[]</code></li>
 <li>for each node in nodes<!-- -->
@@ -189,14 +189,17 @@ export const sections = (options) =&gt; (...args) =&gt; (tree) =&gt; {
 <li>else push node to children of cell at top of stack</li>
 </ul>
 </li>
-</ul></div></div><div startpos="138:1-4117" endpos="189:4-5261" class="code output  cell"><div class="cell-content"><div class="lang-js local codecell output"><a name="../parser/cells-v3.js"></a><span class="meta"><span class="lang">js</span><span class="filename">../parser/cells-v3.js</span></span><output><pre><code class="js">export const cells = (section) =&gt; {
+</ul></div></div><div startpos="138:1-4117" endpos="192:4-5338" class="code output  cell"><div class="cell-content"><div class="lang-js local codecell output"><a name="../parser/cells-v3.js"></a><span class="meta"><span class="lang">js</span><span class="filename">../parser/cells-v3.js</span></span><output><pre><code class="js">export const cells = (section) =&gt; {
   const stack = []
   const nodes = section.children
   section.children = stack
 
   const needNewCell = () =&gt; {
     const cell = stack[stack.length-1]
-    return !cell || cell.type === &#x27;section&#x27;
+    return !cell 
+    || cell.data?.code 
+    || cell.type === &#x27;section&#x27; 
+    || cell.children?.[0]?.type === &#x27;heading&#x27;;
   }
 
   const createCell = (node) =&gt; {
@@ -239,8 +242,8 @@ export const sections = (options) =&gt; (...args) =&gt; (tree) =&gt; {
 
   return section
 }
-</code></pre></output></div></div></div></section><section id="potential-improvements--optimisations" depth="2" class="" startpos="191:1-5263" endpos="193:115-5420"><div startpos="191:1-5263" endpos="193:115-5420" class="cell"><div class="cell-content"><h2 id="potential-improvements--optimisations">Potential improvements &amp; optimisations</h2></div></div><div startpos="193:1-5306" endpos="193:115-5420" class="cell"><div class="cell-content"><ul class="contains-task-list">
+</code></pre></output></div></div></div></section><section id="potential-improvements--optimisations" depth="2" class="" startpos="194:1-5340" endpos="196:115-5497"><div startpos="194:1-5340" endpos="196:115-5497" class="cell"><div class="cell-content"><h2 id="potential-improvements--optimisations">Potential improvements &amp; optimisations</h2></div></div><div startpos="196:1-5383" endpos="196:115-5497" class="cell"><div class="cell-content"><ul class="contains-task-list">
 <li class="task-list-item"><input type="checkbox" disabled=""/> <a class="exists local" href="../todo.html" title="TODO" wikilink="true" filepath="/testing/section_grouping.lit" root="" data="[object Object]">TODO</a> perform cell grouping internal to section node collection, preventing unnecessary additional loops.</li>
-</ul></div></div><section id="bug-bugs" depth="3" class="" startpos="195:1-5422" endpos="197:96-5538"><div startpos="195:1-5422" endpos="197:96-5538" class="cell"><div class="cell-content"><h3 id="bug-bugs"><a class="exists local" href="../bug.html" title="bug" wikilink="true" filepath="/testing/section_grouping.lit" root="" data="[object Object]">🐜 Bugs</a></h3></div></div><div startpos="197:1-5443" endpos="197:96-5538" class="cell"><div class="cell-content"><ul class="contains-task-list">
+</ul></div></div><section id="bug-bugs" depth="3" class="" startpos="198:1-5499" endpos="200:96-5615"><div startpos="198:1-5499" endpos="200:96-5615" class="cell"><div class="cell-content"><h3 id="bug-bugs"><a class="exists local" href="../bug.html" title="bug" wikilink="true" filepath="/testing/section_grouping.lit" root="" data="[object Object]">🐜 Bugs</a></h3></div></div><div startpos="200:1-5520" endpos="200:96-5615" class="cell"><div class="cell-content"><ul class="contains-task-list">
 <li class="task-list-item"><input type="checkbox" disabled=""/> <code>list</code> nodes (with no position? had assumed only toc) being grouped into prior code cells</li>
 </ul></div></div></section></section></section></div></div><div id="backlinks"></div><script src="//cdn.jsdelivr.net/npm/eruda"></script><script>eruda.init();</script><script async="" src="/web.bundle.js"></script></body></html>
