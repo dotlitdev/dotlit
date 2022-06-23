@@ -140,7 +140,7 @@ const Cell = props => {
              const output = await exec()()
              console.log("produced output", output)
              const outputVFile = await vfile({ path: meta.output?.filename || lit.location.src, contents: output})
-             result = await processor({fs: lit.fs,litroot: lit.location.root}).process(outputVFile)
+             result = await processor({fs: lit.fs,litroot: lit.location.root, disableExecOnLoad: true}).process(outputVFile)
              console.log("Result", result)
              setLoaded(true)
              } catch(err) {
