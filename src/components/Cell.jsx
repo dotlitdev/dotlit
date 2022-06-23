@@ -147,7 +147,9 @@ const Cell = props => {
                console.error("onload exec failed", err.message, err.stack)
                return
              }
-             setContent(result.result.props.children[0].props.children[0].props.children) // Whoa! That is a DirtyHack™️; result.result is a cell so will nest infinitely 
+             const newContent = result.result.props.children[0].props.children[0].props.children;
+             console.log("setContent:", newContent)
+             setContent(newContent) // Whoa! That is a DirtyHack™️; result.result is a cell so will nest infinitely 
          }
     },[])
 
