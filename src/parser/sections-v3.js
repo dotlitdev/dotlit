@@ -48,6 +48,7 @@ export const sections = (options) => (...args) => (tree) => {
   }
 
   nodes.map((node, index) => {
+    console.log("sections", index, node)
     const section = stack[stack.length-1];
     if (section.type === 'root') {
       createSection(node);
