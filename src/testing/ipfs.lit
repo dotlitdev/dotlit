@@ -403,6 +403,410 @@ return (async fn => {
 ```
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# [[🔬 testing]] IPFS
+
+
+
+## References
+
+- https://github.com/ipfs/js-ipfs/blob/master/docs/BROWSERS.md
+- https://docs.ipfs.tech/how-to/create-simple-chat-app/#peer-discovery-and-connectivity
+
+
+## Exploring the client API
+
+```>html !inline #ipfs_script_tag
+<script src="https://cdn.jsdelivr.net/npm/ipfs/dist/index.min.js"></script>
+```
+
+
+
+```js #setup #init > txt !collapse
+return (async fn=>{
+  const node = await Ipfs.create({
+    repo: 'ok' + Math.random(), // random so we get a new peerid every time, useful for testing
+    config: {
+        Addresses: {
+            Swarm: [
+                '/dns4/star.thedisco.zone/tcp/9090/wss/p2p-webrtc-star',
+                '/dns6/star.thedisco.zone/tcp/9090/wss/p2p-webrtc-star'
+            ]
+        },
+    }
+})
+  window.IpfsNode = node
+  return await node
+})()
+
+```
+```>txt !collapse attached=true updated=1664746289025
+{ hashers: 
+   { _hashersByName: 
+      { 'sha2-256': [Object],
+        'sha2-512': [Object],
+        identity: [Object] },
+     _hashersByCode: { '0': [Object], '18': [Object], '19': [Object] },
+     _loadHasher: [Function: Ive] },
+  bases: 
+   { _basesByName: 
+      { identity: [Object],
+        base2: [Object],
+        base8: [Object],
+        base10: [Object],
+        base16: [Object],
+        base16upper: [Object],
+        base32: [Object],
+        base32hex: [Object],
+        base32hexpad: [Object],
+        base32hexpadupper: [Object],
+        base32hexupper: [Object],
+        base32pad: [Object],
+        base32padupper: [Object],
+        base32upper: [Object],
+        base32z: [Object],
+        base36: [Object],
+        base36upper: [Object],
+        base58btc: [Object],
+        base58flickr: [Object],
+        base64: [Object],
+        base64pad: [Object],
+        base64url: [Object],
+        base64urlpad: [Object],
+        base256emoji: [Object] },
+     _basesByPrefix: 
+      { '0': [Object],
+        '7': [Object],
+        '9': [Object],
+        '\u0000': [Object],
+        f: [Object],
+        F: [Object],
+        b: [Object],
+        v: [Object],
+        t: [Object],
+        T: [Object],
+        V: [Object],
+        c: [Object],
+        C: [Object],
+        B: [Object],
+        h: [Object],
+        k: [Object],
+        K: [Object],
+        z: [Object],
+        Z: [Object],
+        m: [Object],
+        M: [Object],
+        u: [Object],
+        U: [Object],
+        '🚀': [Object] },
+     _loadBase: [Function: xve] },
+  preload: { [Function: s] start: [Function], stop: [Function] },
+  name: 
+   { publish: [Function],
+     resolve: [Function],
+     pubsub: { cancel: [Function], state: [Function], subs: [Function] } },
+  ipns: 
+   { options: 
+      { start: true,
+        EXPERIMENTAL: {},
+        preload: [Object],
+        repo: 'ok0.7142189064499596',
+        config: [Object] },
+     offline: 
+      { publisher: [Object],
+        republisher: [Object],
+        resolver: [Object],
+        cache: [Object],
+        routing: [Object] },
+     online: 
+      { publisher: [Object],
+        republisher: [Object],
+        resolver: [Object],
+        cache: [Object],
+        routing: [Object] } },
+  pin: 
+   { addAll: [Function],
+     add: [Function],
+     rmAll: [Function],
+     rm: [Function: e],
+     ls: [Function],
+     remote: 
+      { add: [Function: add],
+        ls: [Function: ls],
+        rm: [Function: rm],
+        rmAll: [Function: rmAll],
+        service: [Object] } },
+  resolve: [Function],
+  block: 
+   { get: [Function],
+     put: [Function],
+     rm: [Function],
+     stat: [Function] },
+  refs: { [Function: i] local: [Function] },
+  start: [Function],
+  stop: [Function],
+  dht: 
+   { get: [Function],
+     put: [Function],
+     findProvs: [Function],
+     findPeer: [Function],
+     provide: [Function],
+     query: [Function] },
+  pubsub: 
+   { subscribe: [Function],
+     unsubscribe: [Function],
+     publish: [Function],
+     ls: [Function],
+     peers: [Function] },
+  dns: [Function],
+  isOnline: [Function],
+  id: [Function],
+  version: [Function],
+  bitswap: 
+   { wantlist: [Function],
+     wantlistForPeer: [Function],
+     unwant: [Function],
+     stat: [Function] },
+  bootstrap: 
+   { add: [Function],
+     list: [Function],
+     rm: [Function],
+     clear: [Function],
+     reset: [Function] },
+  config: 
+   { getAll: [Function],
+     get: [Function],
+     set: [Function],
+     replace: [Function],
+     profiles: { apply: [Function], list: [Function] } },
+  ping: [Function],
+  add: [Function: e],
+  addAll: [Function],
+  cat: [Function],
+  get: [Function],
+  ls: [Function],
+  dag: 
+   { export: [Function],
+     get: [Function],
+     import: [Function],
+     resolve: [Function],
+     put: [Function] },
+  files: 
+   { stat: [Function],
+     chmod: [Function],
+     cp: [Function],
+     flush: [Function],
+     mkdir: [Function],
+     mv: [Function],
+     rm: [Function],
+     touch: [Function],
+     write: [Function],
+     read: [Function],
+     ls: [Function] },
+  key: 
+   { gen: [Function],
+     list: [Function],
+     rm: [Function],
+     rename: [Function],
+     export: [Function],
+     import: [Function],
+     info: [Function] },
+  object: 
+   { data: [Function],
+     get: [Function],
+     links: [Function],
+     new: [Function],
+     put: [Function],
+     stat: [Function],
+     patch: 
+      { addLink: [Function],
+        appendData: [Function],
+        rmLink: [Function],
+        setData: [Function] } },
+  repo: 
+   { gc: [Function],
+     stat: [Function],
+     version: [Function],
+     setApiAddr: [Function] },
+  stats: { repo: [Function], bw: [Function], bitswap: [Function] },
+  swarm: 
+   { addrs: [Function],
+     connect: [Function],
+     disconnect: [Function],
+     localAddrs: [Function],
+     peers: [Function] },
+  commands: [Function: re],
+  diag: 
+   { cmds: [Function: re],
+     net: [Function: re],
+     sys: [Function: re] },
+  log: 
+   { level: [Function: re],
+     ls: [Function: re],
+     tail: [Function: ie] },
+  mount: [Function: re],
+  codecs: 
+   { _codecsByName: 
+      { raw: [Object],
+        json: [Object],
+        'dag-pb': [Object],
+        'dag-cbor': [Object],
+        'dag-json': [Object],
+        'dag-jose': [Object],
+        identity: [Object] },
+     _codecsByCode: 
+      { '0': [Object],
+        '85': [Object],
+        '112': [Object],
+        '113': [Object],
+        '133': [Object],
+        '297': [Object],
+        '512': [Object] },
+     _loadCodec: [Function: Tve] } }
+```
+
+```js > txt #pubkey
+return IpfsNode.id().then(res=>res.publicKey)
+```
+```>txt #pubkey attached=true updated=1664744603922
+CAESIOkOL4/uzuzVv7N61ijE6LLoYk27mkEGI+flpllwflLQ
+```
+
+
+
+```js
+return IpfsNode.isOnline()
+```
+```>txt attached=true updated=1664746282955 !error
+function toString() {
+    [native code]
+}
+@untitled.js:2:32
+@untitled.js:4:63
+module code@untitled.js:4:158
+evaluate@[native code]
+moduleEvaluation@[native code]
+```
+```>txt attached=true updated=1664745719910
+true
+```
+```>txt attached=true updated=1664744618011
+true
+```
+
+
+
+
+
+
+```js > txt !collapse #peers
+return IpfsNode.swarm.peers()
+```
+```>txt !collapse #peers attached=true updated=1664744635293
+[ { addr: <Multiaddr 36156e6f6465312e7072656c6f61642e697066732e696f0601bbde03a503221220c9ab4abc592cae0b1d076c557ce9bc2a9ff5d40a726a683e36fe274afa9122a5 - /dns4/node1.preload.ipfs.io/tcp/443/wss/p2p/Qmbut9Ywz9YEDrz8ySBSgWyJk41Uvm2QJPhwDJzJyGFsD6>,
+    peer: 
+     { type: 'RSA',
+       multihash: [Object],
+       privateKey: undefined,
+       publicKey: undefined } },
+  { addr: <Multiaddr 36156e6f6465332e7072656c6f61642e697066732e696f0601bbde03a5032212209129199e0951d4c3f59b8062d384489b8d16cee2b759929ba6802b2418eebc17 - /dns4/node3.preload.ipfs.io/tcp/443/wss/p2p/QmY7JB6MQXhxHvq7dBDh4HpbH29v4yE9JRadAVpndvzySN>,
+    peer: 
+     { type: 'RSA',
+       multihash: [Object],
+       privateKey: undefined,
+       publicKey: undefined } },
+  { addr: <Multiaddr 36156e6f6465322e7072656c6f61642e697066732e696f0601bbde03a50322122064af9b5cee9d39d7f5c78860802832721130faf3aaf6c73d8c72ac30278432f1 - /dns4/node2.preload.ipfs.io/tcp/443/wss/p2p/QmV7gnbW5VTcJ3oyM2Xk1rdFBJ3kTkvxc87UFGsun29STS>,
+    peer: 
+     { type: 'RSA',
+       multihash: [Object],
+       privateKey: undefined,
+       publicKey: undefined } },
+  { addr: <Multiaddr 36156e6f6465302e7072656c6f61642e697066732e696f0601bbde03a503221220a3c61c2e0dfef02fa28f6345a87c7c17101c7cec88a128433ae621cfa8fb7e35 - /dns4/node0.preload.ipfs.io/tcp/443/wss/p2p/QmZMxNdpMkewiVZLMRxaNxUeZpDUb34pWjZ1kZvsd16Zic>,
+    peer: 
+     { type: 'RSA',
+       multihash: [Object],
+       privateKey: undefined,
+       publicKey: undefined } },
+  { addr: <Multiaddr 3617616d362e626f6f7473747261702e6c69627032702e696f0601bbde03a503221220c10f9319dac35c270a6b74cd644cb3acfc1f6efc8c821f8eb282599fd1814f64 - /dns4/am6.bootstrap.libp2p.io/tcp/443/wss/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb>,
+    peer: 
+     { type: 'RSA',
+       multihash: [Object],
+       privateKey: undefined,
+       publicKey: undefined } },
+  { addr: <Multiaddr 37176e79352e626f6f7473747261702e6c69627032702e696f0601bbde03a5032212201b9ea49f92cf930bc24ac1183e78ed1358a1e29dc69031269c1fd7d53ff65fd1 - /dns6/ny5.bootstrap.libp2p.io/tcp/443/wss/p2p/QmQCU2EcMqAqQPR2i9bChDtGNJchTbq5TbXJJ16u19uLTa>,
+    peer: 
+     { type: 'RSA',
+       multihash: [Object],
+       privateKey: undefined,
+       publicKey: undefined } },
+  { addr: <Multiaddr 3718737631352e626f6f7473747261702e6c69627032702e696f0601bbde03a50322122006b3608aa000274049eb28ad8e793a26ff6fab281a7d3bd77cd18eb745dfaabb - /dns6/sv15.bootstrap.libp2p.io/tcp/443/wss/p2p/QmNnooDu7bfjPFoTZYxMNLWUQJyrVwtbZg5gBMjTezGAJN>,
+    peer: 
+     { type: 'RSA',
+       multihash: [Object],
+       privateKey: undefined,
+       publicKey: undefined } },
+  { addr: <Multiaddr 3618737631362e626f6f7473747261702e6c69627032702e696f0601bbde03a503221220a6dd073989ac54aa6e65a5b6a3da2363026ebe15618844a06263244f95fd0eb9 - /dns4/sv16.bootstrap.libp2p.io/tcp/443/wss/p2p/QmZa1sAxajnQjVM8WjWXoMbmPd7NsWhfKsPkErzpm9wGkp>,
+    peer: 
+     { type: 'RSA',
+       multihash: [Object],
+       privateKey: undefined,
+       publicKey: undefined } },
+  { addr: <Multiaddr 36177367312e626f6f7473747261702e6c69627032702e696f0601bbde03a503221220d35893e482b48d830c653415e615061281982226059d8fcb65add178cbb990bf - /dns4/sg1.bootstrap.libp2p.io/tcp/443/wss/p2p/QmcZf59bWwK5XFi76CZX8cbJ4BhTzzA3gU1ZjYZcYW3dwt>,
+    peer: 
+     { type: 'RSA',
+       multihash: [Object],
+       privateKey: undefined,
+       publicKey: undefined } } ]
+```
+
+
+
+
+
+```js
+return IpfsNode.add("dotlit!").then(res=>res.path)
+```
+```>txt attached=true updated=1664745444223
+QmeYcD38KNnj7u1qHF1fGtiZusSdLbqyMuc21hweWTwRms
+```
+
+
+
+
+
+
+
+```js
+return (async fn => {
+  const hash = 
+  //"QmWXdjNC362aPDtwHPUE9o2VMqPeNeCQuTBTv1NsKtwypg/myfile.txt"
+  "QmeYcD38KNnj7u1qHF1fGtiZusSdLbqyMuc21hweWTwRms"
+  let str = ""
+  const enc = new TextDecoder("utf-8");
+  for await (const chunk of IpfsNode.cat(hash)) {
+    str += enc.decode(chunk)
+  }
+  console.log("done")
+  return str
+
+})()
+```
+
+
 ```>txt attached=true updated=1664746327818
 { '0': 100,
   '1': 111,
