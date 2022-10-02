@@ -392,9 +392,10 @@ return (async fn => {
   //"QmWXdjNC362aPDtwHPUE9o2VMqPeNeCQuTBTv1NsKtwypg/myfile.txt"
   "QmeYcD38KNnj7u1qHF1fGtiZusSdLbqyMuc21hweWTwRms"
   let str = ""
+  const enc = new TextDecoder("utf-8");
   for await (const chunk of IpfsNode.cat(hash)) {
     console.info(chunk)
-    str += chunk.toString("utf-8")
+    str += enc.decode(chunk)
   }
   console.log("done")
   return str
