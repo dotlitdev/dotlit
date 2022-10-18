@@ -322,12 +322,12 @@ export function generate(cmd, cb = NoOp) {
                     if (global.litenv) {
                         await fs.copyFile( path.join(__dirname,'./web.bundle.js'), path.join(cmd.output, 'web.bundle.js'))
                         await fs.copyFile( path.join(__dirname,'./style.css'), path.join(cmd.output, 'style.css'))
-                        await copyRecursive(path.join(__dirname,'./assets'), path.join(cmd.output, 'assets'))
+                        // await copyRecursive(path.join(__dirname,'./assets'), path.join(cmd.output, 'assets'))
                     } else {
                         await fs.copyFile( path.join(__dirname,'../../dist/web.bundle.js'), path.join(cmd.output, 'web.bundle.js'))
                         await fs.copyFile( path.join(__dirname,'../../dist/web.bundle.js.map'), path.join(cmd.output, 'web.bundle.js.map'))
                         await fs.copyFile( path.join(__dirname,'../../dist/style.css'), path.join(cmd.output, 'style.css'))
-                        await copyRecursive(path.join(__dirname,'../../assets'), path.join(cmd.output, 'assets'))
+                        // await copyRecursive(path.join(__dirname,'../../assets'), path.join(cmd.output, 'assets'))
                     }
                     console.timeEnd('generate')
                     if (done) done()
