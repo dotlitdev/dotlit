@@ -449,13 +449,17 @@ export const viewer = ({ node, React }) =&gt; {
 		* another second level node
 	* another first level node
 @endmindmap
-</code></pre></div></div></div><div startpos="541:1-13474" endpos="559:4-16805" class="code output  cell"><div class="cell-content"><div class="lang-img local codecell output"><a name="testing/repl-output.svg"></a><span class="meta"><span class="lang">img</span><span class="filename">testing/repl-output.svg</span><span class="updatedAt">Updated <span class="Time relative">77.0w ago</span></span></span><img src="testing/repl-output.svg"/></div></div></div><div startpos="565:1-16811" endpos="569:46-16993" class="cell"><div class="cell-content"><p>Urgh, CORS...</p><p>So to bypass CORS we need a proxy, see <a class="exists local" href="testing/runkit.html" title="testing/runkit" wikilink="true" filepath="/config.lit" root="" data="[object Object]">testing/runkit</a> for an example nodejs repl, which could achieve this proxying.</p><p>Fixed see <a class="exists local" href="testing/cors_proxy.html" title="testing/Cors Proxy" wikilink="true" filepath="/config.lit" root="" data="[object Object]">testing/Cors Proxy</a> for example.</p></div></div></section><section id="search" depth="3" class="" startpos="571:1-16995" endpos="641:4-18675"><div startpos="571:1-16995" endpos="641:4-18675" class="cell"><div class="cell-content"><h3 id="search">Search</h3></div></div><div startpos="572:1-17006" endpos="641:4-18675" class="code   cell"><div class="cell-content"><div class="dir-plugin dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=search</span></span><pre><code class="js">
+</code></pre></div></div></div><div startpos="541:1-13474" endpos="559:4-16805" class="code output  cell"><div class="cell-content"><div class="lang-img local codecell output"><a name="testing/repl-output.svg"></a><span class="meta"><span class="lang">img</span><span class="filename">testing/repl-output.svg</span><span class="updatedAt">Updated <span class="Time relative">77.0w ago</span></span></span><img src="testing/repl-output.svg"/></div></div></div><div startpos="565:1-16811" endpos="569:46-16993" class="cell"><div class="cell-content"><p>Urgh, CORS...</p><p>So to bypass CORS we need a proxy, see <a class="exists local" href="testing/runkit.html" title="testing/runkit" wikilink="true" filepath="/config.lit" root="" data="[object Object]">testing/runkit</a> for an example nodejs repl, which could achieve this proxying.</p><p>Fixed see <a class="exists local" href="testing/cors_proxy.html" title="testing/Cors Proxy" wikilink="true" filepath="/config.lit" root="" data="[object Object]">testing/Cors Proxy</a> for example.</p></div></div></section><section id="search" depth="3" class="" startpos="571:1-16995" endpos="645:4-18777"><div startpos="571:1-16995" endpos="645:4-18777" class="cell"><div class="cell-content"><h3 id="search">Search</h3></div></div><div startpos="572:1-17006" endpos="645:4-18777" class="code   cell"><div class="cell-content"><div class="dir-plugin dir-collapse lang-js local collapsed codecell"><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#c5476f" class="directive dir-plugin">plugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=viewer</span><span class="attribute attr-of" style="color:black;background-color:#00dd70">of=search</span></span><pre><code class="js">
 const sortBy = (keys) =&gt; (a, b) =&gt; {
   for (const key of keys) {
     if (a[key] !== b[key]) break;
     else return a[key] &gt; b[key] ? 1 : -1;
   }
 };
+
+const abs = (url) =&gt; /^https?:\/\//.test(url)
+
+const prefix = (url) =&gt; abs(url) ? url : &quot;/&quot; + url
 
 const itemBuilder = (React) =&gt; (item) =&gt; {
   const rc = React.createElement;
@@ -464,7 +468,7 @@ const itemBuilder = (React) =&gt; (item) =&gt; {
     { className: &quot;item&quot; },
     rc(
       &quot;a&quot;,
-      { className: item.exists ? &quot;local exists&quot;: &quot;local&quot;, href: &quot;/&quot;+ lit.parser.utils.links.decorateLinkNode({url: item.id }).url },
+      { className: item.exists ? &quot;local exists&quot;: &quot;local&quot;, href: prefix(lit.parser.utils.links.decorateLinkNode({url: item.id }).url) },
       item.title || item.id
     )
   );
@@ -517,7 +521,7 @@ export const viewer = ({ node, React }) =&gt; {
   );
 };
 
-</code></pre></div></div></div></section><section id="miscellaneous" depth="3" class="" startpos="647:1-18681" endpos="702:4-20067"><div startpos="647:1-18681" endpos="702:4-20067" class="cell"><div class="cell-content"><h3 id="miscellaneous">Miscellaneous</h3></div></div><div startpos="649:1-18700" endpos="702:4-20067" class="code   cell"><div class="cell-content"><div class="dir-xplugin dir-collapse lang-js local collapsed codecell"><a name="diff"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#913335" class="directive dir-xplugin">xplugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=filemenu</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=diff</span><span class="source">&lt; plugins/modal/diff.js</span></span><pre><code class="js">import diff from &quot;https://cdn.skypack.dev/react-diff-viewer&quot;;
+</code></pre></div></div></div></section><section id="miscellaneous" depth="3" class="" startpos="651:1-18783" endpos="706:4-20169"><div startpos="651:1-18783" endpos="706:4-20169" class="cell"><div class="cell-content"><h3 id="miscellaneous">Miscellaneous</h3></div></div><div startpos="653:1-18802" endpos="706:4-20169" class="code   cell"><div class="cell-content"><div class="dir-xplugin dir-collapse lang-js local collapsed codecell"><a name="diff"></a><span class="meta"><span class="lang">js</span><span style="color:white;background-color:#913335" class="directive dir-xplugin">xplugin</span><span style="color:black;background-color:#da5323" class="directive dir-collapse">collapse</span><span class="attribute attr-type" style="color:white;background-color:#0368f3">type=filemenu</span><span class="attribute attr-id" style="color:black;background-color:#00d1b0">id=diff</span><span class="source">&lt; plugins/modal/diff.js</span></span><pre><code class="js">import diff from &quot;https://cdn.skypack.dev/react-diff-viewer&quot;;
 
 export const filemenu = (ctx, { React, Menu, toggleModal }) =&gt; {
   const rc = React.createElement;
