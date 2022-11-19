@@ -578,6 +578,10 @@ const sortBy = (keys) => (a, b) => {
   }
 };
 
+const abs = (url) => /^https?:\/\//.test(url)
+
+const prefix = (url) => abs(url) ? url : "/" + url
+
 const itemBuilder = (React) => (item) => {
   const rc = React.createElement;
   return rc(
@@ -585,7 +589,7 @@ const itemBuilder = (React) => (item) => {
     { className: "item" },
     rc(
       "a",
-      { className: item.exists ? "local exists": "local", href: "/"+ lit.parser.utils.links.decorateLinkNode({url: item.id }).url },
+      { className: item.exists ? "local exists": "local", href: prefix(lit.parser.utils.links.decorateLinkNode({url: item.id }).url) },
       item.title || item.id
     )
   );
